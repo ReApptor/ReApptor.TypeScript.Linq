@@ -13,4 +13,8 @@
       <DebugType>full</DebugType>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.Security.Permissions" Version="4.7.0" />
+    </ItemGroup>
+
 </Project>
