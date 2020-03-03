@@ -10,7 +10,7 @@ pipelines:
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
               script:
-                - ENV
+                - env
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0-${BITBUCKET_BUILD_NUMBER} ./Renta.Extensions/Renta.Extensions.csproj
                 - dotnet nuget push ./Renta.Extensions/bin/Debug/RentaExtensions.1.0-${BITBUCKET_BUILD_NUMBER}.nupkg ${MYGET_API_KEY} --source https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
