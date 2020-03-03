@@ -12,6 +12,8 @@ pipelines:
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Extensions/Renta.Extensions.csproj -o obj/renta-extensions/publish
+                - ls -la
+                - ls -la obj/renta-extensions/publish
                 - dotnet nuget push obj/renta-extensions/publish/RentaExtensions.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
               services:
                 - docker
