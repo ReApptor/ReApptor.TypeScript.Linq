@@ -12,7 +12,7 @@ pipelines:
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0-${BITBUCKET_BUILD_NUMBER} ./Renta.Extensions/Renta.Extensions.csproj
-                - dotnet nuget push ./Renta.Extensions/bin/Debug/RentaExtensions.1.0-${BITBUCKET_BUILD_NUMBER}.nupkg ${MYGET_API_KEY} -Source https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
+                - dotnet nuget push ./Renta.Extensions/bin/Debug/RentaExtensions.1.0-${BITBUCKET_BUILD_NUMBER}.nupkg ${MYGET_API_KEY} --source https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
               services:
                 - docker
               caches:
