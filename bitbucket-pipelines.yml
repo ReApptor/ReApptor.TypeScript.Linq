@@ -11,8 +11,8 @@ pipelines:
               size: 2x # Double resources available for this step.
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Extensions/Renta.Extensions.csproj
-                - dotnet nuget push ./Renta.Extensions/bin/Debug/RentaExtensions.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Extensions/Renta.Extensions.csproj -o obj/renta-extensions/publish
+                - dotnet nuget push obj/renta-extensions/publish/RentaExtensions.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-dotnet-extensions/api/v2/package
               services:
                 - docker
               caches:
