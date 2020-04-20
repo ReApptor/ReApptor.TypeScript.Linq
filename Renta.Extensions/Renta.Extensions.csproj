@@ -9,7 +9,7 @@
         <Product>Renta Components</Product>
     </PropertyGroup>
     <PropertyGroup>
-        <PackageId>RentaExtensions</PackageId>
+        <PackageId>Renta.Extensions</PackageId>
         <Version>1.0.0</Version>
         <Authors>Renta Developers</Authors>
         <Company>Renta</Company>
