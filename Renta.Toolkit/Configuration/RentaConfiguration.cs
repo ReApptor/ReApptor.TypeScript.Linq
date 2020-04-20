@@ -3,6 +3,8 @@ using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Renta.Toolkit.Configuration
 {
@@ -10,7 +12,7 @@ namespace Renta.Toolkit.Configuration
     {
         private string _version;
 
-        public RentaConfiguration(IHostingEnvironment environment)
+        public RentaConfiguration(IWebHostEnvironment environment)
         {
             HostingEnvironment = environment ?? throw new ArgumentNullException(nameof(environment));
 
@@ -66,7 +68,7 @@ namespace Renta.Toolkit.Configuration
 
         public bool IsPackageManagerConsole { get; }
         
-        public IHostingEnvironment HostingEnvironment { get; }
+        public IWebHostEnvironment HostingEnvironment { get; }
         
         public string Version
         {
