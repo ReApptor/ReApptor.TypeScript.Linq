@@ -63,9 +63,8 @@ namespace Renta.Toolkit.Startup
                 logger.Info("Program started.");
 
                 IHost host = CreateWebHostBuilder<TStartup>(args).Build();
-
                 RentaLayoutRenderer.ServiceProvider = host.Services;
-
+                
                 host.Run();
             }
             catch (Exception ex)
