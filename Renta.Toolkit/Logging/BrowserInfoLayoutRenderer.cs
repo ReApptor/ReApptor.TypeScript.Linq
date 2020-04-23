@@ -20,7 +20,7 @@ namespace Renta.Toolkit.Logging
                 ParseResult<BotMatchResult> botInfo = dd.GetBot();
                 if (botInfo.Success)
                 {
-                    return $"{botInfo.Match.Name}/{botInfo.Match.Producer.Name}|";
+                    return $"{botInfo.Match?.Name}, {botInfo.Match?.Producer?.Name}|";
                 }
             }
             
@@ -28,7 +28,7 @@ namespace Renta.Toolkit.Logging
             if (clientInfo.Success)
             {
                 ParseResult<OsMatchResult> osInfo = dd.GetOs();
-                return $"{clientInfo.Match.Name}/{clientInfo.Match.Version}/{osInfo?.Match?.Name}";
+                return $"{clientInfo.Match?.Name}, {clientInfo.Match?.Version}, {osInfo?.Match?.Name}";
             }
             return provider.UserAgent;
         }
