@@ -14,5 +14,15 @@ namespace Renta.Toolkit.Extensions
         {
             return await Utility.ToByteArrayAsync(stream);
         }
+        
+        public static async Task<MemoryStream> CompressAsync(this Stream stream, bool deflate = true)
+        {
+            return await Utility.CompressAsync(stream, deflate);
+        }
+        
+        public static async Task<MemoryStream> DecompressAsync(this Stream stream, bool deflate = true)
+        {
+            return await Utility.DecompressAsync(stream, deflate);
+        }
     }
 }

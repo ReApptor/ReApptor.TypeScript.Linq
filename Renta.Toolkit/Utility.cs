@@ -706,7 +706,7 @@ namespace Renta.Toolkit
 
         #region Compress
 
-        public static MemoryStream Compress(Stream data)
+        public static async Task<MemoryStream> CompressAsync(Stream data, bool deflate = true)
         {
             if (data == null)
             {
@@ -715,22 +715,22 @@ namespace Renta.Toolkit
 
             const int bufferSize = 262144;
 
-            var compressed = new MemoryStream();
+            var result = new MemoryStream();
 
-            using (var deflate = new DeflateStream(compressed, CompressionMode.Compress, true))
-            {
-                using (var buffer = new BufferedStream(deflate, bufferSize))
-                {
-                    data.CopyTo(buffer);
-                }
-            }
+            await using var compressor = (deflate)
+                ? (Stream) new DeflateStream(result, CompressionMode.Compress, true)
+                : new GZipStream(result, CompressionMode.Compress, true);
+            
+            await using var buffer = new BufferedStream(compressor, bufferSize);
+                
+            await data.CopyToAsync(buffer);
 
-            compressed.Position = 0;
+            result.Position = 0;
 
-            return compressed;
+            return result;
         }
 
-        public static MemoryStream Decompress(Stream compressed, bool deflate = true)
+        public static async Task<MemoryStream> DecompressAsync(Stream compressed, bool deflate = true)
         {
             if (compressed == null)
             {
@@ -739,64 +739,64 @@ namespace Renta.Toolkit
 
             const int bufferSize = 262144;
 
-            using (var deflateDate = (deflate)
+            await using var compressor = (deflate)
                 ? (Stream) new DeflateStream(compressed, CompressionMode.Decompress, true)
-                : new GZipStream(compressed, CompressionMode.Decompress, true))
-            {
-                using (var buffer = new BufferedStream(deflateDate, bufferSize))
-                {
-                    var result = new MemoryStream();
-                    buffer.CopyTo(result);
-                    result.Position = 0;
-                    return result;
-                }
-            }
+                : new GZipStream(compressed, CompressionMode.Decompress, true);
+            
+            await using var buffer = new BufferedStream(compressor, bufferSize);
+            
+            var result = new MemoryStream();
+            
+            await buffer.CopyToAsync(result);
+            
+            result.Position = 0;
+            
+            return result;
         }
 
-        public static byte[] Compress(byte[] data)
+        public static async Task<byte[]> CompressAsync(byte[] data)
         {
             data ??= new byte[0];
-            using (var compressed = new MemoryStream())
-            {
-                using (var deflate = new DeflateStream(compressed, CompressionMode.Compress))
-                {
-                    deflate.Write(data, 0, data.Length);
-                }
 
-                return compressed.ToArray();
-            }
+            await using var compressed = new MemoryStream();
+
+            await using var deflate = new DeflateStream(compressed, CompressionMode.Compress);
+            
+            await deflate.WriteAsync(data, 0, data.Length);
+
+            return await compressed.ToByteArrayAsync();
         }
 
-        public static byte[] Decompress(byte[] data)
+        public static async Task<byte[]> DecompressAsync(byte[] data)
         {
             data ??= new byte[0];
-            using (var compressed = new MemoryStream(data))
-            {
-                using (var deflate = new DeflateStream(compressed, CompressionMode.Decompress))
-                {
-                    using (var result = new MemoryStream())
-                    {
-                        deflate.CopyTo(result);
-                        return result.ToArray();
-                    }
-                }
-            }
+            
+            await using var compressed = new MemoryStream(data);
+            
+            await using var deflate = new DeflateStream(compressed, CompressionMode.Decompress);
+                
+            await using var result = new MemoryStream();
+                    
+            await deflate.CopyToAsync(result);
+                        
+            return await result.ToByteArrayAsync();
         }
 
-        public static string Compress(string data)
+        public static async Task<string> Compress(string data)
         {
-            if (String.IsNullOrEmpty(data))
+            if (string.IsNullOrEmpty(data))
             {
                 return data;
             }
 
             byte[] rawData = Encoding.UTF8.GetBytes(data);
-            rawData = Compress(rawData);
-            string value = Convert.ToBase64String(rawData);
-            return value;
+            
+            rawData = await CompressAsync(rawData);
+            
+            return Convert.ToBase64String(rawData);
         }
 
-        public static string Decompress(string data)
+        public static async Task<string> Decompress(string data)
         {
             if (String.IsNullOrEmpty(data))
             {
@@ -804,9 +804,54 @@ namespace Renta.Toolkit
             }
 
             byte[] rawData = Convert.FromBase64String(data);
-            rawData = Decompress(rawData);
-            string value = Encoding.UTF8.GetString(rawData);
-            return value;
+            rawData = await DecompressAsync(rawData);
+            
+            return Encoding.UTF8.GetString(rawData);
+        }
+
+        #endregion
+        
+        #region Re-Try
+
+        public static async Task InvokeAsync(Func<Task> action, int attempts = 1, int delay = 100)
+        {
+            async Task<bool> Invoker()
+            {
+                await action();
+                return true;
+            }
+
+            await InvokeAsync(Invoker, attempts, delay);
+        }
+
+        public static async Task<T> InvokeAsync<T>(Func<Task<T>> action, int attempts = 1, int delay = 100)
+        {
+            if (attempts <= 0)
+            {
+                return await action();
+            }
+
+            while (true)
+            {
+                attempts--;
+                
+                try
+                {
+                    return await action();
+                }
+                catch (Exception)
+                {
+                    if (attempts == 0)
+                    {
+                        throw;
+                    }
+
+                    if (delay > 0)
+                    {
+                        await Task.Delay(delay);
+                    }
+                }
+            }
         }
 
         #endregion
