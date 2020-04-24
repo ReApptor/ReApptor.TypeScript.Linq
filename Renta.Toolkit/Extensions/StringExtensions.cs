@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Renta.Toolkit.Extensions
 {
@@ -64,11 +65,56 @@ namespace Renta.Toolkit.Extensions
             }
         }
 
+        public static string EscapeQuotesFromXml(this string value)
+        {
+            if (value != null)
+            {
+                //Change
+                //'       &apos; 
+                //"       &quot;
+
+                //Regex regexApos = new Regex(@"(?<=>[^<]*)\'(?=[^</]*</)", 
+                Regex regexApos = new Regex(@"(?<=<.*>[^<]*)\'(?=.*(</).*>)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                //   Regex regexQuot = new Regex(@"(?<=>[^<]*)""(?=[^</]*</)",
+                Regex regexQuot = new Regex(@"(?<=<.*>[^<]*)""(?=.*(</).*>)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                value = regexApos.Replace(value, "&apos;");
+                value = regexQuot.Replace(value, "&quot;");
+            }
+            
+            return value;
+        }
+
         #region Url File format
 
         public static byte[] ExtractRawDataFromUrl(this string src)
         {
             return Utility.ExtractRawDataFromUrl(src);
+        }
+
+        #endregion
+
+        #region Encoding Utility
+
+        public static string ConvertEncoding(this string value, Encoding source, Encoding destination)
+        {
+            return EncodingUtility.ConvertEncoding(value, source, destination);
+        }
+
+        public static string ConvertEncoding(this string value, Encoding destination)
+        {
+            return EncodingUtility.ConvertEncoding(value, destination);
+        }
+
+        public static byte[] GetBytes(this string value, Encoding source, Encoding destination, bool bom = false)
+        {
+            return EncodingUtility.GetBytes(value, source, destination, bom);
+        }
+
+        public static byte[] GetBytes(this string value, Encoding destination, bool bom = false)
+        {
+            return EncodingUtility.GetBytes(value, destination, bom);
         }
 
         #endregion

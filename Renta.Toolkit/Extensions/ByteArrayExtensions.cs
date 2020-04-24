@@ -61,6 +61,11 @@
             return Utility.ToHtmlImage(data);
         }
 
+        public static string ToHtmlCsv(this byte[] data)
+        {
+            return Utility.ToHtmlCsv(data);
+        }
+
         public static string ToHtmlSrc(this byte[] data, string mimeType)
         {
             return Utility.ToHtmlSrc(data, mimeType);

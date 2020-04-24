@@ -475,6 +475,11 @@ namespace Renta.Toolkit
             return ToHtmlSrc(data, "image/png");
         }
 
+        public static string ToHtmlCsv(byte[] data)
+        {
+            return ToHtmlSrc(data, "text/csv");
+        }
+
         public static string ToHtmlSrc(byte[] data, string mimeType)
         {
             return ((data != null) && (data.Length > 0)) ? $"data:{mimeType};base64,{Convert.ToBase64String(data)}" : null;
