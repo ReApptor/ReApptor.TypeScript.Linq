@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <Authors>WeAre Solutions Oy</Authors>
         <Copyright>Copyright © 2020, Renta Oy</Copyright>
         <Company>Renta Oy</Company>
@@ -20,8 +20,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-       <FrameworkReference Include="Microsoft.AspNetCore.App" />
-       <PackageReference Include="DeviceDetector.NET" Version="4.1.0" />
+        <PackageReference Include="DeviceDetector.NET" Version="4.1.0" />
       <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
@@ -32,10 +31,6 @@
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
       <PackageReference Include="System.Security.Claims" Version="4.3.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Renta.Extensions\Renta.Extensions.csproj" />
     </ItemGroup>
 
 </Project>
