@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Renta.Toolkit.Configuration
 {
-    public abstract class RentaConfiguration : EnvironmentConfiguration
+    public abstract class RentaConfiguration :  EnvironmentConfiguration, IRentaConfiguration
     {
         private string _version;
 
