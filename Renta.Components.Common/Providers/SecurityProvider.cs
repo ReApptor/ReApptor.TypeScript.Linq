@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Renta.Components.Common.Configuration;
 using Renta.Components.Common.Extensions;
+using Renta.Toolkit.Configuration;
 
 namespace Renta.Components.Common.Providers
 {

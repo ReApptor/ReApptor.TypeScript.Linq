@@ -4,10 +4,11 @@ using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Renta.Toolkit.Configuration;
 
 namespace Renta.Components.Common.Configuration
 {
-    public abstract class RentaConfiguration : EnvironmentConfiguration
+    public abstract class RentaConfiguration :  EnvironmentConfiguration
     {
         private string _version;
 
