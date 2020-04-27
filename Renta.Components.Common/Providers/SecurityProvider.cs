@@ -16,7 +16,7 @@ namespace Renta.Components.Common.Providers
     public class SecurityProvider //: ISecurityProvider
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IRentaConfiguration _configuration;
+        private readonly RentaConfiguration _configuration;
         private IHttpContextAccessor _accessor;
         private IAntiforgery _antiforgery;
         private HttpContextProvider _httpContextProvider;
@@ -56,7 +56,7 @@ namespace Renta.Components.Common.Providers
             HttpContextProvider.Clear();
         }
 
-        public SecurityProvider(IServiceProvider serviceProvider, IRentaConfiguration configuration)
+        public SecurityProvider(IServiceProvider serviceProvider, RentaConfiguration configuration)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

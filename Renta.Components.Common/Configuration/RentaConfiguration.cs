@@ -8,7 +8,7 @@ using Renta.Toolkit.Configuration;
 
 namespace Renta.Components.Common.Configuration
 {
-    public abstract class RentaConfiguration :  EnvironmentConfiguration, IRentaConfiguration
+    public abstract class RentaConfiguration :  EnvironmentConfiguration
     {
         private string _version;
 
