@@ -51,9 +51,12 @@
             return Utility.StartsWith(x, y);
         }
 
-        public static byte[] RemoveBom(this byte[] x)
+        /// <summary>
+        /// Removes UTF file preamble (BOM)
+        /// </summary>
+        public static byte[] RemoveBomPreamble(this byte[] x)
         {
-            return Utility.RemoveBom(x);
+            return Utility.RemoveBomPreamble(x);
         }
 
         public static string ToHtmlImage(this byte[] data)

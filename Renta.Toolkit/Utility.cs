@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Renta.Toolkit.Extensions;
 
@@ -531,7 +532,10 @@ namespace Renta.Toolkit
             return true;
         }
 
-        public static byte[] RemoveBom(byte[] value)
+        /// <summary>
+        /// Removes UTF file preamble (BOM)
+        /// </summary>
+        public static byte[] RemoveBomPreamble(byte[] value)
         {
             if (value == null)
             {
@@ -851,6 +855,56 @@ namespace Renta.Toolkit
                         await Task.Delay(delay);
                     }
                 }
+            }
+        }
+
+        #endregion
+        
+        #region String
+        
+        /// <summary>
+        /// Removes UTF file preamble (BOM)
+        /// </summary>
+        public static string RemoveBomPreamble(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                byte[] preambleRaw = Encoding.UTF8.GetPreamble();
+                string preamble = Encoding.UTF8.GetString(preambleRaw);
+                if (value.StartsWith(preamble))
+                {
+                    value = value.Substring(preamble.Length);
+                }
+            }
+
+            return value;
+        }
+
+        public static double ToDouble(string value)
+        {
+            try
+            {
+                return double.Parse(value);
+            }
+            catch (Exception)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    string separator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+                    value = value
+                        .Trim()
+                        .Replace(" ", string.Empty)
+                        .Replace(".", separator)
+                        .Replace(",", separator);
+
+                    if (double.TryParse(value, out double parsed))
+                    {
+                        return parsed;
+                    }
+                }
+
+                throw;
             }
         }
 
