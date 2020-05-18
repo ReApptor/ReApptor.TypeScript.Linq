@@ -39,5 +39,10 @@ namespace Renta.Toolkit.Extensions
                 }
             }
         }
+
+        public static string Join<T>(this IEnumerable<T> items, string separator, Func<T, string> transform)
+        {
+            return string.Join(separator, items.Select(transform));
+        }
     }
 }

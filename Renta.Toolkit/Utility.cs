@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
@@ -9,6 +11,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Renta.Toolkit.Attributes;
 using Renta.Toolkit.Extensions;
 
 namespace Renta.Toolkit
@@ -20,6 +23,44 @@ namespace Renta.Toolkit
         private static readonly SortedList<string, PropertyInfo[]> TypeProperties = new SortedList<string, PropertyInfo[]>();
         private static readonly SortedList<string, List<KeyValuePair<Assembly, Guid>>> AssembliesIdentifiers = new SortedList<string, List<KeyValuePair<Assembly, Guid>>>();
         private static readonly SortedList<Guid, byte[]> CacheAssemblyContentHash = new SortedList<Guid, byte[]>();
+
+        private static object ToLocal(PropertyInfo instanceProperty, object instance, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
+        {
+            if (instance != null)
+            {
+                if (instance is DateTime date)
+                {
+                    DateTime local = ToLocal(date, defaultTimeZone, timezoneOffset);
+                    bool dateOnly = (instanceProperty.GetCustomAttribute<DateOnlyAttribute>() != null);
+                    dateOnly |= local.IsDateOnly();
+                    DateTime value = (dateOnly) ? local : date.AsUtc();
+                    return value;
+                }
+
+                Type type = instance.GetType();
+
+                if (!type.IsPrimitive)
+                {
+                    PropertyInfo[] properties = GetAllProperties(type);
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if ((property.CanRead) && (property.CanWrite))
+                        {
+                            object value = property.QuickGetValue(instance);
+                            
+                            object newValue = ToLocal(property, value, defaultTimeZone, timezoneOffset);
+                            
+                            if (newValue != value)
+                            {
+                                property.QuickSetValue(instance, newValue);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return instance;
+        }
 
         #endregion
 
@@ -120,10 +161,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (SHA256 sha = new SHA256Managed())
-            {
-                return sha.ComputeHash(data);
-            }
+            using SHA256 sha = new SHA256Managed();
+            return sha.ComputeHash(data);
         }
 
         public static byte[] Hash256(Stream data)
@@ -131,10 +170,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (SHA256 sha = new SHA256Managed())
-            {
-                return sha.ComputeHash(data);
-            }
+            using SHA256 sha = new SHA256Managed();
+            return sha.ComputeHash(data);
         }
 
         public static byte[] Hash512(byte[] data)
@@ -142,10 +179,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (SHA512 sha = new SHA512Managed())
-            {
-                return sha.ComputeHash(data);
-            }
+            using SHA512 sha = new SHA512Managed();
+            return sha.ComputeHash(data);
         }
 
         public static byte[] Hash512(Stream data)
@@ -153,10 +188,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (SHA512 sha = new SHA512Managed())
-            {
-                return sha.ComputeHash(data);
-            }
+            using SHA512 sha = new SHA512Managed();
+            return sha.ComputeHash(data);
         }
 
         public static byte[] Hash1(byte[] data)
@@ -164,10 +197,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (SHA1 sha = new SHA1Managed())
-            {
-                return sha.ComputeHash(data);
-            }
+            using SHA1 sha = new SHA1Managed();
+            return sha.ComputeHash(data);
         }
 
         public static byte[] Md5(byte[] data)
@@ -175,10 +206,8 @@ namespace Renta.Toolkit
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            using (MD5 md5 = new MD5CryptoServiceProvider())
-            {
-                return md5.ComputeHash(data);
-            }
+            using MD5 md5 = new MD5CryptoServiceProvider();
+            return md5.ComputeHash(data);
         }
 
         public static Guid HashGuid(string data, Encoding encoding = null)
@@ -286,7 +315,10 @@ namespace Renta.Toolkit
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
 
-            string key = assembly.FullName;
+            string key = (!string.IsNullOrWhiteSpace(assembly.FullName))
+                ? assembly.FullName
+                : "<dynamic>";
+            
             lock (AssembliesIdentifiers)
             {
                 List<KeyValuePair<Assembly, Guid>> items;
@@ -427,11 +459,9 @@ namespace Renta.Toolkit
                 stream.Seek(0L, SeekOrigin.Begin);
             }
 
-            using (var copy = new MemoryStream())
-            {
-                stream.CopyTo(copy);
-                return copy.ToArray();
-            }
+            using var copy = new MemoryStream();
+            stream.CopyTo(copy);
+            return copy.ToArray();
         }
 
         public static async Task<byte[]> ToByteArrayAsync(Stream stream)
@@ -449,11 +479,9 @@ namespace Renta.Toolkit
                 stream.Seek(0L, SeekOrigin.Begin);
             }
 
-            using (var copy = new MemoryStream())
-            {
-                await stream.CopyToAsync(copy);
-                return copy.ToArray();
-            }
+            await using var copy = new MemoryStream();
+            await stream.CopyToAsync(copy);
+            return copy.ToArray();
         }
 
         public static string ToHexString(byte[] data)
@@ -639,63 +667,74 @@ namespace Renta.Toolkit
 
         #region DateTime
 
-        public static DateTime ToLocal(DateTime from, bool isDaylightSavingTime = false, int? timezoneOffset = null)
+        public static TimeZoneInfo GetTimeZone(params string[] names)
         {
-            if (from.Kind == DateTimeKind.Local)
+            ReadOnlyCollection<TimeZoneInfo> timezones = TimeZoneInfo.GetSystemTimeZones();
+            bool timezonesConfigured = (timezones.Count > 0);
+            
+            if ((timezonesConfigured) && (names != null) && (names.Length > 0))
             {
-                return from;
-            }
-
-            if (from.Kind == DateTimeKind.Unspecified)
-            {
-                from = new DateTime(from.Ticks, DateTimeKind.Local);
-            }
-
-            if (timezoneOffset == null)
-            {
-                return from.ToLocalTime();
-            }
-
-            from = (isDaylightSavingTime)
-                ? from.AddMinutes(timezoneOffset.Value + 60)
-                : from.AddMinutes(timezoneOffset.Value);
-
-            return from;
-        }
-
-        public static object ToLocal(object instance, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
-        {
-            if (instance != null)
-            {
-                if (instance is DateTime date)
+                foreach (string name in names)
                 {
-                    bool isDaylightSavingTime = defaultTimeZone.IsDaylightSavingTime(date);
-                    return ToLocal(date, isDaylightSavingTime, timezoneOffset);
-                }
-
-                Type type = instance.GetType();
-
-                if (!type.IsPrimitive)
-                {
-                    PropertyInfo[] properties = GetAllProperties(type);
-                    foreach (PropertyInfo property in properties)
+                    if (!string.IsNullOrWhiteSpace(name))
                     {
-                        if ((property.CanRead) && (property.CanWrite))
+                        TimeZoneInfo timezone = timezones.FirstOrDefault(item => item.Id == name || item.DisplayName == name || item.StandardName == name);
+                        if (timezone != null)
                         {
-                            object value = property.QuickGetValue(instance);
-
-                            object newValue = ToLocal(value, defaultTimeZone, timezoneOffset);
-
-                            if (newValue != value)
-                            {
-                                property.QuickSetValue(instance, newValue);
-                            }
+                            return timezone;
                         }
                     }
                 }
             }
 
-            return instance;
+            string namesStr = (names ?? new[] {"\"not_specified\""}).Join(", ", item => $"\"{item}\"");
+            string availableNamesStr = (timezonesConfigured) ? timezones.Join(", ", item => $"\"{item.StandardName}\" ({item.Id})") : "\"not_configured\"";
+            throw new ArgumentOutOfRangeException(nameof(names), $"TimeZone with name(s) {namesStr} cannot be found, available timezones: {availableNamesStr}.");
+        }
+
+        public static DateTime ToLocal(DateTime date, int? timezoneOffset = null)
+        {
+            if (date.Kind == DateTimeKind.Local)
+            {
+                return date;
+            }
+
+            if (date.Kind == DateTimeKind.Unspecified)
+            {
+                date = new DateTime(date.Ticks, DateTimeKind.Local);
+            }
+
+            if (timezoneOffset == null)
+            {
+                return date.ToLocalTime();
+            }
+
+            date = date.AddMinutes(timezoneOffset.Value);
+
+            return date;
+        }
+        
+        public static DateTime ToLocal(DateTime date, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
+        {
+            if ((defaultTimeZone != null) && (timezoneOffset != null))
+            {
+                bool todayIsWinterTime = (!defaultTimeZone.IsDaylightSavingTime(DateTime.Now));
+                bool dayIsSummerTime = (defaultTimeZone.IsDaylightSavingTime(date));
+                bool compensateDaylightSavingTime = todayIsWinterTime && dayIsSummerTime;
+                if (compensateDaylightSavingTime)
+                {
+                    timezoneOffset += 60;
+                }
+                
+                return ToLocal(date, timezoneOffset);
+            }
+
+            return date;
+        }
+
+        public static object ToLocal(object instance, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
+        {
+            return ToLocal(null, instance, defaultTimeZone, timezoneOffset);
         }
 
         public static TimeSpan GetTimezoneOffset(TimeZoneInfo timezone = null)

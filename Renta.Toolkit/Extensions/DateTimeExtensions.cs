@@ -4,9 +4,9 @@ namespace Renta.Toolkit.Extensions
 {
     public static class DateTimeExtensions
     {
-        public static DateTime ToLocal(this DateTime from, bool isDaylightSavingTime = false, int? timezoneOffset = null)
+        public static DateTime ToLocal(this DateTime from, int? timezoneOffset = null)
         {
-            return Utility.ToLocal(from, isDaylightSavingTime, timezoneOffset);
+            return Utility.ToLocal(from, timezoneOffset);
         }
 
         /// <summary>
@@ -52,6 +52,11 @@ namespace Renta.Toolkit.Extensions
         {
             //return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
             return new DateTime(value.Year, value.Month, DateTime.DaysInMonth(value.Year, value.Month), 0, 0, 0, value.Kind);
+        }
+
+        public static bool IsDateOnly(this DateTime value)
+        {
+            return (value.Millisecond == 0) && (value.Second == 0) && (value.Minute == 0) && (value.Hour == 0);
         }
     }
 }
