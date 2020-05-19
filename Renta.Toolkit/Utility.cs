@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,28 +100,20 @@ namespace Renta.Toolkit
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
-            
-            //Didn't find way how to add dependencies correctly to NuGet package
-            //without it NSWag doesn't work (cannot load Toolkit package)
-            //Package:      <PackageReference Include="System.Security.Permissions" Version="4.7.0" />
-            //Namespace:    System.Security.Policy
-            //Usage:        var hashEvidence = new Hash(assembly);
-            
-            return ContentHash256(assembly);
 
-            // byte[] hashCode;
-            //
-            // try
-            // {
-            //     var hashEvidence = new Hash(assembly);
-            //     hashCode = hashEvidence.SHA256;
-            // }
-            // catch (ArgumentException)
-            // {
-            //     hashCode = ContentHash256(assembly);
-            // }
-            //
-            // return hashCode;
+            byte[] hashCode;
+            
+            try
+            {
+                var hashEvidence = new Hash(assembly);
+                hashCode = hashEvidence.SHA256;
+            }
+            catch (ArgumentException)
+            {
+                hashCode = ContentHash256(assembly);
+            }
+            
+            return hashCode;
         }
 
         public static byte[] Hash256(string data, Encoding encoding = null)
