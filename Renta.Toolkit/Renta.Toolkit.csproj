@@ -2,17 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Authors>WeAre Solutions Oy</Authors>
-        <Copyright>Copyright © 2020, Renta Oy</Copyright>
-        <Company>Renta Oy</Company>
-        <PackageVersion>1.0.0.0</PackageVersion>
-        <Product>Renta Components</Product>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
+
     <PropertyGroup>
+        <Copyright>Copyright © 2020, Renta Oy</Copyright>
+        <Version>1.0.0.0</Version>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Company>Renta Oy</Company>
+        <Product>Renta Components</Product>
+        <Title>Renta Toolkit</Title>
         <PackageId>Renta.Toolkit</PackageId>
-        <Version>1.0.0</Version>
-        <Authors>Renta Developers</Authors>
-        <Company>Renta</Company>
+        <PackageVersion>1.0.0.0</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
