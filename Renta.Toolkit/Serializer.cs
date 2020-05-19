@@ -46,22 +46,20 @@ namespace Renta.Toolkit
                 NamespaceHandling = NamespaceHandling.OmitDuplicates,
                 Indent = true
             };
-            using (var writer = XmlWriter.Create(sb, settings))
+            using var writer = XmlWriter.Create(sb, settings);
+            if (serializer == Type.XmlSerializer)
             {
-                if (serializer == Type.XmlSerializer)
-                {
-                    new XmlSerializer(type).Serialize(writer, source);
-                    writer.Flush();
-                    doc.LoadXml(sb.ToString());
-                }
-                else
-                {
-                    new DataContractSerializer(type).WriteObject(writer, source);
-                    writer.Flush();
-                    doc.LoadXml(sb.ToString());
-                }
-                return doc;
+                new XmlSerializer(type).Serialize(writer, source);
+                writer.Flush();
+                doc.LoadXml(sb.ToString());
             }
+            else
+            {
+                new DataContractSerializer(type).WriteObject(writer, source);
+                writer.Flush();
+                doc.LoadXml(sb.ToString());
+            }
+            return doc;
         }
 
         /// <summary>
@@ -83,14 +81,12 @@ namespace Renta.Toolkit
             if (doc.DocumentElement == null)
                 throw new ArgumentOutOfRangeException(nameof(doc), "doc.DocumentElement can not be null");
 
-            using (var reader = new XmlNodeReader(doc.DocumentElement))
-            {
-                var serializer = ((knownTypes != null) && (knownTypes.Length > 0))
-                    ? new DataContractSerializer(type, knownTypes)
-                    : new DataContractSerializer(type);
+            using var reader = new XmlNodeReader(doc.DocumentElement);
+            var serializer = ((knownTypes != null) && (knownTypes.Length > 0))
+                ? new DataContractSerializer(type, knownTypes)
+                : new DataContractSerializer(type);
 
-                return serializer.ReadObject(reader);
-            }
+            return serializer.ReadObject(reader);
         }
 
         public static object Deserialize(System.Type type, XmlDocument doc, Type serializer = Type.DataContractSerializer)
@@ -100,15 +96,13 @@ namespace Renta.Toolkit
             if (doc.DocumentElement == null)
                 throw new ArgumentOutOfRangeException(nameof(doc), "doc.DocumentElement can not be null");
 
-            using (var reader = new XmlNodeReader(doc.DocumentElement))
+            using var reader = new XmlNodeReader(doc.DocumentElement);
+            if (serializer == Type.XmlSerializer)
             {
-                if (serializer == Type.XmlSerializer)
-                {
-                    return new XmlSerializer(type).Deserialize(reader);
-                }
-                
-                return new DataContractSerializer(type).ReadObject(reader);
+                return new XmlSerializer(type).Deserialize(reader);
             }
+                
+            return new DataContractSerializer(type).ReadObject(reader);
         }
 
         public static T Deserialize<T>(XmlDocument doc, System.Type[] knownTypes)
