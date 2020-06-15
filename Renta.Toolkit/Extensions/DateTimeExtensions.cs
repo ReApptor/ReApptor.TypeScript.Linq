@@ -48,6 +48,12 @@ namespace Renta.Toolkit.Extensions
             return value.LastDayOfMonth().AddDays(1);
         }
         
+        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+        
         public static DateTime LastDayOfMonth(this DateTime value)
         {
             //return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
