@@ -202,10 +202,8 @@ namespace Renta.Toolkit
                 NewLineOnAttributes = true
             };
 
-            using (var xmlWriter = XmlWriter.Create(builder, settings))
-            {
-                doc.Save(xmlWriter);
-            }
+            using var xmlWriter = XmlWriter.Create(builder, settings);
+            doc.Save(xmlWriter);
 
             return builder.ToString();
         }
@@ -312,29 +310,27 @@ namespace Renta.Toolkit
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
 
-            using (XmlReader schemaXsdReader = schemaXsd.ToXmlReader())
+            using XmlReader schemaXsdReader = schemaXsd.ToXmlReader();
+            readerSettings.Schemas.Add(null, schemaXsdReader);
+
+            ValidationEventArgs error = null;
+            readerSettings.ValidationEventHandler += delegate(object sender, ValidationEventArgs args)
             {
-                readerSettings.Schemas.Add(null, schemaXsdReader);
+                error = args;
+            };
 
-                ValidationEventArgs error = null;
-                readerSettings.ValidationEventHandler += delegate(object sender, ValidationEventArgs args)
+            using (var stringReader = new StringReader(doc.OuterXml))
+            {
+                using (var xmlReader = XmlReader.Create(stringReader, readerSettings))
                 {
-                    error = args;
-                };
-
-                using (var stringReader = new StringReader(doc.OuterXml))
-                {
-                    using (var xmlReader = XmlReader.Create(stringReader, readerSettings))
+                    while (xmlReader.Read())
                     {
-                        while (xmlReader.Read())
-                        {
-                        }
                     }
                 }
-
-                if (error != null)
-                    throw new XmlSchemaValidationException($"Xml validation failed. Severity:\"{error.Severity}\". Message:\"{error.Message}\".");
             }
+
+            if (error != null)
+                throw new XmlSchemaValidationException($"Xml validation failed. Severity:\"{error.Severity}\". Message:\"{error.Message}\".");
         }
     }
 }

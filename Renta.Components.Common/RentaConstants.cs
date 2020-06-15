@@ -126,7 +126,7 @@ namespace Renta.Components.Common
             /// </summary>
             public const int MaxFileUploadSizeInBytes = 10 * 1024 * 1024;
 
-            public static readonly TimeZoneInfo DefaultTimeZone = TimeZoneInfo.GetSystemTimeZones().First(item => item.Id == "Europe/Helsinki" || item.Id == "FLE Standard Time");
+            public static readonly TimeZoneInfo DefaultTimeZone = Utility.GetTimeZone("Europe/Helsinki", "FLE Standard Time");
 
             public static readonly TimeSpan DefaultTimeZoneOffset = Utility.GetTimezoneOffset(DefaultTimeZone);
 

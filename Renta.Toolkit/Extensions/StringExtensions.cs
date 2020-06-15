@@ -86,6 +86,14 @@ namespace Renta.Toolkit.Extensions
             return value;
         }
 
+        /// <summary>
+        /// Removes UTF file preamble (BOM)
+        /// </summary>
+        public static string RemoveBomPreamble(this string value)
+        {
+            return Utility.RemoveBomPreamble(value);
+        }
+
         #region Url File format
 
         public static byte[] ExtractRawDataFromUrl(this string src)
@@ -117,6 +125,15 @@ namespace Renta.Toolkit.Extensions
             return EncodingUtility.GetBytes(value, destination, bom);
         }
 
+        #endregion
+        
+        #region Parse
+
+        public static double ToDouble(this string value)
+        {
+            return Utility.ToDouble(value);
+        }
+        
         #endregion
     }
 }

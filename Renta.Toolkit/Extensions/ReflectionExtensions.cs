@@ -378,10 +378,7 @@ namespace Renta.Toolkit.Extensions
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentOutOfRangeException(nameof(name), "Field name is empty or whitespace.");
 
-            if (bindings == null)
-            {
-                bindings = DefaultBindings;
-            }
+            bindings ??= DefaultBindings;
 
             string hash = $"{type.GetUniqueName()}:{name}:{bindings}";
             int key = hash.GetHashCode();
@@ -413,10 +410,7 @@ namespace Renta.Toolkit.Extensions
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentOutOfRangeException(nameof(name), "Property name is empty or whitespace.");
 
-            if (bindings == null)
-            {
-                bindings = DefaultBindings;
-            }
+            bindings ??= DefaultBindings;
 
             string hash = $"{type.GetUniqueName()}:{name}:{bindings}";
             int key = hash.GetHashCode();
@@ -439,10 +433,7 @@ namespace Renta.Toolkit.Extensions
 
         public static PropertyInfo GetProperty(Type type, string name, BindingFlags? bindings = null)
         {
-            if (bindings == null)
-            {
-                bindings = DefaultBindings;
-            }
+            bindings ??= DefaultBindings;
 
             PropertyInfo property = FindProperty(type, name, bindings);
 
@@ -499,10 +490,7 @@ namespace Renta.Toolkit.Extensions
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentOutOfRangeException(nameof(name), "Method name is empty or whitespace.");
 
-            if (bindings == null)
-            {
-                bindings = DefaultBindings;
-            }
+            bindings ??= DefaultBindings;
 
             string hash = $"{type.GetUniqueName()}:{name}:{bindings}";
             int key = hash.GetHashCode();
@@ -527,10 +515,7 @@ namespace Renta.Toolkit.Extensions
         {
             MethodInfo method = FindMethod(type, name, bindings);
 
-            if (bindings == null)
-            {
-                bindings = DefaultBindings;
-            }
+            bindings ??= DefaultBindings;
 
             if (method == null)
                 throw new ArgumentOutOfRangeException(nameof(name), $"Method with name \"{name}\" cannot be found in type \"{type.FullName}\" using bindings \"{bindings}\".");

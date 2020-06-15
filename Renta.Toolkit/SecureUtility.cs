@@ -197,25 +197,17 @@ namespace Renta.Toolkit
             vector ??= AesVector;
             prefix ??= AesPrefix;
 
-            using (var provider = CreateAesProvider(key, vector))
+            using var provider = CreateAesProvider(key, vector);
+            using ICryptoTransform encryptor = provider.CreateEncryptor();
+            using var msEncrypt = new MemoryStream();
+            using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+            using (var swEncrypt = new StreamWriter(csEncrypt))
             {
-                using (ICryptoTransform encryptor = provider.CreateEncryptor())
-                {
-                    using (var msEncrypt = new MemoryStream())
-                    {
-                        using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                        {
-                            using (var swEncrypt = new StreamWriter(csEncrypt))
-                            {
-                                //Write all data to the stream.
-                                swEncrypt.Write(prefix.GetString());
-                                swEncrypt.Write(value);
-                            }
-                            return System.Convert.ToBase64String(msEncrypt.ToArray());
-                        }
-                    }
-                }
+                //Write all data to the stream.
+                swEncrypt.Write(prefix.GetString());
+                swEncrypt.Write(value);
             }
+            return System.Convert.ToBase64String(msEncrypt.ToArray());
         }
 
         public static SecureString Decrypt(this string value, SecureString key = null, SecureString vector = null, SecureString prefix = null)
@@ -227,29 +219,19 @@ namespace Renta.Toolkit
             vector ??= AesVector;
             prefix ??= AesPrefix;
 
-            using (var provider = CreateAesProvider(key, vector))
+            using var provider = CreateAesProvider(key, vector);
+            using ICryptoTransform decryptor = provider.CreateDecryptor();
+            byte[] dataBytes = System.Convert.FromBase64String(value);
+            using var msDecrypt = new MemoryStream(dataBytes);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            using var srDecrypt = new StreamReader(csDecrypt);
+            string result = srDecrypt.ReadToEnd();
+            string prefixValue = prefix.GetString();
+            if (result.StartsWith(prefixValue))
             {
-                using (ICryptoTransform decryptor = provider.CreateDecryptor())
-                {
-                    byte[] dataBytes = System.Convert.FromBase64String(value);
-                    using (var msDecrypt = new MemoryStream(dataBytes))
-                    {
-                        using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                        {
-                            using (var srDecrypt = new StreamReader(csDecrypt))
-                            {
-                                string result = srDecrypt.ReadToEnd();
-                                string prefixValue = prefix.GetString();
-                                if (result.StartsWith(prefixValue))
-                                {
-                                    result = result.Substring(prefix.Length);
-                                }
-                                return result.ToSecure();
-                            }
-                        }
-                    }
-                }
+                result = result.Substring(prefix.Length);
             }
+            return result.ToSecure();
         }
 
         #endregion
