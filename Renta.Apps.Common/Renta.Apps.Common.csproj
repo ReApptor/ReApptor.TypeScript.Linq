@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Renta.Toolkit\Renta.Toolkit.csproj" />
       <ProjectReference PrivateAssets="All" Include="..\WeAre.Athenaeum.Common\WeAre.Athenaeum.Common.csproj" />
     </ItemGroup>
 
