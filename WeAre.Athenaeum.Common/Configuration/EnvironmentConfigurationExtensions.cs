@@ -27,11 +27,12 @@ namespace WeAre.Athenaeum.Common.Configuration
             foreach (PropertyInfo settingsProperty in settingsProperties)
             {
                 object settings = settingsProperty.QuickGetValue(configuration);
-                
-                services.AddSingleton(settings);
-                
-                Type[] optionsTypes = settings
-                    .GetType()
+
+                Type settingsType = settings.GetType();
+
+                services.AddSingleton(settingsType, settings);
+
+                Type[] optionsTypes = settingsType
                     .GetInterfaces()
                     .Where(item => item.IsSubClassOfGeneric(optionsGenericType))
                     .ToArray();
