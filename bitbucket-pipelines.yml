@@ -23,7 +23,7 @@ pipelines:
               size: 2x # Double resources available for this step.
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Commonn.csproj -o obj/renta-apps-common/publish
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Common.csproj -o obj/renta-apps-common/publish
                 - dotnet nuget push obj/renta-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
               services:
                 - docker
