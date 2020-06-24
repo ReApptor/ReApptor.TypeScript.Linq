@@ -61,6 +61,35 @@ namespace Renta.Toolkit
 
             return instance;
         }
+        
+        private static Type GetFullTypeDefinition(Type type)
+        {
+            return (type.IsGenericType) ? type.GetGenericTypeDefinition() : type;
+        }
+
+        private static bool VerifyGenericArguments(Type parent, Type child)
+        {
+            Type[] childArguments = child.GetGenericArguments();
+            Type[] parentArguments = parent.GetGenericArguments();
+            if (childArguments.Length == parentArguments.Length)
+            {
+                for (int i = 0; i < childArguments.Length; i++)
+                {
+                    Type childArgument = childArguments[i];
+                    Type parentArgument = parentArguments[i];
+                    
+                    if ((childArgument.Assembly != parentArgument.Assembly) || (childArgument.Name != parentArgument.Name) || (childArgument.Namespace != parentArgument.Namespace))
+                    {
+                        if (!childArgument.IsSubclassOf(parentArgument))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
 
         #endregion
 
@@ -308,6 +337,98 @@ namespace Renta.Toolkit
                 TypeProperties.Add(hashCode, properties);
                 return properties;
             }
+        }
+
+        public static bool IsSubClassOfGeneric(Type child, Type parent)
+        {
+            if (child == null)
+                throw new ArgumentNullException(nameof(child));
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            
+            if (child == parent)
+            {
+                return false;
+            }
+
+            if (child.IsSubclassOf(parent))
+            {
+                return true;
+            }
+
+            Type[] parameters = parent.GetGenericArguments();
+
+            Type parentFullTypeDefinition = GetFullTypeDefinition(parent);
+            
+            bool isParameterLessGeneric = !((parameters.Length > 0) && ((parameters[0].Attributes & TypeAttributes.BeforeFieldInit) == TypeAttributes.BeforeFieldInit));
+
+            while ((child != null) && (child != typeof(object)))
+            {
+                Type current = GetFullTypeDefinition(child);
+
+                if ((parent == current) || (isParameterLessGeneric && current.GetInterfaces().Select(GetFullTypeDefinition).Contains(parentFullTypeDefinition)))
+                {
+                    return true;
+                }
+
+                if (!isParameterLessGeneric)
+                {
+                    if ((parentFullTypeDefinition == current) && (!current.IsInterface))
+                    {
+                        if (VerifyGenericArguments(parentFullTypeDefinition, current))
+                        {
+                            if (VerifyGenericArguments(parent, child))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Type item in child.GetInterfaces().Where(subInterface => parentFullTypeDefinition == GetFullTypeDefinition(subInterface)))
+                        {
+                            if (VerifyGenericArguments(parent, item))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                child = child.BaseType;
+            }
+
+            return false;
+        }
+
+        public static PropertyInfo[] GetAllProperties(Type type, Type propertyType, BindingFlags bindings = BindingFlags.Instance | BindingFlags.Public)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+            if (propertyType == null)
+                throw new ArgumentNullException(nameof(propertyType));
+
+            string hashCode = $"{type.GetUniqueName()}:{bindings}:{propertyType.GetUniqueName()}";
+            lock (TypeProperties)
+            {
+                int index = TypeProperties.IndexOfKey(hashCode);
+                if (index != -1)
+                {
+                    return TypeProperties.Values[index];
+                }
+
+                PropertyInfo[] properties = GetAllProperties(type, bindings)
+                    .Where(property => (property.PropertyType == propertyType) || (property.PropertyType.IsSubclassOf(propertyType)) || (property.PropertyType.IsSubClassOfGeneric(propertyType)))
+                    .ToArray();
+
+                TypeProperties.Add(hashCode, properties);
+                return properties;
+            }
+        }
+
+        public static PropertyInfo[] GetAllProperties<T>(Type type, BindingFlags bindings = BindingFlags.Instance | BindingFlags.Public)
+        {
+            return GetAllProperties(type, typeof(T), bindings);
         }
 
         public static Guid GetRuntimeIdentifier(Assembly assembly)
