@@ -24,7 +24,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Toolkit.UnitTest", "R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F55C67D5-2FDD-4C70-8555-F65A80B07602}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Components.Common", "Renta.Components.Common\Renta.Components.Common.csproj", "{3F821D3E-19EE-4A30-9E09-2225109CB896}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Common", "WeAre.Athenaeum.Common\WeAre.Athenaeum.Common.csproj", "{3F821D3E-19EE-4A30-9E09-2225109CB896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Apps.Common", "Renta.Apps.Common\Renta.Apps.Common.csproj", "{95355ABD-089F-4C8A-AC92-B8E3197614BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,7 @@ Global
 		{65EC578D-CEDE-433F-9B90-98D998713D47} = {87ACEE79-C917-4D67-B416-D6A1824F922A}
 		{0C6D3115-A7C7-4852-B8B4-397D05E8660E} = {F55C67D5-2FDD-4C70-8555-F65A80B07602}
 		{3F821D3E-19EE-4A30-9E09-2225109CB896} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
+		{95355ABD-089F-4C8A-AC92-B8E3197614BF} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -79,5 +82,9 @@ Global
 		{3F821D3E-19EE-4A30-9E09-2225109CB896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F821D3E-19EE-4A30-9E09-2225109CB896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F821D3E-19EE-4A30-9E09-2225109CB896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95355ABD-089F-4C8A-AC92-B8E3197614BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95355ABD-089F-4C8A-AC92-B8E3197614BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95355ABD-089F-4C8A-AC92-B8E3197614BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95355ABD-089F-4C8A-AC92-B8E3197614BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
