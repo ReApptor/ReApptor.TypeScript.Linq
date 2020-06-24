@@ -11,7 +11,14 @@ namespace Renta.Apps.Common.Models
         public PagedList()
         {
         }
-        
+
+        public PagedList(int pageNumber, int pageSize)
+        {
+            _items = new T[0];
+            PageNumber = pageNumber;
+            PageSize = pageSize;
+        }
+
         public PagedList(IEnumerable<T> items, int pageNumber, int pageSize, int totalItemCount)
         {
             _items = items?.ToArray() ?? new T[0];
