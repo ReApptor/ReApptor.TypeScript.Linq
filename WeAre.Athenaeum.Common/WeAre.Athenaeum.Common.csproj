@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Renta.Toolkit\Renta.Toolkit.csproj" />
+        <ProjectReference PrivateAssets="All" Include="..\Renta.Toolkit\Renta.Toolkit.csproj" />
     </ItemGroup>
 
 </Project>
