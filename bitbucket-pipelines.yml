@@ -6,18 +6,6 @@ pipelines:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
-              name: Renta Apps Common build
-              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
-              size: 2x # Double resources available for this step.
-              script:
-                - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Commonn.csproj -o obj/renta-apps-common/publish
-                - dotnet nuget push obj/renta-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
-              services:
-                - docker
-              caches:
-                - dotnetcore
-          - step:
               name: Toolkit build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
@@ -25,6 +13,18 @@ pipelines:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Toolkit/Renta.Toolkit.csproj -o obj/renta-toolkit/publish
                 - dotnet nuget push obj/renta-toolkit/publish/Renta.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+              services:
+                - docker
+              caches:
+                - dotnetcore
+          - step:
+              name: Renta Apps Common build
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+              size: 2x # Double resources available for this step.
+              script:
+                - echo $BITBUCKET_BUILD_NUMBER
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Commonn.csproj -o obj/renta-apps-common/publish
+                - dotnet nuget push obj/renta-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
               services:
                 - docker
               caches:
