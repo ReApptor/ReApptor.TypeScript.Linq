@@ -28,6 +28,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Common", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Apps.Common", "Renta.Apps.Common\Renta.Apps.Common.csproj", "{95355ABD-089F-4C8A-AC92-B8E3197614BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{8EED7979-F134-4043-A7C2-127AABB07996}"
+ProjectSection(SolutionItems) = preProject
+	bitbucket-pipelines.yml = bitbucket-pipelines.yml
+	README.md = README.md
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
