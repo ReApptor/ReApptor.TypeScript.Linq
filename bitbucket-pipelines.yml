@@ -6,7 +6,7 @@ pipelines:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
-              name: Renta.Apps.Common build
+              name: Renta Apps Common build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
               script:
