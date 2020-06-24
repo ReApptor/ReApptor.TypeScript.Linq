@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference PrivateAssets="all" Include="..\WeAre.Athenaeum.Common\WeAre.Athenaeum.Common.csproj" />
+      <ProjectReference ReferenceOutputAssembly="true" Include="..\WeAre.Athenaeum.Common\WeAre.Athenaeum.Common.csproj" />
     </ItemGroup>
 
 </Project>
