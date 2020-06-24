@@ -18,6 +18,18 @@ pipelines:
               caches:
                 - dotnetcore
           - step:
+              name: WeAre Athenaeum Common build
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+              size: 2x # Double resources available for this step.
+              script:
+                - echo $BITBUCKET_BUILD_NUMBER
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Common/WeAre.Athenaeum.Common.csproj -o obj/weare-athenaeum-common/publish
+                - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.Athenaeum.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+              services:
+                - docker
+              caches:
+                - dotnetcore
+          - step:
               name: Renta Apps Common build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
