@@ -1,0 +1,25 @@
+{
+  "name": "WeAre.Athenaeum.React.Toolkit",
+  "private": true,
+  "dependencies": {
+    "@types/jquery": "^3.3.29",
+    "jquery": "^3.2.1",
+    "typescript": "3.3.3",
+    "typescript-collections": "^1.3.2"
+  },
+  "scripts": {
+    "build": "react-app-rewired build"
+  },
+  "browserslist": [],
+  "devDependencies": {
+    "babel-plugin-import": "^1.12.2",
+    "customize-cra": "^0.8.0",
+    "react-app-rewired": "^2.1.3"
+  },
+  "keywords": [
+    "athenaeum",
+    "react",
+    "typescript",
+    "npm"
+  ]
+}
