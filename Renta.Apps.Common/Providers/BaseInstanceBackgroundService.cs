@@ -6,6 +6,9 @@ using Renta.Toolkit.ProcessLocks;
 
 namespace Renta.Apps.Common.Providers
 {
+    /// <summary>
+    /// Background service with ProcessLocker, AuthScoped is enabled (creates new scope automatically)
+    /// </summary>
     public abstract class BaseInstanceBackgroundService : BaseBackgroundService
     {
         protected virtual async Task ProcessLockMessageAsync(ProcessLockMessage message)

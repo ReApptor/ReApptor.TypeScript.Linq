@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Module</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0.0</Version>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Copyright>Copyright © 2020, Renta Oy</Copyright>
+        <Product>WeAre Athenaeum</Product>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Company>Renta Oy</Company>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="src\BoolUtility.ts" />
+      <TypeScriptCompile Include="src\Extensions\DateExtensions.ts" />
+      <TypeScriptCompile Include="src\Extensions\StringExtensions.ts" />
+      <TypeScriptCompile Include="src\HashCodeUtility.ts" />
+      <TypeScriptCompile Include="src\Helpers\PwaHelper.ts" />
+      <TypeScriptCompile Include="src\NumberUtility.ts" />
+      <TypeScriptCompile Include="src\StringUtility.ts" />
+      <TypeScriptCompile Include="src\Utility.ts" />
+    </ItemGroup>
+
+</Project>

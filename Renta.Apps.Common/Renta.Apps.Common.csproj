@@ -11,7 +11,6 @@
         <Product>Renta Components</Product>
         <Authors>WeAre Solutions Oy</Authors>
         <Company>Renta Oy</Company>
-        <Copyright>Copyright © 2020, Renta Oy</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
