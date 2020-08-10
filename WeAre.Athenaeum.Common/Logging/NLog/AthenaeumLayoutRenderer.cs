@@ -13,7 +13,6 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
             LayoutRenderer.Register(UsernameLayoutRenderer.Name, typeof(UsernameLayoutRenderer));
             LayoutRenderer.Register(LanguageLayoutRenderer.Name, typeof(LanguageLayoutRenderer));
             LayoutRenderer.Register(CountryLayoutRenderer.Name, typeof(CountryLayoutRenderer));
-            LayoutRenderer.Register(BrowserInfoLayoutRenderer.Name, typeof(BrowserInfoLayoutRenderer));
         }
 
         public static IServiceProvider ServiceProvider { get; internal set; }
