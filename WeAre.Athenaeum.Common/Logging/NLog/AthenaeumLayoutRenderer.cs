@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using NLog.LayoutRenderers;
 
 namespace WeAre.Athenaeum.Common.Logging.NLog
@@ -16,5 +17,6 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         }
 
         public static IServiceProvider ServiceProvider { get; internal set; }
+        
     }
 }

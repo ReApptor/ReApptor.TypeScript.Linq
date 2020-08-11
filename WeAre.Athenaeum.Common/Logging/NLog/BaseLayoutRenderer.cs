@@ -25,7 +25,7 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
 
         protected IServiceProvider GetServiceProvider()
         {
-            return HttpContextAccessor?.HttpContext?.RequestServices ?? AthenaeumLayoutRenderer.ServiceProvider;
+            return AthenaeumLayoutRenderer.ServiceProvider ?? HttpContextAccessor?.HttpContext?.RequestServices;
         }
 
         protected HttpContextProvider GetHttpContextProvider()
