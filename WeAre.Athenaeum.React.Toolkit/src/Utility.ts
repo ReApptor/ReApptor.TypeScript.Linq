@@ -388,9 +388,9 @@ export default class Utility {
         return (fromValue <= dateValue) && (dateValue <= toValue);
     }
 
-    public static inFuture(x: Date | string): boolean {
-        return (x == null) || (Utility.diff(x, Utility.now()).totalMilliseconds > 0);
-    }
+    // public static inFuture(x: Date | string): boolean {
+    //     return (x == null) || (Utility.diff(x, Utility.now()).totalMilliseconds > 0);
+    // }
 
     public static toUtc(date: Date): Date {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
