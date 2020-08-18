@@ -4,7 +4,8 @@ namespace Renta.Apps.Common.Configuration.Settings
 {
     public sealed class GoogleSettings : IOptions<GoogleSettings>
     {
-        GoogleSettings IOptions<GoogleSettings>.Value => this;        
+        GoogleSettings IOptions<GoogleSettings>.Value => this;
+        
         /// <summary>
         /// API key with restriction by IP
         /// </summary>

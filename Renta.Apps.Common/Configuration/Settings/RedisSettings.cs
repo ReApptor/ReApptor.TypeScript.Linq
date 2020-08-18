@@ -17,8 +17,6 @@ namespace Renta.Apps.Common.Configuration.Settings
             get { return $"{Host}:{Port}"; }
         }
 
-        public string RentaProPrefix => "RentaPro";
-
         public string CacheName
         {
             get { return  $"{InstanceName}:Cache:"; }
