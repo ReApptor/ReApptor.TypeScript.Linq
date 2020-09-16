@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Renta.Toolkit.Extensions
 {
@@ -77,6 +78,18 @@ namespace Renta.Toolkit.Extensions
         public static int IndexOf<T>(this IEnumerable<T> items, T item)
         {
             return items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i));
+        }
+
+        public static async Task WhenAllAsync<T>(this IEnumerable<T> items, Func<T, Task> task, bool multithread = true)
+        {
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
+            if (task == null)
+                throw new ArgumentNullException(nameof(task));
+
+            IEnumerable<Task> tasks = items.Select(task);
+
+            await tasks.WhenAllAsync(multithread);
         }
     }
 }

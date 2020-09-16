@@ -13,5 +13,22 @@ namespace Renta.Toolkit.Extensions
             var list = new List<T>(items) { item };
             return list.ToArray();
         }
+        
+        public static T[] AddRange<T>(this T[] items, IEnumerable<T> value)
+        {
+            if (items != null)
+            {
+                var result = new List<T>(items);
+
+                if (value != null)
+                {
+                    result.AddRange(value);
+                }
+
+                return result.ToArray();
+            }
+
+            return new T[0];
+        }
     }
 }
