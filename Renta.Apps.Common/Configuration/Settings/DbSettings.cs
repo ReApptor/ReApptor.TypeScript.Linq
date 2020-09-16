@@ -1,4 +1,4 @@
-﻿﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
  namespace Renta.Apps.Common.Configuration.Settings
 {
