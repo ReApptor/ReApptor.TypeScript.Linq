@@ -24,7 +24,7 @@ pipelines:
                 # Create package
                 - npm pack
                 # Change version number
-                - npm version $BITBUCKET_BUILD_NUMBER
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Publish to MyGet
                 - npm publish
           - step:
