@@ -19,7 +19,7 @@ pipelines:
                 - echo always-auth=true >> ~/.npmrc
                 - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
                 # Install dependencies
-                - npm install
+                #- npm install
                 # Run tests
                 # - npm test
                 # Create package
