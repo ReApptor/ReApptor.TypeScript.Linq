@@ -220,7 +220,7 @@ namespace WeAre.Athenaeum.Common.Providers
         {
             get
             {
-                return (Accessor?.HttpContext?.User?.Identity as ClaimsIdentity) ??
+                return (HttpContext?.User?.Identity as ClaimsIdentity) ??
                        (Thread.CurrentPrincipal?.Identity as ClaimsIdentity) ??
                        (_scopedUser?.Identity as ClaimsIdentity);
             }

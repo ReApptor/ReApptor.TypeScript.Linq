@@ -17,7 +17,7 @@ namespace WeAre.Athenaeum.Common.Configuration
   <creationDate>2019-01-01T00:00:00.000000Z</creationDate>
   <activationDate>2019-01-01T00:00:00.000000Z</activationDate>
   <expirationDate>2039-01-01T00:00:00.000000Z</expirationDate>
-  <descriptor deserializerType=""Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=3.1.0.0    , Culture=neutral, PublicKeyToken=adb9793829ddae60"">
+  <descriptor deserializerType=""Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=3.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60"">
     <descriptor>
       <encryption algorithm=""AES_256_CBC"" />
       <validation algorithm = ""HMACSHA256"" />

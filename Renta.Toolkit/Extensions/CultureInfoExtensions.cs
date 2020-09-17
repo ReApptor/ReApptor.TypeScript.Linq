@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Renta.Toolkit.Extensions
 {
@@ -25,6 +27,21 @@ namespace Renta.Toolkit.Extensions
             return useTitleCase
                 ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nativeName)
                 : nativeName;
+        }
+
+        public static CultureInfo FindCulture(this IEnumerable<CultureInfo> cultures, string language)
+        {
+            CultureInfo culture = null;
+
+            if ((!string.IsNullOrWhiteSpace(language)) && (cultures != null))
+            {
+                culture = cultures.FirstOrDefault(item => item.DisplayName.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
+                                                          item.Name.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
+                                                          item.TwoLetterISOLanguageName.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
+                                                          item.Name.EndsWith($"-{language}", StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return culture;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Renta.Toolkit.Extensions
 {
@@ -63,6 +64,11 @@ namespace Renta.Toolkit.Extensions
                 string chunk = value.Substring(i, length);
                 yield return chunk;
             }
+        }
+
+        public static string Encode(this string value)
+        {
+            return (!string.IsNullOrWhiteSpace(value)) ? HttpUtility.HtmlEncode(value) : null;
         }
 
         public static string EscapeQuotesFromXml(this string value)
