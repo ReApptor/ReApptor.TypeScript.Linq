@@ -1,6 +1,7 @@
 {
-  "name": "WeAre.Athenaeum.React.Toolkit",
-  "private": true,
+  "name": "weare-athenaeum-react-toolkit",
+  "private": false,
+  "version": "1.0.0",
   "dependencies": {
     "@types/jquery": "^3.3.29",
     "jquery": "^3.2.1",

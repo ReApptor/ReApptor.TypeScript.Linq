@@ -6,6 +6,29 @@ pipelines:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
+              name: Renta React build
+              script:
+                # Update npm settings
+                - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.React.Toolkit
+                - npm $BITBUCKET_BUILD_NUMBER
+                - npm config set strict-ssl true
+                - npm config set ca ""
+                # Create .npmrc file
+                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
+                - echo always-auth=true >> ~/.npmrc
+                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
+                # Install dependencies
+                - npm install
+                # Run tests
+                # - npm test
+                # Create package
+                - npm pack
+                # Change version number
+                - npm version $BITBUCKET_BUILD_NUMBER
+                # Publish to MyGet
+                - npm publish
+          - step:
               name: Toolkit build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
