@@ -22,11 +22,5 @@
     "react",
     "typescript",
     "npm"
-  ],
-  "dependencies": {
-    "module-alias": "^2.2.2"
-  },
-  "_moduleAliases": {
-    "@": "lib/src"
-  }
+  ]
 }

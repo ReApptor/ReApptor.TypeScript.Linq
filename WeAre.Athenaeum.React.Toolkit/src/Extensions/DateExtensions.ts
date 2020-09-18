@@ -1,6 +1,5 @@
-import Utility from "@/Utility";
-import HashCodeUtility from "@/HashCodeUtility";
-
+import Utility from "../Utility";
+import HashCodeUtility from "../HashCodeUtility";
 
 declare global {
     interface Date {
