@@ -13,6 +13,7 @@
   "scripts": {
     "build": "tsc"
   },
+  "files": ["lib"],
   "browserslist": [],
   "devDependencies": {},
   "keywords": [
