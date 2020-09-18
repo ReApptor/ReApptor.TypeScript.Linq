@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import Utility from "@/Utility";
 import NumberUtility from "@/NumberUtility";
 import StringUtility from "@/StringUtility";
