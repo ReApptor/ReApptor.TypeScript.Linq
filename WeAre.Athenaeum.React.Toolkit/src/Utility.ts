@@ -1,6 +1,6 @@
-import HashCodeUtility from "./HashCodeUtility";
-import { DateExtensions } from "./Extensions/DateExtensions";
-import { StringExtensions } from "./Extensions/StringExtensions";
+import HashCodeUtility from "@/HashCodeUtility";
+import { DateExtensions } from "@/Extensions/DateExtensions";
+import { StringExtensions } from "@/Extensions/StringExtensions";
 
 export default class Utility {
     
