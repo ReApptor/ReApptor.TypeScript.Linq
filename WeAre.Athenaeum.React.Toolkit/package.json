@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.0.0",
   "main": "lib/src/index.js",
-  "types": "lib/types/index.d.ts",
+  "types": "lib/types/src/index.d.ts",
   "devDependencies": {
     "@types/jquery": "^3.3.29",
     "jquery": "^3.2.1",
