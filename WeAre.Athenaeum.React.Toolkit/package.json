@@ -11,7 +11,8 @@
     "typescript-collections": "^1.3.2"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "files": ["lib"],
   "browserslist": [],
