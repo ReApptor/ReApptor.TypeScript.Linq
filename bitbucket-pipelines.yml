@@ -16,6 +16,8 @@ pipelines:
                 - npm config set ca ""
                 # Install dependencies
                 - npm install
+                # Run build
+                - npm run build
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
