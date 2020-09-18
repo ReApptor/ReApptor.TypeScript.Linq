@@ -502,7 +502,6 @@ export default class Utility {
      * @returns boolean - true/false if global click happened outside of the component
      */
     public static clickedOutside(target: Node, id: string, exceptId: string | null = null, exceptTag: string | null = null): boolean {
-        console.log("Urlele ukulele");
         const container: Element | null = document.querySelector(`#${id}`);
         let outside: boolean = ((container !== null) && (!container.contains(target)));
 
