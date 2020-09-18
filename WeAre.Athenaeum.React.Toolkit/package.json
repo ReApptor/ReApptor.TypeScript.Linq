@@ -12,8 +12,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
+  "files": ["lib"],
   "browserslist": [],
   "keywords": [
     "athenaeum",
