@@ -2,8 +2,8 @@
   "name": "weare-athenaeum-react-toolkit",
   "private": false,
   "version": "1.0.0",
-  "main": "lib/src/index.js",
-  "types": "lib/types/index.d.ts",
+  "main": "./lib/src/index.js",
+  "types": "./lib/types/index.d.ts",
   "devDependencies": {
     "@types/jquery": "^3.3.29",
     "jquery": "^3.2.1",
@@ -14,7 +14,7 @@
     "build": "tsc",
     "prepare": "npm run build"
   },
-  "files": ["lib"],
+  "files": ["/lib"],
   "browserslist": [],
   "keywords": [
     "athenaeum",
