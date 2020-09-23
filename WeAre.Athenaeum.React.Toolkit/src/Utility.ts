@@ -1,19 +1,35 @@
+import GeoCoordinate from "./models/GeoCoordinate";
+import TimeSpan from "./models/TimeSpan";
+import IPagedList from "./models/IPagedList";
 import HashCodeUtility from "./HashCodeUtility";
-import { DateExtensions } from "./Extensions/DateExtensions";
-import { StringExtensions } from "./Extensions/StringExtensions";
+import FileModel from "./models/FileModel";
+import {Dictionary} from "typescript-collections";
+import {IEnumProvider, ILocalizer} from "./localization/BaseLocalizer";
+import {TFormat} from "./providers/BaseTransformProvider";
+import {DateExtensions} from "./extensions/DateExtensions";
+import {StringExtensions} from "./extensions/StringExtensions";
+import {ArrayExtensions} from "./extensions/ArrayExtensions";
+import ServiceProvider from "./providers/ServiceProvider";
 
 export default class Utility {
-    
+
     private static _geoEnabled: boolean | null = null;
-    
-    // public static setTimeout(asyncCallback: (...args: any[]) => void, ms: number, ...args: any[]): NodeJS.Timeout {
-    //     const timer: any = setTimeout(() => asyncCallback(args), ms, args);
-    //     return timer as NodeJS.Timeout;
-    // }
+
+    public static setTimeout(asyncCallback: (...args: any[]) => void, ms: number, ...args: any[]): NodeJS.Timeout {
+        const timer: any = setTimeout(() => asyncCallback(args), ms, args);
+        return timer as NodeJS.Timeout;
+    }
+
+    public static wait(ms: number): Promise<NodeJS.Timeout> {
+        return new Promise<NodeJS.Timeout>(resolve => this.setTimeout(resolve, ms));
+    }
+
+    public static get geoEnabled(): boolean {
+        return this._geoEnabled || (this._geoEnabled = !!navigator.geolocation);
+    }
 
     public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
-        const geoEnabled: boolean = this._geoEnabled || (this._geoEnabled = !!navigator.geolocation);
-        if (geoEnabled) {
+        if (this.geoEnabled) {
             return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;
@@ -27,20 +43,16 @@ export default class Utility {
         }
     }
 
-    // public static async getLocationAsync(): Promise<GeoCoordinate | null> {
-    //     const position: Position | null = await this.getPositionAsync();
-    //     if (position) {
-    //         const location = new GeoCoordinate();
-    //         location.latitude = position.coords.latitude;
-    //         location.longitude = position.coords.longitude;
-    //         return location;
-    //     }
-    //     return null;
-    // }
-    
-    // public static wait(ms: number): Promise<NodeJS.Timeout> {
-    //     return new Promise<NodeJS.Timeout>(resolve => this.setTimeout(resolve, ms));
-    // }
+    public static async getLocationAsync(options: PositionOptions | null | undefined = null): Promise<GeoCoordinate | null> {
+        const position: Position | null = await this.getPositionAsync(options);
+        if (position) {
+            const location = new GeoCoordinate();
+            location.lat = position.coords.latitude;
+            location.lon = position.coords.longitude;
+            return location;
+        }
+        return null;
+    }
 
     public static css(...params: (string | null | undefined | false)[]): string {
         return (params) ? params.filter(param => param).join(" ").trim() : "";
@@ -60,15 +72,15 @@ export default class Utility {
     //         )
     //         .flat();
     // }
-
+    //
     // public static toSingleLine(text: string | null | undefined): string {
     //     if (text) {
     //         text = text.replace(RentaToolsConstants.newLineRegex, " ");
     //     }
     //     return text || "";
-    // };
+    // }
     //
-    // public static toMultiLines(text: string | null | undefined): any[] {
+    // public static toMultiLines(text: string | null | undefined): (ReactElement | string)[] {
     //     if (!text) {
     //         return [];
     //     }
@@ -77,7 +89,7 @@ export default class Utility {
     //
     //     return lines
     //         .map((line: string, index: number) => (index < lines.length - 1)
-    //             ? [...this.toMarks(line, index), React.createElement("br", { key: "br" + index })]
+    //             ? [...this.toMarks(line, index), React.createElement("br", {key: "br" + index})]
     //             : [...this.toMarks(line, index)]
     //         )
     //         .flat();
@@ -94,14 +106,14 @@ export default class Utility {
                 let i: number = result.indexOf(prefix);
 
                 while (i !== -1) {
-                    let customFormat: boolean = (result[i + 2] === ":") && 
-                                                ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
+                    let customFormat: boolean = (result[i + 2] === ":") &&
+                        ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
 
                     if (customFormat) {
-                        if ((param != null) && 
+                        if ((param != null) &&
                             ((typeof param === "number") ||
-                            (typeof param === "string") || 
-                            ((typeof param === "object") && ((param as any).constructor.name === Date.name)))) {
+                                (typeof param === "string") ||
+                                ((typeof param === "object") && ((param as any).constructor.name === Date.name)))) {
 
                             let j: number = result.indexOf("}", i + 2);
 
@@ -113,8 +125,9 @@ export default class Utility {
 
                                 if (format) {
                                     let formattedParam: string | null = null;
-
+                                    
                                     if ((typeof param === "number")) {
+                                        const enumProvider: IEnumProvider | null = ServiceProvider.getEnumProvider();
                                         //number
                                         if ((format === "c") || (format === "C")) {
                                             formattedParam = this.toCurrencyString(param);
@@ -130,22 +143,18 @@ export default class Utility {
                                             formattedParam = param.toFixed(1) + "%";
                                         } else if (format === "0.00%") {
                                             formattedParam = param.toFixed(2) + "%";
-                                        }// else if (EnumHelper.isEnum(format)) {
-                                        //    formattedParam = EnumHelper.getEnumText(format, param);
-                                        //}
-                                    } else if ((typeof param === "string") ||
-                                        ((typeof param === "object") && ((param as any).constructor.name === Date.name))) {
-                                        //date
-                                        // if (format === "dddd") {
-                                        //     //The abbreviated name of the day of the week.
-                                        //     const date: Date = new Date(param);
-                                        //     formattedParam = Localizer.getDayOfWeek(date);
-                                        // } else  if (format === "ddd") {
-                                        //     //The abbreviated name of the day of the week.
-                                        //     const date: Date = new Date(param);
-                                        //     formattedParam = Localizer.getShortDayOfWeek(date);
-                                        // } else 
-                                        if ((format === "D") || (format === "dd.MM.yyyy")) {
+                                        }
+                                        else if ((enumProvider) && (enumProvider.isEnum(format))) {
+                                            formattedParam = enumProvider.getEnumText(format, param);
+                                        }
+                                    } else if ((typeof param === "string") || ((typeof param === "object") && ((param as any).constructor.name === Date.name))) {
+                                        if (format === "dddd") {
+                                            //The abbreviated name of the day of the week.
+                                            formattedParam = this.getDayOfWeek(param);
+                                        } else if (format === "ddd") {
+                                            //The abbreviated name of the day of the week.
+                                            formattedParam = this.getShortDayOfWeek(param);
+                                        } else if ((format === "D") || (format === "dd.MM.yyyy")) {
                                             const date: Date = new Date(param);
                                             formattedParam = this.toDateString(date);
                                         } else if (format === "G") {
@@ -188,34 +197,70 @@ export default class Utility {
                 }
             });
         }
-        
+
         return result;
     }
 
-    // public static resolveFormat(format: TFormat | null | undefined, def: string | null | undefined = null): TFormat {
-    //     def = def || "";
-    //     return (format)
-    //         ? (typeof format === "function")
-    //             ? format
-    //             : def
-    //         : def;
-    // }
-    //
-    // public static formatValue(value: any, format: TFormat | null | undefined): string {
-    //     return (format)
-    //         ? (typeof format === "function")
-    //             ? format(value)
-    //             : Utility.format(`{0:${format}}`, value)
-    //         : (value != null)
-    //             ? value.toString()
-    //             : "";
-    // }
+    public static formatValue(value: any, format: TFormat | null | undefined): string {
+        return (format)
+            ? (typeof format === "function")
+                ? format(value)
+                : Utility.format(`{0:${format}}`, value)
+            : (value != null)
+                ? value.toString()
+                : "";
+    }
+
+    public static getDayOfWeek(dayOfWeekOrDate: number | Date | string): string {
+
+        switch (typeof dayOfWeekOrDate) {
+            case  "string":
+                dayOfWeekOrDate = new Date(dayOfWeekOrDate);
+                return this.getDayOfWeek(dayOfWeekOrDate);
+
+            case "number":
+                
+                const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+                
+                switch (dayOfWeekOrDate) {
+                    case 0:
+                        return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
+                    case 1:
+                        return (localizer) ? localizer.get("DayOfWeek.Monday") : "Monday";
+                    case 2:
+                        return (localizer) ? localizer.get("DayOfWeek.Tuesday") : "Tuesday";
+                    case 3:
+                        return (localizer) ? localizer.get("DayOfWeek.Wednesday") : "Wednesday";
+                    case 4:
+                        return (localizer) ? localizer.get("DayOfWeek.Thursday") : "Thursday";
+                    case 5:
+                        return (localizer) ? localizer.get("DayOfWeek.Friday") : "Friday";
+                    case 6:
+                        return (localizer) ? localizer.get("DayOfWeek.Saturday") : "Saturday";
+                }
+
+                throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
+
+            case "object":
+                if (typeof dayOfWeekOrDate.getDay === "function") {
+                    dayOfWeekOrDate = (dayOfWeekOrDate as Date).getDay();
+                    return this.getDayOfWeek(dayOfWeekOrDate);
+                }
+                break;
+        }
+
+        throw Error(`Unsupported type for day of week "${dayOfWeekOrDate}", can be number, string or Date.`);
+    }
+
+    public static getShortDayOfWeek(dayOfWeekOrDate: number | Date | string): string {
+        const dayOfWeek: string = this.getDayOfWeek(dayOfWeekOrDate);
+        return dayOfWeek.substr(0, 2);
+    }
 
     public static toCurrencyString(input: number): string {
-        const output: string = input
+        return input
             .toFixed(2)
             .replace(/\d(?=(\d{3})+\.)/g, '$& ');
-        return output;
     }
 
     public static addDays(date: Date | string, days: number): Date {
@@ -245,14 +290,16 @@ export default class Utility {
         const month: number = date.getMonth();
         return [31, (this.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     };
-    
-    // public static distance(x: Position, y: GeoCoordinate): number {
-    //     return Math.sqrt(Math.pow(y.latitude - x.coords.latitude, 2) + Math.pow(y.longitude - x.coords.longitude, 2));
-    // }
 
-    public static max<T>(items: T[], callback: (item: T) => number): T {
+    public static distance(x: Position, y: GeoCoordinate): number {
+        return Math.sqrt(Math.pow(y.lat - x.coords.latitude, 2) + Math.pow(y.lon - x.coords.longitude, 2));
+    }
+
+    public static max<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
+
+        callback = callback || ((item) => (item as any) as number);
 
         let maxItem: T = items[0];
         let maxValue: number = callback(maxItem);
@@ -268,33 +315,35 @@ export default class Utility {
         return maxItem;
     }
 
-    public static maxValue<T>(items: T[], callback: (item: T) => number): number {
+    public static maxValue<T>(items: readonly T[], callback: (item: T) => number): number {
         return callback(Utility.max(items, callback));
     }
 
-    public static min<T>(items: T[], callback: (item: T) => number): T {
+    public static min<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
 
-        let min: T = items[0];
-        let minW: number = callback(min);
-        let length: number = items.length;
+        callback = callback || ((item) => (item as any) as number);
+
+        let minItem: T = items[0];
+        let minValue: number = callback(minItem);
+        const length: number = items.length;
         for (let i: number = 1; i < length; i++) {
-            let item: T = items[i];
-            let w: number = callback(item);
-            if (w < minW) {
-                minW = w;
-                min = item;
+            const item: T = items[i];
+            const value: number = callback(item);
+            if (value < minValue) {
+                minValue = value;
+                minItem = item;
             }
         }
-        return min;
+        return minItem;
     }
 
-    public static minValue<T>(items: T[], callback: (item: T) => number): number {
+    public static minValue<T>(items: readonly T[], callback: (item: T) => number): number {
         return callback(Utility.min(items, callback));
     }
 
-    public static sum<T>(items: T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
+    public static sum<T>(items: readonly T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
         let sum: number = 0;
         if (items) {
             items.forEach(item => sum += callback(item) || 0);
@@ -302,14 +351,14 @@ export default class Utility {
         return sum;
     }
 
-    public static count<T>(items: T[] | null | undefined, callback: (item: T, index: number) => boolean): number {
+    public static count<T>(items: readonly T[] | null | undefined, callback: (item: T, index: number) => boolean): number {
         let count: number = 0;
         if (items) {
             items.forEach((item, index) => count += callback(item, index) ? 1 : 0);
         }
         return count;
     }
-    
+
     public static round(value: number, digits: number = 0): number {
         digits = Math.round(digits);
         if (digits > 0) {
@@ -320,8 +369,8 @@ export default class Utility {
         }
         return value;
     }
-    
-    public static roundE(value: number) {
+
+    public static roundE(value: number): number {
         return this.round(value, 10);
     }
 
@@ -329,17 +378,30 @@ export default class Utility {
         return Math.round(value * 2) / 2;
     }
 
-    public static async forEachAsync<T>(items: T[], callback: (item: T) => Promise<void>): Promise<void> {
-        let promises: Promise<void>[] = items.map(item => callback(item));
+    public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
+        const promises: Promise<void>[] = items.map(item => callback(item));
         await Promise.all(promises);
     }
 
-    public static async whereAsync<T>(items: T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
-        const result: T[] = await items.filter(async item => await callback(item));
+    public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
+        return items.filter(predicate);
+    }
+
+    public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
+        const result: TOut[] = [];
+        const length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const subItems: TOut[] = collectionSelector(items[i]);
+            result.push(...subItems);
+        }
         return result;
     }
 
-    public static groupBy<T>(list: T[], callback: ((item2: T) => any) | null | undefined = null) {
+    public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
+        return items.filter(async item => await callback(item));
+    }
+
+    public static groupBy<T>(list: readonly T[], callback: ((item2: T) => any) | null | undefined = null): any[] {
         const map = new Map();
         list.forEach((item) => {
             const key = callback ? callback(item) : null;
@@ -353,11 +415,25 @@ export default class Utility {
         return Array.from(map.values());
     }
 
-    // public static distinct<T>(items: T[], callback: (item: T) => any): T[] {
-    //     const dict = new Dictionary<any, T>();
-    //     items.forEach(item => dict.setValue(callback(item), item));
-    //     return dict.values();
-    // }
+    public static distinct<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[] {
+        const dict = new Dictionary<any, T>();
+        items.forEach(item => dict.setValue(callback ? callback(item) : item, item));
+        return dict.values();
+    }
+
+    public static remove<T>(items: T[], item: T): void {
+        const index: number = items.indexOf(item);
+        if (index !== -1) {
+            items.splice(index, 1);
+        }
+    }
+
+    public static removeAt<T>(items: T[], index: number): void {
+        if ((index < 0) || (index >= items.length))
+            throw Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
+
+        items.splice(index, 1);
+    }
 
     public static pad(value: number) {
         value = Math.floor(Math.abs(value));
@@ -377,6 +453,10 @@ export default class Utility {
         return Utility.date();
     }
 
+    public static tomorrow(): Date {
+        return this.today().addDays(1);
+    }
+
     public static date(): Date {
         return this.getDateWithoutTime(this.now());
     }
@@ -388,11 +468,16 @@ export default class Utility {
         return (fromValue <= dateValue) && (dateValue <= toValue);
     }
 
-    // public static inFuture(x: Date | string): boolean {
-    //     return (x == null) || (Utility.diff(x, Utility.now()).totalMilliseconds > 0);
-    // }
+    public static inFuture(date: Date | string | null): boolean {
+        return (date != null) && (Utility.diff(date, Utility.now()).totalMilliseconds > 0);
+    }
 
-    public static toUtc(date: Date): Date {
+    public static inPast(date: Date | string | null): boolean {
+        return (date != null) && (Utility.diff(Utility.now(), date).totalMilliseconds > 0);
+    }
+
+    public static toUtc(date: Date | string): Date {
+        date = new Date(date);
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
     }
 
@@ -463,13 +548,13 @@ export default class Utility {
     public static toDateString(date: Date | string): string {
         const value: Date = (typeof date === "string") ? new Date(date) : date;
         return `${Utility.pad(value.getDate())}.${Utility.pad(value.getMonth() + 1)}.${value.getFullYear()}`;
-    };
-    
+    }
+
     public static toShortTimeString(date: Date): string {
         return `${Utility.pad(date.getHours())}:${Utility.pad(date.getMinutes())}`;
-    };
+    }
 
-    public static getDateWithoutTime(date: Date): Date {
+    public static getDateWithoutTime(date: Date | string): Date {
         const copy = new Date(date);
         copy.setHours(0, 0, 0, 0);
         return copy;
@@ -480,18 +565,18 @@ export default class Utility {
         return -timezoneOffset;
     }
 
-    // public static diff(x: Date | string, y: Date | string, ignoreTimeZone: boolean = false): TimeSpan {
-    //     if (typeof x === "string") {
-    //         x = new Date(x);
-    //     }
-    //     if (typeof y === "string") {
-    //         y = new Date(y);
-    //     }
-    //     const xDate: number = (ignoreTimeZone) ? x.utcValueOf() : x.valueOf();
-    //     const yDate: number = (ignoreTimeZone) ? y.utcValueOf() : y.valueOf();
-    //     const mlsec: number = xDate - yDate;
-    //     return TimeSpan.fromMilliseconds(mlsec);
-    // }
+    public static diff(x: Date | string, y: Date | string, ignoreTimeZone: boolean = false): TimeSpan {
+        if (typeof x === "string") {
+            x = new Date(x);
+        }
+        if (typeof y === "string") {
+            y = new Date(y);
+        }
+        const xDate: number = (ignoreTimeZone) ? x.utcValueOf() : x.valueOf();
+        const yDate: number = (ignoreTimeZone) ? y.utcValueOf() : y.valueOf();
+        const mlsec: number = xDate - yDate;
+        return TimeSpan.fromMilliseconds(mlsec);
+    }
 
     /**
      * Checks if global click happened outside of component
@@ -508,14 +593,14 @@ export default class Utility {
         if ((outside) && (exceptId)) {
             const exceptedContainer: Element | null = document.querySelector(`#${exceptId}`);
 
-            if(exceptedContainer !== null) {
+            if (exceptedContainer !== null) {
                 outside = !exceptedContainer.contains(target);
             }
 
-            if(exceptTag && exceptedContainer) {
+            if (exceptTag && exceptedContainer) {
                 const exceptedFound: Element | undefined = exceptedContainer.getElementsByTagName(exceptTag)[0];
 
-                if(exceptedFound && (target === exceptedFound)) {
+                if (exceptedFound && (target === exceptedFound)) {
                     outside = true;
                 }
             }
@@ -537,7 +622,7 @@ export default class Utility {
                 const result: string = (fileReader.result as string | null) || "";
                 resolve(result);
             };
-            
+
             fileReader.readAsDataURL(inputFile);
         });
     }
@@ -552,10 +637,10 @@ export default class Utility {
             };
 
             fileReader.onload = () => {
-                const result: string = (fileReader.result as string | null) || ""; 
+                const result: string = (fileReader.result as string | null) || "";
                 resolve(result);
             };
-            
+
             fileReader.readAsBinaryString(inputFile);
         });
     }
@@ -576,51 +661,49 @@ export default class Utility {
         });
     }
 
-    // public static async transformFileAsync(fileReference: File | null): Promise<FileModel | null> {
-    //    
-    //     if (fileReference) {
-    //         const dataUrl: string = await Utility.readUploadedFileAsDataUrl(fileReference);
-    //
-    //         if (dataUrl) {
-    //             const file: FileModel = new FileModel();
-    //             file.lastModified = new Date(fileReference.lastModified);
-    //             file.name = fileReference.name;
-    //             file.size = fileReference.size;
-    //             file.type = fileReference.type;
-    //             file.src = dataUrl;
-    //             return file;
-    //         }
-    //     }
-    //
-    //     return null;
-    // }
+    public static async transformFileAsync(fileReference: File | null): Promise<FileModel | null> {
+
+        if (fileReference) {
+            const dataUrl: string = await Utility.readUploadedFileAsDataUrl(fileReference);
+
+            if (dataUrl) {
+                const file: FileModel = new FileModel();
+                file.lastModified = new Date(fileReference.lastModified);
+                file.name = fileReference.name;
+                file.size = fileReference.size;
+                file.type = fileReference.type;
+                file.src = dataUrl;
+                return file;
+            }
+        }
+
+        return null;
+    }
 
     public static base64FromDataUrl(dataUrl: string): string {
-        return dataUrl.split("base64,")[1]
+        return dataUrl.split("base64,")[1];
     }
-    
-    // public static toPagedList<TItem>(items: TItem[], pageNumber: number, pageSize: number): IPagedList<TItem> {
-    //     const firstIndex: number = pageNumber * pageSize;
-    //     const totalItemCount: number = items.length;
-    //     let pageCount: number = Math.trunc(totalItemCount / pageSize);
-    //     if (pageCount === 0) {
-    //         pageCount = 1;
-    //     } else if (totalItemCount > pageCount * pageSize) {
-    //         pageCount++;
-    //     }
-    //
-    //     const pageItems: TItem[] = (firstIndex + pageSize >= totalItemCount)
-    //         ? items.slice(firstIndex)
-    //         : items.slice(firstIndex, pageSize);
-    //    
-    //     return {
-    //         items: pageItems,
-    //         pageCount: pageCount,
-    //         pageSize: pageSize,
-    //         totalItemCount: totalItemCount,
-    //         pageNumber: pageNumber
-    //     }
-    // }
+
+    public static toPagedList<TItem>(items: TItem[], pageNumber: number, pageSize: number): IPagedList<TItem> {
+        const firstIndex: number = (pageNumber - 1) * pageSize;
+        const totalItemCount: number = items.length;
+        let pageCount: number = Math.trunc(totalItemCount / pageSize);
+        if (pageCount === 0) {
+            pageCount = 1;
+        } else if (totalItemCount > pageCount * pageSize) {
+            pageCount++;
+        }
+
+        const pageItems: TItem[] = items.slice(firstIndex, firstIndex + pageSize);
+
+        return {
+            items: pageItems,
+            pageCount: pageCount,
+            pageSize: pageSize,
+            totalItemCount: totalItemCount,
+            pageNumber: pageNumber
+        }
+    }
 
     private static findInstanceByAccessor(instance: any, accessor: string): [any, string] | undefined {
 
@@ -631,11 +714,12 @@ export default class Utility {
         accessor = accessor.replace(/\[(\w+)]/g, '.$1'); // convert indexes to properties
         accessor = accessor.replace(/^\./, '');           // strip a leading dot
         const path = accessor.split('.');
-        let tuple: [any, string] | undefined;
         const length: number = path.length;
+
+        let tuple: [any, string] | undefined;
         for (let i = 0, n = length; i < n; ++i) {
 
-            let key: string = path[i];
+            const key: string = path[i];
 
             if ((instance == null) || (!(key in instance))) {
                 return undefined;
@@ -652,20 +736,55 @@ export default class Utility {
         return tuple;
     }
 
-    public static findValueByAccessor(instance: any, accessor: string): any | null | undefined {
-        let tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
+    public static findValueByAccessor(instance: any, accessor: string | ReadonlyArray<string>): any | null | undefined {
+        if (typeof accessor == "string") {
+            const tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
 
-        if (tuple) {
-            instance = tuple[0];
-            accessor = tuple[1];
-            return instance[accessor];
+            if (tuple) {
+                instance = tuple[0];
+                accessor = tuple[1];
+                return instance[accessor];
+            }
+
+            return undefined;
+        }
+
+        const length: number = accessor.length;
+        for (let i: number = 0; i < length; i++) {
+            const value: any | null | undefined = Utility.findValueByAccessor(instance, accessor[i]);
+            if (value !== undefined) {
+                return value;
+            }
         }
 
         return undefined;
     }
 
+    public static findStringValueByAccessor(instance: any, accessor: string | ReadonlyArray<string>): string | null {
+        if (typeof accessor == "string") {
+            const value: any | null | undefined = Utility.findValueByAccessor(instance, accessor);
+
+            if ((value != null) && (typeof value == "string") && (value.length > 0)) {
+                return value as string;
+            }
+
+            return null;
+        }
+
+        const length: number = accessor.length;
+        for (let i: number = 0; i < length; i++) {
+            const value: any | null | undefined = Utility.findValueByAccessor(instance, accessor[i]);
+
+            if ((value != null) && (typeof value == "string") && (value.length > 0)) {
+                return value as string;
+            }
+        }
+
+        return null;
+    }
+
     public static setValueByAccessor(instance: any, accessor: string, value: any) {
-        let tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
+        const tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
         if (tuple) {
             instance = tuple[0];
             accessor = tuple[1];
@@ -676,7 +795,7 @@ export default class Utility {
     public static getHashCode(value: any | null | undefined): number {
         return HashCodeUtility.getHashCode(value);
     }
-    
+
     public static isDateType(date: any): boolean {
         return ((date != null) && (typeof date === "object") && (date.constructor === Date));// && (typeof date.getDay === "function"));
     }
@@ -746,38 +865,46 @@ export default class Utility {
         return JSON.parse(json);
     }
 
-    // public static copyTo(from: Dictionary<string, any> | any, ...to: any[]): void {
-    //    
-    //     if (from == null) {
-    //         return;
-    //     }
-    //    
-    //     if (from instanceof Dictionary) {
-    //         from.keys().forEach(key => {
-    //             const value: any = from.getValue(key);
-    //             to.forEach(instance => {
-    //                 if ((instance != null) && (instance.hasOwnProperty(key))) {
-    //                     instance[key] = value;
-    //                 }
-    //             });
-    //         });
-    //         return;
-    //     }
-    //    
-    //     const copy: any = this.clone(from);
-    //     for(const key in copy) {
-    //         if (copy.hasOwnProperty(key)) {
-    //             const value: any = from[key];
-    //             to.forEach(instance => {
-    //                 if ((instance != null) && (instance.hasOwnProperty(key))) {
-    //                     instance[key] = value;
-    //                 }
-    //             });
-    //         }
-    //     }
-    // }
+    public static copyTo(from: Dictionary<string, any> | any, ...to: any[]): void {
+
+        if (from == null) {
+            return;
+        }
+
+        if (from instanceof Dictionary) {
+            from.keys().forEach(key => {
+                const value: any = from.getValue(key);
+                to.forEach(instance => {
+                    if ((instance != null) && (instance.hasOwnProperty(key))) {
+                        instance[key] = value;
+                    }
+                });
+            });
+            return;
+        }
+
+        const copy: any = this.clone(from);
+        for(const key in copy) {
+            if (copy.hasOwnProperty(key)) {
+                const value: any = from[key];
+                to.forEach(instance => {
+                    if ((instance != null) && (instance.hasOwnProperty(key))) {
+                        instance[key] = value;
+                    }
+                });
+            }
+        }
+    }
+
+    public static getExtensionsFromMimeTypes(mimeTypes: string[]): string [] | string {
+        if (mimeTypes.length && mimeTypes.every((type: string) => type.includes("/"))) {
+            return mimeTypes.map(type => type.split("/")[1]).join(", ");
+        }
+        return "Wrong MimeTypes, extensions could not be recognized";
+    }
 }
 
 //Register Extensions
 DateExtensions();
 StringExtensions();
+ArrayExtensions();
