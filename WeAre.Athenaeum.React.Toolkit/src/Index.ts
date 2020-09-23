@@ -21,7 +21,7 @@ import ServiceProvider from "./providers/ServiceProvider";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
-import BaseLocalizer, { IEnumProvider } from "./localization/BaseLocalizer";
+import BaseLocalizer, { IEnumProvider, ILanguage } from "./localization/BaseLocalizer";
 
 export {
     //Models
@@ -47,5 +47,5 @@ export {
     //Helpers:
     PwaHelper,
     //Other:
-    BaseLocalizer, IEnumProvider,
+    BaseLocalizer, IEnumProvider, ILanguage
 }
