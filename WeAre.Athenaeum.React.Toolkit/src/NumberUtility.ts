@@ -1,3 +1,9 @@
+import {TFormat} from "./providers/BaseTransformProvider";
+
+export interface INumberFormat {
+    step: number;
+    format: TFormat;
+}
 
 export class NumberParsingResult {
     constructor(value: number | null | undefined = null) {
@@ -48,6 +54,7 @@ export default class NumberUtility {
         const parsed: boolean = (
             (!Number.isNaN(value)) &&
             (Number.isFinite(value)) &&
+            (!escapedStr.includes("e")) && (!escapedStr.includes("E")) &&
             (escapedStr.length <= maxLength) &&
             ((allowFloat) || (Math.trunc(value) == value))
         );
@@ -74,11 +81,39 @@ export default class NumberUtility {
         return info;
     }
 
-    public static getDefaultFormat(step: number): string {
-        return ((step >= 0.1) && (step < 1))
-            ? "0.0"
-            : (step <= 0.01)
-                ? "0.00"
-                : "0";
+    private static _formats: INumberFormat[] = [
+        {format: "C", step: 0.01},
+        {format: "c", step: 0.01},
+        {format: "0.00", step: 0.01},
+        {format: "0.00%", step: 0.01},
+        {format: "0.0", step: 0.1},
+        {format: "0.0%", step: 0.1},
+        {format: "0", step: 1},
+        {format: "n", step: 1},
+        {format: "N", step: 1},
+        {format: "%", step: 1},
+        {format: "N%", step: 1},
+        {format: "0%", step: 1},
+    ]
+
+    public static resolveFormat(step: number | null | undefined, format: TFormat | null | undefined, defaultFormat: string | null | undefined = null): INumberFormat {
+        format = format || defaultFormat || "";
+
+        if ((format == "") && (step != null)) {
+            format = ((step >= 0.1) && (step < 1))
+                ? "0.0"
+                : (step <= 0.01)
+                    ? "0.00"
+                    : "0";
+        } else if ((format) && (step == null)) {
+            const item: INumberFormat | null = this._formats.find(item => item.format == format) || null;
+            if (item) {
+                return item;
+            }
+        }
+
+        step = step || 1;
+
+        return {step, format};
     }
 }

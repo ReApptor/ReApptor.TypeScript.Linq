@@ -6,7 +6,7 @@ import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 //Utilities:
 import ArrayUtility from "./ArrayUtility";
-import NumberUtility from "./NumberUtility";
+import NumberUtility, { INumberFormat, NumberParsingResult } from "./NumberUtility";
 import StringUtility from "./StringUtility";
 import BoolUtility from "./BoolUtility";
 import Utility from "./Utility";
@@ -32,7 +32,7 @@ export {
     IPagedList,
     //Utilities:
     ArrayUtility,
-    NumberUtility,
+    NumberUtility, INumberFormat, NumberParsingResult,
     StringUtility,
     BoolUtility,
     HashCodeUtility,
@@ -47,6 +47,5 @@ export {
     //Helpers:
     PwaHelper,
     //Other:
-    BaseLocalizer,
-    IEnumProvider,
+    BaseLocalizer, IEnumProvider,
 }
