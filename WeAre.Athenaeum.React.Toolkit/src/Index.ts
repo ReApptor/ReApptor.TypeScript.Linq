@@ -17,7 +17,7 @@ import { StringExtensions } from "./extensions/StringExtensions";
 import { ArrayExtensions } from "./extensions/ArrayExtensions";
 //Providers:
 import BaseTransformProvider, { TFormat } from "./providers/BaseTransformProvider";
-import ServiceProvider from "./providers/ServiceProvider";
+import ServiceProvider, { ServiceType, IService } from "./providers/ServiceProvider";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
@@ -43,7 +43,7 @@ export {
     ArrayExtensions,
     //Providers:
     BaseTransformProvider, TFormat,
-    ServiceProvider,
+    ServiceProvider, ServiceType, IService,
     //Helpers:
     PwaHelper,
     //Other:
