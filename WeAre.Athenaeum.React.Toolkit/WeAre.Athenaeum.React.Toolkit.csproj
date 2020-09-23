@@ -34,7 +34,7 @@
       <TypeScriptCompile Include="src\providers\ServiceProvider.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
-      <TypeScriptCompile Include="src\Index.ts" />
+      <TypeScriptCompile Include="src\index.ts" />
     </ItemGroup>
 
 </Project>
