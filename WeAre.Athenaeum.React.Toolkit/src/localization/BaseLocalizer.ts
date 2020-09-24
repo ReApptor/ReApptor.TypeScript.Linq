@@ -47,7 +47,7 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
     
     protected setItem(name: string, language: string, value: string): void {
-        let languageItems: Dictionary<string, string> = this.getLanguageItems(language);
+        const languageItems: Dictionary<string, string> = this.getLanguageItems(language);
         languageItems.setValue(name, value);
     }
 
@@ -62,10 +62,10 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     public get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
         let value: string | null = null;
         if (name) {
-            let languageItems: Dictionary<string, string> = this.getLanguageItems(this._language);
+            const languageItems: Dictionary<string, string> = this.getLanguageItems(this._language);
             value = languageItems.getValue(name) as string | null;
             if (value) {
-                let lines: string[] = value.split(AthenaeumConstants.newLineRegex);
+                const lines: string[] = value.split(AthenaeumConstants.newLineRegex);
                 value = lines.join("\n");
             }
         }
@@ -109,96 +109,5 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
 
     public get defaultLanguage(): string {
         return this._defaultLanguage;
-    }
-
-    public getDayOfWeek(dayOfWeekOrDate: number | Date | string): string {
-
-        switch (typeof dayOfWeekOrDate) {
-            case  "string":
-                dayOfWeekOrDate = new Date(dayOfWeekOrDate);
-                return this.getDayOfWeek(dayOfWeekOrDate);
-
-            case "number":
-                switch (dayOfWeekOrDate) {
-                    case 0:
-                        return this.get("DayOfWeek.Sunday");
-                    case 1:
-                        return this.get("DayOfWeek.Monday");
-                    case 2:
-                        return this.get("DayOfWeek.Tuesday");
-                    case 3:
-                        return this.get("DayOfWeek.Wednesday");
-                    case 4:
-                        return this.get("DayOfWeek.Thursday");
-                    case 5:
-                        return this.get("DayOfWeek.Friday");
-                    case 6:
-                        return this.get("DayOfWeek.Saturday");
-                }
-
-                throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
-
-            case "object":
-                if (typeof dayOfWeekOrDate.getDay === "function") {
-                    dayOfWeekOrDate = (dayOfWeekOrDate as Date).getDay();
-                    return this.getDayOfWeek(dayOfWeekOrDate);
-                }
-                break;
-        }
-
-        throw Error(`Unsupported type for day of week "${dayOfWeekOrDate}", can be number, string or Date.`);
-    }
-
-    public getMonth(monthOrDate: number | string | Date): string {
-
-        if (Utility.isDateType(monthOrDate)) {
-            monthOrDate = (monthOrDate as Date).getMonth();
-            return this.getMonth(monthOrDate);
-        }
-        
-        if (typeof monthOrDate === "string") {
-            monthOrDate = monthOrDate.toLowerCase();
-        }
-
-        switch (monthOrDate) {
-            case "january":
-            case 0:
-                return this.get("Month.January");
-            case "february":
-            case 1:
-                return this.get("Month.February");
-            case "march":
-            case 2:
-                return this.get("Month.March");
-            case "april":
-            case 3:
-                return this.get("Month.April");
-            case "may":
-            case 4:
-                return this.get("Month.May");
-            case "june":
-            case 5:
-                return this.get("Month.June");
-            case "july":
-            case 6:
-                return this.get("Month.July");
-            case "august":
-            case 7:
-                return this.get("Month.August");
-            case "september":
-            case 8:
-                return this.get("Month.September");
-            case "october":
-            case 9:
-                return this.get("Month.October");
-            case "november":
-            case 10:
-                return this.get("Month.November");
-            case "december":
-            case 11:
-                return this.get("Month.December");
-        }
-
-        throw Error(`Unsupported month "${monthOrDate}", can be number ([0..11]), string (month name in English) or Date.`);
     }
 }

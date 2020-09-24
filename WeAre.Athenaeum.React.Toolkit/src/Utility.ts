@@ -58,43 +58,6 @@ export default class Utility {
         return (params) ? params.filter(param => param).join(" ").trim() : "";
     }
 
-    // private static toMarks(text: string, containerIndex: number): (ReactElement | string)[] {
-    //     if (!text) {
-    //         return [];
-    //     }
-    //
-    //     const lines: string[] = text.split(RentaToolsConstants.markTagRegex);
-    //
-    //     return lines
-    //         .map((line: string, index: number) => (index % 2 != 0)
-    //             ? [React.createElement("mark", { key: containerIndex + "m" + index }, line)]
-    //             : [line]
-    //         )
-    //         .flat();
-    // }
-    //
-    // public static toSingleLine(text: string | null | undefined): string {
-    //     if (text) {
-    //         text = text.replace(RentaToolsConstants.newLineRegex, " ");
-    //     }
-    //     return text || "";
-    // }
-    //
-    // public static toMultiLines(text: string | null | undefined): (ReactElement | string)[] {
-    //     if (!text) {
-    //         return [];
-    //     }
-    //
-    //     const lines: string[] = text.split(RentaToolsConstants.newLineRegex);
-    //
-    //     return lines
-    //         .map((line: string, index: number) => (index < lines.length - 1)
-    //             ? [...this.toMarks(line, index), React.createElement("br", {key: "br" + index})]
-    //             : [...this.toMarks(line, index)]
-    //         )
-    //         .flat();
-    // }
-
     public static format(text: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined | any)[]): string {
         let result: string = text || "";
 
@@ -151,6 +114,12 @@ export default class Utility {
                                         if (format === "dddd") {
                                             //The abbreviated name of the day of the week.
                                             formattedParam = this.getDayOfWeek(param);
+                                        } else if (format === "ddd") {
+                                            //The abbreviated name of the day of the week.
+                                            formattedParam = this.getShortDayOfWeek(param);
+                                        } else if (format === "MMMM") {
+                                            //The abbreviated name of the month.
+                                            formattedParam = this.getMonth(param);
                                         } else if (format === "ddd") {
                                             //The abbreviated name of the day of the week.
                                             formattedParam = this.getShortDayOfWeek(param);
@@ -256,6 +225,61 @@ export default class Utility {
         const dayOfWeek: string = this.getDayOfWeek(dayOfWeekOrDate);
         return dayOfWeek.substr(0, 2);
     }
+    
+    public static getMonth(monthOrDate: number | string | Date): string {
+
+        if (Utility.isDateType(monthOrDate)) {
+            monthOrDate = (monthOrDate as Date).getMonth();
+            return this.getMonth(monthOrDate);
+        }
+
+        if (typeof monthOrDate === "string") {
+            monthOrDate = monthOrDate.toLowerCase();
+        }
+
+        const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+
+        switch (monthOrDate) {
+            case "january":
+            case 0:
+                return (localizer) ? localizer.get("Month.January") : "January";
+            case "february":
+            case 1:
+                return (localizer) ? localizer.get("Month.February") : "February";
+            case "march":
+            case 2:
+                return (localizer) ? localizer.get("Month.March") : "March";
+            case "april":
+            case 3:
+                return (localizer) ? localizer.get("Month.April") : "April";
+            case "may":
+            case 4:
+                return (localizer) ? localizer.get("Month.May") : "May";
+            case "june":
+            case 5:
+                return (localizer) ? localizer.get("Month.June") : "June";
+            case "july":
+            case 6:
+                return (localizer) ? localizer.get("Month.July") : "July";
+            case "august":
+            case 7:
+                return (localizer) ? localizer.get("Month.August") : "August";
+            case "september":
+            case 8:
+                return (localizer) ? localizer.get("Month.September") : "September";
+            case "october":
+            case 9:
+                return (localizer) ? localizer.get("Month.October") : "October";
+            case "november":
+            case 10:
+                return (localizer) ? localizer.get("Month.November") : "November";
+            case "december":
+            case 11:
+                return (localizer) ? localizer.get("Month.December") : "December";
+        }
+
+        throw Error(`Unsupported month "${monthOrDate}", can be number ([0..11]), string (month name in English) or Date.`);
+    }
 
     public static toCurrencyString(input: number): string {
         return input
@@ -284,7 +308,7 @@ export default class Utility {
             : this.isLeapYear(this.now().getFullYear());
     };
 
-    public static getDaysInMonth(date: Date) {
+    public static getDaysInMonth(date: Date): number {
         date = new Date(date);
         const year: number = date.getFullYear();
         const month: number = date.getMonth();
@@ -684,9 +708,10 @@ export default class Utility {
         return dataUrl.split("base64,")[1];
     }
 
-    public static toPagedList<TItem>(items: TItem[], pageNumber: number, pageSize: number): IPagedList<TItem> {
+    public static toPagedList<T>(items: readonly T[], pageNumber: number, pageSize: number): IPagedList<T> {
         const firstIndex: number = (pageNumber - 1) * pageSize;
         const totalItemCount: number = items.length;
+        
         let pageCount: number = Math.trunc(totalItemCount / pageSize);
         if (pageCount === 0) {
             pageCount = 1;
@@ -694,7 +719,7 @@ export default class Utility {
             pageCount++;
         }
 
-        const pageItems: TItem[] = items.slice(firstIndex, firstIndex + pageSize);
+        const pageItems: T[] = items.slice(firstIndex, firstIndex + pageSize);
 
         return {
             items: pageItems,

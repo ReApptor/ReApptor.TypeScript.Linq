@@ -1,5 +1,6 @@
 import Utility from "../Utility";
 import ArrayUtility from "../ArrayUtility";
+import IPagedList from "../models/IPagedList";
 
 declare global {
     interface Array<T> {
@@ -53,86 +54,102 @@ declare global {
          * @returns Array<T> - An Array<T> that contains distinct elements from the source sequence.
          */
         distinct(callback: ((item: T) => any) | null | undefined): T[];
+
+        toPagedList(pageNumber: number, pageSize: number): IPagedList<T>;
+
+        forEachAsync(callback: (item: T) => Promise<void>): Promise<void>;
     }
 }
 
 export const ArrayExtensions = function () {
 
     if (Array.prototype.where == null) {
-        Array.prototype.where = function <T>(predicate: (item: T) => boolean): T[] {
+        Array.prototype.where = function<T>(predicate: (item: T) => boolean): T[] {
             return Utility.where(this, predicate);
         };
     }
 
     if (Array.prototype.whereAsync == null) {
-        Array.prototype.whereAsync = function <T>(callback: (item: T) => Promise<boolean>): Promise<T[]> {
+        Array.prototype.whereAsync = function<T>(callback: (item: T) => Promise<boolean>): Promise<T[]> {
             return Utility.whereAsync(this, callback);
         };
     }
 
     if (Array.prototype.selectMany == null) {
-        Array.prototype.selectMany = function <T, TOut>(collectionSelector: (item: T) => TOut[]): TOut[] {
+        Array.prototype.selectMany = function<T, TOut>(collectionSelector: (item: T) => TOut[]): TOut[] {
             return Utility.selectMany(this, collectionSelector);
         };
     }
 
     if (Array.prototype.remove == null) {
-        Array.prototype.remove = function <T>(item: T): void {
+        Array.prototype.remove = function<T>(item: T): void {
             Utility.remove(this, item);
         };
     }
 
     if (Array.prototype.removeAt == null) {
-        Array.prototype.removeAt = function <T>(index: number): void {
+        Array.prototype.removeAt = function<T>(index: number): void {
             Utility.removeAt(this, index);
         };
     }
 
     if (Array.prototype.max == null) {
-        Array.prototype.max = function <T>(callback: ((item: T) => number) | null = null): T {
+        Array.prototype.max = function<T>(callback: ((item: T) => number) | null = null): T {
             return Utility.max(this, callback);
         };
     }
 
     if (Array.prototype.maxValue == null) {
-        Array.prototype.maxValue = function <T>(callback: (item: T) => number): number {
+        Array.prototype.maxValue = function<T>(callback: (item: T) => number): number {
             return Utility.maxValue(this, callback);
         };
     }
 
     if (Array.prototype.min == null) {
-        Array.prototype.min = function <T>(callback: ((item: T) => number) | null = null): T {
+        Array.prototype.min = function<T>(callback: ((item: T) => number) | null = null): T {
             return Utility.min(this, callback);
         };
     }
 
     if (Array.prototype.minValue == null) {
-        Array.prototype.minValue = function <T>(callback: (item: T) => number): number {
+        Array.prototype.minValue = function<T>(callback: (item: T) => number): number {
             return Utility.minValue(this, callback);
         };
     }
 
     if (Array.prototype.sum == null) {
-        Array.prototype.sum = function <T>(callback: (item: T) => number | null | undefined): number {
+        Array.prototype.sum = function<T>(callback: (item: T) => number | null | undefined): number {
             return Utility.sum(this, callback);
         };
     }
 
     if (Array.prototype.count == null) {
-        Array.prototype.count = function <T>(callback: (item: T, index: number) => boolean): number {
+        Array.prototype.count = function<T>(callback: (item: T, index: number) => boolean): number {
             return Utility.count(this, callback);
         };
     }
 
     if (Array.prototype.chunk == null) {
-        Array.prototype.chunk = function <T>(chunkSize: number): T[][] {
+        Array.prototype.chunk = function<T>(chunkSize: number): T[][] {
             return ArrayUtility.chunk(this, chunkSize);
         };
     }
 
     if (Array.prototype.distinct == null) {
-        Array.prototype.distinct = function <T>(callback: ((item: T) => any) | null | undefined = null): T[] {
+        Array.prototype.distinct = function<T>(callback: ((item: T) => any) | null | undefined = null): T[] {
             return Utility.distinct(this, callback);
+        };
+    }
+
+    if (Array.prototype.toPagedList == null) {
+        Array.prototype.toPagedList = function<T>(pageNumber: number, pageSize: number): IPagedList<T> {
+            return Utility.toPagedList(this, pageNumber, pageSize);
+        };
+    }
+
+    if (Array.prototype.forEachAsync == null) {
+        Array.prototype.forEachAsync = function<T>(callback: (item: T) => Promise<void>): Promise<void> {
+            return Utility.forEachAsync(this, callback);
         };
     }
 }

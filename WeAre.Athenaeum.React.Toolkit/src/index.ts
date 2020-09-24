@@ -24,7 +24,7 @@ import PwaHelper from "./helpers/PwaHelper";
 import BaseLocalizer, { IEnumProvider, ILanguage } from "./localization/BaseLocalizer";
 
 export {
-    //Models
+    //Models:
     FileModel,
     GeoLocation,
     GeoCoordinate,
