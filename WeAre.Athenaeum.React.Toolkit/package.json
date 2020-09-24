@@ -1,5 +1,5 @@
 {
-  "name": "weare-athenaeum-react-toolkit",
+  "name": "@weare/athenaeum-toolkit",
   "private": false,
   "version": "1.0.0",
   "main": "lib/src/index.js",
