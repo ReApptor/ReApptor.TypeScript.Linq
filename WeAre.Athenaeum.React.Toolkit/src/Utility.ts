@@ -508,6 +508,13 @@ export default class Utility {
     public static asUtc(date: Date | string): Date {
         return new Date(Utility.utcValueOf(date));
     }
+    
+    public static toLocal(date: Date | string): Date {
+        date = new Date(date);
+        const hoursDiff = date.getHours() - date.getTimezoneOffset() / 60;
+        date.setHours(hoursDiff);
+        return date;
+    }
 
     public static utcValueOf(date: Date | string): number {
         if (typeof date === "string") {

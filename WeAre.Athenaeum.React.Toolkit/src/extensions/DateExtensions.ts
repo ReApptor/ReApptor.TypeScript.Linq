@@ -37,7 +37,16 @@ declare global {
          */
         toUniversalTime(): Date;
 
-        /** Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC, ignores time zone. */
+        /**
+         * Converts the value of the current DateTime object to local time.
+         * @returns Date - An object whose Kind property is Local, and whose value is the local time equivalent to the value of the current DateTime object, or MaxValue if the converted value is too large to be represented by a DateTime object, or MinValue if the converted value is too small to be represented as a DateTime object.
+         */
+        toLocalTime(): Date;
+
+        /**
+         * Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC, ignores time zone.
+         * @returns number - A time value in milliseconds since midnight, January 1, 1970 UTC.
+         */
         utcValueOf(): number;
 
         /**
@@ -105,6 +114,12 @@ export const DateExtensions = function () {
     if (Date.prototype.toUniversalTime == null) {
         Date.prototype.toUniversalTime = function(): Date {
             return Utility.toUtc(this);
+        };
+    }
+    
+    if (Date.prototype.toLocalTime == null) {
+        Date.prototype.toLocalTime = function(): Date {
+            return Utility.toLocal(this);
         };
     }
     
