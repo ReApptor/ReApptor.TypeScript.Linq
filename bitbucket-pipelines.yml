@@ -16,14 +16,14 @@ pipelines:
                 - npm config set ca ""
                 # Install dependencies
                 - npm install
+                # Run tests
+                - npm test
                 # Run build
                 - npm run build
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
                 - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
-                # Run tests
-                # - npm test
                 # Create package
                 - npm pack
                 # Change version number
@@ -42,6 +42,15 @@ pipelines:
                 - docker
               caches:
                 - dotnetcore
+          - step:
+              name: UI Toolkit tests
+              image: node:10.15.0
+              script:
+                - echo $BITBUCKET_BUILD_NUMBER
+                - npm install
+                - npm test
+              caches:
+                - node
           - step:
               name: WeAre Athenaeum Common build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine

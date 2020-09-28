@@ -5,14 +5,18 @@
   "main": "lib/src/index.js",
   "types": "lib/types/src/index.d.ts",
   "devDependencies": {
-    "@types/node": "11.9.4",
+    "@types/jest": "^26.0.14",
     "@types/jquery": "^3.3.29",
+    "@types/node": "11.9.4",
+    "jest": "^26.4.2",
     "jquery": "^3.5.1",
+    "ts-jest": "^26.4.0",
     "typescript": "3.4",
     "typescript-collections": "^1.3.2"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "files": [
     "lib"
