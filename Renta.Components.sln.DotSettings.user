@@ -4,6 +4,6 @@
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::Renta.Toolkit.UnitTest.ProcessLockTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bafaf3aa_002Dfc7a_002D45cb_002Da3d1_002D0728ffe35120/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;Tests&amp;gt;\&amp;lt;Renta.Toolkit.UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bafaf3aa_002Dfc7a_002D45cb_002Da3d1_002D0728ffe35120/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Tests&amp;gt;\&amp;lt;Renta.Toolkit.UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Project Location="/Users/popovan/SS/BB-MAC/renta-components/Renta.Toolkit.UnitTest" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;Renta.Toolkit.UnitTest&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

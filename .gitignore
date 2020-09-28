@@ -16,6 +16,9 @@ x86/
 build/
 lib/
 bld/
-node_modules/
 packages/
 TestResults/
+
+# Package managers
+node_modules/
+package-lock.json

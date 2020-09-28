@@ -16,8 +16,8 @@ pipelines:
                 - npm config set ca ""
                 # Install dependencies
                 - npm install
-                # Run tests
-                - npm test
+#                # Run tests
+#                - npm test
                 # Run build
                 - npm run build
                 # Create .npmrc file
@@ -47,6 +47,7 @@ pipelines:
               image: node:10.15.0
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.React.Toolkit
                 - npm install
                 - npm test
               caches:
