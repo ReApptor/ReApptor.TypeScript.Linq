@@ -19,7 +19,8 @@
   "scripts": {
     "build": "tsc",
     "docs": "jsdoc -c jsdoc.json -d lib/docs src/**",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "files": [
     "lib"

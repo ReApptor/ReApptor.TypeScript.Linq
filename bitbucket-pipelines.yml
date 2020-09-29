@@ -16,8 +16,8 @@ pipelines:
                 - npm config set ca ""
                 # Install dependencies
                 - npm install
-#                # Run tests
-#                - npm test
+                # Run tests
+                # - npm test
                 # Run build
                 - npm run build
                 # Create .npmrc file
