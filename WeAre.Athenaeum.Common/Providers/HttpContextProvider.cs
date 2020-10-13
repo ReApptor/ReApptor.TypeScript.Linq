@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
-using Renta.Toolkit.Extensions;
+using WeAre.Athenaeum.Toolkit.Extensions;
 using WeAre.Athenaeum.Common.Extensions;
 
 namespace WeAre.Athenaeum.Common.Providers

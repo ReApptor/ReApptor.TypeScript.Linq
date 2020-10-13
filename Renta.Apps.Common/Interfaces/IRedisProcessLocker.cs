@@ -1,4 +1,4 @@
-using Renta.Toolkit.ProcessLocks;
+using WeAre.Athenaeum.Toolkit.ProcessLocks;
 
 namespace Renta.Apps.Common.Interfaces
 {

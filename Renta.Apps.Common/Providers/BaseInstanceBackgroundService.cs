@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Renta.Toolkit.ProcessLocks;
+using WeAre.Athenaeum.Toolkit.ProcessLocks;
 
 namespace Renta.Apps.Common.Providers
 {

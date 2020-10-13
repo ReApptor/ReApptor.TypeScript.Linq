@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Renta.Toolkit.Extensions;
+using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Providers
 {

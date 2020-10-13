@@ -6,7 +6,7 @@ pipelines:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
-              name: Renta React build
+              name: Athenaeum React Toolkit build
               image: node:10.15.0
               script:
                 # Update npm settings
@@ -31,13 +31,13 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Toolkit build
+              name: Athenaeum Toolkit build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               size: 2x # Double resources available for this step.
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Toolkit/Renta.Toolkit.csproj -o obj/renta-toolkit/publish
-                - dotnet nuget push obj/renta-toolkit/publish/Renta.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Toolkit/WeAre.Athenaeum.Toolkit.csproj -o obj/weare-athenaeum-toolkit/publish
+                - dotnet nuget push obj/weare-athenaeum-toolkit/publish/WeAre.Athenaeum.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
               services:
                 - docker
               caches:

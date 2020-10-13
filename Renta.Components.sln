@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{B0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApplication", "TestApplication", "{87ACEE79-C917-4D67-B416-D6A1824F922A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Toolkit", "Renta.Toolkit\Renta.Toolkit.csproj", "{DC3521FF-A412-4731-B064-9E3ABF02FD65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Toolkit", "WeAre.Athenaeum.Toolkit\WeAre.Athenaeum.Toolkit.csproj", "{DC3521FF-A412-4731-B064-9E3ABF02FD65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.TestApplication.WebUI", "Renta.TestApplication.WebUI\Renta.TestApplication.WebUI.csproj", "{02DF8D1E-4A39-46C8-9ACC-35334E45677A}"
 EndProject
@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.TestApplication.Db", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.TestApplication.Common", "Renta.TestApplication.Common\Renta.TestApplication.Common.csproj", "{65EC578D-CEDE-433F-9B90-98D998713D47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.Toolkit.UnitTest", "Renta.Toolkit.UnitTest\Renta.Toolkit.UnitTest.csproj", "{0C6D3115-A7C7-4852-B8B4-397D05E8660E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Toolkit.UnitTest", "WeAre.Athenaeum.Toolkit.UnitTest\WeAre.Athenaeum.Toolkit.UnitTest.csproj", "{0C6D3115-A7C7-4852-B8B4-397D05E8660E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F55C67D5-2FDD-4C70-8555-F65A80B07602}"
 EndProject

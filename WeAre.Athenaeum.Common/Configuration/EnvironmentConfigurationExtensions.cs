@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Renta.Toolkit.Extensions;
+using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Configuration
 {

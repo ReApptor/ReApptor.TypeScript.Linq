@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Renta.Toolkit\Renta.Toolkit.csproj" />
+      <ProjectReference Include="..\WeAre.Athenaeum.Toolkit\WeAre.Athenaeum.Toolkit.csproj" />
     </ItemGroup>
 
 </Project>
