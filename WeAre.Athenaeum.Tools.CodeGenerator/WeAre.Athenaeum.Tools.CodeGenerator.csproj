@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0.0</Version>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Product>WeAre Athenaeum</Product>
+        <Title>WeAre Athenaeum Tools Code Generator</Title>
+        <PackageId>WeAre.Athenaeum.Tools.CodeGenerator</PackageId>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Company>Renta Oy</Company>
+        <Copyright>Copyright © 2020, Renta Oy</Copyright>
+    </PropertyGroup>
+
+</Project>

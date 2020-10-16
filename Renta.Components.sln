@@ -38,6 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "React", "React", "{73374FF9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.React.Toolkit", "WeAre.Athenaeum.React.Toolkit\WeAre.Athenaeum.React.Toolkit.csproj", "{AFBB8B09-B4B5-4B5C-941B-09E48748D9E5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{13C11342-8709-487B-A4DB-C6F3AB84B71E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Tools.CodeGenerator", "WeAre.Athenaeum.Tools.CodeGenerator\WeAre.Athenaeum.Tools.CodeGenerator.csproj", "{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,7 @@ Global
 		{95355ABD-089F-4C8A-AC92-B8E3197614BF} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
 		{73374FF9-71EC-44D9-8858-8459A65C2B89} = {B09E5E4A-6E87-440C-B81E-C2944AAE1074}
 		{AFBB8B09-B4B5-4B5C-941B-09E48748D9E5} = {73374FF9-71EC-44D9-8858-8459A65C2B89}
+		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA} = {13C11342-8709-487B-A4DB-C6F3AB84B71E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -102,5 +107,9 @@ Global
 		{AFBB8B09-B4B5-4B5C-941B-09E48748D9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFBB8B09-B4B5-4B5C-941B-09E48748D9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFBB8B09-B4B5-4B5C-941B-09E48748D9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
