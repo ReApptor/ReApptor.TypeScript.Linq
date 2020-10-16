@@ -188,9 +188,7 @@ export default class Utility {
                 return this.getDayOfWeek(dayOfWeekOrDate);
 
             case "number":
-                
                 const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
-                
                 switch (dayOfWeekOrDate) {
                     case 0:
                         return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
