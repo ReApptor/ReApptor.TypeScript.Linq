@@ -27,9 +27,11 @@
       <TypeScriptCompile Include="src\models\FileModel.ts" />
       <TypeScriptCompile Include="src\models\GeoCoordinate.ts" />
       <TypeScriptCompile Include="src\models\GeoLocation.ts" />
+      <TypeScriptCompile Include="src\models\ISelectListItem.ts" />
       <TypeScriptCompile Include="src\models\IPagedList.ts" />
       <TypeScriptCompile Include="src\models\TimeSpan.ts" />
       <TypeScriptCompile Include="src\NumberUtility.ts" />
+      <TypeScriptCompile Include="src\providers\BaseEnumProvider.ts" />
       <TypeScriptCompile Include="src\providers\BaseTransformProvider.ts" />
       <TypeScriptCompile Include="src\providers\ServiceProvider.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />

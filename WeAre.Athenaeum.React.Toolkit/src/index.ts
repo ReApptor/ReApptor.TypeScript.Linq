@@ -4,6 +4,7 @@ import GeoCoordinate from "./models/GeoCoordinate";
 import GeoLocation from "./models/GeoLocation";
 import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
+import ISelectListItem from "./models/ISelectListItem";
 //Utilities:
 import ArrayUtility from "./ArrayUtility";
 import NumberUtility, { INumberFormat, NumberParsingResult } from "./NumberUtility";
@@ -17,11 +18,12 @@ import { StringExtensions } from "./extensions/StringExtensions";
 import { ArrayExtensions } from "./extensions/ArrayExtensions";
 //Providers:
 import BaseTransformProvider, { TFormat } from "./providers/BaseTransformProvider";
+import BaseEnumProvider from "./providers/BaseEnumProvider";
 import ServiceProvider, { ServiceType, IService } from "./providers/ServiceProvider";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
-import BaseLocalizer, { IEnumProvider, ILanguage } from "./localization/BaseLocalizer";
+import BaseLocalizer, { IEnumProvider, ILanguage, ILocalizer } from "./localization/BaseLocalizer";
 
 export {
     //Models:
@@ -30,6 +32,7 @@ export {
     GeoCoordinate,
     TimeSpan,
     IPagedList,
+    ISelectListItem,
     //Utilities:
     ArrayUtility,
     NumberUtility, INumberFormat, NumberParsingResult,
@@ -43,7 +46,8 @@ export {
     ArrayExtensions,
     //Providers:
     BaseTransformProvider, TFormat,
-    ServiceProvider, ServiceType, IService,
+    BaseEnumProvider,
+    ServiceProvider, ServiceType, IService, ILocalizer,
     //Helpers:
     PwaHelper,
     //Other:
