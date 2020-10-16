@@ -10,6 +10,7 @@ export interface ILanguage {
 
 export interface ILocalizer {
     get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+    setLanguage(language: string): boolean;
 }
 
 export interface IEnumProvider {
