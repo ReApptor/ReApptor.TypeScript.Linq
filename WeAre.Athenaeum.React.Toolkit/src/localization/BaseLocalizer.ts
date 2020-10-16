@@ -14,12 +14,6 @@ export interface ILocalizer {
     setLanguage(language: string): boolean;
 }
 
-export interface IEnumProvider {
-    isEnum(typeName: string): boolean;
-
-    getEnumText(enumName: string, value: any): string;
-}
-
 export default abstract class BaseLocalizer implements ILocalizer, IService {
     private readonly _items: Dictionary<string, Dictionary<string, string>> = new Dictionary<string, Dictionary<string, string>>();
     private readonly _supportedLanguages: ILanguage[];

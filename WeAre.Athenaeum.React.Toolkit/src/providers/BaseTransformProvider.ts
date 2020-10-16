@@ -1,4 +1,4 @@
-import {IEnumProvider} from "../localization/BaseLocalizer";
+import {IEnumProvider} from "..";
 import Utility from "../Utility";
 import GeoLocation from "../models/GeoLocation";
 import ServiceProvider, {IService, ServiceType} from "./ServiceProvider";

@@ -1,5 +1,5 @@
 import {Dictionary} from "typescript-collections";
-import {IEnumProvider, ILocalizer} from "../localization/BaseLocalizer";
+import {IEnumProvider, ILocalizer} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
 
 export type ServiceType = string;

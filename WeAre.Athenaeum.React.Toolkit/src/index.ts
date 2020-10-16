@@ -17,13 +17,13 @@ import { DateExtensions } from "./extensions/DateExtensions";
 import { StringExtensions } from "./extensions/StringExtensions";
 import { ArrayExtensions } from "./extensions/ArrayExtensions";
 //Providers:
-import BaseTransformProvider, { TFormat } from "./providers/BaseTransformProvider";
-import BaseEnumProvider from "./providers/BaseEnumProvider";
+import BaseTransformProvider, { ITransformProvider, TFormat } from "./providers/BaseTransformProvider";
+import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
 import ServiceProvider, { ServiceType, IService } from "./providers/ServiceProvider";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
-import BaseLocalizer, { IEnumProvider, ILanguage, ILocalizer } from "./localization/BaseLocalizer";
+import BaseLocalizer, { ILanguage, ILocalizer } from "./localization/BaseLocalizer";
 
 export {
     //Models:
@@ -45,11 +45,11 @@ export {
     StringExtensions,
     ArrayExtensions,
     //Providers:
-    BaseTransformProvider, TFormat,
-    BaseEnumProvider,
+    BaseTransformProvider, ITransformProvider, TFormat,
+    BaseEnumProvider, IEnumProvider,
     ServiceProvider, ServiceType, IService, ILocalizer,
     //Helpers:
     PwaHelper,
     //Other:
-    BaseLocalizer, IEnumProvider, ILanguage
+    BaseLocalizer, ILanguage
 }

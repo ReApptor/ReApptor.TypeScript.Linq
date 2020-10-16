@@ -1,4 +1,10 @@
-import {ServiceProvider, IEnumProvider, IService, ServiceType, ILocalizer, ISelectListItem } from "..";
+import {ServiceProvider, IService, ServiceType, ILocalizer, ISelectListItem } from "..";
+
+export interface IEnumProvider {
+    isEnum(typeName: string): boolean;
+
+    getEnumText(enumName: string, value: any): string;
+}
 
 export default abstract class BaseEnumProvider<TSelectListItem extends ISelectListItem> implements IEnumProvider, IService {
     
@@ -57,7 +63,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
         const getter: ((reverse: boolean) => (TSelectListItem[])) | null | undefined = (this as any)[functionName] as ((reverse: boolean) => TSelectListItem[]) | null | undefined;
         
         const items: TSelectListItem[] = (getter)
-            ? getter(reverse)
+            ? getter.call(this, reverse)
             : [];
 
         if (selectedValues) {
