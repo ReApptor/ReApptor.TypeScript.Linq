@@ -38,7 +38,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
     }
 
     protected getItems(enumSymbol: any, enumType: string, reverse: boolean = false): TSelectListItem[] {
-        let items: number[] = this.getValues(enumSymbol, reverse);
+        const items: number[] = this.getValues(enumSymbol, reverse);
         return items.map(value => this.transform(enumSymbol, enumType, value));
     }
 
@@ -66,7 +66,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
             ? getter.call(this, reverse)
             : [];
 
-        if (selectedValues) {
+        if ((selectedValues != null) && (selectedValues.length > 0) && (items.length > 0)) {
             selectedValues.forEach((value) => {
                 const selectedItem: TSelectListItem | undefined = items.find(item => item.value == value.toString());
                 if (selectedItem) {

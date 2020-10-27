@@ -20,6 +20,8 @@ declare global {
          */
         selectMany<TOut>(collectionSelector: (item: T) => TOut[]): TOut[];
 
+        groupBy(callback: ((item: T) => any) | null | undefined): T[][];
+
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
          * @param item - The object to remove from the Array<T>. The value can be null for reference types.
@@ -78,6 +80,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.selectMany == null) {
         Array.prototype.selectMany = function<T, TOut>(collectionSelector: (item: T) => TOut[]): TOut[] {
             return Utility.selectMany(this, collectionSelector);
+        };
+    }
+
+    if (Array.prototype.groupBy == null) {
+        Array.prototype.groupBy = function<T>(callback: ((item: T) => any) | null | undefined): T[][] {
+            return Utility.groupBy(this, callback);
         };
     }
 

@@ -5,6 +5,7 @@ export enum SortDirection {
 }
 
 export default class ArrayUtility {
+    
     public static sortByProperty<TItem>(propertyName: string, sortDirection: SortDirection | null = SortDirection.Asc): (a: TItem , b: TItem) => number {
         const direction: number = (sortDirection == SortDirection.Desc) ? -1 : 1;
         
@@ -43,4 +44,5 @@ export default class ArrayUtility {
 
         return result;
     }
+    
 }

@@ -424,11 +424,11 @@ export default class Utility {
         return items.filter(async item => await callback(item));
     }
 
-    public static groupBy<T>(list: readonly T[], callback: ((item2: T) => any) | null | undefined = null): any[] {
-        const map = new Map();
-        list.forEach((item) => {
-            const key = callback ? callback(item) : null;
-            const collection = map.get(key);
+    public static groupBy<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[][] {
+        const map = new Map<any, T[]>();
+        items.forEach((item) => {
+            const key: any = callback ? callback(item) : null;
+            const collection: T[] | undefined = map.get(key);
             if (!collection) {
                 map.set(key, [item]);
             } else {
@@ -767,7 +767,7 @@ export default class Utility {
         return tuple;
     }
 
-    public static findValueByAccessor(instance: any, accessor: string | ReadonlyArray<string>): any | null | undefined {
+    public static findValueByAccessor(instance: any, accessor: string | readonly string[]): any | null | undefined {
         if (typeof accessor == "string") {
             const tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
 
