@@ -10,6 +10,7 @@ import ArrayUtility from "./ArrayUtility";
 import NumberUtility, { INumberFormat, NumberParsingResult } from "./NumberUtility";
 import StringUtility from "./StringUtility";
 import BoolUtility from "./BoolUtility";
+import DateUtility from "./DateUtility";
 import Utility from "./Utility";
 import HashCodeUtility from "./HashCodeUtility";
 //Extensions:
@@ -38,6 +39,7 @@ export {
     NumberUtility, INumberFormat, NumberParsingResult,
     StringUtility,
     BoolUtility,
+    DateUtility,
     HashCodeUtility,
     Utility,
     //Extensions:

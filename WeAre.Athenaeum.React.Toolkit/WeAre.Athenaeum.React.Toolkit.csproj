@@ -18,6 +18,7 @@
       <TypeScriptCompile Include="src\ArrayUtility.ts" />
       <TypeScriptCompile Include="src\AthenaeumConstants.ts" />
       <TypeScriptCompile Include="src\BoolUtility.ts" />
+      <TypeScriptCompile Include="src\DateUtility.ts" />
       <TypeScriptCompile Include="src\extensions\ArrayExtensions.ts" />
       <TypeScriptCompile Include="src\extensions\DateExtensions.ts" />
       <TypeScriptCompile Include="src\extensions\StringExtensions.ts" />

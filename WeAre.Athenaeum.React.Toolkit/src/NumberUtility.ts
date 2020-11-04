@@ -41,12 +41,11 @@ export default class NumberUtility {
 
     public static parse(str: string, allowFloat: boolean = true, maxLength: number = 10): NumberParsingResult {
         const info = new NumberParsingResult();
-
         info.inputStr = str;
 
-        let escapedStr: string = str
-            .replace(/([\n\r' ])/gm,"")
-            .replace(/([,])/gm,".");
+        const escapedStr: string = str
+            .replace(/([\n\r' ])/gm, "")
+            .replace(/([,])/gm, ".");
 
         const zeroValues: string[] = [".", "-", "+", "-.", "+."];
 

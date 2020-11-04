@@ -1,4 +1,5 @@
 import Utility from "../Utility";
+import DateUtility from "../DateUtility";
 import HashCodeUtility from "../HashCodeUtility";
 
 declare global {
@@ -82,6 +83,24 @@ declare global {
          * @returns number - The month (a number ranging from 1 to 12).
          */
         getDaysInMonth(): number;
+
+        /**
+         * Compares the value of this instance to a specified Date value and returns an integer that indicates whether this instance is earlier than, the same as, or later than the specified Date value.
+         * @param value - The object to compare to the current instance.
+         * @param inverse - Use "true" to inverse the result.
+         * @returns number - A signed number indicating the relative values of this instance and the value parameter.
+         * Less than zero	This instance is earlier than value.
+         * Zero	This instance is the same as value.
+         * Greater than zero	This instance is later than value.
+         */
+        compareTo(value: Date, inverse?: boolean): number;
+
+        /**
+         * Returns a value indicating whether the value of this instance is equal to the value of the specified Date instance.
+         * @param value - The object to compare to this instance.
+         * @returns boolean - true if the value parameter equals the value of this instance; otherwise, false.
+         */
+        equals(value: Date): boolean;
     }
 }
 
@@ -180,6 +199,18 @@ export const DateExtensions = function () {
     if (Date.prototype.getDaysInMonth == null) {
         Date.prototype.getDaysInMonth = function (): number {
             return Utility.getDaysInMonth(this);
+        };
+    }
+
+    if (Date.prototype.compareTo == null) {
+        Date.prototype.compareTo = function (value: Date, inverse: boolean = false): number {
+            return DateUtility.compare(this, value, inverse);
+        };
+    }
+
+    if (Date.prototype.equals == null) {
+        Date.prototype.equals = function (value: Date): boolean {
+            return DateUtility.equals(this, value);
         };
     }
 };
