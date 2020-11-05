@@ -17,6 +17,7 @@ import HashCodeUtility from "./HashCodeUtility";
 import { DateExtensions } from "./extensions/DateExtensions";
 import { StringExtensions } from "./extensions/StringExtensions";
 import { ArrayExtensions } from "./extensions/ArrayExtensions";
+import { NumberExtensions } from "./extensions/NumberExtensions";
 //Providers:
 import BaseTransformProvider, { ITransformProvider, TFormat } from "./providers/BaseTransformProvider";
 import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
@@ -46,6 +47,7 @@ export {
     DateExtensions,
     StringExtensions,
     ArrayExtensions,
+    NumberExtensions,
     //Providers:
     BaseTransformProvider, ITransformProvider, TFormat,
     BaseEnumProvider, IEnumProvider,

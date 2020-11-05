@@ -10,6 +10,7 @@ import {IEnumProvider} from "./providers/BaseEnumProvider";
 import {DateExtensions} from "./extensions/DateExtensions";
 import {StringExtensions} from "./extensions/StringExtensions";
 import {ArrayExtensions} from "./extensions/ArrayExtensions";
+import {NumberExtensions} from "./extensions/NumberExtensions";
 import ServiceProvider from "./providers/ServiceProvider";
 
 export default class Utility {
@@ -939,3 +940,4 @@ export default class Utility {
 DateExtensions();
 StringExtensions();
 ArrayExtensions();
+NumberExtensions();

@@ -7,7 +7,6 @@ declare global {
 
         /**
          * Converts the value of the current DateTime object to its equivalent string representation using the specified format and the formatting conventions of the current culture.
-         * @param format - A standard or custom date and time format string.
          * @returns string - A string representation of value of the current DateTime object as specified by format.
          */
         format(format: string): string;
