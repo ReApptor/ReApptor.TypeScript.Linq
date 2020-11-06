@@ -5,7 +5,7 @@ import HashCodeUtility from "./HashCodeUtility";
 import FileModel from "./models/FileModel";
 import {Dictionary} from "typescript-collections";
 import {ILocalizer} from "./localization/BaseLocalizer";
-import {TFormat} from "./providers/BaseTransformProvider";
+import {ITransformProvider, TFormat} from "./providers/BaseTransformProvider";
 import {IEnumProvider} from "./providers/BaseEnumProvider";
 import {DateExtensions} from "./extensions/DateExtensions";
 import {StringExtensions} from "./extensions/StringExtensions";
@@ -65,14 +65,12 @@ export default class Utility {
 
         if ((result) && (params) && (params.length > 0)) {
             params.forEach((param, index) => {
-                const str: string = (param != null) ? param.toString() : "";
                 const prefix: string = `{${index}`;
 
                 let i: number = result.indexOf(prefix);
 
                 while (i !== -1) {
-                    let customFormat: boolean = (result[i + 2] === ":") &&
-                        ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
+                    const customFormat: boolean = (result[i + 2] === ":") && ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
 
                     if (customFormat) {
                         if ((param != null) &&
@@ -161,6 +159,13 @@ export default class Utility {
 
                         }
                     } else {
+                        let str: string = "";
+                        if (param != null) {
+                            const transformProvider: ITransformProvider | null = ServiceProvider.getTransformProvider();
+                            str = (transformProvider)
+                                ? transformProvider.toString(param, null)
+                                : param.toString();
+                        }
                         result = result.replace(`{${index}}`, str);
                     }
 
@@ -913,10 +918,11 @@ export default class Utility {
                 });
             });
             return;
-        }
+        }50
 
         const copy: any = this.clone(from);
-        for(const key in copy) {
+        
+        for (const key in copy) {
             if (copy.hasOwnProperty(key)) {
                 const value: any = from[key];
                 to.forEach(instance => {
@@ -928,11 +934,11 @@ export default class Utility {
         }
     }
 
-    public static getExtensionsFromMimeTypes(mimeTypes: string[]): string [] | string {
+    public static getExtensionsFromMimeTypes(mimeTypes: string[]): string {
         if (mimeTypes.length && mimeTypes.every((type: string) => type.includes("/"))) {
             return mimeTypes.map(type => type.split("/")[1]).join(", ");
         }
-        return "Wrong MimeTypes, extensions could not be recognized";
+        return "";
     }
 }
 
