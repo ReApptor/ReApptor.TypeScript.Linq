@@ -6,18 +6,18 @@ namespace WeAre.Athenaeum.Cache.Interface
 {
     public interface ICacheService
     {
-        Task<T> GetAsync<T>(CacheKey key, params object [] identifier);
+        Task<T> GetAsync<T>(string key, params object [] identifier);
         
-        Task SaveAsync(CacheKey key, object obj,  params object [] identifiers);
+        Task SaveAsync(string key, object obj,  params object [] identifiers);
 
-        Task SaveAsync(CacheKey key, object obj, TimeSpan? cacheDuration, params object [] identifiers);
+        Task SaveAsync(string key, object obj, TimeSpan? cacheDuration, params object [] identifiers);
 
-        Task InvalidateCacheAsync(CacheKey[] cacheKeys, params object[] identifier);
+        Task InvalidateCacheAsync(string[] cacheKeys, params object[] identifier);
 
-        Task ClearFolder(params CacheKey[] cacheKeys);
+        Task ClearFolder(params string[] cacheKeys);
 
         Task ClearAll();
 
-        Task ClearEntry(CacheKey cacheKey, Guid entityId);
+        Task ClearEntry(string cacheKey, Guid entityId);
     }
 }

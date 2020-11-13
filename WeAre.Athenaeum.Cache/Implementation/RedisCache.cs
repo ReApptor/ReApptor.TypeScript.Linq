@@ -36,7 +36,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
 
         #region Implementation
 
-        public async Task<T> GetAsync<T>(CacheKey cacheKey, params object[] identifier)
+        public async Task<T> GetAsync<T>(string cacheKey, params object[] identifier)
         {
             string keyToFetch = string.Empty;
             try
@@ -54,13 +54,13 @@ namespace WeAre.Athenaeum.Cache.Implementation
             }
         }
 
-        public async Task SaveAsync(CacheKey cacheKey, object obj, params object[] identifier)
+        public async Task SaveAsync(string cacheKey, object obj, params object[] identifier)
         {
             await SaveAsync(cacheKey, obj, TimeSpan.FromHours(24), identifier);
         }
 
 
-        public async Task SaveAsync(CacheKey cacheKey, object obj, TimeSpan? cacheDuration, params object[] identifier)
+        public async Task SaveAsync(string cacheKey, object obj, TimeSpan? cacheDuration, params object[] identifier)
         {
             TimeSpan duration = cacheDuration ?? TimeSpan.FromHours(24);
 
@@ -69,18 +69,18 @@ namespace WeAre.Athenaeum.Cache.Implementation
             await SaveToCacheAsync(hashKey, obj, key, expiration);
         }
 
-        public async Task InvalidateCacheAsync(CacheKey[] cacheKeys, params object[] identifier)
+        public async Task InvalidateCacheAsync(string[] cacheKeys, params object[] identifier)
         {
-            foreach (CacheKey a in cacheKeys)
+            foreach (string a in cacheKeys)
             {
                 (RedisKey hashKey, string key) = FormatKey(a, identifier);
                 await _cache.HashDeleteAsync(hashKey, key);
             }
         }
 
-        public async Task ClearFolder(params CacheKey[] cacheKeys)
+        public async Task ClearFolder(params string[] cacheKeys)
         {
-            foreach (CacheKey a in cacheKeys)
+            foreach (string a in cacheKeys)
             {
                 (RedisKey hashKey, string _) = FormatKey(a);
                 await _cache.KeyDeleteAsync(hashKey);
@@ -100,7 +100,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
             }
         }
 
-        public async Task ClearEntry(CacheKey cacheKey, Guid entityId)
+        public async Task ClearEntry(string cacheKey, Guid entityId)
         {
             (RedisKey hashKey, string key) = FormatKey(cacheKey, entityId);
 
@@ -202,7 +202,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
             }
         }
 
-        private (RedisKey, string) FormatKey(CacheKey key, params object[] identifiers)
+        private (RedisKey, string) FormatKey(string key, params object[] identifiers)
         {
             var hashKey = (RedisKey) $"{CacheName}{key}";
             var cacheKey = new StringBuilder();
