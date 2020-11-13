@@ -13,7 +13,7 @@ using WeAre.Athenaeum.Cache.Models;
 
 namespace WeAre.Athenaeum.Cache.Implementation
 {
- public class RedisCache : ICacheService
+    public class RedisCache : ICacheService
     {
         #region Fields
 
@@ -134,7 +134,6 @@ namespace WeAre.Athenaeum.Cache.Implementation
         #endregion implementation
 
         #region private
-
 
         /// <summary>
         /// Gets key from cache
