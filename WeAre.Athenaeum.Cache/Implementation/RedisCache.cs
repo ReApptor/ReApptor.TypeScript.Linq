@@ -19,16 +19,17 @@ namespace WeAre.Athenaeum.Cache.Implementation
         private readonly IDatabase _cache;
         private readonly ILogger<RedisCache> _logger;
         private readonly IConnectionMultiplexer _connectionMultiplexer;
-        private const string CacheName = ":Cache:";
+        private readonly string _cacheName;
 
         #endregion
 
         #region Constructor
 
-        public RedisCache(ILogger<RedisCache> logger, IConnectionMultiplexer connectionMultiplexer)
+        public RedisCache(ILogger<RedisCache> logger, IConnectionMultiplexer connectionMultiplexer, string cacheName)
         {
             _logger = logger;
             _connectionMultiplexer = connectionMultiplexer;
+            _cacheName = cacheName;
             _cache = connectionMultiplexer.GetDatabase();
         }
 
@@ -89,7 +90,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
 
         public async Task ClearAll()
         {
-            string keyToScan = $"{CacheName}*";
+            string keyToScan = $"{_cacheName}*";
 
             IEnumerable<RedisKey> keysToDelete = GetKeysAsync(keyToScan);
 
@@ -204,7 +205,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
 
         private (RedisKey, string) FormatKey(string key, params object[] identifiers)
         {
-            var hashKey = (RedisKey) $"{CacheName}{key}";
+            var hashKey = (RedisKey) $"{_cacheName}{key}";
             var cacheKey = new StringBuilder();
 
             if (identifiers != null)
