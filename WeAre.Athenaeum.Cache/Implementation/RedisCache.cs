@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using WeAre.Athenaeum.Cache.Interface;
@@ -19,17 +20,17 @@ namespace WeAre.Athenaeum.Cache.Implementation
         private readonly IDatabase _cache;
         private readonly ILogger<RedisCache> _logger;
         private readonly IConnectionMultiplexer _connectionMultiplexer;
-        private readonly string _cacheName;
+        private readonly RedisSettings _settings;
 
         #endregion
 
         #region Constructor
 
-        public RedisCache(ILogger<RedisCache> logger, IConnectionMultiplexer connectionMultiplexer, string cacheName)
+        public RedisCache(ILogger<RedisCache> logger, IConnectionMultiplexer connectionMultiplexer, RedisSettings settings)
         {
             _logger = logger;
             _connectionMultiplexer = connectionMultiplexer;
-            _cacheName = cacheName;
+            _settings = settings;
             _cache = connectionMultiplexer.GetDatabase();
         }
 
@@ -90,7 +91,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
 
         public async Task ClearAll()
         {
-            string keyToScan = $"{_cacheName}*";
+            string keyToScan = $"{_settings.CacheName}*";
 
             IEnumerable<RedisKey> keysToDelete = GetKeysAsync(keyToScan);
 
@@ -205,7 +206,7 @@ namespace WeAre.Athenaeum.Cache.Implementation
 
         private (RedisKey, string) FormatKey(string key, params object[] identifiers)
         {
-            var hashKey = (RedisKey) $"{_cacheName}{key}";
+            var hashKey = (RedisKey) $"{_settings.CacheName}{key}";
             var cacheKey = new StringBuilder();
 
             if (identifiers != null)
