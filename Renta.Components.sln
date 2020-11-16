@@ -42,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{13C11342
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Tools.CodeGenerator", "WeAre.Athenaeum.Tools.CodeGenerator\WeAre.Athenaeum.Tools.CodeGenerator.csproj", "{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Cache", "WeAre.Athenaeum.Cache\WeAre.Athenaeum.Cache.csproj", "{BF7661CF-74A9-4F56-A409-0885019C42C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Services.Cache", "WeAre.Athenaeum.Services.Cache\WeAre.Athenaeum.Services.Cache.csproj", "{BF7661CF-74A9-4F56-A409-0885019C42C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

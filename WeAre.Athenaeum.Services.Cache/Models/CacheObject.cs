@@ -1,6 +1,6 @@
 using System;
 
-namespace WeAre.Athenaeum.Cache.Models
+namespace WeAre.Athenaeum.Services.Cache.Models
 {
     public class CacheObject<T>
     {

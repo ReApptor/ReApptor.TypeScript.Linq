@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace WeAre.Athenaeum.Cache.Models
+namespace WeAre.Athenaeum.Services.Cache.Models
 {
     public sealed class RedisSettings : IOptions<RedisSettings>
     {

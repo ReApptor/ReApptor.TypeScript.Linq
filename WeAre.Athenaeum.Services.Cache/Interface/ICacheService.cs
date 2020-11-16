@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WeAre.Athenaeum.Cache.Models;
+using WeAre.Athenaeum.Services.Cache.Models;
 
-namespace WeAre.Athenaeum.Cache.Interface
+namespace WeAre.Athenaeum.Services.Cache.Interface
 {
     public interface ICacheService
     {

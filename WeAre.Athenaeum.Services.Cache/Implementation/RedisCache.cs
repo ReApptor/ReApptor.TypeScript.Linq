@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using StackExchange.Redis;
-using WeAre.Athenaeum.Cache.Interface;
-using WeAre.Athenaeum.Cache.Models;
+using WeAre.Athenaeum.Services.Cache.Interface;
+using WeAre.Athenaeum.Services.Cache.Models;
 
-namespace WeAre.Athenaeum.Cache.Implementation
+namespace WeAre.Athenaeum.Services.Cache.Implementation
 {
     public class RedisCache : ICacheService
     {
