@@ -80,7 +80,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
             }
         }
 
-        public async Task ClearFolder(params string[] cacheKeys)
+        public async Task ClearFolderAsync(params string[] cacheKeys)
         {
             foreach (string a in cacheKeys)
             {
@@ -89,7 +89,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
             }
         }
 
-        public async Task ClearAll()
+        public async Task ClearAllAsync()
         {
             string keyToScan = $"{_settings.CacheName}*";
 
@@ -102,7 +102,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
             }
         }
 
-        public async Task ClearEntry(string cacheKey, Guid entityId)
+        public async Task ClearEntryAsync(string cacheKey, object entityId)
         {
             (RedisKey hashKey, string key) = FormatKey(cacheKey, entityId);
 

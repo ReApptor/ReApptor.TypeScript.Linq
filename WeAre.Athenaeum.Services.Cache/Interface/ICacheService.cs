@@ -14,10 +14,10 @@ namespace WeAre.Athenaeum.Services.Cache.Interface
 
         Task InvalidateCacheAsync(string[] cacheKeys, params object[] identifier);
 
-        Task ClearFolder(params string[] cacheKeys);
+        Task ClearFolderAsync(params string[] cacheKeys);
 
-        Task ClearAll();
+        Task ClearAllAsync();
 
-        Task ClearEntry(string cacheKey, Guid entityId);
+        Task ClearEntryAsync(string cacheKey, object entityId);
     }
 }
