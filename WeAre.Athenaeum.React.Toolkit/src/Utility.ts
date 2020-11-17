@@ -922,7 +922,7 @@ export default class Utility {
         }
 
         if (from instanceof Dictionary) {
-            from.keys().forEach(key => {
+            from.keys().forEach((key: string) => {
                 const value: any = from.getValue(key);
                 to.forEach(instance => {
                     if ((instance != null) && (instance.hasOwnProperty(key))) {
@@ -931,7 +931,7 @@ export default class Utility {
                 });
             });
             return;
-        }50
+        }
 
         const copy: any = this.clone(from);
         
