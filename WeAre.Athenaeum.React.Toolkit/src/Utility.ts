@@ -231,12 +231,12 @@ export default class Utility {
         return dayOfWeek.substr(0, 2);
     }
 
-    public static getShortMonth(monthOrDate: number | string | Date): string {
+    public static getShortMonth(monthOrDate: number | Date | string): string {
         const month: string = this.getMonth(monthOrDate);
         return month.substr(0, 3);
     }
     
-    public static getMonth(monthOrDate: number | string | Date): string {
+    public static getMonth(monthOrDate: number | Date | string): string {
 
         if (Utility.isDateType(monthOrDate)) {
             monthOrDate = (monthOrDate as Date).getMonth();
