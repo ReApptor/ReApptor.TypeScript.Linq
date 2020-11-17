@@ -56,8 +56,8 @@ export default class Utility {
         return null;
     }
 
-    public static css(...params: (string | null | undefined | false)[]): string {
-        return (params) ? params.filter(param => param).join(" ").trim() : "";
+    public static css(...params: (readonly string[] | string | null | undefined | false)[]): string {
+        return (params) ? params.filter(param => param).join(" ").replace(",", " ").trim() : "";
     }
 
     public static format(text: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined | any)[]): string {
