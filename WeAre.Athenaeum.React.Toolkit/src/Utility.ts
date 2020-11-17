@@ -120,9 +120,9 @@ export default class Utility {
                                         } else if (format === "MMMM") {
                                             //The abbreviated name of the month.
                                             formattedParam = this.getMonth(param);
-                                        } else if (format === "ddd") {
-                                            //The abbreviated name of the day of the week.
-                                            formattedParam = this.getShortDayOfWeek(param);
+                                        } else if (format === "MMM") {
+                                            //The abbreviated name of the month.
+                                            formattedParam = this.getShortMonth(param);
                                         } else if ((format === "D") || (format === "dd.MM.yyyy")) {
                                             const date: Date = new Date(param);
                                             formattedParam = this.toDateString(date);
@@ -163,7 +163,7 @@ export default class Utility {
                         if (param != null) {
                             const transformProvider: ITransformProvider | null = ServiceProvider.getTransformProvider();
                             str = (transformProvider)
-                                ? transformProvider.toString(param, null)
+                                ? transformProvider.toString(param)
                                 : param.toString();
                         }
                         result = result.replace(`{${index}}`, str);
@@ -229,6 +229,11 @@ export default class Utility {
     public static getShortDayOfWeek(dayOfWeekOrDate: number | Date | string): string {
         const dayOfWeek: string = this.getDayOfWeek(dayOfWeekOrDate);
         return dayOfWeek.substr(0, 2);
+    }
+
+    public static getShortMonth(monthOrDate: number | string | Date): string {
+        const month: string = this.getMonth(monthOrDate);
+        return month.substr(0, 3);
     }
     
     public static getMonth(monthOrDate: number | string | Date): string {

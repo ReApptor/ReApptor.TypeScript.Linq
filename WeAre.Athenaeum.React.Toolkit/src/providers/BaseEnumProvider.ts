@@ -16,7 +16,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
         ServiceProvider.addSingleton(this);
     }
     
-    protected abstract get types(): readonly string[]; 
+    protected abstract get types(): readonly string[];
     
     protected abstract createSelectListItem(value: string, text: string, subtext: string): TSelectListItem;
 
