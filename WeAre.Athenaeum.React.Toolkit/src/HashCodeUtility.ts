@@ -16,10 +16,8 @@ export default class HashCodeUtility {
 
         let hash: number = 0;
 
-        for(let property in object)
-        {
-            if (hasOwnProperty.call(object, property))
-            {
+        for (let property in object) {
+            if (hasOwnProperty.call(object, property)) {
                 //hash += HashCodeUtility.hash(property + HashCodeUtility.getHashCode(object[property]));
                 hash = this.inc(hash, this.getStringHashCode(property));
                 hash = this.inc(hash, this.getHashCode(object[property]));
