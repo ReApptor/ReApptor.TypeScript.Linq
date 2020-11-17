@@ -24,10 +24,10 @@ declare global {
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
-         * @param item - The object to remove from the Array<T>. The value can be null for reference types.
+         * @param item - The object(s) to remove from the Array<T>. The value can be null for reference types.
          * @returns boolean - true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the Array<T>.
          */
-        remove(item: T): void;
+        remove(item: T | readonly T[]): void;
 
         /**
          * Removes the element at the specified index of the Array<T>.
@@ -56,6 +56,8 @@ declare global {
          * @returns Array<T> - An Array<T> that contains distinct elements from the source sequence.
          */
         distinct(callback: ((item: T) => any) | null | undefined): T[];
+
+        order<TKey1, TKey2, TKey3, TKey4, TKey5>(keySelector1: ((item: T) => TKey1), keySelector2?: ((item: T) => TKey2), keySelector3?: ((item: T) => TKey3), keySelector4?: ((item: T) => TKey4), keySelector5?: ((item: T) => TKey5)): void;
 
         toPagedList(pageNumber: number, pageSize: number): IPagedList<T>;
 
@@ -90,7 +92,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.remove == null) {
-        Array.prototype.remove = function<T>(item: T): void {
+        Array.prototype.remove = function<T>(item: T | readonly T[]): void {
             Utility.remove(this, item);
         };
     }
@@ -146,6 +148,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.distinct == null) {
         Array.prototype.distinct = function<T>(callback: ((item: T) => any) | null | undefined = null): T[] {
             return Utility.distinct(this, callback);
+        };
+    }
+
+    if (Array.prototype.order == null) {
+        Array.prototype.order = function<T, TKey1, TKey2, TKey3, TKey4, TKey5>(keySelector1: ((item: T) => TKey1), keySelector2?: ((item: T) => TKey2), keySelector3?: ((item: T) => TKey3), keySelector4?: ((item: T) => TKey4), keySelector5?: ((item: T) => TKey5)): void {
+            ArrayUtility.order(this, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5);
         };
     }
 

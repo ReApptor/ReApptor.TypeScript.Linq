@@ -455,10 +455,18 @@ export default class Utility {
         return dict.values();
     }
 
-    public static remove<T>(items: T[], item: T): void {
-        const index: number = items.indexOf(item);
-        if (index !== -1) {
-            items.splice(index, 1);
+    public static remove<T>(items: T[], item: T | []): void {
+        if (Array.isArray(item)) {
+            const length: number = item.length;
+            for (let i: number = 0; i < length; i++) {
+                Utility.remove(items, item[i]);
+            }
+        }
+        else {
+            const index: number = items.indexOf(item);
+            if (index !== -1) {
+                items.splice(index, 1);
+            }
         }
     }
 

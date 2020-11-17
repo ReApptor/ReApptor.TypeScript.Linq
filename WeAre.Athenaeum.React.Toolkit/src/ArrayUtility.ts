@@ -1,3 +1,6 @@
+import Utility from "./Utility";
+import DateUtility from "./DateUtility";
+
 export enum SortDirection {
     Asc,
 
@@ -31,6 +34,37 @@ export default class ArrayUtility {
                 : 0;
 
         return result * direction;
+    }
+
+    public static order<TSource, TKey1, TKey2, TKey3, TKey4, TKey5>(source: TSource[], keySelector1: ((item: TSource) => TKey1), keySelector2?: ((item: TSource) => TKey2), keySelector3?: ((item: TSource) => TKey3), keySelector4?: ((item: TSource) => TKey4), keySelector5?: ((item: TSource) => TKey5)): void {
+
+        const compare = (keySelector: ((item: TSource) => any), x: TSource, y: TSource): number => {
+            const xKey: any = keySelector(x);
+            const yKey: any = keySelector(y);
+            if (Utility.isDateType(xKey)) {
+                return DateUtility.compare(xKey, yKey);
+            }
+            return (xKey > yKey) ? 1 : (xKey > yKey) ? - 1 : 0;
+        }
+
+        const comparator = (x: TSource, y: TSource): number => {
+            let value: number = compare(keySelector1, x, y);
+            if ((value === 0) && (keySelector2)) {
+                value = compare(keySelector2, x, y);
+                if ((value === 0) && (keySelector3)) {
+                    value = compare(keySelector3, x, y);
+                    if ((value === 0) && (keySelector4)) {
+                        value = compare(keySelector4, x, y);
+                        if ((value === 0) && (keySelector5)) {
+                            value = compare(keySelector5, x, y);
+                        }
+                    }
+                }
+            }
+            return value;
+        }
+
+        source.sort(comparator);
     }
 
     public static chunk<TItem>(givenArray: TItem[], chunkSize: number): TItem[][] {
