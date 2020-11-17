@@ -8,7 +8,7 @@ export type TStringTransformer = (value: any) => string;
 export type TFormat = string | TStringTransformer;
 
 export interface ITransformProvider {
-    toString(item: any, format: TFormat | null | undefined): string;    
+    toString(item: any, format?: TFormat | null): string;    
 }
 
 export default abstract class BaseTransformProvider implements ITransformProvider, IService {
@@ -27,7 +27,7 @@ export default abstract class BaseTransformProvider implements ITransformProvide
             : "";
     }
     
-    public toString(item: any, format: TFormat | null | undefined = null): string {
+    public toString(item: any, format?: TFormat | null): string {
 
         if (item == null) {
             return "";
