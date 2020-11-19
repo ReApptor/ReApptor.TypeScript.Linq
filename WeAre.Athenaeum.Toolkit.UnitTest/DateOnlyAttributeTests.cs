@@ -29,7 +29,6 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest
         {
             const int timezoneOffset = 120;
             TimeZoneInfo defaultTimeZone = Utility.GetTimeZone("Europe/Helsinki", "FLE Standard Time");
-            const string dateTimePattern = "yyyy-MM-dd hh:mm:ss";
             var date = new DateTime();
             var expectedDate = date.Date.AddMinutes(timezoneOffset);
             
