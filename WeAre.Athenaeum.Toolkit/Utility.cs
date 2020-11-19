@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -31,10 +32,37 @@ namespace WeAre.Athenaeum.Toolkit
                 if (instance is DateTime date)
                 {
                     DateTime local = ToLocal(date, defaultTimeZone, timezoneOffset);
-                    bool dateOnly = (instanceProperty.GetCustomAttribute<DateOnlyAttribute>() != null);
+                    bool dateOnly = (instanceProperty?.GetCustomAttribute<DateOnlyAttribute>() != null);
                     dateOnly |= local.IsDateOnly();
                     DateTime value = (dateOnly) ? local : date.AsUtc();
                     return value;
+                }
+
+                if (instance is IList list)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        object instanceItem = list[i];
+
+                        object newInstanceItem = ToLocal(instanceProperty, instanceItem, defaultTimeZone, timezoneOffset);
+
+                        if (newInstanceItem != instanceItem)
+                        {
+                            list[i] = newInstanceItem;
+                        }
+                    }
+
+                    return instance;
+                }
+
+                if (instance is IEnumerable enumeration)
+                {
+                    foreach (object instanceItem in enumeration)
+                    {
+                        ToLocal(instanceItem, defaultTimeZone, timezoneOffset);
+                    }
+
+                    return instance;
                 }
 
                 Type type = instance.GetType();
@@ -44,13 +72,13 @@ namespace WeAre.Athenaeum.Toolkit
                     PropertyInfo[] properties = GetAllProperties(type);
                     foreach (PropertyInfo property in properties)
                     {
-                        if ((property.CanRead) && (property.CanWrite))
+                        if (property.CanRead)
                         {
                             object value = property.QuickGetValue(instance);
                             
                             object newValue = ToLocal(property, value, defaultTimeZone, timezoneOffset);
                             
-                            if (newValue != value)
+                            if ((property.CanWrite) && (newValue != value))
                             {
                                 property.QuickSetValue(instance, newValue);
                             }
