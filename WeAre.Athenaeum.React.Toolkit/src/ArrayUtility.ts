@@ -44,7 +44,11 @@ export default class ArrayUtility {
             if (Utility.isDateType(xKey)) {
                 return DateUtility.compare(xKey, yKey);
             }
-            return (xKey > yKey) ? 1 : (xKey > yKey) ? - 1 : 0;
+            return (xKey > yKey)
+                ? 1
+                : (xKey < yKey)
+                    ? -1
+                    : 0;
         }
 
         const comparator = (x: TSource, y: TSource): number => {
