@@ -17,10 +17,12 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
     {
         #region Fields
 
-        private readonly IDatabase _cache;
+        private IDatabase _cache;
         private readonly ILogger<RedisCache> _logger;
         private readonly IConnectionMultiplexer _connectionMultiplexer;
         private readonly RedisSettings _settings;
+
+        private IDatabase Cache => _cache ??= _connectionMultiplexer.GetDatabase();
 
         #endregion
 
@@ -28,10 +30,9 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
 
         public RedisCache(ILogger<RedisCache> logger, IConnectionMultiplexer connectionMultiplexer, RedisSettings settings)
         {
-            _logger = logger;
-            _connectionMultiplexer = connectionMultiplexer;
-            _settings = settings;
-            _cache = connectionMultiplexer.GetDatabase();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _connectionMultiplexer = connectionMultiplexer ?? throw new ArgumentNullException(nameof(connectionMultiplexer));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
         #endregion
@@ -76,7 +77,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
             foreach (string a in cacheKeys)
             {
                 (RedisKey hashKey, string key) = FormatKey(a, identifier);
-                await _cache.HashDeleteAsync(hashKey, key);
+                await Cache.HashDeleteAsync(hashKey, key);
             }
         }
 
@@ -85,7 +86,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
             foreach (string a in cacheKeys)
             {
                 (RedisKey hashKey, string _) = FormatKey(a);
-                await _cache.KeyDeleteAsync(hashKey);
+                await Cache.KeyDeleteAsync(hashKey);
             }
         }
 
@@ -97,7 +98,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
 
             foreach (RedisKey key in keysToDelete)
             {
-                await _cache.KeyDeleteAsync(key);
+                await Cache.KeyDeleteAsync(key);
                 _logger.LogDebug($"Removing Key {key.ToString()} from cache");
             }
         }
@@ -106,12 +107,12 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
         {
             (RedisKey hashKey, string key) = FormatKey(cacheKey, entityId);
 
-            HashEntry[] allHashKeys = await _cache.HashGetAllAsync(hashKey);
+            HashEntry[] allHashKeys = await Cache.HashGetAllAsync(hashKey);
             foreach (HashEntry hasEntry in allHashKeys)
             {
                 if (hasEntry.Name.StartsWith(key))
                 {
-                    await _cache.HashDeleteAsync(hashKey, hasEntry.Name);
+                    await Cache.HashDeleteAsync(hashKey, hasEntry.Name);
                 }
             }
         }
@@ -150,7 +151,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
                     throw new ArgumentException(nameof(key));
                 }
 
-                string jsonObject = await _cache.HashGetAsync(hashKey, key);
+                string jsonObject = await Cache.HashGetAsync(hashKey, key);
 
                 if (jsonObject == null)
                 {
@@ -166,7 +167,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
 
                 if (DateTime.UtcNow > deserialized.Expiration)
                 {
-                    await _cache.HashDeleteAsync(hashKey, key);
+                    await Cache.HashDeleteAsync(hashKey, key);
                     return default;
                 }
 
@@ -195,7 +196,7 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
 
-                await _cache.HashSetAsync(cacheKey, hashField, serialized);
+                await Cache.HashSetAsync(cacheKey, hashField, serialized);
             }
             catch (Exception ex)
             {
