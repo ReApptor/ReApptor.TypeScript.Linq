@@ -353,18 +353,18 @@ export default class Utility {
         return callback(Utility.max(items, callback));
     }
 
-    public static min<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
+    public static min<T, TValue = number | Date>(items: readonly T[], callback: ((item: T) => TValue) | null = null): T {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
 
-        callback = callback || ((item) => (item as any) as number);
+        callback = callback || ((item) => (item as any) as TValue);
 
         let minItem: T = items[0];
-        let minValue: number = callback(minItem);
+        let minValue: TValue = callback(minItem);
         const length: number = items.length;
         for (let i: number = 1; i < length; i++) {
             const item: T = items[i];
-            const value: number = callback(item);
+            const value: TValue = callback(item);
             if (value < minValue) {
                 minValue = value;
                 minItem = item;
@@ -373,7 +373,7 @@ export default class Utility {
         return minItem;
     }
 
-    public static minValue<T>(items: readonly T[], callback: (item: T) => number): number {
+    public static minValue<T, TValue = number | Date>(items: readonly T[], callback: (item: T) => TValue): TValue {
         return callback(Utility.min(items, callback));
     }
 
