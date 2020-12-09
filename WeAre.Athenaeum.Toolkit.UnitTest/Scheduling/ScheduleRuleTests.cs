@@ -1010,7 +1010,6 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
         {
             const string rule = "Monday-Friday; Once At 05:25;";
 
-            DateTime now = DateTime.Now;
             var start = new DateTime(2020, 12, 01, 00, 00, 00);
             var end = new DateTime(2020, 12, 15, 23, 59, 59);
 
