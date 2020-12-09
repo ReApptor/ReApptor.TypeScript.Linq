@@ -1,9 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52c7de01_002D161d_002D41fa_002Dba0c_002D4d6368b274db/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ProcessLockTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.DateOnlyAttributeTests.RequestWithArrayTest&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bafaf3aa_002Dfc7a_002D45cb_002Da3d1_002D0728ffe35120/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Tests&amp;gt;\&amp;lt;Renta.Toolkit.UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Project Location="/Users/popovan/SS/BB-MAC/renta-components/WeAre.Athenaeum.Toolkit.UnitTest" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;WeAre.Athenaeum.Toolkit.UnitTest&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

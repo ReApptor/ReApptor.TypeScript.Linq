@@ -1004,5 +1004,32 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
                 Assert.True(item.Month <= 3);
             }
         }
+
+        [Fact]
+        public void OnceBetweenMondayFridayTest()
+        {
+            const string rule = "Monday-Friday; Once At 05:25;";
+
+            DateTime now = DateTime.Now;
+            var start = new DateTime(2020, 12, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 15, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 12, 01, 05, 25, 00),
+                new DateTime(2020, 12, 02, 05, 25, 00),
+                new DateTime(2020, 12, 03, 05, 25, 00),
+                new DateTime(2020, 12, 04, 05, 25, 00),
+                new DateTime(2020, 12, 07, 05, 25, 00),
+                new DateTime(2020, 12, 08, 05, 25, 00),
+                new DateTime(2020, 12, 09, 05, 25, 00),
+                new DateTime(2020, 12, 10, 05, 25, 00),
+                new DateTime(2020, 12, 11, 05, 25, 00),
+                new DateTime(2020, 12, 14, 05, 25, 00),
+                new DateTime(2020, 12, 15, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
     }
 }
