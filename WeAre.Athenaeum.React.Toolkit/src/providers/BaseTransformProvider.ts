@@ -21,7 +21,7 @@ export default abstract class BaseTransformProvider implements ITransformProvide
         return "ITransformProvider";
     }
 
-    public locationToString(location: GeoLocation | null) {
+    public locationToString(location: GeoLocation | null): string {
         return (location != null)
             ? [location.address, location.postalCode, location.city].filter(item => !!item).join(", ")
             : "";

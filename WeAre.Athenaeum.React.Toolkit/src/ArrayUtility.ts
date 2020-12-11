@@ -82,5 +82,33 @@ export default class ArrayUtility {
 
         return result;
     }
-    
+
+    public static take<T>(items: readonly T[], count: number): T[] {
+        if (count < 0) {
+            count = 0;
+        }
+        let length: number = items.length;
+        if ((count >= 0) && (count < length)) {
+            length = count;
+        }
+        const result = new Array(length);
+        for (let i: number = 0; i < length; i++) {
+            result[i] = items[i];
+        }
+        return result;
+    }
+
+    public static skip<T>(items: readonly T[], count: number): T[] {
+        if (count < 0) {
+            count = 0;
+        }
+        const length: number = items.length;
+        const firstIndex: number = (count < length) ? count : length;
+        const newLength: number = length - firstIndex;
+        const result = new Array(newLength);
+        for (let dest: number = 0, source: number = firstIndex; dest < newLength; dest++, source++) {
+            result[dest] = items[source];
+        }
+        return result;
+    }
 }
