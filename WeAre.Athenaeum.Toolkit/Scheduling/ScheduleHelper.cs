@@ -7,7 +7,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
     public static class ScheduleHelper
     {
         #region Helpers
-        
+
         public static TimeZoneInfo FetchCountryTimeZone(string countryCode)
         {
             if ((!string.IsNullOrWhiteSpace(countryCode)) &&
@@ -24,8 +24,11 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                     case "nb":
                     case "nb-no":
                     case "nn-no":
-                        //Sweden, Norway
-                        return Utility.GetTimeZone("W. Europe Standard Time");
+                    case "nor":
+                    case "pl":
+                    case "pl-pl":
+                        //Sweden, Norway, Poland
+                        return Utility.GetTimeZone("Europe/Stockholm, W. Europe Standard Time");
 
                     case "ee":
                     case "et-ee":
@@ -38,6 +41,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
 
                 throw new ArgumentOutOfRangeException($"Time zone for country \"{countryCode}\" cannot be fetched.");
             }
+
             return null;
         }
 
@@ -48,17 +52,18 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
 
         public static DayOfWeek GetLastDayOfWeek()
         {
-            int first = (int)GetFirstDayOfWeek();
+            int first = (int) GetFirstDayOfWeek();
             int last = first + 6;
             if (last > 6)
             {
                 last = last - 6;
             }
+
             return (DayOfWeek) last;
         }
-        
+
         #endregion
-        
+
         #region DateTime Extensions
 
         public static int GetLastDayOfMonth(this DateTime timestamp)
@@ -83,6 +88,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                 {
                     weekNumber++;
                 }
+
                 weeks.Add(weekNumber);
                 firstDay = firstDay.AddDays(1);
                 if (firstDay.Month != month)
@@ -90,6 +96,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                     break;
                 }
             }
+
             return weeks.ToArray();
         }
 
@@ -111,7 +118,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                 throw new ArgumentOutOfRangeException(nameof(start), $"Start date \"{startDate}\" should be less then timestamp date \"{date}\".");
 
             TimeSpan different = (date - startDate);
-            int weekIndex = different.Days/7;
+            int weekIndex = different.Days / 7;
             return weekIndex;
         }
 
@@ -122,6 +129,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
             {
                 timestamp = timestamp.AddDays(-1);
             }
+
             return timestamp;
         }
 
@@ -141,6 +149,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                 months++;
                 startDate = startDate.AddMonths(1);
             }
+
             return months;
         }
 
@@ -193,7 +202,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
             int nextWeekMonth = nextWeek.Month;
             return (month != nextWeekMonth);
         }
-        
+
         #endregion
     }
 }
