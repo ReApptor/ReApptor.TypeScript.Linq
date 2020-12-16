@@ -399,6 +399,12 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
             scheduler = new Scheduler(new[] { rule });
             return scheduler;
         }
+        
+        public static string ToScript(string rule)
+        {
+            var scheduler = new Scheduler(rule);
+            return scheduler.ToScript();
+        }
 
         public static string[] GetSupportedRuleNames()
         {

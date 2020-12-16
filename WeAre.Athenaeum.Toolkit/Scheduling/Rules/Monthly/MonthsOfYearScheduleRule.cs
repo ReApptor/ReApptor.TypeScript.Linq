@@ -13,7 +13,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling.Rules.Monthly
     ///     "1, 3, 5 January, February"                        - executes task on 1, 2 and 5 of January and February
     ///     "1, 3, 5 Any Month"                                - executes task on 1, 2 and 5 of any month
     /// </example>
-    [ScheduleRule(@"{DaysNumbers} [Of] {MonthsOfYear} [{Years}]", Scheduler.MonthlyRulesPriority)]
+    [ScheduleRule(@"{DaysNumbers} [Of] {MonthsOfYear} [month] [{Years}]", Scheduler.MonthlyRulesPriority)]
     public class MonthsOfYearScheduleRule : BaseScheduleRule
     {
         #region Constructors

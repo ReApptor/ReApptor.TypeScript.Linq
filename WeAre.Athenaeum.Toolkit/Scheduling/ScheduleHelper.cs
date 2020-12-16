@@ -69,7 +69,8 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
         public static int GetLastDayOfMonth(this DateTime timestamp)
         {
             DateTime date = timestamp.Date;
-            DateTime nextMonth = new DateTime(date.Year, date.Month + 1, 1);
+            DateTime firstDay = new DateTime(date.Year, date.Month, 1);
+            DateTime nextMonth = firstDay.AddMonths(1);
             DateTime lastDayOfMonth = nextMonth.AddDays(-1);
             return lastDayOfMonth.Day;
         }
@@ -192,6 +193,47 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
             DateTime previousWeek = date.AddDays(-7);
             int previousWeekMonth = previousWeek.Month;
             return (month != previousWeekMonth);
+        }
+
+        public static bool IsWorkingDay(this DateTime timestamp)
+        {
+            return (timestamp.DayOfWeek >= DayOfWeek.Monday) && (timestamp.DayOfWeek <= DayOfWeek.Friday);
+        }
+
+        public static DateTime GetFirstWorkingDayOfMonthDay(this DateTime timestamp)
+        {
+            var day = new DateTime(timestamp.Year, timestamp.Month, 1);
+            
+            while (!day.IsWorkingDay())
+            {
+                day = day.AddDays(1);
+            }
+
+            return day;
+        }
+
+        public static DateTime GetLastWorkingDayOfMonthDay(this DateTime timestamp)
+        {
+            var day = new DateTime(timestamp.Year, timestamp.Month, timestamp.GetLastDayOfMonth());
+            
+            while (!day.IsWorkingDay())
+            {
+                day = day.AddDays(-1);
+            }
+
+            return day;
+        }
+
+        public static bool IsFirstWorkingDayOfMonth(this DateTime timestamp)
+        {
+            DateTime firstWorkingDayOfMonth = GetFirstWorkingDayOfMonthDay(timestamp);
+            return (timestamp.Day == firstWorkingDayOfMonth.Day);
+        }
+
+        public static bool IsLastWorkingDayOfMonth(this DateTime timestamp)
+        {
+            DateTime lastWorkingDayOfMonth = GetLastWorkingDayOfMonthDay(timestamp);
+            return (timestamp.Day == lastWorkingDayOfMonth.Day);
         }
 
         public static bool IsLastDayOfWeekOfMonth(this DateTime timestamp)

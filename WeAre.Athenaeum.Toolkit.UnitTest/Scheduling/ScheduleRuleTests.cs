@@ -19,7 +19,24 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("fi");
         }
-        
+
+        private void AssertRuleMatch(string primaryRule, string[] rules, DateTime[] correctDates, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            AssertRuleMatch(primaryRule, correctDates, startDate, endDate);
+            
+            string primaryScript = Scheduler.ToScript(primaryRule);
+            
+            foreach (string rule in rules)
+            {
+                AssertRuleMatch(rule, correctDates, startDate, endDate);
+            
+                string script = Scheduler.ToScript(rule);
+                
+                string error = $"Alternative rule \"{rule}\" does not math to the primary rule \"{rule}\" (Primary script: \"{primaryScript}\", alternative script: \"{script}\").";
+                Assert.True(script == primaryScript, error);
+            }
+        }
+
         private void AssertRuleMatch(string rule, DateTime[] correctDates, DateTime? startDate = null, DateTime? endDate = null)
         {
             var begin = new DateTime(2014, 01, 01);
@@ -1026,6 +1043,97 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
                 new DateTime(2020, 12, 11, 05, 25, 00),
                 new DateTime(2020, 12, 14, 05, 25, 00),
                 new DateTime(2020, 12, 15, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
+
+        [Fact]
+        public void FirstDayOfAnyMonthUsingMonthsOfYearScheduleRuleTest()
+        {
+            const string rule = "1 of any month; Once At 05:25;";
+            string[] alternativeRules = { "1 of any; Once At 05:25;" };
+
+            var start = new DateTime(2020, 10, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 31, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 10, 01, 05, 25, 00),
+                new DateTime(2020, 11, 01, 05, 25, 00),
+                new DateTime(2020, 12, 01, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, alternativeRules, dates, start, end);
+        }
+
+        [Fact]
+        public void FirstDayOfAnyMonthTest()
+        {
+            const string rule = "First day of month; Once At 05:25;";
+
+            var start = new DateTime(2020, 10, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 31, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 10, 01, 05, 25, 00),
+                new DateTime(2020, 11, 01, 05, 25, 00),
+                new DateTime(2020, 12, 01, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
+
+        [Fact]
+        public void LastDayOfAnyMonthTest()
+        {
+            const string rule = "Last day of month; Once At 05:25;";
+
+            var start = new DateTime(2020, 10, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 31, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 10, 31, 05, 25, 00),
+                new DateTime(2020, 11, 30, 05, 25, 00),
+                new DateTime(2020, 12, 31, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
+
+        [Fact]
+        public void FirstWorkingOfAnyMonthTest()
+        {
+            const string rule = "First working day; Once At 05:25;";
+
+            var start = new DateTime(2020, 10, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 31, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 10, 01, 05, 25, 00),
+                new DateTime(2020, 11, 02, 05, 25, 00),
+                new DateTime(2020, 12, 01, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
+
+        [Fact]
+        public void LastWorkingOfAnyMonthTest()
+        {
+            const string rule = "Last working day; Once At 05:25;";
+
+            var start = new DateTime(2020, 10, 01, 00, 00, 00);
+            var end = new DateTime(2020, 12, 31, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2020, 10, 30, 05, 25, 00),
+                new DateTime(2020, 11, 30, 05, 25, 00),
+                new DateTime(2020, 12, 31, 05, 25, 00),
             };
 
             AssertRuleMatch(rule, dates, start, end);
