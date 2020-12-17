@@ -28,7 +28,7 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
                     case "pl":
                     case "pl-pl":
                         //Sweden, Norway, Poland
-                        return Utility.GetTimeZone("Europe/Stockholm, W. Europe Standard Time");
+                        return Utility.GetTimeZone("Europe/Stockholm", "Europe/Stockholm, W. Europe Standard Time");
 
                     case "ee":
                     case "et-ee":
