@@ -26,6 +26,7 @@ import ServiceProvider, { ServiceType, IService } from "./providers/ServiceProvi
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
 import BaseLocalizer, { ILanguage, ILocalizer } from "./localization/BaseLocalizer";
+import AthenaeumConstants from "./AthenaeumConstants";
 
 export {
     //Models:
@@ -55,5 +56,6 @@ export {
     //Helpers:
     PwaHelper,
     //Other:
-    BaseLocalizer, ILanguage
+    BaseLocalizer, ILanguage,
+    AthenaeumConstants
 }
