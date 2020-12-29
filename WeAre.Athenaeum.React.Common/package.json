@@ -5,6 +5,7 @@
   "main": "lib/src/index.js",
   "types": "lib/types/src/index.d.ts",
   "devDependencies": {
+    "@babel/types": "7.11.5",
     "@types/jest": "^26.0.14",
     "@types/jquery": "^3.3.29",
     "@types/node": "11.9.4",
