@@ -12,6 +12,11 @@ export default class AthenaeumConstants {
 
     public static readonly okStatusCode: number = 200;
 
+    /**
+     * 768px (bootstrap: $break-md)
+     */
+    public static readonly desktopMinWidth: number = 768;
+
     public static readonly newLineRegex: RegExp = /\r\n|\\r\\n|\n\r|\n|\\n|\r|<br>|<br\/>/g;
 
     public static readonly markTagRegex: RegExp = /<\s*mark[^>]*>(.*?)<\s*\/\s*mark>/ig;
@@ -19,4 +24,6 @@ export default class AthenaeumConstants {
     public static readonly smallTagRegex: RegExp = /<\s*small[^>]*>(.*?)<\s*\/\s*small>/ig;
 
     public static readonly defaultGuid: string = "00000000-0000-0000-0000-000000000000";
+
+    public static readonly apiError = "__API__";
 }
