@@ -39,8 +39,7 @@ pipelines:
                 - cd WeAre.Athenaeum.React.Common
                 - npm config set strict-ssl true
                 - npm config set ca ""
-                - echo ${MYGET_NPM_SOURCE}
-                - npm config set @weare:registry=${MYGET_NPM_SOURCE}
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
                 # Run tests
