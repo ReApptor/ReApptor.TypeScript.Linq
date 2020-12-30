@@ -301,7 +301,7 @@ describe('inFuture', function() {
         expect(result).toBe(false);
     });
     
-    test('input-null', function () {
+    test('inputIsNull', function () {
         const dateInFuture = null;
 
         const result = Utility.inFuture(dateInFuture);
@@ -335,7 +335,7 @@ describe('inPast', function() {
         expect(result).toBe(false);
     });
 
-    test('input-null', function () {
+    test('inputIsNull', function () {
         const dateInFuture = null;
 
         const result = Utility.inPast(dateInFuture);
