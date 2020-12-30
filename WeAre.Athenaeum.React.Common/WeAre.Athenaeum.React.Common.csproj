@@ -15,8 +15,33 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="src\base\BaseAsyncComponent.ts" />
+      <TypeScriptCompile Include="src\base\BaseComponent.ts" />
+      <TypeScriptCompile Include="src\base\BasePage.ts" />
+      <TypeScriptCompile Include="src\Enums.ts" />
       <TypeScriptCompile Include="src\index.ts" />
+      <TypeScriptCompile Include="src\models\AlertModel.ts" />
+      <TypeScriptCompile Include="src\models\ApplicationContext.ts" />
+      <TypeScriptCompile Include="src\models\DescriptionModel.ts" />
+      <TypeScriptCompile Include="src\models\DocumentPreviewModel.ts" />
+      <TypeScriptCompile Include="src\models\IApplicationSettings.ts" />
+      <TypeScriptCompile Include="src\models\BasePageParameters.ts" />
+      <TypeScriptCompile Include="src\models\IConfirmation.ts" />
+      <TypeScriptCompile Include="src\models\IErrorPageParameters.ts" />
+      <TypeScriptCompile Include="src\models\IPageContainer.ts" />
+      <TypeScriptCompile Include="src\models\IUser.ts" />
+      <TypeScriptCompile Include="src\models\UserContext.ts" />
+      <TypeScriptCompile Include="src\models\PageRoute.ts" />
+      <TypeScriptCompile Include="src\models\IResponseContainer.ts" />
+      <TypeScriptCompile Include="src\models\ServerError.ts" />
+      <TypeScriptCompile Include="src\providers\ApiProvider.ts" />
+      <TypeScriptCompile Include="src\providers\BasePageDefinitions.ts" />
+      <TypeScriptCompile Include="src\providers\ComponentHelper.ts" />
+      <TypeScriptCompile Include="src\providers\DocumentEventsProvider.ts" />
+      <TypeScriptCompile Include="src\providers\PageCacheProvider.ts" />
+      <TypeScriptCompile Include="src\providers\PageRouteProvider.ts" />
       <TypeScriptCompile Include="src\ReactUtility.ts" />
+      <TypeScriptCompile Include="src\StylesUtility.ts" />
     </ItemGroup>
 
 </Project>

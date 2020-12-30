@@ -14,5 +14,5 @@ export default class GeoLocation extends GeoCoordinate {
 
     public formattedAddress: string = "";
 
-    public isGeoLocation: boolean = true;
+    public isGeoLocation: true = true;
 }
