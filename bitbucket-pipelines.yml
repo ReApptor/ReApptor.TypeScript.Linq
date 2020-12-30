@@ -16,10 +16,15 @@ pipelines:
                 - npm config set ca ""
                 # Install dependencies
                 - npm install
+                - npm install -g @microsoft/api-extractor
+                - npm install -g @microsoft/api-documenter
                 # Run tests
                 # - npm test
                 # Run build
                 - npm run build
+                - mkdir ./etc
+                - api-extractor run --local
+                - api-documenter markdown -i ./temp/ -o ./docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -42,15 +47,10 @@ pipelines:
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
-                - npm install -g @microsoft/api-extractor
-                - npm install -g @microsoft/api-documenter
                 # Run tests
                 # - npm test
                 # Run build
                 - npm run build
-                - mkdir ./WeAre.Athenaeum.React.Toolkit/etc
-                - api-extractor run --local
-                - api-documenter markdown -i ./temp/ -o ./docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
