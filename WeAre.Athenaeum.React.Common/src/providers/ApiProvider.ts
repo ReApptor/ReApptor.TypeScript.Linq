@@ -3,12 +3,12 @@
  */
 import {AthenaeumConstants, Utility} from "@weare/athenaeum-toolkit";
 import {IBaseComponent} from "../base/BaseComponent";
-import ch from "./ComponentHelper";
-import PageRouteProvider from "./PageRouteProvider";
-import ServerError from "../models/ServerError";
-import {IResponseContainer} from "../models/IResponseContainer";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
+import ServerError from "../models/ServerError";
 import IUser from "../models/IUser";
+import {IResponseContainer} from "../models/IResponseContainer";
+import PageRouteProvider from "./PageRouteProvider";
+import ch from "./ComponentHelper";
 
 export default class ApiProvider {
 

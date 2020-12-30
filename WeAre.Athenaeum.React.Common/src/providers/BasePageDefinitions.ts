@@ -1,9 +1,8 @@
 import React from "react";
-import {IService, ServiceType} from "../../../WeAre.Athenaeum.React.Toolkit/src";
+import {IService, ServiceProvider, ServiceType} from "@weare/athenaeum-toolkit";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, IBasePageConstructor} from "../base/BasePage";
 import {Dictionary} from "typescript-collections";
-import ServiceProvider from "../../../WeAre.Athenaeum.React.Toolkit/src/providers/ServiceProvider";
 
 export interface IPageDefinitions {
     createPageAsync(route: PageRoute): Promise<IBasePage>;
