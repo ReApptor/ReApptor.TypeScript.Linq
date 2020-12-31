@@ -1,6 +1,7 @@
 import {AlertType} from "../Enums";
 
 export default class AlertModel {
+    
     public message: string = "";
 
     public messageParams: string[] | null = null;

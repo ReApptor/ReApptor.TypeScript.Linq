@@ -1,7 +1,7 @@
 import {Align, Justify} from "../Enums";
 
 export default class DescriptionModel {
-
+    
     public readonly: boolean = false;
 
     public className: string | null = null;
@@ -12,5 +12,7 @@ export default class DescriptionModel {
 
     public justify: Justify = Justify.Left;
 
-    onChange?(value: string): Promise<void>
+    onChange?(value: string): Promise<void>;
+
+    public isDescriptionModel: boolean = true;
 }
