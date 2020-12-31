@@ -1,7 +1,7 @@
 
 export type ConfirmationDialogTitleCallback = () => string | IConfirmation;
 
-export interface IConfirmation {
+export default interface IConfirmation {
     title: string;
     placeholder?: string;
     minLength?: number;

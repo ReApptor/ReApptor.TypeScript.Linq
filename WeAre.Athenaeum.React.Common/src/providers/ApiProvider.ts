@@ -6,7 +6,7 @@ import {IBaseComponent} from "../base/BaseComponent";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ServerError from "../models/ServerError";
 import IUser from "../models/IUser";
-import {IResponseContainer} from "../models/IResponseContainer";
+import IResponseContainer from "../models/IResponseContainer";
 import PageRouteProvider from "./PageRouteProvider";
 import ch from "./ComponentHelper";
 

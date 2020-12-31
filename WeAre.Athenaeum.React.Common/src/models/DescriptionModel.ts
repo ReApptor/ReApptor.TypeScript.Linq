@@ -1,6 +1,6 @@
 import {Align, Justify} from "../Enums";
 
-export class DescriptionModel {
+export default class DescriptionModel {
 
     public readonly: boolean = false;
 

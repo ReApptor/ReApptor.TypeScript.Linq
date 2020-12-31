@@ -6,9 +6,9 @@ import {IBaseComponent} from "../base/BaseComponent";
 import AlertModel from "../models/AlertModel";
 import IUser from "../models/IUser";
 import UserContext from "../models/UserContext";
-import {ConfirmationDialogTitleCallback, IConfirmation} from "../models/IConfirmation";
+import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
-import {DescriptionModel} from "../models/DescriptionModel";
+import DescriptionModel from "../models/DescriptionModel";
 
 /**
  * BaseComponent helper

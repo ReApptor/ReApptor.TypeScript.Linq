@@ -2,11 +2,11 @@ import React from "react";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import {Utility} from "@weare/athenaeum-toolkit";
 import ReactUtility from "../ReactUtility";
-import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
+import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
 

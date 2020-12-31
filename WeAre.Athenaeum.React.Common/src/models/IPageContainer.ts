@@ -1,7 +1,7 @@
 import AlertModel from "./AlertModel";
-import {ConfirmationDialogTitleCallback, IConfirmation} from "./IConfirmation";
+import IConfirmation, {ConfirmationDialogTitleCallback} from "./IConfirmation";
 import DocumentPreviewModel from "./DocumentPreviewModel";
-import {DescriptionModel} from "./DescriptionModel";
+import DescriptionModel from "./DescriptionModel";
 
 export default interface IPageContainer {
     readonly alert: AlertModel;

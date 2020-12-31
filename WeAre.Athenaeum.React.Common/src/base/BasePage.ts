@@ -7,13 +7,13 @@ import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
 import {AlertType, SwipeDirection} from "../Enums";
-import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
-import {ConfirmationDialogTitleCallback, IConfirmation} from "../models/IConfirmation";
+import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
-import {DescriptionModel} from "../models/DescriptionModel";
+import DescriptionModel from "../models/DescriptionModel";
 import IPageContainer from "../models/IPageContainer";
 import UserContext from "../models/UserContext";
 import IUser from "../models/IUser";
+import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
     manual?: string;
