@@ -1,4 +1,4 @@
-import {ErrorInfo} from "react";
+import React, {ErrorInfo} from "react";
 import {AthenaeumConstants, ServiceProvider} from "@weare/athenaeum-toolkit";
 import PageCacheProvider from "./PageCacheProvider";
 import PageRoute from "../models/PageRoute";
@@ -163,5 +163,11 @@ export default class PageRouteProvider {
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
 
         return await pageDefinitions.createPageAsync(route);
+    }
+
+    public static render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement {
+        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
+
+        return pageDefinitions.render(page, ref);
     }
 }
