@@ -74,10 +74,8 @@ export default class PageRouteProvider {
             if (current != null) {
                 await current!.hideAlertAsync();
             }
-
-            const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
-
-            const page: IBasePage | null = await pageDefinitions.createPageAsync(route);
+            
+            const page: IBasePage = await this.createPageAsync(route);
 
             context.currentPage = route;
 
@@ -159,5 +157,11 @@ export default class PageRouteProvider {
 
     public static forward(): void {
         window.history.forward();
+    }
+
+    public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
+        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
+
+        return await pageDefinitions.createPageAsync(route);
     }
 }
