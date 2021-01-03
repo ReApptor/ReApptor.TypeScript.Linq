@@ -1,7 +1,7 @@
 import {Dictionary} from "typescript-collections";
 import Utility from "../Utility";
-import ServiceProvider, {IService, ServiceType} from "../providers/ServiceProvider";
 import AthenaeumConstants from "../AthenaeumConstants";
+import ServiceProvider, {IService, ServiceType} from "../providers/ServiceProvider";
 
 export interface ILanguage {
     readonly label: string;
