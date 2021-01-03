@@ -6,7 +6,7 @@ import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 import ISelectListItem from "./models/ISelectListItem";
 //Utilities:
-import ArrayUtility from "./ArrayUtility";
+import ArrayUtility, {SortDirection} from "./ArrayUtility";
 import NumberUtility, { INumberFormat, NumberParsingResult } from "./NumberUtility";
 import StringUtility from "./StringUtility";
 import BoolUtility from "./BoolUtility";
@@ -37,7 +37,7 @@ export {
     IPagedList,
     ISelectListItem,
     //Utilities:
-    ArrayUtility,
+    ArrayUtility, SortDirection,
     NumberUtility, INumberFormat, NumberParsingResult,
     StringUtility,
     BoolUtility,
