@@ -21,7 +21,8 @@ import BasePage, {IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IB
 //Utilities:
 import ReactUtility from "./ReactUtility";
 import StylesUtility from "./StylesUtility";
-//Utilities:
+//Providers:
+import ch from "./providers/ComponentHelper";
 import BasePageDefinitions from "./providers/BasePageDefinitions";
 import PageRouteProvider from "./providers/PageRouteProvider";
 import ApiProvider from "./providers/ApiProvider";
@@ -46,6 +47,7 @@ export {
     ReactUtility,
     StylesUtility,
     //Providers:
+    ch,
     BasePageDefinitions,
     PageRouteProvider,
     ApiProvider,
