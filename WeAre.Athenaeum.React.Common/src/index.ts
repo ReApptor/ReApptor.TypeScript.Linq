@@ -16,9 +16,9 @@ import IErrorPageParameters from "./models/IErrorPageParameters";
 import IPageContainer from "./models/IPageContainer";
 import IResponseContainer from "./models/IResponseContainer";
 import IUser from "./models/IUser";
-
 //Utilities:
 import ReactUtility from "./ReactUtility";
+import StylesUtility from "./StylesUtility";
 
 export {
     //Enums
@@ -32,5 +32,6 @@ export {
     IConfirmation, ConfirmationDialogTitleCallback,
     IErrorPageParameters, IPageContainer, IResponseContainer, IUser,
     //Utilities:
-    ReactUtility
+    ReactUtility,
+    StylesUtility
 }
