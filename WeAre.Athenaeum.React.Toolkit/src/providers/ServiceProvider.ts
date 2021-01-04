@@ -36,6 +36,9 @@ export class ServiceProvider {
      * @exception InvalidOperationException There is no service of type serviceType.
      */
     public getRequiredService<T extends IService | object = {}>(serviceType: ServiceType): T {
+
+        console.log("ServiceProvider.getRequiredService: serviceType=", serviceType);
+        
         const service: IService | object | null = this.getService(serviceType);
         
         if (service == null) {
