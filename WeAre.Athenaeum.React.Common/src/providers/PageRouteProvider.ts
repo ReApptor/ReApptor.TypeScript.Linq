@@ -49,8 +49,6 @@ export default class PageRouteProvider {
     
     private static async invokeRedirectAsync(route: PageRoute, id: string | null = null, innerRedirect: boolean, replace: boolean = false, stopPropagation: boolean = false): Promise<IBasePage | null> {
         
-        console.log("PageRouteProvider.invokeRedirectAsync: route=", route);
-        
         this.initialize();
 
         const context: ApplicationContext = ch.getContext();
@@ -62,8 +60,6 @@ export default class PageRouteProvider {
         }
 
         const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
-
-        console.log("PageRouteProvider.invokeRedirectAsync: newPage=", newPage, " current=", current);
         
         if (newPage) {
             
@@ -81,8 +77,6 @@ export default class PageRouteProvider {
             if (current != null) {
                 await current!.hideAlertAsync();
             }
-
-            console.log("PageRouteProvider.invokeRedirectAsync: createPageAsync");
 
             const page: IBasePage = await this.createPageAsync(route);
 
@@ -170,13 +164,7 @@ export default class PageRouteProvider {
 
     public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
         
-        console.log("PageRouteProvider.createPageAsync-> ServiceProvider=", ServiceProvider);
-        
-        //debugger;
-        
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
-        
-        console.log("PageRouteProvider.createPageAsync: pageDefinitions=", pageDefinitions);
 
         return await pageDefinitions.createPageAsync(route);
     }
