@@ -172,7 +172,7 @@ export default class PageRouteProvider {
         
         console.log("PageRouteProvider.createPageAsync-> ServiceProvider=", ServiceProvider);
         
-        debugger;
+        //debugger;
         
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
         
