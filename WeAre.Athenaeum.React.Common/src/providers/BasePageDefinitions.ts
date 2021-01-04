@@ -1,8 +1,8 @@
 import React from "react";
+import {Dictionary} from "typescript-collections";
 import {IService, ServiceProvider, ServiceType} from "@weare/athenaeum-toolkit";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, IBasePageConstructor} from "../base/BasePage";
-import {Dictionary} from "typescript-collections";
 
 export interface IPageDefinitions {
     createPageAsync(route: PageRoute): Promise<IBasePage>;
@@ -13,8 +13,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
     private static readonly _pages: Dictionary<string, IBasePageConstructor> = new Dictionary<string, IBasePageConstructor>();
     private static readonly _modules: Dictionary<string, any> = new Dictionary<string, any>();
-
-    private static async register(pageName: string): Promise<IBasePageConstructor> {
+    
+    private async register(pageName: string): Promise<IBasePageConstructor> {
 
         const fullPageName: string = pageName;
 
@@ -29,10 +29,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
             pageName = pageNameItems[pageNameItems.length - 1];
         }
 
-        // ../pages/
-        // /Renta.TaskApp.WebUI/node_modules/@weare/athenaeum-react-common/lib/src/providers
-        // /src/pages/
-        const module: any = await require(`./pages/${pageContainer}${pageName}/${pageName}`);
+        //const module: any = await require(`../pages/${pageContainer}${pageName}/${pageName}`);
+        const module: any = await this.require(pageContainer, pageName);
 
         const constructor: IBasePageConstructor = module.default as IBasePageConstructor;
 
@@ -50,6 +48,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public getType(): ServiceType {
         return "IPageDefinitions";
     }
+    
+    protected abstract async require(pageContainer: string, pageName: string): Promise<any>;
 
     public static readonly logoutRouteName: string = "Logout";
 
@@ -72,7 +72,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         const pageName: string = route.name;
 
         try {
-            const pageConstructor: IBasePageConstructor = await BasePageDefinitions.register(pageName);
+            const pageConstructor: IBasePageConstructor = await this.register(pageName);
 
             const props: any = {
                 parameters: route.parameters,
