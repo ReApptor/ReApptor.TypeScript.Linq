@@ -48,6 +48,9 @@ export default class PageRouteProvider {
     }
     
     private static async invokeRedirectAsync(route: PageRoute, id: string | null = null, innerRedirect: boolean, replace: boolean = false, stopPropagation: boolean = false): Promise<IBasePage | null> {
+        
+        console.log("PageRouteProvider.invokeRedirectAsync: route=", route.name);
+        
         this.initialize();
 
         const context: ApplicationContext = ch.getContext();
