@@ -8,7 +8,7 @@ import DescriptionModel from "./models/DescriptionModel";
 import DocumentPreviewModel, { DocumentPreviewSize, DocumentPreviewCallback } from "./models/DocumentPreviewModel";
 import PageRoute from "./models/PageRoute";
 import ServerError from "./models/ServerError";
-import UserContext from "./models/ServerError";
+import UserContext from "./models/UserContext";
 //Interfaces:
 import IApplicationSettings from "./models/IApplicationSettings";
 import IConfirmation, { ConfirmationDialogTitleCallback } from "./models/IConfirmation";
