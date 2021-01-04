@@ -61,7 +61,11 @@ export default class PageRouteProvider {
             route.id = id;
         }
 
-        if ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route))) {
+        const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
+
+        console.log("PageRouteProvider.invokeRedirectAsync: newPage=", newPage, " current=", current);
+        
+        if (newPage) {
             
             if (route.name === BasePageDefinitions.dummyRouteName) {
                 return current;
