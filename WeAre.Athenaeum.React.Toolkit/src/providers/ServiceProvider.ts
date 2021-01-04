@@ -13,7 +13,7 @@ export interface IService {
     getType(): ServiceType;
 }
 
-export class ServiceProvider {
+class ServiceProvider {
     
     private readonly _services: Dictionary<ServiceType, IService | object> = new Dictionary<ServiceType, IService | object>();
     
