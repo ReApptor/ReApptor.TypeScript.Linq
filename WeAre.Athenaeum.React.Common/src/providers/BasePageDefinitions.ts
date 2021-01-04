@@ -29,7 +29,10 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
             pageName = pageNameItems[pageNameItems.length - 1];
         }
 
-        const module: any = await require(`../pages/${pageContainer}${pageName}/${pageName}`);
+        // ../pages/
+        // /Renta.TaskApp.WebUI/node_modules/@weare/athenaeum-react-common/lib/src/providers
+        // /src/pages/
+        const module: any = await require(`./pages/${pageContainer}${pageName}/${pageName}`);
 
         const constructor: IBasePageConstructor = module.default as IBasePageConstructor;
 
