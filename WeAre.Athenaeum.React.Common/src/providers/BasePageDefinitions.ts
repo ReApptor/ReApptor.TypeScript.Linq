@@ -69,6 +69,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
     public async createPageAsync(route: PageRoute): Promise<IBasePage> {
 
+        console.log("BasePageDefinitions.createPageAsync: route=", route);
+        
         const pageName: string = route.name;
 
         try {
