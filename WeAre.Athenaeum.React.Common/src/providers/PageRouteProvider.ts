@@ -49,7 +49,7 @@ export default class PageRouteProvider {
     
     private static async invokeRedirectAsync(route: PageRoute, id: string | null = null, innerRedirect: boolean, replace: boolean = false, stopPropagation: boolean = false): Promise<IBasePage | null> {
         
-        console.log("PageRouteProvider.invokeRedirectAsync: route=", route.name);
+        console.log("PageRouteProvider.invokeRedirectAsync: route=", route);
         
         this.initialize();
 
@@ -77,7 +77,9 @@ export default class PageRouteProvider {
             if (current != null) {
                 await current!.hideAlertAsync();
             }
-            
+
+            console.log("PageRouteProvider.invokeRedirectAsync: createPageAsync");
+
             const page: IBasePage = await this.createPageAsync(route);
 
             context.currentPage = route;
