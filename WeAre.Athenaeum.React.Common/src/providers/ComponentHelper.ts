@@ -5,7 +5,7 @@ import ApiProvider from "./ApiProvider";
 import {IBaseComponent} from "../base/BaseComponent";
 import AlertModel from "../models/AlertModel";
 import IUser from "../models/IUser";
-import UserContext from "../models/UserContext";
+import IUserContext from "../models/IUserContext";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
@@ -66,7 +66,7 @@ export default class ch {
     public static async setContextAsync(context: ApplicationContext): Promise<void> {
         if (this._context !== context) {
 
-            const authorize: boolean = (this._context != null) && ((this._context as UserContext).username != (context as UserContext).username);
+            const authorize: boolean = (this._context != null) && ((this._context as IUserContext).username != (context as IUserContext).username);
 
             //set context
             this._context = context;
@@ -199,7 +199,7 @@ export default class ch {
 
     public static findUser<TUser extends IUser>(): TUser | null {
         const context: ApplicationContext | null = this.findContext();
-        const userContext: UserContext | null = context as UserContext;
+        const userContext: IUserContext | null = context as IUserContext;
         if ((userContext) && (userContext.isUserContext) && (userContext.user) && (userContext.user.username)) {
             return userContext.user;
         }
@@ -228,7 +228,7 @@ export default class ch {
 
     public static getSessionId(): string {
         if (this._context) {
-            const userContext = this._context as UserContext;
+            const userContext = this._context as IUserContext;
             if ((userContext.isUserContext) && (userContext.username)) {
                 return userContext.username.getHashCode().toString();
             }

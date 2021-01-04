@@ -30,7 +30,7 @@
       <TypeScriptCompile Include="src\models\IErrorPageParameters.ts" />
       <TypeScriptCompile Include="src\models\IPageContainer.ts" />
       <TypeScriptCompile Include="src\models\IUser.ts" />
-      <TypeScriptCompile Include="src\models\UserContext.ts" />
+      <TypeScriptCompile Include="src\models\IUserContext.ts" />
       <TypeScriptCompile Include="src\models\PageRoute.ts" />
       <TypeScriptCompile Include="src\models\IResponseContainer.ts" />
       <TypeScriptCompile Include="src\models\ServerError.ts" />

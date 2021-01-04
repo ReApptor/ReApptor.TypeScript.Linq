@@ -1,3 +1,3 @@
-export default class IApplicationSettings {
-    public isApplicationSettings: boolean = true;
+export default interface IApplicationSettings {
+    isApplicationSettings: true;
 }

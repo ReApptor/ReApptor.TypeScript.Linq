@@ -11,8 +11,8 @@ import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirm
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
 import IPageContainer from "../models/IPageContainer";
-import UserContext from "../models/UserContext";
 import IUser from "../models/IUser";
+import IUserContext from "../models/IUserContext";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
@@ -148,11 +148,11 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public findUser(): IUser | null {
-        return (ch.getContext() as UserContext).user || null;
+        return (ch.getContext() as IUserContext).user || null;
     }
 
     public get username(): string | null {
-        return (ch.getContext() as UserContext).username || null;
+        return (ch.getContext() as IUserContext).username || null;
     }
 
     public get isAuthorized(): boolean {

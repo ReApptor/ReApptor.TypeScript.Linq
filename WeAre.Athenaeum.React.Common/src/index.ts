@@ -8,7 +8,6 @@ import DescriptionModel from "./models/DescriptionModel";
 import DocumentPreviewModel, { DocumentPreviewSize, DocumentPreviewCallback } from "./models/DocumentPreviewModel";
 import PageRoute from "./models/PageRoute";
 import ServerError from "./models/ServerError";
-import UserContext from "./models/UserContext";
 //Interfaces:
 import IApplicationSettings from "./models/IApplicationSettings";
 import IConfirmation, { ConfirmationDialogTitleCallback } from "./models/IConfirmation";
@@ -16,6 +15,7 @@ import IErrorPageParameters from "./models/IErrorPageParameters";
 import IPageContainer from "./models/IPageContainer";
 import IResponseContainer from "./models/IResponseContainer";
 import IUser from "./models/IUser";
+import IUserContext from "./models/IUserContext";
 //Base:
 import BasePage, {IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IBasePageProps, IIsLoading} from "./base/BasePage";
 //Utilities:
@@ -36,11 +36,11 @@ export {
     //Models:
     AlertModel, ApplicationContext, BasePageParameters, DescriptionModel,
     DocumentPreviewModel, DocumentPreviewSize, DocumentPreviewCallback,
-    PageRoute, ServerError, UserContext,
+    PageRoute, ServerError,
     //Interfaces:
     IApplicationSettings,
     IConfirmation, ConfirmationDialogTitleCallback,
-    IErrorPageParameters, IPageContainer, IResponseContainer, IUser,
+    IErrorPageParameters, IPageContainer, IResponseContainer, IUser, IUserContext,
     //Base:
     BasePage, IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IBasePageProps, IIsLoading,
     //Utilities:
