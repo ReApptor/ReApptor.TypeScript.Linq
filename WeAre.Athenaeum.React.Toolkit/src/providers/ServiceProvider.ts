@@ -38,8 +38,10 @@ export class ServiceProvider {
     public getRequiredService<T extends IService | object = {}>(serviceType: ServiceType): T {
         const service: IService | object | null = this.getService(serviceType);
         
-        if (service == null)
+        if (service == null) {
+            console.log("ServiceProvider.InvalidOperationException: There is no service of type=", serviceType);
             throw new Error(`InvalidOperationException. There is no service of type "${serviceType}".`);
+        }
         
         return service as T;
     }
