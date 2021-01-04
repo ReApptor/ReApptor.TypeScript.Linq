@@ -147,7 +147,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return ch.getContext() as TContext;
     }
 
-    public findUser(): IUser | null {
+    public findUser<TUser extends IUser>(): TUser | null {
         return (ch.getContext() as IUserContext).user || null;
     }
 
