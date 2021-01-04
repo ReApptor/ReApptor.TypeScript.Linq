@@ -192,7 +192,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        let alert: AlertModel = new AlertModel();
+        const alert = new AlertModel();
         alert.alertType = AlertType.Danger;
         alert.message = message;
         alert.autoClose = autoClose;
@@ -201,7 +201,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        let alert: AlertModel = new AlertModel();
+        const alert = new AlertModel();
         alert.alertType = AlertType.Success;
         alert.message = message;
         alert.autoClose = autoClose;
@@ -210,7 +210,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        let alert: AlertModel = new AlertModel();
+        const alert = new AlertModel();
         alert.alertType = AlertType.Warning;
         alert.message = message;
         alert.autoClose = autoClose;

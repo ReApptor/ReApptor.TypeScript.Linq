@@ -4,7 +4,7 @@ import DocumentPreviewModel from "./DocumentPreviewModel";
 import DescriptionModel from "./DescriptionModel";
 
 export default interface IPageContainer {
-    readonly alert: AlertModel;
+    readonly alert: AlertModel | null;
     alertAsync(alert: AlertModel): Promise<void>;
     hideAlertAsync(): Promise<void>;
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
