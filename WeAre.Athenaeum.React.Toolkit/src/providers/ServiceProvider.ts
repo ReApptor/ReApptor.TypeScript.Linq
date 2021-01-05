@@ -4,6 +4,8 @@ import {ITransformProvider} from "./BaseTransformProvider";
 
 export type ServiceType = string;
 
+export type ServiceCallback = (serviceType: ServiceType) => IService | object | null;
+
 export interface IService {
 
     /**
@@ -25,7 +27,9 @@ class ServiceProvider {
     public getService<T extends IService | object = {}>(serviceType: ServiceType): T | null {
         const service: IService | object | undefined = this._services.getValue(serviceType);
         return (service != null)
-            ? service as T
+            ? (typeof service === "function")
+                ? service(serviceType)
+                : service as T
             : null;
     }
 
@@ -47,20 +51,29 @@ class ServiceProvider {
 
     /**
      * Adds a singleton service of the type specified in serviceType.
-     * @param service - A service instance.
-     * @param serviceType - An object that specifies the type of service object to get.
+     * @param serviceOrType - A service instance or service type.
+     * @param instance - a service instance if service type is specified in first argument
      */
-    public addSingleton(service: IService | object, serviceType: ServiceType | null = null): void {
+    public addSingleton(serviceOrType: IService | ServiceType | object, instance: object | null | ServiceCallback = null): void {
+
+        let serviceType: ServiceType | null = (typeof serviceOrType === "string")
+            ? serviceOrType
+            : null;
+
         if (serviceType == null) {
-            serviceType = ((service as IService).getType)
-                ? (service as IService).getType()
+            serviceType = ((serviceOrType as IService).getType)
+                ? (serviceOrType as IService).getType()
                 : null;
         }
 
         if (!serviceType)
             throw new Error(`InvalidOperationException. Service type is not specified or cannot be recognized from service instance.`);
 
-        this._services.setValue(serviceType, service);
+        instance = (instance != null)
+            ? instance
+            : serviceOrType as object;
+
+        this._services.setValue(serviceType, instance);
     }
 
     public getLocalizer(): ILocalizer | null {
