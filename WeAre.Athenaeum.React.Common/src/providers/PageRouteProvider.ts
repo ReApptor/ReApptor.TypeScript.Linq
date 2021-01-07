@@ -164,13 +164,13 @@ export default class PageRouteProvider {
 
     public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
         
-        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
+        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
 
         return await pageDefinitions.createPageAsync(route);
     }
 
     public static render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement {
-        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService("IPageDefinitions");
+        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
 
         return pageDefinitions.render(page, ref);
     }

@@ -14,8 +14,8 @@
     "jquery": "^3.5.1",
     "jsdoc": "^3.6.6",
     "ts-jest": "^26.4.0",
-    "ts-nameof": "^5.0.0",
     "typescript": "3.4",
+    "ts-nameof": "^5.0.0",
     "typescript-collections": "^1.3.2"
   },
   "scripts": {

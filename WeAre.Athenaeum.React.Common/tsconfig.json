@@ -2,6 +2,7 @@
   //"extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "target": "es5",
+    "plugins": [{ "transform": "ts-nameof", "type": "raw" }],
     "lib": [
       "dom",
       "dom.iterable",

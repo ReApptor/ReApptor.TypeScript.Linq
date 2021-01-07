@@ -180,14 +180,14 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.alertAsync(alert);
         }
     }
 
     public get alert(): AlertModel | null {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null) ? pageContainer.alert : null;
     }
 
@@ -219,26 +219,26 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async hideAlertAsync(): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.hideAlertAsync();
         }
     }
 
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null) && (await pageContainer.confirmAsync(title));
     }
 
     public async documentPreviewAsync(model: DocumentPreviewModel): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.documentPreviewAsync(model);
         }
     }
 
     public async descriptionAsync(containerId: string, model: DescriptionModel): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService("IPageContainer");
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.descriptionAsync(containerId, model);
         }
