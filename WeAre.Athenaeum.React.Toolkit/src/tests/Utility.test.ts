@@ -1,16 +1,19 @@
 import Utility from "../Utility";
 
 describe('roundTests', function() {
+    
     test('roundUp', function () {
         const result: number = Utility.round(5.678, 2);
         
         expect(result).toBe(5.68);
     });
+    
     test('roundDown', function () {
         const result: number = Utility.round(5.432, 2);
         
         expect(result).toBe(5.43);
     });
+    
 });
 
 describe('dateTests', function() {
@@ -105,6 +108,7 @@ describe('dateTests', function() {
 });
 
 describe('inInterval', function() {
+    
     test('dateInputs', function () {
         const date: Date = new Date(2020, 5, 1);
         const fromDate: Date = new Date(2020, 0, 1);
@@ -277,6 +281,7 @@ describe('inInterval', function() {
 });
 
 describe('inFuture', function() {
+    
     test('dateInput', function () {
         const dateInFuture: Date = Utility.addDays(new Date(), 1);
 
@@ -308,9 +313,11 @@ describe('inFuture', function() {
 
         expect(result).toBe(false);
     });
+    
 });
 
 describe('inPast', function() {
+    
     test('dateInput', function () {
         const dateInFuture: Date = Utility.addDays(new Date(), -1);
 
@@ -342,4 +349,5 @@ describe('inPast', function() {
 
         expect(result).toBe(false);
     });
+    
 });
