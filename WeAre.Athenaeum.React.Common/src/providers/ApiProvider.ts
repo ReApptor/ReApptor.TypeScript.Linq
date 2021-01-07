@@ -84,6 +84,8 @@ export default class ApiProvider {
 
             return dataResponse;
         } catch (e) {
+            
+            console.log(e);
 
             if (this.offline) {
                 await PageRouteProvider.offline();

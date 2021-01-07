@@ -74,7 +74,9 @@ export default class ch {
             if (!this._initialized) {
                 this._initialized = true;
                 await this.onInitializeAsync();
-            } else if (authorize) {
+            }
+            
+            if (authorize) {
                 await this.onAuthorizeAsync();
             }
 
