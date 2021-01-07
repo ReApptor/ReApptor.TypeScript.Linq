@@ -6,13 +6,11 @@
   "types": "lib/types/src/index.d.ts",
   "devDependencies": {
     "@types/jest": "^26.0.14",
-    "@types/jquery": "^3.3.29",
     "@types/node": "11.9.4",
     "@types/ts-nameof": "^4.2.1",
     "typescript": "3.4",
     "ttypescript": "^1.5.12",
     "typescript-collections": "^1.3.2",
-    "jquery": "^3.5.1",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0",
     "ts-nameof": "^5.0.0",
