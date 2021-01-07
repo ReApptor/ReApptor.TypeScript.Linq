@@ -6,20 +6,18 @@
   "types": "lib/types/src/index.d.ts",
   "dependencies": {
     "@weare/athenaeum-toolkit": "^1.0.214",
+    "typescript-collections": "^1.3.2",
     "async-mutex": "^0.1.3"
   },
   "devDependencies": {
     "@types/node": "11.9.4",
     "@types/react": "16.8.3",
     "@types/ts-nameof": "^4.2.1",
-    "@types/jquery": "^3.3.29",
-    "better-docs": "^2.3.2",
     "typescript": "3.4",
     "ttypescript": "^1.5.12",
-    "typescript-collections": "^1.3.2",
     "react": "^16.8.2",
     "ts-nameof": "^5.0.0",
-    "jquery": "^3.5.1"
+    "better-docs": "^2.3.2"
   },
   "scripts": {
     "build": "ttsc"
