@@ -90,7 +90,7 @@ export default class ApiProvider {
             if (this.offline) {
                 await PageRouteProvider.offline();
             } else {
-                const ignore: boolean = (!ApiProvider.isApiError(e)) || (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect"));
+                const ignore: boolean = (ApiProvider.isApiError(e)) || (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect"));
                 if (!ignore) {
                     await PageRouteProvider.exception(e);
                 }
