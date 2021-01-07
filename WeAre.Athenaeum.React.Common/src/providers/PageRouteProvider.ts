@@ -41,6 +41,7 @@ export default class PageRouteProvider {
 
     private static async onJsErrorAsync(serverError: ServerError): Promise<void> {
         try {
+            console.log("PageRouteProvider.onJsErrorAsync: serverError=", serverError);
             await ApiProvider.postAsync("api/Application/OnJsError", serverError);
         } catch (e) {
             //no additional action needed, not critical
@@ -138,6 +139,7 @@ export default class PageRouteProvider {
     }
 
     public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<void> {
+        console.log("PageRouteProvider.exception: error=", error, " isApiError=", ApiProvider.isApiError(error));
         if (!ApiProvider.isApiError(error)) {
             const page: IBasePage | null = ch.findPage();
             const pageName: string = ((page) && (page.routeName)) ? ` on page "${page.routeName}"` : ``;

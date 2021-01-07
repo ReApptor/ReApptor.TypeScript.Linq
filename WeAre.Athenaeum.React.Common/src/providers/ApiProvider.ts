@@ -85,7 +85,7 @@ export default class ApiProvider {
             return dataResponse;
         } catch (e) {
             
-            console.log(e);
+            console.log("ApiProvider.fetchAsync.error: ", e, " this.offline=", this.offline, " ignore=", (!ApiProvider.isApiError(e)) || (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect")), " endpoint=", endpoint);
 
             if (this.offline) {
                 await PageRouteProvider.offline();
