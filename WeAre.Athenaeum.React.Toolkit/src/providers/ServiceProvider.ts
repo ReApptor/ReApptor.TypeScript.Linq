@@ -15,6 +15,8 @@ export interface IService {
     getType(): ServiceType;
 }
 
+export type TService = IService;
+
 class ServiceProvider {
     
     private readonly _services: Dictionary<ServiceType, IService | object> = new Dictionary<ServiceType, IService | object>();
@@ -24,12 +26,14 @@ class ServiceProvider {
      * @param serviceType - An object that specifies the type of service object to get.
      * @returns IService | object | null - A service object of type serviceType or null if there is no service object of type serviceType.
      */
-    public getService<T extends IService | object = {}>(serviceType: ServiceType): T | null {
+    public getService<TService extends IService | object>(serviceType: ServiceType): TService | null {
+
         const service: IService | object | undefined = this._services.getValue(serviceType);
+
         return (service != null)
             ? (typeof service === "function")
                 ? service(serviceType)
-                : service as T
+                : service as TService
             : null;
     }
 
@@ -39,22 +43,22 @@ class ServiceProvider {
      * @returns A service object of type serviceType.
      * @exception InvalidOperationException There is no service of type serviceType.
      */
-    public getRequiredService<T extends IService | object = {}>(serviceType: ServiceType): T {
+    public getRequiredService<TService extends IService | object>(serviceType: ServiceType): TService {
         
-        const service: IService | object | null = this.getService(serviceType);
+        const service: TService | null = this.getService<TService>(serviceType);
         
         if (service == null)
             throw new Error(`InvalidOperationException. There is no service of type "${serviceType}".`);
 
-        return service as T;
+        return service;
     }
 
     /**
      * Adds a singleton service of the type specified in serviceType.
      * @param serviceOrType - A service instance or service type.
-     * @param instance - a service instance if service type is specified in first argument
+     * @param service - a service instance if service type is specified in first argument
      */
-    public addSingleton(serviceOrType: IService | ServiceType | object, instance: object | null | ServiceCallback = null): void {
+    public addSingleton(serviceOrType: IService | ServiceType | object, service: object | null | ServiceCallback = null): void {
 
         let serviceType: ServiceType | null = (typeof serviceOrType === "string")
             ? serviceOrType
@@ -69,23 +73,23 @@ class ServiceProvider {
         if (!serviceType)
             throw new Error(`InvalidOperationException. Service type is not specified or cannot be recognized from service instance.`);
 
-        instance = (instance != null)
-            ? instance
+        service = (service != null)
+            ? service
             : serviceOrType as object;
 
-        this._services.setValue(serviceType, instance);
+        this._services.setValue(serviceType, service);
     }
 
     public getLocalizer(): ILocalizer | null {
-        return this.getService("ILocalizer");
+        return this.getService(nameof<ILocalizer>());
     }
 
     public getEnumProvider(): IEnumProvider | null {
-        return this.getService("IEnumProvider");
+        return this.getService(nameof<IEnumProvider>());
     }
 
     public getTransformProvider(): ITransformProvider | null {
-        return this.getService("ITransformProvider");
+        return this.getService(nameof<ITransformProvider>());
     }
 }
 

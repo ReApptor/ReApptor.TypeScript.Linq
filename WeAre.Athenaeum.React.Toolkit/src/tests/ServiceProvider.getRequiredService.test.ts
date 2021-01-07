@@ -1,13 +1,18 @@
 import {ArrayExtensions, IService, ServiceProvider, ServiceType} from "..";
+import {TService} from "../providers/ServiceProvider";
 
 ArrayExtensions();
 
 describe("getRequiredService", function() {
-    
-    interface ITestService {
+
+
+    interface ITestService extends IService {
     }
-    
-    class TestService implements IService, ITestService {
+
+    type TTestService = TService & {
+    }
+
+    class TestService implements TTestService, ITestService {
         getType(): ServiceType {
             return "Service";
         }
@@ -35,6 +40,15 @@ describe("getRequiredService", function() {
         expect(result).toEqual(service);
     });
     
+    test("byServiceNameUsingNameOf", function () {
+        const service: object = {};
+        const serviceName: string = nameof<ITestService>();
+        ServiceProvider.addSingleton(serviceName, service);
+        const result: object = ServiceProvider.getRequiredService(nameof<ITestService>());
+        expect(result).toEqual(service);
+        expect("ITestService").toEqual(serviceName);
+    });
+    
     test("byServiceTypeWithCallback", function () {
         const serviceType: ServiceType = "Service";
         const service: object = {};
@@ -50,12 +64,5 @@ describe("getRequiredService", function() {
         const result: object = ServiceProvider.getRequiredService(serviceName);
         expect(result).toEqual(service);
     });
-    
-    // test("byServiceInterface", function () {
-    //     const service = new TestService();
-    //     ServiceProvider.addSingleton(IService, service);
-    //     const result: object = ServiceProvider.getRequiredService(TestService);
-    //     expect(result).toEqual(service);
-    // });
     
 });
