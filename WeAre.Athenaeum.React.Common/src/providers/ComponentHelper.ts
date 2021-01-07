@@ -82,9 +82,6 @@ export default class ch {
 
             if (this._layout != null) {
 
-                if (1 == 1)
-                    throw new Error("CL DEBUGGING ERROR #1 (setContextAsync CALL).");
-
                 const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
                 
                 const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
