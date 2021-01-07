@@ -1,5 +1,5 @@
 import React from "react";
-import $ from "JQuery";
+import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import {Utility} from "@weare/athenaeum-toolkit";
 import ReactUtility from "../ReactUtility";
