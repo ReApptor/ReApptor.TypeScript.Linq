@@ -18,6 +18,7 @@ import IUser from "./models/IUser";
 import IUserContext from "./models/IUserContext";
 //Base:
 import BasePage, {IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IBasePageProps, IIsLoading} from "./base/BasePage";
+import BaseComponent, {RenderCallback, IChildrenProps, IReactComponent, ISpinner, IBaseClassNames, IBaseComponent, IGlobalResize, IGlobalClick, IGlobalKeydown, IContainer} from "./base/BaseComponent";
 //Utilities:
 import ReactUtility from "./ReactUtility";
 import StylesUtility from "./StylesUtility";
@@ -43,6 +44,7 @@ export {
     IErrorPageParameters, IPageContainer, IResponseContainer, IUser, IUserContext,
     //Base:
     BasePage, IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IBasePageProps, IIsLoading,
+    BaseComponent, RenderCallback, IChildrenProps, IReactComponent, ISpinner, IBaseClassNames, IBaseComponent, IGlobalResize, IGlobalClick, IGlobalKeydown, IContainer,
     //Utilities:
     ReactUtility,
     StylesUtility,
