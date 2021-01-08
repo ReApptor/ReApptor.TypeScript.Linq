@@ -1,0 +1,40 @@
+{
+  //"extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "target": "es5",
+    "plugins": [
+      { "transform": "ts-nameof", "type": "raw" },
+      { "name": "typescript-plugin-css-modules" }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationDir": "lib/types",
+    "rootDir": ".",
+    "outDir": "lib"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "**/*.test.ts"
+  ]
+}

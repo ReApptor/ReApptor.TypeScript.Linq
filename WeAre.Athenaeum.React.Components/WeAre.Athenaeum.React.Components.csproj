@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Module</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0.0</Version>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Copyright>Copyright © 2020, Renta Oy</Copyright>
+        <Product>WeAre Athenaeum</Product>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Company>Renta Oy</Company>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="src\Alert\Alert.tsx" />
+      <TypeScriptCompile Include="src\index.ts" />
+      <TypeScriptCompile Include="src\AthenaeumComponentsConstants.ts" />
+      <TypeScriptCompile Include="src\module.d.ts" />
+    </ItemGroup>
+
+</Project>
