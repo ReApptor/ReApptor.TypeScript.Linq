@@ -20,7 +20,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "experimentalDecorators": true,
