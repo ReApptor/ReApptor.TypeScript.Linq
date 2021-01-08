@@ -4,7 +4,8 @@
     "target": "es5",
     "plugins": [
       { "transform": "ts-nameof", "type": "raw" },
-      { "name": "typescript-plugin-css-modules" }
+      { "transform": "typescript-plugin-css-modules", "type": "config"}
+      //{ "name": "typescript-plugin-css-modules" },
     ],
     "lib": [
       "dom",
