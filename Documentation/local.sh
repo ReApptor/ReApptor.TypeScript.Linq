@@ -7,6 +7,8 @@ mkdir ./etc
 api-extractor run --local
 api-documenter markdown -i ./temp/ -o ../Documentation/docs/
 rm -r ./etc
+rm -r ./temp
+rm -r ./dist
 cp ../Documentation/index.html ../Documentation/docs/index.html
 cd ../Documentation/docs/
 mv index.md README.md
