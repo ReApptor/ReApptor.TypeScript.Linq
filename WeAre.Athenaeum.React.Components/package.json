@@ -21,13 +21,14 @@
     "react": "^16.8.2",
     "react-dependent-script": "^1.1.2",
     "react-dom": "^16.8.2",
+    "react-scripts": "^3.4.3",
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
     "typescript": "3.4",
     "typescript-plugin-css-modules": "^3.0.1"
   },
   "scripts": {
-    "build": "ttsc"
+    "build": "react-scripts build"
   },
   "files": [
     "lib"
