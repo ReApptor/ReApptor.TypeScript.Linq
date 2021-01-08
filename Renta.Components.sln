@@ -47,10 +47,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.React.Common", "WeAre.Athenaeum.React.Common\WeAre.Athenaeum.React.Common.csproj", "{5F70B423-2AAD-4460-ADA4-957C39D487BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{DC4F1D2A-64B9-4DAE-A9A2-88C279EA4A01}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{0C22CBE9-9087-427B-BA20-72316AE2B3B0}"
 ProjectSection(SolutionItems) = preProject
-	Documentation\docs\index.html = Documentation\docs\index.html
+	Documentation\local.sh = Documentation\local.sh
+	Documentation\index.html = Documentation\index.html
 EndProjectSection
 EndProject
 Global
@@ -74,7 +73,6 @@ Global
 		{3D61BAF4-D28F-48D6-A041-C81D3DDD75BA} = {13C11342-8709-487B-A4DB-C6F3AB84B71E}
 		{BF7661CF-74A9-4F56-A409-0885019C42C2} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
 		{5F70B423-2AAD-4460-ADA4-957C39D487BF} = {73374FF9-71EC-44D9-8858-8459A65C2B89}
-		{0C22CBE9-9087-427B-BA20-72316AE2B3B0} = {DC4F1D2A-64B9-4DAE-A9A2-88C279EA4A01}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

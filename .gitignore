@@ -25,3 +25,6 @@ package-lock.json
 
 # Test coverage
 coverage/
+
+#documentation
+Documentation/docs
