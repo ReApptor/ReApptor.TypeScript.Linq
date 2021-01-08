@@ -46,8 +46,4 @@
       <TypeScriptCompile Include="src\index.ts" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="etc" />
-    </ItemGroup>
-
 </Project>
