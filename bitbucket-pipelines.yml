@@ -161,19 +161,33 @@ pipelines:
           name: Athenaeum Documentation build
           image: node:10.15.0
           script:
+            #Prepare Documentation folder
+            - cd Documentation
+            - mkdir input
+            #Prepare npm stuff
             - npm config set strict-ssl true
             - npm config set ca ""
             - npm install -g @microsoft/api-documenter
-            - cd Documentation
-            - mkdir input
+            - npm install -g @microsoft/api-extractor
+            # Toolkit documentation build
             - cd ../WeAre.Athenaeum.React.Toolkit/
-            - echo pwd
+            - npm install
+            - npm run build
+            - mkdir ./etc
+            - api-extractor run --local
+            # Copy toolkit documentation to Documentation/input
             - cp -a ./temp/. ../Documentation/input/
+            # React.Common documentation build
             - cd ../WeAre.Athenaeum.React.Common/
+            - npm install
+            - npm run build
+            - mkdir ./etc
+            - api-extractor run --local
             - cp -a ./temp/. ../Documentation/input/
-            - cd ../Documentation/
+            # Documentation creation from input files to Documentation/docs
+            - cd ../Documentation
             - api-documenter markdown -i ./input/ -o ./docs/
-            - cp ./index.html ../docs/index.html
+            - cp ./index.html ./docs/index.html
             - cd ./docs/
             - mv index.md README.md
             # TODO somehow server static page from docs folder
