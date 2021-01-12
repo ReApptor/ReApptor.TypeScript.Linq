@@ -175,7 +175,7 @@ pipelines:
             - cp -a ../WeAre.Athenaeum.React.Toolkit/temp/. ./input/
             - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
             - api-documenter markdown -i ./input/ -o ./docs/
-            - cp ./index.html ./docs/index.html
+            - cp index.html ./docs/index.html
             - cd ./docs/
             - mv index.md README.md
             # TODO somehow server static page from docs folder
