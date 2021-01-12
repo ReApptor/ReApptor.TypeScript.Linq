@@ -171,7 +171,6 @@ pipelines:
             - npm install -g @microsoft/api-extractor
             # Toolkit documentation build
             - cd ../WeAre.Athenaeum.React.Toolkit/
-            - npm install
             - npm run build
             - mkdir ./etc
             - api-extractor run --local
@@ -179,7 +178,6 @@ pipelines:
             - cp -a ./temp/. ../Documentation/input/
             # React.Common documentation build
             - cd ../WeAre.Athenaeum.React.Common/
-            - npm install
             - npm run build
             - mkdir ./etc
             - api-extractor run --local
