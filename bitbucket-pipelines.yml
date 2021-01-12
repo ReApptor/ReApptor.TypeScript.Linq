@@ -170,8 +170,6 @@ pipelines:
             - npm install -g @microsoft/api-documenter
             - cd Documentation
             - mkdir input
-            - cd ../WeAre.Athenaeum.React.Toolkit/
-            - echo pwd
             - cp -a ../WeAre.Athenaeum.React.Toolkit/temp/. ./input/
             - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
             - api-documenter markdown -i ./input/ -o ./docs/
