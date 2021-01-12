@@ -18,7 +18,6 @@ pipelines:
                 - npm install
                 # Dependencies for documentation create
                 - npm install -g @microsoft/api-extractor
-                - npm install -g @microsoft/api-documenter
                 # Run tests
                 # - npm test
                 # Run build
@@ -26,7 +25,6 @@ pipelines:
                 # Create documentation
                 - mkdir ./etc
                 - api-extractor run --local
-                - api-documenter markdown -i ./temp/ -o ../Documentation/docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -51,7 +49,6 @@ pipelines:
                 - npm install
                  # Dependencies for documentation create
                 - npm install -g @microsoft/api-extractor
-                - npm install -g @microsoft/api-documenter
                 # Run tests
                 # - npm test
                 # Run build
@@ -59,7 +56,6 @@ pipelines:
                 # Create documentation
                 - mkdir ./etc
                 - api-extractor run --local
-                - api-documenter markdown -i ./temp/ -o ../Documentation/docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -160,7 +156,23 @@ pipelines:
               services:
                 - docker
               caches:
-                - dotnetcore
+                - dotnetcore       
+      - step:
+          name: Athenaeum Documentation build
+          image: node:10.15.0
+          script:
+            - npm config set strict-ssl true
+            - npm config set ca ""
+            - npm install -g @microsoft/api-documenter
+            - cd Documentation
+            - mkdir input
+            - cp -a ../WeAre.Athenaeum.React.Toolkit/temp/. ./input/
+            - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
+            - api-documenter markdown -i ./input/ -o ./docs/
+            - cp ./index.html ../docs/index.html
+            - cd ./docs/
+            - mv index.md README.md
+            # TODO somehow server static page from docs folder
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
