@@ -18,8 +18,7 @@
     "typescript": "3.4",
     "ttypescript": "^1.5.12",
     "react": "^16.8.2",
-    "ts-nameof": "^5.0.0",
-    "better-docs": "^2.3.2"
+    "ts-nameof": "^5.0.0"
   },
   "scripts": {
     "build": "ttsc"
