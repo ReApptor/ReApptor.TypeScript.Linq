@@ -74,9 +74,15 @@ export default class ApiProvider {
 
     private static async fetchAsync<TResponse>(endpoint: string, httpRequest: RequestInit, caller: IBaseComponent | null): Promise<TResponse> {
         try {
+            console.log("  ApiProvider.fetchAsync<-");
+            
             await this.setAutoIsSpinningAsync(true, caller);
 
+            console.log("    ApiProvider.fetchAsync.fetch->");
+
             const httpResponse: Response = await fetch(endpoint, httpRequest);
+
+            console.log("    ApiProvider.fetchAsync.fetch<-");
 
             const apiResponse: any | null = await this.processServerResponseAsync(httpResponse);
 
@@ -98,6 +104,8 @@ export default class ApiProvider {
             
         } finally {
             await this.setAutoIsSpinningAsync(false, caller);
+
+            console.log("  ApiProvider.fetchAsync<-");
         }
     }
 
