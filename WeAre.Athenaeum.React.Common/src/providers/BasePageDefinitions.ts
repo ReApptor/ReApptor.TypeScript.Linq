@@ -99,7 +99,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         const props: any = {
             ref: ref,
             key: key,
-            parameters: page.parameters,
+            //parameters: page.parameters,
             routeIndex: routeIndex,
             routeId: routeId,
             routeName: pageName
