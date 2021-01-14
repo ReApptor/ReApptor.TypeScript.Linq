@@ -16,7 +16,7 @@ export default class ApiProvider {
     private static _manualSpinning: boolean = false;
     private static readonly _loadingCallbacks: ((isLoading: boolean) => Promise<void>)[] = [];
     
-    private static async invokeLoadingCallbacksAsync(obsolete: boolean) {
+    private static async invokeLoadingCallbacksAsync(obsolete: boolean): Promise<void> {
         const isLoading: boolean = this.isLoading;
         if (isLoading != obsolete) {
             await Utility.forEachAsync(this._loadingCallbacks, async (callback) => await callback(isLoading));
@@ -28,6 +28,7 @@ export default class ApiProvider {
     }
     
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
+        console.log("      ApiProvider.setAutoIsSpinningAsync->", this._manualSpinning, caller);
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
             this._isSpinning += (isSpinning) ? +1 : -1;
@@ -35,14 +36,15 @@ export default class ApiProvider {
                 if (caller.hasSpinner()) {
                     await caller.setSpinnerAsync(isSpinning);
                 } else {
-                    console.log("      ApiProvider.Layout.setSpinnerAsync->");
+                    console.log("        ApiProvider.Layout.setSpinnerAsync->");
                     const layout: ILayoutPage = ch.getLayout();
                     await layout.setSpinnerAsync(isSpinning);
-                    console.log("      ApiProvider.Layout.setSpinnerAsync<-");
+                    console.log("        ApiProvider.Layout.setSpinnerAsync<-");
                 }
             }
             await this.invokeLoadingCallbacksAsync(isLoading);
         }
+        console.log("      ApiProvider.setAutoIsSpinningAsync<-");
     }
 
     private static async setManualIsSpinningAsync(isSpinning: boolean): Promise<void> {
