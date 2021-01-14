@@ -14,6 +14,7 @@ pipelines:
                 - cd WeAre.Athenaeum.React.Toolkit
                 - npm config set strict-ssl true
                 - npm config set ca ""
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
                 # Dependencies for documentation create
