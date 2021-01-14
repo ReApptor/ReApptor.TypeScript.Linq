@@ -1,4 +1,4 @@
-npm install -g @microsoft/api-extractor
+npm install -g @microsoft/api-extractor@7.12.1
 npm install -g @microsoft/api-documenter
 
 mkdir input
