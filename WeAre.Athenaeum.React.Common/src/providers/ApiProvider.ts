@@ -52,11 +52,13 @@ export default class ApiProvider {
     }
 
     private static async setManualIsSpinningAsync(isSpinning: boolean): Promise<void> {
+        console.log("ApiProvider.setManualIsSpinningAsync->");
         const isLoading: boolean = this.isLoading;
         this._manualSpinning = isSpinning;
         const layout: ILayoutPage = ch.getLayout();
         await layout.setSpinnerAsync(isSpinning);
         await this.invokeLoadingCallbacksAsync(isLoading);
+        console.log("ApiProvider.setManualIsSpinningAsync<-");
     }
 
     private static setHeaders(httpRequest: RequestInit, setContentType: boolean = true) {
@@ -277,13 +279,17 @@ export default class ApiProvider {
         try {
             console.log("ApiProvider.invokeWithForcedSpinnerAsync->");
             await this.setManualIsSpinningAsync(true);
+            console.log("ApiProvider.invokeWithForcedSpinnerAsync.ACTION->");
             const result: T = await action();
+            console.log("ApiProvider.invokeWithForcedSpinnerAsync.ACTION<-");
             if (!eternal) {
                 await this.setManualIsSpinningAsync(false);
             }
+            console.log("ApiProvider.invokeWithForcedSpinnerAsync<- result=", result);
             return result;
         } catch (e) {
             await this.setManualIsSpinningAsync(false);
+            console.log("ApiProvider.invokeWithForcedSpinnerAsync<-(e)");
             throw e;
         }
     }
