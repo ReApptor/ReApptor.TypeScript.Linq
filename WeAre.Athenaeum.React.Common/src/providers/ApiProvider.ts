@@ -28,37 +28,27 @@ export default class ApiProvider {
     }
     
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
-        console.log("      ApiProvider.setAutoIsSpinningAsync->", this._manualSpinning, caller);
-        
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
             this._isSpinning += (isSpinning) ? +1 : -1;
             if (caller) {
                 if (caller.hasSpinner()) {
-                    console.log("        ApiProvider.caller.setSpinnerAsync->");
                     await caller.setSpinnerAsync(isSpinning);
-                    console.log("        ApiProvider.caller.setSpinnerAsync<-");
                 } else {
-                    console.log("        ApiProvider.Layout.setSpinnerAsync->");
                     const layout: ILayoutPage = ch.getLayout();
                     await layout.setSpinnerAsync(isSpinning);
-                    console.log("        ApiProvider.Layout.setSpinnerAsync<-");
                 }
             }
             await this.invokeLoadingCallbacksAsync(isLoading);
         }
-        
-        console.log("      ApiProvider.setAutoIsSpinningAsync<-");
     }
 
     private static async setManualIsSpinningAsync(isSpinning: boolean): Promise<void> {
-        console.log("ApiProvider.setManualIsSpinningAsync->");
         const isLoading: boolean = this.isLoading;
         this._manualSpinning = isSpinning;
         const layout: ILayoutPage = ch.getLayout();
         await layout.setSpinnerAsync(isSpinning);
         await this.invokeLoadingCallbacksAsync(isLoading);
-        console.log("ApiProvider.setManualIsSpinningAsync<-");
     }
 
     private static setHeaders(httpRequest: RequestInit, setContentType: boolean = true) {
@@ -84,15 +74,9 @@ export default class ApiProvider {
 
     private static async fetchAsync<TResponse>(endpoint: string, httpRequest: RequestInit, caller: IBaseComponent | null): Promise<TResponse> {
         try {
-            console.log("  ApiProvider.fetchAsync<-", endpoint);
-            
             await this.setAutoIsSpinningAsync(true, caller);
 
-            console.log("    ApiProvider.fetchAsync.fetch->");
-
             const httpResponse: Response = await fetch(endpoint, httpRequest);
-
-            console.log("    ApiProvider.fetchAsync.fetch<-");
 
             const apiResponse: any | null = await this.processServerResponseAsync(httpResponse);
 
@@ -114,8 +98,6 @@ export default class ApiProvider {
             
         } finally {
             await this.setAutoIsSpinningAsync(false, caller);
-
-            console.log("  ApiProvider.fetchAsync<-");
         }
     }
 
@@ -277,19 +259,14 @@ export default class ApiProvider {
 
     public static async invokeWithForcedSpinnerAsync<T>(action: () => Promise<T>, eternal: boolean = false): Promise<T> {
         try {
-            console.log("ApiProvider.invokeWithForcedSpinnerAsync->");
             await this.setManualIsSpinningAsync(true);
-            console.log("ApiProvider.invokeWithForcedSpinnerAsync.ACTION->");
             const result: T = await action();
-            console.log("ApiProvider.invokeWithForcedSpinnerAsync.ACTION<-");
             if (!eternal) {
                 await this.setManualIsSpinningAsync(false);
             }
-            console.log("ApiProvider.invokeWithForcedSpinnerAsync<- result=", result);
             return result;
         } catch (e) {
             await this.setManualIsSpinningAsync(false);
-            console.log("ApiProvider.invokeWithForcedSpinnerAsync<-(e)");
             throw e;
         }
     }

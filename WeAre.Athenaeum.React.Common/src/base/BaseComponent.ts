@@ -245,12 +245,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
-        console.log("      BaseComponent.setSpinnerAsync->");
         if ((this.hasSpinner()) && (isSpinning !== this._isSpinning)) {
             this._isSpinning = isSpinning;
             await this.reRenderAsync();
         }
-        console.log("      BaseComponent.setSpinnerAsync<-");
     }
     
     public getPage(): IBasePage {
