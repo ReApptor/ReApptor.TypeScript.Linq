@@ -29,6 +29,7 @@ export default class ApiProvider {
     
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
         console.log("      ApiProvider.setAutoIsSpinningAsync->", this._manualSpinning, caller);
+        
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
             this._isSpinning += (isSpinning) ? +1 : -1;
@@ -46,6 +47,7 @@ export default class ApiProvider {
             }
             await this.invokeLoadingCallbacksAsync(isLoading);
         }
+        
         console.log("      ApiProvider.setAutoIsSpinningAsync<-");
     }
 
