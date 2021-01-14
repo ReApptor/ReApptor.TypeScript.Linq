@@ -34,7 +34,9 @@ export default class ApiProvider {
             this._isSpinning += (isSpinning) ? +1 : -1;
             if (caller) {
                 if (caller.hasSpinner()) {
+                    console.log("        ApiProvider.caller.setSpinnerAsync->");
                     await caller.setSpinnerAsync(isSpinning);
+                    console.log("        ApiProvider.caller.setSpinnerAsync<-");
                 } else {
                     console.log("        ApiProvider.Layout.setSpinnerAsync->");
                     const layout: ILayoutPage = ch.getLayout();
