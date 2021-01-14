@@ -15,9 +15,7 @@
     "ttypescript": "^1.5.12",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0",
-    "ts-nameof": "^5.0.0",
-    "jsdoc": "^3.6.6",
-    "better-docs": "^2.3.2"
+    "ts-nameof": "^5.0.0"
   },
   "scripts": {
     "build": "ttsc",
