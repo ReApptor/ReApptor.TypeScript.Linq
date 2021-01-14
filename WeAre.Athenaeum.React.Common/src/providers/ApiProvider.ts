@@ -275,6 +275,7 @@ export default class ApiProvider {
 
     public static async invokeWithForcedSpinnerAsync<T>(action: () => Promise<T>, eternal: boolean = false): Promise<T> {
         try {
+            console.log("ApiProvider.invokeWithForcedSpinnerAsync->");
             await this.setManualIsSpinningAsync(true);
             const result: T = await action();
             if (!eternal) {
