@@ -32,14 +32,17 @@ export default class Utility {
 
     public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
         if (this.geoEnabled) {
+            options = options || { timeout: 1000 };
             return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;
                 })
-                .catch(() => {
-                    this._geoEnabled = false;
+                .catch((e) => {
+                    if (e.code != 3) {
+                        this._geoEnabled = false;
+                    }
                     return null;
-                })
+                });
         } else {
             return new Promise<Position | null>((resolve) => resolve(null));
         }
