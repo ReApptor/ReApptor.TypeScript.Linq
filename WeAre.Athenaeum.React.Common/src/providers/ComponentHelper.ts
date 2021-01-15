@@ -96,6 +96,17 @@ export default class ch {
             }
         }
     }
+    
+    public static async reloadTopNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reloadTopNavAsync();
+        }
+    }
+    
+    public static reloadTopNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reloadTopNavAsync();
+    }
 
     public static async alertAsync(alert: AlertModel): Promise<void> {
         if (this._page != null) {
