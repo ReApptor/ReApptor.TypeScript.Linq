@@ -16,6 +16,7 @@ import IUserContext from "../models/IUserContext";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
+    title?: string;
     manual?: string;
     icon?: string;
     onClick?(): Promise<void>;
