@@ -73,6 +73,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
     }
 
     public render(): React.ReactNode {
+        
         return (
             <div id={this.id} className={this.css((this.model.flyout && styles.flyout), styles.alert, "alert", this.getAlertType(), this.props.className)}>
                 <span className={styles.message}>
@@ -93,5 +94,6 @@ export default class Alert extends BaseComponent<IAlertProps> {
                 </span>
             </div>
         );
+        
     }
 }
