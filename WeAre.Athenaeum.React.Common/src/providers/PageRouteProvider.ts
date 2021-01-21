@@ -138,31 +138,33 @@ export default class PageRouteProvider {
         await PageRouteProvider.redirectAsync(route, true);
     }
 
-    public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<void> {
+    public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<boolean> {
         if (!ApiProvider.isApiError(error)) {
+            
             const page: IBasePage | null = ch.findPage();
             const pageRouteName: string = ((page) && (page.routeName)) ? page.routeName : ``;
             const componentStack: string = (reactInfo != null) ? reactInfo!.componentStack : "";
-            const messageHashCode: number = `${pageRouteName}:${componentStack}:${error.message}`.getHashCode();
+            const messageHashCode: number = `${pageRouteName}:${componentStack}:${error.stack}:${error.message}`.getHashCode();
             const stackOverflow: boolean = (this._lastMessageHashCode == messageHashCode);
-            if (!stackOverflow) {
-                console.log("exception.1:", messageHashCode, this._lastMessageHashCode, pageRouteName, componentStack, error.message, error.stack);
-                this._lastMessageHashCode = messageHashCode;
-                const pageName: string = (pageRouteName) ? ` on page "${pageRouteName}"` : ``;
-                const serverError: ServerError = {
-                    requestId: "",
-                    debugDetails: `Unhandled JS exception occured${pageName}: "${error.message}"\n${error.stack}\n${componentStack}.`
-                };
-                console.log("onJsError:", serverError);
-                // do not await, just notification event
-                // noinspection ES6MissingAwait
-                this.onJsErrorAsync(serverError);
-                //redirect to error page
-                await this.error(serverError);
-            } else {
-                console.log("exception.2:", messageHashCode, this._lastMessageHashCode, pageRouteName, componentStack, error.message, error.stack);
+            
+            if (stackOverflow) {
+                return false;
             }
+
+            this._lastMessageHashCode = messageHashCode;
+            const pageName: string = (pageRouteName) ? ` on page "${pageRouteName}"` : ``;
+            const serverError: ServerError = {
+                requestId: "",
+                debugDetails: `Unhandled JS exception occured${pageName}: "${error.message}"\n${error.stack}\n${componentStack}.`
+            };
+            // do not await, just notification event
+            // noinspection ES6MissingAwait
+            this.onJsErrorAsync(serverError);
+            //redirect to error page
+            await this.error(serverError);
+            
         }
+        return true;
     }
 
     public static back(): void {

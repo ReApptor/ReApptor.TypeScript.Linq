@@ -81,7 +81,7 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
                     await this.setState({isLoading: false});
                 }
                 
-                await PageRouteProvider.exception(e);        
+                await PageRouteProvider.exception(e);
             }
         }
     }
