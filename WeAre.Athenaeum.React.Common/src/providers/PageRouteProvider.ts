@@ -148,6 +148,7 @@ export default class PageRouteProvider {
             const stackOverflow: boolean = (this._lastMessageHashCode == messageHashCode);
             
             if (stackOverflow) {
+                console.log(error);
                 return false;
             }
 
