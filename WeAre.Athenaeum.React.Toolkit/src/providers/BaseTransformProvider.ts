@@ -1,14 +1,12 @@
-import {IEnumProvider} from "..";
-import Utility from "../Utility";
 import GeoLocation from "../models/GeoLocation";
 import ServiceProvider, {IService, ServiceType} from "./ServiceProvider";
+import StringConverter, {IStringConverter} from "./StringConverter";
 
 export type TStringTransformer = (value: any) => string;
 
 export type TFormat = string | TStringTransformer;
 
-export interface ITransformProvider {
-    toString(item: any, format?: TFormat | null): string;    
+export interface ITransformProvider extends IStringConverter {
 }
 
 export default abstract class BaseTransformProvider implements ITransformProvider, IService {
@@ -18,7 +16,7 @@ export default abstract class BaseTransformProvider implements ITransformProvide
     }
 
     public getType(): ServiceType {
-        return "ITransformProvider";
+        return nameof<ITransformProvider>();
     }
 
     public locationToString(location: GeoLocation | null): string {
@@ -33,30 +31,10 @@ export default abstract class BaseTransformProvider implements ITransformProvide
             return "";
         }
 
-        if ((item instanceof GeoLocation) || (item.isGeoLocation === true)) {
+        if ((item instanceof GeoLocation) || (item.isGeoLocation)) {
             return this.locationToString(item as GeoLocation);
         }
-
-        if (Array.isArray(item)) {
-            return item.length.toString();
-        }
-
-        if (format) {
-            if (typeof format === "function") {
-                return format(item);
-            }
-            
-            const enumProvider: IEnumProvider | null = ServiceProvider.getEnumProvider();
-
-            if ((enumProvider) && (enumProvider.isEnum(format))) {
-                return enumProvider.getEnumText(format, item);
-            }
-
-            return Utility.format(`{0:${format}}`, item);
-        }
-
-        return (typeof item.toString === "function")
-            ? item.toString()
-            : item as string;
+        
+        return StringConverter.toString(item, format);
     }
 }

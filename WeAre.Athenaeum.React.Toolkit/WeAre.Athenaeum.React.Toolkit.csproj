@@ -36,11 +36,14 @@
       <TypeScriptCompile Include="src\providers\BaseEnumProvider.ts" />
       <TypeScriptCompile Include="src\providers\BaseTransformProvider.ts" />
       <TypeScriptCompile Include="src\providers\ServiceProvider.ts" />
+      <TypeScriptCompile Include="src\providers\StringConverter.ts" />
+      <TypeScriptCompile Include="src\providers\TypeConverter.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.test.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.take.test.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.test.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.test.ts" />
+      <TypeScriptCompile Include="src\tests\StringConverter.toString.test.ts" />
       <TypeScriptCompile Include="src\tests\Utility.test.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />

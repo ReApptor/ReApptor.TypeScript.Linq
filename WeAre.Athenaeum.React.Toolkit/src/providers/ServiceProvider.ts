@@ -24,14 +24,15 @@ class ServiceProvider {
     /**
      * Gets the service object of the specified type.
      * @param serviceType - An object that specifies the type of service object to get.
+     * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns IService | object | null - A service object of type serviceType or null if there is no service object of type serviceType.
      */
-    public getService<TService extends IService | object>(serviceType: ServiceType): TService | null {
+    public getService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService | null {
 
         const service: IService | object | undefined = this._services.getValue(serviceType);
 
         return (service != null)
-            ? (typeof service === "function")
+            ? ((resolve) && (typeof service === "function"))
                 ? service(serviceType)
                 : service as TService
             : null;
@@ -40,12 +41,13 @@ class ServiceProvider {
     /**
      * Get service of type serviceType from the IServiceProvider.
      * @param serviceType - An object that specifies the type of service object to get.
+     * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns A service object of type serviceType.
      * @exception InvalidOperationException There is no service of type serviceType.
      */
-    public getRequiredService<TService extends IService | object>(serviceType: ServiceType): TService {
+    public getRequiredService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService {
         
-        const service: TService | null = this.getService<TService>(serviceType);
+        const service: TService | null = this.getService<TService>(serviceType, resolve);
         
         if (service == null)
             throw new Error(`InvalidOperationException. There is no service of type "${serviceType}".`);
