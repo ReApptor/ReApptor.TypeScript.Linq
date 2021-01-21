@@ -146,20 +146,21 @@ export default class PageRouteProvider {
             const messageHashCode: number = `${pageRouteName}:${componentStack}:${error.message}`.getHashCode();
             const stackOverflow: boolean = (this._lastMessageHashCode == messageHashCode);
             if (!stackOverflow) {
-                console.log("1:", messageHashCode, pageRouteName, componentStack, error.message, error.stack);
+                console.log("exception.1:", messageHashCode, this._lastMessageHashCode, pageRouteName, componentStack, error.message, error.stack);
                 this._lastMessageHashCode = messageHashCode;
                 const pageName: string = (pageRouteName) ? ` on page "${pageRouteName}"` : ``;
                 const serverError: ServerError = {
                     requestId: "",
                     debugDetails: `Unhandled JS exception occured${pageName}: "${error.message}"\n${error.stack}\n${componentStack}.`
                 };
+                console.log("onJsError:", serverError);
                 // do not await, just notification event
                 // noinspection ES6MissingAwait
                 this.onJsErrorAsync(serverError);
                 //redirect to error page
                 await this.error(serverError);
             } else {
-                console.log("2:", messageHashCode, pageRouteName, componentStack, error.message, error.stack);
+                console.log("exception.2:", messageHashCode, this._lastMessageHashCode, pageRouteName, componentStack, error.message, error.stack);
             }
         }
     }
