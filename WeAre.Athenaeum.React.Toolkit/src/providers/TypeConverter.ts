@@ -3,9 +3,9 @@ import ServiceProvider, {ServiceType} from "./ServiceProvider";
 export interface ITypeConverter {
 }
 
-export declare type TDecoratorConstructor = {new (...args: any[]): object};
+export declare type TDecoratorConstructor = { new (...args: any[]): {} };
 
-export declare type TClassDecorator = <TFunction extends TDecoratorConstructor>(target: TFunction) => TFunction | void;
+export declare type TClassDecorator = <TConstructor extends TDecoratorConstructor>(constructor: TConstructor) => TConstructor | void;
 
 export declare type TConvertibleType<T extends TDecoratorConstructor> = T | object | ServiceType;
 

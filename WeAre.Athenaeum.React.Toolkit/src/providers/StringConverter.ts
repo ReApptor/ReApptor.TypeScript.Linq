@@ -13,11 +13,10 @@ export interface IStringConverter<T = any> extends ITypeConverter {
 export type TStringConverter<T = any> = (item: T | null, format?: TFormat | null) => string;
 
 export function ToString(converter: IStringConverter | TStringConverter): TClassDecorator {
-    return <TFunction extends TDecoratorConstructor>(constructor: TFunction): TFunction | void => {
+    return <TConstructor extends TDecoratorConstructor>(constructor: TConstructor): TConstructor | void => {
         // implement class decorator here, the class decorator
         // will have access to the decorator arguments (filter)
         // because they are  stored in a closure
-        // return classDecorator(target, options);
         TypeConverter.addConverter(constructor, String, converter);
     }
 }
