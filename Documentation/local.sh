@@ -1,4 +1,4 @@
-npm install -g @microsoft/api-extractor@7.12.1
+npm install -g @microsoft/api-extractor
 npm install -g @microsoft/api-documenter
 
 mkdir input
@@ -6,7 +6,7 @@ cd ../WeAre.Athenaeum.React.Toolkit/
 npm install
 npm run build
 mkdir ./etc
-api-extractor run --local
+api-extractor run --local --typescript-compiler-folder $(npm root)/typescript
 cp -a ./temp/. ../Documentation/input/
 rm -r ./etc
 rm -r ./temp
@@ -16,7 +16,7 @@ cd ../WeAre.Athenaeum.React.Common/
 npm install
 npm run build
 mkdir ./etc
-api-extractor run --local
+api-extractor run --local --typescript-compiler-folder $(npm root)/typescript
 cp -a ./temp/. ../Documentation/input/
 rm -r ./etc
 rm -r ./temp
