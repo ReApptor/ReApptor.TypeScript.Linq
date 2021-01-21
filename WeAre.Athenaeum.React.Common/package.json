@@ -15,10 +15,10 @@
     "@types/node": "11.9.4",
     "@types/react": "16.8.3",
     "@types/ts-nameof": "^4.2.1",
-    "typescript": "3.4",
-    "ttypescript": "^1.5.12",
     "react": "^16.8.2",
-    "ts-nameof": "^5.0.0"
+    "ts-nameof": "^5.0.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "3.4"
   },
   "scripts": {
     "build": "ttsc"

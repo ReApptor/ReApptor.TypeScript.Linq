@@ -11,11 +11,11 @@
     "@types/jest": "^26.0.14",
     "@types/node": "11.9.4",
     "@types/ts-nameof": "^4.2.1",
-    "typescript": "3.4",
-    "ttypescript": "^1.5.12",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0",
-    "ts-nameof": "^5.0.0"
+    "ts-nameof": "^5.0.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "3.4"
   },
   "scripts": {
     "build": "ttsc",
