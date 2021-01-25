@@ -2,5 +2,9 @@
 import Alert, { IAlertProps } from "./Alert/Alert";
 
 export {
-    Alert, IAlertProps,
+    Alert, IAlertProps
+}
+
+export default {
+    
 }
