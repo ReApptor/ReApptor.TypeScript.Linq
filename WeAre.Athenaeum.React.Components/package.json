@@ -2,7 +2,7 @@
   "name": "@weare/athenaeum-react-components",
   "private": false,
   "version": "1.0.0",
-  "main": "lib/src/index.es.js",
+  "main": "lib/index.es.js",
   "types": "lib/types/src/index.d.ts",
   "dependencies": {
     "@types/jquery": "^3.3.29",
