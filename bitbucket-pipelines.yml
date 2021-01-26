@@ -21,7 +21,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                 # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.13.0
+                - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
                 # - npm test
                 # Run build
@@ -56,7 +56,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                  # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.13.0
+                - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
                 # - npm test
                 # Run build
@@ -91,7 +91,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                 ## Dependencies for documentation create
-                #- npm install -g @microsoft/api-extractor@7.13.0
+                #- npm install -g @microsoft/api-extractor@7.12.1
                 #- npm install -g @microsoft/api-documenter
                 ## Run tests
                 # - npm test
