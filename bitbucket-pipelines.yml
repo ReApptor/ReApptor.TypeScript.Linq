@@ -1,13 +1,16 @@
 options:
   docker: true
+  size: 2x # Double resources available for this step.
 
 pipelines:
   branches:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
-              name: Athenaeum React Toolkit build
-              image: node:10.15.0
+              name: Athenaeum React Toolkit Build
+              image: node:14
+              caches:
+                - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -18,7 +21,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                 # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.12.1
+                - npm install -g @microsoft/api-extractor@7.13.0
                 # Run tests
                 # - npm test
                 # Run build
@@ -39,8 +42,10 @@ pipelines:
               artifacts:
                 - WeAre.Athenaeum.React.Toolkit/temp/**
           - step:
-              name: Athenaeum React Common build
-              image: node:10.15.0
+              name: Athenaeum React Common Build
+              image: node:14
+              caches:
+                - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -51,7 +56,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                  # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.12.1
+                - npm install -g @microsoft/api-extractor@7.13.0
                 # Run tests
                 # - npm test
                 # Run build
@@ -72,8 +77,10 @@ pipelines:
               artifacts:
                 - WeAre.Athenaeum.React.Common/temp/**
           - step:
-              name: Athenaeum React Components build
-              image: node:10.15.0
+              name: Athenaeum React Components Build
+              image: node:14
+              caches:
+                - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -84,7 +91,7 @@ pipelines:
                 # Install dependencies
                 - npm install
                 ## Dependencies for documentation create
-                #- npm install -g @microsoft/api-extractor@7.12.1
+                #- npm install -g @microsoft/api-extractor@7.13.0
                 #- npm install -g @microsoft/api-documenter
                 ## Run tests
                 # - npm test
@@ -105,66 +112,56 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Athenaeum Toolkit build
+              name: Athenaeum Toolkit Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
-              size: 2x # Double resources available for this step.
+              caches:
+                - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Toolkit/WeAre.Athenaeum.Toolkit.csproj -o obj/weare-athenaeum-toolkit/publish
                 - dotnet nuget push obj/weare-athenaeum-toolkit/publish/WeAre.Athenaeum.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
-              services:
-                - docker
+          - step:
+              name: Athenaeum Redis Build
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
-          - step:
-              name: Athenaeum Redis build
-              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
-              size: 2x # Double resources available for this step.
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.Cache/WeAre.Athenaeum.Services.Cache.csproj -o obj/weare-athenaeum-cache/publish
                 - dotnet nuget push obj/weare-athenaeum-cache/publish/WeAre.Athenaeum.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
-              services:
-                - docker
-              caches:
-                - dotnetcore
           - step:
-              name: UI Toolkit tests
-              image: node:10.15.0
+              name: UI Toolkit Tests
+              image: node:14
+              caches:
+                - node
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Toolkit
                 - npm install
                 - npm test
-              caches:
-                - node
           - step:
-              name: WeAre Athenaeum Common build
+              name: WeAre Athenaeum Common Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
-              size: 2x # Double resources available for this step.
+              caches:
+                - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Common/WeAre.Athenaeum.Common.csproj -o obj/weare-athenaeum-common/publish
                 - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.Athenaeum.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
-              services:
-                - docker
+          - step:
+              name: Renta Apps Common Build
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
-          - step:
-              name: Renta Apps Common build
-              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
-              size: 2x # Double resources available for this step.
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Common.csproj -o obj/renta-apps-common/publish
                 - dotnet nuget push obj/renta-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
-              services:
-                - docker
-              caches:
-                - dotnetcore       
       - step:
-          name: Athenaeum Documentation build
-          image: node:10.15.0
+          name: Build Documentation
+          image: node:14
+          caches:
+            - node
           script:
             - npm config set strict-ssl true
             - npm config set ca ""
@@ -175,12 +172,31 @@ pipelines:
             - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
             - api-documenter markdown -i ./input/ -o ./docs/
             - cp index.html ./docs/index.html
-            - cd ./docs/
-            - mv index.md README.md
-            # TODO somehow server static page from docs folder
+            - mv ./docs/index.md ./docs/README.md
+          artifacts:
+            - Documentation/docs/**
+      - step:
+          name: Deploy Documentation
+          image: amazon/aws-cli
+          caches:
+            - docker
+          script:
+            - export VERSION=latest
+            # Print version from AWS CLI & Python
+            - aws --version && python -V
+            # Deploy documentation
+            - cd Documentation
+            # Build container image and push to ECR repository
+            - aws ecr get-login-password --region ${AWS_REGION} | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+            - docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION -f Dockerfile .
+            - docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
+            - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
+          services:
+            - docker
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
+    node: node_modules
   services:
     docker:
       memory: 2048
