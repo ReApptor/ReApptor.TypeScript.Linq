@@ -57,7 +57,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
     }
     
     protected get localizer(): ILocalizer {
-        return Alert._localizer || (Alert._localizer = ServiceProvider.getRequiredService<ILocalizer>('ILocalizer'));
+        return Alert._localizer || (Alert._localizer = ServiceProvider.getRequiredService<ILocalizer>(nameof<ILocalizer>()));
     }
     
     public async componentDidMount(): Promise<void> {
