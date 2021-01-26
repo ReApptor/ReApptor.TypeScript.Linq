@@ -1,0 +1,16 @@
+{
+  "name": "documentation",
+  "version": "1.0.0",
+  "description": "Documentation for WeAre Athenaeum Components",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Lassi Henriksson lassi.henriksson@weare.fi",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
