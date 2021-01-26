@@ -1,11 +1,7 @@
 {
   //"extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "plugins": [
-      { "transform": "ts-nameof", "type": "raw" },
-      { "name": "typescript-plugin-css-modules" },
-    ],
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
@@ -37,8 +33,6 @@
     "node_modules/**",
     "lib",
     "**/*.test.ts",
-    "webpack.config.ejs",
-    "webpack.config.cjs",
     "webpack.config.js"
   ]
 }

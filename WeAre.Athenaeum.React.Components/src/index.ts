@@ -6,5 +6,5 @@ export {
 }
 
 export default {
-    
+    Alert
 }

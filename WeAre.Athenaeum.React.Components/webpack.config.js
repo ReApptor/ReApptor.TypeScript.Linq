@@ -17,8 +17,9 @@ const configuration = {
     },
     optimization: {
         concatenateModules: false,
-        usedExports: true,
-        minimize: false
+        // usedExports: false,
+        minimize: false,
+        // providedExports: false
     },
     module: {
         rules: [
@@ -42,7 +43,8 @@ const configuration = {
                     {
                         loader: "ts-loader", // or awesome-typescript-loader
                         options: {
-                            getCustomTransformers: () => ({ before: [tsNameof] })
+                            getCustomTransformers: () => ({ before: [tsNameof] }),
+                            onlyCompileBundledFiles: true
                         }
 
                     }]
@@ -52,10 +54,8 @@ const configuration = {
     output: {
         filename: '[name].es.js',
         path: path.resolve(__dirname, 'lib'),
-        library: 'Library',
-        libraryTarget: 'umd',
-        globalObject: 'this',
-        umdNamedDefine: true
+        libraryTarget: 'commonjs',
+        globalObject: 'this'
 
     }
 }
