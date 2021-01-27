@@ -1,0 +1,40 @@
+@import "../../../../variables";
+
+.distanceWidget {
+
+    .extended {
+        
+        .distances {
+
+            padding: $baseline 3*$baseline $baseline 3*$baseline;
+
+            .distanceItem {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .value {
+                    font-size: 2em;
+                }
+                
+                &.today {
+                    > span:first-child {
+                        font-weight: bold;
+                    }
+                }
+            }
+            
+        }
+        
+        .addItem {
+
+            display: inline-block;
+            margin-bottom: $baseline;
+            
+            > span {
+                padding-left: $baseline;
+            }
+        }
+        
+    }
+}

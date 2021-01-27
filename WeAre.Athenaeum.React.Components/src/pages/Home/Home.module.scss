@@ -1,0 +1,9 @@
+@import "../../components/Alert/Alert.module.scss";
+
+.home {
+    padding: 0;
+    
+    .alert {
+        @extend .dashboardAlert;
+    }
+}

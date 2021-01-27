@@ -1,0 +1,17 @@
+@import "../../../variables";
+
+.addConstructionSiteModal {
+  
+  .redirect {
+    height: 100%;
+    width: 260px;
+    display: flex;
+    align-items: center;
+    
+    > div {
+      margin-bottom: 0;
+      margin-right: $baseline;
+      width: 32px;
+    }
+  }
+}

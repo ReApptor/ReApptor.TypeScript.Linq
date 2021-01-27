@@ -1,0 +1,76 @@
+@import "../../../../variables";
+
+.workHours {
+
+    .header {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: $baseline;
+    }
+
+    .body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $baseline;
+        
+        i {
+            cursor: pointer;
+        }
+        
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .date {
+            font-size: 1.2rem;
+            padding: 4px 32px;
+            color: black;
+            background-color: white;
+            border-radius: 5px;
+            border-bottom: 1px solid white;
+            line-height: normal;
+        }
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .icon {
+            flex: 1;
+            margin-left: $baseline * 2;
+        }
+        
+        .summary {
+            flex: 2;
+            text-align: left;
+            
+            span {
+                display: block;
+            }
+            
+            .normal {
+                font-weight: 600;
+                font-size: 1rem;
+            }
+            
+            .overtime {
+            }
+        }
+        
+        &.desktop {
+            .icon {
+                position: absolute;
+                left: 2rem;
+            }
+            
+            .summary {
+                text-align: center;
+            }
+        }
+    }
+}

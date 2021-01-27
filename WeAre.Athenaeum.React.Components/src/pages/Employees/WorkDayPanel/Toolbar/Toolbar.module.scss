@@ -1,0 +1,10 @@
+@import "../../../../variables";
+
+.toolbar {
+  padding: 0 $baseline;
+  
+  .dateDelimiter {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+}

@@ -1,0 +1,17 @@
+@import "../../../variables";
+
+.myWorkHours {
+    
+    .approved {
+        opacity: 1;
+
+        a {
+            background-color: #28a745;
+
+            &:hover {
+                background-color: #28a745;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,114 @@
+@import "../../../../variables";
+
+.summaryWidget {
+    
+    > a {
+        background-color: white !important;
+    }
+    
+    .summaryWidgetContent {
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            margin-bottom: $baseline;
+            color: black;
+
+            .date {
+                align-self: center;
+                font-size: 0.85rem;
+                opacity: 0.8;
+            }
+        }
+
+        .body {
+            min-width: 100%;
+            display: inline-block;
+            text-align: left;
+            color: black;
+            
+            .data {
+                word-break: break-word;
+                overflow: hidden;
+            }
+
+            .noDataText {
+                font-style: italic;
+                opacity: 0.5 !important;
+            }
+
+            mark {
+                font-size: 1rem;
+                margin-left: 10px;
+                color: black;
+            }
+
+            > span {
+                font-size: 0.85rem;
+                display: block;
+                opacity: 0.8;
+                margin-right: 10px;
+            }
+
+            > span:not(:last-child) {
+                margin-bottom: $baseline;
+            }
+
+            .constructionSiteName {
+                font-size: 1.1rem;
+                margin-bottom: 0.2rem !important;
+            }
+            
+            .dropdown {
+                margin-bottom: $baseline * 2;
+            }
+
+            .col {
+                flex-basis: 0;
+                flex-grow: 1;
+                max-width: 100%;
+                position: relative;
+                width: 100%;
+            }
+
+            > div {
+                display: block;
+                margin-bottom: $baseline;
+                
+                .data {
+                    vertical-align: center;
+                    font-size: 1rem;
+                    opacity: 0.8;
+                    margin-right: 10px;
+                }
+
+                > i {
+                    margin-left: 5px;
+                    color: $dark-orange;
+                    margin-right: 25px;
+                }
+
+                > span {
+                    vertical-align: super;
+                    font-size: 0.85rem;
+                    opacity: 0.8;
+                    margin-right: 10px;
+                }
+
+                > button {
+                    height: 100%;
+                    margin-top: $baseline;
+                    margin-bottom: $baseline;
+                    margin-right: 20px !important;
+                }
+
+                > p {
+                    display: inline-block;
+                    font-size: 0.85rem;
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}

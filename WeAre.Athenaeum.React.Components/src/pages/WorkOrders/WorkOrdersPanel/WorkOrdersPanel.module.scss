@@ -1,0 +1,67 @@
+@import "../../../variables";
+
+.tasks {
+
+  .hidden {
+    display: none;
+  }
+
+  .main {
+
+    display: table;
+
+    .left {
+      display: table-cell;
+      padding: 0 $baseline $baseline;
+      vertical-align: top;
+      min-width: 260px;
+      font-size: 0.8rem;
+      position: relative;
+
+      > div {
+        &:first-child {
+          margin-bottom: $baseline;
+        }
+      }
+    }
+
+    .right {
+      display: table-cell;
+      padding: 0 $baseline $baseline;
+      vertical-align: top;
+
+      .workDayTable {
+        margin-bottom: 0;
+
+        .notApprovedRow {
+        }
+
+        .approvedRow {
+          background-color: $approved !important;
+        }
+
+        .exportedRow {
+          background-color: $processed !important;
+        }
+
+        .completedTask {
+          > div:first-child {
+            > div:first-child {
+              > div:first-child {
+                > div:first-child {
+                  > div:first-child {
+                    > div:first-child {
+                      > span {
+                        color: $blue;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

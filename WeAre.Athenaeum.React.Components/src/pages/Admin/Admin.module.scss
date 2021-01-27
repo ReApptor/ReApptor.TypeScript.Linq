@@ -1,0 +1,28 @@
+@import "../../variables";
+
+.admin {
+  
+  .tabContainer {
+    min-height: 40vh;
+  }
+  
+  .invitations {
+    margin-bottom: $baseline * 2;
+  }
+}
+
+.padding{
+  margin-top: 26px;
+}
+
+.subcontractorSection {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+
+  &.open {
+    overflow: visible;
+    max-height: 500px;
+    transition: max-height 0.2s ease-in;
+  }
+}

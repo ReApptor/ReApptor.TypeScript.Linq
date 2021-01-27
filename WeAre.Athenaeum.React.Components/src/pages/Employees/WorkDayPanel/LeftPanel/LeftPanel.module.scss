@@ -1,0 +1,51 @@
+@import "../../../../variables";
+
+.leftPanel {
+  
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+  
+  .minimize {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    cursor: pointer;
+    color: $blue;
+    opacity: 0.3;
+    padding-left: $baseline;
+
+    &:hover {
+      opacity: 1.0;
+    }
+  }
+
+  &:hover {
+    .minimize {
+      display: block;
+    }
+  }
+
+  &.minimized {
+    overflow: hidden;
+    display: block !important;
+    width: 3*$baseline !important;
+    min-width: 3*$baseline !important;
+    transition: min-width 0.2s;
+
+    .minimize {
+      display: block !important;
+      opacity: 1.0;
+    }
+  }
+
+  &.minimized {
+    div:not(.minimize) {
+      visibility: hidden;
+      transition: visibility 0.2s;
+      overflow: hidden !important;
+    }
+  }
+  
+}

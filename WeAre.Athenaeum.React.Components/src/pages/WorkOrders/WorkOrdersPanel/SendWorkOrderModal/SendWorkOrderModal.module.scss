@@ -1,0 +1,31 @@
+.checkbox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    align-items: center;
+    height: 100%;
+    
+    label {
+        cursor: pointer;
+    }
+
+    div:nth-child(2) {
+        align-items: center;
+    }
+}
+
+.newContactPerson {
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.2s ease-out;
+
+    &.open {
+        max-height: 500px;
+        transition: max-height 0.2s ease-in;
+    }
+}
+
+.modifyButtonsMode {
+    width: 48%;
+    margin-top: 10px;
+}

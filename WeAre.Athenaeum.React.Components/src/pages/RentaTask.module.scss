@@ -1,0 +1,97 @@
+@import "../variables";
+@import "../components/Alert/Alert.module.scss";
+
+.pageContainer {
+    padding: 0;
+    
+    > div {
+        border-radius: 0 !important;
+        height: 100%;
+        padding: $baseline/2 !important;
+    }
+    
+    .alert {
+        @extend .dashboardAlert;
+    }
+
+    .pageRow {
+        margin: 0 -4px 4px !important;
+        padding: $baseline 15px;
+        padding-bottom: 0 !important;
+        display: flex;
+        align-content: center;
+
+        > button {
+            margin-left: auto;
+            margin-right: auto;
+            height: 80px;
+        }
+    }
+}
+
+.pageHeader {
+
+    > div {
+
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+
+        > div {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    > hr {
+        display: none;
+    }
+}
+
+.leftPageHeader {
+    @extend .pageHeader;
+
+    > div {
+        > div {
+            text-align: left;
+            margin: auto;
+
+            h4 {
+                margin-bottom: 0;
+                line-height: 1.5;
+            }
+        }
+    }
+}
+
+.rightPageHeader {
+    text-align: right;
+    margin-left: 4px;
+    font-size: 18px;
+    white-space: normal;
+}
+
+.navigation {
+    @media only screen and (max-width: $break-md) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.bigButton {
+    height: 60px;
+    white-space: normal;
+    outline: none !important;
+    box-shadow: none !important;
+    text-transform: uppercase;
+
+    :global {
+        .actions-container {
+            top: 58px;
+        }
+
+        .actions-icon {
+            top: 16px !important;
+            font-size: 24px !important;
+        }
+    }
+}

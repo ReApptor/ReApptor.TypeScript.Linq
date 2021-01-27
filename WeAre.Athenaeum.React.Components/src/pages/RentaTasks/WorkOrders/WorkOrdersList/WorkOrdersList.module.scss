@@ -1,0 +1,100 @@
+@import "../../../../variables";
+
+.workOrdersList {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .filter {
+      padding: $baseline 14px;
+      line-height: 0;
+    }
+  }
+  
+  .workOrderListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background-color: $orange;
+    color: white;
+    padding: $baseline / 3 $baseline;
+    margin: $baseline / 2 0;
+    border-radius: $radius;
+    
+    &.highPriority {
+      background-color: red;
+    }
+    
+    &.signedIn {
+      background-color: $blue;
+    }
+    
+    .left {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+
+      .multiLines {
+        position: relative;
+        min-width: 50px;
+        
+        span {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          
+          &:nth-child(n+2) {
+            font-size: 10px;
+            line-height: 12px;
+            font-weight: 100;
+          }
+        }
+        
+        &.topSpace {
+          top: -3px;
+        }
+      }
+      
+      .overflowContainer {
+        overflow: hidden;
+        margin-right: 0 $baseline;
+        
+        span {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          display: block;
+        }
+      }
+    }
+
+    .icons {
+      margin-left: 20px;
+      margin-right: 10px;
+      
+      i {
+        font-size: 1.5em;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        background: white;
+        border-radius: 25px;
+        
+        &:before {
+          margin: auto;
+        }
+      }
+    }
+    
+    &.noItems {
+      justify-content: center;
+      opacity: 0.8;
+    }
+  }
+}
