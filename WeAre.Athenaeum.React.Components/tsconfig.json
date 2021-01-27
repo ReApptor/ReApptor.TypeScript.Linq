@@ -3,7 +3,15 @@
     "plugins": [
       { "transform": "typescript-transform-paths" },
       { "transform": "ts-nameof", "type": "raw" },
-      { "name": "typescript-plugin-css-modules" }
+      { "name": "typescript-plugin-css-modules" },
+      {
+        "transform": "typescript-plugin-styled-components",
+        "type": "config",
+
+        // other typescript-plugin-styled-components options can be added here
+        "minify": true,
+        "ssr": true
+      }
     ],
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
