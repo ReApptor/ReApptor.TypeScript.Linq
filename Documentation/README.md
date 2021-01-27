@@ -1,4 +1,4 @@
-# WeAre components docs
+# WeAre Components Documentation
 ## Run container locally
 ### DEVELOPMENT
 #### Login into Amazon ECR registry
