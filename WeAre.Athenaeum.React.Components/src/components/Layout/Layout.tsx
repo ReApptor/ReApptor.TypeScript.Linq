@@ -11,6 +11,7 @@ import styles from "./Layout.module.scss";
 import Alert from "@/components/Alert/Alert";
 // import Alert from "@/components/Alert/Alert";
 
+
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     page: IBasePage | null;
     isSpinning: boolean;

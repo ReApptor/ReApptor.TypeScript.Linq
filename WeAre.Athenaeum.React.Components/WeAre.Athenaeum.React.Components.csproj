@@ -62,6 +62,7 @@
       <TypeScriptCompile Include="src\models\ArrayScope.ts" />
       <TypeScriptCompile Include="src\models\Enums.ts" />
       <TypeScriptCompile Include="src\module.d.ts" />
+      <TypeScriptCompile Include="src\pages\index.ts" />
       <TypeScriptCompile Include="src\providers\EnumProvider.ts" />
       <TypeScriptCompile Include="src\providers\ImageProvider.ts" />
       <TypeScriptCompile Include="src\providers\PageDefinitions.ts" />
