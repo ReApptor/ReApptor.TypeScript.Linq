@@ -1,0 +1,72 @@
+﻿@import "../../variables";
+
+.alert {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    max-height: calc(100% + 1px);
+    opacity: 1;
+    margin-top: 15px;
+    
+    .message {  
+        width: 100%;
+        margin: 0.75rem 1.25rem;
+
+        .close {
+            float: right;
+            display: inline;
+            vertical-align: top;
+            cursor: pointer;
+            position: relative;
+            width: 21px;
+            height: 21px;
+            margin-right: -10px;
+            opacity: 0.5;
+            
+            &:hover {
+                opacity: 1;
+            }
+
+            > span {
+                position: absolute;
+                line-height: 0;
+                font-size: 24px;
+                top: 9px;
+                left: 5px;
+            }
+        }
+    }
+
+    &.flyout {
+        position: fixed;
+        top: 46px;
+        border-radius: 0;
+        right: 1px;
+        width: 350px;
+        display: flex;
+        align-items: center;
+        transition: right 0.2s ease-in-out;
+        z-index: 1001;
+        margin: 0 !important;
+
+        &.fadeOut {
+            right: -351px;
+        }
+    }
+}
+
+.dashboardAlert {
+    max-width: 628px;
+    margin-top: 0;
+    margin-bottom: 4px;
+    text-align: center;
+    background: $transparent-dark-orange;
+    border: none;
+    cursor: default;
+    color: white;
+    border-radius: 5px;
+
+    @media screen and (max-width: $break-md) {
+        margin: 0 6px 8px 6px;
+    }
+}

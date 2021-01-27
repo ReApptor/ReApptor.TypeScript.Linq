@@ -1,0 +1,157 @@
+@import "../../variables";
+
+.button {
+    border-color: #ccc !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+    position: relative;
+
+    &:not(:global(.btn-warning.btn-light.btn-link)) {
+        color: white;
+    }
+
+    &:focus {
+        box-shadow: none !important;
+    }
+
+    &.hover {
+        &:hover {
+            color: $text-black !important;
+            background-color: $button-hover !important;
+            border-color: #adadad;
+        }
+    }
+
+    i {
+        padding-right: 0;
+    }
+
+    &.labelPadding {
+        i {
+            padding-right: $baseline;
+        }
+    }
+    
+    &.small {
+        font-size: 0.8rem !important;
+        padding: 0.375rem;
+        height: auto;
+        
+        &.iconPadding.labelPadding {
+            padding-right: 0.7rem;
+        }
+    }
+    
+    &.disabled {
+        pointer-events: none;
+    }
+
+    &.color_grey {
+        background-color: white !important;
+        color: $text-black !important;
+    }
+
+    &.color_orange {
+        background-color: $orange !important;
+        color: white !important;
+    }
+
+    &.color_unset {
+        color: #000000 !important;
+        background-color: #8c8c8c !important;
+        border-color: black;
+    }
+    
+    &.text {
+        padding: 0;
+        border: 0;
+        color: $orange;
+        
+        &:hover {
+            background-color: inherit !important;
+            color: inherit !important;
+        }
+    }
+    
+    &.withActions {
+        padding-right: 24px;
+
+        .icon {
+            position: absolute;
+            top: 10px;
+            right: 0;
+        }
+    }
+}
+
+.actions {
+    position: absolute;
+    width: calc(100% + 2px);
+    border-radius: 0.25rem;
+    border: 1px solid #ccc !important;
+    top: 33px;
+    left: -1px;
+    text-align: left;
+    z-index: 10;
+
+    &.color_grey {
+        background-color: white !important;
+        color: $text-black !important;
+
+        .action {
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.8) !important;
+            }
+        }
+    }
+
+    &.color_orange {
+        background-color: $orange !important;
+        color: white !important;
+
+        .action {
+            &:hover {
+                background-color: rgba(240, 80, 0, 0.8) !important;
+            }
+        }
+    }
+
+    &.color_unset {
+        color: #000000 !important;
+        background-color: #8c8c8c !important;
+        border-color: black;
+
+        .action {
+            &:hover {
+                background-color: rgba(140, 140, 140, 0.8) !important;
+            }
+        }
+    }
+
+    .action {
+        padding: 6px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        span {
+            flex: 1;
+        }
+
+        i:last-child {
+            padding-right: 0;
+        }
+
+        > i {
+            padding-right: 12px;
+        }
+
+        &:hover {
+            filter: alpha(opacity=60);
+        }
+    }
+}
+
+.hidden {
+    display:none;
+}

@@ -1,0 +1,106 @@
+@import "../../variables";
+
+.page {
+    padding: 15px $baseline;
+    height: 100%;
+
+    .container {
+        padding: 15px;
+        background: $transparent-white;
+        border-radius: $radius;
+        
+        &.fullHeight {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        &.fullWidth {
+            max-width: unset !important;
+            min-width: 100% !important;
+        }
+    }
+    
+    &.scale {
+        padding: 0;
+        
+        .container {
+            max-width: unset !important;
+            min-width: 100% !important;
+            height: 100%;
+            border-radius: 0;
+            padding-bottom: 0;
+
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+
+            > div {
+                margin-top: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+    }
+
+    .row {
+        flex-grow: 2;
+        margin: 15px 15px 25px;
+
+        &:last-of-type {
+            margin-bottom: 15px;
+        }
+
+        @media screen and (max-width: $break-md) {
+            margin: 0 -15px 15px !important;
+
+            &:last-of-type {
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+
+    .pageRow {
+        margin-bottom: 0;
+        flex-grow: 0;
+        
+        &.alertRow {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .header {
+        flex-grow: 0;
+        margin-bottom: $baseline * 2;
+        padding: 0 15px;
+        overflow: unset;
+        
+        .content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            h4 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+                font-weight: 400;
+                font-family: Arial, sans-serif;
+                margin-bottom: 8px;
+            }
+
+            &.noMargin {
+                margin-bottom: 0;
+            }
+        }
+
+        hr {
+            border: 0;
+            border-bottom: 1px solid $separator-color;
+            margin: 8px 0 0 0;
+            width: 100%;
+        }
+    }
+}

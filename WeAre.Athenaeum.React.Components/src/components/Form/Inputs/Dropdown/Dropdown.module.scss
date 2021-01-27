@@ -1,0 +1,396 @@
+@import "../../../../variables";
+
+.list {
+    text-align: left;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    height: 100%;
+
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .selected {
+        text-align: center;
+    }
+
+    .itemsContainer {
+        display: flex;
+        visibility: hidden;
+        height: inherit;
+        position: absolute;
+        flex-direction: column;
+
+        .filter {
+            padding: 4px 2px 0;
+            position: relative;
+
+            > input {
+                width: 100%;
+                padding-right: 18px !important;
+            }
+            
+            input::placeholder {
+                font-style: italic;
+            }
+            
+            .clean {
+                position: absolute;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                top: 0;
+                right: 12px;
+                opacity: 0.3;
+                margin-top: 2px;
+                color: black;
+                
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+        
+        .scrollableContainer {
+            overflow-y: auto;
+            height: inherit;
+            position: relative;
+        }
+        
+        .itemsList {
+            height: auto;
+            position: absolute;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: unset;
+            
+            @media screen and(max-width: $break-md) {
+                position: unset !important;
+            }
+        }
+
+        .noWrap {
+            white-space: nowrap;
+            overflow-x: hidden;
+        }
+
+        .lineThrough {
+            text-decoration: line-through;
+        }
+
+        .item {
+            
+            &.listItem {
+                color: $orange;
+
+                &:hover {
+                    background-color: $light-gray;
+                }
+                
+                &.selectedItem {
+                    color: white;
+
+                    &:hover {
+                        color: $blue;
+                    }
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            
+            display: flex;
+            align-items: center;
+            padding: 2px 10px;
+            margin: 2px 0;
+            border-radius: 5px;
+            
+            .iconContainer {
+                padding: 5px;
+                margin-right: 10px;
+            }
+
+            span {
+                display: block;
+                text-transform: uppercase;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            small {
+                text-transform: capitalize;
+            }
+
+            .minus {
+                font-size: 1.5em;
+                margin-right: 5px;
+            }
+            
+            .amountTitle {
+                width: 100%;
+                
+                span {
+                    display: inline;
+                }
+
+                .amountUnit {
+                    padding-left: 5px;
+                    color: lightgray;
+                }
+            }
+
+            .amountDisabled {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
+            .amount {
+                font-size: 1.5em;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .plus {
+                font-size: 1.5em;
+                margin-left: 5px;
+            }
+            
+            .notCompleted {
+                margin-right: 0;
+                margin-left: auto;
+                padding-left: $baseline;
+            }
+        }
+
+        .group, .group:hover, .group:active {
+            cursor: default;
+            color: #e3e3e3 !important;
+            background-color: inherit !important;
+            font-size: 12px;
+        }
+
+        .groupSeparator {
+            margin: 6px 2px;
+            border-color: $separator-color;
+        }
+
+        .selectedItem {
+            background-color: $blue;
+            color: white;
+            
+            &:hover {
+                //color: $blue;
+            }
+        }
+
+        .itemGroupIdent {
+            padding-left: 20px !important;
+        }
+
+        &.opened {
+            visibility: visible;
+            position: initial;
+        }
+        
+        .noResults {
+            @extend .item;
+            
+            &:hover {
+                background-color: transparent;
+            }
+
+            padding: 0;
+            //pointer-events: none;
+            cursor: default;
+        }
+    }
+}
+
+.dropdown {
+    @extend .list;
+    
+    cursor: pointer;
+    position: relative;
+    
+    .hovered {
+        background-color: $button-hover;
+        border-color: $border-hover;
+    }
+    
+    .focused {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .selected {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        white-space: nowrap;
+        
+        &:hover {
+            @extend .hovered;
+        }
+        
+        i {
+            margin-left: 6px;
+        }
+        
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    
+    .itemsContainer {
+        height: auto;
+        position: absolute;
+        background-color: $orange;
+        width: auto;
+        min-width: 100%;
+        left: auto;
+        right: 0;
+        bottom: 0;
+        border-radius: 5px;
+        color: white;
+        margin: 2px 0;
+        padding: 3px 0;
+        box-shadow: $renta-shadow;
+        border: $renta-border;
+        z-index: 150; //10
+      
+        &.alignLeft {
+            left: 0;
+            right: auto;
+        }
+        
+        &.alignTop {
+            bottom: 35px;
+        }
+
+        &.alignBottom {
+            bottom: auto;
+            top: auto;
+        }
+
+        &.opened {
+            visibility: visible;
+            position: absolute;
+        }
+        
+        .itemsList {
+            position: unset !important;
+        }
+        
+        .item {
+            
+            color: white;
+            padding: 0 12px;
+
+            .iconContainer {
+                padding: 2px;
+            }
+            
+            .checkbox {
+                margin-left: auto;
+                padding-left: 10px;
+            }
+
+            &:hover {
+                background-color: $orange-hover;
+            }
+            
+            &.inlineSubtext {
+
+                border-radius: 0;
+                
+                > div {
+                    padding-top: 2px;
+                    padding-bottom: 3px;
+
+                    > span {
+                        display: inline;
+                        text-transform: uppercase;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        -webkit-font-smoothing: initial;
+                    }
+
+                    > small {
+                        margin-left: 0.5em;
+                        color: rgba(255, 255, 255, .5);
+                        font-size: 75%;
+                        -webkit-font-smoothing: initial;
+                    }
+                }
+            }
+        }
+        
+        .filter {
+            padding: 4px $baseline;
+            
+            .clean {
+                color: black !important;
+                right: 16px; //1rem
+                margin-top: 0;
+            }
+        }
+
+        .noResults {
+            @extend .item;
+            
+            &:hover {
+                background-color: transparent;
+            }
+            
+            cursor: default;
+        }
+    }
+}
+
+.dropdownWidget {
+    width: calc(100% + 24px);
+    left: -12px;
+    bottom: -36px;
+}
+
+.transparent {
+    background-color: transparent;
+    border: none;
+        
+    &:hover {
+        i.transparent {
+            visibility: visible;
+        }
+    }
+    
+    &.selected:hover {
+        background-color: rgba(227, 227, 226, 0.5);
+    }
+    
+    &:not(.selected) {
+        margin: -6px 0px -6px -12px;
+    }
+}
+
+i.transparent {
+    visibility: hidden;
+}
+
+.small {
+    min-width: 52px;
+    
+    > div:first-child {
+        padding: 0.375rem;
+        height: auto;
+
+        span {
+            font-size: 0.8rem;
+        }
+    }
+}

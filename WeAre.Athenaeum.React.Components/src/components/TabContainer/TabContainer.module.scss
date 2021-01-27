@@ -1,0 +1,81 @@
+@import "../../variables";
+
+.tabContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    min-width: 100%;
+    
+    .navigationContainer {
+        position: relative;
+
+        .navigationIcon {
+            padding: 10px 4px;
+            top: 0;
+            position: absolute;
+            cursor: pointer;
+            z-index: 1;
+            border-radius: 5px;
+            color: $orange;
+            display: none;
+            
+            &.left {
+                left: -16px;
+            }
+            
+            &.right {
+                right: -16px;
+            }
+        }
+        
+        .scrollableContainer {
+            position: relative;
+            height: 52px;
+            overflow: hidden;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+
+            ul {
+                position: absolute;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+        }
+    }
+    
+    .tab {
+        
+        .closed {
+            display: none;
+        }
+        
+        .icon {
+            &.hasText {
+                margin-left: -$baseline/2;
+                margin-right: $baseline/2;
+            }
+        }
+        
+        .close {
+            margin-left: $baseline;
+            cursor: pointer;
+            opacity: 0.3;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    
+    //.tabContent {
+    //    display: none;
+    //    opacity: 0;
+    //    transition: opacity 0.2s;
+    //    
+    //    &.active {
+    //        display: block;
+    //        opacity: 1;
+    //    }
+    //}
+}
