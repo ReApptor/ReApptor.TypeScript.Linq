@@ -3,6 +3,7 @@
     "plugins": [
       { "name": "typescript-plugin-css-modules" },
       { "transform": "typescript-transform-paths", "afterDeclarations": true },
+      { "transform": "typescript-transform-paths" },
       { "transform": "ts-nameof", "type": "raw" },
     ],
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
