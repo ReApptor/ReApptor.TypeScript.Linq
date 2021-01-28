@@ -22,7 +22,14 @@
                     align-items: center;
                     justify-content: space-between;
 
-                    &.row1 {                        
+                    &.row1 {
+                        /* empty class, comment is to keep the class in compilation. remove if filled */
+                        &.user {
+                            /* empty class, comment is to keep the class in compilation. remove if filled */
+                        }
+                        &.day {
+                            /* empty class, comment is to keep the class in compilation. remove if filled */
+                        }
                     }
 
                     &.row2 {

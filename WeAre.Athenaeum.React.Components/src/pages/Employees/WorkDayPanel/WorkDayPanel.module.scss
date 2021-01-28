@@ -39,10 +39,15 @@
         margin-bottom: 0;
 
         .notApprovedRow {
+          /* empty class, comment is to keep the class in compilation. remove if filled */
         }
 
         .approvedRow {
           background-color: $approved !important;
+        }
+
+        .exportedRow {
+          /* empty class, comment is to keep the class in compilation. remove if filled */
         }
 
         .completedTask {

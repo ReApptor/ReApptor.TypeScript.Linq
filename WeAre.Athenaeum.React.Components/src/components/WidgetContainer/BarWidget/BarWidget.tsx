@@ -34,7 +34,7 @@ export default class BarWidget extends BaseWidget<IBaseWidgetProps, IBarWidgetDa
                 (
                     <div key={i} className={styles.sets}>
                         <div className={this.css(styles.setsContainer, (i == 0) && styles.borderLeft)}>
-                            <span key={i} style={{height: `${value}%`}} title={title} className={styles[`color${1}`]} />
+                            <span key={i} style={{height: `${value}%`}} title={title} className={styles[`color${1}` as 'color1']} />
                         </div>
 
                         <span key={i} title={Utility.getMonth(monthIndex)}>{Utility.getShortMonth(monthIndex)}</span>
