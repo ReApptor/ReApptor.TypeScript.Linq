@@ -1,15 +1,47 @@
 import React from "react";
-import {ApplicationContext, BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-import Icon, { IconSize, IconStyle } from "../Icon/Icon";
-import PageDefinitions from "@/providers/PageDefinitions";
 import Localizer from "../../localization/Localizer";
 
 import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";
 import UserContext from "@/models/server/UserContext";
+
+  
+//  IconStyle Copied to disconnect this component from TopNav, Remove and replace if needed
+enum IconStyle {
+    Solid,
+    
+    Regular,
+    
+    Light,
+    
+    Brands
+}
+//  IconSize Copied to disconnect this component from TopNav, Remove and replace if needed
+enum IconSize {
+    Normal,
+    
+    ExtraSmall,
+    
+    Small,
+    
+    Large,
+    
+    X2,
+    
+    X3,
+    
+    X4,
+    
+    X5,
+    
+    X7,
+    
+    X10
+}
 
 export interface IMenuItem {
     route: PageRoute;
@@ -57,13 +89,16 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         const context: UserContext = ch.getContext() as UserContext;
         
         if(context != null && context.isMobileManager){
-            await PageRouteProvider.redirectAsync(PageDefinitions.rentaTasksRoute)
+            console.log('PageRouteProvider.redirectAsync(PageDefinitions.rentaTasksRoute) is commented out.');
+            // await PageRouteProvider.redirectAsync(PageDefinitions.rentaTasksRoute)
         }
         else if (this.isAuthenticated) {
-            await PageRouteProvider.redirectAsync(PageDefinitions.dashboardRoute)
+            console.log('PageRouteProvider.redirectAsync(PageDefinitions.dashboardRoute) is commented out.');
+            // await PageRouteProvider.redirectAsync(PageDefinitions.dashboardRoute)
         }
         else {
-            await PageRouteProvider.redirectAsync(PageDefinitions.homeRoute)
+            console.log('PageRouteProvider.redirectAsync(PageDefinitions.homeRoute) is commented out.');
+            // await PageRouteProvider.redirectAsync(PageDefinitions.homeRoute)
         }
     }
 
@@ -120,11 +155,12 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             ((this.manual.manual) || (this.manual.onClick))  && 
                             (
-                                <Icon name={this.manual.icon || "question-circle"} 
-                                      className={this.css(styles.right_infoIcon, this.desktop && styles.hover)} 
-                                      style={IconStyle.Regular} size={IconSize.X2}
-                                      toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
-                                />
+                                <div> ICON PLACE HOLDER</div>
+                                // <Icon name={this.manual.icon || "question-circle"} 
+                                //       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)} 
+                                //       style={IconStyle.Regular} size={IconSize.X2}
+                                //       toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
+                                // />
                             )
                         }
                         

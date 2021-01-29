@@ -1,10 +1,10 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
-import RentaTaskConstants from "@/helpers/RentaTaskConstants";
 import Localizer from "@/localization/Localizer";
 
 import styles from "./Alert.module.scss";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 export interface IAlertProps {
     className?: string;
@@ -21,7 +21,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
     }
 
     private async closeWithDelayAsync(): Promise<void> {
-        await Utility.wait(RentaTaskConstants.alertCloseDelay);
+        await Utility.wait(AthenaeumComponentsConstants.alertCloseDelay);
         
         this.fadeOut();
         
