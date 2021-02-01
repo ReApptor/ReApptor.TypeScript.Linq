@@ -1,4 +1,5 @@
 import BasePageParameters from "./BasePageParameters";
+import {Utility} from "@weare/athenaeum-toolkit";
 
 export default class PageRoute {
     public name: string;
@@ -40,7 +41,12 @@ export default class PageRoute {
             return false;
         }
 
-        // TODO: compare parameters
+        if ((x.parameters == null) && (y.parameters == null)) {
+            return true;
+        }
+        if (Utility.getHashCode(x.parameters) != Utility.getHashCode(x.parameters)) {
+            return false;
+        }
 
         return true;
     }
