@@ -176,8 +176,9 @@ export default class PageRouteProvider {
         window.history.forward();
     }
     
-    public static push(route: PageRoute): void {
-        window.history.pushState(route, route.name);
+    public static push(route: PageRoute, title: string | null = null): void {
+        title = title || route.name;
+        window.history.pushState(route, title);
     }
 
     public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
