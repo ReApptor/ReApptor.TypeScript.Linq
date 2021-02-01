@@ -1,8 +1,9 @@
 import React from "react";
 import {Dictionary} from "typescript-collections";
-import {IService, ServiceProvider, ServiceType} from "@weare/athenaeum-toolkit";
+import {IService, ServiceProvider, ServiceType, Utility} from "@weare/athenaeum-toolkit";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, IBasePageConstructor} from "../base/BasePage";
+import BasePageParameters from "../models/BasePageParameters";
 
 export interface IPageDefinitions {
     createPageAsync(route: PageRoute): Promise<IBasePage>;
@@ -92,12 +93,14 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         const pageName: string = page.routeName;
         const routeIndex: number | null = page.routeIndex;
         const routeId: string | null = page.routeId;
-        const key: string = `${pageName}:${page.routeIndex}:${page.routeId}`;
+        const parameters: BasePageParameters | null = page.parameters;
+        const parametersHashCode: number = Utility.getHashCode(parameters);
+        const key: string = `${pageName}:${routeIndex}:${routeId}:${parametersHashCode}`;
 
         const props: any = {
             ref: ref,
             key: key,
-            parameters: page.parameters,
+            parameters: parameters,
             routeIndex: routeIndex,
             routeId: routeId,
             routeName: pageName
