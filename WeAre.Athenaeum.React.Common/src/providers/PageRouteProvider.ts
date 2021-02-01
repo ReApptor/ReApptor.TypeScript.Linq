@@ -24,6 +24,7 @@ export default class PageRouteProvider {
 
     private static async onPopStateAsync(e: PopStateEvent): Promise<void> {
         const route: PageRoute = e.state || BasePageDefinitions.dummyRouteName;
+        console.log("onPopStateAsync: route=", route, "params=", route.parameters);
         await this.invokeRedirectAsync(route, null, true);
     }
 

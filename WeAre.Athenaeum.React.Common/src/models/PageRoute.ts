@@ -44,9 +44,11 @@ export default class PageRoute {
         if ((x.parameters == null) && (y.parameters == null)) {
             return true;
         }
-        if (Utility.getHashCode(x.parameters) != Utility.getHashCode(x.parameters)) {
+        if (Utility.getHashCode(x.parameters) != Utility.getHashCode(y.parameters)) {
             return false;
         }
+        
+        console.log("isEqual: x=", x.parameters, " y=", y.parameters);
 
         return true;
     }
