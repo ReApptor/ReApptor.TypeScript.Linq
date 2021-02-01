@@ -52,6 +52,7 @@ export interface IBaseComponent extends IReactComponent, ISpinner {
     outerHeight(includeMargin: boolean): number;
     getAsync<TResponse>(endpoint: string): Promise<TResponse>;
     postAsync<TResponse>(endpoint: string, request: any | null): Promise<TResponse>;
+    initializeAsync(): Promise<void>;
     reRenderAsync(): Promise<void>;
 }
 
