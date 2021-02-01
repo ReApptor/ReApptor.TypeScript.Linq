@@ -47,8 +47,6 @@ export default class PageRoute {
         if (Utility.getHashCode(x.parameters) != Utility.getHashCode(y.parameters)) {
             return false;
         }
-        
-        console.log("isEqual: x=", x.parameters, " y=", y.parameters);
 
         return true;
     }
