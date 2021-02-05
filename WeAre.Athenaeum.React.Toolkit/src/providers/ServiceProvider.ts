@@ -1,5 +1,5 @@
 import {Dictionary} from "typescript-collections";
-import {IEnumProvider, ILocalizer} from "..";
+import {IEnumProvider, ILocalizer, ITypeResolver, ServiceType} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
 import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
 
@@ -22,7 +22,15 @@ export declare type TType = TDecoratorConstructor | IService | object | boolean 
 
 class ServiceProvider {
     
-    private readonly _services: Dictionary<ServiceType, IService | object> = new Dictionary<ServiceType, IService | object>();
+    private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
+    
+    private set(serviceType: ServiceType, service: IService | object | ServiceCallback): void {
+        this._services.setValue(serviceType, service);
+    }
+    
+    private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
+        return this._services.getValue(serviceType);
+    }
 
     /**
      * Gets the service object of the specified type.
@@ -32,9 +40,11 @@ class ServiceProvider {
      */
     public getService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService | null {
 
-        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
+        const typeResolver: ITypeResolver = this.getTypeResolver();
 
-        const service: IService | object | undefined = this._services.getValue(serviceType);
+        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
+
+        const service: object | IService | ServiceCallback | undefined = this.get(serviceType);
 
         return (service != null)
             ? ((resolve) && (typeof service === "function"))
@@ -52,7 +62,9 @@ class ServiceProvider {
      */
     public getRequiredService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService {
 
-        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
+        const typeResolver: ITypeResolver = this.getTypeResolver();
+        
+        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
 
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
@@ -69,13 +81,25 @@ class ServiceProvider {
      */
     public addSingleton(serviceOrType: ServiceType | TType, service: object | null | ServiceCallback = null): void {
 
-        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
+        const typeResolver: ITypeResolver = this.getTypeResolver();
+
+        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
 
         service = (service != null)
             ? service
             : serviceOrType as object;
 
-        this._services.setValue(serviceType, service);
+        this.set(serviceType, service);
+    }
+
+    public getTypeResolver(): ITypeResolver {
+        const serviceType: string = nameof<ITypeResolver>();
+        const service: ITypeResolver | null = this.get(serviceType) as ITypeResolver;
+        if (service != null) {
+            return service;
+        }
+        this.set(serviceType, TypeResolver);
+        return TypeResolver;
     }
 
     public getLocalizer(): ILocalizer | null {

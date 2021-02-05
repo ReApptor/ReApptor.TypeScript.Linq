@@ -1,5 +1,6 @@
-import TypeResolver from "../providers/TypeResolver";
+import TypeResolver, {ITypeResolver} from "../providers/TypeResolver";
 import {IService, ServiceType} from "../providers/ServiceProvider";
+import {ServiceProvider} from "../index";
 
 describe("TypeResolver", function() {
     
@@ -33,6 +34,12 @@ describe("TypeResolver", function() {
         'V2',
         'V3'
     }
+
+    test("TypeResolver.getService", function () {
+        const result: ITypeResolver | null = ServiceProvider.getService(nameof<ITypeResolver>());
+
+        expect(result).toBe(TypeResolver);
+    });
 
     test("TypeResolver.string", function () {
         const result: string = TypeResolver.resolve("string");
