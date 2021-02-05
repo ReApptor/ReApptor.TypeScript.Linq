@@ -1,8 +1,9 @@
-import ServiceProvider, {ServiceType} from "./ServiceProvider";
+import ServiceProvider, {ServiceType, TType} from "./ServiceProvider";
 import {IEnumProvider} from "./BaseEnumProvider";
 import Utility from "../Utility";
 import {TFormat} from "./BaseTransformProvider";
-import TypeConverter, {ITypeConverter, TClassDecorator, TConvertibleType, TDecoratorConstructor} from "./TypeConverter";
+import {TDecoratorConstructor} from "./TypeResolver";
+import TypeConverter, {ITypeConverter, TClassDecorator} from "./TypeConverter";
 
 const String: ServiceType = "string";
 
@@ -62,19 +63,19 @@ class StringConverter implements IStringConverter {
             : item as string;
     }
 
-    public addConverter<TFrom extends TDecoratorConstructor>(from: TConvertibleType<TFrom>, converter: IStringConverter | TStringConverter): void {
+    public addConverter(from: TType, converter: IStringConverter | TStringConverter): void {
         TypeConverter.addConverter(from, String, converter);
     }
     
-    public getConverter<TFrom extends TDecoratorConstructor>(from: TConvertibleType<TFrom>): IStringConverter | TStringConverter | null {
+    public getConverter(from: TType): IStringConverter | TStringConverter | null {
         return TypeConverter.getConverter(from, String);
     }
     
-    public getRequiredConverter<TFrom extends TDecoratorConstructor>(from: TConvertibleType<TFrom>): IStringConverter | TStringConverter {
+    public getRequiredConverter(from: TType): IStringConverter | TStringConverter {
         return TypeConverter.getRequiredConverter(from, String);
     }
 
-    public canConvert<TFrom extends TDecoratorConstructor>(from: TConvertibleType<TFrom>): boolean {
+    public canConvert(from: TType): boolean {
         return TypeConverter.canConvert(from, String);
     }
 }

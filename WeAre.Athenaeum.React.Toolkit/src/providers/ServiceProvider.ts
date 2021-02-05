@@ -1,6 +1,7 @@
 import {Dictionary} from "typescript-collections";
 import {IEnumProvider, ILocalizer} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
+import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
 
 export type ServiceType = string;
 
@@ -17,17 +18,21 @@ export interface IService {
 
 export type TService = IService;
 
+export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
+
 class ServiceProvider {
     
     private readonly _services: Dictionary<ServiceType, IService | object> = new Dictionary<ServiceType, IService | object>();
-    
+
     /**
      * Gets the service object of the specified type.
-     * @param serviceType - An object that specifies the type of service object to get.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns IService | object | null - A service object of type serviceType or null if there is no service object of type serviceType.
      */
-    public getService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService | null {
+    public getService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService | null {
+
+        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
 
         const service: IService | object | undefined = this._services.getValue(serviceType);
 
@@ -40,13 +45,15 @@ class ServiceProvider {
 
     /**
      * Get service of type serviceType from the IServiceProvider.
-     * @param serviceType - An object that specifies the type of service object to get.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns A service object of type serviceType.
      * @exception InvalidOperationException There is no service of type serviceType.
      */
-    public getRequiredService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService {
-        
+    public getRequiredService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService {
+
+        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
+
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
         if (service == null)
@@ -57,23 +64,12 @@ class ServiceProvider {
 
     /**
      * Adds a singleton service of the type specified in serviceType.
-     * @param serviceOrType - A service instance or service type.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param service - a service instance if service type is specified in first argument
      */
-    public addSingleton(serviceOrType: IService | ServiceType | object, service: object | null | ServiceCallback = null): void {
+    public addSingleton(serviceOrType: ServiceType | TType, service: object | null | ServiceCallback = null): void {
 
-        let serviceType: ServiceType | null = (typeof serviceOrType === "string")
-            ? serviceOrType
-            : null;
-
-        if (serviceType == null) {
-            serviceType = ((serviceOrType as IService).getType)
-                ? (serviceOrType as IService).getType()
-                : null;
-        }
-
-        if (!serviceType)
-            throw new Error(`InvalidOperationException. Service type is not specified or cannot be recognized from service instance.`);
+        const serviceType: ServiceType = TypeResolver.resolveService(serviceOrType);
 
         service = (service != null)
             ? service

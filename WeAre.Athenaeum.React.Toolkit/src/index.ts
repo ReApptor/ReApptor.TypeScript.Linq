@@ -21,7 +21,10 @@ import { NumberExtensions } from "./extensions/NumberExtensions";
 //Providers:
 import BaseTransformProvider, { ITransformProvider, TFormat } from "./providers/BaseTransformProvider";
 import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
-import ServiceProvider, { ServiceType, IService } from "./providers/ServiceProvider";
+import TypeResolver, { TDecoratorConstructor, ITypeResolver } from "./providers/TypeResolver";
+import ServiceProvider, { ServiceType, ServiceCallback, IService, TService, TType } from "./providers/ServiceProvider";
+import TypeConverter, { ITypeConverter, TClassDecorator } from "./providers/TypeConverter";
+import IStringConverter, { TStringConverter, ToString } from "./providers/StringConverter";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
@@ -52,10 +55,13 @@ export {
     //Providers:
     BaseTransformProvider, ITransformProvider, TFormat,
     BaseEnumProvider, IEnumProvider,
-    ServiceProvider, ServiceType, IService, ILocalizer,
+    TypeResolver, TDecoratorConstructor, ITypeResolver,
+    ServiceProvider, ServiceType, ServiceCallback, IService, TService, TType,
+    TypeConverter, ITypeConverter, TClassDecorator,
+    IStringConverter, TStringConverter, ToString,
     //Helpers:
     PwaHelper,
     //Other:
-    BaseLocalizer, ILanguage,
+    BaseLocalizer, ILanguage, ILocalizer,
     AthenaeumConstants
 }
