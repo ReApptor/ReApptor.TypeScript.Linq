@@ -35,24 +35,10 @@ describe("TypeResolver", function() {
         'V3'
     }
 
-    test("TypeResolver.getService", function () {
-        const result: ITypeResolver | null = ServiceProvider.getService(nameof<ITypeResolver>());
-
-        expect(result).toBe(TypeResolver);
-    });
-
     test("TypeResolver.string", function () {
         const result: string = TypeResolver.resolve("string");
 
         expect(result).toBe("string");
-    });
-
-    test("TypeResolver.string.value", function () {
-        const type: string = TypeResolver.resolve("StringValue");
-        const serviceType: string = TypeResolver.resolveService("StringValue");
-
-        expect(type).toBe("string");
-        expect(serviceType).toBe("StringValue");
     });
 
     test("TypeResolver.number", function () {

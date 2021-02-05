@@ -44,6 +44,8 @@
       <TypeScriptCompile Include="src\tests\ArrayUtility.take.test.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.test.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.test.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getService.test.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.test.ts" />
       <TypeScriptCompile Include="src\tests\StringConverter.toString.test.ts" />
       <TypeScriptCompile Include="src\tests\TypeResolver.resove.test.ts" />
       <TypeScriptCompile Include="src\tests\Utility.test.ts" />

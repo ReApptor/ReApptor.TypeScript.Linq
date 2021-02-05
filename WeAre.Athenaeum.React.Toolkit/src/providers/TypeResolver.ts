@@ -5,10 +5,9 @@ export declare type TDecoratorConstructor = { new (...args: any[]): {} };
 
 export interface ITypeResolver {
     resolve(value: TType): ServiceType;
-    resolveService(value: ServiceType | TType): ServiceType;
 }
 
-//IService | ServiceType | object
+export type TTypeResolver = (value: TType) => ServiceType;
 
 class TypeResolver implements ITypeResolver, IService {
 
@@ -79,12 +78,6 @@ class TypeResolver implements ITypeResolver, IService {
             default:
                 return value;
         }
-    }
-
-    public resolveService(value: ServiceType | TType): ServiceType {
-        return (typeof value === "string")
-            ? value
-            : this.resolve(value);
     }
     
 }

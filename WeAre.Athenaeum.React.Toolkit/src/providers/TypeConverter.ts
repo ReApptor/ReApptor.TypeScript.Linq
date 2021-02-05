@@ -1,5 +1,5 @@
 import ServiceProvider, {ServiceType, TType} from "./ServiceProvider";
-import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
+import {TDecoratorConstructor} from "./TypeResolver";
 
 export interface ITypeConverter {
 }
@@ -9,8 +9,8 @@ export declare type TClassDecorator = <TConstructor extends TDecoratorConstructo
 class TypeConverter {
     
     private static getServiceType(from: ServiceType | TType, to: ServiceType | TType): ServiceType {
-        const fromType: ServiceType = TypeResolver.resolveService(from);
-        const toType: ServiceType = TypeResolver.resolveService(to);
+        const fromType: ServiceType = ServiceProvider.resolveServiceType(from);
+        const toType: ServiceType = ServiceProvider.resolveServiceType(to);
         return `typeConverter:${fromType}:${toType}`;
     }
     

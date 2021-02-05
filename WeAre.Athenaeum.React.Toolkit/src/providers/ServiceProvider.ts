@@ -33,6 +33,19 @@ class ServiceProvider {
     }
 
     /**
+     * Resolves service type.
+     * @param serviceOrType - A service declaration, service type or service instance.
+     * @returns ServiceType - A service type.
+     */
+    public resolveServiceType(serviceOrType: ServiceType | TType): ServiceType {
+        const typeResolver: ITypeResolver = this.getTypeResolver();
+
+        return (typeof serviceOrType === "string")
+            ? serviceOrType
+            : typeResolver.resolve(serviceOrType);
+    }
+
+    /**
      * Gets the service object of the specified type.
      * @param serviceOrType - A service declaration, service type or service instance.
      * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
@@ -40,9 +53,7 @@ class ServiceProvider {
      */
     public getService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService | null {
 
-        const typeResolver: ITypeResolver = this.getTypeResolver();
-
-        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
 
         const service: object | IService | ServiceCallback | undefined = this.get(serviceType);
 
@@ -62,9 +73,7 @@ class ServiceProvider {
      */
     public getRequiredService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService {
 
-        const typeResolver: ITypeResolver = this.getTypeResolver();
-        
-        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
 
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
@@ -81,10 +90,8 @@ class ServiceProvider {
      */
     public addSingleton(serviceOrType: ServiceType | TType, service: object | null | ServiceCallback = null): void {
 
-        const typeResolver: ITypeResolver = this.getTypeResolver();
-
-        const serviceType: ServiceType = typeResolver.resolveService(serviceOrType);
-
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
+        
         service = (service != null)
             ? service
             : serviceOrType as object;
