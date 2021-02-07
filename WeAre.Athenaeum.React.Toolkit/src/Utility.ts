@@ -99,6 +99,9 @@ export default class Utility {
                                             formattedParam = this.toCurrencyString(param);
                                         } else if ((format === "0") || (format === "n") || (format === "N")) {
                                             formattedParam = param.toFixed(0).toString();
+                                        } else if (format === "00") {
+                                            param = param.toFixed(0);
+                                            formattedParam = ((param >= 0) && (param < 10)) ? "0" + param : param.toString();
                                         } else if (format === "0.0") {
                                             formattedParam = param.toFixed(1).toString();
                                         } else if (format === "0.00") {
