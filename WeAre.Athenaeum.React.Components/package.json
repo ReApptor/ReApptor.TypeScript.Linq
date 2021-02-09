@@ -10,7 +10,7 @@
     "npm"
   ],
   "type": "module",
-  "main": "lib/src/index.js",
+  "main": "lib/src/index.es.js",
   "module": "lib/src/index.es.js",
   "types": "lib/types/src/index.d.ts",
   "files": [
@@ -31,15 +31,11 @@
     "react-google-autocomplete": "^1.1.2",
     "react-qr-reader": "^2.2.1",
     "tslib": "^2.1.0",
-    "typescript-collections": "^1.3.2",
-    "typescript-transform-paths": "^2.2.2"
+    "typescript-collections": "^1.3.2"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-image": "^2.0.6",
-    "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-url": "^5.0.1",
-    "@svgr/rollup": "^5.4.0",
     "@types/bootstrap": "^4.3.0",
     "@types/googlemaps": "^3.39.5",
     "@types/jquery": "^3.3.29",
@@ -50,7 +46,6 @@
     "@types/react-dom": "16.8.2",
     "@types/react-qr-reader": "^2.1.2",
     "@types/ts-nameof": "^4.2.1",
-    "copyfiles": "^2.4.1",
     "css-loader": "^5.0.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.2",
@@ -60,8 +55,6 @@
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-typescript2": "^0.28.0",
     "ts-nameof": "^5.0.0",
-    "ttypescript": "^1.5.12",
-    "typescript": "3.4",
-    "typescript-plugin-css-modules": "^3.0.1"
+    "typescript": "3.4"
   }
 }
