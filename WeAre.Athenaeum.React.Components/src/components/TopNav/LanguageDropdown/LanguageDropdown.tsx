@@ -3,12 +3,16 @@ import {ILanguage} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick} from "@weare/athenaeum-react-common";
 
 import styles from "./LanguageDropdown.module.scss";
+import enFlag from './flags/en.png';
+import fiFlag from './flags/fi.png';
+import svFlag from './flags/sv.png';
+import plFlag from './flags/pl.png';
 
 let flags: any = {
-    en: require("./flags/en.png"),
-    fi: require("./flags/fi.png"),
-    sv: require("./flags/sv.png"),
-    pl: require("./flags/pl.png"),
+    en: enFlag,
+    fi: fiFlag,
+    sv: svFlag,
+    pl: plFlag,
 };
 
 interface ILanguageDropdownProps {

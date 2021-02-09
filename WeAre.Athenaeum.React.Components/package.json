@@ -11,14 +11,13 @@
   ],
   "type": "module",
   "main": "lib/src/index.js",
+  "module": "lib/src/index.es.js",
   "types": "lib/types/src/index.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
-    "build:rollup": "rm -rf lib && rollup -c --no-treeshake && tsc --project tsconfig.json --declaration --declarationDir lib/types --emitDeclarationOnly",
-    "build": "rm -rf lib && ttsc --project tsconfig.json && npm run copy",
-    "copy": "copyfiles -u 1 -V \"src/**/*.scss\" ./lib/src && copyfiles -u 1 -V \"src/**/*.png\" ./lib/src"
+    "build:rollup": "rm -rf lib && rollup -c && tsc --project tsconfig.json --declaration --declarationDir lib/types --emitDeclarationOnly"
   },
   "browserslist": [],
   "dependencies": {
@@ -36,6 +35,11 @@
     "typescript-transform-paths": "^2.2.2"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-image": "^2.0.6",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-url": "^5.0.1",
+    "@svgr/rollup": "^5.4.0",
     "@types/bootstrap": "^4.3.0",
     "@types/googlemaps": "^3.39.5",
     "@types/jquery": "^3.3.29",
@@ -52,6 +56,9 @@
     "react": "^16.8.2",
     "react-dependent-script": "^1.1.2",
     "react-dom": "^16.8.2",
+    "rollup": "^2.32.1",
+    "rollup-plugin-postcss": "^3.1.8",
+    "rollup-plugin-typescript2": "^0.28.0",
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
     "typescript": "3.4",

@@ -14,4 +14,8 @@
       <DebugType>full</DebugType>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="src\pages" />
+    </ItemGroup>
+
 </Project>
