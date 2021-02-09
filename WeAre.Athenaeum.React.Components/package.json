@@ -17,7 +17,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib && rollup -c && tsc --project tsconfig.json --declaration --declarationDir lib/types --emitDeclarationOnly"
+    "build": "rm -rf lib && rollup -c"
   },
   "browserslist": [],
   "dependencies": {
@@ -55,6 +55,8 @@
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-typescript2": "^0.28.0",
     "ts-nameof": "^5.0.0",
-    "typescript": "3.4"
+    "ttypescript": "^1.5.12",
+    "typescript": "3.4",
+    "typescript-transform-paths": "^2.2.3"
   }
 }

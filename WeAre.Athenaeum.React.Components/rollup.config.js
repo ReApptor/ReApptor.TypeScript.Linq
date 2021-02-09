@@ -1,3 +1,4 @@
+import ttypescript from "ttypescript";
 import typescript from "rollup-plugin-typescript2";
 import postcss from "rollup-plugin-postcss";
 import image from '@rollup/plugin-image';
@@ -22,12 +23,22 @@ export default {
             modules: true,
         }),
         typescript({
+            typescript: ttypescript,
             clean: true,
+            useTsconfigDeclarationDir: true,
             transformers: [() => ({
                 before: [ tsNameOf ],
-                after: []
-            })]
-        })
+                after: [  ]
+            })],
+            tsconfigOverride: {
+                compilerOptions: {
+                    "plugins": [
+                        { "transform": "typescript-transform-paths" },
+                        { "transform": "typescript-transform-paths", "afterDeclarations": true }
+                    ],
+                }
+            }
+        }),
     ],
 
 };

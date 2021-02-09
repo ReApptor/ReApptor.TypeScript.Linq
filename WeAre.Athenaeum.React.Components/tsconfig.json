@@ -6,7 +6,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],     /* Specify library files to be included in the compilation. */
     "allowJs": false,                              /* Allow javascript files to be compiled. */
     "jsx": "react",                               /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-    "declaration": false,                         /* Generates corresponding '.d.ts' file. (To generate decleration files */
+    "declaration": true,                         /* Generates corresponding '.d.ts' file. (To generate decleration files */
     "declarationDir": "lib/types",
     "outDir": "lib",                              /* Redirect output structure to the directory. */
     "rootDir": ".",                               /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
