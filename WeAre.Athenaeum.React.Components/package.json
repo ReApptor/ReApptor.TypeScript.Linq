@@ -17,7 +17,7 @@
     "lib"
   ],
   "scripts": {
-    "build:rollup": "rm -rf lib && rollup -c && tsc --project tsconfig.json --declaration --declarationDir lib/types --emitDeclarationOnly"
+    "build": "rm -rf lib && rollup -c && tsc --project tsconfig.json --declaration --declarationDir lib/types --emitDeclarationOnly"
   },
   "browserslist": [],
   "dependencies": {
