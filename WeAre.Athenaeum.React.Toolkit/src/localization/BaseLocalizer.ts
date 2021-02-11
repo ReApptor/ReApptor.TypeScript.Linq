@@ -52,7 +52,7 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
 
     public getType(): ServiceType {
-        return "ILocalizer";
+        return nameof<ILocalizer>();
     }
     
     public get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {

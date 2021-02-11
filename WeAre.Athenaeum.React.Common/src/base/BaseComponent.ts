@@ -1,13 +1,15 @@
 import React from "react";
 import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {ILocalizer, Utility} from "@weare/athenaeum-toolkit";
 import ReactUtility from "../ReactUtility";
 import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
+import {ServiceProvider} from "../../../WeAre.Athenaeum.React.Toolkit";
+import ComponentsLocalizer from "../../../WeAre.Athenaeum.React.Components/src/localization/ComponentsLocalizer";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
 
@@ -76,6 +78,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private readonly _asGlobalClick: IGlobalClick | null;
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
+    private _localizer: ILocalizer | null;
     private _childComponentIds: string[];
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
@@ -208,6 +211,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         return ch.isAuthenticated;
     }
     
+    public get localizer(): ILocalizer {
+        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer() || ComponentsLocalizer))
+    } 
+    
     public async getAsync<TResponse>(endpoint: string): Promise<TResponse> {
         return await ApiProvider.getAsync<TResponse>(endpoint, this);
     }
@@ -309,6 +316,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
+        this._localizer = null;
         this._childComponentIds = [];
         this._childComponentRefs = [];
         this._isMounted = false;
