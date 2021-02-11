@@ -6,7 +6,7 @@
   "types": "lib/types/src/index.d.ts",
   "dependencies": {
     "@types/jquery": "^3.3.29",
-    "@weare/athenaeum-toolkit": "^1.0.331",
+    "@weare/athenaeum-toolkit": "^1.0.333",
     "async-mutex": "^0.1.3",
     "jquery": "^3.2.1",
     "typescript-collections": "^1.3.2"

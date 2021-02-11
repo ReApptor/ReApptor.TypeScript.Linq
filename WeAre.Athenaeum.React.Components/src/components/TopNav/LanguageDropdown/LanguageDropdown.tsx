@@ -16,7 +16,7 @@ let flags: any = {
 };
 
 interface ILanguageDropdownProps {
-    languages: ILanguage[];
+    languages: readonly ILanguage[];
     currentLanguage: string;
     changeLanguageCallback?(language: string): void;
 }

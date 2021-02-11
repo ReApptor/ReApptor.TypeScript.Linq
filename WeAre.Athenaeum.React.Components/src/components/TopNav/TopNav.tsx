@@ -1,15 +1,12 @@
 import React from "react";
-import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, BasePageDefinitions, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-import Localizer from "../../localization/Localizer";
 
 import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";
-import UserContext from "@/models/server/UserContext";
 
-  
 //  IconStyle Copied to disconnect this component from TopNav, Remove and replace if needed
 enum IconStyle {
     Solid,
@@ -20,6 +17,7 @@ enum IconStyle {
     
     Brands
 }
+
 //  IconSize Copied to disconnect this component from TopNav, Remove and replace if needed
 enum IconSize {
     Normal,
@@ -50,6 +48,7 @@ export interface IMenuItem {
 
 export interface ITopNavProps {
     applicationName?: string;
+    onLogoClick?(sender: TopNav): Promise<void>;
 }
 
 interface ITopNavState extends IBaseAsyncComponentState<IMenuItem[]> {
@@ -86,19 +85,8 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     public async onLogoClick(): Promise<void> {
-        const context: UserContext = ch.getContext() as UserContext;
-        
-        if(context != null && context.isMobileManager){
-            console.log('PageRouteProvider.redirectAsync(PageDefinitions.rentaTasksRoute) is commented out.');
-            // await PageRouteProvider.redirectAsync(PageDefinitions.rentaTasksRoute)
-        }
-        else if (this.isAuthenticated) {
-            console.log('PageRouteProvider.redirectAsync(PageDefinitions.dashboardRoute) is commented out.');
-            // await PageRouteProvider.redirectAsync(PageDefinitions.dashboardRoute)
-        }
-        else {
-            console.log('PageRouteProvider.redirectAsync(PageDefinitions.homeRoute) is commented out.');
-            // await PageRouteProvider.redirectAsync(PageDefinitions.homeRoute)
+        if (this.props.onLogoClick) {
+            await this.props.onLogoClick(this);
         }
     }
 
@@ -140,13 +128,13 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             <i className="fas fa-chevron-circle-left" />
                         </div>
 
-                        <img src={logo} alt="renta" onClick={async () => await this.onLogoClick()}/>
+                        <img src={logo} alt="renta" onClick={async () => await this.onLogoClick()} />
                         
                     </div>
 
                     <div className={styles.middle}>
                         {
-                            this.items.map((item, index) => (<Link key={index} className={this.css(styles.middle_link)} route={item.route}>{Localizer.get(item.label)}</Link>))
+                            this.items.map((item, index) => (<Link key={index} className={this.css(styles.middle_link)} route={item.route}>{this.localizer.get(item.label)}</Link>))
                         }
                     </div>
 
@@ -155,7 +143,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             ((this.manual.manual) || (this.manual.onClick))  && 
                             (
-                                <div> ICON PLACE HOLDER</div>
+                                <span>{this.manual.icon || "question-circle"}</span>
                                 // <Icon name={this.manual.icon || "question-circle"} 
                                 //       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)} 
                                 //       style={IconStyle.Regular} size={IconSize.X2}
@@ -173,7 +161,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             )
                         }
                         
-                        <LanguageDropdown languages={Localizer.supportedLanguages} currentLanguage={Localizer.language} changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)} />
+                        <LanguageDropdown languages={this.localizer.supportedLanguages} currentLanguage={this.localizer.language} changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)} />
                     
                     </div>
 
