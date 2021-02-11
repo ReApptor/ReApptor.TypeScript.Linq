@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <OutputType>Module</OutputType>
+        <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <PropertyGroup>
