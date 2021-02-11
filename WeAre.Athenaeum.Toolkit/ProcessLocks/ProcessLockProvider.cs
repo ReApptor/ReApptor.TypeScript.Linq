@@ -78,11 +78,6 @@ namespace WeAre.Athenaeum.Toolkit.ProcessLocks
             return (state, ProcessLockAction.Start);
         }
 
-        public static async Task<bool> InvokeAsync(IProcessLocker locker, string name, Func<Task> action, Func<ProcessLockMessage, Task> callback = null)
-        {
-            return await InvokeAsync(locker, name, timestamp => action(), callback: callback);
-        }
-
         public static async Task<bool> InvokeAsync(IProcessLocker locker, string name, Func<Task> action, int timeoutInSeconds = 0, int delayTimeoutInSeconds = 0, Func<ProcessLockMessage, Task> callback = null) 
         {
             return await InvokeAsync(locker, name, timestamp => action(), timeoutInSeconds, delayTimeoutInSeconds, callback);
