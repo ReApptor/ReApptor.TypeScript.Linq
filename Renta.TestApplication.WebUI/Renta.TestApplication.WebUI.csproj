@@ -8,6 +8,7 @@
         <Copyright>Copyright © 2020, Renta Oy</Copyright>
         <Company>Renta Oy</Company>
         <Product>Renta Components</Product>
+        <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
