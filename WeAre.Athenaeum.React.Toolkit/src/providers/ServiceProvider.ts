@@ -109,15 +109,19 @@ class ServiceProvider {
         return TypeResolver;
     }
 
-    public getLocalizer(): ILocalizer | null {
+    public findLocalizer(): ILocalizer | null {
         return this.getService(nameof<ILocalizer>());
     }
 
-    public getEnumProvider(): IEnumProvider | null {
+    public getLocalizer(): ILocalizer {
+        return this.getRequiredService(nameof<ILocalizer>());
+    }
+
+    public findEnumProvider(): IEnumProvider | null {
         return this.getService(nameof<IEnumProvider>());
     }
 
-    public getTransformProvider(): ITransformProvider | null {
+    public findTransformProvider(): ITransformProvider | null {
         return this.getService(nameof<ITransformProvider>());
     }
 }

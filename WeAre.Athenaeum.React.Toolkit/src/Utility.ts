@@ -93,7 +93,7 @@ export default class Utility {
                                     let formattedParam: string | null = null;
                                     
                                     if ((typeof param === "number")) {
-                                        const enumProvider: IEnumProvider | null = ServiceProvider.getEnumProvider();
+                                        const enumProvider: IEnumProvider | null = ServiceProvider.findEnumProvider();
                                         //number
                                         if ((format === "c") || (format === "C")) {
                                             formattedParam = this.toCurrencyString(param);
@@ -167,7 +167,7 @@ export default class Utility {
                     } else {
                         let str: string = "";
                         if (param != null) {
-                            const transformProvider: ITransformProvider | null = ServiceProvider.getTransformProvider();
+                            const transformProvider: ITransformProvider | null = ServiceProvider.findTransformProvider();
                             str = (transformProvider)
                                 ? transformProvider.toString(param)
                                 : param.toString();
@@ -201,7 +201,7 @@ export default class Utility {
                 return this.getDayOfWeek(dayOfWeekOrDate);
 
             case "number":
-                const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+                const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
                 switch (dayOfWeekOrDate) {
                     case 0:
                         return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
@@ -253,7 +253,7 @@ export default class Utility {
             monthOrDate = monthOrDate.toLowerCase();
         }
 
-        const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
         switch (monthOrDate) {
             case "january":

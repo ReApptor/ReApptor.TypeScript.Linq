@@ -9,13 +9,13 @@ describe("getLocalizer", function() {
     }
     
     test("noLocalizer", function () {
-        const result: ILocalizer | null = ServiceProvider.getLocalizer();
+        const result: ILocalizer | null = ServiceProvider.findLocalizer();
         expect(result).toBeNull();
     });
     
-    test("getLocalizer", function () {
+    test("findLocalizer", function () {
         const localizer = new Localizer();
-        const result: ILocalizer | null = ServiceProvider.getLocalizer();
+        const result: ILocalizer | null = ServiceProvider.findLocalizer();
         expect(result).toBe(localizer);
     });
     

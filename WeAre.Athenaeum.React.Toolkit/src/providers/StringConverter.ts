@@ -49,7 +49,7 @@ class StringConverter implements IStringConverter {
                 return format(item);
             }
 
-            const enumProvider: IEnumProvider | null = ServiceProvider.getEnumProvider();
+            const enumProvider: IEnumProvider | null = ServiceProvider.findEnumProvider();
 
             if ((enumProvider) && (enumProvider.isEnum(format))) {
                 return enumProvider.getEnumText(format, item);
