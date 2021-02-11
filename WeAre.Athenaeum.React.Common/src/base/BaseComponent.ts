@@ -1,15 +1,13 @@
 import React from "react";
 import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
-import {ILocalizer, Utility} from "@weare/athenaeum-toolkit";
+import {ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import ReactUtility from "../ReactUtility";
 import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
-import {ServiceProvider} from "../../../WeAre.Athenaeum.React.Toolkit";
-import ComponentsLocalizer from "../../../WeAre.Athenaeum.React.Components/src/localization/ComponentsLocalizer";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
 
@@ -212,8 +210,8 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
     
     public get localizer(): ILocalizer {
-        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer() || ComponentsLocalizer))
-    } 
+        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
+    }
     
     public async getAsync<TResponse>(endpoint: string): Promise<TResponse> {
         return await ApiProvider.getAsync<TResponse>(endpoint, this);
