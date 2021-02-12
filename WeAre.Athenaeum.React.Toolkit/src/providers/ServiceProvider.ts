@@ -36,8 +36,11 @@ class ServiceProvider {
     }
     
     constructor() {
+        console.log("sp.constructor:window=", window);
         const container = window as any;
         if (container) {
+            console.log("sp.constructor:container.__athenaeumServiceProvider=", container.__athenaeumServiceProvider);
+            
             if (container.__athenaeumServiceProvider)
                 throw new Error("Service provider has already registered.");
             
