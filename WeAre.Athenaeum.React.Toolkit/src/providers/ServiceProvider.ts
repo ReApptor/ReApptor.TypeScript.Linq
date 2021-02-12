@@ -21,7 +21,7 @@ export type TService = IService;
 export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
 
 interface IContainer {
-    instance: ServiceProvider | null;
+    __athenaeumServiceProviderInstance: ServiceProvider | null;
 }
 
 const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
@@ -132,4 +132,4 @@ class ServiceProvider {
     }
 }
 
-export default (container.instance || (container.instance = new ServiceProvider()));
+export default (container.__athenaeumServiceProviderInstance || (container.__athenaeumServiceProviderInstance = new ServiceProvider()));
