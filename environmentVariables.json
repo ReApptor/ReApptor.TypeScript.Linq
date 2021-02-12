@@ -1,0 +1,64 @@
+{
+  //System
+  "CORES_PER_SERVER": 2,
+  "ASPNETCORE_ENVIRONMENT": "DevelopmentVS",
+  "SESSION_TIMEOUT_MINUTES": "60",
+  "DATA_PROTECTION_KEY": "tpVq5r9pteMvxbMjcN7zwg797Yta519p8yeW74axY0Nzf+s+BUBSCL/a3zgS+a4I/IVLtLF0EhH2TjHIUw2KJw==",
+  "LOCALIZATION_ENABLED": "true",
+  "ALLOWED_HOSTS": "*",
+  "BACKEND_INSTANCE_NAME": "local-templateapp-be",
+  "SYNC_ENABLED": false,
+  //Logging
+  "MICROSOFT_LOGGING_LEVEL": "Information",
+  "DEFAULT_LOGGING_LEVEL": "Trace",
+  "SYSTEM_LOGGING_LEVEL": "Information",
+  //DB
+  "DB_CONNECTIONSTRING": "server=127.0.0.1;port=3306;database=templateapp;user=weare;password=weare;",
+  //BE
+  "API_URL": "http://localhost:48080/",
+  "APPLICATION_URL": "http://localhost:38080/",
+  //PDF
+  "IRON_PDF_LICENSE_KEY": "IRONPDF-149756102E-960478-36E535-1C60769E3A-E016595A-UExEB5D342FB8648D8-RENTAYHTITOY.IRO190822.3328.18107.ENT.10DEV.1YR.SUPPORTED.UNTIL.22.AUG.2020",
+  "PDF_URL": "http://localhost:10000/api/",
+  //Google
+  "GOOGLE_MAP_API_FE_KEY": "AIzaSyBVcbAv50jbB3VKK-16OJ8kxz7Jn6eT4oc",
+  "GOOGLE_MAP_API_BE_KEY": "AIzaSyDXEEAQD13GLoNF-h9_8TaFIXM9RfpmZJc",
+  "GOOGLE_MAP_API_URL": "https://maps.googleapis.com/maps/",
+  "GOOGLE_MAP_API_REQUESTS_PER_100_SEC": 10000,
+  //Connect
+  "CONNECT_API_KEY": "VWKDmg63MD1KlYFoDkKrj61f3kLSorEO87zTLeSx",
+  "CONNECT_URL": "https://dev-private.rentaconnect.fi/v1/api/private/",
+  //AWS
+  "AWS_REGION": "eu-west-1",
+  "AWS_PROFILE": "prod-weare",
+  "S3_BUCKETNAME": "prod-templateapp-storage-fi",
+  //Redis
+  "REDIS_URL": "localhost",
+  "REDIS_PORT": "6379",
+  //EMAIL
+  "EMAIL_API_KEY": "USE-LOCAL-EMAILSERVICE-IN-DEVELOPMENT",
+  "EMAIL_SENDER_EMAIL": "test-asiakaspalvelu@templateapp.fi",
+  "EMAIL_API_URL": "https://api.mailgun.net/v3/templateapp.fi/",
+  "EMAIL_WHITELIST_DOMAINS": "",
+  //TOKEN
+  "SERVICE_TOKEN_TIMEOUT_MINUTES": 44640,
+  "EMAIL_TOKEN_TIMEOUT_MINUTES": 10080,
+  "MOBILE_TOKEN_TIMEOUT_MINUTES": 525600, 
+  "TOKEN_SECURITY_KEY": "123-456-789-abc-def-ghi",
+  "TOKEN_ISSUER": "https://www.weare.fi",
+  //SMS
+  "SMS_USER": "renta",
+  "SMS_PASSWORD": "B4UgE5ewrupe",
+  "SMS_URL": "http://gw.labyrintti.com:28080/",
+  "SMS_WHITELIST_NUMBERS": "",
+  //AZURE SSO
+  "AZURE_SSO_APPLICATION_ID": "bf937be1-1b7a-48b4-843a-2040390d7448",
+  "AZURE_SSO_CLIENT_SECRET": "N4ClC/AeyrqL1vpZ16f5CaDwl955IJJS3NWc39/bKVQ=",
+  //Login
+  "LOGIN_LOCKOUT_TIMEOUT_MINUTES": 10,
+  "LOGIN_FAILED_COUNT": 5,
+  //Reporting
+  "REPORTING_API_ENABLED": true,
+  "REPORTING_API_ENDPOINT_URL": "http://localhost:38080/api/reporting/inbound/",
+  "REPORTING_API_API_KEY": "B6A49E42C4FF4E5FBB53AF131BDD6301"
+}
