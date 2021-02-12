@@ -75,7 +75,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
                         (this.model.dismissible) &&
                         (
                             <div className={this.css(styles.close)} onClick={async () => await this.closeAlertAsync(true)}>
-                                <span>&times;</span>
+                              <span>&times;</span>
                             </div>
                         )
                     }
