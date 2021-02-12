@@ -20,37 +20,23 @@ export type TService = IService;
 
 export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
 
-var me: ServiceProvider | null;
+interface IContainer {
+    instance: ServiceProvider | null;
+}
+
+const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
 
 class ServiceProvider {
     
-    private static _id: number = Math.random(); 
-    private _services: Dictionary<ServiceType, object | IService | ServiceCallback> | null = null;
-    
-    private get services(): Dictionary<ServiceType, object | IService | ServiceCallback> {
-        return (this._services || ((this._services = (window as any)["123"]) || ((window as any)["123"] = new Dictionary<ServiceType, object | IService | ServiceCallback>())));
-    }
+    private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
     
     private set(serviceType: ServiceType, service: IService | object | ServiceCallback): void {
-        this.services.setValue(serviceType, service);
+        this._services.setValue(serviceType, service);
     }
     
     private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
-        return this.services.getValue(serviceType);
+        return this._services.getValue(serviceType);
     }
-    
-    // constructor() {
-    //     console.log("sp.constructor:window=", window);
-    //     const container = window as any;
-    //     if (container) {
-    //         console.log("sp.constructor:container.__athenaeumServiceProvider=", container.__athenaeumServiceProvider);
-    //        
-    //         if (container.__athenaeumServiceProvider)
-    //             throw new Error("Service provider has already registered.");
-    //        
-    //         container.__athenaeumServiceProvider = this;
-    //     }
-    // }
 
     /**
      * Resolves service type.
@@ -98,7 +84,7 @@ class ServiceProvider {
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
         if (service == null)
-            throw new Error(`InvalidOperationException. There is no service of type "${serviceType}". Service provider id "${this.id}".`);
+            throw new Error(`InvalidOperationException. There is no service of type "${serviceType}".`);
 
         return service;
     }
@@ -144,10 +130,6 @@ class ServiceProvider {
     public findTransformProvider(): ITransformProvider | null {
         return this.getService(nameof<ITransformProvider>());
     }
-    
-    public get id(): number {
-        return ServiceProvider._id;
-    }
 }
 
-export default new ServiceProvider();
+export default (container.instance || (container.instance = new ServiceProvider()));
