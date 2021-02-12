@@ -22,6 +22,7 @@ export declare type TType = TDecoratorConstructor | IService | object | boolean 
 
 class ServiceProvider {
     
+    private static _id: number = Math.random(); 
     private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
     
     private set(serviceType: ServiceType, service: IService | object | ServiceCallback): void {
@@ -78,7 +79,7 @@ class ServiceProvider {
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
         if (service == null)
-            throw new Error(`InvalidOperationException. There is no service of type "${serviceType}".`);
+            throw new Error(`InvalidOperationException. There is no service of type "${serviceType}". Service provider id "${this.id}".`);
 
         return service;
     }
@@ -123,6 +124,10 @@ class ServiceProvider {
 
     public findTransformProvider(): ITransformProvider | null {
         return this.getService(nameof<ITransformProvider>());
+    }
+    
+    public get id(): number {
+        return ServiceProvider._id;
     }
 }
 
