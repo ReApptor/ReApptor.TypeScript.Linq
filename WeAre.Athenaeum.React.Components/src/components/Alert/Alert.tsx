@@ -1,5 +1,5 @@
 import React from "react";
-import {ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/athenaeum-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
 import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 

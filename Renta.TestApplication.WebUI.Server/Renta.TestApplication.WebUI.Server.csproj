@@ -9,6 +9,11 @@
         <Product>Renta Components</Product>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Renta.TestApplication.Api.Common\Renta.TestApplication.Api.Common.csproj" />
+        <ProjectReference Include="..\Renta.TestApplication.Common\Renta.TestApplication.Common.csproj" />
+    </ItemGroup>
+
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DebugType>full</DebugType>
     </PropertyGroup>
