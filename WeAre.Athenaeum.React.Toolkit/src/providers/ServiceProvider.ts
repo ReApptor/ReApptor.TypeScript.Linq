@@ -27,12 +27,6 @@ interface IContainer {
 
 const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
 
-if (container.__athenaeumServiceProviderInstance) {
-    console.warn(' ')
-    console.warn('Multiple instance of @weare/athenaeum-toolkit dependencie found. This will not break the app but it is not recommended to use two major versions of @weare/athenaeum-toolkit')
-    console.warn(' ')
-}
-
 class ServiceProvider {
     
     private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
@@ -137,6 +131,10 @@ class ServiceProvider {
     public findTransformProvider(): ITransformProvider | null {
         return this.getService(nameof<ITransformProvider>());
     }
+}
+
+if (container.__athenaeumServiceProviderInstance) {
+    console.warn(`Multiple instance of @weare/athenaeum-toolkit dependencies found. This will not break the app but it is not recommended to use two major versions of @weare/athenaeum-toolkit`);
 }
 
 export default (container.__athenaeumServiceProviderInstance || (container.__athenaeumServiceProviderInstance = new ServiceProvider()));
