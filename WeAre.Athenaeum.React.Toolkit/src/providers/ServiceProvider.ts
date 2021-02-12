@@ -25,14 +25,18 @@ var me: ServiceProvider | null;
 class ServiceProvider {
     
     private static _id: number = Math.random(); 
-    private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
+    private _services: Dictionary<ServiceType, object | IService | ServiceCallback> | null = null;
+    
+    private get services(): Dictionary<ServiceType, object | IService | ServiceCallback> {
+        return (this._services || ((this._services = (window as any)["123"]) || ((window as any)["123"] = new Dictionary<ServiceType, object | IService | ServiceCallback>())));
+    }
     
     private set(serviceType: ServiceType, service: IService | object | ServiceCallback): void {
-        this._services.setValue(serviceType, service);
+        this.services.setValue(serviceType, service);
     }
     
     private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
-        return this._services.getValue(serviceType);
+        return this.services.getValue(serviceType);
     }
     
     constructor() {
