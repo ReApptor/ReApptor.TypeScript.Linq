@@ -20,6 +20,8 @@ export type TService = IService;
 
 export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
 
+var me: ServiceProvider | null;
+
 class ServiceProvider {
     
     private static _id: number = Math.random(); 
@@ -31,6 +33,16 @@ class ServiceProvider {
     
     private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
         return this._services.getValue(serviceType);
+    }
+    
+    constructor() {
+        const container = window as any;
+        if (container) {
+            if (container.__athenaeumServiceProvider)
+                throw new Error("Service provider has already registered.");
+            
+            container.__athenaeumServiceProvider = this;
+        }
     }
 
     /**
