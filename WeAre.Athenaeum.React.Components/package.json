@@ -22,7 +22,7 @@
   "browserslist": [],
   "dependencies": {
     "@weare/athenaeum-react-common": "^1.0.335",
-    "@weare/athenaeum-toolkit": "^1.0.335",
+    "@weare/athenaeum-toolkit": "^1.0.346",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
     "tslib": "^2.1.0"

@@ -1,7 +1,7 @@
 import React from 'react';
-import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
-import {Alert} from "@weare/athenaeum-react-components";
-import Localizer from "@/localization/Localizer";
+import { Alert } from "@weare/athenaeum-react-components";
+import {AlertType, BaseComponent, AlertModel} from "@weare/athenaeum-react-common";
+import "@/localization/Localizer";
 
 class App extends BaseComponent {
     
@@ -15,11 +15,11 @@ class App extends BaseComponent {
     render(): React.ReactNode {
         return (
             <div className="App">
-                <span>{Localizer.topNavAccount}</span>
                 <Alert model={this.alertModel} />
             </div>
         );
     }
     
 }
+
 export default App;
