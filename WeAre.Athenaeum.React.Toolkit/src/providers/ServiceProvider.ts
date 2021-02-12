@@ -39,18 +39,18 @@ class ServiceProvider {
         return this.services.getValue(serviceType);
     }
     
-    constructor() {
-        console.log("sp.constructor:window=", window);
-        const container = window as any;
-        if (container) {
-            console.log("sp.constructor:container.__athenaeumServiceProvider=", container.__athenaeumServiceProvider);
-            
-            if (container.__athenaeumServiceProvider)
-                throw new Error("Service provider has already registered.");
-            
-            container.__athenaeumServiceProvider = this;
-        }
-    }
+    // constructor() {
+    //     console.log("sp.constructor:window=", window);
+    //     const container = window as any;
+    //     if (container) {
+    //         console.log("sp.constructor:container.__athenaeumServiceProvider=", container.__athenaeumServiceProvider);
+    //        
+    //         if (container.__athenaeumServiceProvider)
+    //             throw new Error("Service provider has already registered.");
+    //        
+    //         container.__athenaeumServiceProvider = this;
+    //     }
+    // }
 
     /**
      * Resolves service type.
