@@ -10,7 +10,7 @@ export interface ILanguage {
 
 export interface ILocalizer {
     readonly language: string;
-    readonly supportedLanguages: readonly ILanguage[];
+    readonly supportedLanguages: ILanguage[];
     get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
     contains(name: string): boolean;
     setLanguage(language: string): boolean;
@@ -97,7 +97,7 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         return this._supportedLanguageCodes;
     }
 
-    public get supportedLanguages(): readonly ILanguage[] {
+    public get supportedLanguages(): ILanguage[] {
         return this._supportedLanguages;
     }
 
