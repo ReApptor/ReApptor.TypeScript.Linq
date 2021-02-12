@@ -2,6 +2,7 @@ import {Dictionary} from "typescript-collections";
 import {IEnumProvider, ILocalizer, ITypeResolver, ServiceType} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
 import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
+import {log} from "util";
 
 export type ServiceType = string;
 
@@ -25,6 +26,12 @@ interface IContainer {
 }
 
 const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
+
+if (container.__athenaeumServiceProviderInstance) {
+    console.warn(' ')
+    console.warn('Multiple instance of @weare/athenaeum-toolkit dependencie found. This will not break the app but it is not recommended to use two major versions of @weare/athenaeum-toolkit')
+    console.warn(' ')
+}
 
 class ServiceProvider {
     
