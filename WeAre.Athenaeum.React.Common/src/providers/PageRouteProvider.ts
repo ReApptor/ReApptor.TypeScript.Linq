@@ -107,8 +107,9 @@ export default class PageRouteProvider {
                 this.onRedirectAsync(route);
             }
 
-            if (stopPropagation)
-                throw new Error(AthenaeumConstants.apiError);
+            if (stopPropagation) {
+                this.stopPropagation();
+            }
 
             return page;
         }
@@ -120,11 +121,22 @@ export default class PageRouteProvider {
         return await this.invokeRedirectAsync(route, null, false, replace, stopPropagation);
     }
 
+    public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
+
+        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
+
+        return await pageDefinitions.createPageAsync(route);
+    }
+
     public static async changeUrlWithoutReload(newPath?: string | null) : Promise<void> {
         if (newPath == null) {
             newPath = "/";
         }
         window.history.replaceState(null, "", newPath);
+    }
+    
+    public static stopPropagation(): void {
+        throw new Error(AthenaeumConstants.apiError);
     }
     
     public static async offline(): Promise<void> {
@@ -181,13 +193,6 @@ export default class PageRouteProvider {
             document.title = title;
         }
         window.history.pushState(route, title || route.name);
-    }
-
-    public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
-        
-        const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
-
-        return await pageDefinitions.createPageAsync(route);
     }
 
     public static render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement {

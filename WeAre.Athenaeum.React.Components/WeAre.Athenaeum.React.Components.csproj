@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <OutputType>Module</OutputType>
+        <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -21,7 +22,6 @@
       <TypeScriptCompile Include="src\components\TopNav\TopNav.tsx" />
       <TypeScriptCompile Include="src\index.ts" />
       <TypeScriptCompile Include="src\AthenaeumComponentsConstants.ts" />
-      <TypeScriptCompile Include="src\localization\Localizer.ts" />
       <TypeScriptCompile Include="src\models\Enums.ts" />
       <TypeScriptCompile Include="src\models\server\ApplicationSettings.ts" />
       <TypeScriptCompile Include="src\models\server\User.ts" />
@@ -30,6 +30,21 @@
       <TypeScriptCompile Include="src\models\server\UserRole.ts" />
       <TypeScriptCompile Include="src\module.d.ts" />
       <TypeScriptCompile Include="src\react-app-env.d.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="lib\**" />
+      <Compile Remove="coverage\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="lib\**" />
+      <EmbeddedResource Remove="coverage\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="lib\**" />
+      <None Remove="coverage\**" />
     </ItemGroup>
 
 </Project>

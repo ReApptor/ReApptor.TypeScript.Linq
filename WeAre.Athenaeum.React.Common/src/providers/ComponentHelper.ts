@@ -82,7 +82,7 @@ export default class ch {
 
             if (this._layout != null) {
 
-                const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+                const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
                 
                 const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
 
@@ -254,7 +254,7 @@ export default class ch {
     }
     
     public static async setLanguageAsync(language: string): Promise<void> {
-        const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
         if ((localizer) && (localizer.setLanguage(language))) {
             //update context
             if (this._context != null) {

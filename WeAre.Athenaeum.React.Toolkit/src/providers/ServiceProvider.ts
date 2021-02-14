@@ -1,6 +1,8 @@
 import {Dictionary} from "typescript-collections";
-import {IEnumProvider, ILocalizer} from "..";
+import {IEnumProvider, ILocalizer, ITypeResolver, ServiceType} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
+import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
+import {log} from "util";
 
 export type ServiceType = string;
 
@@ -17,19 +19,50 @@ export interface IService {
 
 export type TService = IService;
 
+export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
+
+interface IContainer {
+    __athenaeumServiceProviderInstance: ServiceProvider | null;
+}
+
+const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
+
 class ServiceProvider {
     
-    private readonly _services: Dictionary<ServiceType, IService | object> = new Dictionary<ServiceType, IService | object>();
+    private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
     
+    private set(serviceType: ServiceType, service: IService | object | ServiceCallback): void {
+        this._services.setValue(serviceType, service);
+    }
+    
+    private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
+        return this._services.getValue(serviceType);
+    }
+
+    /**
+     * Resolves service type.
+     * @param serviceOrType - A service declaration, service type or service instance.
+     * @returns ServiceType - A service type.
+     */
+    public resolveServiceType(serviceOrType: ServiceType | TType): ServiceType {
+        const typeResolver: ITypeResolver = this.getTypeResolver();
+
+        return (typeof serviceOrType === "string")
+            ? serviceOrType
+            : typeResolver.resolve(serviceOrType);
+    }
+
     /**
      * Gets the service object of the specified type.
-     * @param serviceType - An object that specifies the type of service object to get.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns IService | object | null - A service object of type serviceType or null if there is no service object of type serviceType.
      */
-    public getService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService | null {
+    public getService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService | null {
 
-        const service: IService | object | undefined = this._services.getValue(serviceType);
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
+
+        const service: object | IService | ServiceCallback | undefined = this.get(serviceType);
 
         return (service != null)
             ? ((resolve) && (typeof service === "function"))
@@ -40,13 +73,15 @@ class ServiceProvider {
 
     /**
      * Get service of type serviceType from the IServiceProvider.
-     * @param serviceType - An object that specifies the type of service object to get.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param resolve - if True then the service callback will be automatically resolved (invoked); if False, then the function will be returned.
      * @returns A service object of type serviceType.
      * @exception InvalidOperationException There is no service of type serviceType.
      */
-    public getRequiredService<TService extends IService | object>(serviceType: ServiceType, resolve: boolean = true): TService {
-        
+    public getRequiredService<TService extends IService | object>(serviceOrType: ServiceType | TType, resolve: boolean = true): TService {
+
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
+
         const service: TService | null = this.getService<TService>(serviceType, resolve);
         
         if (service == null)
@@ -57,42 +92,49 @@ class ServiceProvider {
 
     /**
      * Adds a singleton service of the type specified in serviceType.
-     * @param serviceOrType - A service instance or service type.
+     * @param serviceOrType - A service declaration, service type or service instance.
      * @param service - a service instance if service type is specified in first argument
      */
-    public addSingleton(serviceOrType: IService | ServiceType | object, service: object | null | ServiceCallback = null): void {
+    public addSingleton(serviceOrType: ServiceType | TType, service: object | null | ServiceCallback = null): void {
 
-        let serviceType: ServiceType | null = (typeof serviceOrType === "string")
-            ? serviceOrType
-            : null;
-
-        if (serviceType == null) {
-            serviceType = ((serviceOrType as IService).getType)
-                ? (serviceOrType as IService).getType()
-                : null;
-        }
-
-        if (!serviceType)
-            throw new Error(`InvalidOperationException. Service type is not specified or cannot be recognized from service instance.`);
-
+        const serviceType: ServiceType = this.resolveServiceType(serviceOrType);
+        
         service = (service != null)
             ? service
             : serviceOrType as object;
 
-        this._services.setValue(serviceType, service);
+        this.set(serviceType, service);
     }
 
-    public getLocalizer(): ILocalizer | null {
+    public getTypeResolver(): ITypeResolver {
+        const serviceType: string = nameof<ITypeResolver>();
+        const service: ITypeResolver | null = this.get(serviceType) as ITypeResolver;
+        if (service != null) {
+            return service;
+        }
+        this.set(serviceType, TypeResolver);
+        return TypeResolver;
+    }
+
+    public findLocalizer(): ILocalizer | null {
         return this.getService(nameof<ILocalizer>());
     }
 
-    public getEnumProvider(): IEnumProvider | null {
+    public getLocalizer(): ILocalizer {
+        return this.getRequiredService(nameof<ILocalizer>());
+    }
+
+    public findEnumProvider(): IEnumProvider | null {
         return this.getService(nameof<IEnumProvider>());
     }
 
-    public getTransformProvider(): ITransformProvider | null {
+    public findTransformProvider(): ITransformProvider | null {
         return this.getService(nameof<ITransformProvider>());
     }
 }
 
-export default new ServiceProvider();
+if (container.__athenaeumServiceProviderInstance) {
+    console.warn(`Multiple instance of @weare/athenaeum-toolkit dependencies found. This will not break the app but it is not recommended to use two major versions of @weare/athenaeum-toolkit`);
+}
+
+export default (container.__athenaeumServiceProviderInstance || (container.__athenaeumServiceProviderInstance = new ServiceProvider()));
