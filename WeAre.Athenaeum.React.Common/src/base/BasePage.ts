@@ -138,7 +138,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     public getTitle(): string {
         const titleLocalizationItem: string = `${this.routeName}Page.Title`;
-        const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
         return ((localizer != null) && (localizer.contains(titleLocalizationItem)))
             ? localizer.get(titleLocalizationItem)
             : this.routeName;

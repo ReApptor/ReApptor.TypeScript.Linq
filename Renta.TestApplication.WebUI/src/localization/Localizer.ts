@@ -99,6 +99,7 @@ class Localizer extends BaseLocalizer {
     public readonly componentDropdownNoDataLanguageItemName: string = `Component.Dropdown.NoData`;
     public readonly componentDropdownFilterResultsLanguageItemName: string = `Component.Dropdown.FilterResults`;
     public readonly componentDropdownGetResultsLanguageItemName: string = `Component.Dropdown.GetResults`;
+    public readonly componentDropdownAddLanguageItemName: string = `Component.Dropdown.Add`;
     public readonly topNavContactSupportLanguageItemName: string = `TopNav.ContactSupport`;
     public readonly topNavWorkOrdersLanguageItemName: string = `TopNav.WorkOrders`;
     public readonly dayOfWeekSundayLanguageItemName: string = `DayOfWeek.Sunday`;
@@ -1047,6 +1048,7 @@ class Localizer extends BaseLocalizer {
     public readonly workOrdersCustomerApproverLanguageItemName: string = `WorkOrders.CustomerApprover`;
     public readonly workOrdersCustomerOrdererLanguageItemName: string = `WorkOrders.CustomerOrderer`;
     public readonly workOrdersManagerLanguageItemName: string = `WorkOrders.Manager`;
+    public readonly workOrdersInvoiceReferenceLanguageItemName: string = `WorkOrders.InvoiceReference`;
     public readonly componentHoursWidgetHoursSpentLanguageItemName: string = `Component.HoursWidget.HoursSpent`;
     public readonly componentHoursWidgetAddOvertimeLanguageItemName: string = `Component.HoursWidget.AddOvertime`;
     public readonly componentHoursWidgetNormalHoursLanguageItemName: string = `Component.HoursWidget.NormalHours`;
@@ -1235,6 +1237,45 @@ class Localizer extends BaseLocalizer {
     public readonly workOrdersFiltersManagersLanguageItemName: string = `WorkOrders.Filters.Managers`;
     public readonly rentaTasksDashboardRouteWidgetWorkOrdersDescriptionLanguageItemName: string = `RentaTasks.Dashboard.RouteWidget.WorkOrders.Description`;
     public readonly workOrdersRowsNoAddressLanguageItemName: string = `WorkOrders.Rows.NoAddress`;
+    public readonly editContactPersonModalButtonLabelSaveChangesLanguageItemName: string = `EditContactPersonModal.Button.Label.SaveChanges`;
+    public readonly editContactPersonModalSubtitleLanguageItemName: string = `EditContactPersonModal.Subtitle`;
+    public readonly summaryWidgetButtonEditApproverLanguageItemName: string = `SummaryWidget.Button.EditApprover`;
+    public readonly summaryWidgetDropdownNothingSelectedLanguageItemName: string = `SummaryWidget.Dropdown.NothingSelected`;
+    public readonly managersNewOrdererLanguageItemName: string = `Managers.NewOrderer`;
+    public readonly managersOrdererSavedSuccessfullyLanguageItemName: string = `Managers.OrdererSavedSuccessfully`;
+    public readonly rentaTasksControllerStepsTitleEditLanguageItemName: string = `RentaTasksController.Steps.TitleEdit`;
+    public readonly rentaTasksControllerStepsTitleManagersLanguageItemName: string = `RentaTasksController.Steps.TitleManagers`;
+    public readonly managersStepOrdererSaveLanguageItemName: string = `ManagersStep.OrdererSave`;
+    public readonly managersStepApproverSavedLanguageItemName: string = `ManagersStep.ApproverSaved`;
+    public readonly managersStepOrdererNotSpecifiedLanguageItemName: string = `ManagersStep.OrdererNotSpecified`;
+    public readonly managersStepApproverNotSpecifiedLanguageItemName: string = `ManagersStep.ApproverNotSpecified`;
+    public readonly managersStepManualLanguageItemName: string = `ManagersStep.Manual`;
+    public readonly managersStepManagerLabelLanguageItemName: string = `ManagersStep.Manager.Label`;
+    public readonly managersStepManagerDescriptionLanguageItemName: string = `ManagersStep.Manager.Description`;
+    public readonly managersStepOrdererLabelLanguageItemName: string = `ManagersStep.Orderer.Label`;
+    public readonly managersStepOrdererDescriptionLanguageItemName: string = `ManagersStep.Orderer.Description`;
+    public readonly managersStepOrdererAddLanguageItemName: string = `ManagersStep.Orderer.Add`;
+    public readonly managersStepApproverLabelLanguageItemName: string = `ManagersStep.Approver.Label`;
+    public readonly managersStepApproverDescriptionLanguageItemName: string = `ManagersStep.Approver.Description`;
+    public readonly managersStepApproverAddLanguageItemName: string = `ManagersStep.Approver.Add`;
+    public readonly rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledLanguageItemName: string = `RentaTasks.WorkOrderInfo.CheckboxWidget.Unscheduled`;
+    public readonly rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledDescriptionLanguageItemName: string = `RentaTasks.WorkOrderInfo.CheckboxWidget.Unscheduled.Description`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsSearchingLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.Searching`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsProductsFoundLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.ProductsFound`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsNoProductsFoundLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.NoProductsFound`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsTextInputPlaceholderSearchLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.TextInput.Placeholder.Search`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsSearchResultLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.SearchResult`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsModalTitleEquipmentLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProductsModal.Title.Equipment`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsModalSubtitleChooseEquipmentLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProductsModal.Subtitle.ChooseEquipment`;
+    public readonly taskTooltipsTaskUnscheduledLanguageItemName: string = `TaskTooltips.TaskUnscheduled`;
+    public readonly workOrderStatusUnscheduledLanguageItemName: string = `WorkOrderStatus.Unscheduled`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsAddEquipmentLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.AddEquipment`;
+    public readonly rentaTasksAddEquipmentAddEquipmentDataProviderCategoryFavoriteLanguageItemName: string = `RentaTasks.AddEquipment.AddEquipmentDataProvider.Category.Favorite`;
+    public readonly rentaTasksAddEquipmentCategoriesOrProductsNoProductsLanguageItemName: string = `RentaTasks.AddEquipment.CategoriesOrProducts.NoProducts`;
+    public readonly rentaTasksControllerWorkOrderConcurrencyAlertLanguageItemName: string = `RentaTasks.Controller.WorkOrderConcurrencyAlert`;
+    public readonly rentaTasksWorkOrderSignInFailedAlertLanguageItemName: string = `RentaTasks.WorkOrder.SignIn.FailedAlert`;
+    public readonly rentaTasksWorkOrderLabelInvoiceReferenceLanguageItemName: string = `RentaTasks.WorkOrder.Label.InvoiceReference`;
+    public readonly summaryWidgetReferenceLanguageItemName: string = `SummaryWidget.Reference`;
 
     constructor() {
 
@@ -1341,6 +1382,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.componentDropdownNoDataLanguageItemName, { language: `fi`, value: `Ei tietoja` }, { language: `sv`, value: `Ingen information` }, { language: `pl`, value: `PL: No data` }, { language: `en`, value: `No data` },);
         this.set(this.componentDropdownFilterResultsLanguageItemName, { language: `fi`, value: `Suodata tulokset` }, { language: `sv`, value: `Filtrera resultat` }, { language: `pl`, value: `PL: Filter results` }, { language: `en`, value: `Filter results` },);
         this.set(this.componentDropdownGetResultsLanguageItemName, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `en`, value: `Start typing to get results` },);
+        this.set(this.componentDropdownAddLanguageItemName, { language: `fi`, value: `Lisää` }, { language: `en`, value: `Add` },);
         this.set(this.topNavContactSupportLanguageItemName, { language: `fi`, value: `Tuki` }, { language: `sv`, value: `Kundtjänst` }, { language: `pl`, value: `PL: Support` }, { language: `en`, value: `Support` },);
         this.set(this.topNavWorkOrdersLanguageItemName, { language: `fi`, value: `Työtilaukset` }, { language: `sv`, value: `SV: Work orders` }, { language: `pl`, value: `PL: Work orders` }, { language: `en`, value: `Work orders` },);
         this.set(this.dayOfWeekSundayLanguageItemName, { language: `fi`, value: `Sunnuntai` }, { language: `sv`, value: `Söndag` }, { language: `pl`, value: `PL: Sunday` }, { language: `en`, value: `Sunday` },);
@@ -1620,7 +1662,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.enumUserRoleGroupSubcontractorsLanguageItemName, { language: `fi`, value: `Aliurakoitsijat` }, { language: `sv`, value: `Underleverantörer` }, { language: `pl`, value: `PL: Subcontractors` }, { language: `en`, value: `Subcontractors` },);
         this.set(this.enumUserRoleGroupAdminsDescriptionLanguageItemName, { language: `fi`, value: `Työmaa- ja yritysvalvojat` }, { language: `sv`, value: `Byggplats- och affärsadministratörer` }, { language: `pl`, value: `PL: Site & business administrators` }, { language: `en`, value: `Site & business administrators` },);
         this.set(this.enumUserRoleGroupManagersLanguageItemName, { language: `fi`, value: `Työnjohtajat` }, { language: `sv`, value: `Chefer` }, { language: `pl`, value: `PL: Managers` }, { language: `en`, value: `Managers` },);
-        this.set(this.enumUserRoleGroupContactPersonsLanguageItemName, { language: `fi`, value: `Yhteyshenkilöt` },);
+        this.set(this.enumUserRoleGroupContactPersonsLanguageItemName, { language: `fi`, value: `Yhteyshenkilöt` }, { language: `pl`, value: `PL: Contact Persons` }, { language: `en`, value: `Contact Persons` },);
         this.set(this.enumUserRoleGroupManagersDescriptionLanguageItemName, { language: `fi`, value: `Työmaa johtajat & yhteyshenkilöt` }, { language: `sv`, value: `Byggplats chefer & kontaktpersoner` }, { language: `pl`, value: `PL: Site managers & contact persons` }, { language: `en`, value: `Site managers & contact persons` },);
         this.set(this.enumUserRoleGroupEmployeesLanguageItemName, { language: `fi`, value: `Työntekijät` }, { language: `sv`, value: `Anställda` }, { language: `pl`, value: `PL: Employees` }, { language: `en`, value: `Employees` },);
         this.set(this.enumUserRoleGroupEmployeesDescriptionLanguageItemName, { language: `fi`, value: `Pää asentajat, asentajat & kuljettajat` }, { language: `sv`, value: `Huvud montörer, montörer & chaufförer` }, { language: `pl`, value: `PL: Head mounters, mounters & drivers` }, { language: `en`, value: `Head mounters, mounters & drivers` },);
@@ -2034,7 +2076,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.myAuditsActionsApproveLanguageItemName, { language: `fi`, value: `Hyväksy tarkastus raporttia` }, { language: `sv`, value: `Godkänn inspektionsrapport` }, { language: `pl`, value: `PL: Approve audit report` }, { language: `en`, value: `Approve audit report` },);
         this.set(this.myAuditsActionsPreviewLanguageItemName, { language: `fi`, value: `Esikatsele tarkastus raporttia` }, { language: `sv`, value: `Förhandsgranska inspektionsrapporten` }, { language: `pl`, value: `PL: Preview audit report` }, { language: `en`, value: `Preview audit report` },);
         this.set(this.myAuditsActionsDownloadLanguageItemName, { language: `fi`, value: `Lataa tarkastus raportti` }, { language: `sv`, value: `Ladda ner inspektionsrapport` }, { language: `pl`, value: `PL: Download audit report` }, { language: `en`, value: `Download audit report` },);
-        this.set(this.myAuditsConfirmationApproveLanguageItemName, { language: `fi`, value: `Haluatko varmasti hyväksyä tarkastusraportin #{0} \"{1}\"` }, { language: `sv`, value: `Är du säker, att du vill godkänna raport #{0} \"{1}\"` }, { language: `pl`, value: `PL: Are you sure, you want approve audit report #{0} \"{1}\"` }, { language: `en`, value: `Are you sure, you want approve audit report #{0} \"{1}\"` },);
+        this.set(this.myAuditsConfirmationApproveLanguageItemName, { language: `fi`, value: `Haluatko varmasti hyväksyä tarkastusraportin #{0} "{1}"` }, { language: `sv`, value: `Är du säker, att du vill godkänna raport #{0} \"{1}\"` }, { language: `pl`, value: `PL: Are you sure, you want approve audit report #{0} \"{1}\"` }, { language: `en`, value: `Are you sure, you want approve audit report #{0} \"{1}\"` },);
         this.set(this.myAuditsReportPreviewLanguageItemName, { language: `fi`, value: `Tarkastusraportin esikatselu` }, { language: `sv`, value: `Förhandsgranska inspektionsrapporter` }, { language: `pl`, value: `PL: Audit report preview` }, { language: `en`, value: `Audit report preview` },);
         this.set(this.agreementMinimumRentalDaysLanguageItemName, { language: `fi`, value: `Minimi vuokrapäiviä` }, { language: `sv`, value: `SV: Minimum rental days` }, { language: `pl`, value: `PL: Minimum rental days` }, { language: `en`, value: `Minimum rental days` },);
         this.set(this.agreementModuleNameLanguageItemName, { language: `fi`, value: `Nimi` }, { language: `sv`, value: `Namn` }, { language: `pl`, value: `PL: Name` }, { language: `en`, value: `Name` },);
@@ -2277,7 +2319,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.constructionSitesConfirmationActivateSiteLanguageItemName, { language: `fi`, value: `Oletko varma, että haluat avata työmaan \n "{0}"?` }, { language: `sv`, value: `SV: Are you sure, you want to activate construction site \n "{0}"?` }, { language: `pl`, value: `PL: Are you sure, you want to activate construction site \n "{0}"?` }, { language: `en`, value: `Are you sure, you want to activate construction site \n "{0}"?` },);
         this.set(this.constructionSitesConfirmationDeactivateSiteLanguageItemName, { language: `fi`, value: `Oletko varma, että haluat sulkea työmaan? \n "{0}"?` }, { language: `sv`, value: `SV: Are you sure, you want to deactivate construction site \n "{0}"?` }, { language: `pl`, value: `PL: Are you sure, you want to deactivate construction site \n "{0}"?` }, { language: `en`, value: `Are you sure, you want to deactivate construction site \n "{0}"?` },);
         this.set(this.addConstructionSiteInvoiceReferenceLanguageItemName, { language: `fi`, value: `Laskuviite` }, { language: `sv`, value: `SV: Invoice reference` }, { language: `pl`, value: `PL: Invoice reference` }, { language: `en`, value: `Invoice reference` },);
-        this.set(this.addConstructionSiteReferenceLanguageItemName, { language: `fi`, value: `Viite` }, { language: `pl`, value: `PL: Reference` }, { language: `en`, value: `Reference` },);
+        this.set(this.addConstructionSiteReferenceLanguageItemName, { language: `fi`, value: `TKVuokrat Laskuviite` }, { language: `pl`, value: `PL: ERP Reference` }, { language: `en`, value: `ERP Reference` },);
         this.set(this.addConstructionSiteHourPriceLanguageItemName, { language: `fi`, value: `Oletus tuntihinta` }, { language: `sv`, value: `SV: Default hour price` }, { language: `pl`, value: `PL: Default hour price` }, { language: `en`, value: `Default hour price` },);
         this.set(this.addConstructionSiteMileagePriceLanguageItemName, { language: `fi`, value: `Oletus kilometrikorvaus` }, { language: `sv`, value: `SV: Default mileage price` }, { language: `pl`, value: `PL: Default mileage price` }, { language: `en`, value: `Default mileage price` },);
         this.set(this.workOrdersShowDetailsTitleLanguageItemName, { language: `fi`, value: `Näytä tuotteet` }, { language: `en`, value: `Show equipment` },);
@@ -2286,9 +2328,10 @@ class Localizer extends BaseLocalizer {
         this.set(this.workOrderEquipmentAmountLanguageItemName, { language: `fi`, value: `Määrä` }, { language: `en`, value: `Amount` },);
         this.set(this.workOrderEquipmentAddProductLanguageItemName, { language: `fi`, value: `Lisää tuote` }, { language: `en`, value: `Add product` },);
         this.set(this.workOrdersCustomerGridHeaderLanguageItemName, { language: `fi`, value: `Asiakas` }, { language: `en`, value: `Customer` },);
-        this.set(this.workOrdersCustomerApproverLanguageItemName, { language: `fi`, value: `Hyväksyjä` }, { language: `en`, value: `Approver` },);
+        this.set(this.workOrdersCustomerApproverLanguageItemName, { language: `fi`, value: `Hyväksyjä` }, { language: `sv`, value: `SV: Customer Approver` }, { language: `pl`, value: `PL: Customer Approver` }, { language: `en`, value: `Customer Approver` },);
         this.set(this.workOrdersCustomerOrdererLanguageItemName, { language: `fi`, value: `Tilaaja` }, { language: `en`, value: `Orderer` },);
         this.set(this.workOrdersManagerLanguageItemName, { language: `fi`, value: `Työnjohtaja` }, { language: `en`, value: `Manager` },);
+        this.set(this.workOrdersInvoiceReferenceLanguageItemName, { language: `fi`, value: `Laskuviite` }, { language: `sv`, value: `SV: Invoice reference` }, { language: `en`, value: `Invoice reference` },);
         this.set(this.componentHoursWidgetHoursSpentLanguageItemName, { language: `fi`, value: `Tehtävään käytetyt tunnit` }, { language: `sv`, value: `SV: Hours spent for task` }, { language: `pl`, value: `PL: Hours spent for task` }, { language: `en`, value: `Hours spent for task` },);
         this.set(this.componentHoursWidgetAddOvertimeLanguageItemName, { language: `fi`, value: `Lisää ylityö` }, { language: `sv`, value: `SV: Add overtime` }, { language: `pl`, value: `PL: Add overtime` }, { language: `en`, value: `Add overtime` },);
         this.set(this.componentHoursWidgetNormalHoursLanguageItemName, { language: `fi`, value: `Normaali` }, { language: `sv`, value: `SV: Normal` }, { language: `pl`, value: `PL: Normal` }, { language: `en`, value: `Normal` },);
@@ -2340,19 +2383,19 @@ class Localizer extends BaseLocalizer {
         this.set(this.enumWorkOrderStatusInvoicedLanguageItemName, { language: `fi`, value: `Laskutettu` }, { language: `sv`, value: `SV: Invoiced` }, { language: `pl`, value: `PL: Invoiced` }, { language: `en`, value: `Invoiced` },);
         this.set(this.enumWorkOrderStatusDeletedLanguageItemName, { language: `fi`, value: `Poistettu` }, { language: `sv`, value: `SV: Deleted` }, { language: `pl`, value: `PL: Deleted` }, { language: `en`, value: `Deleted` },);
         this.set(this.enumWorkOrderStatusUnknownLanguageItemName, { language: `fi`, value: `Tuntematon` }, { language: `sv`, value: `SV: Unknown` }, { language: `pl`, value: `PL: Unknown` }, { language: `en`, value: `Unknown` },);
-        this.set(this.enumTaskStatusFilterUnscheduledLanguageItemName, { language: `fi`, value: `Ei määritetty` },);
-        this.set(this.enumTaskStatusFilterInProgressLanguageItemName, { language: `fi`, value: `Käynnissä` },);
-        this.set(this.enumTaskStatusFilterUpcomingLanguageItemName, { language: `fi`, value: `Tulossa` },);
-        this.set(this.enumTaskStatusFilterCompletedLanguageItemName, { language: `fi`, value: `Valmis` },);
-        this.set(this.enumTaskStatusFilterSentToCustomerLanguageItemName, { language: `fi`, value: `Lähetetty asiakkaalle` },);
-        this.set(this.enumTaskStatusFilterApprovedByCustomerLanguageItemName, { language: `fi`, value: `Asiakas hyväksynyt` },);
-        this.set(this.enumTaskStatusFilterDeclinedByCustomerLanguageItemName, { language: `fi`, value: `Asiakas hylännyt` },);
-        this.set(this.enumTaskStatusFilterReadyForInvoicingLanguageItemName, { language: `fi`, value: `Valmis laskutettavaksi` },);
+        this.set(this.enumTaskStatusFilterUnscheduledLanguageItemName, { language: `fi`, value: `Ei määritetty` }, { language: `en`, value: `Unscheduled` },);
+        this.set(this.enumTaskStatusFilterInProgressLanguageItemName, { language: `fi`, value: `Käynnissä` }, { language: `en`, value: `In process` },);
+        this.set(this.enumTaskStatusFilterUpcomingLanguageItemName, { language: `fi`, value: `Tulossa` }, { language: `en`, value: `Upcoming` },);
+        this.set(this.enumTaskStatusFilterCompletedLanguageItemName, { language: `fi`, value: `Valmis` }, { language: `en`, value: `Completed` },);
+        this.set(this.enumTaskStatusFilterSentToCustomerLanguageItemName, { language: `fi`, value: `Lähetetty asiakkaalle` }, { language: `en`, value: `Sent to customer` },);
+        this.set(this.enumTaskStatusFilterApprovedByCustomerLanguageItemName, { language: `fi`, value: `Asiakas hyväksynyt` }, { language: `en`, value: `Approver by customer` },);
+        this.set(this.enumTaskStatusFilterDeclinedByCustomerLanguageItemName, { language: `fi`, value: `Asiakas hylännyt` }, { language: `en`, value: `Declined by customer` },);
+        this.set(this.enumTaskStatusFilterReadyForInvoicingLanguageItemName, { language: `fi`, value: `Valmis laskutettavaksi` }, { language: `en`, value: `Ready for invocing` },);
         this.set(this.workOrdersFiltersModalTitleActiveLanguageItemName, { language: `fi`, value: `Aktiivisten tyätilausten filtterit` }, { language: `sv`, value: `SV: Active work orders filters` }, { language: `pl`, value: `PL: Active work orders filters` }, { language: `en`, value: `Active work orders filters` },);
         this.set(this.workOrdersFiltersModalTitleCompletedLanguageItemName, { language: `fi`, value: `Valmistuneiden työtilausten filtterit` }, { language: `sv`, value: `SV: Completed work orders filters` }, { language: `pl`, value: `PL: Completed work orders filters` }, { language: `en`, value: `Completed work orders filters` },);
         this.set(this.workOrdersModalActionsActivateLanguageItemName, { language: `fi`, value: `Aktivoi` }, { language: `sv`, value: `SV: Activate` }, { language: `pl`, value: `PL: Activate` }, { language: `en`, value: `Activate` },);
         this.set(this.workOrdersModalActionsCompleteLanguageItemName, { language: `fi`, value: `Valmista` }, { language: `sv`, value: `SV: Complete` }, { language: `pl`, value: `PL: Complete` }, { language: `en`, value: `Complete` },);
-        this.set(this.workOrdersModalActionsEditLanguageItemName, { language: `fi`, value: `Muokkkaa` }, { language: `sv`, value: `SV: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `en`, value: `Edit` },);
+        this.set(this.workOrdersModalActionsEditLanguageItemName, { language: `fi`, value: `Muokkaa` }, { language: `sv`, value: `SV: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `en`, value: `Edit` },);
         this.set(this.workOrdersModalActionsApproveLanguageItemName, { language: `fi`, value: `Hyväksy` }, { language: `sv`, value: `SV: Approve` }, { language: `pl`, value: `PL: Approve` }, { language: `en`, value: `Approve` },);
         this.set(this.workOrdersActionsModalTitleLanguageItemName, { language: `fi`, value: `Työtilauksen toiminnot` }, { language: `sv`, value: `SV: Work order actions` }, { language: `pl`, value: `PL: Work order actions` }, { language: `en`, value: `Work order actions` },);
         this.set(this.workOrdersAlertMessageWorkOrderActivatedLanguageItemName, { language: `fi`, value: `Työtilaus "{0}" on aktivoitu` }, { language: `sv`, value: `SV: Work order "{0}" has been activated` }, { language: `pl`, value: `PL: Work order "{0}" has been activated` }, { language: `en`, value: `Work order "{0}" has been activated` },);
@@ -2477,6 +2520,45 @@ class Localizer extends BaseLocalizer {
         this.set(this.workOrdersFiltersManagersLanguageItemName, { language: `fi`, value: `Työnjohtajat` }, { language: `sv`, value: `SV: Managers` }, { language: `pl`, value: `PL: Managers` }, { language: `en`, value: `Managers` },);
         this.set(this.rentaTasksDashboardRouteWidgetWorkOrdersDescriptionLanguageItemName, { language: `fi`, value: `Tarkastele aktiivisia työtilauksia` }, { language: `sv`, value: `SV: Check active work orders` }, { language: `pl`, value: `PL: Check active work orders` }, { language: `en`, value: `Check active work orders` },);
         this.set(this.workOrdersRowsNoAddressLanguageItemName, { language: `fi`, value: `Ei osoitetta` }, { language: `sv`, value: `SV: No address` }, { language: `pl`, value: `PL: No address` }, { language: `en`, value: `No address` },);
+        this.set(this.editContactPersonModalButtonLabelSaveChangesLanguageItemName, { language: `fi`, value: `Tallenna muutokset` }, { language: `sv`, value: `SV: Save changes` }, { language: `pl`, value: `PL: Save changes` }, { language: `en`, value: `Save changes` },);
+        this.set(this.editContactPersonModalSubtitleLanguageItemName, { language: `fi`, value: `Täytä puuttuvat tiedot` }, { language: `sv`, value: `SV: Fill in missing information` }, { language: `pl`, value: `PL: Fill in missing information` }, { language: `en`, value: `Fill in missing information` },);
+        this.set(this.summaryWidgetButtonEditApproverLanguageItemName, { language: `fi`, value: `Täytä puuttuvat kuittaajan tiedot` }, { language: `sv`, value: `SV: Fill in missing approver info` }, { language: `pl`, value: `PL: Fill in missing approver info` }, { language: `en`, value: `Fill in missing approver info` },);
+        this.set(this.summaryWidgetDropdownNothingSelectedLanguageItemName, { language: `fi`, value: `Valitse hyväksyjä` }, { language: `sv`, value: `SV: Select customer approver` }, { language: `pl`, value: `PL: Select customer approver` }, { language: `en`, value: `Select customer approver` },);
+        this.set(this.managersNewOrdererLanguageItemName, { language: `fi`, value: `Luo uusi tilaaja` }, { language: `sv`, value: `SV: Create newOrderer` }, { language: `pl`, value: `PL: Create new orderer` }, { language: `en`, value: `Create new orderer` },);
+        this.set(this.managersOrdererSavedSuccessfullyLanguageItemName, { language: `fi`, value: `Tilaaja on tallennettu onnistuneesti.` }, { language: `en`, value: `Orderer has been saved successfully.` },);
+        this.set(this.rentaTasksControllerStepsTitleEditLanguageItemName, { language: `fi`, value: `Muokkaa tehtävää` }, { language: `en`, value: `Edit task` },);
+        this.set(this.rentaTasksControllerStepsTitleManagersLanguageItemName, { language: `fi`, value: `Hyväksyjät` }, { language: `en`, value: `Managers` },);
+        this.set(this.managersStepOrdererSaveLanguageItemName, { language: `fi`, value: `Tilaaja tallennettu onnistuneesti.` }, { language: `en`, value: `Orderer has been saved successfully.` },);
+        this.set(this.managersStepApproverSavedLanguageItemName, { language: `fi`, value: `Hyväksyjä tallennettu onnistuneesti.` }, { language: `en`, value: `Approver has been saved successfully.` },);
+        this.set(this.managersStepOrdererNotSpecifiedLanguageItemName, { language: `fi`, value: `Tilaajan yhteystietoja puuttuu!` }, { language: `en`, value: `Orderer data should be specified!` },);
+        this.set(this.managersStepApproverNotSpecifiedLanguageItemName, { language: `fi`, value: `Hyväksyjän yhteystietoja puuttuu!` }, { language: `en`, value: `Approver data should be specified!` },);
+        this.set(this.managersStepManualLanguageItemName, { language: `fi`, value: `Määritä työtilauksen työnjohtaja, tilaaja ja hyväksyjä. Yhteyshenkilöiden tiedot (sähköposti, matkapuhelinnumero, etu -ja sukunimi) tulee olla täytetty.` }, { language: `en`, value: `Specify the work order manager, customer approver, and customer orderer. Customer contact information (email, phone, first and last name) should also be specified.` },);
+        this.set(this.managersStepManagerLabelLanguageItemName, { language: `fi`, value: `Työnjohtaja` }, { language: `en`, value: `Manager` },);
+        this.set(this.managersStepManagerDescriptionLanguageItemName, { language: `fi`, value: `Valitse työnjohtaja` }, { language: `en`, value: `Choose a manager` },);
+        this.set(this.managersStepOrdererLabelLanguageItemName, { language: `fi`, value: `Tilaaja` }, { language: `en`, value: `Customer orderer` },);
+        this.set(this.managersStepOrdererDescriptionLanguageItemName, { language: `fi`, value: `Valitse tai luo tilaaja` }, { language: `en`, value: `Choose or create an orderer` },);
+        this.set(this.managersStepOrdererAddLanguageItemName, { language: `fi`, value: `Uusi tilaaja` }, { language: `en`, value: `New orderer` },);
+        this.set(this.managersStepApproverLabelLanguageItemName, { language: `fi`, value: `Hyväksyjä` }, { language: `en`, value: `Customer approver` },);
+        this.set(this.managersStepApproverDescriptionLanguageItemName, { language: `fi`, value: `Valitse tai luo hyväksyjä` }, { language: `en`, value: `Choose or create an approver` },);
+        this.set(this.managersStepApproverAddLanguageItemName, { language: `fi`, value: `Uusi hyväksyjä` }, { language: `en`, value: `New approver` },);
+        this.set(this.rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledLanguageItemName, { language: `fi`, value: `Aikatauluttamaton` }, { language: `sv`, value: `SV: Unscheduled` }, { language: `pl`, value: `PL: Unscheduled` }, { language: `en`, value: `Unscheduled` },);
+        this.set(this.rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledDescriptionLanguageItemName, { language: `fi`, value: `Lisää tai poista aloituspäivämäärä` }, { language: `sv`, value: `SV: Check to unschedule an activation date` }, { language: `pl`, value: `PL: Check to unschedule an activation date` }, { language: `en`, value: `Check to unschedule an activation date` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsSearchingLanguageItemName, { language: `fi`, value: `Etsitään…` }, { language: `sv`, value: `SV: Searching…` }, { language: `pl`, value: `PL: Searching…` }, { language: `en`, value: `Searching…` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsProductsFoundLanguageItemName, { language: `fi`, value: `{0} Tuotetta löytynyt` }, { language: `sv`, value: `SV: {0} products found:` }, { language: `pl`, value: `PL: {0} products found:` }, { language: `en`, value: `{0} products found:` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsNoProductsFoundLanguageItemName, { language: `fi`, value: `Hakusanalla ei löytynyt tuotteita` }, { language: `sv`, value: `SV: No products with given search term` }, { language: `pl`, value: `PL: No products with given search term` }, { language: `en`, value: `No products with given search term` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsTextInputPlaceholderSearchLanguageItemName, { language: `fi`, value: `Etsi` }, { language: `sv`, value: `SV: Search` }, { language: `pl`, value: `PL: Search` }, { language: `en`, value: `Search` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsSearchResultLanguageItemName, { language: `fi`, value: `Hakutulokset: {0}` }, { language: `sv`, value: `SV: Search results: {0}` }, { language: `pl`, value: `PL: Search results: {0}` }, { language: `en`, value: `Search results: {0}` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsModalTitleEquipmentLanguageItemName, { language: `fi`, value: `Tarvike` }, { language: `sv`, value: `SV: Equipment` }, { language: `pl`, value: `PL: Equipment` }, { language: `en`, value: `Equipment` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsModalSubtitleChooseEquipmentLanguageItemName, { language: `fi`, value: `Valitse tuote työtilaukselle` }, { language: `sv`, value: `SV: Choose product to add to equipment list` }, { language: `pl`, value: `PL: Choose product to add to equipment list` }, { language: `en`, value: `Choose product to add to equipment list` },);
+        this.set(this.taskTooltipsTaskUnscheduledLanguageItemName, { language: `fi`, value: `Työtilausta ei ole aikataulutettu. Aloituspäivämäärä puuttuu.` }, { language: `sv`, value: `SV: Work order is unscheduled.\nActivation date is not specified.` }, { language: `pl`, value: `PL: Work order is unscheduled.\nActivation date is not specified.` }, { language: `en`, value: `Work order is unscheduled.\nActivation date is not specified.` },);
+        this.set(this.workOrderStatusUnscheduledLanguageItemName, { language: `fi`, value: `Aikatauluttamaton` }, { language: `sv`, value: `SV: Unscheduled` }, { language: `pl`, value: `PL: Unscheduled` }, { language: `en`, value: `Unscheduled` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsAddEquipmentLanguageItemName, { language: `fi`, value: `Lisää tarvikkeita` }, { language: `sv`, value: `SV: Add equipment` }, { language: `pl`, value: `PL: Add equipment` }, { language: `en`, value: `Add equipment` },);
+        this.set(this.rentaTasksAddEquipmentAddEquipmentDataProviderCategoryFavoriteLanguageItemName, { language: `fi`, value: `SUOSIKKI` }, { language: `sv`, value: `SV: FAVORITE` }, { language: `pl`, value: `PL: FAVORITE` }, { language: `en`, value: `FAVORITE` },);
+        this.set(this.rentaTasksAddEquipmentCategoriesOrProductsNoProductsLanguageItemName, { language: `fi`, value: `Ei tuotteita` }, { language: `sv`, value: `SV: No products` }, { language: `pl`, value: `PL: No products` }, { language: `en`, value: `No products` },);
+        this.set(this.rentaTasksControllerWorkOrderConcurrencyAlertLanguageItemName, { language: `fi`, value: `{0} on muokannut työtilausta {1:D}. Tarkasta työtilauksen tiedot.` }, { language: `en`, value: `The work order was modified by "{0}" at "{1:D}". Please check the WO details and continue.` },);
+        this.set(this.rentaTasksWorkOrderSignInFailedAlertLanguageItemName, { language: `fi`, value: `Työtilaukselle kirjautuminen epäonnistui, koska työtilauksen tila on muuttunut.` }, { language: `en`, value: `Cannot sign-in to the work order. The work order status has been changed.` },);
+        this.set(this.rentaTasksWorkOrderLabelInvoiceReferenceLanguageItemName, { language: `fi`, value: `Viite` }, { language: `sv`, value: `SV: Reference` }, { language: `pl`, value: `PL: Reference` }, { language: `en`, value: `Reference` },);
+        this.set(this.summaryWidgetReferenceLanguageItemName, { language: `fi`, value: `Viite:` }, { language: `sv`, value: `SV: Reference:` }, { language: `pl`, value: `PL: Reference:` }, { language: `en`, value: `Reference:` },);
     }
 
     /**
@@ -3128,6 +3210,13 @@ class Localizer extends BaseLocalizer {
     */
     public get componentDropdownGetResults() : string {
         return this.get(this.componentDropdownGetResultsLanguageItemName);
+    }
+
+    /**
+    /* "Component.Dropdown.Add" (Add)
+    */
+    public get componentDropdownAdd() : string {
+        return this.get(this.componentDropdownAddLanguageItemName);
     }
 
     /**
@@ -5084,7 +5173,7 @@ class Localizer extends BaseLocalizer {
     }
 
     /**
-    /* "Enum.UserRoleGroup.ContactPersons" (Yhteyshenkilöt)
+    /* "Enum.UserRoleGroup.ContactPersons" (Contact Persons)
     */
     public get enumUserRoleGroupContactPersons() : string {
         return this.get(this.enumUserRoleGroupContactPersonsLanguageItemName);
@@ -9683,7 +9772,7 @@ class Localizer extends BaseLocalizer {
     }
 
     /**
-    /* "AddConstructionSite.Reference" (Reference)
+    /* "AddConstructionSite.Reference" (ERP Reference)
     */
     public get addConstructionSiteReference() : string {
         return this.get(this.addConstructionSiteReferenceLanguageItemName);
@@ -9746,7 +9835,7 @@ class Localizer extends BaseLocalizer {
     }
 
     /**
-    /* "WorkOrders.CustomerApprover" (Approver)
+    /* "WorkOrders.CustomerApprover" (Customer Approver)
     */
     public get workOrdersCustomerApprover() : string {
         return this.get(this.workOrdersCustomerApproverLanguageItemName);
@@ -9764,6 +9853,13 @@ class Localizer extends BaseLocalizer {
     */
     public get workOrdersManager() : string {
         return this.get(this.workOrdersManagerLanguageItemName);
+    }
+
+    /**
+    /* "WorkOrders.InvoiceReference" (Invoice reference)
+    */
+    public get workOrdersInvoiceReference() : string {
+        return this.get(this.workOrdersInvoiceReferenceLanguageItemName);
     }
 
     /**
@@ -10124,56 +10220,56 @@ class Localizer extends BaseLocalizer {
     }
 
     /**
-    /* "Enum.TaskStatusFilter.Unscheduled" (Ei määritetty)
+    /* "Enum.TaskStatusFilter.Unscheduled" (Unscheduled)
     */
     public get enumTaskStatusFilterUnscheduled() : string {
         return this.get(this.enumTaskStatusFilterUnscheduledLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.InProgress" (Käynnissä)
+    /* "Enum.TaskStatusFilter.InProgress" (In process)
     */
     public get enumTaskStatusFilterInProgress() : string {
         return this.get(this.enumTaskStatusFilterInProgressLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.Upcoming" (Tulossa)
+    /* "Enum.TaskStatusFilter.Upcoming" (Upcoming)
     */
     public get enumTaskStatusFilterUpcoming() : string {
         return this.get(this.enumTaskStatusFilterUpcomingLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.Completed" (Valmis)
+    /* "Enum.TaskStatusFilter.Completed" (Completed)
     */
     public get enumTaskStatusFilterCompleted() : string {
         return this.get(this.enumTaskStatusFilterCompletedLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.SentToCustomer" (Lähetetty asiakkaalle)
+    /* "Enum.TaskStatusFilter.SentToCustomer" (Sent to customer)
     */
     public get enumTaskStatusFilterSentToCustomer() : string {
         return this.get(this.enumTaskStatusFilterSentToCustomerLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.ApprovedByCustomer" (Asiakas hyväksynyt)
+    /* "Enum.TaskStatusFilter.ApprovedByCustomer" (Approver by customer)
     */
     public get enumTaskStatusFilterApprovedByCustomer() : string {
         return this.get(this.enumTaskStatusFilterApprovedByCustomerLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.DeclinedByCustomer" (Asiakas hylännyt)
+    /* "Enum.TaskStatusFilter.DeclinedByCustomer" (Declined by customer)
     */
     public get enumTaskStatusFilterDeclinedByCustomer() : string {
         return this.get(this.enumTaskStatusFilterDeclinedByCustomerLanguageItemName);
     }
 
     /**
-    /* "Enum.TaskStatusFilter.ReadyForInvoicing" (Valmis laskutettavaksi)
+    /* "Enum.TaskStatusFilter.ReadyForInvoicing" (Ready for invocing)
     */
     public get enumTaskStatusFilterReadyForInvoicing() : string {
         return this.get(this.enumTaskStatusFilterReadyForInvoicingLanguageItemName);
@@ -11080,6 +11176,279 @@ class Localizer extends BaseLocalizer {
     */
     public get workOrdersRowsNoAddress() : string {
         return this.get(this.workOrdersRowsNoAddressLanguageItemName);
+    }
+
+    /**
+    /* "EditContactPersonModal.Button.Label.SaveChanges" (Save changes)
+    */
+    public get editContactPersonModalButtonLabelSaveChanges() : string {
+        return this.get(this.editContactPersonModalButtonLabelSaveChangesLanguageItemName);
+    }
+
+    /**
+    /* "EditContactPersonModal.Subtitle" (Fill in missing information)
+    */
+    public get editContactPersonModalSubtitle() : string {
+        return this.get(this.editContactPersonModalSubtitleLanguageItemName);
+    }
+
+    /**
+    /* "SummaryWidget.Button.EditApprover" (Fill in missing approver info)
+    */
+    public get summaryWidgetButtonEditApprover() : string {
+        return this.get(this.summaryWidgetButtonEditApproverLanguageItemName);
+    }
+
+    /**
+    /* "SummaryWidget.Dropdown.NothingSelected" (Select customer approver)
+    */
+    public get summaryWidgetDropdownNothingSelected() : string {
+        return this.get(this.summaryWidgetDropdownNothingSelectedLanguageItemName);
+    }
+
+    /**
+    /* "Managers.NewOrderer" (Create new orderer)
+    */
+    public get managersNewOrderer() : string {
+        return this.get(this.managersNewOrdererLanguageItemName);
+    }
+
+    /**
+    /* "Managers.OrdererSavedSuccessfully" (Orderer has been saved successfully.)
+    */
+    public get managersOrdererSavedSuccessfully() : string {
+        return this.get(this.managersOrdererSavedSuccessfullyLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasksController.Steps.TitleEdit" (Edit task)
+    */
+    public get rentaTasksControllerStepsTitleEdit() : string {
+        return this.get(this.rentaTasksControllerStepsTitleEditLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasksController.Steps.TitleManagers" (Managers)
+    */
+    public get rentaTasksControllerStepsTitleManagers() : string {
+        return this.get(this.rentaTasksControllerStepsTitleManagersLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.OrdererSave" (Orderer has been saved successfully.)
+    */
+    public get managersStepOrdererSave() : string {
+        return this.get(this.managersStepOrdererSaveLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.ApproverSaved" (Approver has been saved successfully.)
+    */
+    public get managersStepApproverSaved() : string {
+        return this.get(this.managersStepApproverSavedLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.OrdererNotSpecified" (Orderer data should be specified!)
+    */
+    public get managersStepOrdererNotSpecified() : string {
+        return this.get(this.managersStepOrdererNotSpecifiedLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.ApproverNotSpecified" (Approver data should be specified!)
+    */
+    public get managersStepApproverNotSpecified() : string {
+        return this.get(this.managersStepApproverNotSpecifiedLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Manual" (Specify the work order manager, customer approver, and customer orderer. Customer contact information (email, phone, first and last name) should also be specified.)
+    */
+    public get managersStepManual() : string {
+        return this.get(this.managersStepManualLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Manager.Label" (Manager)
+    */
+    public get managersStepManagerLabel() : string {
+        return this.get(this.managersStepManagerLabelLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Manager.Description" (Choose a manager)
+    */
+    public get managersStepManagerDescription() : string {
+        return this.get(this.managersStepManagerDescriptionLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Orderer.Label" (Customer orderer)
+    */
+    public get managersStepOrdererLabel() : string {
+        return this.get(this.managersStepOrdererLabelLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Orderer.Description" (Choose or create an orderer)
+    */
+    public get managersStepOrdererDescription() : string {
+        return this.get(this.managersStepOrdererDescriptionLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Orderer.Add" (New orderer)
+    */
+    public get managersStepOrdererAdd() : string {
+        return this.get(this.managersStepOrdererAddLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Approver.Label" (Customer approver)
+    */
+    public get managersStepApproverLabel() : string {
+        return this.get(this.managersStepApproverLabelLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Approver.Description" (Choose or create an approver)
+    */
+    public get managersStepApproverDescription() : string {
+        return this.get(this.managersStepApproverDescriptionLanguageItemName);
+    }
+
+    /**
+    /* "ManagersStep.Approver.Add" (New approver)
+    */
+    public get managersStepApproverAdd() : string {
+        return this.get(this.managersStepApproverAddLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.WorkOrderInfo.CheckboxWidget.Unscheduled" (Unscheduled)
+    */
+    public get rentaTasksWorkOrderInfoCheckboxWidgetUnscheduled() : string {
+        return this.get(this.rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.WorkOrderInfo.CheckboxWidget.Unscheduled.Description" (Check to unschedule an activation date)
+    */
+    public get rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledDescription() : string {
+        return this.get(this.rentaTasksWorkOrderInfoCheckboxWidgetUnscheduledDescriptionLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.Searching" (Searching…)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsSearching() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsSearchingLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.ProductsFound" ({0} products found:)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsProductsFound() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsProductsFoundLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.NoProductsFound" (No products with given search term)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsNoProductsFound() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsNoProductsFoundLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.TextInput.Placeholder.Search" (Search)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsTextInputPlaceholderSearch() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsTextInputPlaceholderSearchLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.SearchResult" (Search results: {0})
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsSearchResult() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsSearchResultLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProductsModal.Title.Equipment" (Equipment)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsModalTitleEquipment() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsModalTitleEquipmentLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProductsModal.Subtitle.ChooseEquipment" (Choose product to add to equipment list)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsModalSubtitleChooseEquipment() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsModalSubtitleChooseEquipmentLanguageItemName);
+    }
+
+    /**
+    /* "TaskTooltips.TaskUnscheduled" (Work order is unscheduled.\nActivation date is not specified.)
+    */
+    public get taskTooltipsTaskUnscheduled() : string {
+        return this.get(this.taskTooltipsTaskUnscheduledLanguageItemName);
+    }
+
+    /**
+    /* "WorkOrderStatus.Unscheduled" (Unscheduled)
+    */
+    public get workOrderStatusUnscheduled() : string {
+        return this.get(this.workOrderStatusUnscheduledLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.AddEquipment" (Add equipment)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsAddEquipment() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsAddEquipmentLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.AddEquipmentDataProvider.Category.Favorite" (FAVORITE)
+    */
+    public get rentaTasksAddEquipmentAddEquipmentDataProviderCategoryFavorite() : string {
+        return this.get(this.rentaTasksAddEquipmentAddEquipmentDataProviderCategoryFavoriteLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.AddEquipment.CategoriesOrProducts.NoProducts" (No products)
+    */
+    public get rentaTasksAddEquipmentCategoriesOrProductsNoProducts() : string {
+        return this.get(this.rentaTasksAddEquipmentCategoriesOrProductsNoProductsLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.Controller.WorkOrderConcurrencyAlert" (The work order was modified by "{0}" at "{1:D}". Please check the WO details and continue.)
+    */
+    public get rentaTasksControllerWorkOrderConcurrencyAlert() : string {
+        return this.get(this.rentaTasksControllerWorkOrderConcurrencyAlertLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.WorkOrder.SignIn.FailedAlert" (Cannot sign-in to the work order. The work order status has been changed.)
+    */
+    public get rentaTasksWorkOrderSignInFailedAlert() : string {
+        return this.get(this.rentaTasksWorkOrderSignInFailedAlertLanguageItemName);
+    }
+
+    /**
+    /* "RentaTasks.WorkOrder.Label.InvoiceReference" (Reference)
+    */
+    public get rentaTasksWorkOrderLabelInvoiceReference() : string {
+        return this.get(this.rentaTasksWorkOrderLabelInvoiceReferenceLanguageItemName);
+    }
+
+    /**
+    /* "SummaryWidget.Reference" (Reference:)
+    */
+    public get summaryWidgetReference() : string {
+        return this.get(this.summaryWidgetReferenceLanguageItemName);
     }
 }
 

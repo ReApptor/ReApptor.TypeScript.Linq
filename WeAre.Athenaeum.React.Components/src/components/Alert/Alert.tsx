@@ -1,10 +1,9 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
-import Localizer from "@/localization/Localizer";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 import styles from "./Alert.module.scss";
-import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 export interface IAlertProps {
     className?: string;
@@ -76,13 +75,13 @@ export default class Alert extends BaseComponent<IAlertProps> {
                         (this.model.dismissible) &&
                         (
                             <div className={this.css(styles.close)} onClick={async () => await this.closeAlertAsync(true)}>
-                                <span>&times;</span>
+                              <span>&times;</span>
                             </div>
                         )
                     }
 
                     {
-                        this.toMultiLines(Localizer.get(this.model.message, ...(this.model.messageParams || [])))
+                        this.toMultiLines(this.localizer.get(this.model.message, ...(this.model.messageParams || [])))
                     }
                     
                 </span>

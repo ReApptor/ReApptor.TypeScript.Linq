@@ -44,7 +44,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
 
     protected get localizer(): ILocalizer {
         if (this._localizer == null) {
-            this._localizer = ServiceProvider.getLocalizer();
+            this._localizer = ServiceProvider.findLocalizer();
             if (this._localizer == null)
                 throw new Error("EnumHelper. Localizer is not registered.");
         }

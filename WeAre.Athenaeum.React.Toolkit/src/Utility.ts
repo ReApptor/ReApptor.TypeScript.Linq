@@ -93,12 +93,15 @@ export default class Utility {
                                     let formattedParam: string | null = null;
                                     
                                     if ((typeof param === "number")) {
-                                        const enumProvider: IEnumProvider | null = ServiceProvider.getEnumProvider();
+                                        const enumProvider: IEnumProvider | null = ServiceProvider.findEnumProvider();
                                         //number
                                         if ((format === "c") || (format === "C")) {
                                             formattedParam = this.toCurrencyString(param);
                                         } else if ((format === "0") || (format === "n") || (format === "N")) {
                                             formattedParam = param.toFixed(0).toString();
+                                        } else if (format === "00") {
+                                            param = param.toFixed(0);
+                                            formattedParam = ((param >= 0) && (param < 10)) ? "0" + param : param.toString();
                                         } else if (format === "0.0") {
                                             formattedParam = param.toFixed(1).toString();
                                         } else if (format === "0.00") {
@@ -164,7 +167,7 @@ export default class Utility {
                     } else {
                         let str: string = "";
                         if (param != null) {
-                            const transformProvider: ITransformProvider | null = ServiceProvider.getTransformProvider();
+                            const transformProvider: ITransformProvider | null = ServiceProvider.findTransformProvider();
                             str = (transformProvider)
                                 ? transformProvider.toString(param)
                                 : param.toString();
@@ -198,7 +201,7 @@ export default class Utility {
                 return this.getDayOfWeek(dayOfWeekOrDate);
 
             case "number":
-                const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+                const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
                 switch (dayOfWeekOrDate) {
                     case 0:
                         return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
@@ -250,7 +253,7 @@ export default class Utility {
             monthOrDate = monthOrDate.toLowerCase();
         }
 
-        const localizer: ILocalizer | null = ServiceProvider.getLocalizer();
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
         switch (monthOrDate) {
             case "january":

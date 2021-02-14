@@ -2,7 +2,6 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import { IMenuItem } from "../TopNav";
 import Link from "../../Link/Link";
-import Localizer from "../../../localization/Localizer";
 
 import styles from "./Hamburger.module.scss";
 
@@ -23,7 +22,7 @@ export default class Hamburger extends BaseComponent<IHamburgerProps> {
                     this.props.menuItems.length &&
                     this.props.menuItems.map((item, index) => (
                         <li key={index}>
-                            <Link className={styles.link} route={item.route}>{Localizer.get(item.label)}</Link>
+                            <Link className={styles.link} route={item.route}>{this.localizer.get(item.label)}</Link>
                         </li>
                     ))
                 }

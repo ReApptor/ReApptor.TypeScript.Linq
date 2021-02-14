@@ -1,11 +1,12 @@
-﻿using System;
+using WeAre.Athenaeum.Common.Helpers;
 
-namespace Renta.TestApplication.WebUI
+namespace WeAre.Athenaeum.TemplateApp.WebUI
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            ProgramHelper.Start<Startup>(args);
         }
     }
 }

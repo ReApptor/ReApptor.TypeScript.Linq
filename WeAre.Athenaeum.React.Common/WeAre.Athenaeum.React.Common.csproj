@@ -44,4 +44,16 @@
       <TypeScriptCompile Include="src\StylesUtility.ts" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="lib\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="lib\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="lib\**" />
+    </ItemGroup>
+
 </Project>
