@@ -9,10 +9,10 @@
     "components",
     "npm"
   ],
-  "type": "module",
-  "main": "lib/src/index.es.js",
-  "module": "lib/src/index.es.js",
-  "types": "lib/types/src/index.d.ts",
+  "type": "commonjs",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/src/index.d.ts",
   "files": [
     "lib"
   ],
@@ -21,8 +21,8 @@
   },
   "browserslist": [],
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.335",
-    "@weare/athenaeum-toolkit": "^1.0.346",
+    "@weare/athenaeum-react-common": "^1.0.349",
+    "@weare/athenaeum-toolkit": "^1.0.349",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
     "tslib": "^2.1.0"
