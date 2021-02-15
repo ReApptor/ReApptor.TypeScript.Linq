@@ -2,8 +2,10 @@
   "name": "@weare/athenaeum-react-common",
   "private": false,
   "version": "1.0.0",
-  "main": "lib/src/index.js",
-  "types": "lib/types/src/index.d.ts",
+  "type": "commonjs",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/src/index.d.ts",
   "dependencies": {
     "@types/jquery": "^3.3.29",
     "@weare/athenaeum-toolkit": "^1.0.335",
@@ -16,12 +18,15 @@
     "@types/react": "16.8.3",
     "@types/ts-nameof": "^4.2.1",
     "react": "^16.8.2",
+    "rollup": "^2.32.1",
+    "rollup-plugin-typescript2": "^0.28.0",
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
-    "typescript": "3.4"
+    "typescript": "~4.1.5",
+    "typescript-transform-paths": "^2.2.3"
   },
   "scripts": {
-    "build": "ttsc"
+    "build": "rm -rf lib && rollup -c"
   },
   "files": [
     "lib"
