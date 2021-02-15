@@ -31,6 +31,7 @@
       <TypeScriptCompile Include="src\models\GeoLocation.ts" />
       <TypeScriptCompile Include="src\models\ISelectListItem.ts" />
       <TypeScriptCompile Include="src\models\IPagedList.ts" />
+      <TypeScriptCompile Include="src\models\Position.ts" />
       <TypeScriptCompile Include="src\models\TimeSpan.ts" />
       <TypeScriptCompile Include="src\NumberUtility.ts" />
       <TypeScriptCompile Include="src\providers\BaseEnumProvider.ts" />

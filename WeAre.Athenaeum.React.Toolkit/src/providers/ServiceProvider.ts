@@ -1,8 +1,7 @@
 import {Dictionary} from "typescript-collections";
-import {IEnumProvider, ILocalizer, ITypeResolver, ServiceType} from "..";
+import {IEnumProvider, ILocalizer, ITypeResolver} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
 import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
-import {log} from "util";
 
 export type ServiceType = string;
 

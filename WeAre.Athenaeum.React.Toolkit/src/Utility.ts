@@ -3,6 +3,7 @@ import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 import HashCodeUtility from "./HashCodeUtility";
 import FileModel from "./models/FileModel";
+import Position from "./models/Position";
 import {Dictionary} from "typescript-collections";
 import {ILocalizer} from "./localization/BaseLocalizer";
 import {ITransformProvider, TFormat} from "./providers/BaseTransformProvider";
