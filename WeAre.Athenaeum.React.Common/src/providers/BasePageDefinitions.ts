@@ -50,7 +50,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         return "IPageDefinitions";
     }
     
-    protected abstract async require(pageContainer: string, pageName: string): Promise<any>;
+    protected abstract require(pageContainer: string, pageName: string): Promise<any>;
 
     public static readonly logoutRouteName: string = "Logout";
 
