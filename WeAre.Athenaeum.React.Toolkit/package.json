@@ -14,13 +14,13 @@
     "@types/node": "11.9.4",
     "@types/ts-nameof": "^4.2.1",
     "jest": "^26.4.2",
-    "rollup": "^2.32.1",
-    "rollup-plugin-typescript2": "^0.28.0",
+    "rollup": "^2.39.0",
+    "rollup-plugin-typescript2": "^0.27.3",
     "ts-jest": "^26.4.0",
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
-    "typescript": "~4.1.5",
-    "typescript-transform-paths": "^2.2.3"
+    "typescript": "3.4",
+    "typescript-transform-paths": "^1.1.15"
   },
   "scripts": {
     "build": "rm -rf lib && rollup -c",
