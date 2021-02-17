@@ -69,6 +69,8 @@
 
     <ItemGroup>
       <TypeScriptCompile Include="src\module.d.ts" />
+      <TypeScriptCompile Include="src\pages\Tests\AlertTests\AlertTests.tsx" />
+      <TypeScriptCompile Include="src\pages\Tests\Tests.tsx" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

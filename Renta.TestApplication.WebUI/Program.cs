@@ -1,6 +1,6 @@
 using WeAre.Athenaeum.Common.Helpers;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI
+namespace Renta.TestApplication.WebUI
 {
     public class Program
     {

@@ -1,0 +1,23 @@
+@import "../../variables";
+
+.page {
+  padding: 15px $baseline;
+  height: 100%;
+  .container {
+    padding: 15px;
+    background: $transparent-white;
+    border-radius: $radius;
+
+    &.fullHeight {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &.fullWidth {
+      max-width: unset !important;
+      min-width: 100% !important;
+    }
+    
+  }
+}

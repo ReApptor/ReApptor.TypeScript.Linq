@@ -1,21 +1,15 @@
 import React from 'react';
-import { Alert } from "@weare/athenaeum-react-components";
-import {AlertType, BaseComponent, AlertModel} from "@weare/athenaeum-react-common";
+import { BaseComponent } from "@weare/athenaeum-react-common";
 import "@/localization/Localizer";
-
+import Tests from "@/pages/Tests/Tests";
+import styles from './App.module.scss';
 class App extends BaseComponent {
-    
-    get alertModel(): AlertModel {
-        return {
-            alertType: AlertType.Success, autoClose: false, autoCloseDelay: 0, dismissible: true, flyout: false, isAlertModel: false, messageParams: [],
-            message : "Test 123"
-        };
-    }
+
     
     render(): React.ReactNode {
         return (
-            <div className="App">
-                <Alert model={this.alertModel} />
+            <div className={styles.page}>
+                <Tests routeName={"Tests"}/>
             </div>
         );
     }
