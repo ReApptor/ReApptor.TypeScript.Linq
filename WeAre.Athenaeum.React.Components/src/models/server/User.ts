@@ -1,8 +1,8 @@
 import {GeoLocation} from "@weare/athenaeum-toolkit";
-import {IUser} from "@weare/athenaeum-react-common";
-import UserRole from "@/models/server/UserRole";
-import {AuthType} from "@/models/Enums";
 import UserInvitation from "@/models/server/UserInvitation";
+import {AuthType} from "@/models/Enums";
+import UserRole from "@/models/server/UserRole";
+import {IUser} from "@weare/athenaeum-react-common";
 
 export default class User implements IUser {
     

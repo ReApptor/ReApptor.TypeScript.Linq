@@ -1,0 +1,57 @@
+@import "../../variables";
+
+.popover {
+    position: relative;
+    display: none;
+    
+    &.centered {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 500px;
+    }
+
+    &.open {
+        display: block;
+    }
+    
+    .content {
+        position: absolute;
+        min-width: 200px;
+        background-color: white;
+        border-radius: $radius;
+        border: $renta-border;
+        box-shadow: $renta-shadow;
+        padding: $baseline;
+        z-index: 1000;
+        
+        &.left {
+            right: 0;
+        }
+
+        &.right {
+            left: 0;
+        }
+        
+        &.top {
+            bottom: 26px;
+        }
+        
+        &.bottom {
+            top: 0px;
+        }
+        
+        &.centered {
+            width: 500px;
+            margin: auto;
+            top: 50%;
+        }
+        
+        &.controls {
+            padding: 0.5rem;
+        }
+    }
+}

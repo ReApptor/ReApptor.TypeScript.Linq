@@ -1,6 +1,6 @@
 import {ApplicationContext, IUserContext} from "@weare/athenaeum-react-common";
+import User from "./User";
 import ApplicationSettings from "@/models/server/ApplicationSettings";
-import User from "@/models/server/User";
 
 export default class UserContext extends ApplicationContext implements IUserContext<ApplicationSettings, User> {
     public username: string = "";

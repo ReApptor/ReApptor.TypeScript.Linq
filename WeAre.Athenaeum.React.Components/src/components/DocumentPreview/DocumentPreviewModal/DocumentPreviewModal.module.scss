@@ -1,0 +1,17 @@
+.documentPreviewModal {
+    > div {
+        .body {
+            display: flex;
+            
+            .contentA4 {
+                background-color: #525659;
+                margin: auto;
+            }
+
+            iframe {
+                border: none;
+                overflow: hidden;
+            }
+        }
+    }
+}
