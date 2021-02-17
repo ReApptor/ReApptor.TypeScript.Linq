@@ -1,0 +1,119 @@
+@import "../../variables";
+
+.modal {
+    .modal-dialog {
+        margin: 1.75rem auto !important;
+        
+        .modal-content {
+            .modal-header {
+                padding: 1rem;
+                border-bottom: none;
+                align-items: center;
+                cursor: default;
+                
+                .modal-header-content {
+                    min-height: 54px;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+                
+                .toolbar {
+                    > i {
+                        width: 52px;
+                        padding: .5rem 0;
+                        text-align: center;
+                        color: white;
+                        border-radius: 2px;
+                        cursor: pointer;
+                        background-color: $blue;
+                        
+                        &:not(:first-child) {
+                            margin-left: $baseline;
+                        }
+                    }
+                    
+                    .dismiss {
+                        background-color: $orange;
+                    }
+                }
+
+                .mobile-toolbar {
+                    > i {
+                        &:not(:first-child) {
+                            margin-left: $baseline;
+                        }
+                    }
+                }
+            }
+            
+            .modal-body {
+                padding-top: 0;
+
+                .textFormatting {
+                    white-space: pre-wrap;
+                    text-align: justify;
+                }
+            }
+        }
+        
+        .default-maxWidth {
+            max-width: 475px;
+        }
+        
+        &.modal-auto {
+            &:before {
+                height: auto;
+            }
+            
+            margin: auto !important;
+            max-width: fit-content;
+        }
+
+        &.mobile {
+            &:before {
+                height: auto;
+            }
+            
+            margin: 45px 0 0 0 !important;
+            max-width: 100%;
+            
+            .modal-content {
+                min-height: calc(100vh - 45px);
+                border-radius: 0;
+                border: 0;
+            }
+
+            top: 100vh;
+            display: block !important;
+            
+            &.animation {
+                transition: top 0.15s ease-in-out;
+            }
+        }
+    }
+}
+
+.modal-open.mobile {
+    padding-right: 0 !important;
+    
+    .modal-backdrop.show {
+        opacity: 0;
+    }
+
+    .modal.show {
+        .modal-dialog {
+            top: 0;
+        }
+    }
+}
+
+.modal-dialog-centered {
+    &.modal-auto {
+        &:before {
+            height: auto;
+        }
+        
+        min-height: 100%;
+    }
+}
