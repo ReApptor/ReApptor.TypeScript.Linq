@@ -28,7 +28,7 @@ using WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers;
 using WebEssentials.AspNetCore.Pwa;
 using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI
+namespace Renta.TestApplication.WebUI
 {
     public class Startup
     {
