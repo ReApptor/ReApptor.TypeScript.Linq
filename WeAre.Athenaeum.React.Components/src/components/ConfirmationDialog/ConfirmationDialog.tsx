@@ -4,7 +4,6 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
 import Button, { ButtonType } from "../Button/Button";
 import TextAreaInput from "@/components/Form/Inputs/TextAreaInput/TextAreaInput";
-import Localizer from "../../localization/Localizer";
 
 import styles from "./ConfirmationDialog.module.scss";
 
@@ -60,7 +59,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         }
 
         if (!model.title) {
-            model.title = Localizer.componentConfirmationDialogAreYouSure;
+            model.title = this.localizer.get("Component.ConfirmationDialog.AreYouSure");
         }
         
         return model;
@@ -195,7 +194,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                             <TextAreaInput ref={this._commentRef}
                                            required noValidate
                                            rows={3}
-                                           placeholder={this.model.placeholder || Localizer.confirmationDialogComment}
+                                           placeholder={this.model.placeholder || this.localizer.get("ConfirmationDialog.Comment")}
                                            className={styles.commentInput}
                                            value={this.state.comment}
                                            onChange={async (sender, value) => await this.setCommentAsync(value)}
@@ -203,9 +202,8 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                         )
                     }
 
-                    <Button label={Localizer.confirmationDialogConfirm} block type={ButtonType.Orange} onClick={() => this.invokeCloseAsync(true)} disabled={!this.canConfirm} />
-
-                    <Button label={Localizer.confirmationDialogClose} block type={ButtonType.Default} onClick={() => this.invokeCloseAsync()} />
+                    <Button label={this.localizer.get("ConfirmationDialog.Confirm")} block type={ButtonType.Orange} onClick={() => this.invokeCloseAsync(true)} disabled={!this.canConfirm} />
+                    <Button label={this.localizer.get("ConfirmationDialog.Close")} block type={ButtonType.Default} onClick={() => this.invokeCloseAsync()} />
 
                 </div>
 

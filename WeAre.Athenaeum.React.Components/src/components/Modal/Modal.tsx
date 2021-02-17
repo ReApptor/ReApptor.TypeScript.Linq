@@ -5,7 +5,6 @@ import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@wea
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
-import Localizer from "@/localization/Localizer";
 
 import "./BootstrapOverride.scss";
 
@@ -367,8 +366,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             ((!this.props.info) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
-                                    <Button label={Localizer.componentModalSaveChanges} type={ButtonType.Orange} submit />
-                                    <Button label={Localizer.componentModalClose} type={ButtonType.Default} onClick={() => this.closeAsync()} />
+                                    <Button label={this.localizer.componentModalSaveChanges} type={ButtonType.Orange} submit />
+                                    <Button label={this.localizer.componentModalClose} type={ButtonType.Default} onClick={() => this.closeAsync()} />
                                 </div>
                             )
                         }

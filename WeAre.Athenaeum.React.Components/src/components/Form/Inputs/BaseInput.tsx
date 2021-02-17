@@ -144,7 +144,7 @@ export class RegexValidator extends BaseRegexValidator {
 
 export class EmailValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Email, Localizer.validatorsEmailLanguageItemName);
+        super(InputValidationRule.Email, this.localizer.validatorsEmailLanguageItemName);
     }
 
     public static readonly instance: EmailValidator = new EmailValidator();
@@ -154,7 +154,7 @@ export class EmailValidator extends BaseRegexValidator {
 
 export class PasswordValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Password, Localizer.validatorsPasswordLanguageItemName);
+        super(InputValidationRule.Password, this.localizer.validatorsPasswordLanguageItemName);
     }
 
     public static readonly instance: PasswordValidator = new PasswordValidator();
@@ -164,7 +164,7 @@ export class PasswordValidator extends BaseRegexValidator {
 
 export class PhoneValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Phone, Localizer.validatorsPhoneLanguageItemName);
+        super(InputValidationRule.Phone, this.localizer.validatorsPhoneLanguageItemName);
     }
 
     public static readonly instance: PhoneValidator = new PhoneValidator();

@@ -4,7 +4,6 @@ import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
 import {IInput} from "./Inputs/BaseInput";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import Inline from "../Layout/Inline/Inline";
-import Localizer from "../../localization/Localizer";
 
 import styles from "./Form.module.scss";
 
@@ -145,7 +144,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
                     <ul className={styles.errorList}>
                         {this.state.validationErrors.map((error, index) => (
                             <li key={index}>
-                                <span>{Localizer.get(error)}</span>
+                                <span>{this.localizer.get(error)}</span>
                             </li>
                         ))}
                     </ul>

@@ -1,6 +1,5 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Localizer from "../../localization/Localizer";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
@@ -23,11 +22,11 @@ export default class Footer extends BaseComponent<IFooterProps> {
             : [
                 {
                     href: "https://renta.fi/",
-                    label: Localizer.componentFooterFrontpage
+                    label: this.localizer.get("componentFooterFrontpage")
                 },
                 {
                     href: "https://www.renta.fi/fi/yhteystiedot/",
-                    label: Localizer.componentFooterContact
+                    label: this.localizer.get("componentFooterContact")
                 }
             ];
     }

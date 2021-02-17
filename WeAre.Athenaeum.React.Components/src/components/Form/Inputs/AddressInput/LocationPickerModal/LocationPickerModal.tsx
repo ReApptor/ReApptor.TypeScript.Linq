@@ -6,7 +6,6 @@ import Modal from "@/components/Modal/Modal";
 import ButtonContainer from "@/components/ButtonContainer/ButtonContainer";
 import Button, { ButtonType } from "@/components/Button/Button";
 import AddressHelper from "@/helpers/AddressHelper";
-import Localizer from "@/localization/Localizer";
 
 import styles from "./LocationPickerModal.module.scss";
 
@@ -89,8 +88,8 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         return (
             <Modal id={this.id}
                    ref={this._modalRef}
-                   title={this.props.title || Localizer.locationPickerModalTitle}
-                   subtitle={this.props.subtitle || Localizer.locationPickerModalSubtitle}
+                   title={this.props.title || this.localizer.get("LocationPickerModal.Title")}
+                   subtitle={this.props.subtitle || this.localizer.get("LocationPickerModal.Subtitle")}
                    className={styles.locationPickerModal}
             >
                 <div className={styles.map}>
@@ -119,7 +118,7 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
 
                     {
                         (!this.readonly)
-                            ? (<Button type={ButtonType.Orange} label={Localizer.locationPickerModalSetLocation} onClick={async () => await this.onSubmitAsync()}/>)
+                            ? (<Button type={ButtonType.Orange} label={this.localizer.get("LocationPickerModal.SetLocation")} onClick={async () => await this.onSubmitAsync()}/>)
                             : <div/>
                     }
                     
