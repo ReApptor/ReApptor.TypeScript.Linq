@@ -4,7 +4,6 @@ import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState,
 import Spinner from "../../Spinner/Spinner";
 import Modal, { ModalSize } from "../../Modal/Modal";
 import Icon, { IconSize } from "@/components/Icon/Icon";
-import Localizer from "@/localization/Localizer";
 
 import styles from "./DocumentPreviewModal.module.scss";
 
@@ -119,7 +118,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
                   className="blue"
                   size={IconSize.X2}
                   onClick={async () => await this.download()} 
-                  tooltip={Localizer.imageModalDownload} 
+                  tooltip={this.localizer.get("imageModalDownload")} 
             />
         );
     }
@@ -184,7 +183,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
             <Modal id={this.id} ref={this._modalRef}
                    className={styles.documentPreviewModal}
                    bodyClassName={styles.body}
-                   title={this.title || Localizer.formInputFilePreview}
+                   title={this.title || this.localizer.get("formInputFilePreview")}
                    subtitle={this.subtitle || "..."}
                    info
                    size={ModalSize.Auto}

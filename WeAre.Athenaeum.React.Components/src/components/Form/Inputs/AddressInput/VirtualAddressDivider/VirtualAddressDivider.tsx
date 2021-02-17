@@ -4,7 +4,6 @@ import TwoColumns from "../../../../Layout/TwoColumn/TwoColumns";
 import TextInput from "../../TextInput/TextInput";
 import { IInput } from "../../BaseInput";
 import OneColumn from "@/components/Layout/OneColumn/OneColumn";
-import Localizer from "../../../../../localization/Localizer";
 
 interface IVirtualAddressDividerProps {
     id?: string;
@@ -109,7 +108,7 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                 <OneColumn>
                     <TextInput ref={this._addressInputRef}
                                id={`${this.id}_address`} required
-                               label={Localizer.formInputStreet} 
+                               label={this.localizer.get("Form.Input.Street")} 
                                value={this.state.address}
                                onChange={async (sender, value) => await this.onAddressChange(value)}
                     />
@@ -118,14 +117,14 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                 <TwoColumns>
                     <TextInput ref={this._cityInputRef}
                                id={`${this.id}_city`} required
-                               label={Localizer.formInputCity} 
+                               label={this.localizer.get("Form.Input.City")} 
                                value={this.state.city}
                                onChange={async (sender, value) => await this.onCityChange(value)}
                     />
                                
                     <TextInput ref={this._postalCodeInputRef}
                                id={`${this.id}_postalCode`} required
-                               label={Localizer.formInputPostalcode} 
+                               label={this.localizer.get("Form.Input.Postalcode")} 
                                value={this.state.postalCode}
                                onChange={async (sender, value) => await this.onPostalCodeChange(value)}
                     />

@@ -6,7 +6,6 @@ import AddressInput from "../AddressInput";
 import TextInput from "../../TextInput/TextInput";
 import { IInput } from "../../BaseInput";
 import Comparator from "../../../../../helpers/Comparator";
-import Localizer from "../../../../../localization/Localizer";
 
 interface IAddressDividerProps {
     id?: string;
@@ -102,7 +101,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                 <TwoColumns ref={this._containerRef}>
                     <AddressInput id={`${this.id}_formattedAddress`}
                                   ref={this._addressInputRef}
-                                  label={Localizer.formInputAddress}
+                                  label={this.localizer.get("Form.Input.Address")}
                                   required={this.props.required}
                                   readonly={this.readonly}
                                   value={this.location.formattedAddress}
@@ -110,12 +109,12 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                                   append={this.props.locationPicker}
                                   onChange={async (location) => await this.onPlaceSelectedAsync(location)}
                     />
-                    <TextInput id={`${this.id}_address`} label={Localizer.formInputStreet} value={this.location.address} readonly />
+                    <TextInput id={`${this.id}_address`} label={this.localizer.get("Form.Input.Street")} value={this.location.address} readonly />
                 </TwoColumns>
                 
                 <TwoColumns>
-                    <TextInput id={`${this.id}_city`} label={Localizer.formInputCity} value={this.location.city} readonly />
-                    <TextInput id={`${this.id}_postalCode`} label={Localizer.formInputPostalcode} value={this.location.postalCode} readonly />
+                    <TextInput id={`${this.id}_city`} label={this.localizer.get("Form.Input.City")} value={this.location.city} readonly />
+                    <TextInput id={`${this.id}_postalCode`} label={this.localizer.get("Form.Input.Postalcode")} value={this.location.postalCode} readonly />
                 </TwoColumns>
             </React.Fragment>
         )

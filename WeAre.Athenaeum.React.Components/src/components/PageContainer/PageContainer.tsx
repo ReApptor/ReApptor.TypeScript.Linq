@@ -9,7 +9,6 @@ import RentaTaskConstants from "../../helpers/RentaTaskConstants";
 import DocumentPreviewModal from "../DocumentPreview/DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
-import Localizer from "@/localization/Localizer";
 
 import styles from "./PageContainer.module.scss";
 
