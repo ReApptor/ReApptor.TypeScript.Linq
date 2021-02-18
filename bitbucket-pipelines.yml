@@ -17,7 +17,7 @@ pipelines:
                 - cd WeAre.Athenaeum.React.Toolkit
                 - node -v && npm -v
                 - npm config set strict-ssl true
-                - npm config set ca ""
+                #- npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
@@ -53,7 +53,7 @@ pipelines:
                 - cd WeAre.Athenaeum.React.Common
                 - node -v && npm -v
                 - npm config set strict-ssl true
-                - npm config set ca ""
+                #- npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
@@ -89,7 +89,7 @@ pipelines:
                 - cd WeAre.Athenaeum.React.Components
                 - node -v && npm -v
                 - npm config set strict-ssl true
-                - npm config set ca ""
+                #- npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
@@ -169,7 +169,7 @@ pipelines:
           script:
             - node -v && npm -v
             - npm config set strict-ssl true
-            - npm config set ca ""
+            #- npm config set ca ""
             - npm install -g @microsoft/api-documenter
             - cd Documentation
             - mkdir input
