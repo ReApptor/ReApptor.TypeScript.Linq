@@ -22,12 +22,14 @@
   },
   "browserslist": [],
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.349",
-    "@weare/athenaeum-toolkit": "^1.0.349",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
     "query-string": "^6.14.0",
     "tslib": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@weare/athenaeum-react-common": "^1.0.349",
+    "@weare/athenaeum-toolkit": "^1.0.349"
   },
   "devDependencies": {
     "@rollup/plugin-image": "^2.0.6",
