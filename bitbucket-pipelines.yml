@@ -8,7 +8,7 @@ pipelines:
       - parallel:
           - step:
               name: Athenaeum React Toolkit Build
-              image: node:14
+              image: node:15
               caches:
                 - node
               script:
@@ -44,7 +44,7 @@ pipelines:
                 - WeAre.Athenaeum.React.Toolkit/temp/**
           - step:
               name: Athenaeum React Common Build
-              image: node:14
+              image: node:15
               caches:
                 - node
               script:
@@ -80,7 +80,7 @@ pipelines:
                 - WeAre.Athenaeum.React.Common/temp/**
           - step:
               name: Athenaeum React Components Build
-              image: node:14
+              image: node:15
               caches:
                 - node
               script:
@@ -134,7 +134,7 @@ pipelines:
                 - dotnet nuget push obj/weare-athenaeum-cache/publish/WeAre.Athenaeum.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
           - step:
               name: UI Toolkit Tests
-              image: node:14
+              image: node:15
               caches:
                 - node
               script:
@@ -163,7 +163,7 @@ pipelines:
                 - dotnet nuget push obj/renta-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
       - step:
           name: Build Documentation
-          image: node:14
+          image: node:15
           caches:
             - node
           script:
