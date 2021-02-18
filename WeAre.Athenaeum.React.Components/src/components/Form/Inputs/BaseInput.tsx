@@ -1,10 +1,9 @@
 import React from "react";
-import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
+import {Utility, TFormat, FileModel, ServiceProvider, ILocalizer} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback} from "@weare/athenaeum-react-common";
 import {BaseInputType, InputValidationRule} from "@/models/Enums";
 import LiveValidator, { ValidationRow } from "./PasswordInput/LiveValidator/LiveValidator";
 import RentaTaskConstants from "../../../helpers/RentaTaskConstants";
-import Localizer from "../../../localization/Localizer";
 
 import styles from "../Form.module.scss";
 
@@ -69,6 +68,13 @@ export interface IValidatable<TInputValue extends BaseInputValue> {
 }
 
 export abstract class BaseValidator implements IValidator {
+    private _localizer: ILocalizer | null = null
+
+
+    public get localizer(): ILocalizer {
+        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
+    }
+    
     abstract validate(value: BaseInputValue): string | null;
 
     public static toString(value: BaseInputValue, format: TFormat | null = null): string | null {
@@ -94,6 +100,13 @@ export abstract class BaseValidator implements IValidator {
 }
 
 export abstract class BaseFileValidator implements IValidator {
+    private _localizer: ILocalizer | null = null
+
+
+    public get localizer(): ILocalizer {
+        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
+    }
+    
     abstract validate(value: BaseInputValue): string | null;
 
     public static getSize(file: FileModel | FileModel[] | null): number | null {
@@ -111,15 +124,21 @@ export abstract class BaseFileValidator implements IValidator {
     }
 }
 
+export enum BaseRegexValidatorErrorMessage {
+    validatorsEmailLanguageItemName= "Validators.Email",
+    validatorsPasswordLanguageItemName= "Validators.Password",
+    validatorsPhoneLanguageItemName= "Validators.Phone"
+    
+}
 export abstract class BaseRegexValidator extends BaseValidator {
 
     protected regex: RegExp;
     protected errorMessage: string;
 
-    constructor(regex: string, errorMessage: string) {
+    constructor(regex: string, errorMessage: BaseRegexValidatorErrorMessage) {
         super();
         this.regex = new RegExp(regex);
-        this.errorMessage = errorMessage;
+        this.errorMessage = this.localizer.get(errorMessage);
     }
 
     public validate(value: BaseInputValue): string | null {
@@ -137,14 +156,14 @@ export abstract class BaseRegexValidator extends BaseValidator {
 
 export class RegexValidator extends BaseRegexValidator {
     public static validator(regex: string, errorMessage: string): ValidatorCallback<BaseInputValue> {
-        const instance: RegexValidator = new RegexValidator(regex, errorMessage);
+        const instance: RegexValidator = new RegexValidator(regex, BaseRegexValidatorErrorMessage.validatorsEmailLanguageItemName);
         return (value: BaseInputValue) => instance.validate(value);
     }
 }
 
 export class EmailValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Email, this.localizer.validatorsEmailLanguageItemName);
+        super(InputValidationRule.Email, BaseRegexValidatorErrorMessage.validatorsEmailLanguageItemName);
     }
 
     public static readonly instance: EmailValidator = new EmailValidator();
@@ -154,7 +173,7 @@ export class EmailValidator extends BaseRegexValidator {
 
 export class PasswordValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Password, this.localizer.validatorsPasswordLanguageItemName);
+        super(InputValidationRule.Password, BaseRegexValidatorErrorMessage.validatorsPasswordLanguageItemName);
     }
 
     public static readonly instance: PasswordValidator = new PasswordValidator();
@@ -164,7 +183,7 @@ export class PasswordValidator extends BaseRegexValidator {
 
 export class PhoneValidator extends BaseRegexValidator {
     constructor() {
-        super(InputValidationRule.Phone, this.localizer.validatorsPhoneLanguageItemName);
+        super(InputValidationRule.Phone, BaseRegexValidatorErrorMessage.validatorsPhoneLanguageItemName);
     }
 
     public static readonly instance: PhoneValidator = new PhoneValidator();
@@ -176,11 +195,11 @@ export class RequiredValidator extends BaseValidator {
     
     public validate(value: BaseInputValue): string | null {
         if ((value != null) && (Array.isArray(value))) {
-            return (value.length === 0) ? Localizer.validatorsRequiredLanguageItemName : null;
+            return (value.length === 0) ? this.localizer.get("Validators.Required") : null;
         }
         const str: string | null = BaseValidator.toString(value);
         if ((str == null) || (str.length === 0)) {
-            return Localizer.validatorsRequiredLanguageItemName;
+            return this.localizer.get("Validators.Required");
         }        
         return null;
     }
@@ -201,7 +220,7 @@ export class LengthValidator extends BaseValidator {
     public validate(value: BaseInputValue): string | null {
         const str: string | null = BaseValidator.toString(value);
         if ((this.minLength > 0) && ((str == null) || (str.length < this.minLength))) {
-            return Localizer.validatorsLengthLanguageItemName;
+            return this.localizer.get("Validators.Length");
         }
         return null;
     }
@@ -225,7 +244,7 @@ export class NumberRangeValidator extends BaseValidator {
 
     public validate(value: BaseInputValue): string | null {
         if ((value == null) || (value < this.min) || (value > this.max)) {
-            return Utility.format(Localizer.validatorsNumberRange, this.min, this.max);
+            return Utility.format(this.localizer.get("Validators.NumberRange"), this.min, this.max);
         }
         return null;
     }
@@ -256,7 +275,7 @@ export class FileSizeValidator extends BaseFileValidator {
             const fileSizes: number[] = files.map(file => BaseFileValidator.getSize(file) || 0);
 
             if (fileSizes.some((fileSize: number) => (fileSize > this.maxSize))) {
-                return Localizer.baseInputDocumentTooBigLanguageItemName;
+                return this.localizer.get("BaseInput.DocumentTooBig");
             }
         }
 
@@ -290,7 +309,7 @@ export class FilesSizeValidator extends BaseFileValidator {
             const totalSize: number = BaseFileValidator.getSize(files) || 0;
             
             if (totalSize > this.maxSize) {
-                return Localizer.baseInputTotalSizeTooBigLanguageItemName;
+                return this.localizer.get("BaseInput.TotalSizeTooBig");
             }
         }
 
@@ -323,7 +342,7 @@ export class FileTypeValidator extends BaseFileValidator {
             const fileTypes: string[] = files.map(file => BaseFileValidator.getType(file) || "");
 
             if ((fileTypes.length !== 0) && (!fileTypes.every((fileType: string) => this.fileTypes.includes(fileType)))) {
-                return Utility.format(Localizer.baseInputDocumentTypeNotSupported, Utility.getExtensionsFromMimeTypes(this.fileTypes))
+                return Utility.format(this.localizer.get("BaseInput.DocumentTypeNotSupported"), Utility.getExtensionsFromMimeTypes(this.fileTypes))
             }
         }
 
@@ -708,7 +727,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                     (
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
-                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>{this.state.validationError ? Localizer.get(this.state.validationError, this.props.label) : this.props.label}</label>
+                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>{this.state.validationError ? this.localizer.get(this.state.validationError, this.props.label) : this.props.label}</label>
                             {(this.props.required && !this.noValidate && !this.state.validationError) && <span className={styles.required}>*</span>}
                         </div>
                     )
