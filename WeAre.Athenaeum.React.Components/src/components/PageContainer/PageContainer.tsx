@@ -167,7 +167,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 {
                     (this.manual.manual) &&
                     (
-                        <Modal id="page-help-info" title={this.manual.title || Localizer.componentPageContainerPageHelp} content={this.manual.manual} info />
+                        <Modal id="page-help-info" title={this.manual.title || this.localizer.get("Component.PageContainer.PageHelp")} content={this.manual.manual} info />
                     )
                 }
 

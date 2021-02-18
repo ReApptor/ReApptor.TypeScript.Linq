@@ -1,6 +1,5 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Localizer from "../../../../../localization/Localizer";
 
 import styles from "./LiveValidator.module.scss";
 
@@ -94,7 +93,7 @@ export default class LiveValidator extends BaseComponent<ILiveValidatorProps, IL
                             </tr>
                         ))
                     }
-                        
+
                     {
                         this.props.validLength && (
                             <tr className={this.css(this.state.isLengthValid ? styles.valid : styles.invalid)}>
@@ -105,7 +104,7 @@ export default class LiveValidator extends BaseComponent<ILiveValidatorProps, IL
                                 </td>
                                 <td>
                                     {
-                                        Localizer.passwordHelpTextLength
+                                        this.localizer.get("Password.HelpText.Length")
                                     }
                                 </td>
                             </tr>
