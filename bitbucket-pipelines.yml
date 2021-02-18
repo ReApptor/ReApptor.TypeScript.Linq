@@ -15,6 +15,7 @@ pipelines:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Toolkit
+                - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
@@ -50,6 +51,7 @@ pipelines:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Common
+                - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
@@ -85,6 +87,7 @@ pipelines:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Components
+                - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
@@ -137,6 +140,7 @@ pipelines:
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Toolkit
+                - node -v && npm -v
                 - npm install
                 - npm test
           - step:
@@ -163,6 +167,7 @@ pipelines:
           caches:
             - node
           script:
+            - node -v && npm -v
             - npm config set strict-ssl true
             - npm config set ca ""
             - npm install -g @microsoft/api-documenter
