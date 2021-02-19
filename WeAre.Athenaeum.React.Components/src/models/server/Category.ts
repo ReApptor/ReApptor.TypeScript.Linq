@@ -1,4 +1,10 @@
-import {IBreadCrumbItem} from "@/pages/RentaTasks/AddEquipment/BreadCrumb/BreadCrumb";
+
+//  Copied from pages/RentaTasks/AddEquipment/BreadCrumb/BreadCrumb.tsx
+interface IBreadCrumbItem {
+    readonly id: string;
+
+    readonly name: string;
+}
 
 export default class Category implements IBreadCrumbItem {
     public id: string = "";

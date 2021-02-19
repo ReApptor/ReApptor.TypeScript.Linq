@@ -1,8 +1,6 @@
-import {BasePage, ch, PageRouteProvider} from "@weare/athenaeum-react-common";
+import { BasePage, ch, PageRoute, PageRouteProvider } from "@weare/athenaeum-react-common";
 import UserContext from "../server/UserContext";
 import User from "../server/User";
-import PageDefinitions from "@/providers/PageDefinitions";
-import Localizer from "@/localization/Localizer";
 
 export default abstract class AuthorizedPage<TProps = {}, TState = {}> extends BasePage<TProps, TState, UserContext> {
     public get isAcceptedRegulations(): boolean {
@@ -19,15 +17,19 @@ export default abstract class AuthorizedPage<TProps = {}, TState = {}> extends B
     }
     
     public async initializeAsync(): Promise<void> {
+
+        //  Copied from providers/PageDefinitions.ts
+        const loginRouteName: string = "Login";
+        const loginRoute: PageRoute = new PageRoute(loginRouteName);
         
         if (!this.isAuthorized) {
-            await PageRouteProvider.redirectAsync(PageDefinitions.loginRoute, true, true);
+            await PageRouteProvider.redirectAsync(loginRoute, true, true);
         }
 
         await super.initializeAsync();
         
         if (!this.isAcceptedRegulations) {
-            await this.alertWarningAsync(Localizer.myAccountPageAcceptanceRequired);
+            await this.alertWarningAsync(this.localizer.get("MyAccountPage.Acceptance.Required"));
         }
     }
 }

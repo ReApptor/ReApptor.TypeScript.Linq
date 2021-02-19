@@ -4,8 +4,6 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import Icon, {IconSize} from "../../../../Icon/Icon";
 import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";
-import EnumProvider from "../../../../../providers/EnumProvider";
-import Localizer from "../../../../../localization/Localizer";
 
 import styles from "../Dropdown.module.scss";
 
@@ -62,11 +60,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                 </div>
 
                 <div className={this.css(styles.amountTitle, noWrapCss)}>
-                    <span>{Localizer.get(item.text)}</span>
+                    <span>{this.localizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small className={styles.amountUnit}>{Localizer.get(EnumProvider.getProductUnitName(Number(item.subtext)))}</small>
+                            <small className={styles.amountUnit}>{this.localizer.get(EnumProvider.getProductUnitName(Number(item.subtext)))}</small>
                         )
                     }
                 </div>
@@ -91,11 +89,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
             <React.Fragment>
 
                 <div className={this.css(noWrapCss, lineThroughCss)}>
-                    <span>{Localizer.get(item.text)}</span>
+                    <span>{this.localizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small>{Localizer.get(item.subtext)}</small>
+                            <small>{this.localizer.get(item.subtext)}</small>
                         )
                     }
                 </div>
@@ -120,11 +118,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
             <React.Fragment>
 
                 <div className={this.css(noWrapCss)}>
-                    <span>{Localizer.get(item.text)}</span>
+                    <span>{this.localizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) && 
                         (
-                            <small>{Localizer.get(item.subtext)}</small>
+                            <small>{this.localizer.get(item.subtext)}</small>
                         )
                     }
                 </div>
