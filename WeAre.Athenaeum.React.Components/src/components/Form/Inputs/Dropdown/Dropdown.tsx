@@ -9,8 +9,6 @@ import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectList
 import Comparator from "../../../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
 import Button, {ButtonType} from "@/components/Button/Button";
-import TransformProvider from "../../../../providers/TransformProvider";
-import Localizer from "../../../../localization/Localizer";
 
 import styles from "./Dropdown.module.scss";
 
@@ -1147,9 +1145,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
             text = render;
         } else if (typeof addButton === "string") {
-            text = Localizer.get(addButton)
+            text = this.localizer.get(addButton)
         } else {
-            text = Localizer.componentDropdownAdd;
+            text = this.localizer.get("Component.Dropdown.Add");
         }
         
         return (
@@ -1176,7 +1174,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const selectedListItem: SelectListItem | null = this.selectedListItem;
 
         const title: string = (selectedListItem !== null) && (noSubtext)
-            ? Localizer.get(selectedListItem.subtext)
+            ? this.localizer.get(selectedListItem.subtext)
             : "";
         
         let text: string = (this.props.selectedTextTransform)
@@ -1186,19 +1184,19 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         if (!text) {
             text = (selectedListItem !== null)
                 ? (noSubtext)
-                    ? Localizer.get(selectedListItem.text)
-                    : `${Localizer.get(selectedListItem.text)} <small>${Localizer.get(selectedListItem.subtext)}</small>`
+                    ? this.localizer.get(selectedListItem.text)
+                    : `${this.localizer.get(selectedListItem.text)} <small>${this.localizer.get(selectedListItem.subtext)}</small>`
                 : (this.selectedListItems.length !== 0)
                     ? (this.props.multipleSelectedText)
-                        ? Localizer.get(this.props.multipleSelectedText)
+                        ? this.localizer.get(this.props.multipleSelectedText)
                         : ((this.selectedTextFormat) && (this.selectedListItems.length <= this.selectedTextFormat))
                             ? (noSubtext)
-                                ? this.selectedListItems.take(this.selectedTextFormat).map(item => Localizer.get(item.text)).join(", ")
-                                : this.selectedListItems.take(this.selectedTextFormat).map(item => (item.subtext) ? `${Localizer.get(item.text)} <small>${Localizer.get(item.subtext)}</small>` : Localizer.get(item.text)).join(", ")
-                            : Localizer.get(Localizer.componentDropdownMultipleSelected, this.selectedListItems.length)
+                                ? this.selectedListItems.take(this.selectedTextFormat).map(item => this.localizer.get(item.text)).join(", ")
+                                : this.selectedListItems.take(this.selectedTextFormat).map(item => (item.subtext) ? `${this.localizer.get(item.text)} <small>${this.localizer.get(item.subtext)}</small>` : this.localizer.get(item.text)).join(", ")
+                            : this.localizer.get(this.localizer.get("Component.Dropdown.MultipleSelected"), this.selectedListItems.length)
                     : (this.props.nothingSelectedText)
-                        ? Localizer.get(this.props.nothingSelectedText)
-                        : Localizer.componentDropdownNothingSelected;
+                        ? this.localizer.get(this.props.nothingSelectedText)
+                        : this.localizer.get("Component.Dropdown.NothingSelected");
         }
         
         return (
@@ -1249,7 +1247,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                     (
                                         <div className={this.css(styles.item, styles.group)}>
                                             <div>
-                                                <span>{Localizer.get(item.group!.name)}</span>
+                                                <span>{this.localizer.get(item.group!.name)}</span>
                                             </div>
                                         </div>
                                     )
@@ -1321,12 +1319,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const longListPlaceholder: string = (this.isLongList())
-            ? Localizer.componentDropdownGetResults
-            : Localizer.componentDropdownFilterResults;
+            ? this.localizer.get("Component.Dropdown.GetResults")
+            : this.localizer.get("Component.Dropdown.FilterResults");
         
         const noDataText: string = (this.props.noDataText)
-            ? Localizer.get(this.props.noDataText)
-            : Localizer.componentDropdownNoData;
+            ? this.localizer.get(this.props.noDataText)
+            : this.localizer.get("Component.Dropdown.NoData");
         
         const maxHeight: string | number | undefined = this.getMaxHeightValue();
 
@@ -1389,7 +1387,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                                     {
                                                         (this.noItemsFound()) &&
                                                         (
-                                                            <div className={this.css(styles.noResults, noWrapStyle)}><span>{Localizer.componentDropdownNoItems}</span></div>
+                                                            <div className={this.css(styles.noResults, noWrapStyle)}><span>{this.localizer.get("Component.Dropdown.NoItems")}</span></div>
                                                         )
                                                     }
     

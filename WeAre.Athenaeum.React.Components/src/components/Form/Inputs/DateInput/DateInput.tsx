@@ -4,7 +4,6 @@ import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput";
-import Localizer from "../../../../localization/Localizer";
 
 import formStyles from "../../Form.module.scss";
 import styles from "./DateInput.module.scss";
@@ -129,7 +128,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
                 <DatePicker
                     id={this.getInputId()}
-                    title={Localizer.get(this.props.title)}
+                    title={this.localizer.get(this.props.title)}
                     dateFormat={this.format as string}
                     minDate={this.props.minDate}
                     maxDate={this.props.maxDate}
@@ -144,7 +143,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                     showMonthYearPicker={this.props.showMonthYearPicker}
                     onChangeRaw={(e) => this.handleRawChange(e)}
                     ref={this.props.forwardedRef}
-                    locale={Localizer.language}
+                    locale={this.localizer.language}
                     readOnly={this.readonly}
                     customInput={this.renderCustomInput()}
                 />

@@ -2,7 +2,6 @@ import React from "react";
 import BaseInput, {ValidatorCallback, IBaseInputProps, IBaseInputState} from "../BaseInput";
 import { BaseInputType  } from "@/models/Enums";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
-import Localizer from "../../../../localization/Localizer";
 
 import styles from "./TextInput.module.scss";
 
@@ -129,7 +128,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                     style={inlineStyles}
                     size={this.props.size || 10}
                     maxLength={this.props.maxLength || 255}
-                    placeholder={Localizer.get(this.props.placeholder)}
+                    placeholder={this.localizer.get(this.props.placeholder)}
                     autoFocus={this.props.autoFocus}
                     autoComplete={(this.props.autoComplete === false) ? "off" : ""}
                 />

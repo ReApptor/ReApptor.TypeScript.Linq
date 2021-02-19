@@ -3,7 +3,6 @@ import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import BaseInput, { ValidatorCallback, IBaseInputProps, IBaseInputState, FileSizeValidator, FileTypeValidator, FilesSizeValidator } from "../BaseInput";
 import { BaseInputType  } from "@/models/Enums";
 import Icon from "../../../Icon/Icon";
-import Localizer from "../../../../localization/Localizer";
 
 import styles from "./FileInput.module.scss";
 
@@ -159,7 +158,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             <div className={styles.preview}>
                 <div className={styles.image} style={imagePreviewStyle} />
                 {
-                    Localizer.formInputFilePreview
+                    this.localizer.get("Form.Input.File.Preview")
                 }
             </div>
         );
@@ -202,7 +201,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                             <label htmlFor={this.getInputId()}>
                                 <span>
                                     {
-                                        (this.readonly) ? Localizer.formInputFileReadonly : Localizer.formInputFileDragAndDrop
+                                        (this.readonly) ? this.localizer.get("Form.Input.File.Readonly") : this.localizer.get("Form.Input.File.DragAndDrop")
                                     }
                                 </span>
                                 
@@ -225,7 +224,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                         <div className="d-flex align-items-center">
                             <label className={this.css("btn m-0", this.props.labelClassName ? this.props.labelClassName : "btn-info")}
                                    htmlFor={this.getInputId()}>
-                                {Localizer.formInputFileChooseFile} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
+                                {this.localizer.get("Form.Input.File.ChooseFile")} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
                             </label>
                         </div>
                     )

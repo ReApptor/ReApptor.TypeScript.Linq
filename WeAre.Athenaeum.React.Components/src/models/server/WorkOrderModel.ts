@@ -1,5 +1,5 @@
 import User from "./User";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import { FileModel, ILocalizer, ServiceProvider } from "@weare/athenaeum-toolkit";
 import {IIconProps} from "@/components/Icon/Icon";
 import UserSalaryHour from "@/models/server/UserSalaryHour";
 import WorkOrderEquipmentData from "@/models/server/WorkOrderEquipmentData";
@@ -7,7 +7,6 @@ import ConstructionSiteOrWarehouse from "@/models/server/ConstructionSiteOrWareh
 import {CustomerApprovalType, WorkOrderStatus} from "@/models/Enums";
 import WorkOrderDistance from "@/models/server/WorkOrderDistance";
 import {DefaultPrices} from "@/models/server/DefaultPrices";
-import Localizer from "@/localization/Localizer";
 
 export default class WorkOrderModel {
     public code: string = "";
@@ -115,6 +114,12 @@ export default class WorkOrderModel {
     public modifiedAt: Date = new Date();
 
     public isWorkOrderModel: boolean = true;
+
+    private static _localizer: ILocalizer | null = null;
+
+    public static get localizer(): ILocalizer {
+        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
+    }
     
     public static isActive(workOrder: WorkOrderModel): boolean {
         return (!workOrder.deleted) && (workOrder.currentStatus == WorkOrderStatus.InProgress);
@@ -138,40 +143,40 @@ export default class WorkOrderModel {
         const unscheduled: boolean = !workOrder.activationDate;
         
         if (isNew) {
-            return {name: "far pen", className: "text-primary", tooltip: Localizer.taskTooltipsNewTask };
+            return {name: "far pen", className: "text-primary", tooltip: this.localizer.get("TaskTooltips.NewTask")  };
         }
         
         if (unscheduled) {
-            return {name: "fas clock", className: "grey", tooltip: Localizer.taskTooltipsTaskUnscheduled };
+            return {name: "fas clock", className: "grey", tooltip: this.localizer.get("TaskTooltips.TaskUnscheduled")  };
         }
         
         switch (currentStatus) {
             case WorkOrderStatus.Completed:
-                return {name: "fas clipboard-check", className: "orange", tooltip: Localizer.taskTooltipsTaskWaitingApproval };
+                return {name: "fas clipboard-check", className: "orange", tooltip: this.localizer.get("TaskTooltips.TaskWaitingApproval")  };
             case WorkOrderStatus.InProgress:
-                return {name: "fas running", className: "text-primary", tooltip: Localizer.taskTooltipsTaskInProgress  };
+                return {name: "fas running", className: "text-primary", tooltip: this.localizer.get("TaskTooltips.TaskInProgress")   };
             case WorkOrderStatus.Created:
-                return {name: "fas hourglass-start", className: "orange", tooltip: Localizer.taskTooltipsTaskWaitingActivation  };
+                return {name: "fas hourglass-start", className: "orange", tooltip: this.localizer.get("TaskTooltips.TaskWaitingActivation")   };
             case WorkOrderStatus.SentToCustomer:
-                return {name: "fas mail-bulk", className: "text-primary", tooltip: Localizer.taskTooltipsTaskWaitingApproval };
+                return {name: "fas mail-bulk", className: "text-primary", tooltip: this.localizer.get("TaskTooltips.TaskWaitingApproval")  };
             case WorkOrderStatus.DeclinedByCustomer:
-                return {name: "far thumbs-down", className: "text-danger", tooltip: Localizer.taskTooltipsTaskDeclined };
+                return {name: "far thumbs-down", className: "text-danger", tooltip: this.localizer.get("TaskTooltips.TaskDeclined")  };
             case WorkOrderStatus.ApprovedByCustomer:
-                return {name: "far thumbs-up", className: "text-success", tooltip: Localizer.taskTooltipsTaskApproved };
+                return {name: "far thumbs-up", className: "text-success", tooltip: this.localizer.get("TaskTooltips.TaskApproved")  };
             case WorkOrderStatus.ReadyForInvoicing:
-                return { name: "fas check-circle", className: "green", tooltip: Localizer.taskTooltipsTaskReadyForInvoicing };
+                return { name: "fas check-circle", className: "green", tooltip: this.localizer.get("TaskTooltips.TaskReadyForInvoicing")  };
             case WorkOrderStatus.Invoiced:
-                return { name: "far file-invoice", className: "green", tooltip: Localizer.taskTooltipsTaskInvoiced };
+                return { name: "far file-invoice", className: "green", tooltip: this.localizer.get("TaskTooltips.TaskInvoiced")  };
         }
 
-        return {name: "fas lock-alt", className: "text-danger", tooltip: Localizer.taskTooltipsTaskReadyForInvoicing};
+        return {name: "fas lock-alt", className: "text-danger", tooltip: this.localizer.get("TaskTooltips.TaskReadyForInvoicing") };
     }
 
     public static getStateDescription(workOrder: WorkOrderModel): string {
         const unscheduled: boolean = !workOrder.activationDate;
         
         return (unscheduled)
-            ? Localizer.workOrderStatusUnscheduled
+            ? this.localizer.get("WorkOrderStatus.Unscheduled") 
             : "{0:WorkOrderStatus}".format(workOrder.currentStatus);
     }
 

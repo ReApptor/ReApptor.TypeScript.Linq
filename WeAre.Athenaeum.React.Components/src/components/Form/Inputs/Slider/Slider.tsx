@@ -1,6 +1,6 @@
 import React from "react";
 import SliderComponent, { createSliderWithTooltip, SliderProps, WithTooltipProps } from 'rc-slider';
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import { BaseComponent } from "@weare/athenaeum-react-common";
 
 import styles from "../../Form.module.scss";
 import 'rc-slider/assets/index.css';
@@ -94,7 +94,7 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
                     min={this.min} 
                     max={this.max} 
                     step={this.step}
-                    onChange={(values) => this.handleChangeAsync(values)}
+                    onChange={(values: any) => this.handleChangeAsync(values)}
                     trackStyle={[{backgroundColor: "#fe5000"}]}
                     handleStyle={{borderColor: "#fe5000"}}
                     onAfterChange={() => this.callbackAsync()}

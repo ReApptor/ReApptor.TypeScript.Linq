@@ -5,7 +5,6 @@ import Tests from "@/pages/Tests/Tests";
 import styles from './App.module.scss';
 class App extends BaseComponent {
 
-    
     render(): React.ReactNode {
         return (
             <div className={styles.page}>
