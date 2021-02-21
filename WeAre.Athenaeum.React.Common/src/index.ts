@@ -31,6 +31,8 @@ import ApiProvider from "./providers/ApiProvider";
 import ComponentHelper from "./providers/ComponentHelper";
 import PageCacheProvider from "./providers/PageCacheProvider";
 import DocumentEventsProvider, {DocumentEventType, DocumentEventCallback} from "./providers/DocumentEventsProvider";
+//Localization:
+import {LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer} from "./localization/BaseComponentLocalizer";
 
 export {
     //Enums:
@@ -57,5 +59,7 @@ export {
     ApiProvider,
     ComponentHelper,
     DocumentEventsProvider, DocumentEventType, DocumentEventCallback,
-    PageCacheProvider, 
+    PageCacheProvider,
+    //Localization:
+    LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer
 }
