@@ -10,7 +10,6 @@
     "typescript-collections": "^1.3.2"
   },
   "peerDependencies": {
-    
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
