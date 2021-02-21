@@ -151,6 +151,7 @@ export default class PageRouteProvider {
     }
 
     public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<boolean> {
+        
         if (!ApiProvider.isApiError(error)) {
             
             const page: IBasePage | null = ch.findPage();
@@ -160,15 +161,16 @@ export default class PageRouteProvider {
             const stackOverflow: boolean = (this._lastMessageHashCode == messageHashCode);
             
             if (stackOverflow) {
-                console.log(error);
+                console.warn(error);
                 return false;
             }
 
             this._lastMessageHashCode = messageHashCode;
             const pageName: string = (pageRouteName) ? ` on page "${pageRouteName}"` : ``;
+            const url: string = window.location.href;
             const serverError: ServerError = {
                 requestId: "",
-                debugDetails: `Unhandled JS exception occured${pageName}: "${error.message}"\n${error.stack}\n${componentStack}.`
+                debugDetails: `Unhandled JS exception occured${pageName} ("${url}"): "${error.message}"\n${error.stack}\n${componentStack}.`
             };
             // do not await, just notification event
             // noinspection ES6MissingAwait
@@ -177,6 +179,7 @@ export default class PageRouteProvider {
             await this.error(serverError);
             
         }
+        
         return true;
     }
 
