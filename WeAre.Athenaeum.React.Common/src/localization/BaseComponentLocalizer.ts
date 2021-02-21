@@ -1,5 +1,4 @@
 import {ILocalizer, ServiceType, BaseLocalizer, ILanguage, IService, ServiceProvider} from "@weare/athenaeum-toolkit";
-import {IBaseComponent} from "../base/BaseComponent";
 
 export type LanguageCallback = string | (() => string);
 
@@ -13,8 +12,8 @@ export interface ILanguageSetting {
 
 export interface IComponentsLocalizer {
     readonly supportedLanguages: ILanguage[];
-    get(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
-    contains(name: string): boolean;
+    getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+    contains(name: string | null | undefined): boolean;
 }
 
 export interface IComponentLocalizer {
@@ -32,16 +31,15 @@ export abstract class BaseComponentsLocalizer extends BaseLocalizer implements I
 
 export abstract class BaseComponentLocalizer extends BaseLocalizer implements IComponentLocalizer, IService {
     
-    private readonly _component: IBaseComponent;
+    //private readonly _component: IBaseComponent;
     private _allSupportedLanguages: ILanguage[] | null = null;
     private _browserLanguageCode: string | null = null;
     private _applicationLocalizer: ILocalizer | null = null;
     private _componentsLocalizer: IComponentsLocalizer | null = null;
-    private _type: ServiceType | null = null;
 
-    protected constructor(component: IBaseComponent, supportedLanguages: ILanguage[], language: string) {
+    protected constructor(supportedLanguages: ILanguage[], language: string) {
         super(supportedLanguages, language);
-        this._component = component;
+        //this._component = component;
     }
 
     protected getApplicationLocalizer(): ILocalizer | null {
@@ -62,34 +60,20 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
         return this._allSupportedLanguages;
     }
     
-    public get browserLanguageCode(): string | null {
-        if (this._browserLanguageCode == null) {
-            const code: string = window.navigator.language.toLowerCase();
-            const supportedLanguages: ILanguage[] = this.getSupportedLanguages();
-            const supportedLanguage: ILanguage | null = supportedLanguages.find(item => (item.code.toLowerCase() == code) || (item.label.toLowerCase() == code)) || null;
-            this._browserLanguageCode = (supportedLanguage) ? supportedLanguage.code : null;
-        }
-        return this._browserLanguageCode;
-    }
-    
-    public getType(): ServiceType {
-        return this._type || (this._type = `{nameof<IComponentLocalizer>()}.${this._component.typeName}`);
-    }
-
-    public get language(): string {
+    protected getLanguage(): string {
         let language: string | null = null;
 
-        const props = this._component.props as ILanguageProps;
-
-        // Fetch language from component property
-        if (props.language) {
-            language = (typeof props.language === "function")
-                ? props.language()
-                : props.language;
-        }
-
-        // Fetch language from component settings
-        //TODO:
+        // const props = this._component.props as ILanguageProps;
+        //
+        // // Fetch language from component property
+        // if (props.language) {
+        //     language = (typeof props.language === "function")
+        //         ? props.language()
+        //         : props.language;
+        // }
+        //
+        // // Fetch language from component settings
+        // //TODO:
 
         // Fetch language from application localizer
         const localizer: ILocalizer | null = this.getApplicationLocalizer();
@@ -102,23 +86,38 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
 
         return language || this.getDefaultLanguage();
     }
+    
+    public get browserLanguageCode(): string | null {
+        if (this._browserLanguageCode == null) {
+            const code: string = window.navigator.language.toLowerCase();
+            const supportedLanguages: ILanguage[] = this.getSupportedLanguages();
+            const supportedLanguage: ILanguage | null = supportedLanguages.find(item => (item.code.toLowerCase() == code) || (item.label.toLowerCase() == code)) || null;
+            this._browserLanguageCode = (supportedLanguage) ? supportedLanguage.code : null;
+        }
+        return this._browserLanguageCode;
+    }
+    
+    public getType(): ServiceType {
+        return this.constructor.name;
+    }
 
-    public get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
-        if (name) {
-            
-            const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
-            if ((applicationLocalizer != null) && (applicationLocalizer.contains(name))) {
-                return applicationLocalizer.get(name, ...params);
-            }
+    public get language(): string {
+        return this.getLanguage();
+    }
 
-            const componentsLocalizer: IComponentsLocalizer | null = this.getComponentsLocalizer();
-            if ((componentsLocalizer) && (componentsLocalizer.contains(name))) {
-                return componentsLocalizer.get(this.language, name, ...params);
-            }
-            
+    public getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
+        
+        const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
+        if ((applicationLocalizer != null) && (applicationLocalizer.contains(name))) {
+            return applicationLocalizer.getValue(language, name, ...params);
         }
 
-        return super.get(name, ...params);
+        const componentsLocalizer: IComponentsLocalizer | null = this.getComponentsLocalizer();
+        if ((componentsLocalizer) && (componentsLocalizer.contains(name))) {
+            return componentsLocalizer.getValue(language, name, ...params);
+        }
+
+        return super.getValue(language, name, ...params);
     }
 
     public contains(name: string): boolean {
