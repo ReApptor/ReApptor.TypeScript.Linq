@@ -30,6 +30,22 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         this._language = language;
         ServiceProvider.addSingleton(this);
     }
+
+    protected getSupportedLanguages(): ILanguage[] {
+        return this._supportedLanguages;
+    }
+
+    protected getSupportedLanguageCodes(): string[] {
+        return this._supportedLanguageCodes;
+    }
+
+    protected getLanguage(): string {
+        return this._language;
+    }
+
+    protected getDefaultLanguage(): string {
+        return this._defaultLanguage;
+    }
     
     protected getLanguageItems(language: string): Dictionary<string, string> {
         if (!this._supportedLanguageCodes.includes(language))
@@ -77,8 +93,8 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
     
     public findLanguage(language: string | null | undefined): ILanguage {
-        const item: ILanguage | undefined = (language) ? this.supportedLanguages.find(item => item.code == language) : undefined;
-        return item || this.findLanguage(this.defaultLanguage);
+        const item: ILanguage | undefined = (language) ? this.getSupportedLanguages().find(item => item.code == language) : undefined;
+        return item || this.findLanguage(this.getDefaultLanguage());
     }
     
     public setLanguage(language: string): boolean {
@@ -94,18 +110,18 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
     
     public get supportedLanguageCodes(): string[] {
-        return this._supportedLanguageCodes;
+        return this.getSupportedLanguageCodes();
     }
 
     public get supportedLanguages(): ILanguage[] {
-        return this._supportedLanguages;
+        return this.getSupportedLanguages();
     }
 
     public get language(): string {
-        return this._language;
+        return this.getLanguage();
     }
 
     public get defaultLanguage(): string {
-        return this._defaultLanguage;
+        return this.getDefaultLanguage();
     }
 }
