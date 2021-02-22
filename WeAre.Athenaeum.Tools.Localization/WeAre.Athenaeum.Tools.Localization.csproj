@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <NeutralLanguage>fi</NeutralLanguage>
+    <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0.0</Version>
+    <PackageVersion>1.0.0.0</PackageVersion>
+    <Copyright>Copyright © 2020, Renta Oy</Copyright>
+    <Product>WeAre Athenaeum</Product>
+    <Authors>WeAre Solutions Oy</Authors>
+    <Company>Renta Oy</Company>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeAre.Athenaeum.Tools.CodeGenerator\WeAre.Athenaeum.Tools.CodeGenerator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="localizations\SharedResources.sv.resx" />
+    <EmbeddedResource Remove="localizations\SharedResources.resx" />
+    <EmbeddedResource Remove="localizations\SharedResources.pl.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="localizations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="SharedResources.Designer.cs" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)/localizations/SharedResources.resx&quot; &quot;$(ProjectDir)/src/SharedResources.cs&quot; 1 fi" />
+    <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)/localizations/SharedResources.resx&quot; &quot;$(ProjectDir)/src/Localizer.ts&quot; 0 fi" />
+  </Target>
+
+</Project>
