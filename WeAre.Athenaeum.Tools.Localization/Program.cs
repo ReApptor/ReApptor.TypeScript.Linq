@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using WeAre.Athenaeum.Tools.CodeGenerator;
 
-namespace WeAre.Athenaeum.Tools.CodeGenerator
+namespace WeAre.Athenaeum.Tools.Localization
 {
-    class Program
+    public class Program
     {
         static int Main(string[] args)
         {
@@ -12,7 +13,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if ((args == null) || (args.Length < 2))
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Renta.Tools.CodeGenerator. Invalid input arguments. Expected: \"neutralResourcePath\", \"destinationPath\", \"neutralLanguage\" (\"fi\" by default)\".");
+                    Console.WriteLine(@"WeAre.Athenaeum.Tools.Localization. Invalid input arguments. Expected: ""neutralResourcePath"", ""destinationPath"", ""neutralLanguage"" (""fi"" by default)"".");
                     return -1;
                 }
 
@@ -20,7 +21,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (string.IsNullOrWhiteSpace(neutralResourcePath))
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Renta.Tools.CodeGenerator. Invalid input arguments. Parameter \"neutralResourcePath\"not specified.");
+                    Console.WriteLine(@"WeAre.Athenaeum.Tools.Localization. Invalid input arguments. Parameter ""neutralResourcePath""not specified.");
                     return -1;
                 }
                 if (neutralResourcePath.StartsWith("/"))
@@ -30,7 +31,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (!File.Exists(neutralResourcePath))
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine($"Renta.Tools.CodeGenerator. Invalid input arguments. File from parameter \"neutralResourcePath\" (\"{neutralResourcePath}\") cannot be found.");
+                    Console.WriteLine($@"WeAre.Athenaeum.Tools.Localization. Invalid input arguments. File from parameter ""neutralResourcePath"" (""{neutralResourcePath}"") cannot be found.");
                     return -1;
                 }
 
@@ -38,7 +39,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (string.IsNullOrWhiteSpace(destinationPath))
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Renta.Tools.CodeGenerator. Invalid input arguments. Parameter \"destinationPath\"not specified.");
+                    Console.WriteLine(@"WeAre.Athenaeum.Tools.Localization. Invalid input arguments. Parameter ""destinationPath""not specified.");
                     return -1;
                 }
                 if (destinationPath.StartsWith("/"))
@@ -48,7 +49,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine($"Renta.Tools.CodeGenerator. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{neutralResourcePath}\") cannot be found.");
+                    Console.WriteLine($@"WeAre.Athenaeum.Tools.Localization. Invalid input arguments. Folder from parameter ""destinationPath"" (""{neutralResourcePath}"") cannot be found.");
                     return -1;
                 }
 
@@ -60,18 +61,18 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     ? args[3].Trim()
                     : "fi";
 
-                Console.WriteLine($"Renta.Tools.CodeGenerator: neutralResourcePath=\"{neutralResourcePath}\", destinationPath=\"{destinationPath}\" type=\"{type}\", neutralLanguage=\"{neutralLanguage}\".");
+                Console.WriteLine($@"WeAre.Athenaeum.Tools.Localization: neutralResourcePath=""{neutralResourcePath}"", destinationPath=""{destinationPath}"" type=""{type}"", neutralLanguage=""{neutralLanguage}"".");
 
                 LocalizatorResourceManager.Generate(neutralResourcePath, destinationPath, type, neutralLanguage);
 
-                Console.WriteLine($"Renta.Tools.CodeGenerator. Complete at {DateTime.Now:dd-MM-yyyy HH:mm:ss}.");
+                Console.WriteLine($@"WeAre.Athenaeum.Tools.Localization. Complete at {DateTime.Now:dd-MM-yyyy HH:mm:ss}.");
 
                 return 0;
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Renta.Tools.CodeGenerator. Exception occured.");
+                Console.WriteLine(@"WeAre.Athenaeum.Tools.Localization. Exception occured.");
                 while (ex != null)
                 {
                     Console.WriteLine(ex.Message);
