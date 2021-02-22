@@ -15,6 +15,7 @@ x64/
 x86/
 build/
 lib/
+!Renta.TestApplication.WebUI/src/lib/
 bld/
 packages/
 TestResults/
