@@ -64,7 +64,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small className={styles.amountUnit}>{this.localizer.get(EnumProvider.getProductUnitName(Number(item.subtext)))}</small>
+                            <small className={styles.amountUnit}>{this.localizer.get(item.subtext)}</small>
                         )
                     }
                 </div>

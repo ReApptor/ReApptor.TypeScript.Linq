@@ -38,6 +38,7 @@ class StringConverter implements IStringConverter {
         }
 
         const converter: IStringConverter | TStringConverter | null = TypeConverter.getConverter(item, String);
+        
         if (converter) {
             return (typeof converter === "function")
                 ? converter(item, format)
@@ -77,6 +78,10 @@ class StringConverter implements IStringConverter {
 
     public canConvert(from: TType): boolean {
         return TypeConverter.canConvert(from, String);
+    }
+
+    convert(from: any, to: any): any {
+        throw new Error("Method not implemented.");
     }
 }
 

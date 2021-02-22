@@ -1,7 +1,8 @@
 import ServiceProvider, {ServiceType, TType} from "./ServiceProvider";
 import {TDecoratorConstructor} from "./TypeResolver";
 
-export interface ITypeConverter {
+export interface ITypeConverter<TFrom extends TType = {}, TTo extends TType = {}> {
+    convert(from: TFrom, to: TTo): TTo;
 }
 
 export declare type TClassDecorator = <TConstructor extends TDecoratorConstructor>(constructor: TConstructor) => TConstructor | void;
@@ -33,6 +34,14 @@ class TypeConverter {
         const fullName: ServiceType = TypeConverter.getServiceType(from, to);
         const service: ITypeConverter | null = ServiceProvider.getService<ITypeConverter>(fullName, false);
         return (service != null);
+    }
+    
+    public convert<TFrom extends TType, TTo extends TType>(from: TFrom, to: TTo): TType | undefined {
+        const fullName: ServiceType = TypeConverter.getServiceType(from, to);
+        const service: ITypeConverter | null = ServiceProvider.getService<ITypeConverter<TFrom, TTo>>(fullName, false);
+        return (service != null)
+            ? service.convert(from, to)
+            : undefined;
     }
 }
 

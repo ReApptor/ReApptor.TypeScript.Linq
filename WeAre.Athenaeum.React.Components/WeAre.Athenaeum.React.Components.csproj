@@ -31,6 +31,12 @@
       <TypeScriptCompile Include="src\components\Popover\Popover.tsx" />
       <TypeScriptCompile Include="src\components\Spinner\Spinner.tsx" />
       <TypeScriptCompile Include="src\components\TopNav\TopNav.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\BaseExpandableWidget.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\BaseWidget.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\BaseWidgetContainer.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\DateInputWidget\DateInputWidget.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\DropdownWidget\DropdownWidget.tsx" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\WidgetContainer.tsx" />
       <TypeScriptCompile Include="src\helpers\AddressHelper.ts" />
       <TypeScriptCompile Include="src\helpers\Comparator.ts" />
       <TypeScriptCompile Include="src\helpers\RentaTaskConstants.ts" />

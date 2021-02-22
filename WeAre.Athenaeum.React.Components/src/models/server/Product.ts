@@ -1,7 +1,7 @@
 import {ProductUnit} from "../Enums";
 import Category from "./Category";
 import {INumberFormat, NumberUtility} from "@weare/athenaeum-toolkit";
-import {TFormat} from "@weare/athenaeum-toolkit/lib/types/src/providers/BaseTransformProvider";
+import { TFormat } from "@weare/athenaeum-toolkit";
 
 export default class Product {
     public id: string = "";
