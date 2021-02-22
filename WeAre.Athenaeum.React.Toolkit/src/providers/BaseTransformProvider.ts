@@ -37,4 +37,8 @@ export default abstract class BaseTransformProvider implements ITransformProvide
         
         return StringConverter.toString(item, format);
     }
+
+    convert(from: {}, to: {}): {} {
+        throw new Error("Not Implemented");
+    }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import $ from "jquery";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/athenaeum-react-common";
+import { ITransformProvider, Utility } from "@weare/athenaeum-toolkit";
+import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../../../Icon/Icon";
 import {BaseInputType, DropdownSchema} from "@/models/Enums";
@@ -194,14 +194,69 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             this._filterInputRef.current!.focus();
         }
     }
+    
+    private dynamicTransform(item: TItem): SelectListItem {
+        if (typeof item === "number") {
+            const listItem = new SelectListItem();
+            listItem.value = item.toString();
+            listItem.text = item.toString();
+            listItem.ref = item;
+            return listItem;
+        }
+
+        if (typeof item === "string") {
+            const listItem = new SelectListItem();
+            listItem.value = item;
+            listItem.text = item;
+            listItem.ref = item;
+            return listItem;
+        }
+
+        const value: any = Utility.findStringValueByAccessor(item, ["value"]);
+        const id: any = Utility.findValueByAccessor(item, ["id", "code"]);
+        const name: string | null = Utility.findStringValueByAccessor(item, ["name", "text", "label"]);
+        const subtext: string | null = Utility.findStringValueByAccessor(item, ["subtext", "description"]);
+        const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
+        const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
+
+        const listItem = new SelectListItem();
+
+        listItem.value = (value)
+            ? value
+            : (id != null)
+                ? id.toString()
+                : (name)
+                    ? name
+                    : ComponentHelper.getId().toString();
+
+        if (name) {
+            listItem.text = name;
+        }
+
+        if (subtext) {
+            listItem.subtext = subtext;
+        }
+
+        if (groupName) {
+            listItem.group = SelectListGroup.create(groupName);
+        }
+
+        listItem.favorite = favorite;
+        listItem.ref = item;
+
+        return listItem;
+    }
 
     private transform(item: TItem): SelectListItem {
 
+        //const transformProvider: ITransformProvider | null = ServiceProvider.getRequiredService(nameof<ITransformProvider>());
+        // const typeConverter: TConverter = ServiceProvider.getRequiredService(nameof<ITransformProvider>());
+        
         const listItem: SelectListItem = ((item as any).isSelectListSeparator)
             ? (item as any) as SelectListSeparator
             : (this.props.transform)
                 ? this.props.transform(item)
-                : TransformProvider.toSelectListItem(item);
+                : this.dynamicTransform(item);
 
         if (listItem.ref == null) {
             listItem.ref = item;
