@@ -24,7 +24,6 @@ export function ToString(converter: IStringConverter | TStringConverter): TClass
 
 class StringConverter implements IStringConverter {
     public toString(item: any, format?: TFormat | null): string {
-
         if (item == null) {
             return "";
         }
@@ -78,10 +77,6 @@ class StringConverter implements IStringConverter {
 
     public canConvert(from: TType): boolean {
         return TypeConverter.canConvert(from, String);
-    }
-
-    convert(from: any, to: any): any {
-        throw new Error("Method not implemented.");
     }
 }
 
