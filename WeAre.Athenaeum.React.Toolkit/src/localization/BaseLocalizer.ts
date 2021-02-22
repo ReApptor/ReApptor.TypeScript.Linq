@@ -11,8 +11,9 @@ export interface ILanguage {
 export interface ILocalizer {
     readonly language: string;
     readonly supportedLanguages: ILanguage[];
+    getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
     get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
-    contains(name: string): boolean;
+    contains(name: string | null | undefined): boolean;
     setLanguage(language: string): boolean;
 }
 
@@ -30,11 +31,24 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         this._language = language;
         ServiceProvider.addSingleton(this);
     }
+
+    protected getSupportedLanguages(): ILanguage[] {
+        return this._supportedLanguages;
+    }
+
+    protected getSupportedLanguageCodes(): string[] {
+        return this._supportedLanguageCodes;
+    }
+
+    protected getLanguage(): string {
+        return this._language;
+    }
+
+    protected getDefaultLanguage(): string {
+        return this._defaultLanguage;
+    }
     
     protected getLanguageItems(language: string): Dictionary<string, string> {
-        if (!this._supportedLanguageCodes.includes(language))
-            throw Error(`Unsupported language ${language}.`);
-
         let languageItems: Dictionary<string, string> | null = this._items.getValue(language) as Dictionary<string, string> | null;
         if (!languageItems) {
             languageItems = new Dictionary<string, string>();
@@ -56,11 +70,11 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     public getType(): ServiceType {
         return nameof<ILocalizer>();
     }
-    
-    public get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
+
+    public getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
         let value: string | null = null;
         if (name) {
-            const languageItems: Dictionary<string, string> = this.getLanguageItems(this._language);
+            const languageItems: Dictionary<string, string> = this.getLanguageItems(language);
             value = languageItems.getValue(name) as string | null;
             if (value) {
                 const lines: string[] = value.split(AthenaeumConstants.newLineRegex);
@@ -71,22 +85,32 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         return Utility.format(value, ...params);
     }
 
-    public contains(name: string): boolean {
-        let languageItems = this._items.getValue(this._defaultLanguage) as Dictionary<string, string>;
-        return languageItems.containsKey(name);
+    public get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string {
+        return this.getValue(this.getLanguage(), name, ...params);
+    }
+
+    public contains(name: string | null | undefined): boolean {
+        if (name) {
+            const defaultLanguage: string = this.getDefaultLanguage();
+            const languageItems = this._items.getValue(defaultLanguage) as Dictionary<string, string> | null;
+            return (languageItems != null) && (languageItems.containsKey(name));
+        }
+        return false;
     }
     
     public findLanguage(language: string | null | undefined): ILanguage {
-        const item: ILanguage | undefined = (language) ? this.supportedLanguages.find(item => item.code == language) : undefined;
-        return item || this.findLanguage(this.defaultLanguage);
+        const item: ILanguage | undefined = (language) ? this.getSupportedLanguages().find(item => item.code == language) : undefined;
+        return item || this.findLanguage(this.getDefaultLanguage());
     }
     
     public setLanguage(language: string): boolean {
-        if (!this._supportedLanguageCodes.includes(language))
-            throw Error(`Unsupported language code "${language}".`);
-        
         if (this._language !== language) {
+
+            if (!this._supportedLanguageCodes.includes(language))
+                throw Error(`Unsupported language code "${language}".`);
+
             this._language = language;
+
             return true;
         }
         
@@ -94,18 +118,18 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
     
     public get supportedLanguageCodes(): string[] {
-        return this._supportedLanguageCodes;
+        return this.getSupportedLanguageCodes();
     }
 
     public get supportedLanguages(): ILanguage[] {
-        return this._supportedLanguages;
+        return this.getSupportedLanguages();
     }
 
     public get language(): string {
-        return this._language;
+        return this.getLanguage();
     }
 
     public get defaultLanguage(): string {
-        return this._defaultLanguage;
+        return this.getDefaultLanguage();
     }
 }
