@@ -126,26 +126,25 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
-                <DatePicker
-                    id={this.getInputId()}
-                    title={this.localizer.get(this.props.title)}
-                    dateFormat={this.format as string}
-                    minDate={this.props.minDate}
-                    maxDate={this.props.maxDate}
-                    selected={this.selected}
-                    onChange={async (date: Date) => await this.handleChangeAsync(date)}
-                    className="form-control"
-                    calendarClassName={this.css("datepicker", this.calendarClassName)}
-                    todayButton={this.todayButton}
-                    inline={this.props.expanded}
-                    withPortal={this.props.popup}
-                    showMonthDropdown={this.props.showMonthDropdown}
-                    showMonthYearPicker={this.props.showMonthYearPicker}
-                    onChangeRaw={(e) => this.handleRawChange(e)}
-                    ref={this.props.forwardedRef}
-                    locale={this.localizer.language}
-                    readOnly={this.readonly}
-                    customInput={this.renderCustomInput()}
+                <DatePicker id={this.getInputId()}
+                            title={this.localizer.get(this.props.title)}
+                            dateFormat={this.format as string}
+                            minDate={this.props.minDate}
+                            maxDate={this.props.maxDate}
+                            selected={this.selected}
+                            onChange={async (date: Date) => await this.handleChangeAsync(date)}
+                            className="form-control"
+                            calendarClassName={this.css("datepicker", this.calendarClassName)}
+                            todayButton={this.todayButton}
+                            inline={this.props.expanded}
+                            withPortal={this.props.popup}
+                            showMonthDropdown={this.props.showMonthDropdown}
+                            showMonthYearPicker={this.props.showMonthYearPicker}
+                            onChangeRaw={(e) => this.handleRawChange(e)}
+                            ref={this.props.forwardedRef}
+                            locale={this.localizer.language}
+                            readOnly={this.readonly}
+                            customInput={this.renderCustomInput()}
                 />
             </div>
         );

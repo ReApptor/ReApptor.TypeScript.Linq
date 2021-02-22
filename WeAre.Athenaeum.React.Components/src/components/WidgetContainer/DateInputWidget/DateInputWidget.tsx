@@ -7,8 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./DateInputWidget.scss";
 import styles from "../WidgetContainer.module.scss";
 
-
-
 interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {
     value?: Date;
     minDate?: Date;
@@ -50,14 +48,13 @@ export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWid
     protected renderExpanded(): React.ReactNode {
         return (
             <div className="dateInputContainer">
-                <DatePicker
-                        selected={this.props.value || new Date()}
-                        minDate={this.props.minDate}
-                        onChange={(date: Date) => this.handleChange(date)}
-                        className="form-control"
-                        calendarClassName="datepicker dateInputWidget"
-                        inline
-                        todayButton={this.props.todayButton}
+                <DatePicker selected={this.props.value || new Date()}
+                            minDate={this.props.minDate}
+                            onChange={(date: Date) => this.handleChange(date)}
+                            className="form-control"
+                            calendarClassName="datepicker dateInputWidget"
+                            inline
+                            todayButton={this.props.todayButton}
                     />
             </div>
         )

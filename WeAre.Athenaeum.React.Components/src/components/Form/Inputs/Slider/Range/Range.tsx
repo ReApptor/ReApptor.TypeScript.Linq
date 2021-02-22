@@ -1,5 +1,5 @@
 import React from "react";
-import { Range as RangeComponent, createSliderWithTooltip, WithTooltipProps, RangeProps } from 'rc-slider';
+import { Range as RangeComponent, createSliderWithTooltip, WithTooltipProps, RangeProps } from "rc-slider";
 import BaseInput, { IBaseInputProps, IBaseInputState } from "../../BaseInput";
 
 import styles from "../../../Form.module.scss";

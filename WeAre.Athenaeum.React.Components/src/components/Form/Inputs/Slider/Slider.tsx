@@ -1,5 +1,5 @@
 import React from "react";
-import SliderComponent, { createSliderWithTooltip, SliderProps, WithTooltipProps } from 'rc-slider';
+import SliderComponent, { createSliderWithTooltip, SliderProps, WithTooltipProps } from "rc-slider";
 import { BaseComponent } from "@weare/athenaeum-react-common";
 
 import styles from "../../Form.module.scss";

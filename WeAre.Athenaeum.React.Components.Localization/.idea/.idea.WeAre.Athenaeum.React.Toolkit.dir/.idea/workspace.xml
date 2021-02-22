@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4ad5ff6f-f242-41f9-a2c5-059f0c3537bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.WeAre.Athenaeum.React.Toolkit.dir/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WeAre.Athenaeum.React.Toolkit.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-extractor.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rollup.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ArrayUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AthenaeumConstants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BoolUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DateUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HashCodeUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NumberUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StringUtility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utility.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/extensions/ArrayExtensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/extensions/DateExtensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/extensions/NumberExtensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/extensions/StringExtensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/PwaHelper.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localization/BaseLocalizer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/FileModel.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/GeoCoordinate.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/GeoLocation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/IPagedList.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/ISelectListItem.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/Position.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/TimeSpan.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/BaseEnumProvider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/BaseTransformProvider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/ServiceProvider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/StringConverter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/TypeConverter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/TypeResolver.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ArrayUtility.skip.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ArrayUtility.take.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ServiceProvider.getLocalizer.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ServiceProvider.getRequiredService.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ServiceProvider.getService.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/ServiceProvider.resolveServiceType.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/StringConverter.toString.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/TypeResolver.resove.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/Utility.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.paths.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/src/localization/BaseComponentLocalizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/WeAre.Athenaeum.React.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/WeAre.Athenaeum.React.Common.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/src/base/BaseComponent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../WeAre.Athenaeum.React.Common/src/base/BaseComponent.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1onPSNyi0YCqpxVklrsCZU1ZknE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1613919379373</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613919379373</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
