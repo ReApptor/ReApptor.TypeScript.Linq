@@ -2,6 +2,7 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
 import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
+import AlertLocalizer from "@/components/Alert/AlertLocalizer";
 
 import styles from "./Alert.module.scss";
 
@@ -81,7 +82,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
                     }
 
                     {
-                        this.toMultiLines(this.localizer.get(this.model.message, ...(this.model.messageParams || [])))
+                        this.toMultiLines(AlertLocalizer.get(this.model.message, ...(this.model.messageParams || [])))
                     }
                     
                 </span>
