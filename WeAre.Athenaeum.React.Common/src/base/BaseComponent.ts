@@ -45,6 +45,7 @@ export interface IBaseComponent extends IReactComponent, ISpinner {
     readonly childComponents: IBaseComponent[];
     readonly mobile: boolean;
     readonly desktop: boolean;
+    readonly props: object;
 
     isComponent(): boolean;
     getPage(): IBasePage;
