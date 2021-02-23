@@ -16,4 +16,8 @@
         <Copyright>Copyright © 2020, Renta Oy</Copyright>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
 </Project>
