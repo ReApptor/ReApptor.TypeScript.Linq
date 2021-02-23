@@ -24,6 +24,11 @@ export interface IComponentLocalizer {
 }
 
 export abstract class BaseComponentsLocalizer extends BaseLocalizer implements IComponentsLocalizer, IService {
+
+    protected constructor(supportedLanguages: ILanguage[], language: string) {
+        super(supportedLanguages, language);
+    }
+    
     public getType(): ServiceType {
         return nameof<IComponentsLocalizer>();
     }
