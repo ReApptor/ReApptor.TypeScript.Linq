@@ -177,13 +177,13 @@
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Är du säker?</value>
   </data>
-  <data name="HoursWidget.HoursSpent" xml:space="preserve">
-    <value>SV: Hours spent for task</value>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Var vänlig och lämna en kommentar</value>
   </data>
-  <data name="HoursWidget.AddOvertime" xml:space="preserve">
-    <value>SV: Add overtime</value>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>Bekräfta</value>
   </data>
-  <data name="HoursWidget.NormalHours" xml:space="preserve">
-    <value>SV: Normal</value>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Stäng</value>
   </data>
 </root>

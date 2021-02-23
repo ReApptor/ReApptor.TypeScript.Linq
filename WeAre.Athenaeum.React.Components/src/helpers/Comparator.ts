@@ -1,6 +1,6 @@
 import {Utility, GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {PageRoute} from "@weare/athenaeum-react-common";
-import {SelectListItem, StatusListItem} from "@/components/Form/Inputs/Dropdown/SelectListItem";
+import {SelectListItem, StatusListItem} from "@/components/Dropdown/SelectListItem";
 import WorkOrderModel from "../models/server/WorkOrderModel";
 import ConstructionSiteOrWarehouse from "../models/server/ConstructionSiteOrWarehouse";
 import User from "../models/server/User";

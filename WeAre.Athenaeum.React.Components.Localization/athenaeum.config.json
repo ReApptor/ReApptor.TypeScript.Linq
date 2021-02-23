@@ -6,5 +6,12 @@
     "neutralLanguage": "en",
     "import": "import {BaseComponentsLocalizer} from \"@weare/athenaeum-react-common\";",
     "baseClassName": "BaseComponentsLocalizer"
+  }, {
+    "neutralResourcePath": "$(ProjectDir)/resources/SharedResources.resx",
+    "destinationPath": "$(ProjectDir)/../WeAre.Athenaeum.React.Components/src/components/$(COMPONENT_NAME)/$(COMPONENT_NAME)Localizer.ts",
+    "type": "0",
+    "neutralLanguage": "en",
+    "import": "import {BaseComponentLocalizer} from \"@weare/athenaeum-react-common\";",
+    "baseClassName": "BaseComponentLocalizer"
   }]
 }

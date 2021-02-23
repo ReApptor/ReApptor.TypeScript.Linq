@@ -7,14 +7,14 @@ import DocumentPreviewModal, { DocumentPreviewCallback } from "@/components/Docu
 import Footer from "@/components/Footer/Footer";
 import Form from "@/components/Form/Form";
 import Icon, { IconSize, IIconProps } from "@/components/Icon/Icon";
-import AddressDivider from "@/components/Form/Inputs/AddressInput/AddressDivider/AddressDivider";
-import LocationPicker from "@/components/Form/Inputs/AddressInput/LocationPicker/LocationPicker";
-import LocationPickerModal from "@/components/Form/Inputs/AddressInput/LocationPickerModal/LocationPickerModal";
-import VirtualAddressDivider from "@/components/Form/Inputs/AddressInput/VirtualAddressDivider/VirtualAddressDivider";
-import AddressInput, { IAddressInputProps, IAddressInputState } from "@/components/Form/Inputs/AddressInput/AddressInput";
-import Checkbox, { ICheckboxProps, ICheckboxState, InlineType } from "@/components/Form/Inputs/Checkbox/Checkbox";
-import NullableCheckbox, { INullableCheckboxProps, INullableCheckboxState } from "@/components/Form/Inputs/Checkbox/NullableCheckbox";
-import DateInput from "@/components/Form/Inputs/DateInput/DateInput";
+import AddressDivider from "@/components/AddressInput/AddressDivider/AddressDivider";
+import LocationPicker from "@/components/AddressInput/LocationPicker/LocationPicker";
+import LocationPickerModal from "@/components/AddressInput/LocationPickerModal/LocationPickerModal";
+import VirtualAddressDivider from "@/components/AddressInput/VirtualAddressDivider/VirtualAddressDivider";
+import AddressInput, { IAddressInputProps, IAddressInputState } from "@/components/AddressInput/AddressInput";
+import Checkbox, { ICheckboxProps, ICheckboxState, InlineType } from "@/components/Checkbox/Checkbox";
+import NullableCheckbox, { INullableCheckboxProps, INullableCheckboxState } from "@/components/Checkbox/NullableCheckbox";
+import DateInput from "@/components/DateInput/DateInput";
 import Dropdown, {
     AmountListItem,
     DropdownVerticalAlign,
@@ -29,32 +29,32 @@ import Dropdown, {
     IDropdownState,
     IDropdown,
     IDropdownProps
-} from "@/components/Form/Inputs/Dropdown/Dropdown";
-import { SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem } from "@/components/Form/Inputs/Dropdown/SelectListItem";
-import DropdownListItem, { IDropdownListItemState, IDropdownListItemProps } from "@/components/Form/Inputs/Dropdown/DropdownListItem/DropdownListItem";
-import EmailInput from "@/components/Form/Inputs/EmailInput/EmailInput";
-import FileInput, { IFileInputState, IFileInputProps } from "@/components/Form/Inputs/FileInput/FileInput";
-import { NumberInputBehaviour, INumberInputState, INumberInputProps } from "@/components/Form/Inputs/NumberInput/NumberInput";
-import PasswordInput from "@/components/Form/Inputs/PasswordInput/PasswordInput";
-import LiveValidator, { ValidationRow } from "@/components/Form/Inputs/PasswordInput/LiveValidator/LiveValidator";
-import PhoneInput from "@/components/Form/Inputs/PhoneInput/PhoneInput";
-import Slider from "@/components/Form/Inputs/Slider/Slider";
-import Range from "@/components/Form/Inputs/Slider/Range/Range";
-import NullableSwitch from "@/components/Form/Inputs/Switch/NullableSwitch";
-import Switch from "@/components/Form/Inputs/Switch/Switch";
-import TextAreaInput, { ITextAreaInputState, ITextAreaInputProps } from "@/components/Form/Inputs/TextAreaInput/TextAreaInput";
-import TextInput, { ITextInputState, ITextInputProps } from "@/components/Form/Inputs/TextInput/TextInput";
-import AutoSuggest, { AutoSuggestItem } from "@/components/Form/Inputs/TextInput/AutoSuggest/AutoSuggest";
+} from "@/components/Dropdown/Dropdown";
+import { SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem } from "@/components/Dropdown/SelectListItem";
+import DropdownListItem, { IDropdownListItemState, IDropdownListItemProps } from "@/components/Dropdown/DropdownListItem/DropdownListItem";
+import EmailInput from "@/components/EmailInput/EmailInput";
+import FileInput, { IFileInputState, IFileInputProps } from "@/components/FileInput/FileInput";
+import { NumberInputBehaviour, INumberInputState, INumberInputProps } from "@/components/NumberInput/NumberInput";
+import PasswordInput from "@/components/PasswordInput/PasswordInput";
+import LiveValidator, { ValidationRow } from "@/components/PasswordInput/LiveValidator/LiveValidator";
+import PhoneInput from "@/components/PhoneInput/PhoneInput";
+import Slider from "@/components/Slider/Slider";
+import Range from "@/components/Slider/Range/Range";
+import NullableSwitch from "@/components/Switch/NullableSwitch";
+import Switch from "@/components/Switch/Switch";
+import TextAreaInput, { ITextAreaInputState, ITextAreaInputProps } from "@/components/TextAreaInput/TextAreaInput";
+import TextInput, { ITextInputState, ITextInputProps } from "@/components/TextInput/TextInput";
+import AutoSuggest, { AutoSuggestItem } from "@/components/TextInput/AutoSuggest/AutoSuggest";
 import BaseInput, {
     EmailValidator, FileSizeValidator, FilesSizeValidator, FileTypeValidator, LengthValidator, NullableCheckboxType, PasswordValidator, PhoneValidator, BaseRegexValidatorErrorMessage,
     BaseValidator, NumberRangeValidator, BaseFileValidator, BaseInputValue, BaseRegexValidator, RegexValidator, RequiredValidator, ValidatorCallback, IValidator,
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
-} from "@/components/Form/Inputs/BaseInput";
-import FourColumns from "@/components/Layout/FourColum/FourColumns";
-import Inline, { JustifyContent } from "@/components/Layout/Inline/Inline";
-import OneColumn from "@/components/Layout/OneColumn/OneColumn";
-import ThreeColumns from "@/components/Layout/ThreeColumn/ThreeColumns";
-import TwoColumns from "@/components/Layout/TwoColumn/TwoColumns";
+} from "@/models/base/BaseInput";
+import FourColumns from "@/components/FourColum/FourColumns";
+import Inline, { JustifyContent } from "@/components/Inline/Inline";
+import OneColumn from "@/components/OneColumn/OneColumn";
+import ThreeColumns from "@/components/ThreeColumn/ThreeColumns";
+import TwoColumns from "@/components/TwoColumn/TwoColumns";
 import Layout from "@/components/Layout/Layout";
 import Link from "@/components/Link/Link";
 import Modal, { ModalSize } from "@/components/Modal/Modal";

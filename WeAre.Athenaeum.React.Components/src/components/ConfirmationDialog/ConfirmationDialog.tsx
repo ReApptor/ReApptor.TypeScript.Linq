@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
 import Button, { ButtonType } from "../Button/Button";
-import TextAreaInput from "@/components/Form/Inputs/TextAreaInput/TextAreaInput";
+import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
 import ConfirmationDialogLocalizer from "./ConfirmationDialogLocalizer";
 
 import styles from "./ConfirmationDialog.module.scss";
@@ -203,8 +203,8 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                         )
                     }
 
-                    <Button label={ConfirmationDialogLocalizer.confirm} block type={ButtonType.Orange} onClick={() => this.invokeCloseAsync(true)} disabled={!this.canConfirm} />
-                    <Button label={ConfirmationDialogLocalizer.close} block type={ButtonType.Default} onClick={() => this.invokeCloseAsync()} />
+                    <Button label={ConfirmationDialogLocalizer.confirmButton} block type={ButtonType.Orange} onClick={() => this.invokeCloseAsync(true)} disabled={!this.canConfirm} />
+                    <Button label={ConfirmationDialogLocalizer.closeButton} block type={ButtonType.Default} onClick={() => this.invokeCloseAsync()} />
 
                 </div>
 

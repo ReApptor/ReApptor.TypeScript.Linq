@@ -1,11 +1,11 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
-import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown} from "../../Form/Inputs/Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown} from "../../Dropdown/Dropdown";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../BaseWidget";
 import {IWidgetContainer} from "../BaseWidgetContainer";
 import PageContainer from "../../PageContainer/PageContainer";
 import { DropdownSchema } from "@/models/Enums";
-import {SelectListItem} from "../../Form/Inputs/Dropdown/SelectListItem";
+import {SelectListItem} from "../../Dropdown/SelectListItem";
 import {RenderCallback} from "@weare/athenaeum-react-common";
 
 import styles from "../WidgetContainer.module.scss";

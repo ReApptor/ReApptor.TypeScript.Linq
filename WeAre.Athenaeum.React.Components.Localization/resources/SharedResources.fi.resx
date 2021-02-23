@@ -174,16 +174,16 @@
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
     <value>Siirry seuraavaan vaiheeseen</value>
   </data>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>Kyllä</value>
+  </data>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Ei</value>
+  </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Oletko varma?</value>
   </data>
-  <data name="HoursWidget.HoursSpent" xml:space="preserve">
-    <value>Tehtävään käytetyt tunnit</value>
-  </data>
-  <data name="HoursWidget.AddOvertime" xml:space="preserve">
-    <value>Lisää ylityö</value>
-  </data>
-  <data name="HoursWidget.NormalHours" xml:space="preserve">
-    <value>Normaali</value>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Ole hyvä ja kommentoi</value>
   </data>
 </root>

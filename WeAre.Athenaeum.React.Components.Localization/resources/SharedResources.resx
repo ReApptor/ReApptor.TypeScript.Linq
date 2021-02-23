@@ -177,13 +177,16 @@
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Are you sure?</value>
   </data>
-  <data name="HoursWidget.HoursSpent" xml:space="preserve">
-    <value>Hours spent for task</value>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>Confirm</value>
   </data>
-  <data name="HoursWidget.AddOvertime" xml:space="preserve">
-    <value>Add overtime</value>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Close</value>
   </data>
-  <data name="HoursWidget.NormalHours" xml:space="preserve">
-    <value>Normal</value>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Please leave a comment</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value />
   </data>
 </root>
