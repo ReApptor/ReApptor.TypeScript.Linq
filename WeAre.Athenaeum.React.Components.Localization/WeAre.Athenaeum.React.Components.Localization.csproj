@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <OutputType>Module</OutputType>
+        <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -32,4 +33,8 @@
       <None Remove="package-lock.json" />
     </ItemGroup>
 
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)athenaeum.config.json&quot;" />
+    </Target>
+    
 </Project>

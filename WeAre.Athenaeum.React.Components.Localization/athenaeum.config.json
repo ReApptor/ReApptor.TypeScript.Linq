@@ -1,0 +1,10 @@
+{
+  "localizator": [{
+    "neutralResourcePath": "$(ProjectDir)/resources/SharedResources.resx",
+    "destinationPath": "$(ProjectDir)/src/ComponentsLocalizer.ts",
+    "type": "0",
+    "neutralLanguage": "en",
+    "import": "import {BaseComponentsLocalizer} from \"@weare/athenaeum-react-common\";",
+    "baseClassName": "BaseComponentsLocalizer"
+  }]
+}
