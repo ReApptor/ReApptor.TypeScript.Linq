@@ -6,7 +6,7 @@ import Button, { ButtonType } from "../../Button/Button";
 import Popover from "../Popover";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import { IconSize } from "../../Icon/Icon";
-import TextAreaInput from "@/components/Form/Inputs/TextAreaInput/TextAreaInput";
+import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
 
 import styles from "./Description.module.scss";
 

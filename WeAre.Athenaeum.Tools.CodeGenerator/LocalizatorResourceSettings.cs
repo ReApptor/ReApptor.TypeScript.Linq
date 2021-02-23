@@ -2,6 +2,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 {
     public sealed class LocalizatorResourceSettings
     {
+        public const string ComponentNameTag = "$(COMPONENT_NAME)";
+        
         public LocalizatorResourceManager.Type Type { get; set; }
         
         public string NeutralLanguage { get; set; }
@@ -17,5 +19,10 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         public string ClassName { get; set; }
         
         public string BaseClassName { get; set; }
+        
+        public bool SplitByComponent
+        {
+            get { return (!string.IsNullOrWhiteSpace(DestinationPath)) && (DestinationPath.Contains(ComponentNameTag)); }
+        }
     }
 }

@@ -70,6 +70,35 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return resources;
         }
 
+        private static (string ComponentName, string DestinationPath)[] GetSplittedDestinationFiles(Dictionary<string, Dictionary<string, string>> items, string destinationPathPattern)
+        {
+            string[] componentNames = items
+                .Keys
+                .Select(item => item.Split('.').FirstOrDefault())
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Distinct()
+                .ToArray();
+
+            var x = string.Join(";", componentNames);
+            Console.WriteLine($"componentNames={x}");
+
+            (string ComponentName, string DestinationPath)[] componentFileNames = componentNames
+                .Select(item => (ComponentName: item, DestinationPath: destinationPathPattern.Replace(LocalizatorResourceSettings.ComponentNameTag, item))
+                )
+                .ToArray();
+
+            foreach ((string ComponentName, string DestinationPath) item in componentFileNames)
+            {
+                string directory = Path.GetDirectoryName(item.DestinationPath);
+                if (!Directory.Exists(directory))
+                {
+                    throw new InvalidOperationException($"{Program.Name}: The folder \"{directory}\" cannot be found for component \"{item.ComponentName}\".");
+                }
+            }
+
+            return componentFileNames;
+        }
+
         private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, out CultureInfo[] cultures)
         {
             Dictionary<string, ResourceDocument> resources = LoadResources(neutralResourcePath, neutralLanguage);
@@ -91,6 +120,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     foreach (ResourceDocument.Item item in doc.Items)
                     {
                         string name = item.Name;
+
                         Dictionary<string, string> languages;
                         if (!items.ContainsKey(name))
                         {
@@ -116,6 +146,24 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             cultures = cultureItems.ToArray();
 
             return items;
+        }
+
+        private static Dictionary<string, Dictionary<string, string>> Filter(Dictionary<string, Dictionary<string, string>> items, string componentName)
+        {
+            string prefix = $"{componentName}.";
+            int prefixLength = prefix.Length;
+            var result = new Dictionary<string, Dictionary<string, string>>();
+            foreach (KeyValuePair<string, Dictionary<string, string>> languageItems in items)
+            {
+                bool include = (languageItems.Key.StartsWith(prefix));
+                if (include)
+                {
+                    string key = languageItems.Key.Substring(prefixLength);
+                    result.Add(key, languageItems.Value);
+                }
+            }
+
+            return result;
         }
 
         private static string ToVariableName(string name, bool toLowercase)
@@ -170,7 +218,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return EscapeValue(value, escapeDoubleQuotes);
         }
 
-        private static string GenerateTypeScriptContent(Dictionary<string, Dictionary<string, string>> languageItems, CultureInfo[] cultures, string neutralLanguage, string import, string baseClassName)
+        private static string GenerateTypeScriptContent(Dictionary<string, Dictionary<string, string>> languageItems, CultureInfo[] cultures, string neutralLanguage, string import, string className, string baseClassName)
         {
             import = (!string.IsNullOrWhiteSpace(import))
                 ? import.Trim()
@@ -184,6 +232,10 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             baseClassName = (!string.IsNullOrWhiteSpace(baseClassName))
                 ? baseClassName.Trim()
                 : @"BaseLocalizer";
+            
+            className = (!string.IsNullOrWhiteSpace(className))
+                ? className.Trim()
+                : @"Localizer";
             
             var languages = new StringBuilder();
             foreach (CultureInfo culture in cultures)
@@ -233,36 +285,47 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 }
             }
 
-            initializer.Length -= NewLine.Length;
-            properties.Length -= 2 * NewLine.Length;
-            constants.Length -= NewLine.Length;
+            if (initializer.Length > 0)
+            {
+                initializer.Length -= NewLine.Length;
+            }
+
+            if (properties.Length > 0)
+            {
+                properties.Length -= 2 * NewLine.Length;
+            }
+
+            if (constants.Length > 0)
+            {
+                constants.Length -= NewLine.Length;
+            }
 
             string text = string.Format(
 @"//Autogenerated
 {0}
 
-class Localizer extends {1} {{
+class {1} extends {2} {{
 
     //Constants
-{2}
+{3}
 
     constructor() {{
 
         super(
             [
-{3}
+{4}
             ],
-            ""{4}"");
+            ""{5}"");
         
         //Initializer
-{5}
+{6}
     }}
 
-{6}
+{7}
 }}
 
 //Singleton
-export default new Localizer();", import, baseClassName, constants, languages, neutralLanguage, initializer, properties);
+export default new {8}();", import, className, baseClassName, constants, languages, neutralLanguage, initializer, properties, className);
 
             return text;
         }
@@ -325,6 +388,35 @@ namespace Renta.Tools.WebUI.Resources
             return text;
         }
 
+        private static void GenerateFile(LocalizatorResourceSettings settings, Dictionary<string, Dictionary<string, string>> languageItems, CultureInfo[] cultures, string destinationPath)
+        {
+            string className = Path.GetFileNameWithoutExtension(destinationPath);
+
+            string content;
+            if (settings.Type == Type.TypeScript)
+            {
+                content = GenerateTypeScriptContent(languageItems, cultures, settings.NeutralLanguage, settings.Import, className, settings.BaseClassName);
+            }
+            else
+            {
+                content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, className);
+            }
+
+            bool equals = false;
+            if (File.Exists(destinationPath))
+            {
+                string existingContent = File.ReadAllText(destinationPath, Encoding.UTF8);
+                equals = (existingContent == content);
+            }
+
+            if (!equals)
+            {
+                byte[] rawData = Encoding.UTF8.GetBytes(content);
+                File.WriteAllBytes(destinationPath, rawData);
+                //File.WriteAllText(destinationPath, content, Encoding.UTF8);
+            }
+        }
+        
         //public static void Generate(string neutralResourcePath, string destinationPath, Type type, string neutralLanguage)
         public static void Generate(LocalizatorResourceSettings settings)
         {
@@ -339,29 +431,20 @@ namespace Renta.Tools.WebUI.Resources
 
                 Dictionary<string, Dictionary<string, string>> languageItems = LoadLanguageItems(settings.NeutralResourcePath, settings.NeutralLanguage, out CultureInfo[] cultures);
 
-                string content;
-                if (settings.Type == Type.TypeScript)
+                if (settings.SplitByComponent)
                 {
-                    content = GenerateTypeScriptContent(languageItems, cultures, settings.NeutralLanguage, settings.Import, settings.BaseClassName);
+                    (string ComponentName, string DestinationPath)[] splittedDestinationFiles = GetSplittedDestinationFiles(languageItems, settings.DestinationPath);
+
+                    foreach ((string ComponentName, string DestinationPath) item in splittedDestinationFiles)
+                    {
+                        Dictionary<string, Dictionary<string, string>> componentLanguageItems = Filter(languageItems, item.ComponentName);
+                        
+                        GenerateFile(settings, componentLanguageItems, cultures, item.DestinationPath);
+                    }
                 }
                 else
                 {
-                    string className = Path.GetFileNameWithoutExtension(settings.DestinationPath);
-                    content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, className);
-                }
-
-                bool equals = false;
-                if (File.Exists(settings.DestinationPath))
-                {
-                    string existingContent = File.ReadAllText(settings.DestinationPath, Encoding.UTF8);
-                    equals = (existingContent == content);
-                }
-
-                if (!equals)
-                {
-                    byte[] rawData = Encoding.UTF8.GetBytes(content);
-                    File.WriteAllBytes(settings.DestinationPath, rawData);
-                    //File.WriteAllText(destinationPath, content, Encoding.UTF8);
+                    GenerateFile(settings, languageItems, cultures, settings.DestinationPath);
                 }
             }
             catch (Exception ex)

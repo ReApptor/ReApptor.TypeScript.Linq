@@ -11,7 +11,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         /// <summary>
         /// "WeAre.Athenaeum.CodeGenerator"
         /// </summary>
-        private const string Name = "WeAre.Athenaeum.CodeGenerator";
+        public const string Name = "WeAre.Athenaeum.CodeGenerator";
         
         private static bool Command(string[] args, string command)
         {
@@ -52,40 +52,37 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static int GenerateResources(LocalizatorResourceSettings settings)
         {
-            string neutralResourcePath = settings.NeutralResourcePath;
-            string destinationPath = settings.DestinationPath;
-            
-            if (string.IsNullOrWhiteSpace(neutralResourcePath))
+            if (string.IsNullOrWhiteSpace(settings.NeutralResourcePath))
             {
                 return Error($"{Name}. Invalid input arguments. Parameter \"neutralResourcePath\" not specified.");
             }
 
-            if (neutralResourcePath.StartsWith("/"))
+            if (settings.NeutralResourcePath.StartsWith("/"))
             {
-                neutralResourcePath = Path.Combine(Environment.CurrentDirectory, neutralResourcePath);
+                settings.NeutralResourcePath = Path.Combine(Environment.CurrentDirectory, settings.NeutralResourcePath);
             }
 
-            if (!File.Exists(neutralResourcePath))
+            if (!File.Exists(settings.NeutralResourcePath))
             {
-                return Error($"{Name}. Invalid input arguments. File from parameter \"neutralResourcePath\" (\"{neutralResourcePath}\") cannot be found.");
+                return Error($"{Name}. Invalid input arguments. File from parameter \"neutralResourcePath\" (\"{settings.NeutralResourcePath}\") cannot be found.");
             }
 
-            if (string.IsNullOrWhiteSpace(destinationPath))
+            if (string.IsNullOrWhiteSpace(settings.DestinationPath))
             {
                 return Error($"{Name}. Invalid input arguments. Parameter \"destinationPath\" not specified.");
             }
 
-            if (destinationPath.StartsWith("/"))
+            if (settings.DestinationPath.StartsWith("/"))
             {
-                destinationPath = Path.Combine(Environment.CurrentDirectory, destinationPath);
+                settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
+            if ((!settings.SplitByComponent) && (!Directory.Exists(Path.GetDirectoryName(settings.DestinationPath))))
             {
-                return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{destinationPath}\") cannot be found.");
+                return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
 
-            Console.WriteLine($"{Name}: neutralResourcePath=\"{neutralResourcePath}\", destinationPath=\"{destinationPath}\" type=\"{settings.Type}\", neutralLanguage=\"{settings.NeutralLanguage}\".");
+            Console.WriteLine($"{Name}: neutralResourcePath=\"{settings.NeutralResourcePath}\", destinationPath=\"{settings.DestinationPath}\" type=\"{settings.Type}\", neutralLanguage=\"{settings.NeutralLanguage}\".");
             
             LocalizatorResourceManager.Generate(settings);
 

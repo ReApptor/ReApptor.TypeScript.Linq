@@ -177,13 +177,7 @@
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>RU: Are you sure?</value>
   </data>
-  <data name="HoursWidget.HoursSpent" xml:space="preserve">
-    <value>RU: Hours spent for task</value>
-  </data>
-  <data name="HoursWidget.AddOvertime" xml:space="preserve">
-    <value>RU: Add overtime</value>
-  </data>
-  <data name="HoursWidget.NormalHours" xml:space="preserve">
-    <value>RU: Normal</value>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Close</value>
   </data>
 </root>
