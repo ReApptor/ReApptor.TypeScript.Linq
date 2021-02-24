@@ -6,6 +6,7 @@ import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";
 
 import styles from "../Dropdown.module.scss";
+import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
 
 export interface IDropdownListItemProps {
     item: SelectListItem;
@@ -60,11 +61,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                 </div>
 
                 <div className={this.css(styles.amountTitle, noWrapCss)}>
-                    <span>{this.localizer.get(item.text)}</span>
+                    <span>{DropdownLocalizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small className={styles.amountUnit}>{this.localizer.get(item.subtext)}</small>
+                            <small className={styles.amountUnit}>{DropdownLocalizer.get(item.subtext)}</small>
                         )
                     }
                 </div>
@@ -89,11 +90,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
             <React.Fragment>
 
                 <div className={this.css(noWrapCss, lineThroughCss)}>
-                    <span>{this.localizer.get(item.text)}</span>
+                    <span>{DropdownLocalizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small>{this.localizer.get(item.subtext)}</small>
+                            <small>{DropdownLocalizer.get(item.subtext)}</small>
                         )
                     }
                 </div>
@@ -118,11 +119,11 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
             <React.Fragment>
 
                 <div className={this.css(noWrapCss)}>
-                    <span>{this.localizer.get(item.text)}</span>
+                    <span>{DropdownLocalizer.get(item.text)}</span>
                     {
                         (!this.props.subtextHidden) && 
                         (
-                            <small>{this.localizer.get(item.subtext)}</small>
+                            <small>{DropdownLocalizer.get(item.subtext)}</small>
                         )
                     }
                 </div>

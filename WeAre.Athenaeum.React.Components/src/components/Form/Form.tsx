@@ -6,6 +6,7 @@ import { Dictionary } from "typescript-collections";
 import Inline from "../Inline/Inline";
 
 import styles from "./Form.module.scss";
+import FormLocalizer from "@/components/Form/FormLocalizer";
 
 interface IFormProps {
     id?: string;
@@ -144,7 +145,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
                     <ul className={styles.errorList}>
                         {this.state.validationErrors.map((error, index) => (
                             <li key={index}>
-                                <span>{this.localizer.get(error)}</span>
+                                <span>{FormLocalizer.get(error)}</span>
                             </li>
                         ))}
                     </ul>

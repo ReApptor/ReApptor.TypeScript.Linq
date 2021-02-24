@@ -1,45 +1,12 @@
 import React from "react";
-import {BaseAsyncComponent, BasePageDefinitions, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
 
 import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";
-
-//  IconStyle Copied to disconnect this component from TopNav, Remove and replace if needed
-enum IconStyle {
-    Solid,
-    
-    Regular,
-    
-    Light,
-    
-    Brands
-}
-
-//  IconSize Copied to disconnect this component from TopNav, Remove and replace if needed
-enum IconSize {
-    Normal,
-    
-    ExtraSmall,
-    
-    Small,
-    
-    Large,
-    
-    X2,
-    
-    X3,
-    
-    X4,
-    
-    X5,
-    
-    X7,
-    
-    X10
-}
+import TopNavLocalizer from "@/components/TopNav/TopNavLocalizer";
 
 export interface IMenuItem {
     route: PageRoute;
@@ -134,7 +101,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
                     <div className={styles.middle}>
                         {
-                            this.items.map((item, index) => (<Link key={index} className={this.css(styles.middle_link)} route={item.route}>{this.localizer.get(item.label)}</Link>))
+                            this.items.map((item, index) => (<Link key={index} className={this.css(styles.middle_link)} route={item.route}>{TopNavLocalizer.get(item.label)}</Link>))
                         }
                     </div>
 
@@ -161,7 +128,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             )
                         }
                         
-                        <LanguageDropdown languages={this.localizer.supportedLanguages} currentLanguage={this.localizer.language} changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)} />
+                        <LanguageDropdown languages={TopNavLocalizer.supportedLanguages} currentLanguage={TopNavLocalizer.language} changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)} />
                     
                     </div>
 

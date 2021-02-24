@@ -2,10 +2,10 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBaseComponent} from "@weare/athenaeum-react-common";
 import {Dictionary} from "typescript-collections";
-import DropdownWidget from "./DropdownWidget/DropdownWidget";
 import IBaseWidget from "./BaseWidget";
 
 import styles from "./WidgetContainer.module.scss";
+import DropdownWidget from "@/components/DropdownWidget/DropdownWidget";
 
 export interface IWidgetContainer extends IBaseComponent {
     readonly controller: string | null;

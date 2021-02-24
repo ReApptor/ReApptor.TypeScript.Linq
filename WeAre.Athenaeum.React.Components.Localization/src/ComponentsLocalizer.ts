@@ -44,6 +44,16 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly formInputFilePreviewLanguageItemName: string = `Form.Input.File.Preview`;
     public readonly formInputFileChooseFileLanguageItemName: string = `Form.Input.File.ChooseFile`;
     public readonly alertLanguageItemName: string = `Alert`;
+    public readonly textInputLanguageItemName: string = `TextInput`;
+    public readonly topNavLanguageItemName: string = `TopNav`;
+    public readonly footerLanguageItemName: string = `Footer`;
+    public readonly iconLanguageItemName: string = `Icon`;
+    public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
+    public readonly generalLanguageItemName: string = `General`;
+    public readonly widgetContainerQrWidgetScanErrorLanguageItemName: string = `WidgetContainer.QrWidget.Scan.Error`;
+    public readonly barWidgetBudgetDataModuleLabelLanguageItemName: string = `BarWidget.BudgetData.Module.Label`;
+    public readonly barWidgetBudgetDataPerimeterFrameLabelLanguageItemName: string = `BarWidget.BudgetData.PerimeterFrame.Label`;
+    public readonly barWidgetBudgetDataWeatherShelterLabelLanguageItemName: string = `BarWidget.BudgetData.WeatherShelter.Label`;
     public readonly locationPickerModalTitleLanguageItemName: string = `LocationPickerModal.Title`;
     public readonly locationPickerModalSubtitleLanguageItemName: string = `LocationPickerModal.Subtitle`;
     public readonly locationPickerModalSetLocationLanguageItemName: string = `LocationPickerModal.SetLocation`;
@@ -54,6 +64,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly dropdownAddLanguageItemName: string = `Dropdown.Add`;
     public readonly dropdownNothingSelectedLanguageItemName: string = `Dropdown.NothingSelected`;
     public readonly formInputEmailLanguageItemName: string = `Form.Input.Email`;
+    public readonly passwordInputHelpTextLengthLanguageItemName: string = `PasswordInput.HelpText.Length`;
 
     constructor() {
 
@@ -108,6 +119,16 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.formInputFilePreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
         this.set(this.formInputFileChooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.topNavLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.footerLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.generalLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.widgetContainerQrWidgetScanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
+        this.set(this.barWidgetBudgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
+        this.set(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
+        this.set(this.barWidgetBudgetDataWeatherShelterLabelLanguageItemName, { language: `en`, value: `Weather shelter` }, { language: `sv`, value: `SV: Weather shelter` }, { language: `ru`, value: `RU: Weather shelter` }, { language: `pl`, value: `PL: Weather shelter` }, { language: `fi`, value: `Sääsuoja` },);
         this.set(this.locationPickerModalTitleLanguageItemName, { language: `en`, value: `Location picker` }, { language: `sv`, value: `Platsväljare` }, { language: `ru`, value: `RU: Location picker` }, { language: `pl`, value: `PL: Location picker` }, { language: `fi`, value: `Sijaintivalitsin` },);
         this.set(this.locationPickerModalSubtitleLanguageItemName, { language: `en`, value: `Choose location on map` }, { language: `sv`, value: `Välj plats på kartan` }, { language: `ru`, value: `RU: Choose location on map` }, { language: `pl`, value: `PL: Choose location on map` }, { language: `fi`, value: `Valitse sijainti kartalla` },);
         this.set(this.locationPickerModalSetLocationLanguageItemName, { language: `en`, value: `Set location` }, { language: `sv`, value: `SV: Set location` }, { language: `ru`, value: `RU: Set location` }, { language: `pl`, value: `Ställ in plats` }, { language: `fi`, value: `Aseta sijainti` },);
@@ -118,6 +139,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.dropdownAddLanguageItemName, { language: `en`, value: `Add` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `RU: Add` }, { language: `pl`, value: `PL: Add` }, { language: `fi`, value: `Lisää` },);
         this.set(this.dropdownNothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
         this.set(this.formInputEmailLanguageItemName, { language: `en`, value: `Email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Email` }, { language: `pl`, value: `PL: Email` }, { language: `fi`, value: `Sähköposti` },);
+        this.set(this.passwordInputHelpTextLengthLanguageItemName, { language: `en`, value: `at least 8 characters long` }, { language: `sv`, value: `åtminstone 8 tecken` }, { language: `ru`, value: `RU: at least 8 characters long` }, { language: `pl`, value: `PL: at least 8 characters long` }, { language: `fi`, value: `vähintään 8 merkkiä` },);
     }
 
     /**
@@ -401,6 +423,76 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
+    /* "TextInput" ()
+    */
+    public get textInput() : string {
+        return this.get(this.textInputLanguageItemName);
+    }
+
+    /**
+    /* "TopNav" ()
+    */
+    public get topNav() : string {
+        return this.get(this.topNavLanguageItemName);
+    }
+
+    /**
+    /* "Footer" ()
+    */
+    public get footer() : string {
+        return this.get(this.footerLanguageItemName);
+    }
+
+    /**
+    /* "Icon" ()
+    */
+    public get icon() : string {
+        return this.get(this.iconLanguageItemName);
+    }
+
+    /**
+    /* "DropdownWidget" ()
+    */
+    public get dropdownWidget() : string {
+        return this.get(this.dropdownWidgetLanguageItemName);
+    }
+
+    /**
+    /* "General" ()
+    */
+    public get general() : string {
+        return this.get(this.generalLanguageItemName);
+    }
+
+    /**
+    /* "WidgetContainer.QrWidget.Scan.Error" (QR code scanner is not available, probably no permissions to camera on your mobile device.)
+    */
+    public get widgetContainerQrWidgetScanError() : string {
+        return this.get(this.widgetContainerQrWidgetScanErrorLanguageItemName);
+    }
+
+    /**
+    /* "BarWidget.BudgetData.Module.Label" (Module)
+    */
+    public get barWidgetBudgetDataModuleLabel() : string {
+        return this.get(this.barWidgetBudgetDataModuleLabelLanguageItemName);
+    }
+
+    /**
+    /* "BarWidget.BudgetData.PerimeterFrame.Label" (Perimeter frame)
+    */
+    public get barWidgetBudgetDataPerimeterFrameLabel() : string {
+        return this.get(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName);
+    }
+
+    /**
+    /* "BarWidget.BudgetData.WeatherShelter.Label" (Weather shelter)
+    */
+    public get barWidgetBudgetDataWeatherShelterLabel() : string {
+        return this.get(this.barWidgetBudgetDataWeatherShelterLabelLanguageItemName);
+    }
+
+    /**
     /* "LocationPickerModal.Title" (Location picker)
     */
     public get locationPickerModalTitle() : string {
@@ -468,6 +560,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get formInputEmail() : string {
         return this.get(this.formInputEmailLanguageItemName);
+    }
+
+    /**
+    /* "PasswordInput.HelpText.Length" (at least 8 characters long)
+    */
+    public get passwordInputHelpTextLength() : string {
+        return this.get(this.passwordInputHelpTextLengthLanguageItemName);
     }
 }
 
