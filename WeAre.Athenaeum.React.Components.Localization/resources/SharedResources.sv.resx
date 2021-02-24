@@ -184,6 +184,87 @@
     <value>Bekräfta</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>Stäng</value>
+    <value>SV: Close</value>
+  </data>
+  <data name="Form.Input.Email" xml:space="preserve">
+    <value>Epost</value>
+  </data>
+  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
+    <value>Epost</value>
+  </data>
+  <data name="Form.Input.Phone" xml:space="preserve">
+    <value>Telefonnumer</value>
+  </data>
+  <data name="Form.Input.Firstname" xml:space="preserve">
+    <value>Förnamn</value>
+  </data>
+  <data name="Form.Input.Lastname" xml:space="preserve">
+    <value>Efternamn</value>
+  </data>
+  <data name="Form.Input.Message" xml:space="preserve">
+    <value>Meddelande</value>
+  </data>
+  <data name="Form.Input.Street" xml:space="preserve">
+    <value>Gata</value>
+  </data>
+  <data name="Form.Input.Address" xml:space="preserve">
+    <value>Adress</value>
+  </data>
+  <data name="Form.Input.City" xml:space="preserve">
+    <value>Stad</value>
+  </data>
+  <data name="Form.Input.Postalcode" xml:space="preserve">
+    <value>Postnummer</value>
+  </data>
+  <data name="Form.Input.Language" xml:space="preserve">
+    <value>Språk</value>
+  </data>
+  <data name="Form.Input.File.DragAndDrop" xml:space="preserve">
+    <value>dra och släpp filen här, eller välj med att klicka</value>
+  </data>
+  <data name="Form.Input.File.Readonly" xml:space="preserve">
+    <value>Filen är bara läsbar</value>
+  </data>
+  <data name="Form.Input.File.Preview" xml:space="preserve">
+    <value>Förhandsvisning</value>
+  </data>
+  <data name="Form.Input.File.ChooseFile" xml:space="preserve">
+    <value>Välj fil</value>
+  </data>
+  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
+    <value>Användar-id</value>
+  </data>
+  <data name="Form.Input.Role" xml:space="preserve">
+    <value>Roll</value>
+  </data>
+  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
+    <value>Kontrakt lön timpris</value>
+  </data>
+  <data name="Form.Input.WorkCardId" xml:space="preserve">
+    <value>Arbetskorts-id</value>
+  </data>
+  <data name="Form.Input.CostPool" xml:space="preserve">
+    <value>Kostnadspool</value>
+  </data>
+  <data name="Form.Input.Middlename" xml:space="preserve">
+    <value>SV: Middle name</value>
+  </data>
+  <data name="Form.Input.Postalbox" xml:space="preserve">
+    <value>SV: Postal box</value>
+  </data>
+  <data name="LocationPickerModal.Title" xml:space="preserve">
+    <value>Platsväljare</value>
+  </data>
+  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>Välj plats på kartan</value>
+  </data>
+  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
+    <value>SV: Time tracking device id</value>
+  </data>
+  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>SV: Set location</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value />
   </data>
 </root>

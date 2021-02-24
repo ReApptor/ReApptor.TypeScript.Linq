@@ -16,6 +16,7 @@ import fi from "date-fns/locale/fi";
 import en from "date-fns/locale/en-GB";
 //import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
+import DateInputLocalizer from "@/components/DateInput/DateInputLocalizer";
 
 registerLocale("fi", fi);
 registerLocale("en", en);
@@ -127,7 +128,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
                 <DatePicker id={this.getInputId()}
-                            title={this.localizer.get(this.props.title)}
+                            title={DateInputLocalizer.get(this.props.title)}
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
                             maxDate={this.props.maxDate}
@@ -142,7 +143,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             showMonthYearPicker={this.props.showMonthYearPicker}
                             onChangeRaw={(e) => this.handleRawChange(e)}
                             ref={this.props.forwardedRef}
-                            locale={this.localizer.language}
+                            locale={DateInputLocalizer.language}
                             readOnly={this.readonly}
                             customInput={this.renderCustomInput()}
                 />

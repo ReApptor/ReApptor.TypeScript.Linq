@@ -186,4 +186,85 @@
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>Ole hyvä ja kommentoi</value>
   </data>
+  <data name="Form.Input.Email" xml:space="preserve">
+    <value>Sähköposti</value>
+  </data>
+  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
+    <value>Vastaanottaja</value>
+  </data>
+  <data name="Form.Input.Phone" xml:space="preserve">
+    <value>Puhelinnumero</value>
+  </data>
+  <data name="Form.Input.Firstname" xml:space="preserve">
+    <value>Etunimi</value>
+  </data>
+  <data name="Form.Input.Middlename" xml:space="preserve">
+    <value>Toinen nimi</value>
+  </data>
+  <data name="Form.Input.Lastname" xml:space="preserve">
+    <value>Sukunimi</value>
+  </data>
+  <data name="Form.Input.Message" xml:space="preserve">
+    <value>Viesti</value>
+  </data>
+  <data name="Form.Input.Address" xml:space="preserve">
+    <value>Osoite</value>
+  </data>
+  <data name="Form.Input.Street" xml:space="preserve">
+    <value>Katu</value>
+  </data>
+  <data name="Form.Input.City" xml:space="preserve">
+    <value>Kaupunki</value>
+  </data>
+  <data name="Form.Input.Postalcode" xml:space="preserve">
+    <value>Postinumero</value>
+  </data>
+  <data name="Form.Input.Postalbox" xml:space="preserve">
+    <value>Postilaatikko</value>
+  </data>
+  <data name="Form.Input.Language" xml:space="preserve">
+    <value>Kieli</value>
+  </data>
+  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
+    <value>Käyttäjä-id</value>
+  </data>
+  <data name="Form.Input.CostPool" xml:space="preserve">
+    <value>Kustannuspaikka</value>
+  </data>
+  <data name="Form.Input.WorkCardId" xml:space="preserve">
+    <value>Valttikorti-id</value>
+  </data>
+  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
+    <value>Työaikaseurantalaite-id</value>
+  </data>
+  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
+    <value>Sopimuspalkan tuntihinta</value>
+  </data>
+  <data name="Form.Input.Role" xml:space="preserve">
+    <value>Rooli</value>
+  </data>
+  <data name="Form.Input.File.DragAndDrop" xml:space="preserve">
+    <value>Pudota tiedosto tähän tai valitse klikkaamalla</value>
+  </data>
+  <data name="Form.Input.File.Readonly" xml:space="preserve">
+    <value>Tämä tiedosto on vain luettavissa</value>
+  </data>
+  <data name="Form.Input.File.Preview" xml:space="preserve">
+    <value>Esikatselu</value>
+  </data>
+  <data name="Form.Input.File.ChooseFile" xml:space="preserve">
+    <value>Valitse tiedosto</value>
+  </data>
+  <data name="LocationPickerModal.Title" xml:space="preserve">
+    <value>Sijaintivalitsin</value>
+  </data>
+  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>Valitse sijainti kartalla</value>
+  </data>
+  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>Aseta sijainti</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value />
+  </data>
 </root>

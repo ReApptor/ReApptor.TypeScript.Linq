@@ -6,6 +6,7 @@ import Modal, { ModalSize } from "../../Modal/Modal";
 import Icon, { IconSize } from "@/components/Icon/Icon";
 
 import styles from "./DocumentPreviewModal.module.scss";
+import FormLocalizer from "@/components/Form/FormLocalizer";
 
 const A4 = { width: 595, height: 842 };
 
@@ -118,7 +119,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
                   className="blue"
                   size={IconSize.X2}
                   onClick={async () => await this.download()} 
-                  tooltip={this.localizer.get("imageModalDownload")} 
+                  tooltip={FormLocalizer.get("imageModalDownload")} 
             />
         );
     }
@@ -183,7 +184,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
             <Modal id={this.id} ref={this._modalRef}
                    className={styles.documentPreviewModal}
                    bodyClassName={styles.body}
-                   title={this.title || this.localizer.get("formInputFilePreview")}
+                   title={this.title || FormLocalizer.inputFilePreview}
                    subtitle={this.subtitle || "..."}
                    info
                    size={ModalSize.Auto}

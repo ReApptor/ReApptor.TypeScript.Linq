@@ -1,8 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import TwoColumns from "../../TwoColumn/TwoColumns";
-import TextInput from "../../TextInput/TextInput";
-import { IInput } from "../../../models/base/BaseInput";
+import TwoColumns from "../TwoColumn/TwoColumns";
+import TextInput from "../TextInput/TextInput";
+import { IInput } from "../../models/base/BaseInput";
 import OneColumn from "@/components/OneColumn/OneColumn";
 
 interface IVirtualAddressDividerProps {

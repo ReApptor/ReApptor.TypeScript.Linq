@@ -4,12 +4,6 @@ import {BaseComponentsLocalizer} from "@weare/athenaeum-react-common";
 class ComponentsLocalizer extends BaseComponentsLocalizer {
 
     //Constants
-    public readonly dropdownNoItemsLanguageItemName: string = `Dropdown.NoItems`;
-    public readonly dropdownNoDataLanguageItemName: string = `Dropdown.NoData`;
-    public readonly dropdownFilterResultsLanguageItemName: string = `Dropdown.FilterResults`;
-    public readonly dropdownGetResultsLanguageItemName: string = `Dropdown.GetResults`;
-    public readonly dropdownAddLanguageItemName: string = `Dropdown.Add`;
-    public readonly dropdownNothingSelectedLanguageItemName: string = `Dropdown.NothingSelected`;
     public readonly dropdownMultipleSelectedLanguageItemName: string = `Dropdown.MultipleSelected`;
     public readonly footerContactLanguageItemName: string = `Footer.Contact`;
     public readonly footerFrontpageLanguageItemName: string = `Footer.Frontpage`;
@@ -27,7 +21,39 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly confirmationDialogConfirmButtonLanguageItemName: string = `ConfirmationDialog.ConfirmButton`;
     public readonly confirmationDialogCloseButtonLanguageItemName: string = `ConfirmationDialog.CloseButton`;
     public readonly confirmationDialogCommentLanguageItemName: string = `ConfirmationDialog.Comment`;
+    public readonly formInputReceiverEmailLanguageItemName: string = `Form.Input.ReceiverEmail`;
+    public readonly formInputPhoneLanguageItemName: string = `Form.Input.Phone`;
+    public readonly formInputFirstnameLanguageItemName: string = `Form.Input.Firstname`;
+    public readonly formInputMiddlenameLanguageItemName: string = `Form.Input.Middlename`;
+    public readonly formInputLastnameLanguageItemName: string = `Form.Input.Lastname`;
+    public readonly formInputMessageLanguageItemName: string = `Form.Input.Message`;
+    public readonly formInputAddressLanguageItemName: string = `Form.Input.Address`;
+    public readonly formInputStreetLanguageItemName: string = `Form.Input.Street`;
+    public readonly formInputCityLanguageItemName: string = `Form.Input.City`;
+    public readonly formInputPostalcodeLanguageItemName: string = `Form.Input.Postalcode`;
+    public readonly formInputPostalboxLanguageItemName: string = `Form.Input.Postalbox`;
+    public readonly formInputLanguageLanguageItemName: string = `Form.Input.Language`;
+    public readonly formInputEmployeeNumberLanguageItemName: string = `Form.Input.EmployeeNumber`;
+    public readonly formInputCostPoolLanguageItemName: string = `Form.Input.CostPool`;
+    public readonly formInputWorkCardIdLanguageItemName: string = `Form.Input.WorkCardId`;
+    public readonly formInputTimeTrackingDeviceIdLanguageItemName: string = `Form.Input.TimeTrackingDeviceId`;
+    public readonly formInputContractSalaryHourlyPriceLanguageItemName: string = `Form.Input.ContractSalaryHourlyPrice`;
+    public readonly formInputRoleLanguageItemName: string = `Form.Input.Role`;
+    public readonly formInputFileDragAndDropLanguageItemName: string = `Form.Input.File.DragAndDrop`;
+    public readonly formInputFileReadonlyLanguageItemName: string = `Form.Input.File.Readonly`;
+    public readonly formInputFilePreviewLanguageItemName: string = `Form.Input.File.Preview`;
+    public readonly formInputFileChooseFileLanguageItemName: string = `Form.Input.File.ChooseFile`;
     public readonly alertLanguageItemName: string = `Alert`;
+    public readonly locationPickerModalTitleLanguageItemName: string = `LocationPickerModal.Title`;
+    public readonly locationPickerModalSubtitleLanguageItemName: string = `LocationPickerModal.Subtitle`;
+    public readonly locationPickerModalSetLocationLanguageItemName: string = `LocationPickerModal.SetLocation`;
+    public readonly dropdownNoItemsLanguageItemName: string = `Dropdown.NoItems`;
+    public readonly dropdownNoDataLanguageItemName: string = `Dropdown.NoData`;
+    public readonly dropdownFilterResultsLanguageItemName: string = `Dropdown.FilterResults`;
+    public readonly dropdownGetResultsLanguageItemName: string = `Dropdown.GetResults`;
+    public readonly dropdownAddLanguageItemName: string = `Dropdown.Add`;
+    public readonly dropdownNothingSelectedLanguageItemName: string = `Dropdown.NothingSelected`;
+    public readonly formInputEmailLanguageItemName: string = `Form.Input.Email`;
 
     constructor() {
 
@@ -42,12 +68,6 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
             "en");
         
         //Initializer
-        this.set(this.dropdownNoItemsLanguageItemName, { language: `en`, value: `No items found` }, { language: `sv`, value: `Inga objekt hittades` }, { language: `ru`, value: `RU: No items found` }, { language: `pl`, value: `PL: No items found` }, { language: `fi`, value: `Kohteita ei löytynyt` },);
-        this.set(this.dropdownNoDataLanguageItemName, { language: `en`, value: `No data` }, { language: `sv`, value: `Ingen information` }, { language: `ru`, value: `RU: No data` }, { language: `pl`, value: `PL: No data` }, { language: `fi`, value: `Ei tietoja` },);
-        this.set(this.dropdownFilterResultsLanguageItemName, { language: `en`, value: `Filter results` }, { language: `sv`, value: `Filtrera resultat` }, { language: `ru`, value: `RU: Filter results` }, { language: `pl`, value: `PL: Filter results` }, { language: `fi`, value: `Suodata tulokset` },);
-        this.set(this.dropdownGetResultsLanguageItemName, { language: `en`, value: `Start typing to get results` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `ru`, value: `RU: Start typing to get results` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` },);
-        this.set(this.dropdownAddLanguageItemName, { language: `en`, value: `Add` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `RU: Add` }, { language: `pl`, value: `PL: Add` }, { language: `fi`, value: `Lisää` },);
-        this.set(this.dropdownNothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
         this.set(this.dropdownMultipleSelectedLanguageItemName, { language: `en`, value: `{0} selected` }, { language: `sv`, value: `{0} valt` }, { language: `ru`, value: `RU: {0} selected` }, { language: `pl`, value: `PL: {0} selected` }, { language: `fi`, value: `{0} valittu` },);
         this.set(this.footerContactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `RU: Contact information` }, { language: `pl`, value: `PL: Contact information` }, { language: `fi`, value: `Yhteystiedot` },);
         this.set(this.footerFrontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `PL: Frontpage` }, { language: `fi`, value: `Etusivu` },);
@@ -62,52 +82,42 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.navigationWidgetNextLanguageItemName, { language: `en`, value: `Next` }, { language: `sv`, value: `Nästa` }, { language: `ru`, value: `RU: Next` }, { language: `pl`, value: `PL: Next` }, { language: `fi`, value: `Seuraava` },);
         this.set(this.navigationWidgetGoToNextLanguageItemName, { language: `en`, value: `Go to next step` }, { language: `sv`, value: `Gå till nästa steg` }, { language: `ru`, value: `RU: Go to next step` }, { language: `pl`, value: `PL: Go to next step` }, { language: `fi`, value: `Siirry seuraavaan vaiheeseen` },);
         this.set(this.confirmationDialogAreYouSureLanguageItemName, { language: `en`, value: `Are you sure?` }, { language: `sv`, value: `Är du säker?` }, { language: `ru`, value: `RU: Are you sure?` }, { language: `pl`, value: `PL: Are you sure?` }, { language: `fi`, value: `Oletko varma?` },);
-        this.set(this.confirmationDialogConfirmButtonLanguageItemName, { language: `en`, value: `Confirm` }, { language: `sv`, value: `Bekräfta` }, { language: `fi`, value: `Kyllä` },);
-        this.set(this.confirmationDialogCloseButtonLanguageItemName, { language: `en`, value: `Close` }, { language: `sv`, value: `Stäng` }, { language: `ru`, value: `Close` }, { language: `fi`, value: `Ei` },);
-        this.set(this.confirmationDialogCommentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `fi`, value: `Ole hyvä ja kommentoi` },);
-        this.set(this.alertLanguageItemName, { language: `en`, value: `` },);
-    }
-
-    /**
-    /* "Dropdown.NoItems" (No items found)
-    */
-    public get dropdownNoItems() : string {
-        return this.get(this.dropdownNoItemsLanguageItemName);
-    }
-
-    /**
-    /* "Dropdown.NoData" (No data)
-    */
-    public get dropdownNoData() : string {
-        return this.get(this.dropdownNoDataLanguageItemName);
-    }
-
-    /**
-    /* "Dropdown.FilterResults" (Filter results)
-    */
-    public get dropdownFilterResults() : string {
-        return this.get(this.dropdownFilterResultsLanguageItemName);
-    }
-
-    /**
-    /* "Dropdown.GetResults" (Start typing to get results)
-    */
-    public get dropdownGetResults() : string {
-        return this.get(this.dropdownGetResultsLanguageItemName);
-    }
-
-    /**
-    /* "Dropdown.Add" (Add)
-    */
-    public get dropdownAdd() : string {
-        return this.get(this.dropdownAddLanguageItemName);
-    }
-
-    /**
-    /* "Dropdown.NothingSelected" (Nothing is selected)
-    */
-    public get dropdownNothingSelected() : string {
-        return this.get(this.dropdownNothingSelectedLanguageItemName);
+        this.set(this.confirmationDialogConfirmButtonLanguageItemName, { language: `en`, value: `Confirm` }, { language: `sv`, value: `Bekräfta` }, { language: `ru`, value: `RU: Confirm` }, { language: `pl`, value: `PL: Confirm` }, { language: `fi`, value: `Kyllä` },);
+        this.set(this.confirmationDialogCloseButtonLanguageItemName, { language: `en`, value: `Close` }, { language: `sv`, value: `SV: Close` }, { language: `ru`, value: `RU: Close` }, { language: `pl`, value: `PL: Close` }, { language: `fi`, value: `Ei` },);
+        this.set(this.confirmationDialogCommentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `ru`, value: `RU: Please leave a comment` }, { language: `pl`, value: `PL: Please leave a comment` }, { language: `fi`, value: `Ole hyvä ja kommentoi` },);
+        this.set(this.formInputReceiverEmailLanguageItemName, { language: `en`, value: `Receiver email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Receiver email` }, { language: `pl`, value: `PL: Receiver email` }, { language: `fi`, value: `Vastaanottaja` },);
+        this.set(this.formInputPhoneLanguageItemName, { language: `en`, value: `Phone number` }, { language: `sv`, value: `Telefonnumer` }, { language: `ru`, value: `RU: Phone number` }, { language: `pl`, value: `PL: Phone number` }, { language: `fi`, value: `Puhelinnumero` },);
+        this.set(this.formInputFirstnameLanguageItemName, { language: `en`, value: `Firstname` }, { language: `sv`, value: `Förnamn` }, { language: `ru`, value: `RU: Firstname` }, { language: `pl`, value: `PL: Firstname` }, { language: `fi`, value: `Etunimi` },);
+        this.set(this.formInputMiddlenameLanguageItemName, { language: `en`, value: `Middle name` }, { language: `sv`, value: `SV: Middle name` }, { language: `ru`, value: `RU: Middle name` }, { language: `pl`, value: `PL: Middle name` }, { language: `fi`, value: `Toinen nimi` },);
+        this.set(this.formInputLastnameLanguageItemName, { language: `en`, value: `Lastname` }, { language: `sv`, value: `Efternamn` }, { language: `ru`, value: `RU: Lastname` }, { language: `pl`, value: `PL: Lastname` }, { language: `fi`, value: `Sukunimi` },);
+        this.set(this.formInputMessageLanguageItemName, { language: `en`, value: `Message` }, { language: `sv`, value: `Meddelande` }, { language: `ru`, value: `RU: Message` }, { language: `pl`, value: `PL: Message` }, { language: `fi`, value: `Viesti` },);
+        this.set(this.formInputAddressLanguageItemName, { language: `en`, value: `Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
+        this.set(this.formInputStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
+        this.set(this.formInputCityLanguageItemName, { language: `en`, value: `City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
+        this.set(this.formInputPostalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
+        this.set(this.formInputPostalboxLanguageItemName, { language: `en`, value: `Postal box` }, { language: `sv`, value: `SV: Postal box` }, { language: `ru`, value: `RU: Postal box` }, { language: `pl`, value: `PL: Postal box` }, { language: `fi`, value: `Postilaatikko` },);
+        this.set(this.formInputLanguageLanguageItemName, { language: `en`, value: `Language` }, { language: `sv`, value: `Språk` }, { language: `ru`, value: `RU: Language` }, { language: `pl`, value: `PL: Language` }, { language: `fi`, value: `Kieli` },);
+        this.set(this.formInputEmployeeNumberLanguageItemName, { language: `en`, value: `Employee number` }, { language: `sv`, value: `Användar-id` }, { language: `ru`, value: `RU: Employee number` }, { language: `pl`, value: `PL: Employee number` }, { language: `fi`, value: `Käyttäjä-id` },);
+        this.set(this.formInputCostPoolLanguageItemName, { language: `en`, value: `Cost pool` }, { language: `sv`, value: `Kostnadspool` }, { language: `ru`, value: `RU: Cost pool` }, { language: `pl`, value: `PL: Cost pool` }, { language: `fi`, value: `Kustannuspaikka` },);
+        this.set(this.formInputWorkCardIdLanguageItemName, { language: `en`, value: `Work card id` }, { language: `sv`, value: `Arbetskorts-id` }, { language: `ru`, value: `RU: Work card id` }, { language: `pl`, value: `PL: Work card id` }, { language: `fi`, value: `Valttikorti-id` },);
+        this.set(this.formInputTimeTrackingDeviceIdLanguageItemName, { language: `en`, value: `Time tracking device id` }, { language: `sv`, value: `SV: Time tracking device id` }, { language: `ru`, value: `RU: Time tracking device id` }, { language: `pl`, value: `PL: Time tracking device id` }, { language: `fi`, value: `Työaikaseurantalaite-id` },);
+        this.set(this.formInputContractSalaryHourlyPriceLanguageItemName, { language: `en`, value: `Contract salary hourly price` }, { language: `sv`, value: `Kontrakt lön timpris` }, { language: `ru`, value: `RU: Contract salary hourly price` }, { language: `pl`, value: `PL: Contract salary hourly price` }, { language: `fi`, value: `Sopimuspalkan tuntihinta` },);
+        this.set(this.formInputRoleLanguageItemName, { language: `en`, value: `Role` }, { language: `sv`, value: `Roll` }, { language: `ru`, value: `RU: Role` }, { language: `pl`, value: `PL: Role` }, { language: `fi`, value: `Rooli` },);
+        this.set(this.formInputFileDragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
+        this.set(this.formInputFileReadonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
+        this.set(this.formInputFilePreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
+        this.set(this.formInputFileChooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
+        this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.locationPickerModalTitleLanguageItemName, { language: `en`, value: `Location picker` }, { language: `sv`, value: `Platsväljare` }, { language: `ru`, value: `RU: Location picker` }, { language: `pl`, value: `PL: Location picker` }, { language: `fi`, value: `Sijaintivalitsin` },);
+        this.set(this.locationPickerModalSubtitleLanguageItemName, { language: `en`, value: `Choose location on map` }, { language: `sv`, value: `Välj plats på kartan` }, { language: `ru`, value: `RU: Choose location on map` }, { language: `pl`, value: `PL: Choose location on map` }, { language: `fi`, value: `Valitse sijainti kartalla` },);
+        this.set(this.locationPickerModalSetLocationLanguageItemName, { language: `en`, value: `Set location` }, { language: `sv`, value: `SV: Set location` }, { language: `ru`, value: `RU: Set location` }, { language: `pl`, value: `Ställ in plats` }, { language: `fi`, value: `Aseta sijainti` },);
+        this.set(this.dropdownNoItemsLanguageItemName, { language: `en`, value: `No items found` }, { language: `sv`, value: `Inga objekt hittades` }, { language: `ru`, value: `RU: No items found` }, { language: `pl`, value: `PL: No items found` }, { language: `fi`, value: `Kohteita ei löytynyt` },);
+        this.set(this.dropdownNoDataLanguageItemName, { language: `en`, value: `No data` }, { language: `sv`, value: `Ingen information` }, { language: `ru`, value: `RU: No data` }, { language: `pl`, value: `PL: No data` }, { language: `fi`, value: `Ei tietoja` },);
+        this.set(this.dropdownFilterResultsLanguageItemName, { language: `en`, value: `Filter results` }, { language: `sv`, value: `Filtrera resultat` }, { language: `ru`, value: `RU: Filter results` }, { language: `pl`, value: `PL: Filter results` }, { language: `fi`, value: `Suodata tulokset` },);
+        this.set(this.dropdownGetResultsLanguageItemName, { language: `en`, value: `Start typing to get results` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `ru`, value: `RU: Start typing to get results` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` },);
+        this.set(this.dropdownAddLanguageItemName, { language: `en`, value: `Add` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `RU: Add` }, { language: `pl`, value: `PL: Add` }, { language: `fi`, value: `Lisää` },);
+        this.set(this.dropdownNothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
+        this.set(this.formInputEmailLanguageItemName, { language: `en`, value: `Email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Email` }, { language: `pl`, value: `PL: Email` }, { language: `fi`, value: `Sähköposti` },);
     }
 
     /**
@@ -230,10 +240,234 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
+    /* "Form.Input.ReceiverEmail" (Receiver email)
+    */
+    public get formInputReceiverEmail() : string {
+        return this.get(this.formInputReceiverEmailLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Phone" (Phone number)
+    */
+    public get formInputPhone() : string {
+        return this.get(this.formInputPhoneLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Firstname" (Firstname)
+    */
+    public get formInputFirstname() : string {
+        return this.get(this.formInputFirstnameLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Middlename" (Middle name)
+    */
+    public get formInputMiddlename() : string {
+        return this.get(this.formInputMiddlenameLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Lastname" (Lastname)
+    */
+    public get formInputLastname() : string {
+        return this.get(this.formInputLastnameLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Message" (Message)
+    */
+    public get formInputMessage() : string {
+        return this.get(this.formInputMessageLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Address" (Address)
+    */
+    public get formInputAddress() : string {
+        return this.get(this.formInputAddressLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Street" (Street)
+    */
+    public get formInputStreet() : string {
+        return this.get(this.formInputStreetLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.City" (City)
+    */
+    public get formInputCity() : string {
+        return this.get(this.formInputCityLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Postalcode" (Postal code)
+    */
+    public get formInputPostalcode() : string {
+        return this.get(this.formInputPostalcodeLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Postalbox" (Postal box)
+    */
+    public get formInputPostalbox() : string {
+        return this.get(this.formInputPostalboxLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Language" (Language)
+    */
+    public get formInputLanguage() : string {
+        return this.get(this.formInputLanguageLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.EmployeeNumber" (Employee number)
+    */
+    public get formInputEmployeeNumber() : string {
+        return this.get(this.formInputEmployeeNumberLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.CostPool" (Cost pool)
+    */
+    public get formInputCostPool() : string {
+        return this.get(this.formInputCostPoolLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.WorkCardId" (Work card id)
+    */
+    public get formInputWorkCardId() : string {
+        return this.get(this.formInputWorkCardIdLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.TimeTrackingDeviceId" (Time tracking device id)
+    */
+    public get formInputTimeTrackingDeviceId() : string {
+        return this.get(this.formInputTimeTrackingDeviceIdLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.ContractSalaryHourlyPrice" (Contract salary hourly price)
+    */
+    public get formInputContractSalaryHourlyPrice() : string {
+        return this.get(this.formInputContractSalaryHourlyPriceLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Role" (Role)
+    */
+    public get formInputRole() : string {
+        return this.get(this.formInputRoleLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.File.DragAndDrop" (Drag'n'drop file here, or click to select)
+    */
+    public get formInputFileDragAndDrop() : string {
+        return this.get(this.formInputFileDragAndDropLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.File.Readonly" (File is readonly)
+    */
+    public get formInputFileReadonly() : string {
+        return this.get(this.formInputFileReadonlyLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.File.Preview" (Preview)
+    */
+    public get formInputFilePreview() : string {
+        return this.get(this.formInputFilePreviewLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.File.ChooseFile" (Choose file)
+    */
+    public get formInputFileChooseFile() : string {
+        return this.get(this.formInputFileChooseFileLanguageItemName);
+    }
+
+    /**
     /* "Alert" ()
     */
     public get alert() : string {
         return this.get(this.alertLanguageItemName);
+    }
+
+    /**
+    /* "LocationPickerModal.Title" (Location picker)
+    */
+    public get locationPickerModalTitle() : string {
+        return this.get(this.locationPickerModalTitleLanguageItemName);
+    }
+
+    /**
+    /* "LocationPickerModal.Subtitle" (Choose location on map)
+    */
+    public get locationPickerModalSubtitle() : string {
+        return this.get(this.locationPickerModalSubtitleLanguageItemName);
+    }
+
+    /**
+    /* "LocationPickerModal.SetLocation" (Set location)
+    */
+    public get locationPickerModalSetLocation() : string {
+        return this.get(this.locationPickerModalSetLocationLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.NoItems" (No items found)
+    */
+    public get dropdownNoItems() : string {
+        return this.get(this.dropdownNoItemsLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.NoData" (No data)
+    */
+    public get dropdownNoData() : string {
+        return this.get(this.dropdownNoDataLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.FilterResults" (Filter results)
+    */
+    public get dropdownFilterResults() : string {
+        return this.get(this.dropdownFilterResultsLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.GetResults" (Start typing to get results)
+    */
+    public get dropdownGetResults() : string {
+        return this.get(this.dropdownGetResultsLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.Add" (Add)
+    */
+    public get dropdownAdd() : string {
+        return this.get(this.dropdownAddLanguageItemName);
+    }
+
+    /**
+    /* "Dropdown.NothingSelected" (Nothing is selected)
+    */
+    public get dropdownNothingSelected() : string {
+        return this.get(this.dropdownNothingSelectedLanguageItemName);
+    }
+
+    /**
+    /* "Form.Input.Email" (Email)
+    */
+    public get formInputEmail() : string {
+        return this.get(this.formInputEmailLanguageItemName);
     }
 }
 

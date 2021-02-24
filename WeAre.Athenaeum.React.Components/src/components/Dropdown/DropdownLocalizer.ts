@@ -4,13 +4,13 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class DropdownLocalizer extends BaseComponentLocalizer {
 
     //Constants
+    public readonly multipleSelectedLanguageItemName: string = `MultipleSelected`;
     public readonly noItemsLanguageItemName: string = `NoItems`;
     public readonly noDataLanguageItemName: string = `NoData`;
     public readonly filterResultsLanguageItemName: string = `FilterResults`;
     public readonly getResultsLanguageItemName: string = `GetResults`;
     public readonly addLanguageItemName: string = `Add`;
     public readonly nothingSelectedLanguageItemName: string = `NothingSelected`;
-    public readonly multipleSelectedLanguageItemName: string = `MultipleSelected`;
 
     constructor() {
 
@@ -25,13 +25,20 @@ class DropdownLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
+        this.set(this.multipleSelectedLanguageItemName, { language: `en`, value: `{0} selected` }, { language: `sv`, value: `{0} valt` }, { language: `ru`, value: `RU: {0} selected` }, { language: `pl`, value: `PL: {0} selected` }, { language: `fi`, value: `{0} valittu` },);
         this.set(this.noItemsLanguageItemName, { language: `en`, value: `No items found` }, { language: `sv`, value: `Inga objekt hittades` }, { language: `ru`, value: `RU: No items found` }, { language: `pl`, value: `PL: No items found` }, { language: `fi`, value: `Kohteita ei löytynyt` },);
         this.set(this.noDataLanguageItemName, { language: `en`, value: `No data` }, { language: `sv`, value: `Ingen information` }, { language: `ru`, value: `RU: No data` }, { language: `pl`, value: `PL: No data` }, { language: `fi`, value: `Ei tietoja` },);
         this.set(this.filterResultsLanguageItemName, { language: `en`, value: `Filter results` }, { language: `sv`, value: `Filtrera resultat` }, { language: `ru`, value: `RU: Filter results` }, { language: `pl`, value: `PL: Filter results` }, { language: `fi`, value: `Suodata tulokset` },);
         this.set(this.getResultsLanguageItemName, { language: `en`, value: `Start typing to get results` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `ru`, value: `RU: Start typing to get results` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` },);
         this.set(this.addLanguageItemName, { language: `en`, value: `Add` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `RU: Add` }, { language: `pl`, value: `PL: Add` }, { language: `fi`, value: `Lisää` },);
         this.set(this.nothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
-        this.set(this.multipleSelectedLanguageItemName, { language: `en`, value: `{0} selected` }, { language: `sv`, value: `{0} valt` }, { language: `ru`, value: `RU: {0} selected` }, { language: `pl`, value: `PL: {0} selected` }, { language: `fi`, value: `{0} valittu` },);
+    }
+
+    /**
+    /* "MultipleSelected" ({0} selected)
+    */
+    public get multipleSelected() : string {
+        return this.get(this.multipleSelectedLanguageItemName);
     }
 
     /**
@@ -74,13 +81,6 @@ class DropdownLocalizer extends BaseComponentLocalizer {
     */
     public get nothingSelected() : string {
         return this.get(this.nothingSelectedLanguageItemName);
-    }
-
-    /**
-    /* "MultipleSelected" ({0} selected)
-    */
-    public get multipleSelected() : string {
-        return this.get(this.multipleSelectedLanguageItemName);
     }
 }
 

@@ -4,4 +4,5 @@
   &lt;Project Location="/Users/popovan/SS/BB-MAC/renta-components/WeAre.Athenaeum.Toolkit.UnitTest" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;WeAre.Athenaeum.Toolkit.UnitTest&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Frontend_002FReact_002FWeAre_002EAthenaeum_002EReact_002EComponents_002ELocalization_002Fresources_002FSharedResources/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/OrderByFullPath/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>
