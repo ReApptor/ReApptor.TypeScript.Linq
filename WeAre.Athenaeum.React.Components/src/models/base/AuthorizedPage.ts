@@ -29,7 +29,7 @@ export default abstract class AuthorizedPage<TProps = {}, TState = {}> extends B
         await super.initializeAsync();
         
         if (!this.isAcceptedRegulations) {
-            await this.alertWarningAsync(this.localizer.get("MyAccountPage.Acceptance.Required"));
+            await this.alertWarningAsync("MyAccountPage.Acceptance.Required");
         }
     }
 }

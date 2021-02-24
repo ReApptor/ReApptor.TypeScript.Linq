@@ -4,6 +4,7 @@ import { IMenuItem } from "../TopNav";
 import Link from "../../Link/Link";
 
 import styles from "./Hamburger.module.scss";
+import TopNavLocalizer from "@/components/TopNav/TopNavLocalizer";
 
 interface IHamburgerProps {
     open: boolean;
@@ -22,7 +23,7 @@ export default class Hamburger extends BaseComponent<IHamburgerProps> {
                     this.props.menuItems.length &&
                     this.props.menuItems.map((item, index) => (
                         <li key={index}>
-                            <Link className={styles.link} route={item.route}>{this.localizer.get(item.label)}</Link>
+                            <Link className={styles.link} route={item.route}>{TopNavLocalizer.get(item.label)}</Link>
                         </li>
                     ))
                 }

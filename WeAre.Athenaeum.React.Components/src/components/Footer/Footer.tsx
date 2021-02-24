@@ -3,6 +3,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
+import FooterLocalizer from "@/components/Footer/FooterLocalizer";
 
 interface IFooterLink {
     href: string,
@@ -22,11 +23,11 @@ export default class Footer extends BaseComponent<IFooterProps> {
             : [
                 {
                     href: "https://renta.fi/",
-                    label: this.localizer.get("componentFooterFrontpage")
+                    label: FooterLocalizer.get("componentFooterFrontpage")
                 },
                 {
                     href: "https://www.renta.fi/fi/yhteystiedot/",
-                    label: this.localizer.get("componentFooterContact")
+                    label: FooterLocalizer.get("componentFooterContact")
                 }
             ];
     }

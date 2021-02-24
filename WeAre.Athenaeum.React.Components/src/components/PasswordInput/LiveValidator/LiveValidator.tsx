@@ -2,6 +2,7 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 
 import styles from "./LiveValidator.module.scss";
+import PasswordInputLocalizer from "@/components/PasswordInput/PasswordInputLocalizer";
 
 export class ValidationRow {
     public regex: string;
@@ -104,7 +105,7 @@ export default class LiveValidator extends BaseComponent<ILiveValidatorProps, IL
                                 </td>
                                 <td>
                                     {
-                                        this.localizer.get("Password.HelpText.Length")
+                                        PasswordInputLocalizer.helpTextLength
                                     }
                                 </td>
                             </tr>

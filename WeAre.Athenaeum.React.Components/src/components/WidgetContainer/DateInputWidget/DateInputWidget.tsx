@@ -16,7 +16,7 @@ interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {
 
 export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWidgetProps> {
     private async handleChange(date: Date): Promise<void> {
-        if (this.props.onChange) {
+        if(this.props.onChange) {
             await this.props.onChange(date);
         }
         
@@ -48,13 +48,14 @@ export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWid
     protected renderExpanded(): React.ReactNode {
         return (
             <div className="dateInputContainer">
-                <DatePicker selected={this.props.value || new Date()}
-                            minDate={this.props.minDate}
-                            onChange={(date: Date) => this.handleChange(date)}
-                            className="form-control"
-                            calendarClassName="datepicker dateInputWidget"
-                            inline
-                            todayButton={this.props.todayButton}
+                <DatePicker
+                        selected={this.props.value || new Date()}
+                        minDate={this.props.minDate}
+                        onChange={(date: Date) => this.handleChange(date)}
+                        className="form-control"
+                        calendarClassName="datepicker dateInputWidget"
+                        inline
+                        todayButton={this.props.todayButton}
                     />
             </div>
         )

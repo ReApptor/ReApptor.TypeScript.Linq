@@ -6,6 +6,7 @@ import LiveValidator, { ValidationRow } from "../../components/PasswordInput/Liv
 import RentaTaskConstants from "../../helpers/RentaTaskConstants";
 
 import styles from "../../components/Form/Form.module.scss";
+import GeneralLocalizer from "@/components/General/GeneralLocalizer";
 
 export type NullableCheckboxType = boolean | null;
 
@@ -727,7 +728,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                     (
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
-                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>{this.state.validationError ? this.localizer.get(this.state.validationError, this.props.label) : this.props.label}</label>
+                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>{this.state.validationError ? GeneralLocalizer.get(this.state.validationError, this.props.label) : this.props.label}</label>
                             {(this.props.required && !this.noValidate && !this.state.validationError) && <span className={styles.required}>*</span>}
                         </div>
                     )

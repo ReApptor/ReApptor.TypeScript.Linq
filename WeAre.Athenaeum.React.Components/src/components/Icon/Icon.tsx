@@ -1,6 +1,7 @@
 import React from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import IconLocalizer from "@/components/Icon/IconLocalizer";
 
 export enum IconSize {
     Normal,
@@ -201,7 +202,7 @@ export default class Icon extends BaseComponent<IIconProps> {
                 <i id={this.id}
                    style={this.props.customStyle ? this.props.customStyle : (this.props.disabled) ? this.disabledStyle : {}}
                    className={this.getClassName()}
-                   title={this.localizer.get(this.props.tooltip)}
+                   title={IconLocalizer.get(this.props.tooltip)}
                    data-target={`#${this.dataTarget}`}
                    data-toggle={this.dataToggleModal}
                    data-dismiss={this.dataDismissModal}

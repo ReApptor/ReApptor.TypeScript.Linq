@@ -1,16 +1,17 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
-import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown} from "../../Dropdown/Dropdown";
-import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../BaseWidget";
-import {IWidgetContainer} from "../BaseWidgetContainer";
-import PageContainer from "../../PageContainer/PageContainer";
 import { DropdownSchema } from "@/models/Enums";
-import {SelectListItem} from "../../Dropdown/SelectListItem";
 import {RenderCallback} from "@weare/athenaeum-react-common";
 
 import styles from "../WidgetContainer.module.scss";
-import Comparator from "@/helpers/Comparator";
+import Dropdown, { DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown } from "@/components/Dropdown/Dropdown";
+import { SelectListItem } from "@/components/Dropdown/SelectListItem";
+import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@/components/WidgetContainer/BaseWidget";
+import PageContainer from "@/components/PageContainer/PageContainer";
+import { IWidgetContainer } from "@/components/WidgetContainer/BaseWidgetContainer";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
+import Comparator from "@/helpers/Comparator";
+import DropdownWidgetLocalizer from "@/components/DropdownWidget/DropdownWidgetLocalizer";
 
 export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     favorite?: boolean;
@@ -84,10 +85,10 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         return (!this.props.noDescription)
             ? (this.selectedListItem != null)
                 ? ((this.props.noSubtext) && (this.selectedListItem.subtext))
-                    ? `${this.localizer.get(this.selectedListItem.text.toUpperCase())}, ${this.localizer.get(this.selectedListItem.subtext)}`
-                    : this.localizer.get(this.selectedListItem.text).toUpperCase()
+                    ? `${DropdownWidgetLocalizer.get(this.selectedListItem.text.toUpperCase())}, ${DropdownWidgetLocalizer.get(this.selectedListItem.subtext)}`
+                    : DropdownWidgetLocalizer.get(this.selectedListItem.text).toUpperCase()
                 : (this.props.description)
-                    ? this.localizer.get(this.props.description)
+                    ? DropdownWidgetLocalizer.get(this.props.description)
                     : ""
             : "";
     }
@@ -321,12 +322,12 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
                                   toggleButtonId={this.id}
                                   transform={this.props.transform}
                                   onAdd={() => this.onAddHandlerAsync()}
-                                  onChange={(sender, item, userInteraction) => this.onChangeHandlerAsync(sender, item, userInteraction)}
-                                  onChangeAmount={(sender, item, amount) => this.onChangeAmountHandlerAsync(sender, item, amount)}
-                                  onFavoriteChange={(sender, item, favorite) => this.onFavoriteChangeAsync(sender, item, favorite)}
-                                  onToggle={(sender, expanded) => this.onToggleHandlerAsync(sender, expanded)}
+                                  onChange={(sender: any, item: TItem | null, userInteraction: boolean) => this.onChangeHandlerAsync(sender, item, userInteraction)}
+                                  onChangeAmount={(sender: any, item: TItem | null, amount: number) => this.onChangeAmountHandlerAsync(sender, item, amount)}
+                                  onFavoriteChange={(sender: any, item: TItem | null, favorite: boolean) => this.onFavoriteChangeAsync(sender, item, favorite)}
+                                  onToggle={(sender: any, expanded: boolean) => this.onToggleHandlerAsync(sender, expanded)}
                                   onItemsChange={() => this.onItemsChangeHandlerAsync()}
-                                  onItemClick={(sender, item) => this.onItemClickHandlerAsync(item)}
+                                  onItemClick={(sender: any, item: TItem) => this.onItemClickHandlerAsync(item)}
                         />
                     )
                 }

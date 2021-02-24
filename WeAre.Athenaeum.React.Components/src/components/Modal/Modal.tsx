@@ -7,6 +7,7 @@ import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
 
 import "./BootstrapOverride.scss";
+import ModalLocalizer from "@/components/Modal/ModalLocalizer";
 
 export enum ModalSize {
     Default,
@@ -366,8 +367,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             ((!this.props.info) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
-                                    <Button label={this.localizer.get("Component.Modal.SaveChanges")} type={ButtonType.Orange} submit />
-                                    <Button label={this.localizer.get("Component.Modal.Close")} type={ButtonType.Default} onClick={() => this.closeAsync()} />
+                                    <Button label={ModalLocalizer.saveChanges} type={ButtonType.Orange} submit />
+                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.closeAsync()} />
                                 </div>
                             )
                         }

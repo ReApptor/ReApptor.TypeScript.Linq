@@ -5,6 +5,7 @@ import { BaseInputType  } from "@/models/Enums";
 import Icon from "../Icon/Icon";
 
 import styles from "./FileInput.module.scss";
+import FormLocalizer from "@/components/Form/FormLocalizer";
 
 export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[] | null> {
     forwardedRef?: React.RefObject<HTMLInputElement>;
@@ -158,7 +159,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             <div className={styles.preview}>
                 <div className={styles.image} style={imagePreviewStyle} />
                 {
-                    this.localizer.get("Form.Input.File.Preview")
+                    FormLocalizer.inputFilePreview
                 }
             </div>
         );
@@ -201,7 +202,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                             <label htmlFor={this.getInputId()}>
                                 <span>
                                     {
-                                        (this.readonly) ? this.localizer.get("Form.Input.File.Readonly") : this.localizer.get("Form.Input.File.DragAndDrop")
+                                        (this.readonly) ? FormLocalizer.inputFileReadonly : FormLocalizer.inputFileDragAndDrop
                                     }
                                 </span>
                                 
@@ -224,7 +225,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                         <div className="d-flex align-items-center">
                             <label className={this.css("btn m-0", this.props.labelClassName ? this.props.labelClassName : "btn-info")}
                                    htmlFor={this.getInputId()}>
-                                {this.localizer.get("Form.Input.File.ChooseFile")} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
+                                {FormLocalizer.inputFileChooseFile} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
                             </label>
                         </div>
                     )

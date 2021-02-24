@@ -11,6 +11,7 @@ import Description from "../Popover/Description/Description";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
 
 import styles from "./PageContainer.module.scss";
+import PageContainerLocalizer from "@/components/PageContainer/PageContainerLocalizer";
 
 interface IPageContainerProps {
     id?: string;
@@ -167,7 +168,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 {
                     (this.manual.manual) &&
                     (
-                        <Modal id="page-help-info" title={this.manual.title || this.localizer.get("Component.PageContainer.PageHelp")} content={this.manual.manual} info />
+                        <Modal id="page-help-info" title={this.manual.title || PageContainerLocalizer.pageHelp} content={this.manual.manual} info />
                     )
                 }
 

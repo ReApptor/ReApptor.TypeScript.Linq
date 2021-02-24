@@ -4,6 +4,7 @@ import { BaseInputType  } from "@/models/Enums";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
 
 import styles from "./TextInput.module.scss";
+import TextInputLocalizer from "@/components/TextInput/TextInputLocalizer";
 
 export interface ITextInputProps extends IBaseInputProps<string> {
     maxLength?: number;
@@ -128,7 +129,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                     style={inlineStyles}
                     size={this.props.size || 10}
                     maxLength={this.props.maxLength || 255}
-                    placeholder={this.localizer.get(this.props.placeholder)}
+                    placeholder={TextInputLocalizer.get(this.props.placeholder)}
                     autoFocus={this.props.autoFocus}
                     autoComplete={(this.props.autoComplete === false) ? "off" : ""}
                 />
