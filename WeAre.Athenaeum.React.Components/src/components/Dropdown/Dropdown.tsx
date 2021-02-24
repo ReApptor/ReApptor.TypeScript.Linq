@@ -1,6 +1,6 @@
 import React from "react";
 import $ from "jquery";
-import { ITransformProvider, Utility } from "@weare/athenaeum-toolkit";
+import { Utility } from "@weare/athenaeum-toolkit";
 import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../../models/base/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -11,6 +11,7 @@ import DropdownListItem from "./DropdownListItem/DropdownListItem";
 import Button, {ButtonType} from "@/components/Button/Button";
 
 import styles from "./Dropdown.module.scss";
+import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
 
 const FILTER_MIN_LENGTH = 6;
 const FILTER_MAX_LENGTH = 1000;
@@ -1200,9 +1201,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
             text = render;
         } else if (typeof addButton === "string") {
-            text = this.localizer.get(addButton)
+            text = DropdownLocalizer.get(addButton)
         } else {
-            text = this.localizer.get("Component.Dropdown.Add");
+            text = DropdownLocalizer.add
         }
         
         return (
@@ -1229,7 +1230,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const selectedListItem: SelectListItem | null = this.selectedListItem;
 
         const title: string = (selectedListItem !== null) && (noSubtext)
-            ? this.localizer.get(selectedListItem.subtext)
+            ? DropdownLocalizer.get(selectedListItem.subtext)
             : "";
         
         let text: string = (this.props.selectedTextTransform)
@@ -1239,19 +1240,19 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         if (!text) {
             text = (selectedListItem !== null)
                 ? (noSubtext)
-                    ? this.localizer.get(selectedListItem.text)
-                    : `${this.localizer.get(selectedListItem.text)} <small>${this.localizer.get(selectedListItem.subtext)}</small>`
+                    ? DropdownLocalizer.get(selectedListItem.text)
+                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${DropdownLocalizer.get(selectedListItem.subtext)}</small>`
                 : (this.selectedListItems.length !== 0)
                     ? (this.props.multipleSelectedText)
-                        ? this.localizer.get(this.props.multipleSelectedText)
+                        ? DropdownLocalizer.multipleSelected
                         : ((this.selectedTextFormat) && (this.selectedListItems.length <= this.selectedTextFormat))
                             ? (noSubtext)
-                                ? this.selectedListItems.take(this.selectedTextFormat).map(item => this.localizer.get(item.text)).join(", ")
-                                : this.selectedListItems.take(this.selectedTextFormat).map(item => (item.subtext) ? `${this.localizer.get(item.text)} <small>${this.localizer.get(item.subtext)}</small>` : this.localizer.get(item.text)).join(", ")
-                            : this.localizer.get(this.localizer.get("Component.Dropdown.MultipleSelected"), this.selectedListItems.length)
+                                ? this.selectedListItems.take(this.selectedTextFormat).map(item => DropdownLocalizer.get(item.text)).join(", ")
+                                : this.selectedListItems.take(this.selectedTextFormat).map(item => (item.subtext) ? `${DropdownLocalizer.get(item.text)} <small>${DropdownLocalizer.get(item.subtext)}</small>` : DropdownLocalizer.get(item.text)).join(", ")
+                            : DropdownLocalizer.get(DropdownLocalizer.multipleSelected, this.selectedListItems.length)
                     : (this.props.nothingSelectedText)
-                        ? this.localizer.get(this.props.nothingSelectedText)
-                        : this.localizer.get("Component.Dropdown.NothingSelected");
+                        ? DropdownLocalizer.get(this.props.nothingSelectedText)
+                        : DropdownLocalizer.nothingSelected;
         }
         
         return (
@@ -1302,7 +1303,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                     (
                                         <div className={this.css(styles.item, styles.group)}>
                                             <div>
-                                                <span>{this.localizer.get(item.group!.name)}</span>
+                                                <span>{DropdownLocalizer.get(item.group!.name)}</span>
                                             </div>
                                         </div>
                                     )
@@ -1374,12 +1375,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const longListPlaceholder: string = (this.isLongList())
-            ? this.localizer.get("Component.Dropdown.GetResults")
-            : this.localizer.get("Component.Dropdown.FilterResults");
+            ? DropdownLocalizer.getResults
+            : DropdownLocalizer.filterResults;
         
         const noDataText: string = (this.props.noDataText)
-            ? this.localizer.get(this.props.noDataText)
-            : this.localizer.get("Component.Dropdown.NoData");
+            ? DropdownLocalizer.get(this.props.noDataText)
+            : DropdownLocalizer.noData;
         
         const maxHeight: string | number | undefined = this.getMaxHeightValue();
 
@@ -1442,7 +1443,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                                     {
                                                         (this.noItemsFound()) &&
                                                         (
-                                                            <div className={this.css(styles.noResults, noWrapStyle)}><span>{this.localizer.get("Component.Dropdown.NoItems")}</span></div>
+                                                            <div className={this.css(styles.noResults, noWrapStyle)}><span>{DropdownLocalizer.noItems}</span></div>
                                                         )
                                                     }
     

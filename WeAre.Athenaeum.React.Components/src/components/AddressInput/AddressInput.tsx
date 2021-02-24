@@ -6,7 +6,7 @@ import {ch} from "@weare/athenaeum-react-common";
 import {BaseInputType} from "@/models/Enums";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../../models/base/BaseInput";
 import Icon, {IconSize} from "@/components/Icon/Icon";
-import LocationPickerModal from "@/components/AddressInput/LocationPickerModal/LocationPickerModal";
+import LocationPickerModal from "@/components/LocationPickerModal/LocationPickerModal";
 import AddressHelper, {GoogleApiResult} from "@/helpers/AddressHelper";
 import Comparator from "@/helpers/Comparator";
 

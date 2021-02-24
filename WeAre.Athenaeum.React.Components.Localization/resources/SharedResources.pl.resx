@@ -177,4 +177,94 @@
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>PL: Are you sure?</value>
   </data>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>PL: Confirm</value>
+  </data>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>PL: Close</value>
+  </data>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>PL: Please leave a comment</value>
+  </data>
+  <data name="Form.Input.Postalbox" xml:space="preserve">
+    <value>PL: Postal box</value>
+  </data>
+  <data name="Form.Input.Email" xml:space="preserve">
+    <value>PL: Email</value>
+  </data>
+  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
+    <value>PL: Receiver email</value>
+  </data>
+  <data name="Form.Input.Phone" xml:space="preserve">
+    <value>PL: Phone number</value>
+  </data>
+  <data name="Form.Input.Firstname" xml:space="preserve">
+    <value>PL: Firstname</value>
+  </data>
+  <data name="Form.Input.Lastname" xml:space="preserve">
+    <value>PL: Lastname</value>
+  </data>
+  <data name="Form.Input.Message" xml:space="preserve">
+    <value>PL: Message</value>
+  </data>
+  <data name="Form.Input.Street" xml:space="preserve">
+    <value>PL: Street</value>
+  </data>
+  <data name="Form.Input.Address" xml:space="preserve">
+    <value>PL: Address</value>
+  </data>
+  <data name="Form.Input.City" xml:space="preserve">
+    <value>PL: City</value>
+  </data>
+  <data name="Form.Input.Postalcode" xml:space="preserve">
+    <value>PL: Postal code</value>
+  </data>
+  <data name="Form.Input.Language" xml:space="preserve">
+    <value>PL: Language</value>
+  </data>
+  <data name="Form.Input.File.DragAndDrop" xml:space="preserve">
+    <value>PL: Drag'n'drop file here, or click to select</value>
+  </data>
+  <data name="Form.Input.File.Readonly" xml:space="preserve">
+    <value>PL: File is readonly</value>
+  </data>
+  <data name="Form.Input.File.Preview" xml:space="preserve">
+    <value>PL: Preview</value>
+  </data>
+  <data name="Form.Input.File.ChooseFile" xml:space="preserve">
+    <value>PL: Choose file</value>
+  </data>
+  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
+    <value>PL: Contract salary hourly price</value>
+  </data>
+  <data name="Form.Input.CostPool" xml:space="preserve">
+    <value>PL: Cost pool</value>
+  </data>
+  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
+    <value>PL: Employee number</value>
+  </data>
+  <data name="Form.Input.Middlename" xml:space="preserve">
+    <value>PL: Middle name</value>
+  </data>
+  <data name="Form.Input.Role" xml:space="preserve">
+    <value>PL: Role</value>
+  </data>
+  <data name="Form.Input.WorkCardId" xml:space="preserve">
+    <value>PL: Work card id</value>
+  </data>
+  <data name="LocationPickerModal.Title" xml:space="preserve">
+    <value>PL: Location picker</value>
+  </data>
+  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>PL: Choose location on map</value>
+  </data>
+  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>Ställ in plats</value>
+  </data>
+  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
+    <value>PL: Time tracking device id</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value />
+  </data>
 </root>

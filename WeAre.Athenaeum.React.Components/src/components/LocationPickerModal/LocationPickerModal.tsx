@@ -1,13 +1,14 @@
 import React from "react";
 import {GeoLocation} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import LocationPicker from "@/components/AddressInput/LocationPicker/LocationPicker";
+import LocationPicker from "@/components/LocationPicker/LocationPicker";
 import Modal from "@/components/Modal/Modal";
 import ButtonContainer from "@/components/ButtonContainer/ButtonContainer";
 import Button, { ButtonType } from "@/components/Button/Button";
 import AddressHelper from "@/helpers/AddressHelper";
 
 import styles from "./LocationPickerModal.module.scss";
+import LocationPickerModalLocalizer from "@/components/LocationPickerModal/LocationPickerModalLocalizer";
 
 interface ILocationPickerModalProps {
     id?: string;
@@ -88,8 +89,8 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         return (
             <Modal id={this.id}
                    ref={this._modalRef}
-                   title={this.props.title || this.localizer.get("LocationPickerModal.Title")}
-                   subtitle={this.props.subtitle || this.localizer.get("LocationPickerModal.Subtitle")}
+                   title={this.props.title || LocationPickerModalLocalizer.title}
+                   subtitle={this.props.subtitle || LocationPickerModalLocalizer.subtitle}
                    className={styles.locationPickerModal}
             >
                 <div className={styles.map}>
@@ -118,7 +119,7 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
 
                     {
                         (!this.readonly)
-                            ? (<Button type={ButtonType.Orange} label={this.localizer.get("LocationPickerModal.SetLocation")} onClick={async () => await this.onSubmitAsync()}/>)
+                            ? (<Button type={ButtonType.Orange} label={LocationPickerModalLocalizer.setLocation} onClick={async () => await this.onSubmitAsync()}/>)
                             : <div/>
                     }
                     

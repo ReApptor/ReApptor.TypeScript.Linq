@@ -7,10 +7,10 @@ import DocumentPreviewModal, { DocumentPreviewCallback } from "@/components/Docu
 import Footer from "@/components/Footer/Footer";
 import Form from "@/components/Form/Form";
 import Icon, { IconSize, IIconProps } from "@/components/Icon/Icon";
-import AddressDivider from "@/components/AddressInput/AddressDivider/AddressDivider";
-import LocationPicker from "@/components/AddressInput/LocationPicker/LocationPicker";
-import LocationPickerModal from "@/components/AddressInput/LocationPickerModal/LocationPickerModal";
-import VirtualAddressDivider from "@/components/AddressInput/VirtualAddressDivider/VirtualAddressDivider";
+import AddressDivider from "@/components/AddressDivider/AddressDivider";
+import LocationPicker from "@/components/LocationPicker/LocationPicker";
+import LocationPickerModal from "@/components/LocationPickerModal/LocationPickerModal";
+import VirtualAddressDivider from "@/components/VirtualAddressDivider/VirtualAddressDivider";
 import AddressInput, { IAddressInputProps, IAddressInputState } from "@/components/AddressInput/AddressInput";
 import Checkbox, { ICheckboxProps, ICheckboxState, InlineType } from "@/components/Checkbox/Checkbox";
 import NullableCheckbox, { INullableCheckboxProps, INullableCheckboxState } from "@/components/Checkbox/NullableCheckbox";

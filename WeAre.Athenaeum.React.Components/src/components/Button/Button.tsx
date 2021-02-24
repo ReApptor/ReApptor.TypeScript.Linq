@@ -7,6 +7,7 @@ import {IPageHeaderProps} from "@/components/PageContainer/PageHeader/PageHeader
 import ButtonAction, {IButtonActionProps} from "@/components/Button/ButtonAction/ButtonAction";
 
 import styles from "./Button.module.scss";
+import ButtonLocalizer from "@/components/Button/ButtonLocalizer";
 
 export enum ButtonType {
     Default,
@@ -190,7 +191,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                 <button id={this.id}
                         type={this.props.submit ? "submit" : "button"}
                         disabled={this.props.disabled}
-                        title={this.localizer.get(this.props.title)}
+                        title={ButtonLocalizer.get(this.props.title)}
                         className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, iconPaddingStyle, labelPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
                         data-target={`#${this.dataTarget}`}
                         data-modal={this.dataModal}
@@ -198,7 +199,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         data-dismiss={this.dataDismissModal}
                         onClick={async () => await this.onClickAsync(false)}
                         style={inlineStyles}>
-                    {this.props.icon && <Icon {...this.props.icon} tooltip={this.localizer.get(this.props.title)} />}
+                    {this.props.icon && <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />}
                     <span>{this.props.label}</span>
 
                     {
