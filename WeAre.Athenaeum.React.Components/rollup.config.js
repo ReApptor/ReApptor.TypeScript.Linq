@@ -4,13 +4,19 @@ import postcss from "rollup-plugin-postcss";
 import image from '@rollup/plugin-image';
 import tsNameOf from 'ts-nameof';
 import pkg from "./package.json";
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonJs from '@rollup/plugin-commonjs';
 
 export default {
     input: "src/index.ts",
     external: [
         ...Object.keys(pkg.dependencies || {}) ,
         ...Object.keys(pkg.devDependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {})
+        ...Object.keys(pkg.peerDependencies || {}),
+        'date-fns/locale/fi',
+        'date-fns/locale/pl',
+        'date-fns/locale/sv',
+        'date-fns/locale/en-GB'
     ],    
     output: [
         {
@@ -28,6 +34,8 @@ export default {
     ],
 
     plugins: [
+        nodeResolve(),
+        commonJs(),
         image(),
         postcss({
             modules: true,
@@ -42,7 +50,9 @@ export default {
             })],
             tsconfigOverride: {
                 compilerOptions: {
-                    "plugins": [
+                    sourceMap: true,
+                    inlineSourceMap: true,
+                    plugins: [
                         { "transform": "typescript-transform-paths" },
                         { "transform": "typescript-transform-paths", "afterDeclarations": true }
                     ],
