@@ -4,7 +4,7 @@ import Form from "../../Form/Form";
 import ButtonContainer from "../../ButtonContainer/ButtonContainer";
 import Button, { ButtonType } from "../../Button/Button";
 import Popover from "../Popover";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import { Dictionary } from "typescript-collections";
 import { IconSize } from "../../Icon/Icon";
 import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
 

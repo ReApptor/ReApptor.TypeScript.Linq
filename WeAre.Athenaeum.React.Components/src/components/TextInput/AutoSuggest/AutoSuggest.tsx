@@ -1,7 +1,7 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import { Dictionary } from "typescript-collections";
 
 import styles from "./AutoSuggest.module.scss";
 

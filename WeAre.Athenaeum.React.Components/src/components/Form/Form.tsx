@@ -1,8 +1,8 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import {IInput} from "../../models/base/BaseInput";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import {IInput} from "@/models/base/BaseInput";
+import { Dictionary } from "typescript-collections";
 import Inline from "../Inline/Inline";
 
 import styles from "./Form.module.scss";
