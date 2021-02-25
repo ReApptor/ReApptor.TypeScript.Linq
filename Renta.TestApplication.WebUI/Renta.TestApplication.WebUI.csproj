@@ -45,6 +45,7 @@
         <Content Include="tsconfig.json" />
         <Content Include="tsconfig.paths.json" />
         <Content Include="tslint.json" />
+        <Content Remove="build\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -52,6 +53,7 @@
         <Compile Remove="bin\**" />
         <Compile Remove="src\localization\**" />
         <Compile Remove="src\lib\**" />
+        <Compile Remove="build\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,16 +63,20 @@
 
     <ItemGroup>
       <EmbeddedResource Remove="src\lib\**" />
+      <EmbeddedResource Remove="build\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="src\lib\**" />
+      <None Remove="build\**" />
     </ItemGroup>
 
     <ItemGroup>
       <TypeScriptCompile Include="src\module.d.ts" />
-      <TypeScriptCompile Include="src\pages\Tests\AlertTests\AlertTests.tsx" />
-      <TypeScriptCompile Include="src\pages\Tests\Tests.tsx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="build\manifest.json" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
