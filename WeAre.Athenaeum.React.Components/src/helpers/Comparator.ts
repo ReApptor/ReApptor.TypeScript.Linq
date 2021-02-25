@@ -1,17 +1,11 @@
 import {Utility, GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {PageRoute} from "@weare/athenaeum-react-common";
 import {SelectListItem, StatusListItem} from "@/components/Dropdown/SelectListItem";
-import WorkOrderModel from "../models/server/WorkOrderModel";
-import ConstructionSiteOrWarehouse from "../models/server/ConstructionSiteOrWarehouse";
 import User from "../models/server/User";
 import UserSignIn from "../models/server/UserSignIn";
-import UserCheckIn from "../models/server/UserCheckIn";
-import TaskMounter from "../models/server/TaskMounter";
-import WorkReport from "../models/server/WorkReport";
 import OrganizationContract from "@/models/server/OrganizationContract";
 import AddressHelper from "@/helpers/AddressHelper";
 import ConstructionSite from "@/models/server/ConstructionSite";
-import Warehouse from "@/models/server/Warehouse";
 import Product from "@/models/server/Product";
 
 export default class Comparator {
@@ -95,24 +89,6 @@ export default class Comparator {
                 return ((y instanceof PageRoute) || (y.isPageRoute)) && (this.isEqualPageRoute(x, y));
             }
 
-            if ((x instanceof WorkOrderModel) || (x.isWorkOrderModel)) {
-                return ((y instanceof WorkOrderModel) || (y.isWorkOrderModel))
-                    ? ((x as WorkOrderModel).id == (y as WorkOrderModel).id)
-                    : ((typeof y === "string") && ((x as WorkOrderModel).id === y as string));
-            }
-
-            if ((x instanceof WorkReport) || (x.isWorkReport)) {
-                return ((y instanceof WorkReport) || (y.isWorkReport))
-                    ? ((x as WorkReport).id == (y as WorkReport).id)
-                    : ((typeof y === "string") && ((x as WorkReport).id === y as string));
-            }
-
-            if ((x instanceof TaskMounter) || (x.isTaskMounter)) {
-                return ((y instanceof TaskMounter) || (y.isTaskMounter))
-                    ? ((x as TaskMounter).user.id == (y as TaskMounter).user.id)
-                    : ((typeof y === "string") && ((x as TaskMounter).user.id === y as string))
-            }
-
             if ((x instanceof OrganizationContract) || (x.isOrganizationContract)) {
                 return ((y instanceof OrganizationContract) || (y.isOrganizationContract))
                     ? ((x as OrganizationContract).id == (y as OrganizationContract).id)
@@ -131,18 +107,6 @@ export default class Comparator {
                     : ((typeof y === "string") && ((x as ConstructionSite).id === y as string))
             }
 
-            if ((x instanceof Warehouse) || (x.isWarehouse)) {
-                return ((y instanceof Warehouse) || (y.isWarehouse))
-                    ? ((x as Warehouse).id == (y as Warehouse).id)
-                    : ((typeof y === "string") && ((x as Warehouse).id === y as string))
-            }
-
-            if ((x instanceof ConstructionSiteOrWarehouse) || (x.isConstructionSiteOrWarehouse)) {
-                return ((y instanceof ConstructionSiteOrWarehouse) || (y.isConstructionSiteOrWarehouse))
-                    ? ((x as ConstructionSiteOrWarehouse).id == (y as ConstructionSiteOrWarehouse).id)
-                    : ((typeof y === "string") && ((x as ConstructionSiteOrWarehouse).id === y as string))
-            }
-
             if ((x instanceof Product) || (x.isProduct)) {
                 return ((y instanceof Product) || (y.isProduct))
                     ? ((x as Product).id == (y as Product).id)
@@ -151,10 +115,6 @@ export default class Comparator {
 
             if ((x instanceof UserSignIn) || (x.isUserSignIn)) {
                 return ((y instanceof UserSignIn) || (y.isUserSignIn)) && ((x as UserSignIn).id == (y as UserSignIn).id);
-            }
-
-            if ((x instanceof UserCheckIn) || (x.isUserCheckIn)) {
-                return ((y instanceof UserCheckIn) || (y.isUserCheckIn)) && ((x as UserCheckIn).id == (y as UserCheckIn).id);
             }
 
             if ((x instanceof GeoLocation) || (x.isGeoLocation)) {
