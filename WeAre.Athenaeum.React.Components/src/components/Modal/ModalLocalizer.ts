@@ -20,8 +20,8 @@ class ModalLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.saveChangesLanguageItemName, { language: `en`, value: `Save changes` }, { language: `sv`, value: `Spara ändringar` }, { language: `ru`, value: `RU: Save changes` }, { language: `pl`, value: `PL: Save changes` }, { language: `fi`, value: `Tallenna muutokset` },);
-        this.set(this.closeLanguageItemName, { language: `en`, value: `Close` }, { language: `sv`, value: `Stäng` }, { language: `ru`, value: `RU: Close` }, { language: `pl`, value: `PL: Close` }, { language: `fi`, value: `Sulje` },);
+        this.set(this.saveChangesLanguageItemName, { language: `en`, value: `Save changes` }, { language: `sv`, value: `Spara ändringar` }, { language: `ru`, value: `Созранить изменения` }, { language: `pl`, value: `PL: Save changes` }, { language: `fi`, value: `Tallenna muutokset` },);
+        this.set(this.closeLanguageItemName, { language: `en`, value: `Close` }, { language: `sv`, value: `Stäng` }, { language: `ru`, value: `Закрыть` }, { language: `pl`, value: `PL: Close` }, { language: `fi`, value: `Sulje` },);
     }
 
     /**
