@@ -187,8 +187,7 @@
     <value>Пожалуйста, оставьте комментарий</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>Принять</value>
-    <value>RU: Close</value>
+    <value>Подтвердить</value>
   </data>
   <data name="Form.Input.ReceiverEmail" xml:space="preserve">
     <value>RU: Receiver email</value>
