@@ -2,6 +2,7 @@ import {AlertModel, AlertType, ApplicationContext, BasePage} from "@weare/athena
 import React from "react";
 import styles from "./Tests.module.scss";
 import {Alert} from "@weare/athenaeum-react-components";
+
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
 
 export default class Tests<TProps, TState> extends BasePage<TProps, TState, ApplicationContext> {

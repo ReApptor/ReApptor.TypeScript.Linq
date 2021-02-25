@@ -1,8 +1,8 @@
 import React from 'react';
 import { BaseComponent } from "@weare/athenaeum-react-common";
-import "@/localization/Localizer";
-import Tests from "@/pages/Tests/Tests";
 import styles from './App.module.scss';
+import Tests from "@/pages/Tests/Tests";
+
 class App extends BaseComponent {
 
     render(): React.ReactNode {
