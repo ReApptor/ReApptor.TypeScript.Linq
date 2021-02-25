@@ -25,6 +25,7 @@
       <TypeScriptCompile Include="src\components\DocumentPreview\DocumentPreview.tsx" />
       <TypeScriptCompile Include="src\components\Footer\Footer.tsx" />
       <TypeScriptCompile Include="src\components\Form\Form.tsx" />
+      <TypeScriptCompile Include="src\components\General\GeneralLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Icon\Icon.tsx" />
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
       <TypeScriptCompile Include="src\components\Link\Link.tsx" />
@@ -42,9 +43,7 @@
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseWidget.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseWidgetContainer.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\WidgetContainer.tsx" />
-      <TypeScriptCompile Include="src\helpers\AddressHelper.ts" />
-      <TypeScriptCompile Include="src\helpers\Comparator.ts" />
-      <TypeScriptCompile Include="src\helpers\RentaTaskConstants.ts" />
+      <TypeScriptCompile Include="src\components\WidgetContainer\WidgetContainerLocalizer.ts" />
       <TypeScriptCompile Include="src\index.ts" />
       <TypeScriptCompile Include="src\AthenaeumComponentsConstants.ts" />
       <TypeScriptCompile Include="src\models\ArrayScope.ts" />
@@ -69,7 +68,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\components\General" />
       <Folder Include="src\components\WidgetContainer\SignatureWidget" />
     </ItemGroup>
 
