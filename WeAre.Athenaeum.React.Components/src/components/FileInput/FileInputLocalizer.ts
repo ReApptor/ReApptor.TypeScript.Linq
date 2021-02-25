@@ -6,8 +6,8 @@ class FileInputLocalizer extends BaseComponentLocalizer {
     //Constants
     public readonly dragAndDropLanguageItemName: string = `DragAndDrop`;
     public readonly readonlyLanguageItemName: string = `Readonly`;
-    public readonly previewLanguageItemName: string = `Preview`;
     public readonly chooseFileLanguageItemName: string = `ChooseFile`;
+    public readonly previewLanguageItemName: string = `Preview`;
 
     constructor() {
 
@@ -24,8 +24,8 @@ class FileInputLocalizer extends BaseComponentLocalizer {
         //Initializer
         this.set(this.dragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
         this.set(this.readonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
         this.set(this.chooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
     }
 
     /**
@@ -43,17 +43,17 @@ class FileInputLocalizer extends BaseComponentLocalizer {
     }
 
     /**
-    /* "Preview" (Preview)
-    */
-    public get preview() : string {
-        return this.get(this.previewLanguageItemName);
-    }
-
-    /**
     /* "ChooseFile" (Choose file)
     */
     public get chooseFile() : string {
         return this.get(this.chooseFileLanguageItemName);
+    }
+
+    /**
+    /* "Preview" (Preview)
+    */
+    public get preview() : string {
+        return this.get(this.previewLanguageItemName);
     }
 }
 

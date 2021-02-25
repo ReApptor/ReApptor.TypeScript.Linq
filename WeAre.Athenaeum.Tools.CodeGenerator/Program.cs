@@ -12,6 +12,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         /// "WeAre.Athenaeum.CodeGenerator"
         /// </summary>
         public const string Name = "WeAre.Athenaeum.CodeGenerator";
+
+        /// <summary>
+        /// "athenaeum.config.json"
+        /// </summary>
+        public const string SettingsFileName = "athenaeum.config.json";
         
         private static bool Command(string[] args, string command)
         {
@@ -200,6 +205,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             {
                 if ((args == null) || (args.Length == 0))
                 {
+                    //var localSettingsFile = Path.Combine("{Environment.CurrentDirectory}", "");
                     return Error($"{Name}. Invalid input arguments. Expected: \"neutralResourcePath\", \"destinationPath\", \"neutralLanguage\" (\"fi\" by default)\".");
                 }
 

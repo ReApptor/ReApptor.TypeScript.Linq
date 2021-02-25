@@ -225,7 +225,7 @@
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>Filen är bara läsbar</value>
   </data>
-  <data name="FileInput.Preview" xml:space="preserve">
+  <data name="DocumentPreview.Preview" xml:space="preserve">
     <value>Förhandsvisning</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
@@ -299,5 +299,11 @@
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>åtminstone 8 tecken</value>
+  </data>
+  <data name="DocumentPreview.Download" xml:space="preserve">
+    <value>SV: Download</value>
+  </data>
+  <data name="FileInput.Preview" xml:space="preserve">
+    <value>Förhandsvisning</value>
   </data>
 </root>

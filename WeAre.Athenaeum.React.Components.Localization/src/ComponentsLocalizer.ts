@@ -41,7 +41,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly formInputRoleLanguageItemName: string = `Form.Input.Role`;
     public readonly fileInputDragAndDropLanguageItemName: string = `FileInput.DragAndDrop`;
     public readonly fileInputReadonlyLanguageItemName: string = `FileInput.Readonly`;
-    public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
+    public readonly documentPreviewPreviewLanguageItemName: string = `DocumentPreview.Preview`;
     public readonly fileInputChooseFileLanguageItemName: string = `FileInput.ChooseFile`;
     public readonly alertLanguageItemName: string = `Alert`;
     public readonly textInputLanguageItemName: string = `TextInput`;
@@ -65,6 +65,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly dropdownNothingSelectedLanguageItemName: string = `Dropdown.NothingSelected`;
     public readonly formInputEmailLanguageItemName: string = `Form.Input.Email`;
     public readonly passwordInputHelpTextLengthLanguageItemName: string = `PasswordInput.HelpText.Length`;
+    public readonly documentPreviewDownloadLanguageItemName: string = `DocumentPreview.Download`;
+    public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
 
     constructor() {
 
@@ -116,7 +118,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.formInputRoleLanguageItemName, { language: `en`, value: `Role` }, { language: `sv`, value: `Roll` }, { language: `ru`, value: `RU: Role` }, { language: `pl`, value: `PL: Role` }, { language: `fi`, value: `Rooli` },);
         this.set(this.fileInputDragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
         this.set(this.fileInputReadonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
-        this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
+        this.set(this.documentPreviewPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
         this.set(this.fileInputChooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
@@ -140,6 +142,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.dropdownNothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
         this.set(this.formInputEmailLanguageItemName, { language: `en`, value: `Email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Email` }, { language: `pl`, value: `PL: Email` }, { language: `fi`, value: `Sähköposti` },);
         this.set(this.passwordInputHelpTextLengthLanguageItemName, { language: `en`, value: `at least 8 characters long` }, { language: `sv`, value: `åtminstone 8 tecken` }, { language: `ru`, value: `RU: at least 8 characters long` }, { language: `pl`, value: `PL: at least 8 characters long` }, { language: `fi`, value: `vähintään 8 merkkiä` },);
+        this.set(this.documentPreviewDownloadLanguageItemName, { language: `en`, value: `Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `fi`, value: `FI: Download` },);
+        this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
     }
 
     /**
@@ -402,10 +406,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "FileInput.Preview" (Preview)
+    /* "DocumentPreview.Preview" (Preview)
     */
-    public get fileInputPreview() : string {
-        return this.get(this.fileInputPreviewLanguageItemName);
+    public get documentPreviewPreview() : string {
+        return this.get(this.documentPreviewPreviewLanguageItemName);
     }
 
     /**
@@ -567,6 +571,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get passwordInputHelpTextLength() : string {
         return this.get(this.passwordInputHelpTextLengthLanguageItemName);
+    }
+
+    /**
+    /* "DocumentPreview.Download" (Download)
+    */
+    public get documentPreviewDownload() : string {
+        return this.get(this.documentPreviewDownloadLanguageItemName);
+    }
+
+    /**
+    /* "FileInput.Preview" (Preview)
+    */
+    public get fileInputPreview() : string {
+        return this.get(this.fileInputPreviewLanguageItemName);
     }
 }
 
