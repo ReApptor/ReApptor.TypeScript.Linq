@@ -4,9 +4,9 @@ import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
 import {IInput} from "@/models/base/BaseInput";
 import { Dictionary } from "typescript-collections";
 import Inline from "../Inline/Inline";
+import FormLocalizer from "@/components/Form/FormLocalizer";
 
 import styles from "./Form.module.scss";
-import FormLocalizer from "@/components/Form/FormLocalizer";
 
 interface IFormProps {
     id?: string;

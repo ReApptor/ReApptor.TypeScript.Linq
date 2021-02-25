@@ -207,16 +207,16 @@
   <data name="Form.Input.Message" xml:space="preserve">
     <value>Viesti</value>
   </data>
-  <data name="Form.Input.Address" xml:space="preserve">
+  <data name="AddressDivider.Address" xml:space="preserve">
     <value>Osoite</value>
   </data>
-  <data name="Form.Input.Street" xml:space="preserve">
+  <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>Katu</value>
   </data>
-  <data name="Form.Input.City" xml:space="preserve">
+  <data name="VirtualAddressDivider.City" xml:space="preserve">
     <value>Kaupunki</value>
   </data>
-  <data name="Form.Input.Postalcode" xml:space="preserve">
+  <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>Postinumero</value>
   </data>
   <data name="Form.Input.Postalbox" xml:space="preserve">
@@ -243,16 +243,16 @@
   <data name="Form.Input.Role" xml:space="preserve">
     <value>Rooli</value>
   </data>
-  <data name="Form.Input.File.DragAndDrop" xml:space="preserve">
+  <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Pudota tiedosto tähän tai valitse klikkaamalla</value>
   </data>
-  <data name="Form.Input.File.Readonly" xml:space="preserve">
+  <data name="FileInput.Readonly" xml:space="preserve">
     <value>Tämä tiedosto on vain luettavissa</value>
   </data>
-  <data name="Form.Input.File.Preview" xml:space="preserve">
+  <data name="FileInput.Preview" xml:space="preserve">
     <value>Esikatselu</value>
   </data>
-  <data name="Form.Input.File.ChooseFile" xml:space="preserve">
+  <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>Valitse tiedosto</value>
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">

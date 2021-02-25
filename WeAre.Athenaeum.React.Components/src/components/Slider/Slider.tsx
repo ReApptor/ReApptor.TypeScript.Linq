@@ -3,7 +3,7 @@ import SliderComponent, { createSliderWithTooltip, SliderProps, WithTooltipProps
 import { BaseComponent } from "@weare/athenaeum-react-common";
 
 import styles from "../Form/Form.module.scss";
-import 'rc-slider/assets/index.css';
+import "rc-slider/assets/index.css";
 import "./BootstrapOverride.scss";
 
 interface ISliderProps {

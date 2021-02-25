@@ -3,10 +3,9 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import {IBaseWidgetProps} from "@/components/WidgetContainer/BaseWidget";
 import BaseExpandableWidget from "@/components/WidgetContainer/BaseExpandableWidget";
 import NumberWidget from "@/components/WidgetContainer/NumberWidget/NumberWidget";
+import GeneralLocalizer from "@/components/General/GeneralLocalizer";
 
 import styles from "./HoursWidget.module.scss";
-import WidgetContainerLocalizer from "@/components/WidgetContainer/WidgetContainerLocalizer";
-import GeneralLocalizer from "@/components/General/GeneralLocalizer";
 
 interface IHoursWidgetProps extends IBaseWidgetProps {
     normalHours: number;

@@ -1,9 +1,9 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import FooterLocalizer from "@/components/Footer/FooterLocalizer";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
-import FooterLocalizer from "@/components/Footer/FooterLocalizer";
 
 interface IFooterLink {
     href: string,

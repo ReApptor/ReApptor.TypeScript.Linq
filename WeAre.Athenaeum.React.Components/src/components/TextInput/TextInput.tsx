@@ -2,9 +2,9 @@ import React from "react";
 import BaseInput, {ValidatorCallback, IBaseInputProps, IBaseInputState} from "../../models/base/BaseInput";
 import { BaseInputType  } from "@/models/Enums";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
+import TextInputLocalizer from "@/components/TextInput/TextInputLocalizer";
 
 import styles from "./TextInput.module.scss";
-import TextInputLocalizer from "@/components/TextInput/TextInputLocalizer";
 
 export interface ITextInputProps extends IBaseInputProps<string> {
     maxLength?: number;

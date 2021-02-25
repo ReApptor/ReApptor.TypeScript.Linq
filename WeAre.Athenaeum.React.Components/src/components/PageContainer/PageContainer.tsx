@@ -8,10 +8,10 @@ import Modal from "../Modal/Modal";
 import DocumentPreviewModal from "../DocumentPreview/DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
+import PageContainerLocalizer from "@/components/PageContainer/PageContainerLocalizer";
 
 import styles from "./PageContainer.module.scss";
-import PageContainerLocalizer from "@/components/PageContainer/PageContainerLocalizer";
-import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 interface IPageContainerProps {
     id?: string;

@@ -2,9 +2,9 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import TwoColumns from "../TwoColumn/TwoColumns";
 import TextInput from "../TextInput/TextInput";
-import { IInput } from "../../models/base/BaseInput";
+import { IInput } from "@/models/base/BaseInput";
 import OneColumn from "@/components/OneColumn/OneColumn";
-import FormLocalizer from "@/components/Form/FormLocalizer";
+import VirtualAddressDividerLocalizer from "./VirtualAddressDividerLocalizer";
 
 interface IVirtualAddressDividerProps {
     id?: string;
@@ -48,15 +48,15 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
         }
     }
     
-    private async onCityChange(value: string): Promise<void> {
+    private async onCityChangeAsync(value: string): Promise<void> {
         await this.setState({city: value})
     }
 
-    private async onPostalCodeChange(value: string): Promise<void> {
+    private async onPostalCodeChangeAsync(value: string): Promise<void> {
         await this.setState({postalCode: value})
     }
 
-    private async onAddressChange(value: string): Promise<void> {
+    private async onAddressChangeAsync(value: string): Promise<void> {
         await this.setState({address: value})
     }
     
@@ -109,25 +109,25 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                 <OneColumn>
                     <TextInput ref={this._addressInputRef}
                                id={`${this.id}_address`} required
-                               label={FormLocalizer.inputStreet} 
+                               label={VirtualAddressDividerLocalizer.street} 
                                value={this.state.address}
-                               onChange={async (sender, value) => await this.onAddressChange(value)}
+                               onChange={(sender, value) => this.onAddressChangeAsync(value)}
                     />
                 </OneColumn>
                 
                 <TwoColumns>
                     <TextInput ref={this._cityInputRef}
                                id={`${this.id}_city`} required
-                               label={FormLocalizer.inputCity} 
+                               label={VirtualAddressDividerLocalizer.city} 
                                value={this.state.city}
-                               onChange={async (sender, value) => await this.onCityChange(value)}
+                               onChange={(sender, value) => this.onCityChangeAsync(value)}
                     />
                                
                     <TextInput ref={this._postalCodeInputRef}
                                id={`${this.id}_postalCode`} required
-                               label={FormLocalizer.inputPostalcode} 
+                               label={VirtualAddressDividerLocalizer.postalcode} 
                                value={this.state.postalCode}
-                               onChange={async (sender, value) => await this.onPostalCodeChange(value)}
+                               onChange={(sender, value) => this.onPostalCodeChangeAsync(value)}
                     />
                 </TwoColumns>
             </React.Fragment>

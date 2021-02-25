@@ -27,10 +27,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly formInputMiddlenameLanguageItemName: string = `Form.Input.Middlename`;
     public readonly formInputLastnameLanguageItemName: string = `Form.Input.Lastname`;
     public readonly formInputMessageLanguageItemName: string = `Form.Input.Message`;
-    public readonly formInputAddressLanguageItemName: string = `Form.Input.Address`;
-    public readonly formInputStreetLanguageItemName: string = `Form.Input.Street`;
-    public readonly formInputCityLanguageItemName: string = `Form.Input.City`;
-    public readonly formInputPostalcodeLanguageItemName: string = `Form.Input.Postalcode`;
+    public readonly addressDividerAddressLanguageItemName: string = `AddressDivider.Address`;
+    public readonly virtualAddressDividerStreetLanguageItemName: string = `VirtualAddressDivider.Street`;
+    public readonly virtualAddressDividerCityLanguageItemName: string = `VirtualAddressDivider.City`;
+    public readonly virtualAddressDividerPostalcodeLanguageItemName: string = `VirtualAddressDivider.Postalcode`;
     public readonly formInputPostalboxLanguageItemName: string = `Form.Input.Postalbox`;
     public readonly formInputLanguageLanguageItemName: string = `Form.Input.Language`;
     public readonly formInputEmployeeNumberLanguageItemName: string = `Form.Input.EmployeeNumber`;
@@ -39,10 +39,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly formInputTimeTrackingDeviceIdLanguageItemName: string = `Form.Input.TimeTrackingDeviceId`;
     public readonly formInputContractSalaryHourlyPriceLanguageItemName: string = `Form.Input.ContractSalaryHourlyPrice`;
     public readonly formInputRoleLanguageItemName: string = `Form.Input.Role`;
-    public readonly formInputFileDragAndDropLanguageItemName: string = `Form.Input.File.DragAndDrop`;
-    public readonly formInputFileReadonlyLanguageItemName: string = `Form.Input.File.Readonly`;
-    public readonly formInputFilePreviewLanguageItemName: string = `Form.Input.File.Preview`;
-    public readonly formInputFileChooseFileLanguageItemName: string = `Form.Input.File.ChooseFile`;
+    public readonly fileInputDragAndDropLanguageItemName: string = `FileInput.DragAndDrop`;
+    public readonly fileInputReadonlyLanguageItemName: string = `FileInput.Readonly`;
+    public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
+    public readonly fileInputChooseFileLanguageItemName: string = `FileInput.ChooseFile`;
     public readonly alertLanguageItemName: string = `Alert`;
     public readonly textInputLanguageItemName: string = `TextInput`;
     public readonly topNavLanguageItemName: string = `TopNav`;
@@ -102,10 +102,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.formInputMiddlenameLanguageItemName, { language: `en`, value: `Middle name` }, { language: `sv`, value: `SV: Middle name` }, { language: `ru`, value: `RU: Middle name` }, { language: `pl`, value: `PL: Middle name` }, { language: `fi`, value: `Toinen nimi` },);
         this.set(this.formInputLastnameLanguageItemName, { language: `en`, value: `Lastname` }, { language: `sv`, value: `Efternamn` }, { language: `ru`, value: `RU: Lastname` }, { language: `pl`, value: `PL: Lastname` }, { language: `fi`, value: `Sukunimi` },);
         this.set(this.formInputMessageLanguageItemName, { language: `en`, value: `Message` }, { language: `sv`, value: `Meddelande` }, { language: `ru`, value: `RU: Message` }, { language: `pl`, value: `PL: Message` }, { language: `fi`, value: `Viesti` },);
-        this.set(this.formInputAddressLanguageItemName, { language: `en`, value: `Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
-        this.set(this.formInputStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
-        this.set(this.formInputCityLanguageItemName, { language: `en`, value: `City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
-        this.set(this.formInputPostalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
+        this.set(this.addressDividerAddressLanguageItemName, { language: `en`, value: `Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
+        this.set(this.virtualAddressDividerStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
+        this.set(this.virtualAddressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
+        this.set(this.virtualAddressDividerPostalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
         this.set(this.formInputPostalboxLanguageItemName, { language: `en`, value: `Postal box` }, { language: `sv`, value: `SV: Postal box` }, { language: `ru`, value: `RU: Postal box` }, { language: `pl`, value: `PL: Postal box` }, { language: `fi`, value: `Postilaatikko` },);
         this.set(this.formInputLanguageLanguageItemName, { language: `en`, value: `Language` }, { language: `sv`, value: `Språk` }, { language: `ru`, value: `RU: Language` }, { language: `pl`, value: `PL: Language` }, { language: `fi`, value: `Kieli` },);
         this.set(this.formInputEmployeeNumberLanguageItemName, { language: `en`, value: `Employee number` }, { language: `sv`, value: `Användar-id` }, { language: `ru`, value: `RU: Employee number` }, { language: `pl`, value: `PL: Employee number` }, { language: `fi`, value: `Käyttäjä-id` },);
@@ -114,10 +114,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.formInputTimeTrackingDeviceIdLanguageItemName, { language: `en`, value: `Time tracking device id` }, { language: `sv`, value: `SV: Time tracking device id` }, { language: `ru`, value: `RU: Time tracking device id` }, { language: `pl`, value: `PL: Time tracking device id` }, { language: `fi`, value: `Työaikaseurantalaite-id` },);
         this.set(this.formInputContractSalaryHourlyPriceLanguageItemName, { language: `en`, value: `Contract salary hourly price` }, { language: `sv`, value: `Kontrakt lön timpris` }, { language: `ru`, value: `RU: Contract salary hourly price` }, { language: `pl`, value: `PL: Contract salary hourly price` }, { language: `fi`, value: `Sopimuspalkan tuntihinta` },);
         this.set(this.formInputRoleLanguageItemName, { language: `en`, value: `Role` }, { language: `sv`, value: `Roll` }, { language: `ru`, value: `RU: Role` }, { language: `pl`, value: `PL: Role` }, { language: `fi`, value: `Rooli` },);
-        this.set(this.formInputFileDragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
-        this.set(this.formInputFileReadonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
-        this.set(this.formInputFilePreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
-        this.set(this.formInputFileChooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
+        this.set(this.fileInputDragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
+        this.set(this.fileInputReadonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
+        this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
+        this.set(this.fileInputChooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.topNavLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
@@ -304,31 +304,31 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "Form.Input.Address" (Address)
+    /* "AddressDivider.Address" (Address)
     */
-    public get formInputAddress() : string {
-        return this.get(this.formInputAddressLanguageItemName);
+    public get addressDividerAddress() : string {
+        return this.get(this.addressDividerAddressLanguageItemName);
     }
 
     /**
-    /* "Form.Input.Street" (Street)
+    /* "VirtualAddressDivider.Street" (Street)
     */
-    public get formInputStreet() : string {
-        return this.get(this.formInputStreetLanguageItemName);
+    public get virtualAddressDividerStreet() : string {
+        return this.get(this.virtualAddressDividerStreetLanguageItemName);
     }
 
     /**
-    /* "Form.Input.City" (City)
+    /* "VirtualAddressDivider.City" (City)
     */
-    public get formInputCity() : string {
-        return this.get(this.formInputCityLanguageItemName);
+    public get virtualAddressDividerCity() : string {
+        return this.get(this.virtualAddressDividerCityLanguageItemName);
     }
 
     /**
-    /* "Form.Input.Postalcode" (Postal code)
+    /* "VirtualAddressDivider.Postalcode" (Postal code)
     */
-    public get formInputPostalcode() : string {
-        return this.get(this.formInputPostalcodeLanguageItemName);
+    public get virtualAddressDividerPostalcode() : string {
+        return this.get(this.virtualAddressDividerPostalcodeLanguageItemName);
     }
 
     /**
@@ -388,31 +388,31 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "Form.Input.File.DragAndDrop" (Drag'n'drop file here, or click to select)
+    /* "FileInput.DragAndDrop" (Drag'n'drop file here, or click to select)
     */
-    public get formInputFileDragAndDrop() : string {
-        return this.get(this.formInputFileDragAndDropLanguageItemName);
+    public get fileInputDragAndDrop() : string {
+        return this.get(this.fileInputDragAndDropLanguageItemName);
     }
 
     /**
-    /* "Form.Input.File.Readonly" (File is readonly)
+    /* "FileInput.Readonly" (File is readonly)
     */
-    public get formInputFileReadonly() : string {
-        return this.get(this.formInputFileReadonlyLanguageItemName);
+    public get fileInputReadonly() : string {
+        return this.get(this.fileInputReadonlyLanguageItemName);
     }
 
     /**
-    /* "Form.Input.File.Preview" (Preview)
+    /* "FileInput.Preview" (Preview)
     */
-    public get formInputFilePreview() : string {
-        return this.get(this.formInputFilePreviewLanguageItemName);
+    public get fileInputPreview() : string {
+        return this.get(this.fileInputPreviewLanguageItemName);
     }
 
     /**
-    /* "Form.Input.File.ChooseFile" (Choose file)
+    /* "FileInput.ChooseFile" (Choose file)
     */
-    public get formInputFileChooseFile() : string {
-        return this.get(this.formInputFileChooseFileLanguageItemName);
+    public get fileInputChooseFile() : string {
+        return this.get(this.fileInputChooseFileLanguageItemName);
     }
 
     /**

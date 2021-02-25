@@ -3,9 +3,9 @@ import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import BaseInput, { ValidatorCallback, IBaseInputProps, IBaseInputState, FileSizeValidator, FileTypeValidator, FilesSizeValidator } from "../../models/base/BaseInput";
 import { BaseInputType  } from "@/models/Enums";
 import Icon from "../Icon/Icon";
+import FileInputLocalizer from "./FileInputLocalizer";
 
 import styles from "./FileInput.module.scss";
-import FormLocalizer from "@/components/Form/FormLocalizer";
 
 export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[] | null> {
     forwardedRef?: React.RefObject<HTMLInputElement>;
@@ -159,7 +159,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             <div className={styles.preview}>
                 <div className={styles.image} style={imagePreviewStyle} />
                 {
-                    FormLocalizer.inputFilePreview
+                    FileInputLocalizer.preview
                 }
             </div>
         );
@@ -202,7 +202,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                             <label htmlFor={this.getInputId()}>
                                 <span>
                                     {
-                                        (this.readonly) ? FormLocalizer.inputFileReadonly : FormLocalizer.inputFileDragAndDrop
+                                        (this.readonly) ? FileInputLocalizer.readonly : FileInputLocalizer.dragAndDrop
                                     }
                                 </span>
                                 
@@ -225,7 +225,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                         <div className="d-flex align-items-center">
                             <label className={this.css("btn m-0", this.props.labelClassName ? this.props.labelClassName : "btn-info")}
                                    htmlFor={this.getInputId()}>
-                                {FormLocalizer.inputFileChooseFile} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
+                                {FileInputLocalizer.chooseFile} {this.value && (this.value as FileModel[]).length > 0 && `(${(this.value as FileModel[]).length})`}
                             </label>
                         </div>
                     )

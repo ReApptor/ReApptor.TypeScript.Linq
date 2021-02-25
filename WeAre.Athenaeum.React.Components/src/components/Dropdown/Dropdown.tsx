@@ -9,9 +9,9 @@ import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectList
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
 import Button, {ButtonType} from "@/components/Button/Button";
+import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
 
 import styles from "./Dropdown.module.scss";
-import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
 
 const FILTER_MIN_LENGTH = 6;
 const FILTER_MAX_LENGTH = 1000;
@@ -919,7 +919,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         //If no items (data) yet, return props.selectedItem if it is specified
         if (this.listItems.length === 0) {
             const selectedItem: TItem | string | null = this.props.selectedItem || null;
-            if ((selectedItem) && (typeof selectedItem === "object")) {
+            if ((selectedItem != null) && (typeof selectedItem === "object")) {
                 return this.transform(selectedItem);
             }
             
@@ -1113,7 +1113,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
     
     public find(item: TItem | string | null): SelectListItem | null {
-        if ((item) && (this.listItems)) {
+        if ((item != null) && (this.listItems)) {
 
             const itemValue: string = (typeof item === "string")
                 ? item
