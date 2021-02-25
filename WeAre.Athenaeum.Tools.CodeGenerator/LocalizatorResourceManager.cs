@@ -79,8 +79,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 .Distinct()
                 .ToArray();
 
-            var x = string.Join(";", componentNames);
-            Console.WriteLine($"componentNames={x}");
+            Console.WriteLine("Components to generate: {0}.", string.Join(", ", componentNames.Select(item => $"\"{item}\"")));
 
             (string ComponentName, string DestinationPath)[] componentFileNames = componentNames
                 .Select(item => (ComponentName: item, DestinationPath: destinationPathPattern.Replace(LocalizatorResourceSettings.ComponentNameTag, item))
