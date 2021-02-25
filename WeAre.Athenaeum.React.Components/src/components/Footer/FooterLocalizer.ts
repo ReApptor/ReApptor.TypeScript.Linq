@@ -20,7 +20,7 @@ class FooterLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.contactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `RU: Contact information` }, { language: `pl`, value: `PL: Contact information` }, { language: `fi`, value: `Yhteystiedot` },);
+        this.set(this.contactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `Контактная информация` }, { language: `pl`, value: `PL: Contact information` }, { language: `fi`, value: `Yhteystiedot` },);
         this.set(this.frontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `PL: Frontpage` }, { language: `fi`, value: `Etusivu` },);
     }
 

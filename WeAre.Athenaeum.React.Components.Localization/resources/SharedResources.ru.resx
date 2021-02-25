@@ -118,49 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>RU: No items found</value>
+    <value>Данные не найдены</value>
   </data>
   <data name="Dropdown.NoData" xml:space="preserve">
-    <value>RU: No data</value>
+    <value>Нет данных</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
     <value>RU: Filter results</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>RU: Start typing to get results</value>
+    <value>Начните писать, чтобы увидеть данные</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>RU: Add</value>
+    <value>Новый</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
     <value>RU: Nothing is selected</value>
   </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>RU: {0} selected</value>
+    <value>{0} выбрано</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
-    <value>RU: Contact information</value>
+    <value>Контактная информация</value>
   </data>
   <data name="Footer.Frontpage" xml:space="preserve">
     <value>RU: Frontpage</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>RU: Loading...</value>
+    <value>Закрыть...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>RU: Clear</value>
+    <value>Очистить</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>RU: Done</value>
+    <value>Завершить</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>RU: Save changes</value>
+    <value>Созранить изменения</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>RU: Close</value>
+    <value>Закрыть</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>RU: Page help</value>
+    <value>Справка</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
     <value>RU: Previous</value>
@@ -175,12 +175,19 @@
     <value>RU: Go to next step</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>RU: Are you sure?</value>
+    <value>Вы уверены?</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
     <value>RU: Confirm</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Пожалуйста, оставьте комментарий</value>
+  </data>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>Принять</value>
     <value>RU: Close</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
