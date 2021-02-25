@@ -7,7 +7,7 @@
   "module": "./lib/esm/index.js",
   "types": "./lib/types/src/index.d.ts",
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.376"
+    "@weare/athenaeum-react-common": "^1.0.384"
   },
   "peerDependencies": {},
   "devDependencies": {
