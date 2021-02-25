@@ -17,6 +17,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         /// "athenaeum.config.json"
         /// </summary>
         public const string SettingsFileName = "athenaeum.config.json";
+
+        /// <summary>
+        /// "$(PWD)"
+        /// </summary>
+        public const string ProjectDirectoryEnvironmentVariable = "$(PWD)";
         
         private static bool Command(string[] args, string command)
         {
@@ -179,14 +184,24 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return 0;
         }
 
+        private static string GetProjectDirectory()
+        {
+            string projectDirectory = Environment.GetEnvironmentVariable(ProjectDirectoryEnvironmentVariable);
+            return (!string.IsNullOrWhiteSpace(projectDirectory))
+                ? projectDirectory
+                : Directory.GetCurrentDirectory();
+        }
+
         private static string ProcessEnvVariables(string data)
         {
-            data = data.Replace("$(ProjectDir)", "$(PWD)");
+            string projectDirectory = GetProjectDirectory();
+            data = data.Replace("$(ProjectDir)", projectDirectory);
+            data = data.Replace(ProjectDirectoryEnvironmentVariable, projectDirectory);
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
                 string key = $"$({keyValue.Key as string})";
-                if (data.Contains(key))
+                if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
                     string value = (keyValue.Value as string) ?? string.Empty;
                     data = data.Replace(key, value);
@@ -194,6 +209,19 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             }
 
             return data;
+        }
+
+        private static Settings GetSettings(string path)
+        {
+            Console.WriteLine($"{Name}. Fetching settings from \"{path}\".");
+
+            string json = File.ReadAllText(path);
+
+            json = ProcessEnvVariables(json);
+                    
+            var settings = JsonConvert.DeserializeObject<Settings>(json);
+
+            return settings;
         }
 
         static int Main(string[] args)
@@ -205,8 +233,25 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             {
                 if ((args == null) || (args.Length == 0))
                 {
-                    //var localSettingsFile = Path.Combine("{Environment.CurrentDirectory}", "");
-                    return Error($"{Name}. Invalid input arguments. Expected: \"neutralResourcePath\", \"destinationPath\", \"neutralLanguage\" (\"fi\" by default)\".");
+                    string settingsFile = Path.Combine(Environment.CurrentDirectory, SettingsFileName);
+                    if (!File.Exists(settingsFile))
+                    {
+                        string projectDirectory = GetProjectDirectory();
+                        settingsFile = Path.Combine(projectDirectory, SettingsFileName);
+                        if (!File.Exists(settingsFile))
+                        {
+                            DirectoryInfo parent = Directory.GetParent(projectDirectory);
+                            settingsFile = Path.Combine(parent.FullName, SettingsFileName);
+                            if (!File.Exists(settingsFile))
+                            {
+                                return Error($"{Name}. Invalid input arguments. Settings file cannot be found in project or solution directories.");
+                            }
+                        }
+                    }
+                    
+                    Settings settings = GetSettings(settingsFile);
+
+                    return Generate(settings);
                 }
 
                 if (!string.IsNullOrWhiteSpace(args[0]) && (args[0].EndsWith(".json", StringComparison.InvariantCultureIgnoreCase)))
@@ -215,14 +260,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     {
                         return Error($"{Name}. Invalid input arguments. Setting file (\"{args[0]}\") cannot be found.");
                     }
-                    
-                    Console.WriteLine($"{Name}. Fetching settings from \"{args[0]}\".");
 
-                    string json = File.ReadAllText(args[0]);
-
-                    json = ProcessEnvVariables(json);
-                    
-                    var settings = JsonConvert.DeserializeObject<Settings>(json);
+                    Settings settings = GetSettings(args[0]);
 
                     return Generate(settings);
                 }
