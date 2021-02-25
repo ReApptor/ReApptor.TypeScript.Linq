@@ -21,10 +21,12 @@ class UserInteractionDataStorage {
     private get key(): string {
         if (this._key == null) {
             const context: ApplicationContext | null = ch.findContext();
-            const applicationName: string = ((context) && (context.applicationName))
-                ? context.applicationName
-                : document.location.host;
-            this._key = `$${applicationName}.${ch.getSessionId()}.userInteractionDataStorage`;
+            const applicationName: string | null = (context) ? context.applicationName : null;
+            if (!applicationName) {
+                return `${window.location.host}.userInteractionDataStorage`;
+            }
+            const sessionId: string = ch.getSessionId();
+            this._key = `${applicationName}.${sessionId}.userInteractionDataStorage`;
         }
         return this._key;
     }
