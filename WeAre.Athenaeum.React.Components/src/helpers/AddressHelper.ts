@@ -1,7 +1,7 @@
 import {GeoCoordinate, GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ApplicationContext, ch} from "@weare/athenaeum-react-common";
-import RentaTaskConstants from "./RentaTaskConstants";
 import ApplicationSettings from "@/models/server/ApplicationSettings";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;
 
@@ -77,7 +77,7 @@ export default class AddressHelper {
     }
 
     public static async createMapAsync(element: HTMLDivElement, center: GeoCoordinate | null = null, zoom: number = 16): Promise<google.maps.Map> {
-        center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || RentaTaskConstants.defaultLocation;
+        center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || AthenaeumComponentsConstants.defaultLocation;
 
         const centerGoogle = new this.google.maps.LatLng(center.lat, center.lon);
         

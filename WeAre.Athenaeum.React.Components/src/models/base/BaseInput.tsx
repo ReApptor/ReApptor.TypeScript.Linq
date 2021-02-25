@@ -1,12 +1,12 @@
 import React from "react";
-import {Utility, TFormat, FileModel, ServiceProvider, ILocalizer} from "@weare/athenaeum-toolkit";
+import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback} from "@weare/athenaeum-react-common";
 import {BaseInputType, InputValidationRule} from "@/models/Enums";
 import LiveValidator, { ValidationRow } from "../../components/PasswordInput/LiveValidator/LiveValidator";
-import RentaTaskConstants from "../../helpers/RentaTaskConstants";
 
 import styles from "../../components/Form/Form.module.scss";
 import GeneralLocalizer from "@/components/General/GeneralLocalizer";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 export type NullableCheckboxType = boolean | null;
 
@@ -69,12 +69,6 @@ export interface IValidatable<TInputValue extends BaseInputValue> {
 }
 
 export abstract class BaseValidator implements IValidator {
-    private _localizer: ILocalizer | null = null
-
-
-    public get localizer(): ILocalizer {
-        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
-    }
     
     abstract validate(value: BaseInputValue): string | null;
 
@@ -101,12 +95,6 @@ export abstract class BaseValidator implements IValidator {
 }
 
 export abstract class BaseFileValidator implements IValidator {
-    private _localizer: ILocalizer | null = null
-
-
-    public get localizer(): ILocalizer {
-        return (this._localizer || (this._localizer = ServiceProvider.getLocalizer()));
-    }
     
     abstract validate(value: BaseInputValue): string | null;
 
@@ -139,7 +127,7 @@ export abstract class BaseRegexValidator extends BaseValidator {
     constructor(regex: string, errorMessage: BaseRegexValidatorErrorMessage) {
         super();
         this.regex = new RegExp(regex);
-        this.errorMessage = this.localizer.get(errorMessage);
+        this.errorMessage = GeneralLocalizer.get(errorMessage);
     }
 
     public validate(value: BaseInputValue): string | null {
@@ -196,11 +184,11 @@ export class RequiredValidator extends BaseValidator {
     
     public validate(value: BaseInputValue): string | null {
         if ((value != null) && (Array.isArray(value))) {
-            return (value.length === 0) ? this.localizer.get("Validators.Required") : null;
+            return (value.length === 0) ? GeneralLocalizer.get("Validators.Required") : null;
         }
         const str: string | null = BaseValidator.toString(value);
         if ((str == null) || (str.length === 0)) {
-            return this.localizer.get("Validators.Required");
+            return GeneralLocalizer.get("Validators.Required");
         }        
         return null;
     }
@@ -221,7 +209,7 @@ export class LengthValidator extends BaseValidator {
     public validate(value: BaseInputValue): string | null {
         const str: string | null = BaseValidator.toString(value);
         if ((this.minLength > 0) && ((str == null) || (str.length < this.minLength))) {
-            return this.localizer.get("Validators.Length");
+            return GeneralLocalizer.get("Validators.Length");
         }
         return null;
     }
@@ -245,7 +233,7 @@ export class NumberRangeValidator extends BaseValidator {
 
     public validate(value: BaseInputValue): string | null {
         if ((value == null) || (value < this.min) || (value > this.max)) {
-            return Utility.format(this.localizer.get("Validators.NumberRange"), this.min, this.max);
+            return Utility.format(GeneralLocalizer.get("Validators.NumberRange"), this.min, this.max);
         }
         return null;
     }
@@ -261,7 +249,7 @@ export class FileSizeValidator extends BaseFileValidator {
 
     public maxSize: number;
 
-    constructor(maxSize: number = RentaTaskConstants.maxFileUploadSizeInBytes) {
+    constructor(maxSize: number = AthenaeumComponentsConstants.maxFileUploadSizeInBytes) {
         super();
         this.maxSize = maxSize;
     }
@@ -276,7 +264,7 @@ export class FileSizeValidator extends BaseFileValidator {
             const fileSizes: number[] = files.map(file => BaseFileValidator.getSize(file) || 0);
 
             if (fileSizes.some((fileSize: number) => (fileSize > this.maxSize))) {
-                return this.localizer.get("BaseInput.DocumentTooBig");
+                return GeneralLocalizer.get("BaseInput.DocumentTooBig");
             }
         }
 
@@ -285,7 +273,7 @@ export class FileSizeValidator extends BaseFileValidator {
 
     public static readonly instance: FileSizeValidator = new FileSizeValidator();
 
-    public static validator(maxSize: number = RentaTaskConstants.maxFileUploadSizeInBytes): ValidatorCallback<BaseInputValue> {
+    public static validator(maxSize: number = AthenaeumComponentsConstants.maxFileUploadSizeInBytes): ValidatorCallback<BaseInputValue> {
         return (value: BaseInputValue) => new FileSizeValidator(maxSize).validate(value);
     }
 }
@@ -294,7 +282,7 @@ export class FilesSizeValidator extends BaseFileValidator {
 
     public maxSize: number;
 
-    constructor(maxSize: number = RentaTaskConstants.maxFileUploadSizeInBytes) {
+    constructor(maxSize: number = AthenaeumComponentsConstants.maxFileUploadSizeInBytes) {
         super();
         this.maxSize = maxSize;
     }
@@ -310,7 +298,7 @@ export class FilesSizeValidator extends BaseFileValidator {
             const totalSize: number = BaseFileValidator.getSize(files) || 0;
             
             if (totalSize > this.maxSize) {
-                return this.localizer.get("BaseInput.TotalSizeTooBig");
+                return GeneralLocalizer.get("BaseInput.TotalSizeTooBig");
             }
         }
 
@@ -319,7 +307,7 @@ export class FilesSizeValidator extends BaseFileValidator {
 
     public static readonly instance: FilesSizeValidator = new FilesSizeValidator();
 
-    public static validator(maxSize: number = RentaTaskConstants.maxFileUploadSizeInBytes): ValidatorCallback<BaseInputValue> {
+    public static validator(maxSize: number = AthenaeumComponentsConstants.maxFileUploadSizeInBytes): ValidatorCallback<BaseInputValue> {
         return (value: BaseInputValue) => new FilesSizeValidator(maxSize).validate(value);
     }
 }
@@ -328,7 +316,7 @@ export class FileTypeValidator extends BaseFileValidator {
 
     public fileTypes: string[];
 
-    constructor(fileTypes: string[] = RentaTaskConstants.imageFileTypes) {
+    constructor(fileTypes: string[] = AthenaeumComponentsConstants.imageFileTypes) {
         super();
         this.fileTypes = fileTypes;
     }
@@ -343,7 +331,7 @@ export class FileTypeValidator extends BaseFileValidator {
             const fileTypes: string[] = files.map(file => BaseFileValidator.getType(file) || "");
 
             if ((fileTypes.length !== 0) && (!fileTypes.every((fileType: string) => this.fileTypes.includes(fileType)))) {
-                return Utility.format(this.localizer.get("BaseInput.DocumentTypeNotSupported"), Utility.getExtensionsFromMimeTypes(this.fileTypes))
+                return Utility.format(GeneralLocalizer.get("BaseInput.DocumentTypeNotSupported"), Utility.getExtensionsFromMimeTypes(this.fileTypes))
             }
         }
 
@@ -352,7 +340,7 @@ export class FileTypeValidator extends BaseFileValidator {
 
     public static readonly instance: FileTypeValidator = new FileTypeValidator();
 
-    public static validator(fileTypes: string[] = RentaTaskConstants.imageFileTypes): ValidatorCallback<BaseInputValue> {
+    public static validator(fileTypes: string[] = AthenaeumComponentsConstants.imageFileTypes): ValidatorCallback<BaseInputValue> {
         return (value: BaseInputValue) => new FileTypeValidator(fileTypes).validate(value);
     }
 }

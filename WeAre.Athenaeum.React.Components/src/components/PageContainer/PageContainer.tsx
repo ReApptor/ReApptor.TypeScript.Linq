@@ -5,13 +5,13 @@ import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPrevi
 import Alert from "../Alert/Alert";
 import PageRow from "./PageRow/PageRow";
 import Modal from "../Modal/Modal";
-import RentaTaskConstants from "../../helpers/RentaTaskConstants";
 import DocumentPreviewModal from "../DocumentPreview/DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
 
 import styles from "./PageContainer.module.scss";
 import PageContainerLocalizer from "@/components/PageContainer/PageContainerLocalizer";
+import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 interface IPageContainerProps {
     id?: string;
@@ -69,8 +69,8 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     private async invokeHideAlertAsync(animation: boolean): Promise<void> {
         if (this.state.alert) {
             if ((animation) && (this._alertContainerRef.current)) {
-                this._alertContainerRef.current.minimize(RentaTaskConstants.alertAnimationDelay);
-                await Utility.wait(RentaTaskConstants.alertAnimationDelay);
+                this._alertContainerRef.current.minimize(AthenaeumComponentsConstants.alertAnimationDelay);
+                await Utility.wait(AthenaeumComponentsConstants.alertAnimationDelay);
             }
             await this.setState({ alert: null });
         }
