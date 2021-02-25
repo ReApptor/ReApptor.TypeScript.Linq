@@ -41,6 +41,7 @@
       <TypeScriptCompile Include="src\providers\DocumentEventsProvider.ts" />
       <TypeScriptCompile Include="src\providers\PageCacheProvider.ts" />
       <TypeScriptCompile Include="src\providers\PageRouteProvider.ts" />
+      <TypeScriptCompile Include="src\providers\UserInteractionDataStorage.ts" />
       <TypeScriptCompile Include="src\ReactUtility.ts" />
       <TypeScriptCompile Include="src\StylesUtility.ts" />
     </ItemGroup>
