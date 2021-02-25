@@ -9,8 +9,7 @@
   "dependencies": {
     "typescript-collections": "^1.3.2"
   },
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.14",
     "@types/node": "11.9.4",
@@ -25,7 +24,8 @@
     "typescript-transform-paths": "^1.1.15"
   },
   "scripts": {
-    "build": "rm -rf lib && rollup -c",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
     "test": "jest",
     "coverage": "jest --coverage"
   },
