@@ -177,9 +177,6 @@
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Вы уверены?</value>
   </data>
-  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>RU: Confirm</value>
-  </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
     <value>Отмена</value>
   </data>

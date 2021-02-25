@@ -23,7 +23,7 @@ class ConfirmationDialogLocalizer extends BaseComponentLocalizer {
         
         //Initializer
         this.set(this.areYouSureLanguageItemName, { language: `en`, value: `Are you sure?` }, { language: `sv`, value: `Är du säker?` }, { language: `ru`, value: `Вы уверены?` }, { language: `pl`, value: `PL: Are you sure?` }, { language: `fi`, value: `Oletko varma?` },);
-        this.set(this.confirmButtonLanguageItemName, { language: `en`, value: `Confirm` }, { language: `sv`, value: `Bekräfta` }, { language: `ru`, value: `RU: Confirm` }, { language: `pl`, value: `PL: Confirm` }, { language: `fi`, value: `Kyllä` },);
+        this.set(this.confirmButtonLanguageItemName, { language: `en`, value: `Confirm` }, { language: `sv`, value: `Bekräfta` }, { language: `ru`, value: `Подтвердить` }, { language: `pl`, value: `PL: Confirm` }, { language: `fi`, value: `Kyllä` },);
         this.set(this.closeButtonLanguageItemName, { language: `en`, value: `Close` }, { language: `sv`, value: `SV: Close` }, { language: `ru`, value: `Отмена` }, { language: `pl`, value: `PL: Close` }, { language: `fi`, value: `Ei` },);
         this.set(this.commentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `ru`, value: `Пожалуйста, оставьте комментарий` }, { language: `pl`, value: `PL: Please leave a comment` }, { language: `fi`, value: `Ole hyvä ja kommentoi` },);
     }
