@@ -5,13 +5,13 @@ import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ch} from "@weare/athenaeum-react-common";
 import {BaseInputType} from "@/models/Enums";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../../models/base/BaseInput";
-import Icon, {IconSize} from "@/components/Icon/Icon";
+import Icon from "@/components/Icon/Icon";
 import LocationPickerModal from "@/components/LocationPickerModal/LocationPickerModal";
 import AddressHelper, {GoogleApiResult} from "@/helpers/AddressHelper";
 import Comparator from "@/helpers/Comparator";
 
 import textInputStyles from "../TextInput/TextInput.module.scss";
-import styles from "@/components/Form/Form.module.scss";
+import formStyles from "@/components/Form/Form.module.scss";
 
 export interface IAddressInputProps extends IBaseInputProps<string> {
     small?: boolean;
@@ -167,7 +167,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         if (this.props.locationPicker && this.state.edit) {
             return (
                 <div className={"input-group-append cursor-pointer"} onClick={() => this.openLocationPickerAsync()}>
-                    <span  className={this.css("input-group-text", styles.append, this.state.validationError && styles.validationError)}>
+                    <span  className={this.css("input-group-text", formStyles.append, this.state.validationError && formStyles.validationError)}>
                         <Icon name={"fas map-marker-alt"}/>
                     </span>
                 </div>

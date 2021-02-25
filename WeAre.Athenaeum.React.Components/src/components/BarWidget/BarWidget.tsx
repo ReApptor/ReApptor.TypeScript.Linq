@@ -1,11 +1,11 @@
 import React from "react";
 import AverageModuleRentCostPerSquare from "@/models/server/AverageModuleRentCostPerSquare";
 import {Utility} from "@weare/athenaeum-toolkit";
+import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@/components/WidgetContainer/BaseWidget";
+import Spinner from "@/components/Spinner/Spinner";
+import BarWidgetLocalizer from "@/components/BarWidget/BarWidgetLocalizer";
 
 import styles from "../WidgetContainer.module.scss";
-import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@/components/WidgetContainer/BaseWidget";
-import BarWidgetLocalizer from "@/components/BarWidget/BarWidgetLocalizer";
-import Spinner from "@/components/Spinner/Spinner";
 
 export interface IBarWidgetData {
     sets: number[][] | number[];

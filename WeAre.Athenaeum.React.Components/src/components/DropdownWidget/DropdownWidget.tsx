@@ -2,8 +2,6 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import { DropdownSchema } from "@/models/Enums";
 import {RenderCallback} from "@weare/athenaeum-react-common";
-
-import styles from "../WidgetContainer.module.scss";
 import Dropdown, { DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown } from "@/components/Dropdown/Dropdown";
 import { SelectListItem } from "@/components/Dropdown/SelectListItem";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@/components/WidgetContainer/BaseWidget";
@@ -12,6 +10,8 @@ import { IWidgetContainer } from "@/components/WidgetContainer/BaseWidgetContain
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import Comparator from "@/helpers/Comparator";
 import DropdownWidgetLocalizer from "@/components/DropdownWidget/DropdownWidgetLocalizer";
+
+import styles from "../WidgetContainer.module.scss";
 
 export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     favorite?: boolean;

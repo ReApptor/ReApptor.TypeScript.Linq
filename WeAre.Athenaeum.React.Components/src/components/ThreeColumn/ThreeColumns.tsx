@@ -4,7 +4,6 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import styles from "../Layout/Layout.module.scss";
 
 interface IThreeColumnsProps {
- 
 }
 
 export default class ThreeColumns extends BaseComponent<IThreeColumnsProps> {

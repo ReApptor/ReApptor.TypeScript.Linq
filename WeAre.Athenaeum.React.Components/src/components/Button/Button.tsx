@@ -5,9 +5,9 @@ import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
 import {IPageHeaderProps} from "@/components/PageContainer/PageHeader/PageHeader";
 import ButtonAction, {IButtonActionProps} from "@/components/Button/ButtonAction/ButtonAction";
+import ButtonLocalizer from "@/components/Button/ButtonLocalizer";
 
 import styles from "./Button.module.scss";
-import ButtonLocalizer from "@/components/Button/ButtonLocalizer";
 
 export enum ButtonType {
     Default,

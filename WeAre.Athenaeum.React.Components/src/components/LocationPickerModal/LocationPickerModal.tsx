@@ -6,9 +6,9 @@ import Modal from "@/components/Modal/Modal";
 import ButtonContainer from "@/components/ButtonContainer/ButtonContainer";
 import Button, { ButtonType } from "@/components/Button/Button";
 import AddressHelper from "@/helpers/AddressHelper";
+import LocationPickerModalLocalizer from "@/components/LocationPickerModal/LocationPickerModalLocalizer";
 
 import styles from "./LocationPickerModal.module.scss";
-import LocationPickerModalLocalizer from "@/components/LocationPickerModal/LocationPickerModalLocalizer";
 
 interface ILocationPickerModalProps {
     id?: string;

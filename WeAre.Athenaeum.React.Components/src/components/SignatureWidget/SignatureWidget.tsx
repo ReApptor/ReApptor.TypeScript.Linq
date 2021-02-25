@@ -1,10 +1,10 @@
 import React from "react";
 import SignatureCanvas from "react-signature-canvas";
-
-import styles from "../WidgetContainer.module.scss";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "@/components/WidgetContainer/BaseExpandableWidget";
 import Button, { ButtonType } from "@/components/Button/Button";
 import SignatureWidgetLocalizer from "@/components/SignatureWidget/SignatureWidgetLocalizer";
+
+import styles from "../WidgetContainer.module.scss";
 
 export interface ISignatureWidgetProps extends IBaseExpandableWidgetProps {
     onSign?(signature: string | null): Promise<void>;

@@ -204,16 +204,16 @@
   <data name="Form.Input.Message" xml:space="preserve">
     <value>RU: Message</value>
   </data>
-  <data name="Form.Input.Address" xml:space="preserve">
+  <data name="AddressDivider.Address" xml:space="preserve">
     <value>RU: Address</value>
   </data>
-  <data name="Form.Input.Street" xml:space="preserve">
+  <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>RU: Street</value>
   </data>
-  <data name="Form.Input.City" xml:space="preserve">
+  <data name="VirtualAddressDivider.City" xml:space="preserve">
     <value>RU: City</value>
   </data>
-  <data name="Form.Input.Postalcode" xml:space="preserve">
+  <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>RU: Postal code</value>
   </data>
   <data name="Form.Input.Postalbox" xml:space="preserve">
@@ -240,16 +240,16 @@
   <data name="Form.Input.Role" xml:space="preserve">
     <value>RU: Role</value>
   </data>
-  <data name="Form.Input.File.DragAndDrop" xml:space="preserve">
+  <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>RU: Drag'n'drop file here, or click to select</value>
   </data>
-  <data name="Form.Input.File.Readonly" xml:space="preserve">
+  <data name="FileInput.Readonly" xml:space="preserve">
     <value>RU: File is readonly</value>
   </data>
-  <data name="Form.Input.File.Preview" xml:space="preserve">
+  <data name="FileInput.Preview" xml:space="preserve">
     <value>RU: Preview</value>
   </data>
-  <data name="Form.Input.File.ChooseFile" xml:space="preserve">
+  <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>RU: Choose file</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
