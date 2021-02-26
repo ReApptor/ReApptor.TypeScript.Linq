@@ -2,8 +2,10 @@ import {ServiceProvider, IService, ServiceType, ILocalizer, ISelectListItem } fr
 
 export interface IEnumProvider {
     isEnum(typeName: string): boolean;
-
+    getEnumName(enumName: string, value: any): string;
     getEnumText(enumName: string, value: any): string;
+    getEnumItem(enumName: string, value: any): ISelectListItem;
+    getEnumItems(enumName: string, selectedValues: number[] | null, reverse: boolean): ISelectListItem[];
 }
 
 export default abstract class BaseEnumProvider<TSelectListItem extends ISelectListItem> implements IEnumProvider, IService {
