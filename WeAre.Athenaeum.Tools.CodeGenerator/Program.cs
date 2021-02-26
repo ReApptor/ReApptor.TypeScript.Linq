@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace WeAre.Athenaeum.Tools.CodeGenerator
 {
-    class Program
+    public class Program
     {
         /// <summary>
         /// "WeAre.Athenaeum.CodeGenerator"
@@ -224,7 +224,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return settings;
         }
 
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             // <Exec Command="dotnet run --project &quot;$(ProjectDir)../Renta.Tools.CodeGenerator/Renta.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)SharedResources.resx&quot; &quot;$(ProjectDir)../Renta.Tools.WebUI.Resources/SharedResources.cs&quot; 1 fi" />
             // <Exec Command="dotnet run --project &quot;$(ProjectDir)../Renta.Tools.CodeGenerator/Renta.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)SharedResources.resx&quot; &quot;$(ProjectDir)../Renta.Tools.WebUI/src/localization/Localizer.ts&quot; 0 fi" />
