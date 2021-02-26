@@ -398,7 +398,11 @@ namespace {0}
             }
             else
             {
-                content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, settings.Namespace, className);
+                string @namespace = (!string.IsNullOrWhiteSpace(settings.Namespace))
+                    ? settings.Namespace.Trim()
+                    : Path.GetDirectoryName(destinationPath);
+
+                content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, @namespace, className);
             }
 
             bool equals = false;
