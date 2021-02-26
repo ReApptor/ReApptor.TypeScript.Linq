@@ -1,23 +1,21 @@
 import React from "react";
-import {Utility, TFormat, GeoLocation} from "@weare/athenaeum-toolkit";
+import {Utility, TFormat, GeoLocation, IEnumProvider, ServiceProvider} from "@weare/athenaeum-toolkit";
 import {ReactUtility, StylesUtility, PageRouteProvider, BaseComponent} from "@weare/athenaeum-react-common";
 import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell} from "../GridModel";
 import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
 import Comparator from "../../../helpers/Comparator";
 import Icon, { IconSize, IIconProps } from "../../Icon/Icon";
-
-import gridStyles from "../Grid.module.scss";
 import { IInput } from "@/models/base/BaseInput";
 import { SelectListItem } from "@/components/Dropdown/SelectListItem";
 import NumberInput from "@/components/NumberInput/NumberInput";
 import TextInput from "@/components/TextInput/TextInput";
 import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
-import GridLocalizer from "@/components/Grid/GridLocalizer";
 import DateInput from "@/components/DateInput/DateInput";
 import AddressInput from "@/components/AddressInput/AddressInput";
-import EnumProvider from "@/helpers/EnumProvider";
-import TransformProvider from "@/helpers/TransformProvider";
+import GridLocalizer from "@/components/Grid/GridLocalizer";
+
+import gridStyles from "../Grid.module.scss";
 
 interface ICellProps<TItem = {}> {
     cell: CellModel<TItem>;
@@ -103,12 +101,12 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         if (hasInfo) {
             infoValue = this.findValueByAccessor(cell.model, settings.infoAccessor!) as string;
             const infoFormat: TFormat | null = (cell.column.settings.infoFormat != null) ? cell.column.settings.infoFormat : cell.column.format;
-
+            
             infoValue = ((settings.hideZero) && (!infoValue))
                 ? ""
                 : (cell.column.transform)
                     ? cell.column.transform(cell, infoValue, infoFormat)
-                    : TransformProvider.toString(infoValue, infoFormat);
+                    : Utility.formatValue(infoValue, infoFormat);
 
             const hideInfo: boolean = (hasInfo) &&
                 (
@@ -312,7 +310,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         if (Utility.isDateType(infoValue)) {
-            infoValue = TransformProvider.toString(infoValue, cell.column.format);
+            infoValue = Utility.formatValue(infoValue, cell.column.format);
         }
         
         const minDate: Date | null = (typeof settings.min !== "number")
@@ -364,6 +362,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     private renderEnumCellContent(cell: CellModel<TItem>, cellValue: any, enumName: string): React.ReactNode {
+        const enumProvider: IEnumProvider = ServiceProvider.getRequiredService(nameof<IEnumProvider>());
         return (
             <Dropdown required noSubtext noWrap
                       className={gridStyles.dropdown}
@@ -371,8 +370,8 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                       verticalAlign={DropdownVerticalAlign.Auto}
                       align={DropdownAlign.Left}
                       noFilter={cell.column.settings.noFilter}
-                      items={EnumProvider.getEnumItems(enumName)}
-                      selectedItem={EnumProvider.getEnumItem(enumName, cellValue)}
+                      items={enumProvider.getEnumItems(enumName)}
+                      selectedItem={enumProvider.getEnumItem(enumName, cellValue)}
                       onChange={async (sender, item: SelectListItem, userInteraction: boolean) => await this.onEnumCellChangeAsync(cell, item, userInteraction)}
             />
         );
@@ -563,7 +562,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     ? ""
                     : (column.transform)
                         ? column.transform(cell, cellValue, format)
-                        : TransformProvider.toString(cellValue, format);
+                        : Utility.formatValue(cellValue, format);
 
                 cellContent = this.renderDefaultCellContent(cell, settings, cellValue);
                 cellStyle = gridStyles.defaultCell;
