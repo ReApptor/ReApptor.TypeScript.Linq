@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Install:All" type="CompoundRunConfigurationType">
+    <toRun name="install:common:latest:toolkit" type="js.build_tools.npm" />
+    <toRun name="install:components:latest:common" type="js.build_tools.npm" />
+    <toRun name="install:localization:latest:toolkit" type="js.build_tools.npm" />
+    <toRun name="install:localization:latest:common" type="js.build_tools.npm" />
+    <toRun name="install:components:latest:toolkit" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FullStack" type="CompoundRunConfigurationType">
+    <toRun name="build:watch:toolkit" type="js.build_tools.npm" />
+    <toRun name="build:watch:common" type="js.build_tools.npm" />
+    <toRun name="Renta.TestApplication.WebUI" type="LaunchSettings" />
+    <toRun name="build:watch:components" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>
