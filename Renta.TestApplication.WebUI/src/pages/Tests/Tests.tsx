@@ -1,18 +1,23 @@
-import {AlertModel, AlertType, ApplicationContext, BasePage} from "@weare/athenaeum-react-common";
 import React from "react";
-import styles from "./Tests.module.scss";
-import {Alert} from "@weare/athenaeum-react-components";
-
+import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
+import NumberWidgetTests from "@/pages/Tests/NumberWidgetTests/NumberWidgetTests";
+import DropdownTests from "@/pages/Tests/DropdownTests/DropdownTests";
+import DropdownSelectItemsTests from "@/pages/Tests/DropdownSelectItemsTests/DropdownSelectItemsTests";
+import DropdownWidgetTests from "@/pages/Tests/DropdownWidgetTests/DropdownWidgetTests";
+import DropdownPerformanceTests from "@/pages/Tests/DropdownPerformanceTests/DropdownPerformanceTests";
+import NullableSwitchTests from "@/pages/Tests/NullableSwitchTests/NullableSwitchTests";
+import ListTests from "@/pages/Tests/ListTests/ListTests";
+import ModalTests from "@/pages/Tests/ModalTests/ModalTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
+import GridTests from "@/pages/Tests/GridTests/GridTests";
+import HoursWidgetTests from "@/pages/Tests/WorkHoursWidgetTests/HoursWidgetTests";
+import SummaryWidgetTest from "@/pages/Tests/SummaryWidgetTest/SummaryWidgetTest";
+import FormTests from "@/pages/Tests/FormTests/FormTests";
+import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
+import { TabContainer, PageContainer, PageHeader, PageRow, Tab, TabRenderType } from "@weare/athenaeum-react-components";
+import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 
-export default class Tests<TProps, TState> extends BasePage<TProps, TState, ApplicationContext> {
-
-    get alertModel(): AlertModel {
-        return {
-            alertType: AlertType.Success, autoClose: false, autoCloseDelay: 0, dismissible: true, flyout: false, isAlertModel: false, messageParams: [],
-            message : "Test 123"
-        };
-    }
+export default class Tests extends AnonymousPage {
     
     public getTitle(): string {
         return "Tests";
@@ -20,13 +25,78 @@ export default class Tests<TProps, TState> extends BasePage<TProps, TState, Appl
 
     public render(): React.ReactNode {
         return (
-            <div className={this.css(styles.page)} id={this.id}>
-                <div className={this.css("container", styles.container, styles.fullHeight, styles.fullWidth)}>
-                    <Alert model={this.alertModel} />
-                    <AlertTests/>
-                </div>
-        </div> 
-        )
-    }
+            <PageContainer>
+                <PageHeader title="Tests" />
+                
+                <PageRow>
+                    
+                    <TabContainer renderType={TabRenderType.ActiveOnly}>
 
+                        <Tab id="buttonTests" title="Button">
+                            <ButtonTests />
+                        </Tab>
+
+                        <Tab id="alertTests" title="Alerts">
+                            <AlertTests />
+                        </Tab>
+
+                        <Tab id="gridTest" title="Grids">
+                            <GridTests />
+                        </Tab>
+
+                        <Tab id="formTests" title="Form">
+                            <FormTests />
+                        </Tab>
+
+                        <Tab id="numberInputTests" title="Number Input">
+                            <NumberInputTests />
+                        </Tab>
+                        
+                        <Tab id="numberWidgetTests" title="Number Widget">
+                            <NumberWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="workHoursWidgetTests" title="Work hours Widget">
+                            <HoursWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="workReportSummaryWidgetTest" title="Work report summary">
+                            <SummaryWidgetTest />
+                        </Tab>
+                        
+                        <Tab id="dropdownTests" title="Dropdown">
+                            <DropdownTests />
+                        </Tab>
+                        
+                        <Tab id="dropdownPerformanceTests" title="DD Performance">
+                            <DropdownPerformanceTests />
+                        </Tab>
+
+                        <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">
+                            <DropdownSelectItemsTests />
+                        </Tab>
+                        
+                        <Tab id="dropdownWidgetTests" title="DropdownWidget">
+                            <DropdownWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="listTests" title="List">
+                            <ListTests />
+                        </Tab>
+
+                        <Tab id="nullableSwitchTests" title="Nullable switch">
+                            <NullableSwitchTests />
+                        </Tab>
+
+                        <Tab id="modalTests" title="Modal">
+                            <ModalTests />
+                        </Tab>
+                             
+                    </TabContainer>
+                    
+                </PageRow>
+                
+            </PageContainer>
+        );
+    }
 }

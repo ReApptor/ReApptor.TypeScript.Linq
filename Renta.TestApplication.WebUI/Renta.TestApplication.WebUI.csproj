@@ -73,6 +73,8 @@
 
     <ItemGroup>
       <TypeScriptCompile Include="src\module.d.ts" />
+      <TypeScriptCompile Include="src\pages\AnonymousPage\AnonymousPage.ts" />
+      <TypeScriptCompile Include="src\pages\Tests\Tests.tsx" />
     </ItemGroup>
 
     <ItemGroup>
