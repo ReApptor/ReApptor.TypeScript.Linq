@@ -67,6 +67,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly passwordInputHelpTextLengthLanguageItemName: string = `PasswordInput.HelpText.Length`;
     public readonly documentPreviewDownloadLanguageItemName: string = `DocumentPreview.Download`;
     public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
+    public readonly gridLanguageItemName: string = `Grid`;
 
     constructor() {
 
@@ -144,6 +145,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.passwordInputHelpTextLengthLanguageItemName, { language: `en`, value: `at least 8 characters long` }, { language: `sv`, value: `åtminstone 8 tecken` }, { language: `ru`, value: `RU: at least 8 characters long` }, { language: `pl`, value: `PL: at least 8 characters long` }, { language: `fi`, value: `vähintään 8 merkkiä` },);
         this.set(this.documentPreviewDownloadLanguageItemName, { language: `en`, value: `Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `fi`, value: `FI: Download` },);
         this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
+        this.set(this.gridLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -585,6 +587,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get fileInputPreview() : string {
         return this.get(this.fileInputPreviewLanguageItemName);
+    }
+
+    /**
+    /* "Grid" ()
+    */
+    public get grid() : string {
+        return this.get(this.gridLanguageItemName);
     }
 }
 
