@@ -30,7 +30,7 @@ import PageRouteProvider from "./providers/PageRouteProvider";
 import ApiProvider from "./providers/ApiProvider";
 import ComponentHelper from "./providers/ComponentHelper";
 import PageCacheProvider from "./providers/PageCacheProvider";
-import UserInteractionDataStorage from "./providers/UserInteractionDataStorage";
+import UserInteractionDataStorage, { DataStorageType } from "./providers/UserInteractionDataStorage";
 import DocumentEventsProvider, {DocumentEventType, DocumentEventCallback} from "./providers/DocumentEventsProvider";
 //Localization:
 import {LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer} from "./localization/BaseComponentLocalizer";
@@ -61,7 +61,7 @@ export {
     ComponentHelper,
     DocumentEventsProvider, DocumentEventType, DocumentEventCallback,
     PageCacheProvider,
-    UserInteractionDataStorage,
+    UserInteractionDataStorage, DataStorageType,
     //Localization:
     LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer
 }
