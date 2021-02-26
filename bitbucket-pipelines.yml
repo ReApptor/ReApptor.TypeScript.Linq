@@ -189,6 +189,15 @@ pipelines:
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Common/WeAre.Athenaeum.Common.csproj -o obj/weare-athenaeum-common/publish
                 - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.Athenaeum.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
           - step:
+              name: WeAre Athenaeum Tools CodeGenerator
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+              caches:
+                - dotnetcore
+              script:
+                - echo $BITBUCKET_BUILD_NUMBER
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj -o obj/weare-athenaeum-tools-codegenerator/publish
+                - dotnet nuget push obj/weare-athenaeum-tools-codegenerator/publish/WeAre.Athenaeum.Tools.CodeGenerator.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+          - step:
               name: Renta Apps Common Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:

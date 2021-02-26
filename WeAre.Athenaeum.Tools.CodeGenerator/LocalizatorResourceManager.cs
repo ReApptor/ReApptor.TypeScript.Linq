@@ -329,7 +329,7 @@ export default new {8}();", import, className, baseClassName, constants, languag
             return text;
         }
 
-        private static string GenerateCSharpContent(Dictionary<string, Dictionary<string, string>> languageItems, CultureInfo[] cultures, string neutralLanguage, string className)
+        private static string GenerateCSharpContent(Dictionary<string, Dictionary<string, string>> languageItems, CultureInfo[] cultures, string neutralLanguage, string @namespace, string className)
         {
             var languages = new StringBuilder();
             languages.Append("        public static readonly ReadOnlyCollection<CultureInfo> SupportedCultures = new ReadOnlyCollection<CultureInfo>(new[]");
@@ -371,18 +371,18 @@ export default new {8}();", import, className, baseClassName, constants, languag
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-namespace Renta.Tools.WebUI.Resources
+namespace {0}
 {{
-    public static class {0}
+    public static class {1}
     {{
-{1}
+{2}
 
-        public static readonly CultureInfo DefaultCulture = new CultureInfo(""{2}"");
+        public static readonly CultureInfo DefaultCulture = new CultureInfo(""{3}"");
 
-{3}
+{4}
     }}
 }}
-", className, languages, neutralLanguage, constants.ToString().TrimEnd());
+", @namespace, className, languages, neutralLanguage, constants.ToString().TrimEnd());
 
             return text;
         }
@@ -398,7 +398,7 @@ namespace Renta.Tools.WebUI.Resources
             }
             else
             {
-                content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, className);
+                content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, settings.Namespace, className);
             }
 
             bool equals = false;
