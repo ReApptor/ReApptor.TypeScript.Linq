@@ -400,7 +400,7 @@ namespace {0}
             {
                 string @namespace = (!string.IsNullOrWhiteSpace(settings.Namespace))
                     ? settings.Namespace.Trim()
-                    : Path.GetDirectoryName(destinationPath);
+                    : Path.GetFileName(Path.GetDirectoryName(destinationPath));
 
                 content = GenerateCSharpContent(languageItems, cultures, settings.NeutralLanguage, @namespace, className);
             }
