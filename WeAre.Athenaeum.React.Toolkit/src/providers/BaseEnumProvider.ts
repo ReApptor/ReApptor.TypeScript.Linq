@@ -5,7 +5,7 @@ export interface IEnumProvider {
     getEnumName(enumName: string, value: any): string;
     getEnumText(enumName: string, value: any): string;
     getEnumItem(enumName: string, value: any): ISelectListItem;
-    getEnumItems(enumName: string, selectedValues: number[] | null, reverse: boolean): ISelectListItem[];
+    getEnumItems(enumName: string, selectedValues?: number[] | null, reverse?: boolean): ISelectListItem[];
 }
 
 export default abstract class BaseEnumProvider<TSelectListItem extends ISelectListItem> implements IEnumProvider, IService {
@@ -59,13 +59,13 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
         return nameof<IEnumProvider>();
     }
 
-    public getEnumItems(enumName: string, selectedValues: number[] | null = null, reverse: boolean = false): TSelectListItem[] {
+    public getEnumItems(enumName: string, selectedValues?: number[] | null, reverse?: boolean): TSelectListItem[] {
         
         const functionName: string = `get${enumName}Items`;
         const getter: ((reverse: boolean) => (TSelectListItem[])) | null | undefined = (this as any)[functionName] as ((reverse: boolean) => TSelectListItem[]) | null | undefined;
         
         const items: TSelectListItem[] = (getter)
-            ? getter.call(this, reverse)
+            ? getter.call(this, (reverse == true))
             : [];
 
         if ((selectedValues != null) && (selectedValues.length > 0) && (items.length > 0)) {
