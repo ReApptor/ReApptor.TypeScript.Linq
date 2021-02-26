@@ -1,6 +1,8 @@
 import {AthenaeumConstants, GeoCoordinate} from "@weare/athenaeum-toolkit";
 
 export default class AthenaeumComponentsConstants extends AthenaeumConstants {
+    
+    public static readonly applicationName: string = "Athenaeum";
 
     // 10 MB
     public static readonly maxFileUploadSizeInBytes: number = 10 * 1024 * 1024;

@@ -1,0 +1,52 @@
+@import "../../variables";
+
+.tabContainer {
+    .nav-tabs {
+        margin-bottom: 2 * $baseline;
+        padding-bottom: $baseline;
+        border-bottom: none;
+        
+        .nav-item {
+            margin-bottom: $baseline;
+            
+            &:not(:last-child) {
+                margin-right: $baseline;
+            }
+            
+            .nav-link {
+                color: #495057;
+                cursor: pointer;
+                border-radius: 4px;
+                border-color: #ccc;
+                padding: 6px 12px;
+
+                &.active {
+                    color: white;
+                    cursor: default;
+                    background-color: $orange;
+                    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+                }
+
+                &:hover:not(.active) {
+                    background-color: rgba(227, 227, 226, 0.5);
+                }
+            }
+        }
+    }
+    
+    .tab-content {
+        height: 100%;
+        
+        .tab-pane {
+            flex-direction: column;
+            
+            &.active {
+                display: flex;
+            }
+        }
+        
+        //.row {
+        //    height: 100%;
+        //}
+    }
+}
