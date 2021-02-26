@@ -1,0 +1,21 @@
+@import "../../variables";
+
+.pagination {
+    
+    .size {
+        min-width: 116px;
+        
+        > div {
+            width: auto;
+        }
+    }
+    
+    .total {
+        margin-left: 1rem;
+        width: 86px;
+        color: $light-gray;
+        cursor: default;
+        white-space: nowrap;
+    }
+    
+}

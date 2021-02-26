@@ -1,0 +1,55 @@
+@import "../../../variables";
+
+.gridRow {
+    
+    &.data {
+        
+        &.darkSeparators {
+            td {
+                border-bottom-color: #7f8484;
+            }
+
+            &:nth-last-child(2) td {
+                border-bottom-color: inherit;
+            }
+        }
+
+        &.odd {
+            &.rowHovering:not(:hover),
+            &:not(.rowHovering) {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+    
+    &.details {
+        display: none;
+        //height: 200px;
+        background-color: rgba(0, 0, 0, 0.02) !important;
+        
+        > td {
+            vertical-align: top;
+            position: relative;
+        }
+        
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.02) !important;
+        }
+        
+        &.visible {
+            display: table-row;
+        }
+    }
+    
+    &.heightLarge {
+        height: 52px;
+    }
+    
+    &.heightMedium {
+        height: 42px;
+    }
+    
+    &.heightSmall {
+        height: 32px;
+    }
+}

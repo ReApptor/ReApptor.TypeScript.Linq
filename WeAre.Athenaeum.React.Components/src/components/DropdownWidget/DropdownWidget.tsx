@@ -11,7 +11,7 @@ import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import Comparator from "@/helpers/Comparator";
 import DropdownWidgetLocalizer from "@/components/DropdownWidget/DropdownWidgetLocalizer";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     favorite?: boolean;
