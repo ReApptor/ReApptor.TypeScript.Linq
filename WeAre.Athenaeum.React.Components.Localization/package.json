@@ -6,15 +6,17 @@
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/types/src/index.d.ts",
-  "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.394",
-    "@weare/athenaeum-toolkit": "^1.0.394"
+  "dependencies": {},
+  "peerDependencies": {
+    "@weare/athenaeum-react-common": "1.0.x",
+    "@weare/athenaeum-toolkit": "1.0.x"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.14",
     "@types/node": "11.9.4",
     "@types/ts-nameof": "^4.2.1",
+    "@weare/athenaeum-react-common": "^1.0.402",
+    "@weare/athenaeum-toolkit": "^1.0.402",
     "jest": "^26.4.2",
     "rollup": "^2.39.0",
     "rollup-plugin-typescript2": "^0.27.3",
@@ -25,7 +27,7 @@
     "typescript-transform-paths": "^1.1.15"
   },
   "scripts": {
-    "build": "rm -rf lib && rollup -c",
+    "build": "rollup -c",
     "test": "jest",
     "coverage": "jest --coverage"
   },
