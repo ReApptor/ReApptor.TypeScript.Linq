@@ -1,9 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import WorkHoursWidget from "@/pages/RentaTasks/MyWorkHours/WorkHoursWidget/WorkHoursWidget";
-import HoursWidget from "@/components/WidgetContainer/HoursWidget/HoursWidget";
-import Localizer from "@/localization/Localizer";
+import { WidgetContainer, HoursWidget, WorkHoursWidget } from "@weare/athenaeum-react-components";
 
 export interface IHoursWidgetTestsState {
     normalHours: number,

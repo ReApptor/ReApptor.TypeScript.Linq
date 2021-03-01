@@ -2,8 +2,7 @@ import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
 import { Checkbox, Form, TwoColumns } from "@weare/athenaeum-react-components";
-import { ColumnDefinition, GridHoveringType, GridOddType } from "@weare/athenaeum-react-components/lib/src/components/Grid/GridModel";
-import Grid from "@weare/athenaeum-react-components/lib/src/components/Grid/Grid";
+import { Grid, ColumnDefinition, GridHoveringType, GridOddType } from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
