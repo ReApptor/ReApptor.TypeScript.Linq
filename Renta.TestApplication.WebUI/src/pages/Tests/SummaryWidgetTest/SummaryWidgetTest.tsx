@@ -1,13 +1,11 @@
 import React from "react";
 import {GeoLocation} from "@weare/athenaeum-toolkit";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import WorkOrderModel from "@/models/server/WorkOrderModel";
-import SummaryWidget from "@/pages/RentaTasks/Summary/SummaryWidget/SummaryWidget";
-import User from "@/models/server/User";
-import CreateAndAssignContactPersonRequest from "@/models/server/requests/CreateAndAssignContactPersonRequest";
-import CreateAndAssignContactPersonResponse from "@/models/server/responses/CreateAndAssignContactPersonResponse";
-import ConstructionSiteOrWarehouse from "@/models/server/ConstructionSiteOrWarehouse";
+import WorkOrderModel from "@weare/athenaeum-react-components/lib/types/src/models/server/WorkOrderModel";
+import CreateAndAssignContactPersonResponse from "@weare/athenaeum-react-components/lib/types/src/models/server/responses/CreateAndAssignContactPersonResponse";
+import ConstructionSiteOrWarehouse from "@weare/athenaeum-react-components/lib/types/src/models/server/ConstructionSiteOrWarehouse";
+import { WidgetContainer, User, SummaryWidget } from "@weare/athenaeum-react-components";
+import CreateAndAssignContactPersonRequest from "@weare/athenaeum-react-components/lib/types/src/models/server/requests/CreateAndAssignContactPersonRequest";
 
 export interface ISummaryWidgetTestState {
 }

@@ -1,8 +1,7 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Form from "@/components/Form/Form";
-import ThreeColumns from "@/components/Layout/ThreeColumn/ThreeColumns";
-import NumberInput, {NumberInputBehaviour} from "@/components/Form/Inputs/NumberInput/NumberInput";
+import { Form, NumberInputBehaviour, ThreeColumns } from "@weare/athenaeum-react-components";
+import { NumberInput } from "@weare/athenaeum-react-components";
 
 export default class NumberInputTests extends BaseComponent {
     
