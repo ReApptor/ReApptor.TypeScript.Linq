@@ -91,6 +91,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly textAreaInputLanguageItemName: string = `TextAreaInput`;
     public readonly layoutThreeColumnsLanguageItemName: string = `LayoutThreeColumns`;
     public readonly layoutTwoColumnsLanguageItemName: string = `LayoutTwoColumns`;
+    public readonly checkboxWidgetLanguageItemName: string = `CheckboxWidget`;
 
     constructor() {
 
@@ -192,6 +193,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.textAreaInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutThreeColumnsLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutTwoColumnsLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.checkboxWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -801,6 +803,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get layoutTwoColumns() : string {
         return this.get(this.layoutTwoColumnsLanguageItemName);
+    }
+
+    /**
+    /* "CheckboxWidget" ()
+    */
+    public get checkboxWidget() : string {
+        return this.get(this.checkboxWidgetLanguageItemName);
     }
 }
 
