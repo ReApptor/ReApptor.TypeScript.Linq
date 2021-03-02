@@ -405,4 +405,7 @@
   <data name="WidgetContainer.QrWidget.Scan.Error" xml:space="preserve">
     <value />
   </data>
+  <data name="SwitchWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>

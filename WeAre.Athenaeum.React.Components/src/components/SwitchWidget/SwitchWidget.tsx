@@ -1,7 +1,7 @@
 import React from "react";
-import BaseCheckboxWidget, { IBaseCheckboxWidgetProps } from "../BaseCheckboxWidget";
+import BaseCheckboxWidget, { IBaseCheckboxWidgetProps } from "../WidgetContainer/BaseCheckboxWidget";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export interface ISwitchWidgetProps extends IBaseCheckboxWidgetProps {
     leftLabel: string;
