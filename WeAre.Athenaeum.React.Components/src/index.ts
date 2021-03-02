@@ -96,7 +96,7 @@ import BaseInput, {
 } from "@/models/base/BaseInput";
 import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
 import Inline, { JustifyContent } from "@/components/Inline/Inline";
-import OneColumn from "@/components/OneColumn/OneColumn";
+import LayoutOneColumn from "@/components/LayoutOneColumn/LayoutOneColumn";
 import ThreeColumns from "@/components/ThreeColumn/ThreeColumns";
 import TwoColumns from "@/components/TwoColumn/TwoColumns";
 import Layout from "@/components/Layout/Layout";
@@ -216,7 +216,7 @@ export {
 };
 export { LayoutFourColumns };
 export { Inline, JustifyContent };
-export { OneColumn };
+export { LayoutOneColumn };
 export { ThreeColumns };
 export { TwoColumns };
 export { Layout };

@@ -339,4 +339,7 @@
   <data name="NumberInput" xml:space="preserve">
     <value />
   </data>
+  <data name="LayoutOneColumn" xml:space="preserve">
+    <value />
+  </data>
 </root>

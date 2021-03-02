@@ -7,7 +7,7 @@ interface IOneColumnProps {
     className?: string;
 }
 
-export default class OneColumn extends BaseComponent<IOneColumnProps> {
+export default class LayoutOneColumn extends BaseComponent<IOneColumnProps> {
 
     private renderRow(index: number, item: React.ReactNode): React.ReactNode {
         return (
