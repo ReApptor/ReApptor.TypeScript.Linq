@@ -75,6 +75,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly documentPreviewLanguageItemName: string = `DocumentPreview`;
     public readonly emailInputLanguageItemName: string = `EmailInput`;
     public readonly layoutFourColumnsLanguageItemName: string = `LayoutFourColumns`;
+    public readonly linkLanguageItemName: string = `Link`;
 
     constructor() {
 
@@ -160,6 +161,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.documentPreviewLanguageItemName, { language: `en`, value: `` },);
         this.set(this.emailInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutFourColumnsLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.linkLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -657,6 +659,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get layoutFourColumns() : string {
         return this.get(this.layoutFourColumnsLanguageItemName);
+    }
+
+    /**
+    /* "Link" ()
+    */
+    public get link() : string {
+        return this.get(this.linkLanguageItemName);
     }
 }
 
