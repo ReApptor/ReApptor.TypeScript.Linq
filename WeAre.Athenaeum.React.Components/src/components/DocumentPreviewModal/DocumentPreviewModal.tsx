@@ -1,12 +1,12 @@
 import React from "react";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/athenaeum-react-common";
-import Spinner from "../../Spinner/Spinner";
-import Modal, { ModalSize } from "../../Modal/Modal";
+import Spinner from "../Spinner/Spinner";
+import Modal, { ModalSize } from "../Modal/Modal";
 import Icon, { IconSize } from "@/components/Icon/Icon";
-import DocumentPreviewLocalizer from "../DocumentPreviewLocalizer";
 
 import styles from "./DocumentPreviewModal.module.scss";
+import DocumentPreviewModalLocalizer from "@/components/DocumentPreviewModal/DocumentPreviewModalLocalizer";
 
 const A4 = { width: 595, height: 842 };
 
@@ -119,7 +119,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
                   className="blue"
                   size={IconSize.X2}
                   onClick={async () => await this.download()} 
-                  tooltip={DocumentPreviewLocalizer.download}
+                  tooltip={DocumentPreviewModalLocalizer.download}
             />
         );
     }
@@ -184,7 +184,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
             <Modal id={this.id} ref={this._modalRef}
                    className={styles.documentPreviewModal}
                    bodyClassName={styles.body}
-                   title={this.title || DocumentPreviewLocalizer.preview}
+                   title={this.title || DocumentPreviewModalLocalizer.preview}
                    subtitle={this.subtitle || "..."}
                    info
                    size={ModalSize.Auto}

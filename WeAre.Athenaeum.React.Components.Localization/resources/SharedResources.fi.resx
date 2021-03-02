@@ -249,7 +249,7 @@
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>Tämä tiedosto on vain luettavissa</value>
   </data>
-  <data name="DocumentPreview.Preview" xml:space="preserve">
+  <data name="DocumentPreviewModal.Preview" xml:space="preserve">
     <value>Esikatselu</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
@@ -300,7 +300,7 @@
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>vähintään 8 merkkiä</value>
   </data>
-  <data name="DocumentPreview.Download" xml:space="preserve">
+  <data name="DocumentPreviewModal.Download" xml:space="preserve">
     <value>FI: Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">

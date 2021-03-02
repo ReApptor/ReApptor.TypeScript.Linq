@@ -246,7 +246,7 @@
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>RU: File is readonly</value>
   </data>
-  <data name="DocumentPreview.Preview" xml:space="preserve">
+  <data name="DocumentPreviewModal.Preview" xml:space="preserve">
     <value>RU: Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
@@ -300,7 +300,7 @@
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>RU: at least 8 characters long</value>
   </data>
-  <data name="DocumentPreview.Download" xml:space="preserve">
+  <data name="DocumentPreviewModal.Download" xml:space="preserve">
     <value>RU: Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">

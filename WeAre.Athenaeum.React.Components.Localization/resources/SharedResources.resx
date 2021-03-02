@@ -228,7 +228,7 @@
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>File is readonly</value>
   </data>
-  <data name="DocumentPreview.Preview" xml:space="preserve">
+  <data name="DocumentPreviewModal.Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
@@ -300,7 +300,7 @@
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>at least 8 characters long</value>
   </data>
-  <data name="DocumentPreview.Download" xml:space="preserve">
+  <data name="DocumentPreviewModal.Download" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
@@ -319,6 +319,9 @@
     <value />
   </data>
   <data name="CheckboxNullable" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DocumentPreview" xml:space="preserve">
     <value />
   </data>
 </root>
