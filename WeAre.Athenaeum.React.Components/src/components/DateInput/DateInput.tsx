@@ -3,7 +3,7 @@ import $ from "jquery";
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
-import BaseInput, {IBaseInputProps, IBaseInputState} from "../../models/base/BaseInput";
+import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 
 import formStyles from "../Form/Form.module.scss";
 import styles from "./DateInput.module.scss";

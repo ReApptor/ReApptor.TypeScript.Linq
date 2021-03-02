@@ -1,5 +1,5 @@
 import React from "react";
-import BaseInput, {IBaseInputProps, IBaseInputState, LengthValidator, ValidatorCallback} from "../../models/base/BaseInput";
+import BaseInput, {IBaseInputProps, IBaseInputState, LengthValidator, ValidatorCallback} from "../BaseInput/BaseInput";
 import {BaseInputType} from "@/models/Enums";
 
 import styles from "./TextAreaInput.module.scss";

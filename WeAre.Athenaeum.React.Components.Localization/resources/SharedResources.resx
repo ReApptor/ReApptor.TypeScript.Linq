@@ -252,7 +252,7 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="General" xml:space="preserve">
+  <data name="BaseInput" xml:space="preserve">
     <value />
   </data>
   <data name="WidgetContainer" xml:space="preserve">

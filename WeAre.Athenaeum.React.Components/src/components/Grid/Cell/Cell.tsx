@@ -6,7 +6,7 @@ import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
 import Comparator from "../../../helpers/Comparator";
 import Icon, { IconSize, IIconProps } from "../../Icon/Icon";
-import { IInput } from "@/models/base/BaseInput";
+import { IInput } from "@/components/BaseInput/BaseInput";
 import { SelectListItem } from "@/components/Dropdown/SelectListItem";
 import NumberInput from "@/components/NumberInput/NumberInput";
 import TextInput from "@/components/TextInput/TextInput";
