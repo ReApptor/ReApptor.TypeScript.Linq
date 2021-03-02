@@ -1,5 +1,5 @@
 import React from "react";
-import NullableCheckbox, { INullableCheckboxProps } from "@/components/Checkbox/NullableCheckbox";
+import CheckboxNullable, { INullableCheckboxProps } from "@/components/CheckboxNullable/CheckboxNullable";
 
 import styles from "./Switch.module.scss";
 
@@ -8,7 +8,7 @@ interface INullableSwitchProps extends INullableCheckboxProps {
     rightLabel?: string;
 }
 
-export default class NullableSwitch extends NullableCheckbox<INullableSwitchProps> {
+export default class NullableSwitch extends CheckboxNullable<INullableSwitchProps> {
     
     renderInput(): React.ReactNode {
         const toggleStyles = (this.value === false)

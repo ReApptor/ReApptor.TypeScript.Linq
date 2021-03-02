@@ -8,13 +8,13 @@ import styles from "@/components/Checkbox/Checkbox.module.scss";
 export interface INullableCheckboxProps extends IBaseInputProps<NullableCheckboxType> {
     excludeNull?: boolean;
     readonly?: boolean;
-    onChange?(sender: NullableCheckbox, value: NullableCheckboxType): Promise<void>;
+    onChange?(sender: CheckboxNullable, value: NullableCheckboxType): Promise<void>;
 }
 
 export interface INullableCheckboxState extends IBaseInputState<NullableCheckboxType> {
 }
 
-export default class NullableCheckbox<TProps extends INullableCheckboxProps = INullableCheckboxProps> extends BaseInput<NullableCheckboxType, TProps, INullableCheckboxState> {
+export default class CheckboxNullable<TProps extends INullableCheckboxProps = INullableCheckboxProps> extends BaseInput<NullableCheckboxType, TProps, INullableCheckboxState> {
     state: INullableCheckboxState = {
         validationError: null,
         edit: true,
