@@ -336,4 +336,7 @@
   <data name="LocationPicker" xml:space="preserve">
     <value />
   </data>
+  <data name="NumberInput" xml:space="preserve">
+    <value />
+  </data>
 </root>
