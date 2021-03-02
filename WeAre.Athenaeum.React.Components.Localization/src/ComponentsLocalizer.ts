@@ -85,6 +85,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly popoverLanguageItemName: string = `Popover`;
     public readonly sliderLanguageItemName: string = `Slider`;
     public readonly spinnerLanguageItemName: string = `Spinner`;
+    public readonly switchLanguageItemName: string = `Switch`;
+    public readonly switchNullableLanguageItemName: string = `SwitchNullable`;
 
     constructor() {
 
@@ -180,6 +182,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.popoverLanguageItemName, { language: `en`, value: `` },);
         this.set(this.sliderLanguageItemName, { language: `en`, value: `` },);
         this.set(this.spinnerLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.switchLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.switchNullableLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -747,6 +751,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get spinner() : string {
         return this.get(this.spinnerLanguageItemName);
+    }
+
+    /**
+    /* "Switch" ()
+    */
+    public get switch() : string {
+        return this.get(this.switchLanguageItemName);
+    }
+
+    /**
+    /* "SwitchNullable" ()
+    */
+    public get switchNullable() : string {
+        return this.get(this.switchNullableLanguageItemName);
     }
 }
 

@@ -80,7 +80,7 @@ import LiveValidator, { ValidationRow } from "@/components/PasswordInput/LiveVal
 import PhoneInput from "@/components/PhoneInput/PhoneInput";
 import Slider from "@/components/Slider/Slider";
 import Range from "@/components/Slider/Range/Range";
-import NullableSwitch from "@/components/Switch/NullableSwitch";
+import NullableSwitch from "@/components/Switch/SwitchNullable";
 import Switch from "@/components/Switch/Switch";
 import TabContainer from "@/components/TabContainer/TabContainer";
 import { TabModel, ITab, ITabContainer, ITabContainerDefinition, ITabDefinition, ITabHeader, TabContainerModel, TabRenderType, TabTransformer } from "@/components/TabContainer/TabModel";
