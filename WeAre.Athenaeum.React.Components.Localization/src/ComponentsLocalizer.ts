@@ -100,6 +100,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly numberWidgetLanguageItemName: string = `NumberWidget`;
     public readonly qrWidgetScanErrorLanguageItemName: string = `QrWidget.Scan.Error`;
     public readonly widgetContainerQrWidgetScanErrorLanguageItemName: string = `WidgetContainer.QrWidget.Scan.Error`;
+    public readonly switchWidgetLanguageItemName: string = `SwitchWidget`;
 
     constructor() {
 
@@ -210,6 +211,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.numberWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.qrWidgetScanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
         this.set(this.widgetContainerQrWidgetScanErrorLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.switchWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -882,6 +884,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get widgetContainerQrWidgetScanError() : string {
         return this.get(this.widgetContainerQrWidgetScanErrorLanguageItemName);
+    }
+
+    /**
+    /* "SwitchWidget" ()
+    */
+    public get switchWidget() : string {
+        return this.get(this.switchWidgetLanguageItemName);
     }
 }
 
