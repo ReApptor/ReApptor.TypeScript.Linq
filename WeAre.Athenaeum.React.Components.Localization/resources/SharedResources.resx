@@ -357,4 +357,7 @@
   <data name="Slider" xml:space="preserve">
     <value />
   </data>
+  <data name="Spinner" xml:space="preserve">
+    <value />
+  </data>
 </root>
