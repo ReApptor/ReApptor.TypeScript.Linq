@@ -97,7 +97,7 @@ import BaseInput, {
 import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
 import LayoutInline, { JustifyContent } from "@/components/LayoutInline/LayoutInline";
 import LayoutOneColumn from "@/components/LayoutOneColumn/LayoutOneColumn";
-import ThreeColumns from "@/components/ThreeColumn/ThreeColumns";
+import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
 import TwoColumns from "@/components/TwoColumn/TwoColumns";
 import Layout from "@/components/Layout/Layout";
 import Link from "@/components/Link/Link";
@@ -217,7 +217,7 @@ export {
 export { LayoutFourColumns };
 export { LayoutInline, JustifyContent };
 export { LayoutOneColumn };
-export { ThreeColumns };
+export { LayoutThreeColumns };
 export { TwoColumns };
 export { Layout };
 export { Link };
