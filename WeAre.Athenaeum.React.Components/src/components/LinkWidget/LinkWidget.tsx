@@ -1,4 +1,4 @@
-import BaseWidget, { IBaseWidgetProps } from "../../BaseWidget";
+import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
 import { LinkTarget } from "@/models/Enums";
 
 export interface ILinkWidgetProps extends IBaseWidgetProps {
