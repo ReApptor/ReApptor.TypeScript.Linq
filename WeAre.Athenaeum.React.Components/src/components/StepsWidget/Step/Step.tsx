@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Icon from "../../../Icon/Icon";
+import Icon from "../../Icon/Icon";
 
 import styles from "../StepsWidget.module.scss";
 

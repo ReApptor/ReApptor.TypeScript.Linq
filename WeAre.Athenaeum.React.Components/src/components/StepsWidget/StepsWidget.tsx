@@ -1,11 +1,11 @@
 import React from "react";
 import {ch, IBasePage, PageRoute} from "@weare/athenaeum-react-common";
-import BaseWidget, { IBaseWidgetProps } from "../../WidgetContainer/BaseWidget";
-import Comparator from "../../../helpers/Comparator";
-import {IIconProps} from "../../Icon/Icon";
+import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
+import Comparator from "../../helpers/Comparator";
+import {IIconProps} from "../Icon/Icon";
 import Step from "./Step/Step";
 
-import widgetStyles from "../../WidgetContainer/WidgetContainer.module.scss";
+import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
 import styles from "./StepsWidget.module.scss";
 
 export interface IWizardStep {

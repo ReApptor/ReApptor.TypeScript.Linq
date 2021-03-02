@@ -414,4 +414,7 @@
   <data name="TextInputWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="StepsWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>

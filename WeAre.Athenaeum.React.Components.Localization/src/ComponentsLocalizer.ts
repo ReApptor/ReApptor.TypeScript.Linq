@@ -103,6 +103,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly switchWidgetLanguageItemName: string = `SwitchWidget`;
     public readonly textAreaWidgetLanguageItemName: string = `TextAreaWidget`;
     public readonly textInputWidgetLanguageItemName: string = `TextInputWidget`;
+    public readonly stepsWidgetLanguageItemName: string = `StepsWidget`;
 
     constructor() {
 
@@ -216,6 +217,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.switchWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.textAreaWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.textInputWidgetLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.stepsWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -909,6 +911,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get textInputWidget() : string {
         return this.get(this.textInputWidgetLanguageItemName);
+    }
+
+    /**
+    /* "StepsWidget" ()
+    */
+    public get stepsWidget() : string {
+        return this.get(this.stepsWidgetLanguageItemName);
     }
 }
 
