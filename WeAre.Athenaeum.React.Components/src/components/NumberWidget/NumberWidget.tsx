@@ -1,10 +1,10 @@
 import React from "react";
 import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/athenaeum-toolkit";
 import {IGlobalClick} from "@weare/athenaeum-react-common";
-import BaseWidget, { IBaseWidgetProps } from "../BaseWidget";
-import Icon, { IconSize, IconStyle } from "../../Icon/Icon";
+import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
+import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export interface INumberWidgetProps extends IBaseWidgetProps {
     min?: number;

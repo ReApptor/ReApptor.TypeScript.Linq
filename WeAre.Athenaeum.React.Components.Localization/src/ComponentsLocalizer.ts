@@ -97,6 +97,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly linkWidgetLanguageItemName: string = `LinkWidget`;
     public readonly routeWidgetLanguageItemName: string = `RouteWidget`;
     public readonly timeWidgetLanguageItemName: string = `TimeWidget`;
+    public readonly numberWidgetLanguageItemName: string = `NumberWidget`;
 
     constructor() {
 
@@ -204,6 +205,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.linkWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.routeWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.timeWidgetLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.numberWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -855,6 +857,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get timeWidget() : string {
         return this.get(this.timeWidgetLanguageItemName);
+    }
+
+    /**
+    /* "NumberWidget" ()
+    */
+    public get numberWidget() : string {
+        return this.get(this.numberWidgetLanguageItemName);
     }
 }
 

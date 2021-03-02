@@ -396,4 +396,7 @@
   <data name="TimeWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="NumberWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>
