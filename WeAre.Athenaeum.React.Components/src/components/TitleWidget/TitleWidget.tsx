@@ -1,11 +1,10 @@
 import React from "react";
-import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../../WidgetContainer/BaseWidget";
-import { IconSize, IIconProps } from "../../Icon/Icon";
-import TransformProvider from "../../../providers/TransformProvider";
-import Localizer from "@/localization/Localizer";
+import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
+import { IconSize, IIconProps } from "../Icon/Icon";
 
-import widgetStyles from "../../WidgetContainer/WidgetContainer.module.scss";
+import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
 import styles from "./TitleWidget.module.scss";
+import TitleWidgetLocalizer from "@/components/TitleWidget/TitleWidgetLocalizer";
 
 export interface ITitleModel {
     label: string;
@@ -83,7 +82,7 @@ export default class TitleWidget extends BaseWidget<ITitleWidgetProps> {
             >
                 
                 <div className={this.css(widgetStyles.compact, this.transparent && widgetStyles.transparent, widgetStyles.content)}
-                     title={this.toSingleLine(Localizer.get(this.description || this.label))}
+                     title={this.toSingleLine(TitleWidgetLocalizer.get(this.description || this.label))}
                      onClick={async (e: React.MouseEvent) => await this.onClickAsync(e)}
                 >
 

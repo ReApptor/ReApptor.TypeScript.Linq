@@ -1,7 +1,6 @@
 import React from "react";
 import NavigationWidget from "../NavigationWidget/NavigationWidget";
 import { IIconProps } from "../Icon/Icon";
-import { IWizardPage } from "@/models/base/WizardPage";
 import BaseWidgetContainer, { IBaseWidgetContainerProps } from "../WidgetContainer/BaseWidgetContainer";
 import StepsWidget, { IWizardSteps } from "../StepsWidget/StepsWidget";
 
