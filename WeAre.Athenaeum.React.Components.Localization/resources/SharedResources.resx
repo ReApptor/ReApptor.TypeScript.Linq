@@ -333,4 +333,7 @@
   <data name="Link" xml:space="preserve">
     <value />
   </data>
+  <data name="LocationPicker" xml:space="preserve">
+    <value />
+  </data>
 </root>
