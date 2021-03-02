@@ -360,4 +360,10 @@
   <data name="Spinner" xml:space="preserve">
     <value />
   </data>
+  <data name="Switch" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SwitchNullable" xml:space="preserve">
+    <value />
+  </data>
 </root>
