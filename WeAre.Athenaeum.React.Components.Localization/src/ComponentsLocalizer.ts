@@ -83,6 +83,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly paginationLanguageItemName: string = `Pagination`;
     public readonly phoneInputLanguageItemName: string = `PhoneInput`;
     public readonly popoverLanguageItemName: string = `Popover`;
+    public readonly sliderLanguageItemName: string = `Slider`;
 
     constructor() {
 
@@ -176,6 +177,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.paginationLanguageItemName, { language: `en`, value: `` },);
         this.set(this.phoneInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.popoverLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.sliderLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -729,6 +731,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get popover() : string {
         return this.get(this.popoverLanguageItemName);
+    }
+
+    /**
+    /* "Slider" ()
+    */
+    public get slider() : string {
+        return this.get(this.sliderLanguageItemName);
     }
 }
 

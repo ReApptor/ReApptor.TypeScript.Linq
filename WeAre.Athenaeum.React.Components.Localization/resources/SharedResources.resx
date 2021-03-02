@@ -354,4 +354,7 @@
   <data name="Popover" xml:space="preserve">
     <value />
   </data>
+  <data name="Slider" xml:space="preserve">
+    <value />
+  </data>
 </root>
