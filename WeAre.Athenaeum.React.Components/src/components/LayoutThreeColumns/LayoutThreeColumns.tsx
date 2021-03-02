@@ -6,7 +6,7 @@ import styles from "../Layout/Layout.module.scss";
 interface IThreeColumnsProps {
 }
 
-export default class ThreeColumns extends BaseComponent<IThreeColumnsProps> {
+export default class LayoutThreeColumns extends BaseComponent<IThreeColumnsProps> {
     
     private renderRow(left: React.ReactNode | null, middle: React.ReactNode | null, right: React.ReactNode | null): React.ReactNode {
         return (
