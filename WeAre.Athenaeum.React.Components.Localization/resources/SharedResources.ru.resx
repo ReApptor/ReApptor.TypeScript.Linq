@@ -285,9 +285,6 @@
   <data name="General" xml:space="preserve">
     <value />
   </data>
-  <data name="WidgetContainer.QrWidget.Scan.Error" xml:space="preserve">
-    <value>RU: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
-  </data>
   <data name="BarWidget.BudgetData.Module.Label" xml:space="preserve">
     <value>RU: Module</value>
   </data>
@@ -305,5 +302,8 @@
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>RU: Preview</value>
+  </data>
+  <data name="QrWidget.Scan.Error" xml:space="preserve">
+    <value>RU: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
   </data>
 </root>

@@ -1,10 +1,10 @@
 import React from "react";
 import {ch} from "@weare/athenaeum-react-common";
 import QrReader from "react-qr-reader";
-import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../BaseExpandableWidget";
-import Localizer from "@/localization/Localizer";
+import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
+import QrWidgetLocalizer from "@/components/QrWidget/QrWidgetLocalizer";
 
 export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     onQr?(qr: string): Promise<void>;
@@ -23,7 +23,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     private async onScanErrorAsync(error: string): Promise<void> {
-        await ch.alertErrorAsync(Localizer.qrWidgetScanError, true);
+        await ch.alertErrorAsync(QrWidgetLocalizer.scanError, true);
         await super.hideContentAsync();
     }
 

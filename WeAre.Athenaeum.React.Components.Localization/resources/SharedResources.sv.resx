@@ -285,9 +285,6 @@
   <data name="General" xml:space="preserve">
     <value />
   </data>
-  <data name="WidgetContainer.QrWidget.Scan.Error" xml:space="preserve">
-    <value>QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.</value>
-  </data>
   <data name="BarWidget.BudgetData.Module.Label" xml:space="preserve">
     <value>SV: Module</value>
   </data>
@@ -305,5 +302,8 @@
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>Förhandsvisning</value>
+  </data>
+  <data name="QrWidget.Scan.Error" xml:space="preserve">
+    <value>QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.</value>
   </data>
 </root>
