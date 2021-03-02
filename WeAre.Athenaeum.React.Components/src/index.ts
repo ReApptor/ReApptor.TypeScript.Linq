@@ -94,7 +94,7 @@ import BaseInput, {
     BaseValidator, NumberRangeValidator, BaseFileValidator, BaseInputValue, BaseRegexValidator, RegexValidator, RequiredValidator, ValidatorCallback, IValidator,
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
 } from "@/models/base/BaseInput";
-import FourColumns from "@/components/FourColum/FourColumns";
+import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
 import Inline, { JustifyContent } from "@/components/Inline/Inline";
 import OneColumn from "@/components/OneColumn/OneColumn";
 import ThreeColumns from "@/components/ThreeColumn/ThreeColumns";
@@ -214,7 +214,7 @@ export {
     BaseValidator, NumberRangeValidator, BaseFileValidator, BaseInputValue, BaseRegexValidator, RegexValidator, RequiredValidator, ValidatorCallback, IValidator,
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable
 };
-export { FourColumns };
+export { LayoutFourColumns };
 export { Inline, JustifyContent };
 export { OneColumn };
 export { ThreeColumns };

@@ -7,7 +7,7 @@ interface IFourColumnsProps {
     className?: string;
 }
 
-export default class FourColumns extends BaseComponent<IFourColumnsProps> {
+export default class LayoutFourColumns extends BaseComponent<IFourColumnsProps> {
     
     private renderRow(left: React.ReactNode | null, left2: React.ReactNode | null, right: React.ReactNode | null, right2: React.ReactNode | null): React.ReactNode {
         return (
