@@ -1,7 +1,7 @@
 import React from "react";
-import TextInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../BaseInputWidget";
+import TextInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../WidgetContainer/BaseInputWidget";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProps> {
     public refObject: IInputRefType<HTMLTextAreaElement> = {
