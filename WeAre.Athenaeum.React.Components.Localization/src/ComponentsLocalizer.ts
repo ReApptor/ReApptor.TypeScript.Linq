@@ -50,7 +50,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly iconLanguageItemName: string = `Icon`;
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
     public readonly generalLanguageItemName: string = `General`;
-    public readonly widgetContainerQrWidgetScanErrorLanguageItemName: string = `WidgetContainer.QrWidget.Scan.Error`;
+    public readonly widgetContainerLanguageItemName: string = `WidgetContainer`;
     public readonly barWidgetBudgetDataModuleLabelLanguageItemName: string = `BarWidget.BudgetData.Module.Label`;
     public readonly barWidgetBudgetDataPerimeterFrameLabelLanguageItemName: string = `BarWidget.BudgetData.PerimeterFrame.Label`;
     public readonly barWidgetBudgetDataWeatherShelterLabelLanguageItemName: string = `BarWidget.BudgetData.WeatherShelter.Label`;
@@ -98,6 +98,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly routeWidgetLanguageItemName: string = `RouteWidget`;
     public readonly timeWidgetLanguageItemName: string = `TimeWidget`;
     public readonly numberWidgetLanguageItemName: string = `NumberWidget`;
+    public readonly qrWidgetScanErrorLanguageItemName: string = `QrWidget.Scan.Error`;
+    public readonly widgetContainerQrWidgetScanErrorLanguageItemName: string = `WidgetContainer.QrWidget.Scan.Error`;
 
     constructor() {
 
@@ -158,7 +160,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.generalLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
-        this.set(this.widgetContainerQrWidgetScanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
+        this.set(this.widgetContainerLanguageItemName, { language: `en`, value: `` },);
         this.set(this.barWidgetBudgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
         this.set(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
         this.set(this.barWidgetBudgetDataWeatherShelterLabelLanguageItemName, { language: `en`, value: `Weather shelter` }, { language: `sv`, value: `SV: Weather shelter` }, { language: `ru`, value: `RU: Weather shelter` }, { language: `pl`, value: `PL: Weather shelter` }, { language: `fi`, value: `Sääsuoja` },);
@@ -206,6 +208,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.routeWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.timeWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.numberWidgetLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.qrWidgetScanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
+        this.set(this.widgetContainerQrWidgetScanErrorLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -531,10 +535,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "WidgetContainer.QrWidget.Scan.Error" (QR code scanner is not available, probably no permissions to camera on your mobile device.)
+    /* "WidgetContainer" ()
     */
-    public get widgetContainerQrWidgetScanError() : string {
-        return this.get(this.widgetContainerQrWidgetScanErrorLanguageItemName);
+    public get widgetContainer() : string {
+        return this.get(this.widgetContainerLanguageItemName);
     }
 
     /**
@@ -864,6 +868,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get numberWidget() : string {
         return this.get(this.numberWidgetLanguageItemName);
+    }
+
+    /**
+    /* "QrWidget.Scan.Error" (QR code scanner is not available, probably no permissions to camera on your mobile device.)
+    */
+    public get qrWidgetScanError() : string {
+        return this.get(this.qrWidgetScanErrorLanguageItemName);
+    }
+
+    /**
+    /* "WidgetContainer.QrWidget.Scan.Error" ()
+    */
+    public get widgetContainerQrWidgetScanError() : string {
+        return this.get(this.widgetContainerQrWidgetScanErrorLanguageItemName);
     }
 }
 
