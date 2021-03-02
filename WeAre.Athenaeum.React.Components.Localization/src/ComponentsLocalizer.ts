@@ -68,6 +68,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly documentPreviewDownloadLanguageItemName: string = `DocumentPreview.Download`;
     public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
     public readonly gridLanguageItemName: string = `Grid`;
+    public readonly addressInputLanguageItemName: string = `AddressInput`;
 
     constructor() {
 
@@ -146,6 +147,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.documentPreviewDownloadLanguageItemName, { language: `en`, value: `Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `fi`, value: `FI: Download` },);
         this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
         this.set(this.gridLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.addressInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -594,6 +596,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get grid() : string {
         return this.get(this.gridLanguageItemName);
+    }
+
+    /**
+    /* "AddressInput" ()
+    */
+    public get addressInput() : string {
+        return this.get(this.addressInputLanguageItemName);
     }
 }
 
