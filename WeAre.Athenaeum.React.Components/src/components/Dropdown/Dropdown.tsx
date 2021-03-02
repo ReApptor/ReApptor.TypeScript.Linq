@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jquery";
 import { Utility } from "@weare/athenaeum-toolkit";
 import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
-import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../../models/base/BaseInput";
+import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {BaseInputType, DropdownSchema} from "@/models/Enums";
 import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";

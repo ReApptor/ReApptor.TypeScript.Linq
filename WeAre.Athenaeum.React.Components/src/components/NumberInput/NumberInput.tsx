@@ -1,6 +1,6 @@
 import React from "react";
 import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/athenaeum-toolkit";
-import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../../models/base/BaseInput";
+import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon from "../Icon/Icon";
 
 import styles from "../Form/Form.module.scss";

@@ -1,5 +1,5 @@
 import React from "react";
-import BaseInput, { IBaseInputProps, IBaseInputState, NullableCheckboxType, ValidatorCallback } from "../../models/base/BaseInput";
+import BaseInput, { IBaseInputProps, IBaseInputState, NullableCheckboxType, ValidatorCallback } from "../BaseInput/BaseInput";
 import {BaseInputType} from "@/models/Enums";
 import Icon, { IconSize } from "@/components/Icon/Icon";
 

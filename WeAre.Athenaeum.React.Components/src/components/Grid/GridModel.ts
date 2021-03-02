@@ -8,7 +8,7 @@ import ArrayScope from "../../models/ArrayScope";
 import {IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
-import { IInput } from "@/models/base/BaseInput";
+import { IInput } from "@/components/BaseInput/BaseInput";
 
 const DEFAULT_PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 20;

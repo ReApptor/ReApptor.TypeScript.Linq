@@ -5,7 +5,7 @@ import Comparator from "../../../../helpers/Comparator";
 
 import gridStyles from "../../Grid.module.scss";
 import Dropdown, { DropdownOrderBy } from "@/components/Dropdown/Dropdown";
-import { IInput } from "@/models/base/BaseInput";
+import { IInput } from "@/components/BaseInput/BaseInput";
 
 interface IDropdownCellProps<TItem = {}> {
     id?: string;

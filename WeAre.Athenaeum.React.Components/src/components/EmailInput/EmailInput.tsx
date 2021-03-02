@@ -1,6 +1,6 @@
 import TextInput from "../TextInput/TextInput";
 import { BaseInputType } from "@/models/Enums";
-import { EmailValidator, ValidatorCallback } from "@/models/base/BaseInput";
+import { EmailValidator, ValidatorCallback } from "@/components/BaseInput/BaseInput";
 
 export default class EmailInput extends TextInput {
     protected getType(): BaseInputType {

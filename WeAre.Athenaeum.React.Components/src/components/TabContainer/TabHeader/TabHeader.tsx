@@ -4,7 +4,7 @@ import Icon from "../../Icon/Icon";
 import {ITabHeader, TabModel} from "../TabModel";
 
 import styles from "../TabContainer.module.scss";
-import GeneralLocalizer from "@/components/General/GeneralLocalizer";
+import TabContainerLocalizer from "@/components/TabContainer/TabContainerLocalizer";
 
 interface ITabHeaderProps {
     model: TabModel;
@@ -41,7 +41,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         const iconStyle: string = (!!model.title) && (styles.hasText) || "";
         
         return (
-            <li className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle)} title={GeneralLocalizer.get(model.tooltip)}>
+            <li className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle)} title={TabContainerLocalizer.get(model.tooltip)}>
 
                 <a className={this.css("nav-link", activeStyle)} onClick={async () => await this.onClickAsync()}>
                     
@@ -52,7 +52,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                         )
                     }
 
-                    {GeneralLocalizer.get(model.title)}
+                    {TabContainerLocalizer.get(model.title)}
 
                     {
                         (model.onClose) &&

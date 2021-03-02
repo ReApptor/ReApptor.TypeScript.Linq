@@ -49,7 +49,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly footerLanguageItemName: string = `Footer`;
     public readonly iconLanguageItemName: string = `Icon`;
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
-    public readonly generalLanguageItemName: string = `General`;
+    public readonly baseInputLanguageItemName: string = `BaseInput`;
     public readonly widgetContainerLanguageItemName: string = `WidgetContainer`;
     public readonly barWidgetBudgetDataModuleLabelLanguageItemName: string = `BarWidget.BudgetData.Module.Label`;
     public readonly barWidgetBudgetDataPerimeterFrameLabelLanguageItemName: string = `BarWidget.BudgetData.PerimeterFrame.Label`;
@@ -164,7 +164,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.footerLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
-        this.set(this.generalLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.baseInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.widgetContainerLanguageItemName, { language: `en`, value: `` },);
         this.set(this.barWidgetBudgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
         this.set(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
@@ -538,10 +538,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "General" ()
+    /* "BaseInput" ()
     */
-    public get general() : string {
-        return this.get(this.generalLanguageItemName);
+    public get baseInput() : string {
+        return this.get(this.baseInputLanguageItemName);
     }
 
     /**

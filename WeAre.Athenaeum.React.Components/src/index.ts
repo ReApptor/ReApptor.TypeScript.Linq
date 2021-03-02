@@ -93,7 +93,7 @@ import BaseInput, {
     EmailValidator, FileSizeValidator, FilesSizeValidator, FileTypeValidator, LengthValidator, NullableCheckboxType, PasswordValidator, PhoneValidator, BaseRegexValidatorErrorMessage,
     BaseValidator, NumberRangeValidator, BaseFileValidator, BaseInputValue, BaseRegexValidator, RegexValidator, RequiredValidator, ValidatorCallback, IValidator,
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
-} from "@/models/base/BaseInput";
+} from "@/components/BaseInput/BaseInput";
 import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
 import LayoutInline, { JustifyContent } from "@/components/LayoutInline/LayoutInline";
 import LayoutOneColumn from "@/components/LayoutOneColumn/LayoutOneColumn";
