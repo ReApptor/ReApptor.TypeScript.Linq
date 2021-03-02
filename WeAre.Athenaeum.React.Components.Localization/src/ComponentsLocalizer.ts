@@ -90,6 +90,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly tabContainerLanguageItemName: string = `TabContainer`;
     public readonly textAreaInputLanguageItemName: string = `TextAreaInput`;
     public readonly layoutThreeColumnsLanguageItemName: string = `LayoutThreeColumns`;
+    public readonly layoutTwoColumnsLanguageItemName: string = `LayoutTwoColumns`;
 
     constructor() {
 
@@ -190,6 +191,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.tabContainerLanguageItemName, { language: `en`, value: `` },);
         this.set(this.textAreaInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutThreeColumnsLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.layoutTwoColumnsLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -792,6 +794,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get layoutThreeColumns() : string {
         return this.get(this.layoutThreeColumnsLanguageItemName);
+    }
+
+    /**
+    /* "LayoutTwoColumns" ()
+    */
+    public get layoutTwoColumns() : string {
+        return this.get(this.layoutTwoColumnsLanguageItemName);
     }
 }
 
