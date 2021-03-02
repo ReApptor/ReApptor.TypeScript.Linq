@@ -17,7 +17,7 @@ interface IInlineProps {
     className?: string;
 }
 
-export default class Inline extends BaseComponent<IInlineProps> {
+export default class LayoutInline extends BaseComponent<IInlineProps> {
 
     private getPaddingStyle(index: number, length: number): string {
         return (length > 0)

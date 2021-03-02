@@ -342,4 +342,7 @@
   <data name="LayoutOneColumn" xml:space="preserve">
     <value />
   </data>
+  <data name="LayoutInline" xml:space="preserve">
+    <value />
+  </data>
 </root>
