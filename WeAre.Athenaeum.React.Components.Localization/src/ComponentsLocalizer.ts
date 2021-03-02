@@ -73,6 +73,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly checkboxLanguageItemName: string = `Checkbox`;
     public readonly checkboxNullableLanguageItemName: string = `CheckboxNullable`;
     public readonly documentPreviewLanguageItemName: string = `DocumentPreview`;
+    public readonly emailInputLanguageItemName: string = `EmailInput`;
 
     constructor() {
 
@@ -156,6 +157,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.checkboxLanguageItemName, { language: `en`, value: `` },);
         this.set(this.checkboxNullableLanguageItemName, { language: `en`, value: `` },);
         this.set(this.documentPreviewLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.emailInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -639,6 +641,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get documentPreview() : string {
         return this.get(this.documentPreviewLanguageItemName);
+    }
+
+    /**
+    /* "EmailInput" ()
+    */
+    public get emailInput() : string {
+        return this.get(this.emailInputLanguageItemName);
     }
 }
 
