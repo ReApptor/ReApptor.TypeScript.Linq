@@ -53,7 +53,7 @@ import LocationPickerModal from "@/components/LocationPickerModal/LocationPicker
 import VirtualAddressDivider from "@/components/VirtualAddressDivider/VirtualAddressDivider";
 import AddressInput, { IAddressInputProps, IAddressInputState } from "@/components/AddressInput/AddressInput";
 import Checkbox, { ICheckboxProps, ICheckboxState, InlineType } from "@/components/Checkbox/Checkbox";
-import NullableCheckbox, { INullableCheckboxProps, INullableCheckboxState } from "@/components/Checkbox/NullableCheckbox";
+import CheckboxNullable, { INullableCheckboxProps, INullableCheckboxState } from "@/components/CheckboxNullable/CheckboxNullable";
 import DateInput from "@/components/DateInput/DateInput";
 import Dropdown, {
     AmountListItem,
@@ -171,7 +171,7 @@ export { LocationPickerModal };
 export { VirtualAddressDivider };
 export { AddressInput, IAddressInputProps, IAddressInputState };
 export { Checkbox, ICheckboxProps, ICheckboxState, InlineType };
-export { NullableCheckbox, INullableCheckboxProps, INullableCheckboxState };
+export { CheckboxNullable, INullableCheckboxProps, INullableCheckboxState };
 export { DateInput };
 export {
     Dropdown,

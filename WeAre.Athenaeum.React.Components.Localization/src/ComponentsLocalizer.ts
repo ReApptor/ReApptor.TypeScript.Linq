@@ -70,6 +70,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly gridLanguageItemName: string = `Grid`;
     public readonly addressInputLanguageItemName: string = `AddressInput`;
     public readonly buttonContainerLanguageItemName: string = `ButtonContainer`;
+    public readonly checkboxLanguageItemName: string = `Checkbox`;
+    public readonly checkboxNullableLanguageItemName: string = `CheckboxNullable`;
 
     constructor() {
 
@@ -150,6 +152,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.gridLanguageItemName, { language: `en`, value: `` },);
         this.set(this.addressInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.buttonContainerLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.checkboxLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.checkboxNullableLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -612,6 +616,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get buttonContainer() : string {
         return this.get(this.buttonContainerLanguageItemName);
+    }
+
+    /**
+    /* "Checkbox" ()
+    */
+    public get checkbox() : string {
+        return this.get(this.checkboxLanguageItemName);
+    }
+
+    /**
+    /* "CheckboxNullable" ()
+    */
+    public get checkboxNullable() : string {
+        return this.get(this.checkboxNullableLanguageItemName);
     }
 }
 

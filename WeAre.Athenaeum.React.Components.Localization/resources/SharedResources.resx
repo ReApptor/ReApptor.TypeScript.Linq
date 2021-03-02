@@ -315,4 +315,10 @@
   <data name="ButtonContainer" xml:space="preserve">
     <value />
   </data>
+  <data name="Checkbox" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CheckboxNullable" xml:space="preserve">
+    <value />
+  </data>
 </root>
