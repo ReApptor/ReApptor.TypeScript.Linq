@@ -102,6 +102,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly widgetContainerQrWidgetScanErrorLanguageItemName: string = `WidgetContainer.QrWidget.Scan.Error`;
     public readonly switchWidgetLanguageItemName: string = `SwitchWidget`;
     public readonly textAreaWidgetLanguageItemName: string = `TextAreaWidget`;
+    public readonly textInputWidgetLanguageItemName: string = `TextInputWidget`;
 
     constructor() {
 
@@ -214,6 +215,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.widgetContainerQrWidgetScanErrorLanguageItemName, { language: `en`, value: `` },);
         this.set(this.switchWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.textAreaWidgetLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.textInputWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -900,6 +902,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get textAreaWidget() : string {
         return this.get(this.textAreaWidgetLanguageItemName);
+    }
+
+    /**
+    /* "TextInputWidget" ()
+    */
+    public get textInputWidget() : string {
+        return this.get(this.textInputWidgetLanguageItemName);
     }
 }
 
