@@ -74,6 +74,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly checkboxNullableLanguageItemName: string = `CheckboxNullable`;
     public readonly documentPreviewLanguageItemName: string = `DocumentPreview`;
     public readonly emailInputLanguageItemName: string = `EmailInput`;
+    public readonly layoutFourColumnsLanguageItemName: string = `LayoutFourColumns`;
 
     constructor() {
 
@@ -158,6 +159,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.checkboxNullableLanguageItemName, { language: `en`, value: `` },);
         this.set(this.documentPreviewLanguageItemName, { language: `en`, value: `` },);
         this.set(this.emailInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.layoutFourColumnsLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -648,6 +650,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get emailInput() : string {
         return this.get(this.emailInputLanguageItemName);
+    }
+
+    /**
+    /* "LayoutFourColumns" ()
+    */
+    public get layoutFourColumns() : string {
+        return this.get(this.layoutFourColumnsLanguageItemName);
     }
 }
 
