@@ -5,7 +5,7 @@ import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPrevi
 import Alert from "../Alert/Alert";
 import PageRow from "./PageRow/PageRow";
 import Modal from "../Modal/Modal";
-import DocumentPreviewModal from "../DocumentPreview/DocumentPreviewModal/DocumentPreviewModal";
+import DocumentPreviewModal from "../DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
 import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";

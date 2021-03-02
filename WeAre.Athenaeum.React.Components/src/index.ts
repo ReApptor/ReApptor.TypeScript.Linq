@@ -3,7 +3,7 @@ import Button, { IButtonProps, ButtonType } from "@/components/Button/Button";
 import ButtonContainer, { IButtonContainerProps, IButtonContainerState } from "@/components/ButtonContainer/ButtonContainer";
 import ConfirmationDialog, { IConfirmation, ConfirmationDialogTitleCallback } from "@/components/ConfirmationDialog/ConfirmationDialog";
 import DocumentPreview from "@/components/DocumentPreview/DocumentPreview";
-import DocumentPreviewModal, { DocumentPreviewCallback } from "@/components/DocumentPreview/DocumentPreviewModal/DocumentPreviewModal";
+import DocumentPreviewModal, { DocumentPreviewCallback } from "@/components/DocumentPreviewModal/DocumentPreviewModal";
 import Footer from "@/components/Footer/Footer";
 import Form from "@/components/Form/Form";
 // import CellActionComponent from "@/components/Grid/Cell/CellActionComponent/CellActionComponent";
