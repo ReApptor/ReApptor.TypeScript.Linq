@@ -1,8 +1,8 @@
 import React from "react";
-import BaseInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../BaseInputWidget";
-import AutoSuggest, { AutoSuggestItem } from "../../Form/Inputs/TextInput/AutoSuggest/AutoSuggest";
+import BaseInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../WidgetContainer/BaseInputWidget";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
+import AutoSuggest, {AutoSuggestItem} from "@/components/TextInput/AutoSuggest/AutoSuggest";
 
 interface ITextInputWidgetProps extends IBaseInputWidgetProps {
     autoSuggestItems?: AutoSuggestItem[];
