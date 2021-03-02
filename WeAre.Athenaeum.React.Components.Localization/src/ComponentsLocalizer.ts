@@ -77,6 +77,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly layoutFourColumnsLanguageItemName: string = `LayoutFourColumns`;
     public readonly linkLanguageItemName: string = `Link`;
     public readonly locationPickerLanguageItemName: string = `LocationPicker`;
+    public readonly numberInputLanguageItemName: string = `NumberInput`;
 
     constructor() {
 
@@ -164,6 +165,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.layoutFourColumnsLanguageItemName, { language: `en`, value: `` },);
         this.set(this.linkLanguageItemName, { language: `en`, value: `` },);
         this.set(this.locationPickerLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.numberInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -675,6 +677,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get locationPicker() : string {
         return this.get(this.locationPickerLanguageItemName);
+    }
+
+    /**
+    /* "NumberInput" ()
+    */
+    public get numberInput() : string {
+        return this.get(this.numberInputLanguageItemName);
     }
 }
 
