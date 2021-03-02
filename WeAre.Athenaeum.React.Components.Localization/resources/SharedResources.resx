@@ -381,4 +381,7 @@
   <data name="CheckboxWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="CheckStepWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>
