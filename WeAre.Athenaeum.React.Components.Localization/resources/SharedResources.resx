@@ -393,4 +393,7 @@
   <data name="RouteWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="TimeWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>

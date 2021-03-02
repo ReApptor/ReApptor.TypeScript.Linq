@@ -1,5 +1,5 @@
 import {TimeSpan, Utility} from "@weare/athenaeum-toolkit";
-import BaseRouteWidget, { IBaseRouteWidgetProps } from "../../BaseRouteWidget";
+import BaseRouteWidget, { IBaseRouteWidgetProps } from "../WidgetContainer/BaseRouteWidget";
 
 export interface ITimeWidgetProps extends IBaseRouteWidgetProps {
     onClick?(): Promise<void>;
