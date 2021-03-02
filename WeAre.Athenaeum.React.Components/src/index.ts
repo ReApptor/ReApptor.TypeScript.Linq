@@ -95,7 +95,7 @@ import BaseInput, {
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
 } from "@/models/base/BaseInput";
 import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
-import Inline, { JustifyContent } from "@/components/Inline/Inline";
+import LayoutInline, { JustifyContent } from "@/components/LayoutInline/LayoutInline";
 import LayoutOneColumn from "@/components/LayoutOneColumn/LayoutOneColumn";
 import ThreeColumns from "@/components/ThreeColumn/ThreeColumns";
 import TwoColumns from "@/components/TwoColumn/TwoColumns";
@@ -215,7 +215,7 @@ export {
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable
 };
 export { LayoutFourColumns };
-export { Inline, JustifyContent };
+export { LayoutInline, JustifyContent };
 export { LayoutOneColumn };
 export { ThreeColumns };
 export { TwoColumns };
