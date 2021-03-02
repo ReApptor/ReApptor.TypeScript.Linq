@@ -375,4 +375,7 @@
   <data name="LayoutThreeColumns" xml:space="preserve">
     <value />
   </data>
+  <data name="LayoutTwoColumns" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -98,7 +98,7 @@ import LayoutFourColumns from "@/components/LayoutFourColumns/LayoutFourColumns"
 import LayoutInline, { JustifyContent } from "@/components/LayoutInline/LayoutInline";
 import LayoutOneColumn from "@/components/LayoutOneColumn/LayoutOneColumn";
 import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
-import TwoColumns from "@/components/TwoColumn/TwoColumns";
+import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
 import Layout from "@/components/Layout/Layout";
 import Link from "@/components/Link/Link";
 import List from "@/components/List/List";
@@ -218,7 +218,7 @@ export { LayoutFourColumns };
 export { LayoutInline, JustifyContent };
 export { LayoutOneColumn };
 export { LayoutThreeColumns };
-export { TwoColumns };
+export { LayoutTwoColumns };
 export { Layout };
 export { Link };
 export { List };
