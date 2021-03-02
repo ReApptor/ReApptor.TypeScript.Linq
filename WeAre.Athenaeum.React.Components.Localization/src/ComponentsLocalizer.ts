@@ -81,6 +81,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly layoutOneColumnLanguageItemName: string = `LayoutOneColumn`;
     public readonly layoutInlineLanguageItemName: string = `LayoutInline`;
     public readonly paginationLanguageItemName: string = `Pagination`;
+    public readonly phoneInputLanguageItemName: string = `PhoneInput`;
 
     constructor() {
 
@@ -172,6 +173,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.layoutOneColumnLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutInlineLanguageItemName, { language: `en`, value: `` },);
         this.set(this.paginationLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.phoneInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -711,6 +713,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get pagination() : string {
         return this.get(this.paginationLanguageItemName);
+    }
+
+    /**
+    /* "PhoneInput" ()
+    */
+    public get phoneInput() : string {
+        return this.get(this.phoneInputLanguageItemName);
     }
 }
 
