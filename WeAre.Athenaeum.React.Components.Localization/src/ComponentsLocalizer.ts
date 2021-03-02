@@ -87,6 +87,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly spinnerLanguageItemName: string = `Spinner`;
     public readonly switchLanguageItemName: string = `Switch`;
     public readonly switchNullableLanguageItemName: string = `SwitchNullable`;
+    public readonly tabContainerLanguageItemName: string = `TabContainer`;
 
     constructor() {
 
@@ -184,6 +185,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.spinnerLanguageItemName, { language: `en`, value: `` },);
         this.set(this.switchLanguageItemName, { language: `en`, value: `` },);
         this.set(this.switchNullableLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.tabContainerLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -765,6 +767,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get switchNullable() : string {
         return this.get(this.switchNullableLanguageItemName);
+    }
+
+    /**
+    /* "TabContainer" ()
+    */
+    public get tabContainer() : string {
+        return this.get(this.tabContainerLanguageItemName);
     }
 }
 
