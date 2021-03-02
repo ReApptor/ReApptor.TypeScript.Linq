@@ -1,8 +1,8 @@
 import React from "react";
 import BaseInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../BaseInputWidget";
+import AutoSuggest, { AutoSuggestItem } from "../../Form/Inputs/TextInput/AutoSuggest/AutoSuggest";
 
 import styles from "../WidgetContainer.module.scss";
-import AutoSuggest, { AutoSuggestItem } from "@/components/TextInput/AutoSuggest/AutoSuggest";
 
 interface ITextInputWidgetProps extends IBaseInputWidgetProps {
     autoSuggestItems?: AutoSuggestItem[];
@@ -70,7 +70,7 @@ export default class TextInputWidget extends BaseInputWidget<ITextInputWidgetPro
                                                              items={this.autoSuggestItems}
                                                              isOpen={this.inputVisible}
                                                              toggleButtonId={this.toggleButtonId}
-                                                             onSelect={async (_: any, value: string) => await this.setValueFromAutoSuggest(value)}/>
+                                                             onSelect={async (_, value) => await this.setValueFromAutoSuggest(value)}/>
                                             </div>
                                         )
                                     }

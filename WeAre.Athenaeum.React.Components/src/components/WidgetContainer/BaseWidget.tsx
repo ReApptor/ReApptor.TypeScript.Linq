@@ -5,9 +5,9 @@ import { LinkTarget } from "@/models/Enums";
 import Icon, { IconSize, IIconProps } from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import BaseWidgetContainer from "./BaseWidgetContainer";
+import Localizer from "../../localization/Localizer";
 
 import styles from "./WidgetContainer.module.scss";
-import WidgetContainerLocalizer from "@/components/WidgetContainer/WidgetContainerLocalizer";
 
 export interface IBaseWidget {
     isWidget(): boolean;
@@ -110,12 +110,12 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
 
     protected get label(): string {
-        return WidgetContainerLocalizer.get(this.getLabel());
+        return Localizer.get(this.getLabel());
     }
 
     protected get description(): string {
         const description: string | null = this.getDescription();
-        return WidgetContainerLocalizer.get(description, this.state.number);
+        return Localizer.get(description, this.state.number);
     }
 
     protected get icon(): IIconProps | null {

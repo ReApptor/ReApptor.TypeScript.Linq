@@ -3,7 +3,7 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import {IBaseWidgetProps} from "@/components/WidgetContainer/BaseWidget";
 import BaseExpandableWidget from "@/components/WidgetContainer/BaseExpandableWidget";
 import NumberWidget from "@/components/WidgetContainer/NumberWidget/NumberWidget";
-import GeneralLocalizer from "@/components/General/GeneralLocalizer";
+import Localizer from "@/localization/Localizer";
 
 import styles from "./HoursWidget.module.scss";
 
@@ -100,7 +100,7 @@ export default class HoursWidget extends BaseExpandableWidget<IHoursWidgetProps>
                         (
                             <React.Fragment>
                                 <NumberWidget className={this.css(styles.embeddedWidget, totalWidgetStyle, (this.desktop) && styles.alignNumbers)}
-                                              label={(this.contentVisible) ? GeneralLocalizer.get("componentHoursWidgetNormalHours") : ""}
+                                              label={(this.contentVisible) ? Localizer.componentHoursWidgetNormalHours : ""}
                                               reverse={true}
                                               wide
                                               min={0}

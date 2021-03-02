@@ -2,9 +2,9 @@ import React from "react";
 import {ch} from "@weare/athenaeum-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../BaseExpandableWidget";
+import Localizer from "@/localization/Localizer";
 
 import styles from "../WidgetContainer.module.scss";
-import WidgetContainerLocalizer from "@/components/WidgetContainer/WidgetContainerLocalizer";
 
 export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     onQr?(qr: string): Promise<void>;
@@ -23,7 +23,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     private async onScanErrorAsync(error: string): Promise<void> {
-        await ch.alertErrorAsync(WidgetContainerLocalizer.qrWidgetScanError, true);
+        await ch.alertErrorAsync(Localizer.qrWidgetScanError, true);
         await super.hideContentAsync();
     }
 
@@ -43,8 +43,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         return (
             <div className={styles.qr}>
                 <QrReader delay={300}
-                          onScan={async (data: string | null) => await this.onScanAsync(data)}
-                          onError={async (error: string) => await this.onScanErrorAsync(error)}
+                          onScan={async (data) => await this.onScanAsync(data)}
+                          onError={async (error) => await this.onScanErrorAsync(error)}
                           style={qrStyle}/>
             </div>
         );
