@@ -1,4 +1,4 @@
-import BaseRouteWidget, { IBaseRouteWidgetProps } from "../../BaseRouteWidget";
+import BaseRouteWidget, { IBaseRouteWidgetProps } from "../WidgetContainer/BaseRouteWidget";
 
 export interface IRouteWidgetProps extends IBaseRouteWidgetProps {
     onClick?(): Promise<void>;
