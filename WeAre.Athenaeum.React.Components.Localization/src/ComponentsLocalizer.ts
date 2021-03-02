@@ -69,6 +69,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly fileInputPreviewLanguageItemName: string = `FileInput.Preview`;
     public readonly gridLanguageItemName: string = `Grid`;
     public readonly addressInputLanguageItemName: string = `AddressInput`;
+    public readonly buttonContainerLanguageItemName: string = `ButtonContainer`;
 
     constructor() {
 
@@ -148,6 +149,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.fileInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
         this.set(this.gridLanguageItemName, { language: `en`, value: `` },);
         this.set(this.addressInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.buttonContainerLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -603,6 +605,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get addressInput() : string {
         return this.get(this.addressInputLanguageItemName);
+    }
+
+    /**
+    /* "ButtonContainer" ()
+    */
+    public get buttonContainer() : string {
+        return this.get(this.buttonContainerLanguageItemName);
     }
 }
 
