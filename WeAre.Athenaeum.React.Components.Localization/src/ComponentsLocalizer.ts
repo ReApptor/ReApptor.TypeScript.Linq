@@ -94,6 +94,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly checkboxWidgetLanguageItemName: string = `CheckboxWidget`;
     public readonly checkStepWidgetLanguageItemName: string = `CheckStepWidget`;
     public readonly dateInputWidgetLanguageItemName: string = `DateInputWidget`;
+    public readonly linkWidgetLanguageItemName: string = `LinkWidget`;
 
     constructor() {
 
@@ -198,6 +199,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.checkboxWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.checkStepWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.dateInputWidgetLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.linkWidgetLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -828,6 +830,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get dateInputWidget() : string {
         return this.get(this.dateInputWidgetLanguageItemName);
+    }
+
+    /**
+    /* "LinkWidget" ()
+    */
+    public get linkWidget() : string {
+        return this.get(this.linkWidgetLanguageItemName);
     }
 }
 

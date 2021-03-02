@@ -387,4 +387,7 @@
   <data name="DateInputWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="LinkWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>
