@@ -5,7 +5,6 @@ import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../BaseExpanda
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateInputWidget.scss";
-
 import styles from "../WidgetContainer.module.scss";
 
 interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {

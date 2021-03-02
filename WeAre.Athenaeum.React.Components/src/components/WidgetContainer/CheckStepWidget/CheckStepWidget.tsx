@@ -1,9 +1,9 @@
 import React from "react";
 import BaseCheckboxWidget, { IBaseCheckboxWidgetProps } from "../BaseCheckboxWidget";
 import {IIconProps} from "@/components/Icon/Icon";
+import Checkbox from "@/components/Form/Inputs/Checkbox/Checkbox";
 
 import styles from "../WidgetContainer.module.scss";
-import Checkbox from "@/components/Checkbox/Checkbox";
 
 export interface ICheckStepWidgetProps extends IBaseCheckboxWidgetProps {
     onChange?(sender: CheckStepWidget, checked: boolean): Promise<void>;
