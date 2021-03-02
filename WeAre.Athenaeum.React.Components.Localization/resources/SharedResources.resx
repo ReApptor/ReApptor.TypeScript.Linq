@@ -408,4 +408,7 @@
   <data name="SwitchWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="TextAreaWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>
