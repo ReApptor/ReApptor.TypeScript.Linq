@@ -1,4 +1,4 @@
-import BaseCheckboxWidget, { IBaseCheckboxWidgetProps } from "../BaseCheckboxWidget";
+import BaseCheckboxWidget, { IBaseCheckboxWidgetProps } from "../WidgetContainer/BaseCheckboxWidget";
 
 export interface ICheckboxWidgetProps extends IBaseCheckboxWidgetProps {
     onChange?(sender: CheckboxWidget, checked: boolean): Promise<void>;
