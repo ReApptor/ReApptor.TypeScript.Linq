@@ -1,11 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import {Utility} from "@weare/athenaeum-toolkit";
-import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../BaseExpandableWidget";
+import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateInputWidget.scss";
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {
     value?: Date;

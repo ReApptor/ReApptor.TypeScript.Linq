@@ -384,4 +384,7 @@
   <data name="CheckStepWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="DateInputWidget" xml:space="preserve">
+    <value />
+  </data>
 </root>
