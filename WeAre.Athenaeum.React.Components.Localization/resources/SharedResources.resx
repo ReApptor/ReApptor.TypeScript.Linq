@@ -195,6 +195,9 @@
   <data name="TopNav" xml:space="preserve">
     <value />
   </data>
+  <data name="Footer" xml:space="preserve">
+    <value />
+  </data>
   <data name="Icon" xml:space="preserve">
     <value />
   </data>
@@ -369,16 +372,13 @@
   <data name="DateInput" xml:space="preserve">
     <value />
   </data>
+  <data name="Form" xml:space="preserve">
+    <value />
+  </data>
   <data name="Layout" xml:space="preserve">
     <value />
   </data>
   <data name="WizardContainer" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Footer" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Form" xml:space="preserve">
     <value />
   </data>
 </root>
