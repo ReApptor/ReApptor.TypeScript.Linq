@@ -1,6 +1,7 @@
 import resx, { ObjectOfStrings } from 'resx';
 import fs from 'fs';
 import path from 'path';
+import * as chalk from "chalk";
 
 export function convertResxToJs(resxFile: string): Promise<ObjectOfStrings> {
   return new Promise((resolve, reject) => {
@@ -16,7 +17,12 @@ export function convertResxToJs(resxFile: string): Promise<ObjectOfStrings> {
 export function readDirectory(directory: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     fs.readdir(directory, (err, files) => {
-      if (err) {
+      if (err && err.code === 'ENOTDIR') {
+        resolve([]);
+      } else if (err) {
+        console.log('Error while reading directory: ');
+        console.log('directory: ', directory);
+        console.log('err: ', err);
         reject(err);
       }
       resolve(files);
@@ -25,20 +31,26 @@ export function readDirectory(directory: string): Promise<string[]> {
 }
 
 export async function listAllNestedFiles(directory: string): Promise<string[]> {
-  const finalized = [];
-  const directoryData = await readDirectory(directory);
+      const finalized = [];
+      const directoryData = await readDirectory(directory);
 
-  for (const data of directoryData) {
-    try {
+      for (const data of directoryData) {
       const nestedDir = path.resolve(directory, data);
-      const nestedData = await listAllNestedFiles(nestedDir);
-      finalized.push(...nestedData.map((x) => path.resolve(nestedDir, x)));
-    } catch (e) {
-      const nestedDir = path.resolve(directory, data);
-      finalized.push(nestedDir);
-    }
-  }
-  return finalized;
+      
+        try {
+          const nestedData = await listAllNestedFiles(nestedDir);
+          finalized.push(...nestedData.map((x) => path.resolve(nestedDir, x)));
+        } catch (e) {
+          if (e.code === 'ENOTDIR') {
+            finalized.push(nestedDir);
+          } else {
+            console.log('Error while listing ALl nested files:')
+            console.log('Directory:', directory)
+            console.log(e);
+          }
+        }
+      }
+      return finalized;
 }
 
 export async function listAllTsAndTsxFiles(directory: string, exclude?: string): Promise<string[]> {
