@@ -10,18 +10,22 @@ import { checkForUnUsedLocalizations } from './actions/componentUnUsedLocalizati
 async function main(componentsPath: string, resxPath: string) {
   const localizationMap = await convertResxFileToMap(fs.readFileSync(resxPath));
 
+  console.log(chalk.green("Checking for RedundantLocalizerPlaceHolders"))
   const redundantWarnings = checkForRedundantLocalizerPlaceHolders(localizationMap);
-
+  
+  console.log(chalk.green("Checking for localizationWithoutComponentWarnings"))
   const localizationWithoutComponentWarnings = await checkForLocalizationWithoutComponent(
       componentsPath,
       localizationMap,
   );
-
+  
+  console.log(chalk.green("Checking for componentsWithoutLocalizationWarnings"))
   const componentsWithoutLocalizationWarnings = await checkForComponentWithoutLocalization(
       componentsPath,
       localizationMap,
   );
-
+  
+  console.log(chalk.green("Checking for componentUnUsedLocalizationWarnings"))
   const componentUnUsedLocalizationWarnings = await checkForUnUsedLocalizations(componentsPath, localizationMap);
 
   if (redundantWarnings.length > 0) {
@@ -75,4 +79,10 @@ console.log(resxPathAsAbsolute);
 console.log('components directory path:');
 console.log(componentsPathAsAbsolute);
 
-main(componentsPathAsAbsolute, resxPathAsAbsolute).then();
+try {
+  main(componentsPathAsAbsolute, resxPathAsAbsolute).then();
+
+} catch (e){
+  console.log('Error while running Checks');
+  console.log(e)
+}
