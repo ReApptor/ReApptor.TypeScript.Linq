@@ -25,7 +25,6 @@
       <TypeScriptCompile Include="src\components\DocumentPreview\DocumentPreview.tsx" />
       <TypeScriptCompile Include="src\components\Footer\Footer.tsx" />
       <TypeScriptCompile Include="src\components\Form\Form.tsx" />
-      <TypeScriptCompile Include="src\components\General\GeneralLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Grid\Grid.tsx" />
       <TypeScriptCompile Include="src\components\Grid\GridLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Grid\GridModel.ts" />

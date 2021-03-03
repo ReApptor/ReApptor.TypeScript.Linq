@@ -30,6 +30,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly alertLanguageItemName: string = `Alert`;
     public readonly textInputLanguageItemName: string = `TextInput`;
     public readonly topNavLanguageItemName: string = `TopNav`;
+    public readonly footerLanguageItemName: string = `Footer`;
     public readonly iconLanguageItemName: string = `Icon`;
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
     public readonly baseInputLanguageItemName: string = `BaseInput`;
@@ -88,10 +89,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly titleWidgetLanguageItemName: string = `TitleWidget`;
     public readonly buttonLanguageItemName: string = `Button`;
     public readonly dateInputLanguageItemName: string = `DateInput`;
+    public readonly formLanguageItemName: string = `Form`;
     public readonly layoutLanguageItemName: string = `Layout`;
     public readonly wizardContainerLanguageItemName: string = `WizardContainer`;
-    public readonly footerLanguageItemName: string = `Footer`;
-    public readonly formLanguageItemName: string = `Form`;
 
     constructor() {
 
@@ -132,6 +132,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.topNavLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
+        this.set(this.footerLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.baseInputLanguageItemName, { language: `en`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
@@ -190,10 +191,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.titleWidgetLanguageItemName, { language: `en`, value: `` },);
         this.set(this.buttonLanguageItemName, { language: `en`, value: `` },);
         this.set(this.dateInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.formLanguageItemName, { language: `en`, value: `` },);
         this.set(this.layoutLanguageItemName, { language: `en`, value: `` },);
         this.set(this.wizardContainerLanguageItemName, { language: `en`, value: `` },);
-        this.set(this.footerLanguageItemName, { language: `en`, value: `` },);
-        this.set(this.formLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -376,6 +376,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get topNav() : string {
         return this.get(this.topNavLanguageItemName);
+    }
+
+    /**
+    /* "Footer" ()
+    */
+    public get footer() : string {
+        return this.get(this.footerLanguageItemName);
     }
 
     /**
@@ -785,6 +792,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
+    /* "Form" ()
+    */
+    public get form() : string {
+        return this.get(this.formLanguageItemName);
+    }
+
+    /**
     /* "Layout" ()
     */
     public get layout() : string {
@@ -796,20 +810,6 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get wizardContainer() : string {
         return this.get(this.wizardContainerLanguageItemName);
-    }
-
-    /**
-    /* "Footer" ()
-    */
-    public get footer() : string {
-        return this.get(this.footerLanguageItemName);
-    }
-
-    /**
-    /* "Form" ()
-    */
-    public get form() : string {
-        return this.get(this.formLanguageItemName);
     }
 }
 
