@@ -5,6 +5,7 @@ class ButtonLocalizer extends BaseComponentLocalizer {
 
     //Constants
 
+
     constructor() {
 
         super(
@@ -18,7 +19,9 @@ class ButtonLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
+
     }
+
 
 }
 

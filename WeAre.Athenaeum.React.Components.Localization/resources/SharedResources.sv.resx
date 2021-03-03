@@ -138,14 +138,8 @@
   <data name="Dropdown.Add" xml:space="preserve">
     <value>SV: Add</value>
   </data>
-  <data name="Footer.Contact" xml:space="preserve">
-    <value>Kontakt information</value>
-  </data>
   <data name="List.Loading" xml:space="preserve">
     <value>Laddar...</value>
-  </data>
-  <data name="Footer.Frontpage" xml:space="preserve">
-    <value>Framsida</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>Töm</value>
@@ -186,24 +180,6 @@
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
     <value>SV: Close</value>
   </data>
-  <data name="Form.Input.Email" xml:space="preserve">
-    <value>Epost</value>
-  </data>
-  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
-    <value>Epost</value>
-  </data>
-  <data name="Form.Input.Phone" xml:space="preserve">
-    <value>Telefonnumer</value>
-  </data>
-  <data name="Form.Input.Firstname" xml:space="preserve">
-    <value>Förnamn</value>
-  </data>
-  <data name="Form.Input.Lastname" xml:space="preserve">
-    <value>Efternamn</value>
-  </data>
-  <data name="Form.Input.Message" xml:space="preserve">
-    <value>Meddelande</value>
-  </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>Gata</value>
   </data>
@@ -215,9 +191,6 @@
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>Postnummer</value>
-  </data>
-  <data name="Form.Input.Language" xml:space="preserve">
-    <value>Språk</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>dra och släpp filen här, eller välj med att klicka</value>
@@ -231,35 +204,11 @@
   <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>Välj fil</value>
   </data>
-  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
-    <value>Användar-id</value>
-  </data>
-  <data name="Form.Input.Role" xml:space="preserve">
-    <value>Roll</value>
-  </data>
-  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
-    <value>Kontrakt lön timpris</value>
-  </data>
-  <data name="Form.Input.WorkCardId" xml:space="preserve">
-    <value>Arbetskorts-id</value>
-  </data>
-  <data name="Form.Input.CostPool" xml:space="preserve">
-    <value>Kostnadspool</value>
-  </data>
-  <data name="Form.Input.Middlename" xml:space="preserve">
-    <value>SV: Middle name</value>
-  </data>
-  <data name="Form.Input.Postalbox" xml:space="preserve">
-    <value>SV: Postal box</value>
-  </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
     <value>Platsväljare</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
     <value>Välj plats på kartan</value>
-  </data>
-  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
-    <value>SV: Time tracking device id</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
     <value>SV: Set location</value>
@@ -271,9 +220,6 @@
     <value />
   </data>
   <data name="TopNav" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Footer" xml:space="preserve">
     <value />
   </data>
   <data name="Icon" xml:space="preserve">

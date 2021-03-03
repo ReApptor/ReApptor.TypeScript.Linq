@@ -4,21 +4,7 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class FormLocalizer extends BaseComponentLocalizer {
 
     //Constants
-    public readonly inputReceiverEmailLanguageItemName: string = `Input.ReceiverEmail`;
-    public readonly inputPhoneLanguageItemName: string = `Input.Phone`;
-    public readonly inputFirstnameLanguageItemName: string = `Input.Firstname`;
-    public readonly inputMiddlenameLanguageItemName: string = `Input.Middlename`;
-    public readonly inputLastnameLanguageItemName: string = `Input.Lastname`;
-    public readonly inputMessageLanguageItemName: string = `Input.Message`;
-    public readonly inputPostalboxLanguageItemName: string = `Input.Postalbox`;
-    public readonly inputLanguageLanguageItemName: string = `Input.Language`;
-    public readonly inputEmployeeNumberLanguageItemName: string = `Input.EmployeeNumber`;
-    public readonly inputCostPoolLanguageItemName: string = `Input.CostPool`;
-    public readonly inputWorkCardIdLanguageItemName: string = `Input.WorkCardId`;
-    public readonly inputTimeTrackingDeviceIdLanguageItemName: string = `Input.TimeTrackingDeviceId`;
-    public readonly inputContractSalaryHourlyPriceLanguageItemName: string = `Input.ContractSalaryHourlyPrice`;
-    public readonly inputRoleLanguageItemName: string = `Input.Role`;
-    public readonly inputEmailLanguageItemName: string = `Input.Email`;
+
 
     constructor() {
 
@@ -33,127 +19,10 @@ class FormLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.inputReceiverEmailLanguageItemName, { language: `en`, value: `Receiver email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Receiver email` }, { language: `pl`, value: `PL: Receiver email` }, { language: `fi`, value: `Vastaanottaja` },);
-        this.set(this.inputPhoneLanguageItemName, { language: `en`, value: `Phone number` }, { language: `sv`, value: `Telefonnumer` }, { language: `ru`, value: `RU: Phone number` }, { language: `pl`, value: `PL: Phone number` }, { language: `fi`, value: `Puhelinnumero` },);
-        this.set(this.inputFirstnameLanguageItemName, { language: `en`, value: `Firstname` }, { language: `sv`, value: `Förnamn` }, { language: `ru`, value: `RU: Firstname` }, { language: `pl`, value: `PL: Firstname` }, { language: `fi`, value: `Etunimi` },);
-        this.set(this.inputMiddlenameLanguageItemName, { language: `en`, value: `Middle name` }, { language: `sv`, value: `SV: Middle name` }, { language: `ru`, value: `RU: Middle name` }, { language: `pl`, value: `PL: Middle name` }, { language: `fi`, value: `Toinen nimi` },);
-        this.set(this.inputLastnameLanguageItemName, { language: `en`, value: `Lastname` }, { language: `sv`, value: `Efternamn` }, { language: `ru`, value: `RU: Lastname` }, { language: `pl`, value: `PL: Lastname` }, { language: `fi`, value: `Sukunimi` },);
-        this.set(this.inputMessageLanguageItemName, { language: `en`, value: `Message` }, { language: `sv`, value: `Meddelande` }, { language: `ru`, value: `RU: Message` }, { language: `pl`, value: `PL: Message` }, { language: `fi`, value: `Viesti` },);
-        this.set(this.inputPostalboxLanguageItemName, { language: `en`, value: `Postal box` }, { language: `sv`, value: `SV: Postal box` }, { language: `ru`, value: `RU: Postal box` }, { language: `pl`, value: `PL: Postal box` }, { language: `fi`, value: `Postilaatikko` },);
-        this.set(this.inputLanguageLanguageItemName, { language: `en`, value: `Language` }, { language: `sv`, value: `Språk` }, { language: `ru`, value: `RU: Language` }, { language: `pl`, value: `PL: Language` }, { language: `fi`, value: `Kieli` },);
-        this.set(this.inputEmployeeNumberLanguageItemName, { language: `en`, value: `Employee number` }, { language: `sv`, value: `Användar-id` }, { language: `ru`, value: `RU: Employee number` }, { language: `pl`, value: `PL: Employee number` }, { language: `fi`, value: `Käyttäjä-id` },);
-        this.set(this.inputCostPoolLanguageItemName, { language: `en`, value: `Cost pool` }, { language: `sv`, value: `Kostnadspool` }, { language: `ru`, value: `RU: Cost pool` }, { language: `pl`, value: `PL: Cost pool` }, { language: `fi`, value: `Kustannuspaikka` },);
-        this.set(this.inputWorkCardIdLanguageItemName, { language: `en`, value: `Work card id` }, { language: `sv`, value: `Arbetskorts-id` }, { language: `ru`, value: `RU: Work card id` }, { language: `pl`, value: `PL: Work card id` }, { language: `fi`, value: `Valttikorti-id` },);
-        this.set(this.inputTimeTrackingDeviceIdLanguageItemName, { language: `en`, value: `Time tracking device id` }, { language: `sv`, value: `SV: Time tracking device id` }, { language: `ru`, value: `RU: Time tracking device id` }, { language: `pl`, value: `PL: Time tracking device id` }, { language: `fi`, value: `Työaikaseurantalaite-id` },);
-        this.set(this.inputContractSalaryHourlyPriceLanguageItemName, { language: `en`, value: `Contract salary hourly price` }, { language: `sv`, value: `Kontrakt lön timpris` }, { language: `ru`, value: `RU: Contract salary hourly price` }, { language: `pl`, value: `PL: Contract salary hourly price` }, { language: `fi`, value: `Sopimuspalkan tuntihinta` },);
-        this.set(this.inputRoleLanguageItemName, { language: `en`, value: `Role` }, { language: `sv`, value: `Roll` }, { language: `ru`, value: `RU: Role` }, { language: `pl`, value: `PL: Role` }, { language: `fi`, value: `Rooli` },);
-        this.set(this.inputEmailLanguageItemName, { language: `en`, value: `Email` }, { language: `sv`, value: `Epost` }, { language: `ru`, value: `RU: Email` }, { language: `pl`, value: `PL: Email` }, { language: `fi`, value: `Sähköposti` },);
+
     }
 
-    /**
-    /* "Input.ReceiverEmail" (Receiver email)
-    */
-    public get inputReceiverEmail() : string {
-        return this.get(this.inputReceiverEmailLanguageItemName);
-    }
 
-    /**
-    /* "Input.Phone" (Phone number)
-    */
-    public get inputPhone() : string {
-        return this.get(this.inputPhoneLanguageItemName);
-    }
-
-    /**
-    /* "Input.Firstname" (Firstname)
-    */
-    public get inputFirstname() : string {
-        return this.get(this.inputFirstnameLanguageItemName);
-    }
-
-    /**
-    /* "Input.Middlename" (Middle name)
-    */
-    public get inputMiddlename() : string {
-        return this.get(this.inputMiddlenameLanguageItemName);
-    }
-
-    /**
-    /* "Input.Lastname" (Lastname)
-    */
-    public get inputLastname() : string {
-        return this.get(this.inputLastnameLanguageItemName);
-    }
-
-    /**
-    /* "Input.Message" (Message)
-    */
-    public get inputMessage() : string {
-        return this.get(this.inputMessageLanguageItemName);
-    }
-
-    /**
-    /* "Input.Postalbox" (Postal box)
-    */
-    public get inputPostalbox() : string {
-        return this.get(this.inputPostalboxLanguageItemName);
-    }
-
-    /**
-    /* "Input.Language" (Language)
-    */
-    public get inputLanguage() : string {
-        return this.get(this.inputLanguageLanguageItemName);
-    }
-
-    /**
-    /* "Input.EmployeeNumber" (Employee number)
-    */
-    public get inputEmployeeNumber() : string {
-        return this.get(this.inputEmployeeNumberLanguageItemName);
-    }
-
-    /**
-    /* "Input.CostPool" (Cost pool)
-    */
-    public get inputCostPool() : string {
-        return this.get(this.inputCostPoolLanguageItemName);
-    }
-
-    /**
-    /* "Input.WorkCardId" (Work card id)
-    */
-    public get inputWorkCardId() : string {
-        return this.get(this.inputWorkCardIdLanguageItemName);
-    }
-
-    /**
-    /* "Input.TimeTrackingDeviceId" (Time tracking device id)
-    */
-    public get inputTimeTrackingDeviceId() : string {
-        return this.get(this.inputTimeTrackingDeviceIdLanguageItemName);
-    }
-
-    /**
-    /* "Input.ContractSalaryHourlyPrice" (Contract salary hourly price)
-    */
-    public get inputContractSalaryHourlyPrice() : string {
-        return this.get(this.inputContractSalaryHourlyPriceLanguageItemName);
-    }
-
-    /**
-    /* "Input.Role" (Role)
-    */
-    public get inputRole() : string {
-        return this.get(this.inputRoleLanguageItemName);
-    }
-
-    /**
-    /* "Input.Email" (Email)
-    */
-    public get inputEmail() : string {
-        return this.get(this.inputEmailLanguageItemName);
-    }
 }
 
 //Singleton
