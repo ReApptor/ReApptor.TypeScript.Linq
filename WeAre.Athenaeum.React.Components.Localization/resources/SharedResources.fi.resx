@@ -138,12 +138,6 @@
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
     <value>{0} valittu</value>
   </data>
-  <data name="Footer.Contact" xml:space="preserve">
-    <value>Yhteystiedot</value>
-  </data>
-  <data name="Footer.Frontpage" xml:space="preserve">
-    <value>Etusivu</value>
-  </data>
   <data name="List.Loading" xml:space="preserve">
     <value>Ladataan...</value>
   </data>
@@ -186,27 +180,6 @@
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>Ole hyvä ja kommentoi</value>
   </data>
-  <data name="Form.Input.Email" xml:space="preserve">
-    <value>Sähköposti</value>
-  </data>
-  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
-    <value>Vastaanottaja</value>
-  </data>
-  <data name="Form.Input.Phone" xml:space="preserve">
-    <value>Puhelinnumero</value>
-  </data>
-  <data name="Form.Input.Firstname" xml:space="preserve">
-    <value>Etunimi</value>
-  </data>
-  <data name="Form.Input.Middlename" xml:space="preserve">
-    <value>Toinen nimi</value>
-  </data>
-  <data name="Form.Input.Lastname" xml:space="preserve">
-    <value>Sukunimi</value>
-  </data>
-  <data name="Form.Input.Message" xml:space="preserve">
-    <value>Viesti</value>
-  </data>
   <data name="AddressDivider.Address" xml:space="preserve">
     <value>Osoite</value>
   </data>
@@ -218,30 +191,6 @@
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>Postinumero</value>
-  </data>
-  <data name="Form.Input.Postalbox" xml:space="preserve">
-    <value>Postilaatikko</value>
-  </data>
-  <data name="Form.Input.Language" xml:space="preserve">
-    <value>Kieli</value>
-  </data>
-  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
-    <value>Käyttäjä-id</value>
-  </data>
-  <data name="Form.Input.CostPool" xml:space="preserve">
-    <value>Kustannuspaikka</value>
-  </data>
-  <data name="Form.Input.WorkCardId" xml:space="preserve">
-    <value>Valttikorti-id</value>
-  </data>
-  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
-    <value>Työaikaseurantalaite-id</value>
-  </data>
-  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
-    <value>Sopimuspalkan tuntihinta</value>
-  </data>
-  <data name="Form.Input.Role" xml:space="preserve">
-    <value>Rooli</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Pudota tiedosto tähän tai valitse klikkaamalla</value>
@@ -271,9 +220,6 @@
     <value />
   </data>
   <data name="TopNav" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Footer" xml:space="preserve">
     <value />
   </data>
   <data name="Icon" xml:space="preserve">

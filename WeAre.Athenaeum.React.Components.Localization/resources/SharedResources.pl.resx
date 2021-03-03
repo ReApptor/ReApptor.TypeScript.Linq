@@ -165,12 +165,6 @@
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
     <value>PL: Go to next step</value>
   </data>
-  <data name="Footer.Contact" xml:space="preserve">
-    <value>PL: Contact information</value>
-  </data>
-  <data name="Footer.Frontpage" xml:space="preserve">
-    <value>PL: Frontpage</value>
-  </data>
   <data name="List.Loading" xml:space="preserve">
     <value>PL: Loading...</value>
   </data>
@@ -186,27 +180,6 @@
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>PL: Please leave a comment</value>
   </data>
-  <data name="Form.Input.Postalbox" xml:space="preserve">
-    <value>PL: Postal box</value>
-  </data>
-  <data name="Form.Input.Email" xml:space="preserve">
-    <value>PL: Email</value>
-  </data>
-  <data name="Form.Input.ReceiverEmail" xml:space="preserve">
-    <value>PL: Receiver email</value>
-  </data>
-  <data name="Form.Input.Phone" xml:space="preserve">
-    <value>PL: Phone number</value>
-  </data>
-  <data name="Form.Input.Firstname" xml:space="preserve">
-    <value>PL: Firstname</value>
-  </data>
-  <data name="Form.Input.Lastname" xml:space="preserve">
-    <value>PL: Lastname</value>
-  </data>
-  <data name="Form.Input.Message" xml:space="preserve">
-    <value>PL: Message</value>
-  </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>PL: Street</value>
   </data>
@@ -218,9 +191,6 @@
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>PL: Postal code</value>
-  </data>
-  <data name="Form.Input.Language" xml:space="preserve">
-    <value>PL: Language</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>PL: Drag'n'drop file here, or click to select</value>
@@ -234,24 +204,6 @@
   <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>PL: Choose file</value>
   </data>
-  <data name="Form.Input.ContractSalaryHourlyPrice" xml:space="preserve">
-    <value>PL: Contract salary hourly price</value>
-  </data>
-  <data name="Form.Input.CostPool" xml:space="preserve">
-    <value>PL: Cost pool</value>
-  </data>
-  <data name="Form.Input.EmployeeNumber" xml:space="preserve">
-    <value>PL: Employee number</value>
-  </data>
-  <data name="Form.Input.Middlename" xml:space="preserve">
-    <value>PL: Middle name</value>
-  </data>
-  <data name="Form.Input.Role" xml:space="preserve">
-    <value>PL: Role</value>
-  </data>
-  <data name="Form.Input.WorkCardId" xml:space="preserve">
-    <value>PL: Work card id</value>
-  </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
     <value>PL: Location picker</value>
   </data>
@@ -261,9 +213,6 @@
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
     <value>Ställ in plats</value>
   </data>
-  <data name="Form.Input.TimeTrackingDeviceId" xml:space="preserve">
-    <value>PL: Time tracking device id</value>
-  </data>
   <data name="Alert" xml:space="preserve">
     <value />
   </data>
@@ -271,9 +220,6 @@
     <value />
   </data>
   <data name="TopNav" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Footer" xml:space="preserve">
     <value />
   </data>
   <data name="Icon" xml:space="preserve">

@@ -4,7 +4,7 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class WidgetContainerLocalizer extends BaseComponentLocalizer {
 
     //Constants
-    public readonly qrWidgetScanErrorLanguageItemName: string = `QrWidget.Scan.Error`;
+
 
     constructor() {
 
@@ -19,15 +19,10 @@ class WidgetContainerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.qrWidgetScanErrorLanguageItemName, { language: `en`, value: `` },);
+
     }
 
-    /**
-    /* "QrWidget.Scan.Error" ()
-    */
-    public get qrWidgetScanError() : string {
-        return this.get(this.qrWidgetScanErrorLanguageItemName);
-    }
+
 }
 
 //Singleton
