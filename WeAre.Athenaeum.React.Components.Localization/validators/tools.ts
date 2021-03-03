@@ -1,7 +1,6 @@
 import resx, { ObjectOfStrings } from 'resx';
 import fs from 'fs';
 import path from 'path';
-import * as chalk from "chalk";
 
 export function convertResxToJs(resxFile: string): Promise<ObjectOfStrings> {
   return new Promise((resolve, reject) => {
@@ -17,12 +16,7 @@ export function convertResxToJs(resxFile: string): Promise<ObjectOfStrings> {
 export function readDirectory(directory: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     fs.readdir(directory, (err, files) => {
-      if (err && err.code === 'ENOTDIR') {
-        resolve([]);
-      } else if (err) {
-        console.log('Error while reading directory: ');
-        console.log('directory: ', directory);
-        console.log('err: ', err);
+      if (err) {
         reject(err);
       }
       resolve(files);
@@ -31,33 +25,27 @@ export function readDirectory(directory: string): Promise<string[]> {
 }
 
 export async function listAllNestedFiles(directory: string): Promise<string[]> {
-      const finalized = [];
-      const directoryData = await readDirectory(directory);
+  const finalized = [];
+  const directoryData = await readDirectory(directory);
 
-      for (const data of directoryData) {
+  for (const data of directoryData) {
+    try {
       const nestedDir = path.resolve(directory, data);
-      
-        try {
-          const nestedData = await listAllNestedFiles(nestedDir);
-          finalized.push(...nestedData.map((x) => path.resolve(nestedDir, x)));
-        } catch (e) {
-          if (e.code === 'ENOTDIR') {
-            finalized.push(nestedDir);
-          } else {
-            console.log('Error while listing ALl nested files:')
-            console.log('Directory:', directory)
-            console.log(e);
-          }
-        }
-      }
-      return finalized;
+      const nestedData = await listAllNestedFiles(nestedDir);
+      finalized.push(...nestedData.map((x) => path.resolve(nestedDir, x)));
+    } catch (e) {
+      const nestedDir = path.resolve(directory, data);
+      finalized.push(nestedDir);
+    }
+  }
+  return finalized;
 }
 
 export async function listAllTsAndTsxFiles(directory: string, exclude?: string): Promise<string[]> {
   const allFiles = await listAllNestedFiles(directory);
   return allFiles
-      .filter((x) => (x.endsWith('.ts') || x.endsWith('.tsx')) && !x.endsWith('.d.ts'))
-      .filter((x) => (exclude ? !x.endsWith(exclude) : x));
+    .filter((x) => (x.endsWith('.ts') || x.endsWith('.tsx')) && !x.endsWith('.d.ts'))
+    .filter((x) => (exclude ? !x.endsWith(exclude) : x));
 }
 
 export function pascalToCamelCase(str: string) {
@@ -93,17 +81,4 @@ export async function convertResxFileToMap(resxFile: Buffer): Promise<Map<string
     }
     return previousValue;
   }, new Map<string, string[]>());
-}
-
-export function getArguments() {
-  const args: Record<string, string> = {};
-  process.argv.slice(2, process.argv.length).forEach((arg) => {
-    // long arg
-    if (arg.slice(0, 2) === '--') {
-      const longArg = arg.split('=');
-      const longArgFlag = longArg[0].slice(2, longArg[0].length);
-      args[longArgFlag] = longArg.length > 1 ? longArg[1] : 'true';
-    }
-  });
-  return args;
 }
