@@ -1,20 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import { convertResxFileToMap } from './tools';
 import { checkForRedundantLocalizerPlaceHolders } from './actions/redundantLocalizerPlaceHolderCheck';
 import { checkForLocalizationWithoutComponent } from './actions/localizationWithoutComponentCheck';
 import { checkForComponentWithoutLocalization } from './actions/componentWithoutLocalizationCheck';
 import { checkForUnUsedLocalizations } from './actions/componentUnUsedLocalizationCheck';
+import { ResxUtilities } from './utilities/resxUtilities';
+import { ArgsUtilities } from './utilities/argsUtilities';
 
-const componentsPath =
-  '/Users/ericaskari/Desktop/WEARE/RENTA/renta-components/WeAre.Athenaeum.React.Components/src/components';
-async function main() {
-  const resxPath = path.resolve(
-    '/Users/ericaskari/Desktop/WEARE/RENTA/renta-components/WeAre.Athenaeum.React.Components.Localization/resources/SharedResources.resx',
-  );
-
-  const localizationMap = await convertResxFileToMap(fs.readFileSync(resxPath));
+async function main(componentsPath: string, resxPath: string) {
+  const localizationMap = await ResxUtilities.convertResxFileToMap(fs.readFileSync(resxPath));
 
   const redundantWarnings = checkForRedundantLocalizerPlaceHolders(localizationMap);
 
@@ -64,4 +59,21 @@ async function main() {
   }
 }
 
-main().then();
+console.log();
+const { resxPath, componentsPath } = ArgsUtilities.read();
+
+if (!resxPath || !componentsPath) {
+  throw new Error('Missing argument --resxPath=x or --componentsPath=y');
+}
+
+const resxPathAsAbsolute = resxPath.startsWith('.') ? path.resolve(process.cwd(), resxPath) : resxPath;
+const componentsPathAsAbsolute = componentsPath.startsWith('.')
+  ? path.resolve(process.cwd(), componentsPath)
+  : componentsPath;
+
+console.log('resx path:');
+console.log(resxPathAsAbsolute);
+console.log('components directory path:');
+console.log(componentsPathAsAbsolute);
+
+main(componentsPathAsAbsolute, resxPathAsAbsolute).then();
