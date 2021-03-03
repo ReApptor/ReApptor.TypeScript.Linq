@@ -1,31 +1,33 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import { convertResxFileToMap, getArguments } from './tools';
+import { convertResxFileToMap } from './tools';
 import { checkForRedundantLocalizerPlaceHolders } from './actions/redundantLocalizerPlaceHolderCheck';
 import { checkForLocalizationWithoutComponent } from './actions/localizationWithoutComponentCheck';
 import { checkForComponentWithoutLocalization } from './actions/componentWithoutLocalizationCheck';
 import { checkForUnUsedLocalizations } from './actions/componentUnUsedLocalizationCheck';
 
-async function main(componentsPath: string, resxPath: string) {
+const componentsPath =
+  '/Users/ericaskari/Desktop/WEARE/RENTA/renta-components/WeAre.Athenaeum.React.Components/src/components';
+async function main() {
+  const resxPath = path.resolve(
+    '/Users/ericaskari/Desktop/WEARE/RENTA/renta-components/WeAre.Athenaeum.React.Components.Localization/resources/SharedResources.resx',
+  );
+
   const localizationMap = await convertResxFileToMap(fs.readFileSync(resxPath));
 
-  console.log(chalk.green("Checking for RedundantLocalizerPlaceHolders"))
   const redundantWarnings = checkForRedundantLocalizerPlaceHolders(localizationMap);
-  
-  console.log(chalk.green("Checking for localizationWithoutComponentWarnings"))
+
   const localizationWithoutComponentWarnings = await checkForLocalizationWithoutComponent(
-      componentsPath,
-      localizationMap,
+    componentsPath,
+    localizationMap,
   );
-  
-  console.log(chalk.green("Checking for componentsWithoutLocalizationWarnings"))
+
   const componentsWithoutLocalizationWarnings = await checkForComponentWithoutLocalization(
-      componentsPath,
-      localizationMap,
+    componentsPath,
+    localizationMap,
   );
-  
-  console.log(chalk.green("Checking for componentUnUsedLocalizationWarnings"))
+
   const componentUnUsedLocalizationWarnings = await checkForUnUsedLocalizations(componentsPath, localizationMap);
 
   if (redundantWarnings.length > 0) {
@@ -62,27 +64,4 @@ async function main(componentsPath: string, resxPath: string) {
   }
 }
 
-console.log();
-const { resxPath, componentsPath } = getArguments();
-
-if (!resxPath || !componentsPath) {
-  throw new Error("Missing argument --resxPath=x or --componentsPath=y")
-}
-
-const resxPathAsAbsolute = resxPath.startsWith('.') ? path.resolve(process.cwd(), resxPath) : resxPath;
-const componentsPathAsAbsolute = componentsPath.startsWith('.')
-    ? path.resolve(process.cwd(), componentsPath)
-    : componentsPath;
-
-console.log('resx path:');
-console.log(resxPathAsAbsolute);
-console.log('components directory path:');
-console.log(componentsPathAsAbsolute);
-
-try {
-  main(componentsPathAsAbsolute, resxPathAsAbsolute).then();
-
-} catch (e){
-  console.log('Error while running Checks');
-  console.log(e)
-}
+main().then();
