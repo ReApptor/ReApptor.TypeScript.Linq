@@ -3,6 +3,7 @@ import NavigationWidget from "../NavigationWidget/NavigationWidget";
 import { IIconProps } from "../Icon/Icon";
 import BaseWidgetContainer, { IBaseWidgetContainerProps } from "../WidgetContainer/BaseWidgetContainer";
 import StepsWidget, { IWizardSteps } from "../StepsWidget/StepsWidget";
+import { IWizardPage } from "@/helpers/WizardPage";
 
 export interface IWizardContainerProps extends IBaseWidgetContainerProps {
     id?: string;

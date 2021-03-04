@@ -1,10 +1,10 @@
 import React from "react";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
 import { IconSize, IIconProps } from "../Icon/Icon";
+import TitleWidgetLocalizer from "@/components/TitleWidget/TitleWidgetLocalizer";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
 import styles from "./TitleWidget.module.scss";
-import TitleWidgetLocalizer from "@/components/TitleWidget/TitleWidgetLocalizer";
 
 export interface ITitleModel {
     label: string;
