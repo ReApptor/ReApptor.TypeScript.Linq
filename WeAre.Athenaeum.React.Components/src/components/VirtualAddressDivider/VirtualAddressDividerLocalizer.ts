@@ -16,14 +16,15 @@ class VirtualAddressDividerLocalizer extends BaseComponentLocalizer {
                 { code: "fi", label: "Suomi" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" }
+                { code: "sv", label: "Svenska" },
+                { code: "uk", label: "Українська (Україна)" }
             ],
             "en");
         
         //Initializer
-        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
-        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
-        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
+        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk-ua`, value: `UK-UA: Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
+        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk-ua`, value: `UK-UA: City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
+        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk-ua`, value: `UK-UA: Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
     }
 
     /**

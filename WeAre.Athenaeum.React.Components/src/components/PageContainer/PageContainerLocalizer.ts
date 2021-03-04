@@ -14,12 +14,13 @@ class PageContainerLocalizer extends BaseComponentLocalizer {
                 { code: "fi", label: "Suomi" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" }
+                { code: "sv", label: "Svenska" },
+                { code: "uk", label: "Українська (Україна)" }
             ],
             "en");
         
         //Initializer
-        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `fi`, value: `Sivun ohje` },);
+        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `uk-ua`, value: `UK-UA: Page help` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `fi`, value: `Sivun ohje` },);
     }
 
     /**
