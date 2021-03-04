@@ -1,0 +1,278 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Dropdown.MultipleSelected" xml:space="preserve">
+    <value>UK-UA: {0} selected</value>
+  </data>
+    <data name="List.Loading" xml:space="preserve">
+    <value>UK-UA: Loading...</value>
+  </data>
+    <data name="SignatureWidget.Clear" xml:space="preserve">
+    <value>UK-UA: Clear</value>
+  </data>
+    <data name="SignatureWidget.Done" xml:space="preserve">
+    <value>UK-UA: Done</value>
+  </data>
+    <data name="Modal.SaveChanges" xml:space="preserve">
+    <value>UK-UA: Save changes</value>
+  </data>
+    <data name="Modal.Close" xml:space="preserve">
+    <value>UK-UA: Close</value>
+  </data>
+    <data name="PageContainer.PageHelp" xml:space="preserve">
+    <value>UK-UA: Page help</value>
+  </data>
+    <data name="NavigationWidget.Previous" xml:space="preserve">
+    <value>UK-UA: Previous</value>
+  </data>
+    <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
+    <value>UK-UA: Return to previous step</value>
+  </data>
+    <data name="NavigationWidget.Next" xml:space="preserve">
+    <value>UK-UA: Next</value>
+  </data>
+    <data name="NavigationWidget.GoToNext" xml:space="preserve">
+    <value>UK-UA: Go to next step</value>
+  </data>
+    <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
+    <value>UK-UA: Are you sure?</value>
+  </data>
+    <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>UK-UA: Confirm</value>
+  </data>
+    <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>UK-UA: Close</value>
+  </data>
+    <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>UK-UA: Please leave a comment</value>
+  </data>
+    <data name="AddressDivider.Address" xml:space="preserve">
+    <value>UK-UA: Address</value>
+  </data>
+    <data name="VirtualAddressDivider.Street" xml:space="preserve">
+    <value>UK-UA: Street</value>
+  </data>
+    <data name="VirtualAddressDivider.City" xml:space="preserve">
+    <value>UK-UA: City</value>
+  </data>
+    <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
+    <value>UK-UA: Postal code</value>
+  </data>
+    <data name="FileInput.DragAndDrop" xml:space="preserve">
+    <value>UK-UA: Drag'n'drop file here, or click to select</value>
+  </data>
+    <data name="FileInput.Readonly" xml:space="preserve">
+    <value>UK-UA: File is readonly</value>
+  </data>
+    <data name="DocumentPreviewModal.Preview" xml:space="preserve">
+    <value>UK-UA: Preview</value>
+  </data>
+    <data name="FileInput.ChooseFile" xml:space="preserve">
+    <value>UK-UA: Choose file</value>
+  </data>
+    <data name="Alert" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TextInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TopNav" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Footer" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Icon" xml:space="preserve">
+    <value />
+  </data>
+    <data name="DropdownWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="BaseInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="WidgetContainer" xml:space="preserve">
+    <value />
+  </data>
+    <data name="BarWidget.BudgetData.Module.Label" xml:space="preserve">
+    <value>UK-UA: Module</value>
+  </data>
+    <data name="BarWidget.BudgetData.PerimeterFrame.Label" xml:space="preserve">
+    <value>UK-UA: Perimeter frame</value>
+  </data>
+    <data name="BarWidget.BudgetData.WeatherShelter.Label" xml:space="preserve">
+    <value>UK-UA: Weather shelter</value>
+  </data>
+    <data name="LocationPickerModal.Title" xml:space="preserve">
+    <value>UK-UA: Location picker</value>
+  </data>
+    <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>UK-UA: Choose location on map</value>
+  </data>
+    <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>UK-UA: Set location</value>
+  </data>
+    <data name="Dropdown.NoItems" xml:space="preserve">
+    <value>UK-UA: No items found</value>
+  </data>
+    <data name="Dropdown.NoData" xml:space="preserve">
+    <value>UK-UA: No data</value>
+  </data>
+    <data name="Dropdown.FilterResults" xml:space="preserve">
+    <value>UK-UA: Filter results</value>
+  </data>
+    <data name="Dropdown.GetResults" xml:space="preserve">
+    <value>UK-UA: Start typing to get results</value>
+  </data>
+    <data name="Dropdown.Add" xml:space="preserve">
+    <value>UK-UA: Add</value>
+  </data>
+    <data name="Dropdown.NothingSelected" xml:space="preserve">
+    <value>UK-UA: Nothing is selected</value>
+  </data>
+    <data name="PasswordInput.HelpText.Length" xml:space="preserve">
+    <value>UK-UA: at least 8 characters long</value>
+  </data>
+    <data name="DocumentPreviewModal.Download" xml:space="preserve">
+    <value>UK-UA: Download</value>
+  </data>
+    <data name="FileInput.Preview" xml:space="preserve">
+    <value>UK-UA: Preview</value>
+  </data>
+    <data name="Grid" xml:space="preserve">
+    <value />
+  </data>
+    <data name="AddressInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="ButtonContainer" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Checkbox" xml:space="preserve">
+    <value />
+  </data>
+    <data name="CheckboxNullable" xml:space="preserve">
+    <value />
+  </data>
+    <data name="DocumentPreview" xml:space="preserve">
+    <value />
+  </data>
+    <data name="EmailInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LayoutFourColumns" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Link" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LocationPicker" xml:space="preserve">
+    <value />
+  </data>
+    <data name="NumberInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LayoutOneColumn" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LayoutInline" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Pagination" xml:space="preserve">
+    <value />
+  </data>
+    <data name="PhoneInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Popover" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Slider" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Spinner" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Switch" xml:space="preserve">
+    <value />
+  </data>
+    <data name="SwitchNullable" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TabContainer" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TextAreaInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LayoutThreeColumns" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LayoutTwoColumns" xml:space="preserve">
+    <value />
+  </data>
+    <data name="CheckboxWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="CheckStepWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="DateInputWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="LinkWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="RouteWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TimeWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="NumberWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="QrWidget.Scan.Error" xml:space="preserve">
+    <value>UK-UA: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+  </data>
+    <data name="SwitchWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TextAreaWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TextInputWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="StepsWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="TitleWidget" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Button" xml:space="preserve">
+    <value />
+  </data>
+    <data name="DateInput" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Form" xml:space="preserve">
+    <value />
+  </data>
+    <data name="Layout" xml:space="preserve">
+    <value />
+  </data>
+    <data name="WizardContainer" xml:space="preserve">
+    <value />
+  </data>
+</root>

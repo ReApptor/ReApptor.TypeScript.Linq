@@ -16,14 +16,15 @@ class BarWidgetLocalizer extends BaseComponentLocalizer {
                 { code: "fi", label: "Suomi" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" }
+                { code: "sv", label: "Svenska" },
+                { code: "uk", label: "Українська (Україна)" }
             ],
             "en");
         
         //Initializer
-        this.set(this.budgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
-        this.set(this.budgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
-        this.set(this.budgetDataWeatherShelterLabelLanguageItemName, { language: `en`, value: `Weather shelter` }, { language: `sv`, value: `SV: Weather shelter` }, { language: `ru`, value: `RU: Weather shelter` }, { language: `pl`, value: `PL: Weather shelter` }, { language: `fi`, value: `Sääsuoja` },);
+        this.set(this.budgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `uk-ua`, value: `UK-UA: Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
+        this.set(this.budgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `uk-ua`, value: `UK-UA: Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
+        this.set(this.budgetDataWeatherShelterLabelLanguageItemName, { language: `en`, value: `Weather shelter` }, { language: `uk-ua`, value: `UK-UA: Weather shelter` }, { language: `sv`, value: `SV: Weather shelter` }, { language: `ru`, value: `RU: Weather shelter` }, { language: `pl`, value: `PL: Weather shelter` }, { language: `fi`, value: `Sääsuoja` },);
     }
 
     /**

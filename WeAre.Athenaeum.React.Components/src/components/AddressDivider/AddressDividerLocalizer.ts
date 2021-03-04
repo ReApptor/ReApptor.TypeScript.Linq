@@ -14,12 +14,13 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
                 { code: "fi", label: "Suomi" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" }
+                { code: "sv", label: "Svenska" },
+                { code: "uk", label: "Українська (Україна)" }
             ],
             "en");
         
         //Initializer
-        this.set(this.addressLanguageItemName, { language: `en`, value: `Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
+        this.set(this.addressLanguageItemName, { language: `en`, value: `Address` }, { language: `uk-ua`, value: `UK-UA: Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
     }
 
     /**

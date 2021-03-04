@@ -14,12 +14,13 @@ class ListLocalizer extends BaseComponentLocalizer {
                 { code: "fi", label: "Suomi" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" }
+                { code: "sv", label: "Svenska" },
+                { code: "uk", label: "Українська (Україна)" }
             ],
             "en");
         
         //Initializer
-        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Закрыть...` }, { language: `pl`, value: `PL: Loading...` }, { language: `fi`, value: `Ladataan...` },);
+        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `uk-ua`, value: `UK-UA: Loading...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Закрыть...` }, { language: `pl`, value: `PL: Loading...` }, { language: `fi`, value: `Ladataan...` },);
     }
 
     /**
