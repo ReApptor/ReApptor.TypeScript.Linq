@@ -7,50 +7,63 @@ import { checkForComponentWithoutLocalization } from './actions/componentWithout
 import { checkForUnUsedLocalizations } from './actions/componentUnUsedLocalizationCheck';
 import { ResxUtilities } from './utilities/resxUtilities';
 import { ArgsUtilities } from './utilities/argsUtilities';
+import { checkForUnUsedLocalizationsGlobally } from './actions/globalLocalizationUsageCheck';
 
-async function main(componentsPath: string, resxPath: string) {
+async function main(componentsPath: string, resxPath: string, global: boolean) {
   const localizationMap = await ResxUtilities.convertResxFileToMap(fs.readFileSync(resxPath));
+  const warnings = [];
 
-  const redundantWarnings = checkForRedundantLocalizerPlaceHolders(localizationMap);
+  if (global) {
+    const globalUnUsedLocalizationsWarnings = await checkForUnUsedLocalizationsGlobally(
+      componentsPath,
+      localizationMap,
+    );
 
-  const localizationWithoutComponentWarnings = await checkForLocalizationWithoutComponent(
-    componentsPath,
-    localizationMap,
-  );
+    if (globalUnUsedLocalizationsWarnings.length > 0) {
+      console.log(chalk.red('Global Unused localizations: '));
+      globalUnUsedLocalizationsWarnings.map((x) => console.log(x));
+    }
+    warnings.push(...globalUnUsedLocalizationsWarnings);
+  } else {
+    const redundantWarnings = checkForRedundantLocalizerPlaceHolders(localizationMap);
 
-  const componentsWithoutLocalizationWarnings = await checkForComponentWithoutLocalization(
-    componentsPath,
-    localizationMap,
-  );
+    const localizationWithoutComponentWarnings = await checkForLocalizationWithoutComponent(
+      componentsPath,
+      localizationMap,
+    );
 
-  const componentUnUsedLocalizationWarnings = await checkForUnUsedLocalizations(componentsPath, localizationMap);
+    const componentsWithoutLocalizationWarnings = await checkForComponentWithoutLocalization(
+      componentsPath,
+      localizationMap,
+    );
 
-  if (redundantWarnings.length > 0) {
-    console.log(chalk.red('Redundant Localizer placeholders: '));
-    redundantWarnings.map((x) => console.log(x));
+    const componentUnUsedLocalizationWarnings = await checkForUnUsedLocalizations(componentsPath, localizationMap);
+
+    if (redundantWarnings.length > 0) {
+      console.log(chalk.red('Redundant Localizer placeholders: '));
+      redundantWarnings.map((x) => console.log(x));
+    }
+
+    if (localizationWithoutComponentWarnings.length > 0) {
+      console.log(chalk.red('Localizations without component:'));
+      localizationWithoutComponentWarnings.map((x) => console.log(x));
+    }
+
+    if (componentsWithoutLocalizationWarnings.length > 0) {
+      console.log(chalk.red('Components without Localization:'));
+      componentsWithoutLocalizationWarnings.map((x) => console.log(x));
+    }
+
+    if (componentUnUsedLocalizationWarnings.length > 0) {
+      console.log(chalk.red('Unused Localizations:'));
+      componentUnUsedLocalizationWarnings.map((x) => console.log(x));
+    }
+
+    warnings.push(...redundantWarnings);
+    warnings.push(...localizationWithoutComponentWarnings);
+    warnings.push(...componentsWithoutLocalizationWarnings);
+    warnings.push(...componentUnUsedLocalizationWarnings);
   }
-
-  if (localizationWithoutComponentWarnings.length > 0) {
-    console.log(chalk.red('Localizations without component:'));
-    localizationWithoutComponentWarnings.map((x) => console.log(x));
-  }
-
-  if (componentsWithoutLocalizationWarnings.length > 0) {
-    console.log(chalk.red('Components without Localization:'));
-    componentsWithoutLocalizationWarnings.map((x) => console.log(x));
-  }
-
-  if (componentUnUsedLocalizationWarnings.length > 0) {
-    console.log(chalk.red('Unused Localizations:'));
-    componentUnUsedLocalizationWarnings.map((x) => console.log(x));
-  }
-
-  const warnings = [
-    ...redundantWarnings,
-    ...localizationWithoutComponentWarnings,
-    ...componentsWithoutLocalizationWarnings,
-    ...componentUnUsedLocalizationWarnings,
-  ];
 
   if (warnings.length === 0) {
     console.log(chalk.green('No Warnings! Good to go.'));
@@ -60,8 +73,8 @@ async function main(componentsPath: string, resxPath: string) {
 }
 
 console.log();
-const { resxPath, componentsPath } = ArgsUtilities.read();
-
+const { resxPath, componentsPath, globalCheck } = ArgsUtilities.read();
+console.log({ resxPath, componentsPath, globalCheck });
 if (!resxPath || !componentsPath) {
   throw new Error('Missing argument --resxPath=x or --componentsPath=y');
 }
@@ -76,4 +89,4 @@ console.log(resxPathAsAbsolute);
 console.log('components directory path:');
 console.log(componentsPathAsAbsolute);
 
-main(componentsPathAsAbsolute, resxPathAsAbsolute).then();
+main(componentsPathAsAbsolute, resxPathAsAbsolute, globalCheck === 'true').then();
