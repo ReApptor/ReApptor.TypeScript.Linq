@@ -23,7 +23,6 @@
       <TypeScriptCompile Include="validators\actions\localizationWithoutComponentCheck.ts" />
       <TypeScriptCompile Include="validators\actions\redundantLocalizerPlaceHolderCheck.ts" />
       <TypeScriptCompile Include="validators\index.ts" />
-      <TypeScriptCompile Include="validators\tools.ts" />
     </ItemGroup>
 
     <ItemGroup>

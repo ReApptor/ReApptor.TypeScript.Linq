@@ -35,7 +35,6 @@
     "build": "rollup -c",
     "test": "jest",
     "validate": "ts-node --project tsconfig-validator.json ./validators/index.ts --resxPath=./resources/SharedResources.resx --componentsPath=../WeAre.Athenaeum.React.Components/src/components",
-    "validate:task": "ts-node --project tsconfig-validator.json ./validators/index.ts --resxPath=../../renta-task/Renta.TaskApp.WebUI.Resources/SharedResources.resx --componentsPath=../../renta-task/Renta.TaskApp.WebUI/src/components",
     "coverage": "jest --coverage"
   },
   "files": [
