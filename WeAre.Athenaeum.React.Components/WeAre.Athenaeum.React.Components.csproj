@@ -52,6 +52,7 @@
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseWidgetContainer.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\WidgetContainer.tsx" />
       <TypeScriptCompile Include="src\components\WizardContainer\WizardContainer.tsx" />
+      <TypeScriptCompile Include="src\helpers\WizardPage.d.ts" />
       <TypeScriptCompile Include="src\index.ts" />
       <TypeScriptCompile Include="src\AthenaeumComponentsConstants.ts" />
       <TypeScriptCompile Include="src\models\ArrayScope.ts" />
