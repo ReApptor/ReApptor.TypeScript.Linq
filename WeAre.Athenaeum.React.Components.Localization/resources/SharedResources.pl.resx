@@ -234,15 +234,6 @@
   <data name="BaseInput" xml:space="preserve">
     <value />
   </data>
-  <data name="BarWidget.BudgetData.Module.Label" xml:space="preserve">
-    <value>PL: Module</value>
-  </data>
-  <data name="BarWidget.BudgetData.PerimeterFrame.Label" xml:space="preserve">
-    <value>PL: Perimeter frame</value>
-  </data>
-  <data name="BarWidget.BudgetData.WeatherShelter.Label" xml:space="preserve">
-    <value>PL: Weather shelter</value>
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>PL: at least 8 characters long</value>
   </data>

@@ -1,9 +1,14 @@
 import {GeoCoordinate, GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ApplicationContext, ch} from "@weare/athenaeum-react-common";
-import ApplicationSettings from "@/models/server/ApplicationSettings";
 import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;
+
+export interface IGoogleApiSettings {
+    googleMapApiUrl: string;
+
+    googleMapApiKey: string;
+}
 
 export default class AddressHelper {
 
@@ -39,7 +44,11 @@ export default class AddressHelper {
 
     private static get googleApiUrl(): string {
         const context: ApplicationContext = ch.getContext();
-        const settings: ApplicationSettings = context.settings;
+        const settings = context.settings as IGoogleApiSettings;
+        
+        if ((!settings.googleMapApiKey) || (!settings.googleMapApiUrl))
+            throw new Error("Application context doesn't provide Google API settings: \"googleMapApiKey\" or \"googleMapApiUrl\" are empty.");
+        
         return `${settings.googleMapApiUrl}api/js?key=${settings.googleMapApiKey}&libraries=places`;
     }
 

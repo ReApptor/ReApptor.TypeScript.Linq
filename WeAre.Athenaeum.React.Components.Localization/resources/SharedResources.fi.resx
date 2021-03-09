@@ -234,15 +234,6 @@
   <data name="BaseInput" xml:space="preserve">
     <value />
   </data>
-  <data name="BarWidget.BudgetData.PerimeterFrame.Label" xml:space="preserve">
-    <value>Kehäteline</value>
-  </data>
-  <data name="BarWidget.BudgetData.Module.Label" xml:space="preserve">
-    <value>Moduuli</value>
-  </data>
-  <data name="BarWidget.BudgetData.WeatherShelter.Label" xml:space="preserve">
-    <value>Sääsuoja</value>
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>vähintään 8 merkkiä</value>
   </data>

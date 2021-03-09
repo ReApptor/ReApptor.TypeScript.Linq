@@ -92,12 +92,23 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return enums;
         }
 
-        private static string GenerateTypeScriptContent(Type[] enums)
+        private static string GenerateTypeScriptContent(Type[] enums, string enumsImport, string selectListItemImport)
         {
             var systemNames = new HashSet<string>(new[] { "SortDirection", "WebApplicationType"});
             string names = string.Join(", ", enums.Select(item => item.Name).Where(item => !systemNames.Contains(item)));
             string quotedNames = string.Join(", ", enums.Select(item => $"\"{item.Name}\""));
 
+            enumsImport = (!string.IsNullOrWhiteSpace(enumsImport))
+                ? enumsImport.Trim()
+                : @"import {{{0}}} from ""@/models/Enums"";";
+
+            enumsImport = string.Format(enumsImport, names);
+
+            if (!enumsImport.EndsWith(";"))
+            {
+                enumsImport  += ";";
+            }
+            
             var items = new List<string>();
             
             foreach (Type @enum in enums)
@@ -119,7 +130,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
     }}
 
     public get{0}Text(value: {0}): string {{
-        return Localizer.get(this.get{0}Name(value));
+        return this.localizer.get(this.get{0}Name(value));
     }}
 
     public get{0}Description(value: {0}): string {{
@@ -139,15 +150,15 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
 import {{BaseEnumProvider, SortDirection}} from ""@weare/athenaeum-toolkit"";
 import {{WebApplicationType}} from ""@weare/athenaeum-react-common"";
-import {{SelectListItem}} from ""@/components/Form/Inputs/Dropdown/SelectListItem"";
-import {{{0}}} from ""@/models/Enums"";
-import Localizer from ""../localization/Localizer"";
+{0}
+{1}
 
 class EnumProvider extends BaseEnumProvider<SelectListItem> {{
 
     // #region Private
 
-    private readonly _types: string[] = [{1}];
+    
+    private readonly _types: string[] = [{2}];
 
     protected get types(): readonly string[] {{
         return this._types;
@@ -163,34 +174,38 @@ class EnumProvider extends BaseEnumProvider<SelectListItem> {{
         super();
     }}
 
-    {2}
+    {3}
 }}
 
 //Singleton
-export default new EnumProvider();", names, quotedNames, itemsContent);
+export default new EnumProvider();", selectListItemImport, enumsImport, quotedNames, itemsContent);
 
             return text;
         }
 
-        public static void Generate(string solutionPath, string projectPath, string destinationPath, string[] exclude = null)
+        // string solutionPath, string projectPath, string destinationPath, string[] exclude = null
+        public static void Generate(EnumProviderSettings settings)
         {
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings)); 
+            
             try
             {
-                Type[] enums = GetEnums(solutionPath, projectPath, exclude);
+                Type[] enums = GetEnums(settings.SolutionPath, settings.ProjectPath, settings.Exclude);
 
-                string content = GenerateTypeScriptContent(enums);
+                string content = GenerateTypeScriptContent(enums, settings.EnumsImport, settings.SelectListItemImport);
 
                 bool equals = false;
-                if (File.Exists(destinationPath))
+                if (File.Exists(settings.DestinationPath))
                 {
-                    string existingContent = File.ReadAllText(destinationPath, Encoding.UTF8);
+                    string existingContent = File.ReadAllText(settings.DestinationPath, Encoding.UTF8);
                     equals = (existingContent == content);
                 }
 
                 if (!equals)
                 {
                     byte[] rawData = Encoding.UTF8.GetBytes(content);
-                    File.WriteAllBytes(destinationPath, rawData);
+                    File.WriteAllBytes(settings.DestinationPath, rawData);
                 }
             }
             catch (Exception ex)

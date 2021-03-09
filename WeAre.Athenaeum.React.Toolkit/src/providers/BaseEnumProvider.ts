@@ -8,7 +8,7 @@ export interface IEnumProvider {
     getEnumItems(enumName: string, selectedValues?: number[] | null, reverse?: boolean): ISelectListItem[];
 }
 
-export default abstract class BaseEnumProvider<TSelectListItem extends ISelectListItem> implements IEnumProvider, IService {
+export default abstract class BaseEnumProvider<TSelectListItem extends ISelectListItem = any> implements IEnumProvider, IService {
     
     // #region Private/Protected
 
