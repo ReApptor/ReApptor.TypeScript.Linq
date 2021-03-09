@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Module</OutputType>
+        <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**</DefaultItemExcludes>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0.0</Version>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Copyright>Copyright © 2020, Renta Oy</Copyright>
+        <Product>WeAre Athenaeum</Product>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Company>Renta Oy</Company>
+    </PropertyGroup>
+
+</Project>
