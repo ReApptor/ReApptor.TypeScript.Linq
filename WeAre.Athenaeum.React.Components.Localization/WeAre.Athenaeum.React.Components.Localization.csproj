@@ -18,11 +18,6 @@
     <ItemGroup>
       <TypeScriptCompile Include="src\ComponentsLocalizer.ts" />
       <TypeScriptCompile Include="src\index.ts" />
-      <TypeScriptCompile Include="validators\actions\componentUnUsedLocalizationCheck.ts" />
-      <TypeScriptCompile Include="validators\actions\componentWithoutLocalizationCheck.ts" />
-      <TypeScriptCompile Include="validators\actions\localizationWithoutComponentCheck.ts" />
-      <TypeScriptCompile Include="validators\actions\redundantLocalizerPlaceHolderCheck.ts" />
-      <TypeScriptCompile Include="validators\index.ts" />
     </ItemGroup>
 
     <ItemGroup>

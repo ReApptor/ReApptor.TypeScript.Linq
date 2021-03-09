@@ -30,7 +30,7 @@
     }
 
 
-##### And run `npm run check:localization` or `npx weare-localization-check` : 
+##### And run `npm run check:localization` or `npx weare-check-localization` : 
 
 
 if there was no warnings example below will be shown: 
