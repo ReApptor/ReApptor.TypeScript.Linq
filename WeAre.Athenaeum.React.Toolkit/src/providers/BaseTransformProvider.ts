@@ -1,12 +1,12 @@
 import GeoLocation from "../models/GeoLocation";
 import ServiceProvider, {IService, ServiceType} from "./ServiceProvider";
-import StringConverter, {IStringConverter} from "./StringConverter";
+import StringConverter from "./StringConverter";
 
 export type TStringTransformer = (value: any) => string;
 
 export type TFormat = string | TStringTransformer;
 
-export interface ITransformProvider extends IStringConverter {
+export interface ITransformProvider {
 }
 
 export default abstract class BaseTransformProvider implements ITransformProvider, IService {
