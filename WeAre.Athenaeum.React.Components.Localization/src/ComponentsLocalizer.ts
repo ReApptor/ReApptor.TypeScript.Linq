@@ -35,9 +35,6 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
     public readonly baseInputLanguageItemName: string = `BaseInput`;
     public readonly widgetContainerLanguageItemName: string = `WidgetContainer`;
-    public readonly barWidgetBudgetDataModuleLabelLanguageItemName: string = `BarWidget.BudgetData.Module.Label`;
-    public readonly barWidgetBudgetDataPerimeterFrameLabelLanguageItemName: string = `BarWidget.BudgetData.PerimeterFrame.Label`;
-    public readonly barWidgetBudgetDataWeatherShelterLabelLanguageItemName: string = `BarWidget.BudgetData.WeatherShelter.Label`;
     public readonly locationPickerModalTitleLanguageItemName: string = `LocationPickerModal.Title`;
     public readonly locationPickerModalSubtitleLanguageItemName: string = `LocationPickerModal.Subtitle`;
     public readonly locationPickerModalSetLocationLanguageItemName: string = `LocationPickerModal.SetLocation`;
@@ -138,9 +135,6 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `uk-ua`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.baseInputLanguageItemName, { language: `en`, value: `` }, { language: `uk-ua`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `fi`, value: `` },);
         this.set(this.widgetContainerLanguageItemName, { language: `en`, value: `` }, { language: `uk-ua`, value: `` },);
-        this.set(this.barWidgetBudgetDataModuleLabelLanguageItemName, { language: `en`, value: `Module` }, { language: `uk-ua`, value: `UK-UA: Module` }, { language: `sv`, value: `SV: Module` }, { language: `ru`, value: `RU: Module` }, { language: `pl`, value: `PL: Module` }, { language: `fi`, value: `Moduuli` },);
-        this.set(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName, { language: `en`, value: `Perimeter frame` }, { language: `uk-ua`, value: `UK-UA: Perimeter frame` }, { language: `sv`, value: `SV: Perimeter frame` }, { language: `ru`, value: `RU: Perimeter frame` }, { language: `pl`, value: `PL: Perimeter frame` }, { language: `fi`, value: `Kehäteline` },);
-        this.set(this.barWidgetBudgetDataWeatherShelterLabelLanguageItemName, { language: `en`, value: `Weather shelter` }, { language: `uk-ua`, value: `UK-UA: Weather shelter` }, { language: `sv`, value: `SV: Weather shelter` }, { language: `ru`, value: `RU: Weather shelter` }, { language: `pl`, value: `PL: Weather shelter` }, { language: `fi`, value: `Sääsuoja` },);
         this.set(this.locationPickerModalTitleLanguageItemName, { language: `en`, value: `Location picker` }, { language: `uk-ua`, value: `UK-UA: Location picker` }, { language: `sv`, value: `Platsväljare` }, { language: `ru`, value: `RU: Location picker` }, { language: `pl`, value: `PL: Location picker` }, { language: `fi`, value: `Sijaintivalitsin` },);
         this.set(this.locationPickerModalSubtitleLanguageItemName, { language: `en`, value: `Choose location on map` }, { language: `uk-ua`, value: `UK-UA: Choose location on map` }, { language: `sv`, value: `Välj plats på kartan` }, { language: `ru`, value: `RU: Choose location on map` }, { language: `pl`, value: `PL: Choose location on map` }, { language: `fi`, value: `Valitse sijainti kartalla` },);
         this.set(this.locationPickerModalSetLocationLanguageItemName, { language: `en`, value: `Set location` }, { language: `uk-ua`, value: `UK-UA: Set location` }, { language: `sv`, value: `SV: Set location` }, { language: `ru`, value: `RU: Set location` }, { language: `pl`, value: `Ställ in plats` }, { language: `fi`, value: `Aseta sijainti` },);
@@ -412,27 +406,6 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get widgetContainer() : string {
         return this.get(this.widgetContainerLanguageItemName);
-    }
-
-    /**
-    /* "BarWidget.BudgetData.Module.Label" (Module)
-    */
-    public get barWidgetBudgetDataModuleLabel() : string {
-        return this.get(this.barWidgetBudgetDataModuleLabelLanguageItemName);
-    }
-
-    /**
-    /* "BarWidget.BudgetData.PerimeterFrame.Label" (Perimeter frame)
-    */
-    public get barWidgetBudgetDataPerimeterFrameLabel() : string {
-        return this.get(this.barWidgetBudgetDataPerimeterFrameLabelLanguageItemName);
-    }
-
-    /**
-    /* "BarWidget.BudgetData.WeatherShelter.Label" (Weather shelter)
-    */
-    public get barWidgetBudgetDataWeatherShelterLabel() : string {
-        return this.get(this.barWidgetBudgetDataWeatherShelterLabelLanguageItemName);
     }
 
     /**

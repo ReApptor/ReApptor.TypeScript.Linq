@@ -1,12 +1,7 @@
 import {Utility, GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {PageRoute} from "@weare/athenaeum-react-common";
 import {SelectListItem, StatusListItem} from "@/components/Dropdown/SelectListItem";
-import User from "../models/server/User";
-import UserSignIn from "../models/server/UserSignIn";
-import OrganizationContract from "@/models/server/OrganizationContract";
 import AddressHelper from "@/helpers/AddressHelper";
-import ConstructionSite from "@/models/server/ConstructionSite";
-import Product from "@/models/server/Product";
 
 export default class Comparator {
 
@@ -87,34 +82,6 @@ export default class Comparator {
             
             if ((x instanceof PageRoute) || (x.isPageRoute)) {
                 return ((y instanceof PageRoute) || (y.isPageRoute)) && (this.isEqualPageRoute(x, y));
-            }
-
-            if ((x instanceof OrganizationContract) || (x.isOrganizationContract)) {
-                return ((y instanceof OrganizationContract) || (y.isOrganizationContract))
-                    ? ((x as OrganizationContract).id == (y as OrganizationContract).id)
-                    : ((typeof y === "string") && ((x as OrganizationContract).id === y as string))
-            }
-
-            if ((x instanceof User) || (x.isUser)) {
-                return ((y instanceof User) || (y.isUser))
-                    ? ((x as User).id == (y as User).id)
-                    : ((typeof y === "string") && ((x as User).id === y as string));
-            }
-
-            if ((x instanceof ConstructionSite) || (x.isConstructionSite)) {
-                return ((y instanceof ConstructionSite) || (y.isConstructionSite))
-                    ? ((x as ConstructionSite).id == (y as ConstructionSite).id)
-                    : ((typeof y === "string") && ((x as ConstructionSite).id === y as string))
-            }
-
-            if ((x instanceof Product) || (x.isProduct)) {
-                return ((y instanceof Product) || (y.isProduct))
-                    ? ((x as Product).id == (y as Product).id)
-                    : ((typeof y === "string") && ((x as Product).id === y as string))
-            }
-
-            if ((x instanceof UserSignIn) || (x.isUserSignIn)) {
-                return ((y instanceof UserSignIn) || (y.isUserSignIn)) && ((x as UserSignIn).id == (y as UserSignIn).id);
             }
 
             if ((x instanceof GeoLocation) || (x.isGeoLocation)) {

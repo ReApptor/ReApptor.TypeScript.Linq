@@ -101,61 +101,84 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return 0;
         }
 
+
         private static int GenerateEnumProvider(string[] args)
         {
-            string solutionPath = args[0]?.Trim().Replace("\\\\", "\\");
-            if (string.IsNullOrWhiteSpace(solutionPath))
-            {
-                return Error($"{Name}. Invalid input arguments. Parameter \"solutionPath\" not specified.");
-            }
+            string solutionPath = (args.Length > 0)
+                ? args[0]?.Trim().Replace("\\\\", "\\")
+                : null;
 
-            if (!Directory.Exists(solutionPath))
-            {
-                return Error($"{Name}. Invalid input arguments. Directory from parameter \"solutionPath\" (\"{solutionPath}\") cannot be found.");
-            }
-            
-            string projectPath = args[1]?.Trim().Replace("\\\\", "\\");
-            if (string.IsNullOrWhiteSpace(projectPath))
-            {
-                return Error($"{Name}. Invalid input arguments. Parameter \"projectPath\" not specified.");
-            }
+            string projectPath = (args.Length > 1)
+                ? args[1]?.Trim().Replace("\\\\", "\\")
+                : null;
 
-            if (projectPath.StartsWith("/"))
-            {
-                projectPath = Path.Combine(Environment.CurrentDirectory, projectPath);
-            }
+            string destinationPath = (args.Length > 2)
+                ? args[2]?.Trim().Replace("\\\\", "\\")
+                : null;
 
-            if (!File.Exists(projectPath))
-            {
-                return Error($"{Name}. Invalid input arguments. File from parameter \"projectPath\" (\"{projectPath}\") cannot be found.");
-            }
-
-            string destinationPath = args[2]?.Trim().Replace("\\\\", "\\");
-            if (string.IsNullOrWhiteSpace(destinationPath))
-            {
-                return Error($"{Name}. Invalid input arguments. Parameter \"destinationPath\" not specified.");
-            }
-
-            if (destinationPath.StartsWith("/"))
-            {
-                destinationPath = Path.Combine(Environment.CurrentDirectory, destinationPath);
-            }
-
-            if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
-            {
-                return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{destinationPath}\") cannot be found.");
-            }
-
-            string[] exclude = ((args.Length >= 4) && (!string.IsNullOrWhiteSpace(args[3])))
+            string[] exclude = ((args.Length > 3) && (!string.IsNullOrWhiteSpace(args[3])))
                 ? args[2]
                     .Split(new[] {",", ";"}, StringSplitOptions.RemoveEmptyEntries)
                     .Select(item => item.Trim())
                     .ToArray()
                 : null;
 
-            Console.WriteLine($"{Name}: projectPath=\"{projectPath}\", destinationPath=\"{destinationPath}\" exclude=\"{string.Join("; ", (exclude ?? new string[0]))}\".");
+            var settings = new EnumProviderSettings
+            {
+                SolutionPath = solutionPath,
+                DestinationPath = destinationPath,
+                ProjectPath = projectPath,
+                Exclude = exclude
+            };
 
-            EnumProviderManager.Generate(solutionPath, projectPath, destinationPath);
+            return GenerateEnumProvider(settings);
+        }
+        
+        private static int GenerateEnumProvider(EnumProviderSettings settings)
+        {
+            if (string.IsNullOrWhiteSpace(settings.SolutionPath))
+            {
+                return Error($"{Name}. Invalid input arguments. Parameter \"solutionPath\" not specified.");
+            }
+
+            if (!Directory.Exists(settings.SolutionPath))
+            {
+                return Error($"{Name}. Invalid input arguments. Directory from parameter \"solutionPath\" (\"{settings.SolutionPath}\") cannot be found.");
+            }
+            
+            if (string.IsNullOrWhiteSpace(settings.ProjectPath))
+            {
+                return Error($"{Name}. Invalid input arguments. Parameter \"projectPath\" not specified.");
+            }
+
+            if (settings.ProjectPath.StartsWith("/"))
+            {
+                settings.ProjectPath = Path.Combine(Environment.CurrentDirectory, settings.ProjectPath);
+            }
+
+            if (!File.Exists(settings.ProjectPath))
+            {
+                return Error($"{Name}. Invalid input arguments. File from parameter \"projectPath\" (\"{settings.ProjectPath}\") cannot be found.");
+            }
+
+            if (string.IsNullOrWhiteSpace(settings.DestinationPath))
+            {
+                return Error($"{Name}. Invalid input arguments. Parameter \"destinationPath\" not specified.");
+            }
+
+            if (settings.DestinationPath.StartsWith("/"))
+            {
+                settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
+            }
+
+            if (!Directory.Exists(Path.GetDirectoryName(settings.DestinationPath)))
+            {
+                return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
+            }
+
+            Console.WriteLine($"{Name}: projectPath=\"{settings.ProjectPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\".");
+
+            EnumProviderManager.Generate(settings);
 
             Console.WriteLine($"{Name}. Complete at {DateTime.Now:dd-MM-yyyy HH:mm:ss}.");
 

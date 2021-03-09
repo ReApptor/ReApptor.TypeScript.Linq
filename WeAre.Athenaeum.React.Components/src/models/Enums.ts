@@ -1,29 +1,4 @@
-﻿export enum LoginResultStatus {
-    Success,
-
-    NotFound,
-
-    Deleted,
-
-    Locked,
-
-    /**
-     * Token security stamp does not correspond to user security stamp
-     */
-    TokenInvalidSecurityStamp,
-
-    /**
-     * Token already used
-     */
-    TokenUsed,
-
-    /**
-     * Token invalid or expired
-     */
-    TokenInvalidOrExpired
-}
-
-export enum LinkTarget {
+﻿export enum LinkTarget {
     /**
      * Load in a new window
      */
@@ -114,35 +89,6 @@ export enum PasswordValidationError {
     Length
 }
 
-export enum WorkDayState {
-    Normal = 0,
-
-    /**
-     * Sairas
-     */
-    SickLeave = 1,
-
-    /**
-     * Loma
-     */
-    Vacation = 2,
-
-    /**
-     * Vko lepo
-     */
-    WeeklyRest = 3,
-
-    /**
-     * Maksullinen vapaapäivä
-     */
-    PaidDayOff = 4,
-
-    /**
-     * Pekkanen
-     */
-    FlexHours = 5,
-}
-
 export enum DropdownSchema {
     Default,
 
@@ -157,123 +103,6 @@ export enum ConstructionSiteStatus {
     Inactive = 1,
 
     Closed = 2
-}
-
-export enum WorkOrderStatus {
-    Created = 0,
-
-    InProgress = 1,
-
-    Completed = 2,
-
-    SentToCustomer = 3,
-
-    ApprovedByCustomer = 4,
-
-    DeclinedByCustomer = 5,
-
-    ReadyForInvoicing = 6,
-
-    Invoiced = 7,
-
-    Deleted = 8,
-
-    Unknown = 9
-}
-
-export enum ConstructionSiteWorkOrderStatus {
-
-    //Active tasks
-    HasActiveTasks = 0,
-
-    //Tasks completed, not sent workReports
-    WorkReportNotSent = 1,
-
-    //WorkReport sent, not approved by customer
-    WorkReportNotApprovedByCustomer = 2,
-
-    //Tasks completed, not approved by manager
-    TaskNotApprovedByManager = 3,
-
-    //InvoiceRows not approved by manager
-    InvoiceRowsNotApprovedNyManager = 4,
-
-    //InvoiceRows approved, not sent to Pagero (not created actual invoice)
-    InvoiceNotCreated = 5
-}
-
-export enum UserRoleGroup {
-    Admins,
-
-    Managers,
-
-    Employees,
-
-    ContactPersons
-}
-
-export enum ConstructionSiteOrWarehouseType {
-    ConstructionSite = 0,
-
-    Warehouse = 1
-}
-
-export enum TaskStatusFilter {
-    Unscheduled = 0,
-    
-    InProgress = 1,
-    
-    Upcoming = 2,
-    
-    Completed = 3,
-    
-    SentToCustomer = 4,
-    
-    ApprovedByCustomer = 5,
-    
-    DeclinedByCustomer = 6,
-    
-    ReadyForInvoicing = 7
-}
-
-export enum CustomerApprovalType {
-    Email = 0,
-
-    Phone = 1,
-
-    Signature = 2
-}
-
-export enum ProductUnit {
-    Piece = 0,
-
-    Meter = 1,
-
-    Kilometer = 2,
-
-    Meter2 = 3,
-
-    Liter = 4,
-
-    Box = 5,
-
-    Pair = 6,
-
-    Bottle = 7,
-
-    Can = 8,
-
-    Bag = 9,
-
-    Roll = 10,
-
-    Custom = 11,
-}
-
-export enum UserDocumentLevel {
-    First,
-
-    Second
 }
 
 export enum ActionType {
@@ -316,49 +145,8 @@ export enum ActionType {
     Blue,
 }
 
-export enum UserSalaryAggregateType {
-    Day,
-
-    Month
-}
-
-export enum InvitationType {
-    Invitation,
-
-    ResetPassword,
-
-    ForgotPassword
-}
-
 export enum AuthType {
     Email,
 
     Phone
-}
-export enum AuditTimestamp {
-    CreatedAt,
-
-    ModifiedAt
-}
-
-export enum SavePasswordResultStatus {
-    Success,
-
-    WeakPassword,
-
-    WrongCurrent
-}
-
-export enum OrganizationContractLevel {
-    Operator = 0,
-
-    Company = 1,
-
-    SubCompany = 2
-}
-
-export enum OrganizationContractType {
-    Customer = 0,
-
-    Subcontractor = 1
 }
