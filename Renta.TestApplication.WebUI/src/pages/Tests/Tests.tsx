@@ -10,8 +10,8 @@ import ListTests from "@/pages/Tests/ListTests/ListTests";
 import ModalTests from "@/pages/Tests/ModalTests/ModalTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
 import GridTests from "@/pages/Tests/GridTests/GridTests";
-import HoursWidgetTests from "@/pages/Tests/WorkHoursWidgetTests/HoursWidgetTests";
-import SummaryWidgetTest from "@/pages/Tests/SummaryWidgetTest/SummaryWidgetTest";
+// import HoursWidgetTests from "@/pages/Tests/WorkHoursWidgetTests/HoursWidgetTests";
+// import SummaryWidgetTest from "@/pages/Tests/SummaryWidgetTest/SummaryWidgetTest";
 import FormTests from "@/pages/Tests/FormTests/FormTests";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 import { TabContainer, PageContainer, PageHeader, PageRow, Tab, TabRenderType } from "@weare/athenaeum-react-components";
@@ -56,13 +56,13 @@ export default class Tests extends AnonymousPage {
                             <NumberWidgetTests />
                         </Tab>
                         
-                        <Tab id="workHoursWidgetTests" title="Work hours Widget">
-                            <HoursWidgetTests />
-                        </Tab>
+                        {/*<Tab id="workHoursWidgetTests" title="Work hours Widget">*/}
+                        {/*    <HoursWidgetTests />*/}
+                        {/*</Tab>*/}
                         
-                        <Tab id="workReportSummaryWidgetTest" title="Work report summary">
-                            <SummaryWidgetTest />
-                        </Tab>
+                        {/*<Tab id="workReportSummaryWidgetTest" title="Work report summary">*/}
+                        {/*    <SummaryWidgetTest />*/}
+                        {/*</Tab>*/}
                         
                         <Tab id="dropdownTests" title="Dropdown">
                             <DropdownTests />
