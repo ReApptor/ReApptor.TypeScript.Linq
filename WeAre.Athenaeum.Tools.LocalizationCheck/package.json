@@ -1,7 +1,7 @@
 {
   "name": "@weare/localization-check",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "description": "",
   "type": "commonjs",
   "main": "./lib/cjs/index.js",
