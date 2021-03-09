@@ -115,42 +115,6 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Athenaeum Tool Localization Check CLI Build
-              image: node:14
-              caches:
-                - node
-              script:
-                # Update npm settings
-                - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.Tools.LocalizationCheck
-                - node -v && npm -v
-                - npm config set strict-ssl true
-                - npm config set ca ""
-                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
-                # Install dependencies
-                - npm install
-                ## Dependencies for documentation create
-                #- npm install -g @microsoft/api-extractor@7.12.1
-                #- npm install -g @microsoft/api-documenter
-                ## Run tests
-                # - npm test
-                # Run build
-                - npm run build
-                ## Create documentation
-                #- mkdir ./etc
-                #- api-extractor run --local
-                #- api-documenter markdown -i ./temp/ -o ../Documentation/docs/
-                # Create .npmrc file
-                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
-                - echo always-auth=true >> ~/.npmrc
-                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
-                # Create package
-                - npm pack
-                # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
-                # Publish to MyGet
-                - npm publish
-          - step:
               name: Athenaeum React Components Build
               image: node:14
               caches:
@@ -224,6 +188,42 @@ pipelines:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Common/WeAre.Athenaeum.Common.csproj -o obj/weare-athenaeum-common/publish
                 - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.Athenaeum.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+          - step:
+              name: WeAre Athenaeum Tools Localization Check CLI Build
+              image: node:14
+              caches:
+                - node
+              script:
+                # Update npm settings
+                - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.Tools.LocalizationCheck
+                - node -v && npm -v
+                - npm config set strict-ssl true
+                - npm config set ca ""
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
+                # Install dependencies
+                - npm install
+                ## Dependencies for documentation create
+                #- npm install -g @microsoft/api-extractor@7.12.1
+                #- npm install -g @microsoft/api-documenter
+                ## Run tests
+                # - npm test
+                # Run build
+                - npm run build
+                ## Create documentation
+                #- mkdir ./etc
+                #- api-extractor run --local
+                #- api-documenter markdown -i ./temp/ -o ../Documentation/docs/
+                # Create .npmrc file
+                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
+                - echo always-auth=true >> ~/.npmrc
+                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
+                # Create package
+                - npm pack
+                # Change version number
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                # Publish to MyGet
+                - npm publish
           - step:
               name: WeAre Athenaeum Tools CodeGenerator
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
