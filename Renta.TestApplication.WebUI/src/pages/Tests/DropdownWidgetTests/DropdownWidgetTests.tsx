@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import { AmountListItem, Checkbox, Form, List, TwoColumns } from "@weare/athenaeum-react-components";
+import { AmountListItem, Checkbox, Form, List, LayoutTwoColumns as TwoColumns } from "@weare/athenaeum-react-components";
 import { WidgetContainer, DropdownWidget } from "@weare/athenaeum-react-components";
 
 export interface IDropdownWidgetTestsState {

@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { NullableCheckbox, NullableSwitch } from "@weare/athenaeum-react-components";
+import { SwitchNullable, CheckboxNullable } from "@weare/athenaeum-react-components";
 
 export default class NullableSwitchTests extends BaseComponent {
     
@@ -8,9 +8,9 @@ export default class NullableSwitchTests extends BaseComponent {
         return (
             <React.Fragment>
 
-                <NullableSwitch label={"Nullable switch"} leftLabel={"Off"} rightLabel={"On"} />
+                <SwitchNullable label={"Nullable switch"} leftLabel={"Off"} rightLabel={"On"} />
                 
-                <NullableCheckbox label={"Nullable checkbox"} />
+                <CheckboxNullable label={"Nullable checkbox"} />
                 
             </React.Fragment>
         );
