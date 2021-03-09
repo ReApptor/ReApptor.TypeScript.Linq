@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { Dropdown, ThreeColumns } from "@weare/athenaeum-react-components";
+import { Dropdown, LayoutThreeColumns as ThreeColumns } from "@weare/athenaeum-react-components";
 
 export interface IDropdownPerformanceTestsState {
 }

@@ -74,7 +74,7 @@ import { SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem } 
 import DropdownListItem, { IDropdownListItemState, IDropdownListItemProps } from "@/components/Dropdown/DropdownListItem/DropdownListItem";
 import EmailInput from "@/components/EmailInput/EmailInput";
 import FileInput, { IFileInputState, IFileInputProps } from "@/components/FileInput/FileInput";
-import { NumberInputBehaviour, INumberInputState, INumberInputProps } from "@/components/NumberInput/NumberInput";
+import NumberInput, { NumberInputBehaviour, INumberInputState, INumberInputProps } from "@/components/NumberInput/NumberInput";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
 import LiveValidator, { ValidationRow } from "@/components/PasswordInput/LiveValidator/LiveValidator";
 import PhoneInput from "@/components/PhoneInput/PhoneInput";
@@ -115,6 +115,7 @@ import LanguageDropdown from "@/components/TopNav/LanguageDropdown/LanguageDropd
 import WidgetContainer, { IWidgetContainerProps } from "@/components/WidgetContainer/WidgetContainer";
 import DropdownWidget from "@/components/DropdownWidget/DropdownWidget";
 import SwitchNullable from "@/components/SwitchNullable/SwitchNullable";
+import NumberWidget from "@/components/NumberWidget/NumberWidget";
 
 export { Alert, IAlertProps };
 export { Button, IButtonProps, ButtonType };
@@ -194,7 +195,7 @@ export { SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem };
 export { DropdownListItem, IDropdownListItemState, IDropdownListItemProps };
 export { EmailInput };
 export { FileInput, IFileInputState, IFileInputProps };
-export { NumberInputBehaviour, INumberInputState, INumberInputProps };
+export { NumberInput, NumberInputBehaviour, INumberInputState, INumberInputProps };
 export { PasswordInput };
 export { LiveValidator, ValidationRow };
 export { PhoneInput };
@@ -234,3 +235,4 @@ export { TopNav, IMenuItem, ITopNavProps };
 export { Hamburger };
 export { LanguageDropdown };
 export { WidgetContainer, IWidgetContainerProps };
+export { NumberWidget };

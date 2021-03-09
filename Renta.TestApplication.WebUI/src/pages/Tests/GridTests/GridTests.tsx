@@ -1,7 +1,7 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import { Checkbox, Form, TwoColumns } from "@weare/athenaeum-react-components";
+import { Checkbox, Form, LayoutTwoColumns as TwoColumns } from "@weare/athenaeum-react-components";
 import { Grid, ColumnDefinition, GridHoveringType, GridOddType } from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
