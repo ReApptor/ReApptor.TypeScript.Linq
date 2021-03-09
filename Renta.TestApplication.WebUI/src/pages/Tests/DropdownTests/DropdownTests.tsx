@@ -17,7 +17,7 @@ import {
     IIconProps,
     IStringInputModel,
     SelectListItem, TextInput,
-    TwoColumns,
+    LayoutTwoColumns as TwoColumns,
     IconStyle
 } from "@weare/athenaeum-react-components";
 
