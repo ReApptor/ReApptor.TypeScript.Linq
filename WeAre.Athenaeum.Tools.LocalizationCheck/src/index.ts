@@ -1,5 +1,5 @@
 import ConfigurationLoader from "./utilities/ConfigurationLoader";
-import { TypescriptLocalizationPrefix } from "./types";
+import { TypescriptLocalizationPrefix, Configuration } from "./types";
 import { EntryChecks } from "./actions/EntryChecks";
 import { main } from "./actions/Main";
 
@@ -22,4 +22,4 @@ main({
     enumsToKeep: config.enumsToKeep,
 }).then();
 
-export { ConfigurationLoader, TypescriptLocalizationPrefix };
+export { TypescriptLocalizationPrefix, Configuration };
