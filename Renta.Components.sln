@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.React.Compo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.React.Components.Localization", "WeAre.Athenaeum.React.Components.Localization\WeAre.Athenaeum.React.Components.Localization.csproj", "{B3E09CFA-1807-4260-A635-58911CEDC1B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Tools.LocalizationCheck", "WeAre.Athenaeum.Tools.LocalizationCheck\WeAre.Athenaeum.Tools.LocalizationCheck.csproj", "{1B6B49D6-988E-4A3C-9182-AB09088B5C52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,7 @@ Global
 		{5F70B423-2AAD-4460-ADA4-957C39D487BF} = {73374FF9-71EC-44D9-8858-8459A65C2B89}
 		{E2B9531C-76A9-4AE3-B577-F72CA1D4D290} = {73374FF9-71EC-44D9-8858-8459A65C2B89}
 		{B3E09CFA-1807-4260-A635-58911CEDC1B0} = {73374FF9-71EC-44D9-8858-8459A65C2B89}
+		{1B6B49D6-988E-4A3C-9182-AB09088B5C52} = {13C11342-8709-487B-A4DB-C6F3AB84B71E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -146,5 +149,9 @@ Global
 		{B3E09CFA-1807-4260-A635-58911CEDC1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3E09CFA-1807-4260-A635-58911CEDC1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3E09CFA-1807-4260-A635-58911CEDC1B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6B49D6-988E-4A3C-9182-AB09088B5C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6B49D6-988E-4A3C-9182-AB09088B5C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6B49D6-988E-4A3C-9182-AB09088B5C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6B49D6-988E-4A3C-9182-AB09088B5C52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
