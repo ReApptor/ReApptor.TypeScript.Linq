@@ -1,7 +1,7 @@
 import React from "react";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
 import { IconSize, IIconProps } from "../Icon/Icon";
-import {ITypeConverter, TypeConverter} from "@weare/athenaeum-toolkit";
+import {TypeConverter} from "@weare/athenaeum-toolkit";
 import TitleWidgetLocalizer from "@/components/TitleWidget/TitleWidgetLocalizer";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
@@ -55,12 +55,12 @@ export default class TitleWidget extends BaseWidget<ITitleWidgetProps> {
 
     protected async processDataAsync(state: IBaseWidgetState<any>, data: any | null): Promise<void> {
         if (data != null) {
-            const converter: ITypeConverter | null = TypeConverter.getConverter(data, {} as ITitleModel);
-            //TODO: convert to toTitle
-            const title: ITitleModel = (data || {}) as ITitleModel;
-            state.description = title.description;
-            state.label = title.label;
-            state.icon = title.icon || state.icon;
+            const title: ITitleModel | null = TypeConverter.convert(data, nameof<ITitleModel>());
+            if (title != null) {
+                state.description = title.description;
+                state.label = title.label;
+                state.icon = title.icon || state.icon;
+            }
         }
     }
 
