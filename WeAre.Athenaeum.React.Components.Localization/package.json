@@ -24,17 +24,11 @@
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
     "typescript": "3.4",
-    "typescript-transform-paths": "^1.1.15",
-    "@types/resx": "^2.0.0",
-    "nodemon": "^2.0.7",
-    "ts-node": "^9.1.1",
-    "chalk": "^4.1.0",
-    "resx": "^2.0.3"
+    "typescript-transform-paths": "^1.1.15"
   },
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "validate": "ts-node --project tsconfig-validator.json ./validators/index.ts --resxPath=./resources/SharedResources.resx --componentsPath=../WeAre.Athenaeum.React.Components/src/components",
     "coverage": "jest --coverage"
   },
   "files": [
