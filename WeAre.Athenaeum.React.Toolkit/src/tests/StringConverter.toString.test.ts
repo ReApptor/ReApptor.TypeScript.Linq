@@ -8,7 +8,11 @@ describe("StringConverter", function() {
         return "TestClass:" + (item ? item.value : "NULL") + format;
     }
 
-    class TestClassTransformer implements IStringConverter {
+    class TestClassTransformer implements IStringConverter<TestClassWithInterface> {
+        public convert(item: TestClassWithInterface | null): string {
+            return this.toString(item);
+        }
+
         public toString(item: TestClassWithInterface | null, format?: TFormat | null): string {
             return itemToString(item, format);
         }
