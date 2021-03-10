@@ -172,9 +172,12 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
     
     public get children(): React.ReactElement[] {
+
+        console.log("BaseComponent.children: id=", this.id);
+        
         this._childComponentIds = [];
         this._childComponentRefs = [];
-        this._childComponentIdToRefs.clear();
+        //this._childComponentIdToRefs.clear();
 
         let children = this.props.children as any;
         if (children && children.type && children.type.toString && children.type.toString() === "Symbol(react.fragment)") {
@@ -351,11 +354,20 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     public async componentWillMount(): Promise<void> {
+
+        console.log("BaseComponent.componentWillMount: id=", this.id);
+        
+        this._childComponentIdToRefs.clear();
+
+        console.log("BaseComponent.componentWillMount: id=", this.id, "children=", this.children);
+        
         await this.initializeAsync();
     }
     
     public async componentDidMount(): Promise<void> {
         this._isMounted = true;
+
+        console.log("BaseComponent.componentDidMount: id=", this.id);
 
         if (this._asGlobalClick) {
             DocumentEventsProvider.register(this.id, DocumentEventType.Mousedown, async (e: React.SyntheticEvent) => await this._asGlobalClick!.onGlobalClick(e));

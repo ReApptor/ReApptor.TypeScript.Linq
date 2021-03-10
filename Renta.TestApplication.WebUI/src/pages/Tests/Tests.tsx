@@ -2,6 +2,7 @@ import React from "react";
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import {PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType} from "@weare/athenaeum-react-components";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
+import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
 // import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
 // import NumberWidgetTests from "@/pages/Tests/NumberWidgetTests/NumberWidgetTests";
 // import DropdownTests from "@/pages/Tests/DropdownTests/DropdownTests";
@@ -18,6 +19,9 @@ import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 
 export default class Tests extends AnonymousPage {
     
+    private readonly _buttonTestsRef: React.RefObject<Tab> = React.createRef();
+    private readonly _alertsRef: React.RefObject<Tab> = React.createRef();
+    
     public getTitle(): string {
         return "Tests";
     }
@@ -33,13 +37,13 @@ export default class Tests extends AnonymousPage {
 
                     <TabContainer renderType={TabRenderType.ActiveOnly}>
                     
-                        <Tab id="buttonTests" title="Button">
+                        <Tab id="buttonTests" title="Button" ref={this._buttonTestsRef}>
                             <ButtonTests />
                         </Tab>
                         
-                    {/*    <Tab id="alertTests" title="Alerts">*/}
-                    {/*        <AlertTests />*/}
-                    {/*    </Tab>*/}
+                        <Tab id="alertTests" title="Alerts" ref={this._alertsRef}>
+                            <AlertTests />
+                        </Tab>
                     
                     {/*    <Tab id="gridTest" title="Grids">*/}
                     {/*        <GridTests />*/}
