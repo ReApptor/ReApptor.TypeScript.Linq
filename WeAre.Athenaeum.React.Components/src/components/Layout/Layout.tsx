@@ -2,12 +2,17 @@ import React from "react";
 import $ from "jquery";
 import queryString, {ParsedQuery} from "query-string";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
-import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent} from "@weare/athenaeum-react-common";
+import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";
 import TopNav from "../TopNav/TopNav";
 import Footer from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "./Layout.module.scss";
+
+export interface ILayoutProps {
+    fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
+    tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
+}
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     page: IBasePage | null;
@@ -15,7 +20,7 @@ interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     error: boolean;
 }
 
-export default class Layout extends BaseAsyncComponent<{}, ILayoutState, ApplicationContext> implements ILayoutPage, IGlobalResize {
+export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext> implements ILayoutPage, IGlobalResize {
 
     state: ILayoutState = {
         isLoading: false,
@@ -124,7 +129,11 @@ export default class Layout extends BaseAsyncComponent<{}, ILayoutState, Applica
         }
 
         if (token) {
-            await this.postAsync("api/Application/TokenLogin", token);
+            if (this.props.tokenLogin) {
+                await this.props.tokenLogin(this, token);
+            } else {
+                await this.postAsync("api/Application/TokenLogin", token);
+            }
 
             await PageRouteProvider.changeUrlWithoutReload();
         }
@@ -137,7 +146,7 @@ export default class Layout extends BaseAsyncComponent<{}, ILayoutState, Applica
 
     private isPwaApp(): boolean {
         return (
-            (window.matchMedia('(display-mode: standalone)').matches) ||
+            (window.matchMedia("(display-mode: standalone)").matches) ||
             //(window.matchMedia('(display-mode: fullscreen)').matches) ||
             //(window.matchMedia('(display-mode: minimal-ui)').matches) ||
             ((window.navigator as any).standalone) ||
@@ -153,6 +162,16 @@ export default class Layout extends BaseAsyncComponent<{}, ILayoutState, Applica
                 : (this.mobile)
                     ? WebApplicationType.MobileBrowser
                     : WebApplicationType.DesktopBrowser;
+    }
+
+    protected async fetchDataAsync(): Promise<ApplicationContext> {
+        if (this.props.fetchContext) {
+            const timezoneOffset: number = Utility.timezoneOffset;
+            const applicationType: WebApplicationType = this.getApplicationType();
+            return await this.props.fetchContext(this, timezoneOffset, applicationType);
+        }
+
+        return super.fetchDataAsync();
     }
 
     protected getEndpoint(): string {
@@ -218,18 +237,18 @@ export default class Layout extends BaseAsyncComponent<{}, ILayoutState, Applica
 
         if (tooltip.length > 0) {
             tooltip.tooltip({
-                trigger: 'click',
-                placement: 'top',
+                trigger: "click",
+                placement: "top",
             });
 
-            tooltip.on('show.bs.tooltip', () => {
-                $('.tooltip').not(tooltip).remove();
+            tooltip.on("show.bs.tooltip", () => {
+                $(".tooltip").not(tooltip).remove();
             });
         }
     }
 
     public reinitializeTooltips(): void {
-        $('[data-toggle="tooltip"]').tooltip('dispose');
+        $('[data-toggle="tooltip"]').tooltip("dispose");
         
         this.initializeTooltips();
     }
