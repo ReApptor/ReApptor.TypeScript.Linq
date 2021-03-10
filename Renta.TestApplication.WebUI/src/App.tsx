@@ -17,7 +17,7 @@ class App extends BaseComponent {
 }
 
 //Register initialize events
-ch.registerInitializeCallback(async () => await AddressHelper.loadGoogleLibraryAsync());
+//ch.registerInitializeCallback(async () => await AddressHelper.loadGoogleLibraryAsync());
 ch.registerInitializeCallback(async () => await TestApplicationController.initializeAsync());
 //Register authorize events
 ch.registerAuthorizeCallback(async () => await UserInteractionDataStorage.onAuthorize());

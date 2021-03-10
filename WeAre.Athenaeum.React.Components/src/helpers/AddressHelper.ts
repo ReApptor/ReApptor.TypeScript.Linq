@@ -11,7 +11,7 @@ export interface IGoogleApiSettings {
 }
 
 export default class AddressHelper {
-
+    
     private static _google: any = null;
     
     public static async loadGoogleLibraryAsync(): Promise<void> {
