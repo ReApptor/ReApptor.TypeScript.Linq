@@ -108,15 +108,15 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     private clone(element: React.ReactElement): React.ReactElement {
         if (BaseComponent.isComponent(element)/* && (element.props.ref == null)*/) {
-            const id: string = (element.props.id || ch.getComponentId());
-            console.log("BaseComponent.clone id=", id);
             const expandedProps: any | null = this.extendChildProps(element);
+            const id: string = (element.props.id || ch.getComponentId());
             let ref: any = (element as any).ref;
+            console.log("BaseComponent.clone id=", id, " ref=");
             if (ref != null) {
                 this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
             } else {
                 //ref = id;
-                ref = React.createRef<IBaseComponent>();
+                ref = React.createRef<BaseComponent>();
                 this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
                 //this._childComponentIds.push(id);
             }
@@ -149,6 +149,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 prototype = Object.getPrototypeOf(prototype);
             }
         }
+        
+        console.log("isComponent=false element=", element);
+        
         return false;
     }
 
@@ -181,6 +184,8 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 .filter(id => BaseComponent.isComponent(this.refs[id]))
                 .map(id => ((this.refs[id] as any) as IBaseComponent))
         );
+        
+        console.log("BaseComponent.childComponents: _childComponentRefs=", this._childComponentRefs);
 
         childComponent.push(...
             this
