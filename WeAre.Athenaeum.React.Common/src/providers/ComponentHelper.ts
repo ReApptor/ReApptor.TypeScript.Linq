@@ -10,19 +10,31 @@ import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirm
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
 
+class Data {
+    readonly initializeCallbacks: (() => Promise<void>)[] = [];
+    readonly authorizeCallbacks: (() => Promise<void>)[] = [];
+    number: number = 1;
+    context: ApplicationContext | null = null;
+    layout: ILayoutPage | null = null;
+    page: IBasePage | null = null;
+    initialized: boolean = false;
+}
+
+const DataInstance: Data = (window ? ((window as any).__athenaeumComponentHelperData as (Data | null)) || ((window as any).__athenaeumComponentHelperData = new Data()) : new Data());
+
 /**
  * BaseComponent helper
  * Provides helper functions for component initialization
  */
 export default class ch {
 
-    private static readonly _initializeCallbacks: (() => Promise<void>)[] = [];
-    private static readonly _authorizeCallbacks: (() => Promise<void>)[] = [];
-    private static _number: number = 1;
-    private static _context: ApplicationContext | null = null;
-    private static _layout: ILayoutPage | null = null;
-    private static _page: IBasePage | null = null;
-    private static _initialized: boolean = false;
+    private static readonly _initializeCallbacks: (() => Promise<void>)[] = DataInstance.initializeCallbacks;
+    private static readonly _authorizeCallbacks: (() => Promise<void>)[] = DataInstance.authorizeCallbacks;
+    private static _number: number = DataInstance.number;
+    private static _context: ApplicationContext | null = DataInstance.context;
+    private static _layout: ILayoutPage | null = DataInstance.layout;
+    private static _page: IBasePage | null = DataInstance.page;
+    private static _initialized: boolean = DataInstance.initialized;
 
     private static async onOnSetLanguageAsync(language: string): Promise<void> {
         try {
