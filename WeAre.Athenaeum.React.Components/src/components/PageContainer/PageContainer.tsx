@@ -47,10 +47,12 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
 
     // noinspection JSUnusedLocalSymbols
     private static initialize = (() => ServiceProvider.addSingleton(nameof<IPageContainer>(), () => PageContainer.instance))();
-    
+ 
     private get manual(): IManualProps {
-        const page: IBasePage = ch.getPage();
-        return page.getManualProps();
+        const page: IBasePage | null = ch.findPage();
+        return (page)
+            ? page.getManualProps()
+            : {};
     }
     
     private toggleVerticalScroll() {

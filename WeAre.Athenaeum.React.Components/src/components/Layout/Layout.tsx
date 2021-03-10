@@ -165,22 +165,16 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     protected async fetchDataAsync(): Promise<ApplicationContext> {
-        console.log("Layout.fetchDataAsync: this.props.fetchContext=", (this.props.fetchContext != null));
+        
         if (this.props.fetchContext) {
             const timezoneOffset: number = Utility.timezoneOffset;
             const applicationType: WebApplicationType = this.getApplicationType();
-            console.log("Layout.fetchDataAsync: timezoneOffset=", timezoneOffset, "applicationType=", applicationType);
-            return await this.props.fetchContext(this, timezoneOffset, applicationType);
+            const context: ApplicationContext = await this.props.fetchContext(this, timezoneOffset, applicationType);
+            await ch.setContextAsync(context);
+            return context;
         }
 
         return super.fetchDataAsync();
-    }
-
-    protected async processDataAsync(state: ILayoutState, data: ApplicationContext | null): Promise<void> {
-        console.log("Layout.processDataAsync: data.currentPage=", data ? data.currentPage : null, " this.state.page=", this.state.page);
-        if ((!this.state.page) && (data) && (data.currentPage)) {
-            await PageRouteProvider.redirectAsync(data.currentPage);
-        }
     }
 
     protected getEndpoint(): string {
