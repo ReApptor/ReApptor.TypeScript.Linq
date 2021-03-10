@@ -7,8 +7,8 @@ class App extends BaseComponent {
 
     render(): React.ReactNode {
         return (
-            <Layout fetchContext={(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
-                    tokenLogin={(sender: IBaseComponent, token: string) => TestApplicationController.tokenLoginAsync(token)}
+            <Layout fetchContext={(sender, timezoneOffset, applicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
+                    tokenLogin={(sender, token) => TestApplicationController.tokenLoginAsync(token)}
             />
         );
     }
