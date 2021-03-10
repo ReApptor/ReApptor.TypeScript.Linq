@@ -15,6 +15,7 @@ import GridSpinner from "@/components/Grid/GridSpinner/GridSpinner";
 import Row from "@/components/Grid/Row/Row";
 import TotalRow from "@/components/Grid/TotalRow/TotalRow";
 import Grid from "@/components/Grid/Grid";
+import AddressHelper, { GoogleApiResult, IGoogleApiSettings } from "@/helpers/AddressHelper";
 import {
     GridModel,
     BorderType,
@@ -117,6 +118,7 @@ import DropdownWidget from "@/components/DropdownWidget/DropdownWidget";
 import SwitchNullable from "@/components/SwitchNullable/SwitchNullable";
 import NumberWidget from "@/components/NumberWidget/NumberWidget";
 
+export { AddressHelper, GoogleApiResult, IGoogleApiSettings }
 export { Alert, IAlertProps };
 export { Button, IButtonProps, ButtonType };
 export { ButtonContainer, IButtonContainerProps, IButtonContainerState };
