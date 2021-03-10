@@ -3,7 +3,7 @@ import $ from "jquery";
 import queryString, {ParsedQuery} from "query-string";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import TopNav from "../TopNav/TopNav";
+import TopNav, {IMenuItem} from "../TopNav/TopNav";
 import Footer from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 
@@ -12,6 +12,7 @@ import styles from "./Layout.module.scss";
 export interface ILayoutProps {
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
+    fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
@@ -217,8 +218,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async setPageAsync(page: IBasePage): Promise<void> {
-        
-        console.log("setPageAsync: page=", page);
 
         await this.setState({ page: page });
         
@@ -308,7 +307,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                  onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
                 
                 {
-                    (this.hasData) && <TopNav applicationName={this.applicationName} />
+                    (this.hasData) &&
+                    (
+                        <TopNav applicationName={this.applicationName}
+                                fetchItems={this.props.fetchTopNavItems}
+                        />
+                    )
                 }
 
                 <main className={styles.main}>
