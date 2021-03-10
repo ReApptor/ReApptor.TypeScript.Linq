@@ -1,9 +1,14 @@
 import React from "react";
+import {IBasePage} from "@weare/athenaeum-react-common";
 import NavigationWidget from "../NavigationWidget/NavigationWidget";
 import { IIconProps } from "../Icon/Icon";
 import BaseWidgetContainer, { IBaseWidgetContainerProps } from "../WidgetContainer/BaseWidgetContainer";
 import StepsWidget, { IWizardSteps } from "../StepsWidget/StepsWidget";
-import { IWizardPage } from "@/helpers/WizardPage";
+
+export interface IWizardPage extends IBasePage {
+    prevAsync(): Promise<void>;
+    nextAsync(): Promise<void>;
+}
 
 export interface IWizardContainerProps extends IBaseWidgetContainerProps {
     id?: string;
