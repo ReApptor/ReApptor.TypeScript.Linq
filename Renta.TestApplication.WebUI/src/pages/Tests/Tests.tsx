@@ -31,7 +31,7 @@ export default class Tests extends AnonymousPage {
                     
                     <span>Test page</span>
 
-                    {/*<TabContainer renderType={TabRenderType.ActiveOnly}>*/}
+                    <TabContainer renderType={TabRenderType.ActiveOnly}>
                     
                     {/*    <Tab id="buttonTests" title="Button">*/}
                     {/*        <ButtonTests />*/}
@@ -93,7 +93,7 @@ export default class Tests extends AnonymousPage {
                     {/*        <ModalTests />*/}
                     {/*    </Tab>*/}
                     
-                    {/*</TabContainer>*/}
+                    </TabContainer>
 
                 </PageRow>
 
