@@ -77,6 +77,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private readonly _asGlobalClick: IGlobalClick | null;
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
+    private _children: React.ReactElement[];
     private _childComponentIds: string[];
     private _childComponentIdToRefs: Dictionary<string, React.RefObject<IBaseComponent>>;
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
@@ -171,13 +172,13 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         return $(`#${this.id}`);
     }
     
-    public get children(): React.ReactElement[] {
+    private cloneChildren(): void {
+        this._children = [];
 
-        console.log("BaseComponent.children: id=", this.id);
-        
+        console.log("BaseComponent.cloneChildren: id=", this.id);
+
         this._childComponentIds = [];
         this._childComponentRefs = [];
-        //this._childComponentIdToRefs.clear();
 
         let children = this.props.children as any;
         if (children && children.type && children.type.toString && children.type.toString() === "Symbol(react.fragment)") {
@@ -188,10 +189,15 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             const element = child as React.ReactElement;
             return this.clone(element);
         });
-        
-        console.log("BaseComponent.children: clone=", clone);
-        
-        return clone || [];
+
+        console.log("BaseComponent.cloneChildren: clone=", clone);
+
+        this._children = clone || [];
+    }
+    
+    public get children(): React.ReactElement[] {
+        this.cloneChildren();
+        return this._children;
     }
 
     public get childComponents(): IBaseComponent[] {
@@ -338,6 +344,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
+        this._children = [];
         this._childComponentIds = [];
         this._childComponentRefs = [];
         this._childComponentIdToRefs = new Dictionary<string, React.RefObject<IBaseComponent>>();
@@ -355,11 +362,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     public async componentWillMount(): Promise<void> {
 
-        console.log("BaseComponent.componentWillMount: id=", this.id);
-        
-        this._childComponentIdToRefs.clear();
+        this.cloneChildren();
 
-        console.log("BaseComponent.componentWillMount: id=", this.id, "children=", this.children);
+        console.log("BaseComponent.componentWillMount: id=", this.id);
         
         await this.initializeAsync();
     }
@@ -385,6 +390,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public async componentWillUnmount(): Promise<void> {
         this._isMounted = false;
         this._isSpinning = false;
+        this._childComponentIdToRefs.clear();
 
         if (this._asGlobalClick) {
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Mousedown);

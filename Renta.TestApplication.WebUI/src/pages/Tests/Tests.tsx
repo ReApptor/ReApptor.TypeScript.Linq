@@ -35,13 +35,13 @@ export default class Tests extends AnonymousPage {
                     
                     <span>Test page</span>
 
-                    <TabContainer renderType={TabRenderType.ActiveOnly}>
+                    <TabContainer id="TestsTabs" renderType={TabRenderType.ActiveOnly}>
                     
-                        <Tab id="buttonTests" title="Button" ref={this._buttonTestsRef}>
+                        <Tab id="buttonTests" title="Button">
                             <ButtonTests />
                         </Tab>
                         
-                        <Tab id="alertTests" title="Alerts" ref={this._alertsRef}>
+                        <Tab id="alertTests" title="Alerts">
                             <AlertTests />
                         </Tab>
                     
