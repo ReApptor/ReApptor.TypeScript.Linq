@@ -80,8 +80,10 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
     
     private get manual(): IManualProps {
-        const page: IBasePage = ch.getPage();
-        return page.getManualProps();
+        const page: IBasePage | null = ch.findPage();
+        return (page)
+            ? page.getManualProps()
+            : {};
     }
 
     public render(): React.ReactNode {

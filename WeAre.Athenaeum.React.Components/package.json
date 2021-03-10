@@ -10,8 +10,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "build:watch": "rollup -c -w"
+    "build:components": "rollup -c",
+    "build:components:watch": "rollup -c -w"
   },
   "browserslist": [],
   "dependencies": {
