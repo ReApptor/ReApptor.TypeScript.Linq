@@ -1,5 +1,6 @@
 import React from "react";
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
+import {PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType} from "@weare/athenaeum-react-components";
 // import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
 // import NumberWidgetTests from "@/pages/Tests/NumberWidgetTests/NumberWidgetTests";
 // import DropdownTests from "@/pages/Tests/DropdownTests/DropdownTests";
@@ -23,81 +24,80 @@ export default class Tests extends AnonymousPage {
 
     public render(): React.ReactNode {
         return (
-            <div>
-                EMPTY PAGE
-            </div>
-            // <PageContainer>
-            //     <PageHeader title="Tests" />
-            //    
-            //     <PageRow>
-            //        
-            //         <TabContainer renderType={TabRenderType.ActiveOnly}>
-            //
-            //             <Tab id="buttonTests" title="Button">
-            //                 <ButtonTests />
-            //             </Tab>
-            //
-            //             <Tab id="alertTests" title="Alerts">
-            //                 <AlertTests />
-            //             </Tab>
-            //
-            //             <Tab id="gridTest" title="Grids">
-            //                 <GridTests />
-            //             </Tab>
-            //
-            //             <Tab id="formTests" title="Form">
-            //                 <FormTests />
-            //             </Tab>
-            //
-            //             <Tab id="numberInputTests" title="Number Input">
-            //                 <NumberInputTests />
-            //             </Tab>
-            //            
-            //             <Tab id="numberWidgetTests" title="Number Widget">
-            //                 <NumberWidgetTests />
-            //             </Tab>
-            //            
-            //             {/*<Tab id="workHoursWidgetTests" title="Work hours Widget">*/}
-            //             {/*    <HoursWidgetTests />*/}
-            //             {/*</Tab>*/}
-            //            
-            //             {/*<Tab id="workReportSummaryWidgetTest" title="Work report summary">*/}
-            //             {/*    <SummaryWidgetTest />*/}
-            //             {/*</Tab>*/}
-            //            
-            //             <Tab id="dropdownTests" title="Dropdown">
-            //                 <DropdownTests />
-            //             </Tab>
-            //            
-            //             <Tab id="dropdownPerformanceTests" title="DD Performance">
-            //                 <DropdownPerformanceTests />
-            //             </Tab>
-            //
-            //             <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">
-            //                 <DropdownSelectItemsTests />
-            //             </Tab>
-            //            
-            //             <Tab id="dropdownWidgetTests" title="DropdownWidget">
-            //                 <DropdownWidgetTests />
-            //             </Tab>
-            //            
-            //             <Tab id="listTests" title="List">
-            //                 <ListTests />
-            //             </Tab>
-            //
-            //             <Tab id="nullableSwitchTests" title="Nullable switch">
-            //                 <NullableSwitchTests />
-            //             </Tab>
-            //
-            //             <Tab id="modalTests" title="Modal">
-            //                 <ModalTests />
-            //             </Tab>
-            //                 
-            //         </TabContainer>
-            //        
-            //     </PageRow>
-            //    
-            // </PageContainer>
+            <PageContainer>
+                <PageHeader title="Tests" />
+
+                <PageRow>
+                    
+                    <span>Test page</span>
+
+                    {/*<TabContainer renderType={TabRenderType.ActiveOnly}>*/}
+                    
+                    {/*    <Tab id="buttonTests" title="Button">*/}
+                    {/*        <ButtonTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="alertTests" title="Alerts">*/}
+                    {/*        <AlertTests />*/}
+                    {/*    </Tab>*/}
+                    
+                    {/*    <Tab id="gridTest" title="Grids">*/}
+                    {/*        <GridTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="formTests" title="Form">*/}
+                    {/*        <FormTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="numberInputTests" title="Number Input">*/}
+                    {/*        <NumberInputTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="numberWidgetTests" title="Number Widget">*/}
+                    {/*        <NumberWidgetTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    /!*<Tab id="workHoursWidgetTests" title="Work hours Widget">*!/*/}
+                    {/*    /!*    <HoursWidgetTests />*!/*/}
+                    {/*    /!*</Tab>*!/*/}
+                    {/*    */}
+                    {/*    /!*<Tab id="workReportSummaryWidgetTest" title="Work report summary">*!/*/}
+                    {/*    /!*    <SummaryWidgetTest />*!/*/}
+                    {/*    /!*</Tab>*!/*/}
+                    {/*    */}
+                    {/*    <Tab id="dropdownTests" title="Dropdown">*/}
+                    {/*        <DropdownTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="dropdownPerformanceTests" title="DD Performance">*/}
+                    {/*        <DropdownPerformanceTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">*/}
+                    {/*        <DropdownSelectItemsTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="dropdownWidgetTests" title="DropdownWidget">*/}
+                    {/*        <DropdownWidgetTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="listTests" title="List">*/}
+                    {/*        <ListTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="nullableSwitchTests" title="Nullable switch">*/}
+                    {/*        <NullableSwitchTests />*/}
+                    {/*    </Tab>*/}
+                    {/*    */}
+                    {/*    <Tab id="modalTests" title="Modal">*/}
+                    {/*        <ModalTests />*/}
+                    {/*    </Tab>*/}
+                    
+                    {/*</TabContainer>*/}
+
+                </PageRow>
+
+            </PageContainer>
         );
     }
 }
