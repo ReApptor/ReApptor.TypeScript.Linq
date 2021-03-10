@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Attributes, ComponentClass, FunctionComponent, ReactChildren, ReactNode} from "react";
 import {ReactElement} from "react";
 import {AthenaeumConstants} from "@weare/athenaeum-toolkit";
 
@@ -13,7 +13,7 @@ export default class ReactUtility {
 
         return items
             .map((item: string, index: number) => (index % 2 != 0)
-                ? [React.createElement(tag, {key: `${containerIndex}${tag}${index}`}, item)]
+                ? [this.createElement(tag, {key: `${containerIndex}${tag}${index}`}, item)]
                 : [item]
             )
             .flat();
@@ -51,9 +51,18 @@ export default class ReactUtility {
 
         return lines
             .map((line: string, index: number) => (index < lines.length - 1)
-                ? [...this.containerToMarks(line, index), React.createElement("br", {key: "br" + index})]
+                ? [...this.containerToMarks(line, index), this.createElement("br", {key: "br" + index})]
                 : [...this.containerToMarks(line, index)]
             )
             .flat();
+    }
+    
+    public static createElement<P extends {}>(type: FunctionComponent<P> | ComponentClass<P> | string, props?: Attributes & P | null, ...children: ReactNode[]): ReactElement<P> {
+        const createElement = ((window as any).reactCreateElement) || ((window as any).reactCreateElement = React.createElement);
+        return createElement(type, props, ...children);
+    }
+
+    public static get reactChildren(): ReactChildren {
+        return ((window as any).reactChildren || ((window as any).reactChildren = React.Children));
     }
 }
