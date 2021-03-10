@@ -58,11 +58,13 @@ export default class ReactUtility {
     }
     
     public static createElement<P extends {}>(type: FunctionComponent<P> | ComponentClass<P> | string, props?: Attributes & P | null, ...children: ReactNode[]): ReactElement<P> {
+        console.log("createElement: props=", props);
         const createElement = ((window as any).reactCreateElement) || ((window as any).reactCreateElement = React.createElement);
         return createElement(type, props, ...children);
     }
 
     public static get reactChildren(): ReactChildren {
+        console.log("reactChildren()");
         return ((window as any).reactChildren || ((window as any).reactChildren = React.Children));
     }
 }
