@@ -1,4 +1,5 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
+import {IMenuItem} from "@weare/athenaeum-react-components";
 import PageDefinitions from "@/pages/PageDefinitions";
 
 class TestApplicationController {
@@ -26,7 +27,7 @@ class TestApplicationController {
     }
     
     public async fetchApplicationContextAsync(timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext> {
-        console.log("fetchApplicationContextAsync: timezoneOffset=", timezoneOffset, "applicationType=", applicationType);
+        console.log("TestApplicationController.fetchApplicationContextAsync: timezoneOffset=", timezoneOffset, "applicationType=", applicationType);
         if (this._applicationContext == null) {
             this._applicationContext = new ApplicationContext();
             this._applicationContext.id = ch.getComponentId();
@@ -41,7 +42,13 @@ class TestApplicationController {
     }
     
     public async tokenLoginAsync(token: string): Promise<void> {
-        console.log("tokenLoginAsync: token=", token);
+        console.log("TestApplicationController.tokenLoginAsync: token=", token);
+    }
+    
+    public async fetchTopNavItems(): Promise<IMenuItem[]> {
+        return [
+            { route: PageDefinitions.testsRoute, label: "Tests" }
+        ];
     }
 }
 

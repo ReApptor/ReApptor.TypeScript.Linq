@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, ch, IBaseComponent, WebApplicationType, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
 import {AddressHelper, Layout} from "@weare/athenaeum-react-components";
 import TestApplicationController from "@/pages/TestApplicationController";
 
@@ -9,6 +9,7 @@ class App extends BaseComponent {
         return (
             <Layout fetchContext={(sender, timezoneOffset, applicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
                     tokenLogin={(sender, token) => TestApplicationController.tokenLoginAsync(token)}
+                    fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
             />
         );
     }

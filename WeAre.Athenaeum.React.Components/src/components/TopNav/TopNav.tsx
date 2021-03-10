@@ -15,6 +15,7 @@ export interface IMenuItem {
 
 export interface ITopNavProps {
     applicationName?: string;
+    fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
     onLogoClick?(sender: TopNav): Promise<void>;
 }
 
@@ -69,6 +70,13 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     
     private async onLanguageChangeAsync(language: string): Promise<void> {
         await ch.setLanguageAsync(language);
+    }
+    
+    protected async fetchDataAsync(): Promise<IMenuItem[]> {
+        if (this.props.fetchItems) {
+            return await this.props.fetchItems(this);
+        }
+        return super.fetchDataAsync();
     }
 
     protected getEndpoint(): string {
