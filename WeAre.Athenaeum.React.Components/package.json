@@ -10,7 +10,7 @@
     "lib"
   ],
   "scripts": {
-    "build:components": "rollup -c",
+    "build": "rollup -c",
     "build:components:watch": "rollup -c -w"
   },
   "browserslist": [],
