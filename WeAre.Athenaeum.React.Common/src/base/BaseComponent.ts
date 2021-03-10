@@ -78,6 +78,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
     private _childComponentIds: string[];
+    private _childComponentIdToRefs: Dictionary<string, React.RefObject<IBaseComponent>>;
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
     private _isSpinning: boolean;
@@ -115,10 +116,20 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             if (ref != null) {
                 this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
             } else {
-                ref = id;
+                ref = this._childComponentIdToRefs.getValue(id) || null;
+                if (ref != null) {
+                    console.log("BaseComponent.clone restore from existing id=", id);
+                }
+                else {
+                    ref = React.createRef<IBaseComponent>();
+                    this._childComponentRefs.push(ref);
+                    this._childComponentIdToRefs.setValue(id, ref);
+                    console.log("BaseComponent.clone create new ref id=", id);
+                }
+                //ref = id;
                 //ref = React.createRef<BaseComponent>();
                 //this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
-                this._childComponentIds.push(id);
+                //this._childComponentIds.push(id);
             }
             const newProps: any = { ...element.props, ref: ref, id: id, ...expandedProps };
             console.log("BaseComponent.clone newProps=", newProps);
@@ -163,6 +174,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public get children(): React.ReactElement[] {
         this._childComponentIds = [];
         this._childComponentRefs = [];
+        this._childComponentIdToRefs.clear();
 
         let children = this.props.children as any;
         if (children && children.type && children.type.toString && children.type.toString() === "Symbol(react.fragment)") {
@@ -325,6 +337,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._asGlobalResize = this.asGlobalResize();
         this._childComponentIds = [];
         this._childComponentRefs = [];
+        this._childComponentIdToRefs = new Dictionary<string, React.RefObject<IBaseComponent>>();
         this._isMounted = false;
         this._isSpinning = false;
         
