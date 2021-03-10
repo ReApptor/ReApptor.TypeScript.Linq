@@ -168,10 +168,14 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             children = children.props.children;
         }
 
-        return ReactUtility.reactChildren.map(children, (child) => {
+        const clone: React.ReactElement[] | null | undefined = ReactUtility.reactChildren.map(children, (child) => {
             const element = child as React.ReactElement;
             return this.clone(element);
-        }) || [];
+        });
+        
+        console.log("BaseComponent.children: clone=", clone);
+        
+        return clone || [];
     }
 
     public get childComponents(): IBaseComponent[] {
