@@ -2,8 +2,8 @@
   "name": "WeAre.Athenaeum.TemplateApp.WebUI",
   "private": true,
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.432",
-    "@weare/athenaeum-toolkit": "^1.0.432",
+    "@weare/athenaeum-react-common": "^1.0.433",
+    "@weare/athenaeum-toolkit": "^1.0.433",
     "@weare/athenaeum-react-components": "file:../WeAre.Athenaeum.React.Components",
     "async-mutex": "^0.1.3",
     "bootstrap": "^4.3.1",
