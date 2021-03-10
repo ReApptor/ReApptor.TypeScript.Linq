@@ -109,6 +109,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private clone(element: React.ReactElement): React.ReactElement {
         if (BaseComponent.isComponent(element)/* && (element.props.ref == null)*/) {
             const id: string = (element.props.id || ch.getComponentId());
+            console.log("BaseComponent.clone id=", id);
             const expandedProps: any | null = this.extendChildProps(element);
             let ref: any = (element as any).ref;
             if (ref != null) {
