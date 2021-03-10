@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactChildren} from "react";
 import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import { Utility } from "@weare/athenaeum-toolkit";
@@ -163,7 +163,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             children = children.props.children;
         }
 
-        return React.Children.map(children, (child) => {
+        return ReactUtility.reactChildren.map(children, (child) => {
             const element = child as React.ReactElement;
             return this.clone(element);
         }) || [];
