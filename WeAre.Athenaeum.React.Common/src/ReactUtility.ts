@@ -62,6 +62,12 @@ export default class ReactUtility {
         const createElement = ((window as any).reactCreateElement) || ((window as any).reactCreateElement = React.createElement);
         return createElement(type, props, ...children);
     }
+    
+    public static cloneElement<P>(element: ReactElement<P>, props?: Partial<P> & Attributes, ...children: ReactNode[]): ReactElement<P> {
+        console.log("cloneElement: element=", element, "props=", props);
+        const cloneElement = ((window as any).reactCloneElement) || ((window as any).reactCloneElement = React.cloneElement);
+        return cloneElement(element, props, ...children);
+    }
 
     public static get reactChildren(): ReactChildren {
         console.log("reactChildren()");

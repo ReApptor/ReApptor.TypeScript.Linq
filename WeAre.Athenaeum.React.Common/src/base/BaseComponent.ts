@@ -111,7 +111,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             const expandedProps: any | null = this.extendChildProps(element);
             const id: string = (element.props.id || ch.getComponentId());
             let ref: any = (element as any).ref;
-            console.log("BaseComponent.clone id=", id, " ref=");
+            console.log("BaseComponent.clone id=", id, " ref=", ref);
             if (ref != null) {
                 this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
             } else {
@@ -121,7 +121,8 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 //this._childComponentIds.push(id);
             }
             const newProps: any = { ...element.props, ref: ref, id: id, ...expandedProps };
-            return React.cloneElement(element, newProps);
+            console.log("BaseComponent.clone newProps=", newProps);
+            return ReactUtility.cloneElement(element, newProps);
         }
         return element;
     }
