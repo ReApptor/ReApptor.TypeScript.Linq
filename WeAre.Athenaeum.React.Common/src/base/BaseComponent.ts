@@ -156,16 +156,16 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public get children(): React.ReactElement[] {
         this._childComponentIds = [];
         this._childComponentRefs = [];
-        
+
         let children = this.props.children as any;
         if (children && children.type && children.type.toString && children.type.toString() === "Symbol(react.fragment)") {
             children = children.props.children;
         }
 
-        return React.Children.map(children, (child) => {            
+        return React.Children.map(children, (child) => {
             const element = child as React.ReactElement;
             return this.clone(element);
-        });
+        }) || [];
     }
 
     public get childComponents(): IBaseComponent[] {
