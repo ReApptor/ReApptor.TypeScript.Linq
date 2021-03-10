@@ -30,7 +30,7 @@ export default class ErrorPage extends AnonymousPage<IErrorPageParameters> {
                             (
                                 <React.Fragment>
                                     <p>
-                                        Error:
+                                        Error occured.
                                     </p>
 
                                     {
@@ -39,6 +39,7 @@ export default class ErrorPage extends AnonymousPage<IErrorPageParameters> {
                                             <p className={styles.debugDetails}>{this.error!.debugDetails}</p>
                                         )
                                     }
+                                    
                                 </React.Fragment>
                             )
                         }

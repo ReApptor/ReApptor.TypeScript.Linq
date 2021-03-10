@@ -71,6 +71,10 @@ export default class ApiProvider {
 
         httpRequest.headers = headers;
     }
+    
+    private static ignoreException(endpoint: string): boolean {
+        return (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect"));
+    }
 
     private static async fetchAsync<TResponse>(endpoint: string, httpRequest: RequestInit, caller: IBaseComponent | null): Promise<TResponse> {
         try {
@@ -88,7 +92,7 @@ export default class ApiProvider {
             if (this.offline) {
                 await PageRouteProvider.offline();
             } else {
-                const ignore: boolean = (ApiProvider.isApiError(e)) || (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect"));
+                const ignore: boolean = (ApiProvider.isApiError(e)) || (ApiProvider.ignoreException(endpoint));
                 if (!ignore) {
                     await PageRouteProvider.exception(e);
                 }
@@ -148,12 +152,17 @@ export default class ApiProvider {
     private static async processServerResponseAsync(httpResponse: Response): Promise<any | null> {
 
         const textResponse: string = await httpResponse.text();
+        const endpoint: string = httpResponse.url;
+        
+        if (ApiProvider.ignoreException(endpoint)) {
+            throw new Error(AthenaeumConstants.apiError);
+        }
 
-        if (httpResponse.status === AthenaeumConstants.notFoundStatusCode) {              
+        if (httpResponse.status === AthenaeumConstants.notFoundStatusCode) {
             const serverError: ServerError = {
                 requestId: "",
-                debugDetails: `Requested api action not found (404): "${httpResponse.url}".\nServer response:\n${textResponse.trim()}`
-            };            
+                debugDetails: `Requested api action not found (404): "${endpoint}".\nServer response:\n${textResponse.trim()}`
+            };
             await PageRouteProvider.error(serverError);            
             throw new Error(AthenaeumConstants.apiError);
         }
@@ -165,14 +174,14 @@ export default class ApiProvider {
             if (isMaintenanceOrBlocked) {
                 ch.refresh();
             } else if (!this.offline) {
-                const offlineOrRequestIsTooBif: boolean = (httpResponse.url.endsWith("offline.html")) && (httpResponse.status == 200);
+                const offlineOrRequestIsTooBif: boolean = (endpoint.endsWith("offline.html")) && (httpResponse.status == 200);
                 const debugDetails: string = (offlineOrRequestIsTooBif)
                     ? `Server returned HTML instead of JSON response, probably server is offline or request body is too big.`
                     : `Server returned HTML instead of JSON response, probably requested api action not found.`;
                 
                 const serverError: ServerError = {
                     requestId: "",
-                    debugDetails: debugDetails + `\nEndpoint: "${httpResponse.url}"\nServer response code: "${httpResponse.status}".\nServer response:\n${textResponse.trim()}}`
+                    debugDetails: debugDetails + `\nEndpoint: "${endpoint}"\nServer response code: "${httpResponse.status}".\nServer response:\n${textResponse.trim()}}`
                 };
                 
                 await PageRouteProvider.error(serverError);
@@ -196,7 +205,7 @@ export default class ApiProvider {
             const source: string = (page) ? page.routeName : "unknown";
             const serverError: ServerError = {
                 requestId: "",
-                debugDetails: `Access denied.\nSource: "${source}"\nUser: "${username}".\nEndpoint: "${httpResponse.url}".`
+                debugDetails: `Access denied.\nSource: "${source}"\nUser: "${username}".\nEndpoint: "${endpoint}".`
             };
             await PageRouteProvider.error(serverError);
             throw new Error(AthenaeumConstants.apiError);
@@ -211,7 +220,7 @@ export default class ApiProvider {
         if (httpResponse.status !== AthenaeumConstants.okStatusCode) {
             const serverError: ServerError = {
                 requestId: "",
-                debugDetails: `Endpoint: "${httpResponse.url}"\nServer response status code: "${httpResponse.status}".`
+                debugDetails: `Endpoint: "${endpoint}"\nServer response status code: "${httpResponse.status}".`
             };
             await PageRouteProvider.error(serverError);
             throw new Error(AthenaeumConstants.apiError);
