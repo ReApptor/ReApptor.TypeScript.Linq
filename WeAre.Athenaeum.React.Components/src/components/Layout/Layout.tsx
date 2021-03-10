@@ -171,7 +171,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             const timezoneOffset: number = Utility.timezoneOffset;
             const applicationType: WebApplicationType = this.getApplicationType();
             const context: ApplicationContext = await this.props.fetchContext(this, timezoneOffset, applicationType);
+            
             await ch.setContextAsync(context);
+            
+            if (context.currentPage) {
+                await PageRouteProvider.redirectAsync(context.currentPage, true);
+            }
+
             return context;
         }
 
