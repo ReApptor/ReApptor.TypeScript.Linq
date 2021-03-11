@@ -21,6 +21,7 @@ import BasePage, {IManualProps, IBasePage, ILayoutPage, IBasePageConstructor, IB
 import BaseComponent, {RenderCallback, IChildrenProps, IReactComponent, ISpinner, IBaseClassNames, IBaseComponent, IGlobalResize, IGlobalClick, IGlobalKeydown, IContainer} from "./base/BaseComponent";
 import BaseAsyncComponent, {IAsyncComponent, IBaseAsyncComponentState} from "./base/BaseAsyncComponent";
 //Utilities:
+import JQueryUtility from "./JQueryUtility";
 import ReactUtility from "./ReactUtility";
 import StylesUtility from "./StylesUtility";
 //Providers:
@@ -51,6 +52,7 @@ export {
     BaseComponent, RenderCallback, IChildrenProps, IReactComponent, ISpinner, IBaseClassNames, IBaseComponent, IGlobalResize, IGlobalClick, IGlobalKeydown, IContainer,
     BaseAsyncComponent, IAsyncComponent, IBaseAsyncComponentState,
     //Utilities:
+    JQueryUtility,
     ReactUtility,
     StylesUtility,
     //Providers:
