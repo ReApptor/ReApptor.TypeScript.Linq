@@ -350,7 +350,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     public async componentWillMount(): Promise<void> {
 
-        this.cloneChildren();
+        //this.cloneChildren();
 
         console.log("BaseComponent.componentWillMount: id=", this.id);
         
@@ -359,8 +359,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     
     public async componentDidMount(): Promise<void> {
         this._isMounted = true;
-
-        console.log("BaseComponent.componentDidMount: id=", this.id);
 
         if (this._asGlobalClick) {
             DocumentEventsProvider.register(this.id, DocumentEventType.Mousedown, async (e: React.SyntheticEvent) => await this._asGlobalClick!.onGlobalClick(e));
