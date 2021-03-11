@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:watch": "rollup -c -w"
+    "build:common:watch": "rollup -c -w"
   },
   "files": [
     "lib"

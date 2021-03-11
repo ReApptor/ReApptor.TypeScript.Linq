@@ -199,17 +199,26 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         data-dismiss={this.dataDismissModal}
                         onClick={async () => await this.onClickAsync(false)}
                         style={inlineStyles}>
-                    {this.props.icon && <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />}
+                    
+                    {
+                        (this.props.icon) && 
+                        (
+                            <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />
+                        )
+                    }
+                    
                     <span>{this.props.label}</span>
 
                     {
-                        this.hasActions && (
+                        (this.hasActions) &&
+                        (
                             <Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />
                         )
                     }
 
                     {
-                        this.hasActions && this.state.isOpen && (
+                        (this.hasActions) && (this.state.isOpen) &&
+                        (
                             <div className={this.css(styles.actions, this.getStyleColor(), "actions-container")}>
                                 {this.props.children}
                             </div>
