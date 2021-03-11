@@ -4,7 +4,6 @@ import {IService, ServiceType, Utility, ServiceProvider} from "@weare/athenaeum-
 import PageRoute from "../models/PageRoute";
 import {IBasePage, IBasePageConstructor} from "../base/BasePage";
 import BasePageParameters from "../models/BasePageParameters";
-import ReactUtility from "../ReactUtility";
 
 export interface IPageDefinitions {
     createPageAsync(route: PageRoute): Promise<IBasePage>;
@@ -109,7 +108,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
         const module: any = BasePageDefinitions._modules.getValue(pageName);
 
-        const element: React.ReactElement = ReactUtility.createElement(module.default, props);
+        const element: React.ReactElement = React.createElement(module.default, props);
 
         return element;
     }
