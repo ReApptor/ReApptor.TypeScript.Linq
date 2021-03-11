@@ -1,10 +1,10 @@
 import ttypescript from "ttypescript";
 import typescript from "rollup-plugin-typescript2";
-import postcss from "rollup-plugin-postcss";
-import image from '@rollup/plugin-image';
-import tsNameOf from 'ts-nameof';
+import tsNameOf from "ts-nameof";
 import pkg from "./package.json";
-import nodeResolve from '@rollup/plugin-node-resolve';
+import postcss from "rollup-plugin-postcss";
+import image from "@rollup/plugin-image";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import commonJs from '@rollup/plugin-commonjs';
 
 export default {
@@ -13,10 +13,10 @@ export default {
         ...Object.keys(pkg.dependencies || {}) ,
         ...Object.keys(pkg.devDependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
-        'date-fns/locale/fi',
-        'date-fns/locale/pl',
-        'date-fns/locale/sv',
-        'date-fns/locale/en-GB'
+        "date-fns/locale/fi",
+        "date-fns/locale/pl",
+        "date-fns/locale/sv",
+        "date-fns/locale/en-GB"
     ],    
     output: [
         {
