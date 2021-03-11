@@ -1,4 +1,4 @@
-import React from "react";
+import React, {RefObject} from "react";
 import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import { Utility } from "@weare/athenaeum-toolkit";
@@ -77,8 +77,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private readonly _asGlobalClick: IGlobalClick | null;
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
-    private _children: React.ReactElement[];
-    private _childComponentIdToRefs: Dictionary<string, React.RefObject<IBaseComponent>>;
+    private _childComponentIds: Dictionary<string, React.RefObject<IBaseComponent>>;
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
     private _isSpinning: boolean;
@@ -108,27 +107,19 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     private clone(element: React.ReactElement): React.ReactElement {
-        if (BaseComponent.isComponent(element)/* && (element.props.ref == null)*/) {
+        if (BaseComponent.isComponent(element)) {
             const expandedProps: any | null = this.extendChildProps(element);
             const id: string = (element.props.id || ch.getComponentId());
-            let ref: any = (element as any).ref;
-            console.log("CLONE: BaseComponent.clone id=", id, " ref=", ref);
-            if (ref != null) {
-                this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
-            } else {
-                ref = this._childComponentIdToRefs.getValue(id) || null;
-                if (ref != null) {
-                    console.log("BaseComponent.clone restore from existing id=", id);
-                }
-                else {
+            let ref: RefObject<IBaseComponent> | null = (element as any).ref;
+            if (ref == null) {
+                ref = this._childComponentIds.getValue(id) || null;
+                if (ref == null) {
                     ref = React.createRef<IBaseComponent>();
-                    this._childComponentIdToRefs.setValue(id, ref);
-                    console.log("BaseComponent.clone create new ref id=", id);
+                    this._childComponentIds.setValue(id, ref);
                 }
-                this._childComponentRefs.push(ref);
             }
+            this._childComponentRefs.push(ref);
             const newProps: any = { ...element.props, ref: ref, id: id, ...expandedProps };
-            console.log("BaseComponent.clone newProps=", newProps);
             return React.cloneElement(element, newProps);
         }
         return element;
@@ -147,10 +138,8 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         
         if (element != null) {
             if ((element.isComponent !== undefined) && (typeof element.isComponent === "function") && (element.isComponent())) {
-            //if ((element.isComponent !== undefined) && (typeof element.isComponent === "function") && (element.isComponent() === true)) {
                 return true;
             }
-            //React.Element<typeof IBaseComponent>;
             let prototype: any = element.type;
             while ((prototype) && (prototype.name) && (prototype.name !== Object.name)) {
                 if (prototype.name === BaseComponent.name) {
@@ -160,8 +149,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             }
         }
         
-        console.log("isComponent=false element=", element);
-        
         return false;
     }
 
@@ -169,11 +156,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         return $(`#${this.id}`);
     }
     
-    private cloneChildren(): void {
-        this._children = [];
-
-        console.log("BaseComponent.cloneChildren: id=", this.id);
-
+    public get children(): React.ReactElement[] {
         this._childComponentRefs = [];
 
         let children = this.props.children as any;
@@ -186,21 +169,12 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             return this.clone(element);
         });
 
-        console.log("BaseComponent.cloneChildren: clone=", clone);
-
-        this._children = clone || [];
-    }
-    
-    public get children(): React.ReactElement[] {
-        this.cloneChildren();
-        return this._children;
+        return clone || [];
     }
 
     public get childComponents(): IBaseComponent[] {
 
         const childComponent: IBaseComponent[] = [];
-
-        console.log("BaseComponent.childComponents: _childComponentRefs=", this._childComponentRefs);
 
         childComponent.push(...
             this
@@ -333,9 +307,8 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
-        this._children = [];
+        this._childComponentIds = new Dictionary<string, React.RefObject<IBaseComponent>>();
         this._childComponentRefs = [];
-        this._childComponentIdToRefs = new Dictionary<string, React.RefObject<IBaseComponent>>();
         this._isMounted = false;
         this._isSpinning = false;
         
@@ -349,11 +322,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     public async componentWillMount(): Promise<void> {
-
-        //this.cloneChildren();
-
-        console.log("BaseComponent.componentWillMount: id=", this.id);
-        
         await this.initializeAsync();
     }
     
@@ -376,7 +344,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public async componentWillUnmount(): Promise<void> {
         this._isMounted = false;
         this._isSpinning = false;
-        this._childComponentIdToRefs.clear();
 
         if (this._asGlobalClick) {
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Mousedown);
