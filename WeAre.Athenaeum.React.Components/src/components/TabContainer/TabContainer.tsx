@@ -22,7 +22,6 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
     private _model: TabContainerModel | null = null;
 
     private getTabs(): ITab[] {
-        console.log("TabContainer.getTabs: this.childComponents=", this.childComponents);
         return this
             .childComponents
             .filter(item => ((item as any).isTab))
