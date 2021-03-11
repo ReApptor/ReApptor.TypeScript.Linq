@@ -1,4 +1,4 @@
-import React, {ReactChildren} from "react";
+import React from "react";
 import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import { Utility } from "@weare/athenaeum-toolkit";
@@ -78,7 +78,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
     private _children: React.ReactElement[];
-    private _childComponentIds: string[];
     private _childComponentIdToRefs: Dictionary<string, React.RefObject<IBaseComponent>>;
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
@@ -126,19 +125,17 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                     this._childComponentIdToRefs.setValue(id, ref);
                     console.log("BaseComponent.clone create new ref id=", id);
                 }
-                //ref = id;
-                //ref = React.createRef<BaseComponent>();
-                //this._childComponentRefs.push(ref as React.RefObject<IBaseComponent>);
-                //this._childComponentIds.push(id);
                 this._childComponentRefs.push(ref);
             }
             const newProps: any = { ...element.props, ref: ref, id: id, ...expandedProps };
             console.log("BaseComponent.clone newProps=", newProps);
-            return ReactUtility.cloneElement(element, newProps);
+            return React.cloneElement(element, newProps);
         }
         return element;
     }
     
+    // virtual or children overrides;
+    // noinspection JSUnusedLocalSymbols
     protected extendChildProps(element: React.ReactElement): any | null {
         return null;
     }
@@ -177,7 +174,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
         console.log("BaseComponent.cloneChildren: id=", this.id);
 
-        this._childComponentIds = [];
         this._childComponentRefs = [];
 
         let children = this.props.children as any;
@@ -185,7 +181,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             children = children.props.children;
         }
 
-        const clone: React.ReactElement[] | null | undefined = ReactUtility.reactChildren.map(children, (child) => {
+        const clone: React.ReactElement[] | null | undefined = React.Children.map(children, (child) => {
             const element = child as React.ReactElement;
             return this.clone(element);
         });
@@ -204,13 +200,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
         const childComponent: IBaseComponent[] = [];
 
-        childComponent.push(...
-            this
-                ._childComponentIds
-                .filter(id => BaseComponent.isComponent(this.refs[id]))
-                .map(id => ((this.refs[id] as any) as IBaseComponent))
-        );
-        
         console.log("BaseComponent.childComponents: _childComponentRefs=", this._childComponentRefs);
 
         childComponent.push(...
@@ -345,7 +334,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
         this._children = [];
-        this._childComponentIds = [];
         this._childComponentRefs = [];
         this._childComponentIdToRefs = new Dictionary<string, React.RefObject<IBaseComponent>>();
         this._isMounted = false;
