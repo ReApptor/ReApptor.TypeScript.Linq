@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 // import {Utility} from "@weare/athenaeum-toolkit";
 // import {BaseComponent} from "@weare/athenaeum-react-common";
 // import {ch} from "@weare/athenaeum-react-common";
@@ -13,22 +13,22 @@ import React from "react";
 //
 // class TestDropdownItem {
 //     public id: number = 0;
-//    
+//
 //     public name: string = "";
 // }
 //
 // export default class DropdownSelectItemsTests extends BaseComponent<{}, IDropdownSelectItemsTestsState> {
-//    
+//
 //     private readonly _multipleMasterRef: React.RefObject<Dropdown<TestDropdownItem>> = React.createRef();
 //     private readonly _singleMasterRef: React.RefObject<Dropdown<TestDropdownItem>> = React.createRef();
-//    
+//
 //     state: IDropdownSelectItemsTestsState = {
 //         requiredSelectedItemId: null,
 //         selectedItemId: null,
 //         selectedItemIds: [],
 //         delayedData: []
 //     };
-//    
+//
 //     private get testItems(): TestDropdownItem[] {
 //         const items: TestDropdownItem[] = [];
 //         for (let i: number = 1; i <= 100; i++) {
@@ -37,32 +37,32 @@ import React from "react";
 //         }
 //         return items;
 //     }
-//    
+//
 //     private async onTestItemsChangeAsync(sender: Dropdown<TestDropdownItem>, userInteraction: boolean): Promise<void> {
 //         const selectedItemIds: string[] = sender.selectedValues;
 //         await this.setState({selectedItemIds});
 //     }
-//    
+//
 //     private async onTestItemChangeAsync(item: TestDropdownItem | null, userInteraction: boolean): Promise<void> {
 //         const selectedItemId: string | null = (item) ? item.id.toString() : null;
 //         await this.setState({selectedItemId});
 //     }
-//    
+//
 //     private async onRequiredTestItemChangeAsync(item: TestDropdownItem, userInteraction: boolean): Promise<void> {
 //         const requiredSelectedItemId: string = item.id.toString();
 //         await this.setState({requiredSelectedItemId});
 //     }
-//    
+//
 //     private async loadDataWithDelayAsync(): Promise<void> {
 //         await this.setState({ delayedData: []});
-//        
+//
 //         await Utility.wait(3000);
-//        
+//
 //         await this.setState({ delayedData: this.testItems });
 //     }
-//    
+//
 //     public render(): React.ReactNode {   
-//        
+//
 //         return (
 //             <React.Fragment>
 //
@@ -131,11 +131,11 @@ import React from "react";
 //                                   orderBy={DropdownOrderBy.None}
 //                                   selectedItem={this.state.requiredSelectedItemId || undefined}
 //                         />
-//                        
+//
 //                     </FourColumns>
-//                    
+//
 //                     <FourColumns>
-//                        
+//
 //                         <Dropdown<TestDropdownItem> id="noItemsButSelectedItem"
 //                                                     label="No items but selected item"
 //                                                     items={[]}
@@ -148,13 +148,13 @@ import React from "react";
 //                                                     selectedItem={ {id: 10, name: "Test Item 10"} as TestDropdownItem}
 //                                                     onChange={async (sender, item, userInteraction) => await ch.flyoutMessageAsync(sender.id + ".onChange:" + item + " " + userInteraction)}
 //                         />
-//                        
+//
 //                         <Button label="Load" type={ButtonType.Blue} style={{marginTop: 24}} onClick={async () => await this.loadDataWithDelayAsync()} />
 //
 //                     </FourColumns>
-//                    
+//
 //                     <FourColumns>
-//                        
+//
 //                         <Dropdown<TestDropdownItem> id="noItemsButRequired" required
 //                                                     label="No items but required"
 //                                                     items={[]}
@@ -173,8 +173,8 @@ import React from "react";
 //                     </FourColumns>
 //
 //                 </Form>
-//                
+//
 //             </React.Fragment>
 //         );
 //     }
-//}
+// }

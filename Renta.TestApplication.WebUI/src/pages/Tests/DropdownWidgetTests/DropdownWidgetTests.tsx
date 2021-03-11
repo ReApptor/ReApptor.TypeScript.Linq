@@ -22,7 +22,7 @@ import React from "react";
 //         expanded: false,
 //         amountListItem: false
 //     };
-//    
+//
 //     private readonly _listRef: React.RefObject<List> = React.createRef();
 //
 //     private items: any[] = [
@@ -71,7 +71,7 @@ import React from "react";
 //             await this._listRef.current.reloadAsync();
 //         }
 //     }
-//    
+//
 //     private get amountListItems(): AmountListItem[] {
 //         return this.amountItems.map((item, index) => {
 //             const amountListItem: AmountListItem = new AmountListItem();
@@ -83,9 +83,9 @@ import React from "react";
 //             return amountListItem;
 //         });
 //     }
-//    
+//
 //     public render(): React.ReactNode {
-//        
+//
 //         return (
 //             <React.Fragment>
 //
@@ -107,7 +107,7 @@ import React from "react";
 //                                   inline
 //                                   value={this.state.favorite}
 //                                   onChange={async (sender, value) => await this.setState({favorite:value})}/>
-//                                  
+//
 //                         <Checkbox label="Required"
 //                                   inline
 //                                   value={this.state.required}
@@ -123,9 +123,9 @@ import React from "react";
 //                                   value={this.state.amountListItem}
 //                                   onChange={async (sender, value) => await this.setState({amountListItem:value})}
 //                         />
-//                                  
+//
 //                     </Form>
-//                    
+//
 //                     <WidgetContainer>
 //
 //                         <DropdownWidget id="amountListItems" wide
@@ -137,11 +137,11 @@ import React from "react";
 //                                         expanded={this.state.expanded}
 //                                         onChange={async (sender: { id: string; }, item: string, amount: string) => await ch.flyoutMessageAsync(sender.id + ".onChange:" + item + " " + amount)}
 //                         />
-//                        
+//
 //                     </WidgetContainer>
-//                    
+//
 //                 </TwoColumns>
-//                
+//
 //             </React.Fragment>
 //         );
 //     }
