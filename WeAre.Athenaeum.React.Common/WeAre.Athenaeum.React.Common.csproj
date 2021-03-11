@@ -20,6 +20,7 @@
       <TypeScriptCompile Include="src\base\BasePage.ts" />
       <TypeScriptCompile Include="src\Enums.ts" />
       <TypeScriptCompile Include="src\index.ts" />
+      <TypeScriptCompile Include="src\JQueryUtility.ts" />
       <TypeScriptCompile Include="src\localization\BaseComponentLocalizer.ts" />
       <TypeScriptCompile Include="src\models\AlertModel.ts" />
       <TypeScriptCompile Include="src\models\ApplicationContext.ts" />

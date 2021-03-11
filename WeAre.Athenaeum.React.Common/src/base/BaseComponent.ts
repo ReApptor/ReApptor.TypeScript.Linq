@@ -1,5 +1,4 @@
 import React, {RefObject} from "react";
-import $ from "jquery";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import { Utility } from "@weare/athenaeum-toolkit";
 import ReactUtility from "../ReactUtility";
@@ -7,6 +6,7 @@ import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
+import JQueryUtility from "../JQueryUtility";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
@@ -151,9 +151,13 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         
         return false;
     }
+    
+    protected get JQuery(): JQueryStatic {
+        return JQueryUtility.$;
+    }
 
     protected getNode(): JQuery {
-        return $(`#${this.id}`);
+        return this.JQuery(`#${this.id}`);
     }
     
     public get children(): React.ReactElement[] {
