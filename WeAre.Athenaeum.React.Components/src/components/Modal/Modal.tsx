@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import $ from "jquery";
 import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@weare/athenaeum-react-common";
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
@@ -121,9 +120,9 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private togglePageScroll(toggle: boolean): void {
         if (!this.mobile) {
             if (toggle) {
-                $("html").addClass("prevent-scroll");
+                this.JQuery("html").addClass("prevent-scroll");
             } else {
-                $("html").removeClass("prevent-scroll");
+                this.JQuery("html").removeClass("prevent-scroll");
             }
         }
     }
@@ -147,13 +146,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private async onOpenHandlerAsync(event: any): Promise<void> {
         this.togglePageScroll(true);
 
-        const data: any = $(event.relatedTarget).data("modal");
+        const data: any = this.JQuery(event.relatedTarget).data("modal");
         if (data != null) {
             this.setData(this.transformData(data));
         }
 
         if (this.mobile) {
-            $("body").addClass("mobile");
+            this.JQuery("body").addClass("mobile");
         }
 
         await this.setModal(true);
@@ -163,7 +162,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.togglePageScroll(false);
         
         if (this.mobile) {
-            $("body").removeClass("mobile");
+            this.JQuery("body").removeClass("mobile");
         }
         
         await this.setModal(false);
@@ -173,7 +172,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     private close(): void {
         if (this.modal) {
-            $(this.modal).modal("hide");
+            this.JQuery(this.modal).modal("hide");
 
             if (Modal._openInstance === this) {
                 Modal._openInstance = null;
@@ -184,8 +183,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private open(animation: boolean = true): void {
         if (this.modal) {
             this._animation = animation;
-            
-            $(this.modal).modal("show");
+
+            this.JQuery(this.modal).modal("show");
 
             Modal._openInstance = this;
         }
@@ -226,7 +225,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }    
     
     public getBodyNode(): JQuery {
-        return $(`#${this.id}_body`);
+        return this.JQuery(`#${this.id}_body`);
     }
 
     private get title(): string {
@@ -292,7 +291,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         const modal: HTMLDivElement | null = this.modal;
         if (modal) {
-            const node: JQuery = $(modal);
+            const node: JQuery = this.JQuery(modal);
             node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
             node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
         }
@@ -305,7 +304,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         const modal: HTMLDivElement | null = this.modal;
         if (modal) {
-            const node: JQuery = $(modal);
+            const node: JQuery = this.JQuery(modal);
             node.off("shown.bs.modal");
             node.off("hide.bs.modal");
         }
