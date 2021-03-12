@@ -221,7 +221,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             import = (!string.IsNullOrWhiteSpace(import))
                 ? import.Trim()
-                : @"import {{ BaseLocalizer }} from ""@weare/athenaeum-toolkit"";";
+                : @"import {BaseLocalizer} from ""@weare/athenaeum-toolkit"";";
 
             if (!import.EndsWith(";"))
             {
