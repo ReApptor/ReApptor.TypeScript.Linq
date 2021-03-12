@@ -232,7 +232,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             {
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    string variable = Environment.GetEnvironmentVariable(ProjectDirectoryEnvironmentVariable);
+                    string variable = Environment.GetEnvironmentVariable(name);
                     if (!string.IsNullOrWhiteSpace(variable))
                     {
                         return variable.Trim();
