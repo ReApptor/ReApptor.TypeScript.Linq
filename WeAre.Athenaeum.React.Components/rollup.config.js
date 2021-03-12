@@ -38,7 +38,7 @@ export default {
         commonJs(),
         image(),
         postcss({
-            modules: true,
+            autoModules: true,
         }),
         typescript({
             typescript: ttypescript,
