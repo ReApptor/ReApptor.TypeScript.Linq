@@ -98,14 +98,15 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 ? enumsImport.Trim()
                 : @"from ""@/models/Enums"";";
 
-            enumsImport = string.Format(enumsImport, names);
-
-            if (!enumsImport.EndsWith(";"))
+            if (!enumsImport.StartsWith("import "))
             {
-                enumsImport  += ";";
+                enumsImport = $"import {{0}} from \"{enumsImport}\";";
             }
+            
+            enumsImport = enumsImport.TrimEnd(';');
+            enumsImport += ";";
 
-            enumsImport = $"import {{0}} from {enumsImport};";
+            enumsImport = string.Format(enumsImport, names);
 
             return enumsImport;
         }
@@ -115,14 +116,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             selectListItemImport = selectListItemImport.Trim();
             if (!selectListItemImport.StartsWith("import "))
             {
-                selectListItemImport = selectListItemImport.TrimEnd(';').Trim('"');
-                selectListItemImport = $"import {{ SelectListItem }} from {selectListItemImport};";
+                selectListItemImport = $"import {{SelectListItem}} from \"{selectListItemImport}\";";
             }
 
-            if (!selectListItemImport.EndsWith(";"))
-            {
-                selectListItemImport += ";";
-            }
+            selectListItemImport = selectListItemImport.TrimEnd(';');
+            selectListItemImport += ";";
 
             return selectListItemImport;
         }
