@@ -225,22 +225,58 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return 0;
         }
 
+        private static string GetEnvironmentVariable(params string[] names)
+        {
+            names ??= new string[0];
+            foreach (string name in names)
+            {
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    string variable = Environment.GetEnvironmentVariable(ProjectDirectoryEnvironmentVariable);
+                    if (!string.IsNullOrWhiteSpace(variable))
+                    {
+                        return variable.Trim();
+                    }
+                }
+            }
+
+            return null;
+        }
+
         private static string GetProjectDirectory()
         {
-            string projectDirectory = Environment.GetEnvironmentVariable(ProjectDirectoryEnvironmentVariable);
+            string projectDirectory = GetEnvironmentVariable("ProjectDir", "$(ProjectDir)", ProjectDirectoryEnvironmentVariable);
             return (!string.IsNullOrWhiteSpace(projectDirectory))
                 ? projectDirectory
                 : Directory.GetCurrentDirectory();
         }
 
+        private static string GetTargetPath()
+        {
+            return GetEnvironmentVariable(@"TargetPath", "$(TargetPath)");
+        }
+
+        private static string GetSolutionDir(string projectDirectory)
+        {
+            string solutionDirectory = GetEnvironmentVariable("SolutionDir", "$(SolutionDir)");
+            return (!string.IsNullOrWhiteSpace(solutionDirectory))
+                ? solutionDirectory
+                : Path.GetDirectoryName(projectDirectory);
+        }
+
         private static string ProcessEnvVariables(string data)
         {
             string projectDirectory = GetProjectDirectory();
+            string solutionDirectory = GetSolutionDir(projectDirectory);
+            Console.WriteLine("ENV. Project Directory={0}", projectDirectory);
+            Console.WriteLine("ENV. Solution Directory={0}", solutionDirectory);
             data = data.Replace("$(ProjectDir)", projectDirectory);
+            data = data.Replace("$(SolutionDir)", solutionDirectory);
             data = data.Replace(ProjectDirectoryEnvironmentVariable, projectDirectory);
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
+                Console.WriteLine("ENV. key={0} value={1};", keyValue.Key, keyValue.Value);
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
