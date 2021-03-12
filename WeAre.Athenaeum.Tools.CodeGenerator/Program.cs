@@ -266,6 +266,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static string ProcessEnvVariables(string data)
         {
+            //List of IDE variables: https://docs.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties?view=msvc-160
+            //Exec command description: https://docs.microsoft.com/en-us/visualstudio/msbuild/exec-task?view=vs-2019
             string projectDirectory = GetProjectDirectory();
             string solutionDirectory = GetSolutionDir(projectDirectory);
             string targetPath = GetTargetPath();
