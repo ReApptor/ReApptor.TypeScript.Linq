@@ -175,7 +175,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
 
-            Console.WriteLine($"{Name}: projectPath=\"{settings.ProjectPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\".");
+            Console.WriteLine($"{Name}: projectPath=\"{settings.ProjectPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
 
             EnumProviderManager.Generate(settings);
 
@@ -279,7 +279,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
+                //Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {

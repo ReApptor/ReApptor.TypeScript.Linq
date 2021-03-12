@@ -92,15 +92,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return enums;
         }
 
-        private static string GenerateTypeScriptContent(Type[] enums, string enumsImport, string selectListItemImport)
+        private static string ProcessEnumsImport(string enumsImport, string names)
         {
-            var systemNames = new HashSet<string>(new[] { "SortDirection", "WebApplicationType"});
-            string names = string.Join(", ", enums.Select(item => item.Name).Where(item => !systemNames.Contains(item)));
-            string quotedNames = string.Join(", ", enums.Select(item => $"\"{item.Name}\""));
-
             enumsImport = (!string.IsNullOrWhiteSpace(enumsImport))
                 ? enumsImport.Trim()
-                : @"import {{{0}}} from ""@/models/Enums"";";
+                : @"from ""@/models/Enums"";";
 
             enumsImport = string.Format(enumsImport, names);
 
@@ -108,6 +104,38 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             {
                 enumsImport  += ";";
             }
+
+            enumsImport = $"import {{0}} from {enumsImport};";
+
+            return enumsImport;
+        }
+
+        private static string ProcessSelectListItemImport(string selectListItemImport)
+        {
+            selectListItemImport = selectListItemImport.Trim();
+            if (!selectListItemImport.StartsWith("import "))
+            {
+                selectListItemImport = selectListItemImport.TrimEnd(';').Trim('"');
+                selectListItemImport = $"import {{ SelectListItem }} from {selectListItemImport};";
+            }
+
+            if (!selectListItemImport.EndsWith(";"))
+            {
+                selectListItemImport += ";";
+            }
+
+            return selectListItemImport;
+        }
+
+        private static string GenerateTypeScriptContent(Type[] enums, string enumsImport, string selectListItemImport)
+        {
+            var systemNames = new HashSet<string>(new[] { "SortDirection", "WebApplicationType"});
+            string names = string.Join(", ", enums.Select(item => item.Name).Where(item => !systemNames.Contains(item)));
+            string quotedNames = string.Join(", ", enums.Select(item => $"\"{item.Name}\""));
+
+            enumsImport = ProcessEnumsImport(enumsImport, names);
+
+            selectListItemImport = ProcessSelectListItemImport(selectListItemImport);
             
             var items = new List<string>();
             
