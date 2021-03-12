@@ -105,8 +105,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             enumsImport = enumsImport.TrimEnd(';');
             enumsImport += ";";
 
-            enumsImport = string.Format(enumsImport, names);
-
             return enumsImport;
         }
 

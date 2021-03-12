@@ -310,7 +310,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             // <Exec Command="dotnet run --project &quot;$(ProjectDir)../Renta.Tools.CodeGenerator/Renta.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)SharedResources.resx&quot; &quot;$(ProjectDir)../Renta.Tools.WebUI.Resources/SharedResources.cs&quot; 1 fi" />
             // <Exec Command="dotnet run --project &quot;$(ProjectDir)../Renta.Tools.CodeGenerator/Renta.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)SharedResources.resx&quot; &quot;$(ProjectDir)../Renta.Tools.WebUI/src/localization/Localizer.ts&quot; 0 fi" />
-            
+
             try
             {
                 if ((args == null) || (args.Length == 0))
