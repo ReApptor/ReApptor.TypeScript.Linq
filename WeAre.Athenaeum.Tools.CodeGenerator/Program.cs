@@ -245,7 +245,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static string GetProjectDirectory()
         {
-            string projectDirectory = GetEnvironmentVariable("$ProjectDir", "ProjectDir", "$(ProjectDir)", ProjectDirectoryEnvironmentVariable);
+            string projectDirectory = GetEnvironmentVariable("$ProjectDir", "$(ProjectDir)", "ProjectDir", ProjectDirectoryEnvironmentVariable);
             return (!string.IsNullOrWhiteSpace(projectDirectory))
                 ? projectDirectory
                 : Directory.GetCurrentDirectory();
@@ -253,12 +253,12 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static string GetTargetPath()
         {
-            return GetEnvironmentVariable("$TargetPath", "TargetPath", "$(TargetPath)");
+            return GetEnvironmentVariable("$TargetPath", "$(TargetPath)", "TargetPath");
         }
 
         private static string GetSolutionDir(string projectDirectory)
         {
-            string solutionDirectory = GetEnvironmentVariable("$SolutionDir", "SolutionDir", "$(SolutionDir)");
+            string solutionDirectory = GetEnvironmentVariable("$SolutionDir", "$(SolutionDir)", "SolutionDir");
             return (!string.IsNullOrWhiteSpace(solutionDirectory))
                 ? solutionDirectory
                 : Path.GetDirectoryName(projectDirectory);
@@ -279,7 +279,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                //Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
+                Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
