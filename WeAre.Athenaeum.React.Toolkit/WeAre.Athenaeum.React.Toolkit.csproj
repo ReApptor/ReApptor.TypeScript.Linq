@@ -37,6 +37,7 @@
       <TypeScriptCompile Include="src\providers\BaseEnumProvider.ts" />
       <TypeScriptCompile Include="src\providers\BaseTransformProvider.ts" />
       <TypeScriptCompile Include="src\providers\ServiceProvider.ts" />
+      <TypeScriptCompile Include="src\providers\Singleton.ts" />
       <TypeScriptCompile Include="src\providers\StringConverter.ts" />
       <TypeScriptCompile Include="src\providers\TypeConverter.ts" />
       <TypeScriptCompile Include="src\providers\TypeResolver.ts" />

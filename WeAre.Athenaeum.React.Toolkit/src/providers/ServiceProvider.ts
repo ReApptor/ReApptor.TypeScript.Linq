@@ -2,6 +2,7 @@ import {Dictionary} from "typescript-collections";
 import {IEnumProvider, ILocalizer, ITypeResolver} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
 import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
+import Singleton from "./Singleton";
 
 export type ServiceType = string;
 
@@ -20,13 +21,7 @@ export type TService = IService;
 
 export declare type TType = TDecoratorConstructor | IService | object | boolean | number | string;
 
-interface IContainer {
-    __athenaeumServiceProviderInstance: ServiceProvider | null;
-}
-
-const container: IContainer = (window ? (window as any as IContainer) : {} as IContainer);
-
-class ServiceProvider {
+class ServiceProvider implements IService {
     
     private readonly _services: Dictionary<ServiceType, object | IService | ServiceCallback> = new Dictionary<ServiceType, object | IService | ServiceCallback>();
     
@@ -36,6 +31,10 @@ class ServiceProvider {
     
     private get(serviceType: ServiceType): object | IService | ServiceCallback | undefined {
         return this._services.getValue(serviceType);
+    }
+    
+    public getType(): ServiceType {
+        return nameof(ServiceProvider);
     }
 
     /**
@@ -132,8 +131,4 @@ class ServiceProvider {
     }
 }
 
-if (container.__athenaeumServiceProviderInstance) {
-    console.warn(`Multiple instance of @weare/athenaeum-toolkit dependencies found. This will not break the app but it is not recommended to use two major versions of @weare/athenaeum-toolkit`);
-}
-
-export default (container.__athenaeumServiceProviderInstance || (container.__athenaeumServiceProviderInstance = new ServiceProvider()));
+export default Singleton.get(nameof(ServiceProvider), new ServiceProvider());
