@@ -11,6 +11,7 @@ class TestApplicationController {
         if ((!this._initialized) && (!this._initializing)) {
             this._initializing = true;
             try {
+                console.log("TestApplicationController.initializeAsync()");
                 //TODO: place for initialization
                 this._initialized = true;
             } finally {
