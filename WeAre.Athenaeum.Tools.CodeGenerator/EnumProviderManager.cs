@@ -98,10 +98,9 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 ? enumsImport.Trim()
                 : @"from ""@/models/Enums"";";
 
-            if (!enumsImport.StartsWith("import "))
-            {
-                enumsImport = $"import {{ {{0}} }} from \"{enumsImport}\";";
-            }
+            enumsImport = (enumsImport.StartsWith("import "))
+                ? enumsImport.Replace("{{0}}", names)
+                : $"import {{{names}}} from \"{enumsImport}\";";
             
             enumsImport = enumsImport.TrimEnd(';');
             enumsImport += ";";
