@@ -245,7 +245,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static string GetProjectDirectory()
         {
-            string projectDirectory = GetEnvironmentVariable("ProjectDir", "$(ProjectDir)", ProjectDirectoryEnvironmentVariable);
+            string projectDirectory = GetEnvironmentVariable("$ProjectDir", "ProjectDir", "$(ProjectDir)", ProjectDirectoryEnvironmentVariable);
             return (!string.IsNullOrWhiteSpace(projectDirectory))
                 ? projectDirectory
                 : Directory.GetCurrentDirectory();
@@ -253,12 +253,12 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static string GetTargetPath()
         {
-            return GetEnvironmentVariable(@"TargetPath", "$(TargetPath)");
+            return GetEnvironmentVariable("$TargetPath", "TargetPath", "$(TargetPath)");
         }
 
         private static string GetSolutionDir(string projectDirectory)
         {
-            string solutionDirectory = GetEnvironmentVariable("SolutionDir", "$(SolutionDir)");
+            string solutionDirectory = GetEnvironmentVariable("$SolutionDir", "SolutionDir", "$(SolutionDir)");
             return (!string.IsNullOrWhiteSpace(solutionDirectory))
                 ? solutionDirectory
                 : Path.GetDirectoryName(projectDirectory);
@@ -268,15 +268,18 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             string projectDirectory = GetProjectDirectory();
             string solutionDirectory = GetSolutionDir(projectDirectory);
-            Console.WriteLine("ENV. Project Directory={0}", projectDirectory);
-            Console.WriteLine("ENV. Solution Directory={0}", solutionDirectory);
+            string targetPath = GetTargetPath();
             data = data.Replace("$(ProjectDir)", projectDirectory);
-            data = data.Replace("$(SolutionDir)", solutionDirectory);
             data = data.Replace(ProjectDirectoryEnvironmentVariable, projectDirectory);
+            data = data.Replace("$(SolutionDir)", solutionDirectory);
+            if (!string.IsNullOrWhiteSpace(targetPath))
+            {
+                data = data.Replace("$(TargetPath)", targetPath);
+            }
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                Console.WriteLine("ENV. key={0} value={1};", keyValue.Key, keyValue.Value);
+                //Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {

@@ -34,7 +34,9 @@
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj&quot;" />
+        <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj&quot;"
+              EnvironmentVariables="$SolutionDir=$(SolutionDir);$ProjectDir=$(ProjectDir);$TargetPath=$(TargetPath);"
+        />
     </Target>
     
 </Project>
