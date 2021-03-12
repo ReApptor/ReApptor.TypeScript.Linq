@@ -100,7 +100,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             if (!enumsImport.StartsWith("import "))
             {
-                enumsImport = $"import {{0}} from \"{enumsImport}\";";
+                enumsImport = $"import {{{{0}}}} from \"{enumsImport}\";";
             }
             
             enumsImport = enumsImport.TrimEnd(';');
