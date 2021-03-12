@@ -6,8 +6,8 @@ import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
 import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
 import NumberWidgetTests from "@/pages/Tests/NumberWidgetTests/NumberWidgetTests";
 import DropdownTests from "@/pages/Tests/DropdownTests/DropdownTests";
-//import DropdownSelectItemsTests from "@/pages/Tests/DropdownSelectItemsTests/DropdownSelectItemsTests";
-//import DropdownWidgetTests from "@/pages/Tests/DropdownWidgetTests/DropdownWidgetTests";
+import DropdownSelectItemsTests from "@/pages/Tests/DropdownSelectItemsTests/DropdownSelectItemsTests";
+import DropdownWidgetTests from "@/pages/Tests/DropdownWidgetTests/DropdownWidgetTests";
 import DropdownPerformanceTests from "@/pages/Tests/DropdownPerformanceTests/DropdownPerformanceTests";
 import NullableSwitchTests from "@/pages/Tests/NullableSwitchTests/NullableSwitchTests";
 import ListTests from "@/pages/Tests/ListTests/ListTests";
@@ -62,13 +62,13 @@ export default class Tests extends AnonymousPage {
                             <DropdownPerformanceTests />
                         </Tab>
                         
-                        {/*<Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">*/}
-                        {/*    <DropdownSelectItemsTests />*/}
-                        {/*</Tab>*/}
+                        <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">
+                            <DropdownSelectItemsTests />
+                        </Tab>
                         
-                        {/*<Tab id="dropdownWidgetTests" title="DropdownWidget">*/}
-                        {/*    <DropdownWidgetTests />*/}
-                        {/*</Tab>*/}
+                        <Tab id="dropdownWidgetTests" title="DropdownWidget">
+                            <DropdownWidgetTests />
+                        </Tab>
                         
                         <Tab id="listTests" title="List">
                             <ListTests />
