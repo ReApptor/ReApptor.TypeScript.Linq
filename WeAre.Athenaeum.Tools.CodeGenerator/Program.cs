@@ -101,7 +101,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return 0;
         }
 
-
         private static int GenerateEnumProvider(string[] args)
         {
             string solutionPath = (args.Length > 0)
@@ -188,15 +187,34 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         private static int Generate(Settings settings)
         {
             LocalizatorResourceSettings[] localizators = settings
-                                                             .Localizator?
-                                                             .Where(item => item != null)
-                                                             .ToArray();
+                .Localizator?
+                .Where(item => item != null)
+                .ToArray();
 
             if (localizators != null)
             {
                 foreach (LocalizatorResourceSettings localizator in localizators)
                 {
                     int result = GenerateResources(localizator);
+                    
+                    if (result != 0)
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            EnumProviderSettings[] enumProviders = settings
+                .EnumProvider?
+                .Where(item => item != null)
+                .ToArray();
+
+            if (enumProviders != null)
+            {
+                foreach (EnumProviderSettings enumProvider in enumProviders)
+                {
+                    int result = GenerateEnumProvider(enumProvider);
+                    
                     if (result != 0)
                     {
                         return result;
