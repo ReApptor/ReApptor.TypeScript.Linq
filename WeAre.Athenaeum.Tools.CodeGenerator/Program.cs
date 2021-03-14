@@ -9,6 +9,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
     public class Program
     {
         /// <summary>
+        /// Echo (logs) enabled/disabled
+        /// </summary>
+        public static bool Echo = false;
+        
+        /// <summary>
         /// "WeAre.Athenaeum.CodeGenerator"
         /// </summary>
         public const string Name = "WeAre.Athenaeum.CodeGenerator";
@@ -293,7 +298,10 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                Console.WriteLine($"{Name}. ENV. key=\"{keyValue.Key}\" value=\"{keyValue.Value}\"");
+                if (Echo)
+                {
+                    Console.WriteLine($"{Name}. ENV. key=\"{keyValue.Key}\" value=\"{keyValue.Value}\"");
+                }
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
@@ -325,11 +333,14 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             try
             {
-                Console.WriteLine($"{Name}. Environment.CurrentDirectory=\"{Environment.CurrentDirectory}\".");
-                
-                foreach (string arg in args ?? new string[0])
+                if (Echo)
                 {
-                    Console.WriteLine($"{Name}. ARG. value=\"{arg}\"");
+                    Console.WriteLine($"{Name}. Environment.CurrentDirectory=\"{Environment.CurrentDirectory}\".");
+                
+                    foreach (string arg in args ?? new string[0])
+                    {
+                        Console.WriteLine($"{Name}. ARG. value=\"{arg}\"");
+                    }
                 }
                 
                 if ((args == null) || (args.Length == 0))
