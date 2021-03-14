@@ -92,7 +92,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            if ((!settings.SplitByComponent) && (!Directory.Exists(Path.GetDirectoryName(settings.DestinationPath))))
+            if ((!settings.SplitByComponent) && (!Directory.Exists(GetDirectoryName(settings.DestinationPath))))
             {
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
@@ -175,7 +175,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            string destinationFolder = Path.GetDirectoryName(settings.DestinationPath);
+            string destinationFolder = GetDirectoryName(settings.DestinationPath);
             if (!Directory.Exists(destinationFolder))
             {
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
@@ -249,6 +249,12 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return null;
         }
 
+        private static string GetDirectoryName(string path)
+        {
+            path = path.TrimEnd('\\').TrimEnd('/');
+            return Path.GetDirectoryName(path);
+        }
+
         private static string GetProjectDirectory()
         {
             string projectDirectory = GetEnvironmentVariable("$ProjectDir", "$(ProjectDir)", "ProjectDir", ProjectDirectoryEnvironmentVariable);
@@ -267,7 +273,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             string solutionDirectory = GetEnvironmentVariable("$SolutionDir", "$(SolutionDir)", "SolutionDir");
             return (!string.IsNullOrWhiteSpace(solutionDirectory))
                 ? solutionDirectory
-                : Path.GetDirectoryName(projectDirectory);
+                : GetDirectoryName(projectDirectory);
         }
 
         private static string ProcessEnvVariables(string data)
