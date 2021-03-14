@@ -175,7 +175,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            if (!Directory.Exists(Path.GetDirectoryName(settings.DestinationPath)))
+            string destinationFolder = Path.GetDirectoryName(settings.DestinationPath);
+            if (!Directory.Exists(destinationFolder))
             {
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
@@ -286,7 +287,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
+                Console.WriteLine($"{Name}. ENV. key=\"{keyValue.Key}\" value=\"{keyValue.Value}\"");
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
@@ -318,9 +319,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             try
             {
+                Console.WriteLine($"{Name}. Environment.CurrentDirectory=\"{Environment.CurrentDirectory}\".");
+                
                 foreach (string arg in args ?? new string[0])
                 {
-                    Console.WriteLine("ARG. value=\"{0}\"", arg);
+                    Console.WriteLine($"{Name}. ARG. value=\"{arg}\"");
                 }
                 
                 if ((args == null) || (args.Length == 0))
