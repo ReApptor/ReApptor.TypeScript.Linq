@@ -281,7 +281,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
-                //Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
+                Console.WriteLine("ENV. key=\"{0}\" value=\"{1}\"", keyValue.Key, keyValue.Value);
                 string key = $"$({keyValue.Key as string})";
                 if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
                 {
