@@ -318,6 +318,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             try
             {
+                foreach (string arg in args ?? new string[0])
+                {
+                    Console.WriteLine("ARG. value=\"{0}\"", arg);
+                }
+                
                 if ((args == null) || (args.Length == 0))
                 {
                     string settingsFile = Path.Combine(Environment.CurrentDirectory, SettingsFileName);
