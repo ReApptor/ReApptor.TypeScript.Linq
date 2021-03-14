@@ -22,6 +22,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         /// "$(PWD)"
         /// </summary>
         public const string ProjectDirectoryEnvironmentVariable = "$(PWD)";
+
+        /// <summary>
+        /// "*Undefined*"
+        /// </summary>
+        public const string EmptyEnvironmentVariable = "*Undefined*";
         
         private static bool Command(string[] args, string command)
         {
@@ -233,7 +238,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     string variable = Environment.GetEnvironmentVariable(name);
-                    if (!string.IsNullOrWhiteSpace(variable))
+                    if ((!string.IsNullOrWhiteSpace(variable)) && (variable != EmptyEnvironmentVariable))
                     {
                         return variable.Trim();
                     }
