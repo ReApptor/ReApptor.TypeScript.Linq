@@ -1,12 +1,8 @@
 namespace WeAre.Athenaeum.Tools.CodeGenerator
 {
-    public sealed class EnumProviderSettings
+    public sealed class EnumProviderSettings : BaseSettings
     {
-        public string SolutionPath { get; set; }
-        
-        public string ProjectPath { get; set; }
-        
-        public string DestinationPath { get; set; }
+        public string DestinationPath  { get; set; }
         
         public string[] Exclude { get; set; }
 

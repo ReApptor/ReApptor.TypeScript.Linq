@@ -1,6 +1,6 @@
 namespace WeAre.Athenaeum.Tools.CodeGenerator
 {
-    public sealed class LocalizatorResourceSettings
+    public sealed class LocalizatorResourceSettings : BaseSettings
     {
         public const string ComponentNameTag = "$(COMPONENT_NAME)";
         
@@ -15,8 +15,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         public string Namespace { get; set; }
         
         public string Import { get; set; }
-
-        public string ClassName { get; set; }
         
         public string BaseClassName { get; set; }
         
