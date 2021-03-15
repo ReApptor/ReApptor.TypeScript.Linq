@@ -16,37 +16,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static int GenerateResources(LocalizatorResourceSettings settings)
         {
-            // if (string.IsNullOrWhiteSpace(settings.NeutralResourcePath))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. Parameter \"neutralResourcePath\" not specified.");
-            // }
-            //
-            // if (settings.NeutralResourcePath.StartsWith("/"))
-            // {
-            //     settings.NeutralResourcePath = Path.Combine(Environment.CurrentDirectory, settings.NeutralResourcePath);
-            // }
-            //
-            // if (!File.Exists(settings.NeutralResourcePath))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. File from parameter \"neutralResourcePath\" (\"{settings.NeutralResourcePath}\") cannot be found.");
-            // }
-            //
-            // if (string.IsNullOrWhiteSpace(settings.DestinationPath))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. Parameter \"destinationPath\" not specified.");
-            // }
-            //
-            // if (settings.DestinationPath.StartsWith("/"))
-            // {
-            //     settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
-            // }
-            //
-            // string destinationFolder = SettingsProvider.GetDirectoryName(settings.DestinationPath);
-            // if ((!settings.SplitByComponent) && (!Directory.Exists(destinationFolder)))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
-            // }
-
             Console.WriteLine($"{Name}: neutralResourcePath=\"{settings.NeutralResourcePath}\", destinationPath=\"{settings.DestinationPath}\" type=\"{settings.Type}\", neutralLanguage=\"{settings.NeutralLanguage}\".");
             
             LocalizatorResourceManager.Generate(settings);
@@ -58,32 +27,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         
         private static int GenerateEnumProvider(EnumProviderSettings settings)
         {
-            // if (settings.TargetPath.StartsWith("/"))
-            // {
-            //     settings.TargetPath = Path.Combine(Environment.CurrentDirectory, settings.TargetPath);
-            // }
-            //
-            // if (!File.Exists(settings.TargetPath))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. File from parameter \"targetPath\" (\"{settings.TargetPath}\") cannot be found.");
-            // }
-            //
-            // if (string.IsNullOrWhiteSpace(settings.DestinationPath))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. Parameter \"destinationPath\" not specified.");
-            // }
-            //
-            // if (settings.DestinationPath.StartsWith("/"))
-            // {
-            //     settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
-            // }
-            //
-            // string destinationFolder = SettingsProvider.GetDirectoryName(settings.DestinationPath);
-            // if (!Directory.Exists(destinationFolder))
-            // {
-            //     return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
-            // }
-
             Console.WriteLine($"{Name}: targetPath=\"{settings.TargetPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
 
             EnumProviderManager.Generate(settings);
