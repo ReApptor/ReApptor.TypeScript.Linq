@@ -69,13 +69,13 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return assembly;
         }
 
-        private static Type[] GetEnums(string solutionPath, string projectPath, string[] exclude = null)
+        private static Type[] GetEnums(string solutionDirectory, string targetPath, string[] exclude = null)
         {
-            LoadAssemblies(solutionPath);
+            LoadAssemblies(solutionDirectory);
 
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
-            Assembly assembly = Assembly.LoadFile(projectPath);
+            Assembly assembly = Assembly.LoadFile(targetPath);
 
             Type[] enums = assembly
                 .GetTypes()
@@ -214,7 +214,7 @@ export default new EnumProvider();", selectListItemImport, enumsImport, quotedNa
             
             try
             {
-                Type[] enums = GetEnums(settings.SolutionPath, settings.ProjectPath, settings.Exclude);
+                Type[] enums = GetEnums(settings.SolutionDirectory, settings.TargetPath, settings.Exclude);
 
                 string content = GenerateTypeScriptContent(enums, settings.EnumsImport, settings.SelectListItemImport);
 

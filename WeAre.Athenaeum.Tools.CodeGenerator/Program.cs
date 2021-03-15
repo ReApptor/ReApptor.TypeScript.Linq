@@ -1,73 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace WeAre.Athenaeum.Tools.CodeGenerator
 {
     public class Program
     {
-        /// <summary>
-        /// Echo (logs) enabled/disabled
-        /// </summary>
-        public static bool Echo = false;
-        
-        /// <summary>
-        /// "WeAre.Athenaeum.CodeGenerator"
-        /// </summary>
-        public const string Name = "WeAre.Athenaeum.CodeGenerator";
-
-        /// <summary>
-        /// "athenaeum.config.json"
-        /// </summary>
-        public const string SettingsFileName = "athenaeum.config.json";
-
-        /// <summary>
-        /// "$(PWD)"
-        /// </summary>
-        public const string ProjectDirectoryEnvironmentVariable = "$(PWD)";
-
-        /// <summary>
-        /// "*Undefined*"
-        /// </summary>
-        public const string EmptyEnvironmentVariable = "*Undefined*";
-        
-        private static bool Command(string[] args, string command)
-        {
-            return ((args != null) && (args.Length > 0) &&
-                    (args.Any(arg => (!string.IsNullOrWhiteSpace(arg)) && (arg.Trim().Trim('/').Equals(command, StringComparison.InvariantCultureIgnoreCase)))));
-        }
+        public const string Name = SettingsProvider.Name;
         
         private static int Error(string message)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(message);
             return -1;
-        }
-
-        private static int GenerateResources(string[] args)
-        {
-            string neutralResourcePath = args[0]?.Trim().Replace("\\\\", "\\");
-            string destinationPath = args[1]?.Trim().Replace("\\\\", "\\");
-
-            LocalizatorResourceManager.Type type = ((args.Length > 2) && (!string.IsNullOrWhiteSpace(args[2])) && (args[2].Trim() == "1"))
-                ? LocalizatorResourceManager.Type.CSharp
-                : LocalizatorResourceManager.Type.TypeScript;
-         
-            string neutralLanguage = ((args.Length > 3) && (!string.IsNullOrWhiteSpace(args[3])))
-                ? args[3].Trim()
-                : "fi";
-
-            var settings = new LocalizatorResourceSettings
-            {
-                NeutralResourcePath = neutralResourcePath,
-                DestinationPath = destinationPath,
-                Type = type,
-                NeutralLanguage = neutralLanguage
-            };
-
-            return GenerateResources(settings);
         }
 
         private static int GenerateResources(LocalizatorResourceSettings settings)
@@ -97,7 +42,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            if ((!settings.SplitByComponent) && (!Directory.Exists(GetDirectoryName(settings.DestinationPath))))
+            string destinationFolder = SettingsProvider.GetDirectoryName(settings.DestinationPath);
+            if ((!settings.SplitByComponent) && (!Directory.Exists(destinationFolder)))
             {
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
@@ -110,64 +56,32 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             return 0;
         }
-
-        private static int GenerateEnumProvider(string[] args)
-        {
-            string solutionPath = (args.Length > 0)
-                ? args[0]?.Trim().Replace("\\\\", "\\")
-                : null;
-
-            string projectPath = (args.Length > 1)
-                ? args[1]?.Trim().Replace("\\\\", "\\")
-                : null;
-
-            string destinationPath = (args.Length > 2)
-                ? args[2]?.Trim().Replace("\\\\", "\\")
-                : null;
-
-            string[] exclude = ((args.Length > 3) && (!string.IsNullOrWhiteSpace(args[3])))
-                ? args[2]
-                    .Split(new[] {",", ";"}, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(item => item.Trim())
-                    .ToArray()
-                : null;
-
-            var settings = new EnumProviderSettings
-            {
-                SolutionPath = solutionPath,
-                DestinationPath = destinationPath,
-                ProjectPath = projectPath,
-                Exclude = exclude
-            };
-
-            return GenerateEnumProvider(settings);
-        }
         
         private static int GenerateEnumProvider(EnumProviderSettings settings)
         {
-            if (string.IsNullOrWhiteSpace(settings.SolutionPath))
+            if (string.IsNullOrWhiteSpace(settings.SolutionDirectory))
             {
                 return Error($"{Name}. Invalid input arguments. Parameter \"solutionPath\" not specified.");
             }
 
-            if (!Directory.Exists(settings.SolutionPath))
+            if (!Directory.Exists(settings.SolutionDirectory))
             {
-                return Error($"{Name}. Invalid input arguments. Directory from parameter \"solutionPath\" (\"{settings.SolutionPath}\") cannot be found.");
+                return Error($"{Name}. Invalid input arguments. Directory from parameter \"solutionPath\" (\"{settings.SolutionDirectory}\") cannot be found.");
             }
             
-            if (string.IsNullOrWhiteSpace(settings.ProjectPath))
+            if (string.IsNullOrWhiteSpace(settings.ProjectDirectory))
             {
                 return Error($"{Name}. Invalid input arguments. Parameter \"projectPath\" not specified.");
             }
 
-            if (settings.ProjectPath.StartsWith("/"))
+            if (settings.TargetPath.StartsWith("/"))
             {
-                settings.ProjectPath = Path.Combine(Environment.CurrentDirectory, settings.ProjectPath);
+                settings.TargetPath = Path.Combine(Environment.CurrentDirectory, settings.TargetPath);
             }
 
-            if (!File.Exists(settings.ProjectPath))
+            if (!File.Exists(settings.TargetPath))
             {
-                return Error($"{Name}. Invalid input arguments. File from parameter \"projectPath\" (\"{settings.ProjectPath}\") cannot be found.");
+                return Error($"{Name}. Invalid input arguments. File from parameter \"targetPath\" (\"{settings.TargetPath}\") cannot be found.");
             }
 
             if (string.IsNullOrWhiteSpace(settings.DestinationPath))
@@ -180,13 +94,13 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 settings.DestinationPath = Path.Combine(Environment.CurrentDirectory, settings.DestinationPath);
             }
 
-            string destinationFolder = GetDirectoryName(settings.DestinationPath);
+            string destinationFolder = SettingsProvider.GetDirectoryName(settings.DestinationPath);
             if (!Directory.Exists(destinationFolder))
             {
                 return Error($"{Name}. Invalid input arguments. Folder from parameter \"destinationPath\" (\"{settings.DestinationPath}\") cannot be found.");
             }
 
-            Console.WriteLine($"{Name}: projectPath=\"{settings.ProjectPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
+            Console.WriteLine($"{Name}: targetPath=\"{settings.TargetPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
 
             EnumProviderManager.Generate(settings);
 
@@ -236,96 +150,6 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return 0;
         }
 
-        private static string GetEnvironmentVariable(params string[] names)
-        {
-            names ??= new string[0];
-            foreach (string name in names)
-            {
-                if (!string.IsNullOrWhiteSpace(name))
-                {
-                    string variable = Environment.GetEnvironmentVariable(name);
-                    if ((!string.IsNullOrWhiteSpace(variable)) && (variable != EmptyEnvironmentVariable))
-                    {
-                        return variable.Trim();
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private static string GetDirectoryName(string path)
-        {
-            path = path.TrimEnd('\\').TrimEnd('/');
-            return Path.GetDirectoryName(path);
-        }
-
-        private static string GetProjectDirectory()
-        {
-            string projectDirectory = GetEnvironmentVariable("$ProjectDir", "$(ProjectDir)", "ProjectDir", ProjectDirectoryEnvironmentVariable);
-            return (!string.IsNullOrWhiteSpace(projectDirectory))
-                ? projectDirectory
-                : Directory.GetCurrentDirectory();
-        }
-
-        private static string GetTargetPath()
-        {
-            return GetEnvironmentVariable("$TargetPath", "$(TargetPath)", "TargetPath");
-        }
-
-        private static string GetSolutionDir(string projectDirectory)
-        {
-            string solutionDirectory = GetEnvironmentVariable("$SolutionDir", "$(SolutionDir)", "SolutionDir");
-            return (!string.IsNullOrWhiteSpace(solutionDirectory))
-                ? solutionDirectory
-                : GetDirectoryName(projectDirectory);
-        }
-
-        private static string ProcessEnvVariables(string data)
-        {
-            //List of IDE variables: https://docs.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties?view=msvc-160
-            //Exec command description: https://docs.microsoft.com/en-us/visualstudio/msbuild/exec-task?view=vs-2019
-            string projectDirectory = GetProjectDirectory();
-            string solutionDirectory = GetSolutionDir(projectDirectory);
-            string targetPath = GetTargetPath();
-            data = data.Replace("$(ProjectDir)", projectDirectory);
-            data = data.Replace(ProjectDirectoryEnvironmentVariable, projectDirectory);
-            data = data.Replace("$(SolutionDir)", solutionDirectory);
-            if (!string.IsNullOrWhiteSpace(targetPath))
-            {
-                data = data.Replace("$(TargetPath)", targetPath);
-            }
-            IDictionary variables = Environment.GetEnvironmentVariables();
-            foreach (DictionaryEntry keyValue in variables)
-            {
-                if (Echo)
-                {
-                    Console.WriteLine($"{Name}. ENV. key=\"{keyValue.Key}\" value=\"{keyValue.Value}\"");
-                }
-                string key = $"$({keyValue.Key as string})";
-                if ((key != ProjectDirectoryEnvironmentVariable) && (data.Contains(key)))
-                {
-                    string value = (keyValue.Value as string) ?? string.Empty;
-                    data = data.Replace(key, value);
-                }
-            }
-
-            return data;
-        }
-
-        private static Settings GetSettings(string path)
-        {
-            Console.WriteLine($"{Name}. Fetching settings from \"{path}\".");
-
-            string json = File.ReadAllText(path);
-
-            json = ProcessEnvVariables(json);
-                    
-            var settings = JsonConvert.DeserializeObject<Settings>(json);
-
-            return settings;
-        }
-
         public static int Main(string[] args)
         {
             // <Exec Command="dotnet run --project &quot;$(ProjectDir)../Renta.Tools.CodeGenerator/Renta.Tools.CodeGenerator.csproj&quot; &quot;$(ProjectDir)SharedResources.resx&quot; &quot;$(ProjectDir)../Renta.Tools.WebUI.Resources/SharedResources.cs&quot; 1 fi" />
@@ -333,57 +157,29 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
             try
             {
-                if (Echo)
+                var settingsProvider = new SettingsProvider(args);
+                
+                if (settingsProvider.Debug)
                 {
                     Console.WriteLine($"{Name}. Environment.CurrentDirectory=\"{Environment.CurrentDirectory}\".");
+                    Console.WriteLine($"{Name}. CurrentDir=\"{settingsProvider.CurrentDir}\".");
+                    Console.WriteLine($"{Name}. SolutionDir=\"{settingsProvider.SolutionDir}\".");
+                    Console.WriteLine($"{Name}. ProjectDir=\"{settingsProvider.ProjectDir}\".");
+                    Console.WriteLine($"{Name}. TargetPath=\"{settingsProvider.TargetPath}\".");
+                    Console.WriteLine($"{Name}. SettingFilePath=\"{settingsProvider.SettingFilePath}\".");
                 
                     foreach (string arg in args ?? new string[0])
                     {
                         Console.WriteLine($"{Name}. ARG. value=\"{arg}\"");
                     }
                 }
-                
-                if ((args == null) || (args.Length == 0))
-                {
-                    string settingsFile = Path.Combine(Environment.CurrentDirectory, SettingsFileName);
-                    if (!File.Exists(settingsFile))
-                    {
-                        string projectDirectory = GetProjectDirectory();
-                        settingsFile = Path.Combine(projectDirectory, SettingsFileName);
-                        if (!File.Exists(settingsFile))
-                        {
-                            DirectoryInfo parent = Directory.GetParent(projectDirectory);
-                            settingsFile = Path.Combine(parent.FullName, SettingsFileName);
-                            if (!File.Exists(settingsFile))
-                            {
-                                return Error($"{Name}. Invalid input arguments. Settings file cannot be found in project or solution directories.");
-                            }
-                        }
-                    }
-                    
-                    Settings settings = GetSettings(settingsFile);
 
-                    return Generate(settings);
+                if (settingsProvider.Failed)
+                {
+                    return Error(settingsProvider.Error);
                 }
 
-                if (!string.IsNullOrWhiteSpace(args[0]) && (args[0].EndsWith(".json", StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    if (!File.Exists(args[0]))
-                    {
-                        return Error($"{Name}. Invalid input arguments. Setting file (\"{args[0]}\") cannot be found.");
-                    }
-
-                    Settings settings = GetSettings(args[0]);
-
-                    return Generate(settings);
-                }
-                
-                if (Command(args, "EnumProvider"))
-                {
-                    return GenerateEnumProvider(args);
-                }
-
-                return GenerateResources(args);
+                return Generate(settingsProvider.Settings);
             }
             catch (Exception ex)
             {
