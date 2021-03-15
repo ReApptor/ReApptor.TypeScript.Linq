@@ -214,7 +214,7 @@ export default new EnumProvider();", selectListItemImport, enumsImport, quotedNa
             
             try
             {
-                Type[] enums = GetEnums(settings.SolutionDirectory, settings.TargetPath, settings.Exclude);
+                Type[] enums = GetEnums(settings.SolutionDir, settings.TargetPath, settings.Exclude);
 
                 string content = GenerateTypeScriptContent(enums, settings.EnumsImport, settings.SelectListItemImport);
 

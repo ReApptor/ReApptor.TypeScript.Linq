@@ -22,5 +22,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             get { return (!string.IsNullOrWhiteSpace(DestinationPath)) && (DestinationPath.Contains(ComponentNameTag)); }
         }
+
+        public override string Validate()
+        {
+            return RequirePath(nameof(NeutralResourcePath), NeutralResourcePath, false) ??
+                   RequirePath(nameof(DestinationPath), DestinationPath, false, false, !SplitByComponent);
+        }
     }
 }

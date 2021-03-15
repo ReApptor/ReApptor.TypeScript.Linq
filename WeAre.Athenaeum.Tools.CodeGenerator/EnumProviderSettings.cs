@@ -9,5 +9,11 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         public string EnumsImport { get; set; }
         
         public string SelectListItemImport { get; set; }
+        
+        public override string Validate()
+        {
+            return RequirePath(nameof(TargetPath), TargetPath, false) ??
+                   RequirePath(nameof(DestinationPath), DestinationPath, false, false);
+        }
     }
 }
