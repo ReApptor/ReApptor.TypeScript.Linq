@@ -179,7 +179,6 @@ import {{WebApplicationType}} from ""@weare/athenaeum-react-common"";
 class EnumProvider extends BaseEnumProvider<SelectListItem> {{
 
     // #region Private
-
     
     private readonly _types: string[] = [{2}];
 
