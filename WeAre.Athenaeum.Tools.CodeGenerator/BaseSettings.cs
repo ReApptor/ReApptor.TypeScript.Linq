@@ -8,7 +8,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                return $"Invalid input arguments. Parameter \"{parameter}\" not specified.";
+                return $"{SettingsProvider.Name}. Invalid input arguments. Parameter \"{parameter}\" not specified.";
             }
 
             if (shouldExist)
@@ -17,8 +17,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 if (!exists)
                 {
                     return (directory)
-                        ? $"Invalid input arguments. File from parameter \"{parameter}\" (\"{path}\") cannot be found."
-                        : $"Invalid input arguments. Directory from parameter \"{parameter}\" (\"{path}\") cannot be found.";
+                        ? $"{SettingsProvider.Name}. Invalid input arguments. File from parameter \"{parameter}\" (\"{path}\") cannot be found."
+                        : $"{SettingsProvider.Name}. Invalid input arguments. Directory from parameter \"{parameter}\" (\"{path}\") cannot be found.";
                 }
             }
             else if ((!directory) && (sourceFolderShouldExist))
@@ -26,7 +26,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                 bool exists = Directory.Exists(SettingsProvider.GetDirectoryName(path));
                 if (!exists)
                 {
-                    return $"Invalid input arguments. Source directory from parameter \"{parameter}\" (\"{path}\") cannot be found.";
+                    return $"{SettingsProvider.Name}. Invalid input arguments. Source directory from parameter \"{parameter}\" (\"{path}\") cannot be found.";
                 }
             }
 
