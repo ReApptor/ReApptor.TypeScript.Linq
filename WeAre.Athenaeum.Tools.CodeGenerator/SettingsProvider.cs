@@ -85,6 +85,37 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     
             var settings = JsonConvert.DeserializeObject<Settings>(json);
 
+            settings.Localizator = (settings.Localizator ?? new LocalizatorResourceSettings[0])
+                .Where(item => item != null)
+                .ToArray();
+
+            settings.EnumProvider = (settings.EnumProvider ?? new EnumProviderSettings[0])
+                .Where(item => item != null)
+                .ToArray();
+
+            foreach (LocalizatorResourceSettings localizator in settings.Localizator)
+            {
+                localizator.CurrentDir = CurrentDir;
+                localizator.SolutionDir = SolutionDir;
+                localizator.ProjectDir = ProjectDir;
+                localizator.TargetPath = TargetPath;
+                localizator.DestinationPath = GetPath(localizator.DestinationPath);
+                localizator.NeutralResourcePath = GetPath(localizator.NeutralResourcePath);
+                
+                Error ??= localizator.Validate();
+            }
+
+            foreach (EnumProviderSettings enumProvider in settings.EnumProvider)
+            {
+                enumProvider.CurrentDir = CurrentDir;
+                enumProvider.SolutionDir = SolutionDir;
+                enumProvider.ProjectDir = ProjectDir;
+                enumProvider.TargetPath = TargetPath;
+                enumProvider.DestinationPath = GetPath(enumProvider.DestinationPath);
+                
+                Error ??= enumProvider.Validate();
+            }
+
             return settings;
         }
 
