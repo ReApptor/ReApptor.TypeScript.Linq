@@ -2,7 +2,10 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import {ch} from "@weare/athenaeum-react-common";
-import { Button, ButtonType, Dropdown, DropdownOrderBy, Form, LayoutFourColumns as FourColumns } from "@weare/athenaeum-react-components";
+import FourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
+import Dropdown, { DropdownOrderBy } from "@/components/Dropdown/Dropdown";
+import Button, { ButtonType } from "@/components/Button/Button";
+import Form from "@/components/Form/Form";
 
 export interface IDropdownSelectItemsTestsState {
     selectedItemId: string | null,
