@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using WeAre.Athenaeum.Common.Providers;
 using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Configuration
@@ -44,6 +47,27 @@ namespace WeAre.Athenaeum.Common.Configuration
             }
 
             return configuration;
+        }
+
+        public static void AddAthenaeumLocalization(this IServiceCollection services, CultureInfo[] supportedCultures, CultureInfo defaultCulture, string country, bool requestBased = true)
+        {
+            if (services == null)
+                throw new ArgumentNullException(nameof(services));
+            if (supportedCultures == null)
+                throw new ArgumentNullException(nameof(supportedCultures));
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.DefaultRequestCulture = HttpContextRequestCultureProvider.GetCultureRequest(supportedCultures, country, defaultCulture);
+
+                options.RequestCultureProviders.Clear();
+                if (requestBased)
+                {
+                    options.RequestCultureProviders.Add(HttpContextRequestCultureProvider.Instance);
+                }
+            });
         }
     }
 }

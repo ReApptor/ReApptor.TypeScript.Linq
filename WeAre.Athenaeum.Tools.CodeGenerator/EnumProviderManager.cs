@@ -69,13 +69,13 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return assembly;
         }
 
-        private static Type[] GetEnums(string solutionPath, string projectPath, string[] exclude = null)
+        private static Type[] GetEnums(string solutionDirectory, string targetPath, string[] exclude = null)
         {
-            LoadAssemblies(solutionPath);
+            LoadAssemblies(solutionDirectory);
 
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
-            Assembly assembly = Assembly.LoadFile(projectPath);
+            Assembly assembly = Assembly.LoadFile(targetPath);
 
             Type[] enums = assembly
                 .GetTypes()
@@ -92,22 +92,45 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return enums;
         }
 
+        private static string ProcessEnumsImport(string enumsImport, string names)
+        {
+            enumsImport = (!string.IsNullOrWhiteSpace(enumsImport))
+                ? enumsImport.Trim()
+                : @"from ""@/models/Enums"";";
+
+            enumsImport = (enumsImport.StartsWith("import "))
+                ? enumsImport.Replace("{{0}}", names)
+                : $"import {{{names}}} from \"{enumsImport}\";";
+            
+            enumsImport = enumsImport.TrimEnd(';');
+            enumsImport += ";";
+
+            return enumsImport;
+        }
+
+        private static string ProcessSelectListItemImport(string selectListItemImport)
+        {
+            selectListItemImport = selectListItemImport.Trim();
+            if (!selectListItemImport.StartsWith("import "))
+            {
+                selectListItemImport = $"import {{SelectListItem}} from \"{selectListItemImport}\";";
+            }
+
+            selectListItemImport = selectListItemImport.TrimEnd(';');
+            selectListItemImport += ";";
+
+            return selectListItemImport;
+        }
+
         private static string GenerateTypeScriptContent(Type[] enums, string enumsImport, string selectListItemImport)
         {
             var systemNames = new HashSet<string>(new[] { "SortDirection", "WebApplicationType"});
             string names = string.Join(", ", enums.Select(item => item.Name).Where(item => !systemNames.Contains(item)));
             string quotedNames = string.Join(", ", enums.Select(item => $"\"{item.Name}\""));
 
-            enumsImport = (!string.IsNullOrWhiteSpace(enumsImport))
-                ? enumsImport.Trim()
-                : @"import {{{0}}} from ""@/models/Enums"";";
+            enumsImport = ProcessEnumsImport(enumsImport, names);
 
-            enumsImport = string.Format(enumsImport, names);
-
-            if (!enumsImport.EndsWith(";"))
-            {
-                enumsImport  += ";";
-            }
+            selectListItemImport = ProcessSelectListItemImport(selectListItemImport);
             
             var items = new List<string>();
             
@@ -156,7 +179,6 @@ import {{WebApplicationType}} from ""@weare/athenaeum-react-common"";
 class EnumProvider extends BaseEnumProvider<SelectListItem> {{
 
     // #region Private
-
     
     private readonly _types: string[] = [{2}];
 
@@ -191,7 +213,7 @@ export default new EnumProvider();", selectListItemImport, enumsImport, quotedNa
             
             try
             {
-                Type[] enums = GetEnums(settings.SolutionPath, settings.ProjectPath, settings.Exclude);
+                Type[] enums = GetEnums(settings.SolutionDir, settings.TargetPath, settings.Exclude);
 
                 string content = GenerateTypeScriptContent(enums, settings.EnumsImport, settings.SelectListItemImport);
 
