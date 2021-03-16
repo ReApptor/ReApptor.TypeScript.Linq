@@ -1,7 +1,9 @@
 import React from "react";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import { Button, Checkbox, Modal } from "@weare/athenaeum-react-components";
+import Button from "@/components/Button/Button";
+import Checkbox from "@/components/Checkbox/Checkbox";
+import Modal from "@/components/Modal/Modal";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;

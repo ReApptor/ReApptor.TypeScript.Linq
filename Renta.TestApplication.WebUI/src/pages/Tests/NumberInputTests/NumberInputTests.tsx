@@ -1,7 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { Form, NumberInputBehaviour, LayoutThreeColumns as ThreeColumns } from "@weare/athenaeum-react-components";
-import { NumberInput } from "@weare/athenaeum-react-components";
+import Form from "@/components/Form/Form";
+import NumberInput, { NumberInputBehaviour } from "@/components/NumberInput/NumberInput";
+import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
 
 export default class NumberInputTests extends BaseComponent {
 
@@ -11,7 +12,7 @@ export default class NumberInputTests extends BaseComponent {
 
                 <Form>
 
-                    <ThreeColumns>
+                    <LayoutThreeColumns>
 
                         <NumberInput label={"Test (step 0.01, [min = 1; max = 10])"} step={0.01} min={1} max={10} />
 
@@ -19,9 +20,9 @@ export default class NumberInputTests extends BaseComponent {
 
                         <NumberInput label={"Test (step 1, [min = -10; max = 10])"} step={1} min={-10} max={10} />
 
-                    </ThreeColumns>
+                    </LayoutThreeColumns>
 
-                    <ThreeColumns>
+                    <LayoutThreeColumns>
 
                         <NumberInput label={"Test (step 0.01, [min = 1; max = 10], Restricted)"} step={0.01} min={1} max={10} behaviour={NumberInputBehaviour.Restricted} />
 
@@ -29,7 +30,7 @@ export default class NumberInputTests extends BaseComponent {
 
                         <NumberInput label={"Test (step 0.01, [min = 1; max = 10]), OnSave"} step={0.01} min={1} max={10} behaviour={NumberInputBehaviour.ValidationOnSave} />
 
-                    </ThreeColumns>
+                    </LayoutThreeColumns>
 
                 </Form>
 

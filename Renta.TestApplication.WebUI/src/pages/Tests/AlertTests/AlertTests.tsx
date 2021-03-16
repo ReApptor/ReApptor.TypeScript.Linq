@@ -1,6 +1,7 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {Button, Icon, IconSize} from "@weare/athenaeum-react-components";
+import Button from "@/components/Button/Button";
+import Icon, { IconSize } from "@/components/Icon/Icon";
 
 export default class AlertTests extends BaseComponent {
 

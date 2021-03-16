@@ -3,23 +3,15 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 
 
 import styles from "./DropdownTests.module.scss";
-import {
-    Checkbox,
-    Dropdown,
-    DropdownAlign,
-    DropdownOrderBy,
-    DropdownRequiredType,
-    DropdownSelectType,
-    DropdownSubtextType,
-    DropdownVerticalAlign,
-    Form,
-    IconSize,
-    IIconProps,
-    IStringInputModel,
-    SelectListItem, TextInput,
-    LayoutTwoColumns as TwoColumns,
-    IconStyle
-} from "@weare/athenaeum-react-components";
+import Form from "@/components/Form/Form";
+import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownRequiredType, DropdownSelectType, DropdownSubtextType, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
+import Checkbox from "@/components/Checkbox/Checkbox";
+import TextInput from "@/components/TextInput/TextInput";
+import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
+import { SelectListItem } from "@/components/Dropdown/SelectListItem";
+import { IStringInputModel } from "@/components/BaseInput/BaseInput";
+import { IconSize, IconStyle, IIconProps } from "@/components/Icon/Icon";
+
 
 export interface IDropdownTestsState {
     generateGroups: boolean,
@@ -183,7 +175,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         return (
             <div className={styles.dropdownTests}>
 
-                <TwoColumns>
+                <LayoutTwoColumns>
 
                     <Form>
 
@@ -351,7 +343,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                               onAdd={() => this.addAsync()}
                     />
 
-                </TwoColumns>
+                </LayoutTwoColumns>
 
             </div>
         );

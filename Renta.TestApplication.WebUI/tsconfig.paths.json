@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/AthenaeumComponentsConstants": ["src/components/AthenaeumComponentsConstants.ts"],
+      "@/models/Enums": ["src/components/models/Enums.ts"],
+      "@/components/*": ["src/components/components/*"],
+      "@/helpers/*": ["src/components/helpers/*"],
+      "@/*": ["src/*"],
     }
   }
 }

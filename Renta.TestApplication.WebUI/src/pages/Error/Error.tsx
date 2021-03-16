@@ -1,9 +1,11 @@
 import React from "react";
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import {ServerError, BasePageParameters} from "@weare/athenaeum-react-common";
-import {PageContainer, PageHeader, PageRow} from "@weare/athenaeum-react-components";
 
 import styles from "./Error.module.scss";
+import PageContainer from "@/components/PageContainer/PageContainer";
+import PageHeader from "@/components/PageContainer/PageHeader/PageHeader";
+import PageRow from "@/components/PageContainer/PageRow/PageRow";
 
 export interface IErrorPageParameters extends BasePageParameters {
     error: ServerError | null;

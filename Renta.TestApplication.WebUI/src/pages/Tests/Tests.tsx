@@ -1,6 +1,5 @@
 import React from "react";
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
-import {PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType} from "@weare/athenaeum-react-components";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
 import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
@@ -14,6 +13,12 @@ import ListTests from "@/pages/Tests/ListTests/ListTests";
 import ModalTests from "@/pages/Tests/ModalTests/ModalTests";
 import GridTests from "@/pages/Tests/GridTests/GridTests";
 import FormTests from "@/pages/Tests/FormTests/FormTests";
+import PageContainer from "@/components/PageContainer/PageContainer";
+import Tab from "@/components/TabContainer/Tab/Tab";
+import PageHeader from "@/components/PageContainer/PageHeader/PageHeader";
+import PageRow from "@/components/PageContainer/PageRow/PageRow";
+import TabContainer from "@/components/TabContainer/TabContainer";
+import { TabRenderType } from "@/components/TabContainer/TabModel";
 
 export default class Tests extends AnonymousPage {
     
