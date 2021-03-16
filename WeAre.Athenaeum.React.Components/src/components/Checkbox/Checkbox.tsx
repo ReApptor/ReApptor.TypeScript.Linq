@@ -1,7 +1,7 @@
 import React from "react";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize} from "../Icon/Icon";
-import {BaseInputType} from "@/models/Enums";
+import {BaseInputType} from "@weare/athenaeum-react-components/models/Enums";
 
 import styles from "./Checkbox.module.scss";
 

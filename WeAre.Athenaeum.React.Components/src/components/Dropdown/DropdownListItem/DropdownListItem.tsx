@@ -6,7 +6,7 @@ import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";
 
 import styles from "../Dropdown.module.scss";
-import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
+import DropdownLocalizer from "@weare/athenaeum-react-components/components/Dropdown/DropdownLocalizer";
 
 export interface IDropdownListItemProps {
     item: SelectListItem;

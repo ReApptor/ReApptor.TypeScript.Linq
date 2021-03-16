@@ -3,14 +3,14 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 
 
 import styles from "./DropdownTests.module.scss";
-import Form from "@/components/Form/Form";
-import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownRequiredType, DropdownSelectType, DropdownSubtextType, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
-import Checkbox from "@/components/Checkbox/Checkbox";
-import TextInput from "@/components/TextInput/TextInput";
-import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
-import { SelectListItem } from "@/components/Dropdown/SelectListItem";
-import { IStringInputModel } from "@/components/BaseInput/BaseInput";
-import { IconSize, IconStyle, IIconProps } from "@/components/Icon/Icon";
+import Form from "@weare/athenaeum-react-components/components/Form/Form";
+import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownRequiredType, DropdownSelectType, DropdownSubtextType, DropdownVerticalAlign } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import Checkbox from "@weare/athenaeum-react-components/components/Checkbox/Checkbox";
+import TextInput from "@weare/athenaeum-react-components/components/TextInput/TextInput";
+import LayoutTwoColumns from "@weare/athenaeum-react-components/components/LayoutTwoColumns/LayoutTwoColumns";
+import { SelectListItem } from "@weare/athenaeum-react-components/components/Dropdown/SelectListItem";
+import { IStringInputModel } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
+import { IconSize, IconStyle, IIconProps } from "@weare/athenaeum-react-components/components/Icon/Icon";
 
 
 export interface IDropdownTestsState {

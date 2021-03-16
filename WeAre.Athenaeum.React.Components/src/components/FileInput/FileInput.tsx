@@ -1,7 +1,7 @@
 import React from "react";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import BaseInput, { ValidatorCallback, IBaseInputProps, IBaseInputState, FileSizeValidator, FileTypeValidator, FilesSizeValidator } from "../BaseInput/BaseInput";
-import { BaseInputType  } from "@/models/Enums";
+import { BaseInputType  } from "@weare/athenaeum-react-components/models/Enums";
 import Icon from "../Icon/Icon";
 import FileInputLocalizer from "./FileInputLocalizer";
 

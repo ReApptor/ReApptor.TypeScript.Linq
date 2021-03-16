@@ -1,15 +1,15 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import Form from "@/components/Form/Form";
-import Button, { ButtonType } from "@/components/Button/Button";
-import Checkbox from "@/components/Checkbox/Checkbox";
-import FourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
-import DateInput from "@/components/DateInput/DateInput";
-import ButtonContainer from "@/components/ButtonContainer/ButtonContainer";
-import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
-import TextInput from "@/components/TextInput/TextInput";
-import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
-import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
+import Form from "@weare/athenaeum-react-components/components/Form/Form";
+import Button, { ButtonType } from "@weare/athenaeum-react-components/components/Button/Button";
+import Checkbox from "@weare/athenaeum-react-components/components/Checkbox/Checkbox";
+import FourColumns from "@weare/athenaeum-react-components/components/LayoutFourColumns/LayoutFourColumns";
+import DateInput from "@weare/athenaeum-react-components/components/DateInput/DateInput";
+import ButtonContainer from "@weare/athenaeum-react-components/components/ButtonContainer/ButtonContainer";
+import TextAreaInput from "@weare/athenaeum-react-components/components/TextAreaInput/TextAreaInput";
+import TextInput from "@weare/athenaeum-react-components/components/TextInput/TextInput";
+import LayoutTwoColumns from "@weare/athenaeum-react-components/components/LayoutTwoColumns/LayoutTwoColumns";
+import LayoutThreeColumns from "@weare/athenaeum-react-components/components/LayoutThreeColumns/LayoutThreeColumns";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;

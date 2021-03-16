@@ -1,5 +1,5 @@
 import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
-import { LinkTarget } from "@/models/Enums";
+import { LinkTarget } from "@weare/athenaeum-react-components/models/Enums";
 
 export interface ILinkWidgetProps extends IBaseWidgetProps {
     url: string;

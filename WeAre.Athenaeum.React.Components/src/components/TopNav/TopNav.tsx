@@ -3,7 +3,7 @@ import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClic
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-import TopNavLocalizer from "@/components/TopNav/TopNavLocalizer";
+import TopNavLocalizer from "@weare/athenaeum-react-components/components/TopNav/TopNavLocalizer";
 
 import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";

@@ -4,7 +4,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import LayoutTwoColumns from "../LayoutTwoColumns/LayoutTwoColumns";
 import AddressInput from "../AddressInput/AddressInput";
 import TextInput from "../TextInput/TextInput";
-import { IInput } from "@/components/BaseInput/BaseInput";
+import { IInput } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
 import Comparator from "../../helpers/Comparator";
 import AddressDividerLocalizer from "./AddressDividerLocalizer";
 

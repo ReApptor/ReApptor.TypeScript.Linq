@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
 import TestApplicationController from "@/pages/TestApplicationController";
-import Layout from "@/components/Layout/Layout";
+import Layout from "@weare/athenaeum-react-components/components/Layout/Layout";
 
 class App extends BaseComponent {
 

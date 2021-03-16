@@ -3,10 +3,10 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/athenaeum-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
-import Icon, { IconSize } from "@/components/Icon/Icon";
+import Icon, { IconSize } from "@weare/athenaeum-react-components/components/Icon/Icon";
 
 import styles from "./DocumentPreviewModal.module.scss";
-import DocumentPreviewModalLocalizer from "@/components/DocumentPreviewModal/DocumentPreviewModalLocalizer";
+import DocumentPreviewModalLocalizer from "@weare/athenaeum-react-components/components/DocumentPreviewModal/DocumentPreviewModalLocalizer";
 
 const A4 = { width: 595, height: 842 };
 

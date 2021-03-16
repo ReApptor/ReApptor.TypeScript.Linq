@@ -3,7 +3,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 
 import "./BootstrapOverride.scss";
 import styles from "./Pagination.module.scss";
-import Dropdown, { DropdownOrderBy } from "@/components/Dropdown/Dropdown";
+import Dropdown, { DropdownOrderBy } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
 
 class PaginationButton {
 

@@ -5,7 +5,7 @@ import {Dictionary} from "typescript-collections";
 import IBaseWidget from "./BaseWidget";
 
 import styles from "./WidgetContainer.module.scss";
-import DropdownWidget from "@/components/DropdownWidget/DropdownWidget";
+import DropdownWidget from "@weare/athenaeum-react-components/components/DropdownWidget/DropdownWidget";
 
 export interface IWidgetContainer extends IBaseComponent {
     readonly controller: string | null;

@@ -5,7 +5,7 @@ import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
 import styles from "./NavigationWidget.module.scss";
-import NavigationWidgetLocalizer from "@/components/NavigationWidget/NavigationWidgetLocalizer";
+import NavigationWidgetLocalizer from "@weare/athenaeum-react-components/components/NavigationWidget/NavigationWidgetLocalizer";
 
 export interface INavigationWidgetProps extends IBaseWidgetProps {
     className?: string;

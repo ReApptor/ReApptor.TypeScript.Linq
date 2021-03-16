@@ -1,6 +1,6 @@
 import React from "react";
 import BaseInput, {IBaseInputProps, IBaseInputState, LengthValidator, ValidatorCallback} from "../BaseInput/BaseInput";
-import {BaseInputType} from "@/models/Enums";
+import {BaseInputType} from "@weare/athenaeum-react-components/models/Enums";
 
 import styles from "./TextAreaInput.module.scss";
 

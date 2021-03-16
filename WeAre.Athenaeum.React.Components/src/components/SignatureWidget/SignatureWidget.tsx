@@ -1,8 +1,8 @@
 import React from "react";
 import SignatureCanvas from "react-signature-canvas";
-import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "@/components/WidgetContainer/BaseExpandableWidget";
-import Button, { ButtonType } from "@/components/Button/Button";
-import SignatureWidgetLocalizer from "@/components/SignatureWidget/SignatureWidgetLocalizer";
+import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "@weare/athenaeum-react-components/components/WidgetContainer/BaseExpandableWidget";
+import Button, { ButtonType } from "@weare/athenaeum-react-components/components/Button/Button";
+import SignatureWidgetLocalizer from "@weare/athenaeum-react-components/components/SignatureWidget/SignatureWidgetLocalizer";
 
 import styles from "../WidgetContainer.module.scss";
 

@@ -6,14 +6,14 @@ import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
 import Comparator from "../../../helpers/Comparator";
 import Icon, { IconSize, IIconProps } from "../../Icon/Icon";
-import { IInput } from "@/components/BaseInput/BaseInput";
-import { SelectListItem } from "@/components/Dropdown/SelectListItem";
-import NumberInput from "@/components/NumberInput/NumberInput";
-import TextInput from "@/components/TextInput/TextInput";
-import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
-import DateInput from "@/components/DateInput/DateInput";
-import AddressInput from "@/components/AddressInput/AddressInput";
-import GridLocalizer from "@/components/Grid/GridLocalizer";
+import { IInput } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
+import { SelectListItem } from "@weare/athenaeum-react-components/components/Dropdown/SelectListItem";
+import NumberInput from "@weare/athenaeum-react-components/components/NumberInput/NumberInput";
+import TextInput from "@weare/athenaeum-react-components/components/TextInput/TextInput";
+import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownVerticalAlign } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import DateInput from "@weare/athenaeum-react-components/components/DateInput/DateInput";
+import AddressInput from "@weare/athenaeum-react-components/components/AddressInput/AddressInput";
+import GridLocalizer from "@weare/athenaeum-react-components/components/Grid/GridLocalizer";
 
 import gridStyles from "../Grid.module.scss";
 

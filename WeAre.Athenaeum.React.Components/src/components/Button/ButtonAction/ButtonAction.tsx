@@ -1,6 +1,6 @@
 import React from "react";
 import {Justify} from "@weare/athenaeum-react-common";
-import Icon, {IIconProps} from "@/components/Icon/Icon";
+import Icon, {IIconProps} from "@weare/athenaeum-react-components/components/Icon/Icon";
 
 import styles from "../Button.module.scss"
 
