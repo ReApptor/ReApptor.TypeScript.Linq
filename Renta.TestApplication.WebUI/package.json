@@ -4,7 +4,6 @@
   "dependencies": {
     "@weare/athenaeum-toolkit": "^1.0.454",
     "@weare/athenaeum-react-common": "^1.0.454",
-    "@weare/athenaeum-react-components": "file:../WeAre.Athenaeum.React.Components",
     "async-mutex": "^0.1.3",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
@@ -42,7 +41,10 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build"
+    "prebuild": "npm run copy:components",
+    "build": "react-app-rewired build",
+    "copy:components": "cp -a '../WeAre.Athenaeum.React.Components/src/.' './src/components/' && rm './src/components/index.ts'",
+    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*'  --exec 'npm run copy:components'"
   },
   "browserslist": []
 }

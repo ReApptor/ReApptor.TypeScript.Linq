@@ -1,6 +1,6 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
-import {IMenuItem} from "@weare/athenaeum-react-components";
 import PageDefinitions from "@/pages/PageDefinitions";
+import { IMenuItem } from "@/components/TopNav/TopNav";
 
 class TestApplicationController {
     private _applicationContext: ApplicationContext | null = null;

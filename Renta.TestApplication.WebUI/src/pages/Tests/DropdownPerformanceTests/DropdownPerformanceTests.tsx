@@ -1,6 +1,7 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { Dropdown, LayoutThreeColumns as ThreeColumns } from "@weare/athenaeum-react-components";
+import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
+import Dropdown from "@/components/Dropdown/Dropdown";
 
 export interface IDropdownPerformanceTestsState {
 }
@@ -28,7 +29,7 @@ export default class DropdownPerformanceTests extends BaseComponent<{}, IDropdow
         return (
             <React.Fragment>
 
-                <ThreeColumns>
+                <LayoutThreeColumns>
 
                     <Dropdown id="performanceTest"
                               label="Dropdown"
@@ -36,7 +37,7 @@ export default class DropdownPerformanceTests extends BaseComponent<{}, IDropdow
                               filterMaxLength={Number.MAX_VALUE}
                     />
 
-                </ThreeColumns>
+                </LayoutThreeColumns>
 
             </React.Fragment>
         );

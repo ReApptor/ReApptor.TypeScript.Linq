@@ -1,6 +1,15 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import { Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, LayoutFourColumns as FourColumns, TextAreaInput, TextInput, LayoutThreeColumns as ThreeColumns, LayoutTwoColumns as TwoColumns } from "@weare/athenaeum-react-components";
+import Form from "@/components/Form/Form";
+import Button, { ButtonType } from "@/components/Button/Button";
+import Checkbox from "@/components/Checkbox/Checkbox";
+import FourColumns from "@/components/LayoutFourColumns/LayoutFourColumns";
+import DateInput from "@/components/DateInput/DateInput";
+import ButtonContainer from "@/components/ButtonContainer/ButtonContainer";
+import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
+import TextInput from "@/components/TextInput/TextInput";
+import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
+import LayoutThreeColumns from "@/components/LayoutThreeColumns/LayoutThreeColumns";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
@@ -19,15 +28,15 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                 <Form onSubmit={() => ch.alertMessageAsync("Submit", true) }>
 
-                    <TwoColumns>
+                    <LayoutTwoColumns>
 
                         <Checkbox label={"Checkbox #1"} inline />
 
                         <Checkbox label={"Checkbox #1"} readonly />
 
-                    </TwoColumns>
+                    </LayoutTwoColumns>
 
-                    <ThreeColumns>
+                    <LayoutThreeColumns>
 
                         <TextInput label={"Text input #1"}  />
 
@@ -35,7 +44,7 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                         <TextInput label={"Text input #3"} readonly />
 
-                    </ThreeColumns>
+                    </LayoutThreeColumns>
 
                     <FourColumns>
 
