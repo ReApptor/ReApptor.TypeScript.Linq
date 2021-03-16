@@ -44,8 +44,10 @@
     "start": "react-app-rewired start",
     "prebuild": "npm run copy:components",
     "build": "react-app-rewired build",
-    "copy:components": "cp -a '../WeAre.Athenaeum.React.Components/src/.' './src/components/' && rm './src/components/index.ts'",
-    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*'  --exec 'npm run copy:components'"
+    "copy:components": "rsync -av '../WeAre.Athenaeum.React.Components/src/.' './src/components/' && rm './src/components/index.ts'",
+    "copy:components:back": "rsync -av './src/components/.' '../WeAre.Athenaeum.React.Components/src/'",
+    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*'  --exec 'npm run copy:components'",
+    "watch:components:back": "nodemon --ext '.' --watch './src/components/*'  --exec 'npm run copy:components:back'"
   },
   "browserslist": []
 }
