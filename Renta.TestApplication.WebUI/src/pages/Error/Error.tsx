@@ -3,9 +3,9 @@ import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import {ServerError, BasePageParameters} from "@weare/athenaeum-react-common";
 
 import styles from "./Error.module.scss";
-import PageContainer from "@/components/PageContainer/PageContainer";
-import PageHeader from "@/components/PageContainer/PageHeader/PageHeader";
-import PageRow from "@/components/PageContainer/PageRow/PageRow";
+import PageContainer from "@weare/athenaeum-react-components/components/PageContainer/PageContainer";
+import PageHeader from "@weare/athenaeum-react-components/components/PageContainer/PageHeader/PageHeader";
+import PageRow from "@weare/athenaeum-react-components/components/PageContainer/PageRow/PageRow";
 
 export interface IErrorPageParameters extends BasePageParameters {
     error: ServerError | null;

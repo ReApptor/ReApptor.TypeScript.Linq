@@ -1,5 +1,5 @@
 import React from "react";
-import CheckboxNullable, { INullableCheckboxProps } from "@/components/CheckboxNullable/CheckboxNullable";
+import CheckboxNullable, { INullableCheckboxProps } from "@weare/athenaeum-react-components/components/CheckboxNullable/CheckboxNullable";
 
 import styles from "../Switch/Switch.module.scss";
 

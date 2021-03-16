@@ -1,12 +1,12 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import List from "@/components/List/List";
-import { AmountListItem } from "@/components/Dropdown/Dropdown";
-import Checkbox from "@/components/Checkbox/Checkbox";
-import Form from "@/components/Form/Form";
-import LayoutTwoColumns from "@/components/LayoutTwoColumns/LayoutTwoColumns";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import DropdownWidget from "@/components/DropdownWidget/DropdownWidget";
+import List from "@weare/athenaeum-react-components/components/List/List";
+import { AmountListItem } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import Checkbox from "@weare/athenaeum-react-components/components/Checkbox/Checkbox";
+import Form from "@weare/athenaeum-react-components/components/Form/Form";
+import LayoutTwoColumns from "@weare/athenaeum-react-components/components/LayoutTwoColumns/LayoutTwoColumns";
+import WidgetContainer from "@weare/athenaeum-react-components/components/WidgetContainer/WidgetContainer";
+import DropdownWidget from "@weare/athenaeum-react-components/components/DropdownWidget/DropdownWidget";
 
 export interface IDropdownWidgetTestsState {
     multiSelect: boolean,

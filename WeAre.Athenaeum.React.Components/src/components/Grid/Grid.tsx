@@ -9,8 +9,8 @@ import TotalRow from "./TotalRow/TotalRow";
 import CheckHeaderCell from "./Cell/CheckHeaderCell";
 
 import styles from "./Grid.module.scss";
-import Pagination from "@/components/Pagination/Pagintation";
-import GridLocalizer from "@/components/Grid/GridLocalizer";
+import Pagination from "@weare/athenaeum-react-components/components/Pagination/Pagintation";
+import GridLocalizer from "@weare/athenaeum-react-components/components/Grid/GridLocalizer";
 
 interface IGridProps<TItem = {}> extends IGridDefinition {
     data?: TItem[] | null;

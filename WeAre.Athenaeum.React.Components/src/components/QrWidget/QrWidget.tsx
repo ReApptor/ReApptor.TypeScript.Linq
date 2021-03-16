@@ -4,7 +4,7 @@ import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
-import QrWidgetLocalizer from "@/components/QrWidget/QrWidgetLocalizer";
+import QrWidgetLocalizer from "@weare/athenaeum-react-components/components/QrWidget/QrWidgetLocalizer";
 
 export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     onQr?(qr: string): Promise<void>;

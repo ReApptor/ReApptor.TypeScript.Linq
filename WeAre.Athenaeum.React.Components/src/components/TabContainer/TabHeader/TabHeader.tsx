@@ -4,7 +4,7 @@ import Icon from "../../Icon/Icon";
 import {ITabHeader, TabModel} from "../TabModel";
 
 import styles from "../TabContainer.module.scss";
-import TabContainerLocalizer from "@/components/TabContainer/TabContainerLocalizer";
+import TabContainerLocalizer from "@weare/athenaeum-react-components/components/TabContainer/TabContainerLocalizer";
 
 interface ITabHeaderProps {
     model: TabModel;

@@ -1,8 +1,8 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
-import { SelectListItem } from "@/components/Dropdown/SelectListItem";
-import Dropdown, { DropdownOrderBy, DropdownType, IDropdown } from "@/components/Dropdown/Dropdown";
-import ListLocalizer from "@/components/List/ListLocalizer";
+import { SelectListItem } from "@weare/athenaeum-react-components/components/Dropdown/SelectListItem";
+import Dropdown, { DropdownOrderBy, DropdownType, IDropdown } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import ListLocalizer from "@weare/athenaeum-react-components/components/List/ListLocalizer";
 
 import styles from "./List.module.scss";
 

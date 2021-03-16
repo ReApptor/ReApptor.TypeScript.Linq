@@ -1,14 +1,14 @@
 import React from "react";
 import {HashCodeUtility, IPagedList, SortDirection, TFormat, Utility} from "@weare/athenaeum-toolkit";
 import {Align, ch, IAsyncComponent, IBaseComponent, Justify, PageRoute, TextAlign, VerticalAlign} from "@weare/athenaeum-react-common";
-import {ActionType} from "@/models/Enums";
+import {ActionType} from "@weare/athenaeum-react-components/models/Enums";
 import {IIconProps} from "../Icon/Icon";
 import Comparator from "../../helpers/Comparator";
 import ArrayScope from "../../models/ArrayScope";
-import {IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
+import {IConfirmation} from "@weare/athenaeum-react-components/components/ConfirmationDialog/ConfirmationDialog";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
-import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "@/components/Dropdown/Dropdown";
-import { IInput } from "@/components/BaseInput/BaseInput";
+import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import { IInput } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
 
 const DEFAULT_PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 20;

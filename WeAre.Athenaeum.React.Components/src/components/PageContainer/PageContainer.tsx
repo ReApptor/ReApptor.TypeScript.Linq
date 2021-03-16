@@ -7,9 +7,9 @@ import PageRow from "./PageRow/PageRow";
 import Modal from "../Modal/Modal";
 import DocumentPreviewModal from "../DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
-import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@/components/ConfirmationDialog/ConfirmationDialog";
-import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
-import PageContainerLocalizer from "@/components/PageContainer/PageContainerLocalizer";
+import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "@weare/athenaeum-react-components/components/ConfirmationDialog/ConfirmationDialog";
+import AthenaeumComponentsConstants from "@weare/athenaeum-react-components/AthenaeumComponentsConstants";
+import PageContainerLocalizer from "@weare/athenaeum-react-components/components/PageContainer/PageContainerLocalizer";
 
 import styles from "./PageContainer.module.scss";
 

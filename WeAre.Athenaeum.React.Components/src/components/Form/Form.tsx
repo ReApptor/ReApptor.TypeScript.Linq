@@ -1,10 +1,10 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import {IInput} from "@/components/BaseInput/BaseInput";
+import {IInput} from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
 import { Dictionary } from "typescript-collections";
 import LayoutInline from "../LayoutInline/LayoutInline";
-import FormLocalizer from "@/components/Form/FormLocalizer";
+import FormLocalizer from "@weare/athenaeum-react-components/components/Form/FormLocalizer";
 
 import styles from "./Form.module.scss";
 

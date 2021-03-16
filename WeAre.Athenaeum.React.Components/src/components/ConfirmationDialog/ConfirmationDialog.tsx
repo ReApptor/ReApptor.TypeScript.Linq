@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
 import Button, { ButtonType } from "../Button/Button";
-import TextAreaInput from "@/components/TextAreaInput/TextAreaInput";
+import TextAreaInput from "@weare/athenaeum-react-components/components/TextAreaInput/TextAreaInput";
 import ConfirmationDialogLocalizer from "./ConfirmationDialogLocalizer";
 
 import styles from "./ConfirmationDialog.module.scss";

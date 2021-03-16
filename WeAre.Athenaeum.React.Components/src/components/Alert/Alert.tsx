@@ -1,8 +1,8 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
-import AthenaeumComponentsConstants from "@/AthenaeumComponentsConstants";
-import AlertLocalizer from "@/components/Alert/AlertLocalizer";
+import AthenaeumComponentsConstants from "@weare/athenaeum-react-components/AthenaeumComponentsConstants";
+import AlertLocalizer from "@weare/athenaeum-react-components/components/Alert/AlertLocalizer";
 
 import styles from "./Alert.module.scss";
 

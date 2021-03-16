@@ -34,10 +34,7 @@ const path = require("path");
 // };
 
 module.exports = override(
-    addWebpackAlias({ ["@/AthenaeumComponentsConstants"]: path.resolve(__dirname, "src/components/AthenaeumComponentsConstants.ts")}),
-    addWebpackAlias({ ["@/models/Enums"]: path.resolve(__dirname, "src/components/models/Enums.ts")}),
-    addWebpackAlias({ ["@/components"]: path.resolve(__dirname, "src/components/components")}),
-    addWebpackAlias({ ["@/helpers"]: path.resolve(__dirname, "src/components/helpers")}),
+    addWebpackAlias({ ["@weare/athenaeum-react-components"]: path.resolve(__dirname, "src/components")}),
     addWebpackAlias({ ["@"]: path.resolve(__dirname, "src")}),
     ...addBabelPlugins("babel-plugin-ts-nameof"),
 );

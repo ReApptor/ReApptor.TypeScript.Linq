@@ -4,12 +4,12 @@ import { Utility } from "@weare/athenaeum-toolkit";
 import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
-import {BaseInputType, DropdownSchema} from "@/models/Enums";
+import {BaseInputType, DropdownSchema} from "@weare/athenaeum-react-components/models/Enums";
 import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
-import Button, {ButtonType} from "@/components/Button/Button";
-import DropdownLocalizer from "@/components/Dropdown/DropdownLocalizer";
+import Button, {ButtonType} from "@weare/athenaeum-react-components/components/Button/Button";
+import DropdownLocalizer from "@weare/athenaeum-react-components/components/Dropdown/DropdownLocalizer";
 
 import styles from "./Dropdown.module.scss";
 

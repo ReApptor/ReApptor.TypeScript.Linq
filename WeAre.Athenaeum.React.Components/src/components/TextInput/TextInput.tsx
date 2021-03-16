@@ -1,8 +1,8 @@
 import React from "react";
 import BaseInput, {ValidatorCallback, IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
-import { BaseInputType  } from "@/models/Enums";
+import { BaseInputType  } from "@weare/athenaeum-react-components/models/Enums";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
-import TextInputLocalizer from "@/components/TextInput/TextInputLocalizer";
+import TextInputLocalizer from "@weare/athenaeum-react-components/components/TextInput/TextInputLocalizer";
 
 import styles from "./TextInput.module.scss";
 

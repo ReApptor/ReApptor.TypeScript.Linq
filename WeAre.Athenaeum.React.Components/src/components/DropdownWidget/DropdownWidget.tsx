@@ -1,15 +1,15 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
-import { DropdownSchema } from "@/models/Enums";
+import { DropdownSchema } from "@weare/athenaeum-react-components/models/Enums";
 import {RenderCallback} from "@weare/athenaeum-react-common";
-import Dropdown, { DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown } from "@/components/Dropdown/Dropdown";
-import { SelectListItem } from "@/components/Dropdown/SelectListItem";
-import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@/components/WidgetContainer/BaseWidget";
-import PageContainer from "@/components/PageContainer/PageContainer";
-import { IWidgetContainer } from "@/components/WidgetContainer/BaseWidgetContainer";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import Comparator from "@/helpers/Comparator";
-import DropdownWidgetLocalizer from "@/components/DropdownWidget/DropdownWidgetLocalizer";
+import Dropdown, { DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
+import { SelectListItem } from "@weare/athenaeum-react-components/components/Dropdown/SelectListItem";
+import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "@weare/athenaeum-react-components/components/WidgetContainer/BaseWidget";
+import PageContainer from "@weare/athenaeum-react-components/components/PageContainer/PageContainer";
+import { IWidgetContainer } from "@weare/athenaeum-react-components/components/WidgetContainer/BaseWidgetContainer";
+import WidgetContainer from "@weare/athenaeum-react-components/components/WidgetContainer/WidgetContainer";
+import Comparator from "@weare/athenaeum-react-components/helpers/Comparator";
+import DropdownWidgetLocalizer from "@weare/athenaeum-react-components/components/DropdownWidget/DropdownWidgetLocalizer";
 
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
 

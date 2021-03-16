@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import NumberWidget from "@/components/NumberWidget/NumberWidget";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
+import NumberWidget from "@weare/athenaeum-react-components/components/NumberWidget/NumberWidget";
+import WidgetContainer from "@weare/athenaeum-react-components/components/WidgetContainer/WidgetContainer";
 
 export default class NumberWidgetTests extends BaseComponent {
 
