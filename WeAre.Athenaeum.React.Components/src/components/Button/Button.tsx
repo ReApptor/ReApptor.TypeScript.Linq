@@ -207,7 +207,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         )
                     }
                     
-                    <span>Test 4: {this.props.label}</span>
+                    <span>{this.props.label}</span>
 
                     {
                         (this.hasActions) &&
