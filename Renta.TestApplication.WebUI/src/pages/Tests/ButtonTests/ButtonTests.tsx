@@ -1,10 +1,7 @@
 import React from "react";
 import {BaseComponent, ch, Justify} from "@weare/athenaeum-react-common";
-import Form from "@weare/athenaeum-react-components/components/Form/Form";
-import Button, { ButtonType } from "@weare/athenaeum-react-components/components/Button/Button";
-import FourColumns from "@weare/athenaeum-react-components/components/LayoutFourColumns/LayoutFourColumns";
-import ButtonContainer from "@weare/athenaeum-react-components/components/ButtonContainer/ButtonContainer";
-import LayoutTwoColumns from "@weare/athenaeum-react-components/components/LayoutTwoColumns/LayoutTwoColumns";
+import FourColumns from "@/@weare/athenaeum-react-components/components/LayoutFourColumns/LayoutFourColumns";
+import { Button, ButtonType, Form, LayoutTwoColumns, ButtonContainer } from "@weare/athenaeum-react-components";
 
 interface IButtonTestsState {
 }
