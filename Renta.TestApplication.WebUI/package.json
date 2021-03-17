@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "prebuild": "npm run copy:components",
+    "prebuild": "npm run copy:toolkit && copy:common && copy:components",
     "build": "react-app-rewired build",
     "copy:components": "rsync -av '../WeAre.Athenaeum.React.Components/src/.' './src/@weare/athenaeum-react-components/'",
     "copy:components:back": "rsync -av './src/@weare/athenaeum-react-components/.' '../WeAre.Athenaeum.React.Components/src/'",
