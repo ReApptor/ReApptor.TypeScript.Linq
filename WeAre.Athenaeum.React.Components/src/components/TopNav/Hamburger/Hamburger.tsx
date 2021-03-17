@@ -4,7 +4,7 @@ import { IMenuItem } from "../TopNav";
 import Link from "../../Link/Link";
 
 import styles from "./Hamburger.module.scss";
-import TopNavLocalizer from "@weare/athenaeum-react-components/components/TopNav/TopNavLocalizer";
+import TopNavLocalizer from "../TopNavLocalizer";
 
 interface IHamburgerProps {
     open: boolean;

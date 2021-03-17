@@ -1,7 +1,7 @@
 import {Utility, GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {PageRoute} from "@weare/athenaeum-react-common";
-import {SelectListItem, StatusListItem} from "@weare/athenaeum-react-components/components/Dropdown/SelectListItem";
-import AddressHelper from "@weare/athenaeum-react-components/helpers/AddressHelper";
+import { SelectListItem, StatusListItem } from "../components/Dropdown/SelectListItem";
+import AddressHelper from "./AddressHelper";
 
 export default class Comparator {
 

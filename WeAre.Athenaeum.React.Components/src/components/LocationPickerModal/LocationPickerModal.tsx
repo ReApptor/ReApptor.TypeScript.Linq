@@ -1,14 +1,14 @@
 import React from "react";
 import {GeoLocation} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import LocationPicker from "@weare/athenaeum-react-components/components/LocationPicker/LocationPicker";
-import Modal from "@weare/athenaeum-react-components/components/Modal/Modal";
-import ButtonContainer from "@weare/athenaeum-react-components/components/ButtonContainer/ButtonContainer";
-import Button, { ButtonType } from "@weare/athenaeum-react-components/components/Button/Button";
-import AddressHelper from "@weare/athenaeum-react-components/helpers/AddressHelper";
-import LocationPickerModalLocalizer from "@weare/athenaeum-react-components/components/LocationPickerModal/LocationPickerModalLocalizer";
 
 import styles from "./LocationPickerModal.module.scss";
+import LocationPicker from "../LocationPicker/LocationPicker";
+import Modal from "../Modal/Modal";
+import LocationPickerModalLocalizer from "./LocationPickerModalLocalizer";
+import AddressHelper from "../../helpers/AddressHelper";
+import Button, { ButtonType } from "../Button/Button";
+import ButtonContainer from '../ButtonContainer/ButtonContainer';
 
 interface ILocationPickerModalProps {
     id?: string;

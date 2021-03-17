@@ -5,7 +5,7 @@ import {ColumnModel, ColumnType, GridModel, GridTransformer} from "../GridModel"
 import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
 
 import styles from "../Grid.module.scss";
-import GridLocalizer from "@weare/athenaeum-react-components/components/Grid/GridLocalizer";
+import GridLocalizer from "../GridLocalizer";
 
 interface IHeaderCellProps<TItem = {}> {
     column: ColumnModel<TItem>;

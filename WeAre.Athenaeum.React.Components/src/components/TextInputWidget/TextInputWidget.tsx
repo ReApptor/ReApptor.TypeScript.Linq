@@ -2,7 +2,7 @@ import React from "react";
 import BaseInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../WidgetContainer/BaseInputWidget";
 
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
-import AutoSuggest, {AutoSuggestItem} from "@weare/athenaeum-react-components/components/TextInput/AutoSuggest/AutoSuggest";
+import AutoSuggest, { AutoSuggestItem } from "../TextInput/AutoSuggest/AutoSuggest";
 
 interface ITextInputWidgetProps extends IBaseInputWidgetProps {
     autoSuggestItems?: AutoSuggestItem[];

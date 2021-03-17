@@ -1,10 +1,10 @@
 import React from "react";
 import BaseInput, {ValidatorCallback, IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
-import { BaseInputType  } from "@weare/athenaeum-react-components/models/Enums";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
-import TextInputLocalizer from "@weare/athenaeum-react-components/components/TextInput/TextInputLocalizer";
 
 import styles from "./TextInput.module.scss";
+import TextInputLocalizer from "./TextInputLocalizer";
+import { BaseInputType } from "../../models/Enums";
 
 export interface ITextInputProps extends IBaseInputProps<string> {
     maxLength?: number;

@@ -1,9 +1,9 @@
 import React from "react";
 import BaseInput, { IBaseInputProps, IBaseInputState, NullableCheckboxType, ValidatorCallback } from "../BaseInput/BaseInput";
-import {BaseInputType} from "@weare/athenaeum-react-components/models/Enums";
-import Icon, { IconSize } from "@weare/athenaeum-react-components/components/Icon/Icon";
 
-import styles from "@weare/athenaeum-react-components/components/Checkbox/Checkbox.module.scss";
+import { BaseInputType } from "../../models/Enums";
+import Icon, { IconSize } from "../Icon/Icon";
+import styles from "../Checkbox/Checkbox.module.scss";
 
 export interface INullableCheckboxProps extends IBaseInputProps<NullableCheckboxType> {
     excludeNull?: boolean;

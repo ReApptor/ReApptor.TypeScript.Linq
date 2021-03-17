@@ -1,7 +1,7 @@
 import React from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import IconLocalizer from "@weare/athenaeum-react-components/components/Icon/IconLocalizer";
+import IconLocalizer from "./IconLocalizer";
 
 export enum IconSize {
     Normal,

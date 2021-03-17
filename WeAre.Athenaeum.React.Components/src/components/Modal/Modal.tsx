@@ -4,9 +4,9 @@ import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@wea
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
-import ModalLocalizer from "@weare/athenaeum-react-components/components/Modal/ModalLocalizer";
 
 import "./BootstrapOverride.scss";
+import ModalLocalizer from "./ModalLocalizer";
 
 export enum ModalSize {
     Default,
