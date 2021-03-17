@@ -51,7 +51,7 @@
     "rollup-plugin-typescript2": "^0.28.0",
     "ts-nameof": "^5.0.0",
     "ttypescript": "^1.5.12",
-    "typescript": "3.4",
+    "typescript": "3.8",
     "typescript-transform-paths": "^1.1.15"
   },
   "keywords": [
