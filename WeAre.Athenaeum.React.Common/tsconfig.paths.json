@@ -1,8 +1,0 @@
-﻿{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@weare/athenaeum-react-common/*": ["src/*"]
-    }
-  }
-}
