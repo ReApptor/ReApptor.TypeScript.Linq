@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@weare/athenaeum-react-components": ["src/@weare/athenaeum-react-components/index.ts"],
+      "@weare/athenaeum-react-common": ["src/@weare/athenaeum-react-common/index.ts"],
       "@/*": ["src/*"],
     }
   }
