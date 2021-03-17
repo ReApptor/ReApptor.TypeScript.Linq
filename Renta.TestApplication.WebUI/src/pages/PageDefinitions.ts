@@ -1,5 +1,4 @@
 import {BasePageDefinitions, PageRoute} from "@weare/athenaeum-react-common";
-import {IBasePage} from "@weare/athenaeum-react-common/lib/types/src/base/BasePage";
 
 export default class PageDefinitions extends BasePageDefinitions {
 
