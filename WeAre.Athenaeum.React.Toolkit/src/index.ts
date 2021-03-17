@@ -24,44 +24,73 @@ import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
 import TypeResolver, { TDecoratorConstructor, ITypeResolver } from "./providers/TypeResolver";
 import ServiceProvider, { ServiceType, ServiceCallback, IService, TService, TType } from "./providers/ServiceProvider";
 import TypeConverter, { ITypeConverter, TClassDecorator } from "./providers/TypeConverter";
-import IStringConverter, { TStringConverter, ToString } from "./providers/StringConverter";
+import StringConverter, { TStringConverter, ToString, IStringConverter } from "./providers/StringConverter";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
 //Other:
 import BaseLocalizer, { ILanguage, ILocalizer } from "./localization/BaseLocalizer";
 import AthenaeumConstants from "./AthenaeumConstants";
 
+//Models:
 export {
-    //Models:
-    FileModel,
-    GeoLocation,
-    GeoCoordinate,
-    TimeSpan,
-    IPagedList,
-    ISelectListItem,
-    //Utilities:
+    FileModel, GeoLocation, GeoCoordinate, TimeSpan,
+};
+export type { IPagedList, ISelectListItem };
+
+//Utilities:
+export {
     ArrayUtility, SortDirection,
-    NumberUtility, INumberFormat, NumberParsingResult,
+    NumberUtility, NumberParsingResult,
     StringUtility,
     BoolUtility,
     DateUtility,
     HashCodeUtility,
     Utility,
-    //Extensions:
+};
+export type { INumberFormat };
+
+//Extensions:
+export {
     DateExtensions,
     StringExtensions,
     ArrayExtensions,
     NumberExtensions,
-    //Providers:
-    BaseTransformProvider, ITransformProvider, TFormat,
-    BaseEnumProvider, IEnumProvider,
-    TypeResolver, TDecoratorConstructor, ITypeResolver,
-    ServiceProvider, ServiceType, ServiceCallback, IService, TService, TType,
-    TypeConverter, ITypeConverter, TClassDecorator,
-    IStringConverter, TStringConverter, ToString,
-    //Helpers:
-    PwaHelper,
-    //Other:
-    BaseLocalizer, ILanguage, ILocalizer,
-    AthenaeumConstants
+};
+
+//Providers:
+export {
+    BaseTransformProvider,
+    BaseEnumProvider,
+    TypeResolver,
+    ServiceProvider, ToString, TypeConverter, StringConverter
 }
+export type {
+    IEnumProvider, 
+    ITransformProvider, 
+    TFormat, ITypeConverter,
+    IStringConverter, 
+    TClassDecorator, 
+    TStringConverter, 
+    ServiceType, 
+    ServiceCallback, 
+    IService, 
+    TService, 
+    TType, 
+    TDecoratorConstructor, 
+    ITypeResolver
+};
+
+//Helpers:
+export {
+    PwaHelper
+}
+
+export type {
+    ILanguage, ILocalizer
+};
+
+//Other:
+export {
+    BaseLocalizer,
+    AthenaeumConstants
+};
