@@ -36,6 +36,7 @@ const path = require("path");
 module.exports = override(
     addWebpackAlias({ ["@weare/athenaeum-react-components"]: path.resolve(__dirname, "src/@weare/athenaeum-react-components/index.ts")}),
     addWebpackAlias({ ["@weare/athenaeum-react-common"]: path.resolve(__dirname, "src/@weare/athenaeum-react-common/index.ts")}),
+    addWebpackAlias({ ["@weare/athenaeum-toolkit"]: path.resolve(__dirname, "src/@weare/athenaeum-toolkit/index.ts")}),
     addWebpackAlias({ ["@"]: path.resolve(__dirname, "src")}),
     ...addBabelPlugins("babel-plugin-ts-nameof"),
 );
