@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@weare/athenaeum-react-components/*": ["src/@weare/athenaeum-react-components/*"],
+      "@weare/athenaeum-react-components": ["src/@weare/athenaeum-react-components/index.ts"],
       "@/*": ["src/*"],
     }
   }
