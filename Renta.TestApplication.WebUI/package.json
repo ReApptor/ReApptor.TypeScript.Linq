@@ -2,7 +2,6 @@
   "name": "WeAre.Athenaeum.TemplateApp.WebUI",
   "private": true,
   "dependencies": {
-    "@weare/athenaeum-toolkit": "^1.0.493",
     "async-mutex": "^0.1.3",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
@@ -50,7 +49,11 @@
     "copy:common": "rsync -av '../WeAre.Athenaeum.React.Common/src/.' './src/@weare/athenaeum-react-common/'",
     "copy:common:back": "rsync -av './src/@weare/athenaeum-react-common/.' '../WeAre.Athenaeum.React.Common/src/'",
     "watch:common": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Common/src/*'  --exec 'npm run copy:common'",
-    "watch:common:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-common/*'  --exec 'npm run copy:common:back'"
+    "watch:common:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-common/*'  --exec 'npm run copy:common:back'",
+    "copy:toolkit": "rsync -av '../WeAre.Athenaeum.React.Toolkit/src/.' './src/@weare/athenaeum-toolkit/'",
+    "copy:toolkit:back": "rsync -av './src/@weare/athenaeum-toolkit/.' '../WeAre.Athenaeum.React.Toolkit/src/'",
+    "watch:toolkit": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Toolkit/src/*'  --exec 'npm run copy:toolkit'",
+    "watch:toolkit:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-toolkit/*'  --exec 'npm run copy:toolkit:back'"
   },
   "browserslist": []
 }
