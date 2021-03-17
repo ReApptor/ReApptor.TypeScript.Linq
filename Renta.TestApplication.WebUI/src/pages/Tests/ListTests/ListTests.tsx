@@ -1,9 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Form from "@weare/athenaeum-react-components/components/Form/Form";
-import Checkbox from "@weare/athenaeum-react-components/components/Checkbox/Checkbox";
-import List from "@weare/athenaeum-react-components/components/List/List";
-import LayoutTwoColumns from "@weare/athenaeum-react-components/components/LayoutTwoColumns/LayoutTwoColumns";
+import { Checkbox, Form, LayoutTwoColumns, List } from "@weare/athenaeum-react-components";
 
 export interface IListTestsState {
     multiSelect: boolean,
