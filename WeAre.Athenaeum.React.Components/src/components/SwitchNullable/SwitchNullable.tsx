@@ -1,7 +1,7 @@
 import React from "react";
-import CheckboxNullable, { INullableCheckboxProps } from "@weare/athenaeum-react-components/components/CheckboxNullable/CheckboxNullable";
 
 import styles from "../Switch/Switch.module.scss";
+import CheckboxNullable, { INullableCheckboxProps } from "../CheckboxNullable/CheckboxNullable";
 
 interface INullableSwitchProps extends INullableCheckboxProps {
     leftLabel?: string;

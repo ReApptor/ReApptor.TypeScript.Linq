@@ -1,11 +1,11 @@
 import React from "react";
 import {GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-import AddressInput from "@weare/athenaeum-react-components/components/AddressInput/AddressInput";
-import AddressHelper from "@weare/athenaeum-react-components/helpers/AddressHelper";
-import Comparator from "@weare/athenaeum-react-components/helpers/Comparator";
 
 import styles from "./LocationPicker.module.scss";
+import Comparator from "../../helpers/Comparator";
+import AddressHelper from "../../helpers/AddressHelper";
+import AddressInput from "../AddressInput/AddressInput";
 
 interface ILocationPickerProps {
     id?: string;

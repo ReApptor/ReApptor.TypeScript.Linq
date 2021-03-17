@@ -2,9 +2,9 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import LayoutTwoColumns from "../LayoutTwoColumns/LayoutTwoColumns";
 import TextInput from "../TextInput/TextInput";
-import { IInput } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
-import LayoutOneColumn from "@weare/athenaeum-react-components/components/LayoutOneColumn/LayoutOneColumn";
 import VirtualAddressDividerLocalizer from "./VirtualAddressDividerLocalizer";
+import { IInput } from "../BaseInput/BaseInput";
+import LayoutOneColumn from "../LayoutOneColumn/LayoutOneColumn";
 
 interface IVirtualAddressDividerProps {
     id?: string;

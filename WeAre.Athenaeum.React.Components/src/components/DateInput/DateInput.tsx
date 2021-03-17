@@ -16,7 +16,7 @@ import fi from "date-fns/locale/fi";
 import en from "date-fns/locale/en-GB";
 //import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
-import DateInputLocalizer from "@weare/athenaeum-react-components/components/DateInput/DateInputLocalizer";
+import DateInputLocalizer from "./DateInputLocalizer";
 
 registerLocale("fi", fi);
 registerLocale("en", en);

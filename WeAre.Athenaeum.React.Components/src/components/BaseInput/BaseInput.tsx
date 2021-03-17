@@ -1,12 +1,12 @@
 import React from "react";
 import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback} from "@weare/athenaeum-react-common";
-import {BaseInputType, InputValidationRule} from "@weare/athenaeum-react-components/models/Enums";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
-import AthenaeumComponentsConstants from "@weare/athenaeum-react-components/AthenaeumComponentsConstants";
-import BaseInputLocalizer from "@weare/athenaeum-react-components/components/BaseInput/BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
+import BaseInputLocalizer from "./BaseInputLocalizer";
+import { BaseInputType, InputValidationRule } from "../../models/Enums";
 
 export type NullableCheckboxType = boolean | null;
 

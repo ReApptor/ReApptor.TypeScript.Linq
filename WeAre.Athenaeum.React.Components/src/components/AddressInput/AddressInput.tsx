@@ -3,15 +3,15 @@ import $ from "jquery";
 import Autocomplete from "react-google-autocomplete";
 import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ch} from "@weare/athenaeum-react-common";
-import {BaseInputType} from "@weare/athenaeum-react-components/models/Enums";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
-import Icon from "@weare/athenaeum-react-components/components/Icon/Icon";
-import LocationPickerModal from "@weare/athenaeum-react-components/components/LocationPickerModal/LocationPickerModal";
-import AddressHelper, {GoogleApiResult} from "@weare/athenaeum-react-components/helpers/AddressHelper";
-import Comparator from "@weare/athenaeum-react-components/helpers/Comparator";
 
+import formStyles from "../Form/Form.module.scss";
 import textInputStyles from "../TextInput/TextInput.module.scss";
-import formStyles from "@weare/athenaeum-react-components/components/Form/Form.module.scss";
+import LocationPickerModal from "../LocationPickerModal/LocationPickerModal";
+import AddressHelper, { GoogleApiResult } from "../../helpers/AddressHelper";
+import { BaseInputType } from "../../models/Enums";
+import Comparator from "../../helpers/Comparator";
+import Icon from "../Icon/Icon";
 
 export interface IAddressInputProps extends IBaseInputProps<string> {
     small?: boolean;

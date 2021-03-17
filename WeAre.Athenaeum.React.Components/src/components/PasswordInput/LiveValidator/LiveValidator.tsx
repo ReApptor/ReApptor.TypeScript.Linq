@@ -2,7 +2,7 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 
 import styles from "./LiveValidator.module.scss";
-import PasswordInputLocalizer from "@weare/athenaeum-react-components/components/PasswordInput/PasswordInputLocalizer";
+import PasswordInputLocalizer from "../PasswordInputLocalizer";
 
 export class ValidationRow {
     public regex: string;

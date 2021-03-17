@@ -1,8 +1,8 @@
 import React from "react";
 import BaseInput, {IBaseInputProps, IBaseInputState, LengthValidator, ValidatorCallback} from "../BaseInput/BaseInput";
-import {BaseInputType} from "@weare/athenaeum-react-components/models/Enums";
 
 import styles from "./TextAreaInput.module.scss";
+import { BaseInputType } from "../../models/Enums";
 
 export interface ITextAreaInputProps extends IBaseInputProps<string> {
     readonly?: boolean;

@@ -4,8 +4,8 @@ import { CellModel, ColumnSettings } from "../../GridModel";
 import Comparator from "../../../../helpers/Comparator";
 
 import gridStyles from "../../Grid.module.scss";
-import Dropdown, { DropdownOrderBy } from "@weare/athenaeum-react-components/components/Dropdown/Dropdown";
-import { IInput } from "@weare/athenaeum-react-components/components/BaseInput/BaseInput";
+import Dropdown, { DropdownOrderBy } from "../../../Dropdown/Dropdown";
+import { IInput } from "../../../BaseInput/BaseInput";
 
 interface IDropdownCellProps<TItem = {}> {
     id?: string;

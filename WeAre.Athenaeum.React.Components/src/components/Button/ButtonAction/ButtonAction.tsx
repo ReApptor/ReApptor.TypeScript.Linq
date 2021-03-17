@@ -1,8 +1,8 @@
 import React from "react";
 import {Justify} from "@weare/athenaeum-react-common";
-import Icon, {IIconProps} from "@weare/athenaeum-react-components/components/Icon/Icon";
 
 import styles from "../Button.module.scss"
+import Icon, { IIconProps } from "../../Icon/Icon";
 
 export interface IButtonActionProps {
     title: string;

@@ -16,9 +16,7 @@
     "strictNullChecks": true,                     /* Enable strict null checks. */
     "moduleResolution": "node",                   /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "baseUrl": ".",                               /* Base directory to resolve non-absolute module names. */
-    "paths": {                                    /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
-      "@weare/athenaeum-react-components/*": ["src/*"] 
-    },                
+    "paths": {},                                  /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "allowSyntheticDefaultImports": true,         /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     "esModuleInterop": true,                      /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "resolveJsonModule": true,                    /* Include modules imported with '.json' extension. Requires TypeScript version 2.9 or later.'. */

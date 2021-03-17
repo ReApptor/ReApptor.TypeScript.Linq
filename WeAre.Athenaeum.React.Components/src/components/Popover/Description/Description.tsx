@@ -6,9 +6,9 @@ import Button, { ButtonType } from "../../Button/Button";
 import Popover from "../Popover";
 import { Dictionary } from "typescript-collections";
 import { IconSize } from "../../Icon/Icon";
-import TextAreaInput from "@weare/athenaeum-react-components/components/TextAreaInput/TextAreaInput";
 
 import styles from "./Description.module.scss";
+import TextAreaInput from "../../TextAreaInput/TextAreaInput";
 
 interface IDescriptionProps {
     model?: DescriptionModel;
