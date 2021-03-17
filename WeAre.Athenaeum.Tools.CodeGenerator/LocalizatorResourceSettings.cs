@@ -4,6 +4,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
     {
         public const string ComponentNameTag = "$(COMPONENT_NAME)";
         
+        public const string ComponentFullNameTag = "$(COMPONENT_FULL_NAME)";
+        
         public LocalizatorResourceManager.Type Type { get; set; }
         
         public string NeutralLanguage { get; set; }

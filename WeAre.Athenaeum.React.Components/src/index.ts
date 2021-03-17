@@ -95,9 +95,9 @@ import BaseInput, {
     BaseValidator, NumberRangeValidator, BaseFileValidator, BaseInputValue, BaseRegexValidator, RegexValidator, RequiredValidator, ValidatorCallback, IValidator,
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
 } from "./components/BaseInput/BaseInput";
-import LayoutFourColumns from "./components/LayoutFourColumns/LayoutFourColumns";
+import FourColumns from "./components/Layout.FourColumns/FourColumns";
 import LayoutInline, { JustifyContent } from "./components/LayoutInline/LayoutInline";
-import LayoutOneColumn from "./components/LayoutOneColumn/LayoutOneColumn";
+import OneColumn from "./components/Layout.OneColumn/OneColumn";
 import LayoutThreeColumns from "./components/LayoutThreeColumns/LayoutThreeColumns";
 import LayoutTwoColumns from "./components/LayoutTwoColumns/LayoutTwoColumns";
 import Layout from "./components/Layout/Layout";
@@ -264,9 +264,9 @@ export type {
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, NullableCheckboxType, INumberInputModel, IStringInputModel, IValidatable, ValidatorCallback, BaseInputValue
 };
 
-export { LayoutFourColumns };
+export { FourColumns };
 export { LayoutInline, JustifyContent };
-export { LayoutOneColumn };
+export { OneColumn };
 export { LayoutThreeColumns };
 export { LayoutTwoColumns };
 export { Layout };

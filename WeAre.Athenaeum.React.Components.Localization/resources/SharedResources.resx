@@ -267,7 +267,7 @@
   <data name="EmailInput" xml:space="preserve">
     <value />
   </data>
-  <data name="LayoutFourColumns" xml:space="preserve">
+  <data name="Layout.FourColumns" xml:space="preserve">
     <value />
   </data>
   <data name="Link" xml:space="preserve">
@@ -279,7 +279,7 @@
   <data name="NumberInput" xml:space="preserve">
     <value />
   </data>
-  <data name="LayoutOneColumn" xml:space="preserve">
+  <data name="Layout.OneColumn" xml:space="preserve">
     <value />
   </data>
   <data name="LayoutInline" xml:space="preserve">
