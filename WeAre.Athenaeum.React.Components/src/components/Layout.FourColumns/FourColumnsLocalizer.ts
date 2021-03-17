@@ -2,7 +2,7 @@
 
 import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 
-class WizardContainerLocalizer extends BaseComponentLocalizer {
+class FourColumnsLocalizer extends BaseComponentLocalizer {
 
     //Constants
 
@@ -28,4 +28,4 @@ class WizardContainerLocalizer extends BaseComponentLocalizer {
 }
 
 //Singleton
-export default new WizardContainerLocalizer();
+export default new FourColumnsLocalizer();

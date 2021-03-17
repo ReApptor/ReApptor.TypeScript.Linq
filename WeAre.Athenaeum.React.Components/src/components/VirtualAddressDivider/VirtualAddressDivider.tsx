@@ -2,9 +2,9 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import LayoutTwoColumns from "../LayoutTwoColumns/LayoutTwoColumns";
 import TextInput from "../TextInput/TextInput";
-import VirtualAddressDividerLocalizer from "./VirtualAddressDividerLocalizer";
 import { IInput } from "../BaseInput/BaseInput";
-import LayoutOneColumn from "../LayoutOneColumn/LayoutOneColumn";
+import OneColumn from "../Layout.OneColumn/OneColumn";
+import VirtualAddressDividerLocalizer from "./VirtualAddressDividerLocalizer";
 
 interface IVirtualAddressDividerProps {
     id?: string;
@@ -106,16 +106,18 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
     render() {
         return (
             <React.Fragment>
-                <LayoutOneColumn>
+                
+                <OneColumn>
                     <TextInput ref={this._addressInputRef}
                                id={`${this.id}_address`} required
                                label={VirtualAddressDividerLocalizer.street} 
                                value={this.state.address}
                                onChange={(sender, value) => this.onAddressChangeAsync(value)}
                     />
-                </LayoutOneColumn>
+                </OneColumn>
                 
                 <LayoutTwoColumns>
+                    
                     <TextInput ref={this._cityInputRef}
                                id={`${this.id}_city`} required
                                label={VirtualAddressDividerLocalizer.city} 
@@ -129,7 +131,9 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                                value={this.state.postalCode}
                                onChange={(sender, value) => this.onPostalCodeChangeAsync(value)}
                     />
+                    
                 </LayoutTwoColumns>
+                
             </React.Fragment>
         )
     }

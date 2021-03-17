@@ -1,7 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import FourColumns from "@/@weare/athenaeum-react-components/components/LayoutFourColumns/LayoutFourColumns";
-import { Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, LayoutThreeColumns, LayoutTwoColumns, TextAreaInput, TextInput } from "@weare/athenaeum-react-components";
+import { Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, LayoutThreeColumns, LayoutTwoColumns, TextAreaInput, TextInput, FourColumns } from "@weare/athenaeum-react-components";
 
 
 interface IModalTestsState {

@@ -1,7 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, Justify} from "@weare/athenaeum-react-common";
-import FourColumns from "@/@weare/athenaeum-react-components/components/LayoutFourColumns/LayoutFourColumns";
-import { Button, ButtonType, Form, LayoutTwoColumns, ButtonContainer } from "@weare/athenaeum-react-components";
+import {Button, ButtonType, Form, LayoutTwoColumns, ButtonContainer, FourColumns} from "@weare/athenaeum-react-components";
 
 interface IButtonTestsState {
 }
