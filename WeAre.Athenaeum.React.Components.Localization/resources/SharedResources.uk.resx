@@ -12,73 +12,73 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>UK-UA: {0} selected</value>
+    <value>UK: {0} selected</value>
   </data>
     <data name="List.Loading" xml:space="preserve">
-    <value>UK-UA: Loading...</value>
+    <value>UK: Loading...</value>
   </data>
     <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>UK-UA: Clear</value>
+    <value>UK: Clear</value>
   </data>
     <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>UK-UA: Done</value>
+    <value>UK: Done</value>
   </data>
     <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>UK-UA: Save changes</value>
+    <value>UK: Save changes</value>
   </data>
     <data name="Modal.Close" xml:space="preserve">
-    <value>UK-UA: Close</value>
+    <value>UK: Close</value>
   </data>
     <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>UK-UA: Page help</value>
+    <value>UK: Page help</value>
   </data>
     <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>UK-UA: Previous</value>
+    <value>UK: Previous</value>
   </data>
     <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>UK-UA: Return to previous step</value>
+    <value>UK: Return to previous step</value>
   </data>
     <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>UK-UA: Next</value>
+    <value>UK: Next</value>
   </data>
     <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>UK-UA: Go to next step</value>
+    <value>UK: Go to next step</value>
   </data>
     <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>UK-UA: Are you sure?</value>
+    <value>UK: Are you sure?</value>
   </data>
     <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>UK-UA: Confirm</value>
+    <value>UK: Confirm</value>
   </data>
     <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>UK-UA: Close</value>
+    <value>UK: Close</value>
   </data>
     <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>UK-UA: Please leave a comment</value>
+    <value>UK: Please leave a comment</value>
   </data>
     <data name="AddressDivider.Address" xml:space="preserve">
-    <value>UK-UA: Address</value>
+    <value>UK: Address</value>
   </data>
     <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>UK-UA: Street</value>
+    <value>UK: Street</value>
   </data>
     <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>UK-UA: City</value>
+    <value>UK: City</value>
   </data>
     <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>UK-UA: Postal code</value>
+    <value>UK: Postal code</value>
   </data>
     <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>UK-UA: Drag'n'drop file here, or click to select</value>
+    <value>UK: Drag'n'drop file here, or click to select</value>
   </data>
     <data name="FileInput.Readonly" xml:space="preserve">
-    <value>UK-UA: File is readonly</value>
+    <value>UK: File is readonly</value>
   </data>
     <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>UK-UA: Preview</value>
+    <value>UK: Preview</value>
   </data>
     <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>UK-UA: Choose file</value>
+    <value>UK: Choose file</value>
   </data>
     <data name="Alert" xml:space="preserve">
     <value />
@@ -105,40 +105,40 @@
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>UK-UA: Location picker</value>
+    <value>UK: Location picker</value>
   </data>
     <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>UK-UA: Choose location on map</value>
+    <value>UK: Choose location on map</value>
   </data>
     <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>UK-UA: Set location</value>
+    <value>UK: Set location</value>
   </data>
     <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>UK-UA: No items found</value>
+    <value>UK: No items found</value>
   </data>
     <data name="Dropdown.NoData" xml:space="preserve">
-    <value>UK-UA: No data</value>
+    <value>UK: No data</value>
   </data>
     <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>UK-UA: Filter results</value>
+    <value>UK: Filter results</value>
   </data>
     <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>UK-UA: Start typing to get results</value>
+    <value>UK: Start typing to get results</value>
   </data>
     <data name="Dropdown.Add" xml:space="preserve">
-    <value>UK-UA: Add</value>
+    <value>UK: Add</value>
   </data>
     <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>UK-UA: Nothing is selected</value>
+    <value>UK: Nothing is selected</value>
   </data>
     <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>UK-UA: at least 8 characters long</value>
+    <value>UK: at least 8 characters long</value>
   </data>
     <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>UK-UA: Download</value>
+    <value>UK: Download</value>
   </data>
     <data name="FileInput.Preview" xml:space="preserve">
-    <value>UK-UA: Preview</value>
+    <value>UK: Preview</value>
   </data>
     <data name="Grid" xml:space="preserve">
     <value />
@@ -234,7 +234,7 @@
     <value />
   </data>
     <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>UK-UA: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+    <value>UK: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
   </data>
     <data name="SwitchWidget" xml:space="preserve">
     <value />
