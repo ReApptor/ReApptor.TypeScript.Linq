@@ -60,7 +60,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly locationPickerLanguageItemName: string = `LocationPicker`;
     public readonly numberInputLanguageItemName: string = `NumberInput`;
     public readonly layoutOneColumnLanguageItemName: string = `Layout.OneColumn`;
-    public readonly layoutInlineLanguageItemName: string = `LayoutInline`;
+    public readonly layoutInlineLanguageItemName: string = `Layout.Inline`;
     public readonly paginationLanguageItemName: string = `Pagination`;
     public readonly phoneInputLanguageItemName: string = `PhoneInput`;
     public readonly popoverLanguageItemName: string = `Popover`;
@@ -70,8 +70,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly switchNullableLanguageItemName: string = `SwitchNullable`;
     public readonly tabContainerLanguageItemName: string = `TabContainer`;
     public readonly textAreaInputLanguageItemName: string = `TextAreaInput`;
-    public readonly layoutThreeColumnsLanguageItemName: string = `LayoutThreeColumns`;
-    public readonly layoutTwoColumnsLanguageItemName: string = `LayoutTwoColumns`;
+    public readonly layoutThreeColumnsLanguageItemName: string = `Layout.ThreeColumns`;
+    public readonly layoutTwoColumnsLanguageItemName: string = `Layout.TwoColumns`;
     public readonly checkboxWidgetLanguageItemName: string = `CheckboxWidget`;
     public readonly checkStepWidgetLanguageItemName: string = `CheckStepWidget`;
     public readonly dateInputWidgetLanguageItemName: string = `DateInputWidget`;
@@ -578,7 +578,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "LayoutInline" ()
+    /* "Layout.Inline" ()
     */
     public get layoutInline() : string {
         return this.get(this.layoutInlineLanguageItemName);
@@ -648,14 +648,14 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "LayoutThreeColumns" ()
+    /* "Layout.ThreeColumns" ()
     */
     public get layoutThreeColumns() : string {
         return this.get(this.layoutThreeColumnsLanguageItemName);
     }
 
     /**
-    /* "LayoutTwoColumns" ()
+    /* "Layout.TwoColumns" ()
     */
     public get layoutTwoColumns() : string {
         return this.get(this.layoutTwoColumnsLanguageItemName);

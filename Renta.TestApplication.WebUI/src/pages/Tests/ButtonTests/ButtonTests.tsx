@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, Justify} from "@weare/athenaeum-react-common";
-import {Button, ButtonType, Form, LayoutTwoColumns, ButtonContainer, FourColumns} from "@weare/athenaeum-react-components";
+import {Button, ButtonType, Form, TwoColumns, ButtonContainer, FourColumns} from "@weare/athenaeum-react-components";
 
 interface IButtonTestsState {
 }
@@ -137,7 +137,7 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
 
                     </ButtonContainer>
 
-                    <LayoutTwoColumns className={"mt-3"}>
+                    <TwoColumns className={"mt-3"}>
 
                         <Button type={ButtonType.Orange} label={"Orange (multi)"}>
                             <Button.Action title={"Action #1"} onClick={() => ch.alertMessageAsync("Action #1", true)} />
@@ -151,7 +151,7 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                             <Button.Action title={"Action #3"} icon={{name: "fal plus"}} iconPosition={Justify.Right} onClick={() => ch.alertMessageAsync("Action #3", true)} />
                         </Button>
 
-                    </LayoutTwoColumns>
+                    </TwoColumns>
 
                     <FourColumns className={"mt-3"}>
 

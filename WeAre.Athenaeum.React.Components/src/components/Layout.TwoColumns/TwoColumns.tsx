@@ -9,7 +9,7 @@ interface ITwoColumnsProps {
     rightClassName?: string;
 }
 
-export default class LayoutTwoColumns extends BaseComponent<ITwoColumnsProps> {
+export default class TwoColumns extends BaseComponent<ITwoColumnsProps> {
     
     private get leftClassName(): string {
         return this.props.leftClassName || "col-md-6";

@@ -96,10 +96,10 @@ import BaseInput, {
     IBaseInputProps, IBaseInputState, IBooleanInputModel, IDateInputModel, IInput, IInputModel, INumberInputModel, IStringInputModel, IValidatable,
 } from "./components/BaseInput/BaseInput";
 import FourColumns from "./components/Layout.FourColumns/FourColumns";
-import LayoutInline, { JustifyContent } from "./components/LayoutInline/LayoutInline";
+import Inline, { JustifyContent } from "./components/Layout.Inline/Inline";
 import OneColumn from "./components/Layout.OneColumn/OneColumn";
-import LayoutThreeColumns from "./components/LayoutThreeColumns/LayoutThreeColumns";
-import LayoutTwoColumns from "./components/LayoutTwoColumns/LayoutTwoColumns";
+import ThreeColumns from "./components/Layout.ThreeColumns/ThreeColumns";
+import TwoColumns from "./components/Layout.TwoColumns/TwoColumns";
 import Layout from "./components/Layout/Layout";
 import Link from "./components/Link/Link";
 import List from "./components/List/List";
@@ -265,10 +265,10 @@ export type {
 };
 
 export { FourColumns };
-export { LayoutInline, JustifyContent };
+export { Inline, JustifyContent };
 export { OneColumn };
-export { LayoutThreeColumns };
-export { LayoutTwoColumns };
+export { ThreeColumns };
+export { TwoColumns };
 export { Layout };
 export { Link };
 export { List };
