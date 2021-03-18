@@ -71,15 +71,15 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     state: IButtonState = {
         isOpen: false
     }
-    
+
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
 
     public static get Action(): (props: IButtonActionProps & IChildrenProps) => React.ReactElement {
         return (props: IPageHeaderProps & IChildrenProps) => <ButtonAction {...props as IButtonActionProps} />;
     }
-    
+
     public isButton(): boolean { return true; }
-    
+
     private getStyleColor(): string {
         switch (this.props.type) {
             case ButtonType.Orange:
@@ -142,7 +142,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private async closeActions(): Promise<void> {
         await this.setState({isOpen: false});
     }
-    
+
     private get dataTarget(): string {
         return this.props.dataTarget || "";
     }
@@ -154,7 +154,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private get dataToggleModal(): string {
         return this.props.toggleModal ? "modal" : "";
     }
-    
+
     private get dataDismissModal(): string {
         return this.props.dismissModal ? "modal" : "";
     }
@@ -172,7 +172,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             await this.closeActions();
         }
     }
-    
+
     public render(): React.ReactNode {
         const blockStyle: any = (this.props.block) && "btn-block";
         const smallStyle: any = (this.props.small) && styles.small;
@@ -185,7 +185,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (this.props.minWidth) {
             inlineStyles.minWidth = this.props.minWidth;
         }
-        
+
         return (
             <React.Fragment>
                 <button id={this.id}
@@ -195,30 +195,21 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, iconPaddingStyle, labelPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
                         data-target={`#${this.dataTarget}`}
                         data-modal={this.dataModal}
-                        data-toggle={this.dataToggleModal} 
+                        data-toggle={this.dataToggleModal}
                         data-dismiss={this.dataDismissModal}
                         onClick={async () => await this.onClickAsync(false)}
                         style={inlineStyles}>
-                    
-                    {
-                        (this.props.icon) && 
-                        (
-                            <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />
-                        )
-                    }
-                    
+                    {this.props.icon && <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />}
                     <span>{this.props.label}</span>
 
                     {
-                        (this.hasActions) &&
-                        (
+                        this.hasActions && (
                             <Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />
                         )
                     }
 
                     {
-                        (this.hasActions) && (this.state.isOpen) &&
-                        (
+                        this.hasActions && this.state.isOpen && (
                             <div className={this.css(styles.actions, this.getStyleColor(), "actions-container")}>
                                 {this.props.children}
                             </div>
@@ -227,7 +218,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
 
                 </button>
                 {
-                    (this.props.confirm) && 
+                    (this.props.confirm) &&
                     (
                         <ConfirmationDialog ref={this._confirmDialogRef}
                                             title={this.props.confirm}

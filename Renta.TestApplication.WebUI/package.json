@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "prebuild": "npm run copy:components",
+    "prebuild": "mkdir -p src/@weare && npm run copy:components && npm run copy:common && npm run copy:toolkit",
     "build": "react-app-rewired build",
     "copy:components": "rsync -av '../WeAre.Athenaeum.React.Components/src/.' './src/@weare/athenaeum-react-components/'",
     "copy:components:back": "rsync -av './src/@weare/athenaeum-react-components/.' '../WeAre.Athenaeum.React.Components/src/'",
@@ -50,7 +50,7 @@
     "copy:common:back": "rsync -av './src/@weare/athenaeum-react-common/.' '../WeAre.Athenaeum.React.Common/src/'",
     "watch:common": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Common/src/*'  --exec 'npm run copy:common'",
     "watch:common:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-common/*'  --exec 'npm run copy:common:back'",
-    "copy:toolkit": "rsync -av '../WeAre.Athenaeum.React.Toolkit/src/.' './src/@weare/athenaeum-toolkit/'",
+    "copy:toolkit": "rsync -av '../WeAre.Athenaeum.React.Toolkit/src/.' './src/@weare/athenaeum-toolkit/' --exclude 'tests'",
     "copy:toolkit:back": "rsync -av './src/@weare/athenaeum-toolkit/.' '../WeAre.Athenaeum.React.Toolkit/src/'",
     "watch:toolkit": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Toolkit/src/*'  --exec 'npm run copy:toolkit'",
     "watch:toolkit:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-toolkit/*'  --exec 'npm run copy:toolkit:back'"
