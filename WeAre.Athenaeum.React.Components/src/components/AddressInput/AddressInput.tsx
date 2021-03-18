@@ -4,14 +4,14 @@ import Autocomplete from "react-google-autocomplete";
 import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ch} from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
-
-import formStyles from "../Form/Form.module.scss";
-import textInputStyles from "../TextInput/TextInput.module.scss";
 import LocationPickerModal from "../LocationPickerModal/LocationPickerModal";
 import AddressHelper, { GoogleApiResult } from "../../helpers/AddressHelper";
 import { BaseInputType } from "../../models/Enums";
 import Comparator from "../../helpers/Comparator";
 import Icon from "../Icon/Icon";
+
+import formStyles from "../Form/Form.module.scss";
+import textInputStyles from "../TextInput/TextInput.module.scss";
 
 export interface IAddressInputProps extends IBaseInputProps<string> {
     small?: boolean;

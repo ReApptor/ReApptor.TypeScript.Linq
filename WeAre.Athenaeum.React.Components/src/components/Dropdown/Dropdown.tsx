@@ -7,11 +7,11 @@ import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
+import { BaseInputType } from "../../models/Enums";
+import Button, { ButtonType } from "../Button/Button";
+import DropdownLocalizer from "./DropdownLocalizer";
 
 import styles from "./Dropdown.module.scss";
-import { BaseInputType, DropdownSchema } from "../../models/Enums";
-import DropdownLocalizer from "./DropdownLocalizer";
-import Button, { ButtonType } from "../Button/Button";
 
 const FILTER_MIN_LENGTH = 6;
 const FILTER_MAX_LENGTH = 1000;
@@ -30,6 +30,14 @@ export class AmountListItem extends SelectListItem {
             ? Utility.format(`{0:0}`, this.amount)
             : Utility.format(`{0:0.0}`, this.amount)
     }
+}
+
+export enum DropdownSchema {
+    Default,
+
+    Widget,
+
+    Transparent
 }
 
 export enum DropdownType {

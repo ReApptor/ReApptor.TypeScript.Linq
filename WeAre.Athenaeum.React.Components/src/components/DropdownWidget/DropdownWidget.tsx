@@ -1,17 +1,16 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
-
-import styles from "../WidgetContainer/WidgetContainer.module.scss";
 import PageContainer from "../PageContainer/PageContainer";
-import { DropdownSchema } from "../../models/Enums";
-import Dropdown, { DropdownOrderBy, DropdownRequiredType, DropdownType, IDropdown } from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownSchema, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
 import { IWidgetContainer } from "../WidgetContainer/BaseWidgetContainer";
 import Comparator from "../../helpers/Comparator";
-import DropdownWidgetLocalizer from "./DropdownWidgetLocalizer";
 import { SelectListItem } from "../Dropdown/SelectListItem";
 import WidgetContainer from "../WidgetContainer/WidgetContainer";
+import DropdownWidgetLocalizer from "./DropdownWidgetLocalizer";
+
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     favorite?: boolean;

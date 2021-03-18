@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Renta.TestApplication.Common;
 using WeAre.Athenaeum.TemplateApp.Common;
 
 namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers
