@@ -24,8 +24,8 @@ class LocationPickerModalLocalizer extends BaseComponentLocalizer {
         
         //Initializer
         this.set(this.titleLanguageItemName, { language: `en`, value: `Location picker` }, { language: `uk`, value: `UK: Location picker` }, { language: `sv`, value: `Platsväljare` }, { language: `ru`, value: `RU: Location picker` }, { language: `pl`, value: `PL: Location picker` }, { language: `fi`, value: `Sijaintivalitsin` },);
-        this.set(this.subtitleLanguageItemName, { language: `en`, value: `Choose location on map` }, { language: `uk`, value: `UK: Choose location on map` }, { language: `sv`, value: `Välj plats på kartan` }, { language: `ru`, value: `RU: Choose location on map` }, { language: `pl`, value: `PL: Choose location on map` }, { language: `fi`, value: `Valitse sijainti kartalla` },);
-        this.set(this.setLocationLanguageItemName, { language: `en`, value: `Set location` }, { language: `uk`, value: `UK: Set location` }, { language: `sv`, value: `SV: Set location` }, { language: `ru`, value: `RU: Set location` }, { language: `pl`, value: `Ställ in plats` }, { language: `fi`, value: `Aseta sijainti` },);
+        this.set(this.subtitleLanguageItemName, { language: `en`, value: `Choose location on map` }, { language: `uk`, value: `Оберіть місце на мапі` }, { language: `sv`, value: `Välj plats på kartan` }, { language: `ru`, value: `RU: Choose location on map` }, { language: `pl`, value: `PL: Choose location on map` }, { language: `fi`, value: `Valitse sijainti kartalla` },);
+        this.set(this.setLocationLanguageItemName, { language: `en`, value: `Set location` }, { language: `uk`, value: `Оберіть адресу` }, { language: `sv`, value: `SV: Set location` }, { language: `ru`, value: `RU: Set location` }, { language: `pl`, value: `Ställ in plats` }, { language: `fi`, value: `Aseta sijainti` },);
     }
 
     /**

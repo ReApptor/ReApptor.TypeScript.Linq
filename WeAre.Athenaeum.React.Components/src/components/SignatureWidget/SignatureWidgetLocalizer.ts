@@ -22,8 +22,8 @@ class SignatureWidgetLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.clearLanguageItemName, { language: `en`, value: `Clear` }, { language: `uk`, value: `UK: Clear` }, { language: `sv`, value: `Töm` }, { language: `ru`, value: `Очистить` }, { language: `pl`, value: `PL: Clear` }, { language: `fi`, value: `Tyhjennä` },);
-        this.set(this.doneLanguageItemName, { language: `en`, value: `Done` }, { language: `uk`, value: `UK: Done` }, { language: `sv`, value: `Färdig` }, { language: `ru`, value: `Завершить` }, { language: `pl`, value: `PL: Done` }, { language: `fi`, value: `Valmis` },);
+        this.set(this.clearLanguageItemName, { language: `en`, value: `Clear` }, { language: `uk`, value: `Очистити` }, { language: `sv`, value: `Töm` }, { language: `ru`, value: `Очистить` }, { language: `pl`, value: `PL: Clear` }, { language: `fi`, value: `Tyhjennä` },);
+        this.set(this.doneLanguageItemName, { language: `en`, value: `Done` }, { language: `uk`, value: `Завершити` }, { language: `sv`, value: `Färdig` }, { language: `ru`, value: `Завершить` }, { language: `pl`, value: `PL: Done` }, { language: `fi`, value: `Valmis` },);
     }
 
     /**
