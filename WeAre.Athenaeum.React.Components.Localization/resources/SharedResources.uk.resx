@@ -11,74 +11,74 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>UK: {0} selected</value>
+  <data name="Dropdown.MultipleSelected" xml:space="preserve">
+    <value>{0} вибран(о)</value>
   </data>
-    <data name="List.Loading" xml:space="preserve">
-    <value>UK: Loading...</value>
+  <data name="List.Loading" xml:space="preserve">
+    <value>Завантаження...</value>
   </data>
-    <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>UK: Clear</value>
+  <data name="SignatureWidget.Clear" xml:space="preserve">
+    <value>Очистити</value>
   </data>
-    <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>UK: Done</value>
+  <data name="SignatureWidget.Done" xml:space="preserve">
+    <value>Завершити</value>
   </data>
-    <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>UK: Save changes</value>
+  <data name="Modal.SaveChanges" xml:space="preserve">
+    <value>Зберегти зміни</value>
   </data>
-    <data name="Modal.Close" xml:space="preserve">
-    <value>UK: Close</value>
+  <data name="Modal.Close" xml:space="preserve">
+    <value>Закрити</value>
   </data>
-    <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>UK: Page help</value>
+  <data name="PageContainer.PageHelp" xml:space="preserve">
+    <value>Довідка</value>
   </data>
-    <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>UK: Previous</value>
+  <data name="NavigationWidget.Previous" xml:space="preserve">
+    <value>Назад</value>
   </data>
-    <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>UK: Return to previous step</value>
+  <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
+    <value>Повернутися до попереднього кроку</value>
   </data>
-    <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>UK: Next</value>
+  <data name="NavigationWidget.Next" xml:space="preserve">
+    <value>Далі</value>
   </data>
-    <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>UK: Go to next step</value>
+  <data name="NavigationWidget.GoToNext" xml:space="preserve">
+    <value>Перейти до наступного кроку</value>
   </data>
-    <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>UK: Are you sure?</value>
+  <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
+    <value>Ви впевнені?</value>
   </data>
-    <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>UK: Confirm</value>
+  <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
+    <value>Підтвердети</value>
   </data>
-    <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>UK: Close</value>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Закрити</value>
   </data>
-    <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>UK: Please leave a comment</value>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Будьласка, залиште коментар</value>
   </data>
-    <data name="AddressDivider.Address" xml:space="preserve">
-    <value>UK: Address</value>
+  <data name="AddressDivider.Address" xml:space="preserve">
+    <value>Адреса</value>
   </data>
-    <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>UK: Street</value>
+  <data name="VirtualAddressDivider.Street" xml:space="preserve">
+    <value>Вулиця</value>
   </data>
-    <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>UK: City</value>
+  <data name="VirtualAddressDivider.City" xml:space="preserve">
+    <value>Місто</value>
   </data>
-    <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>UK: Postal code</value>
+  <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
+    <value>Поштовий індекс</value>
   </data>
-    <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>UK: Drag'n'drop file here, or click to select</value>
+  <data name="FileInput.DragAndDrop" xml:space="preserve">
+    <value>Перетягніть файл, або оберіть його</value>
   </data>
     <data name="FileInput.Readonly" xml:space="preserve">
     <value>UK: File is readonly</value>
   </data>
-    <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>UK: Preview</value>
+  <data name="DocumentPreviewModal.Preview" xml:space="preserve">
+    <value>Переглянути</value>
   </data>
-    <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>UK: Choose file</value>
+  <data name="FileInput.ChooseFile" xml:space="preserve">
+    <value>Оберіть файл</value>
   </data>
     <data name="Alert" xml:space="preserve">
     <value />
@@ -107,38 +107,38 @@
   <data name="LocationPickerModal.Title" xml:space="preserve">
     <value>UK: Location picker</value>
   </data>
-    <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>UK: Choose location on map</value>
+  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>Оберіть місце на мапі</value>
   </data>
-    <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>UK: Set location</value>
+  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>Оберіть адресу</value>
   </data>
-    <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>UK: No items found</value>
+  <data name="Dropdown.NoItems" xml:space="preserve">
+    <value>Нічого не знайдено</value>
   </data>
-    <data name="Dropdown.NoData" xml:space="preserve">
-    <value>UK: No data</value>
+  <data name="Dropdown.NoData" xml:space="preserve">
+    <value>Немає даних</value>
   </data>
-    <data name="Dropdown.FilterResults" xml:space="preserve">
+  <data name="Dropdown.FilterResults" xml:space="preserve">
     <value>UK: Filter results</value>
   </data>
-    <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>UK: Start typing to get results</value>
+  <data name="Dropdown.GetResults" xml:space="preserve">
+    <value>Почніть писати, щоб побачити дані</value>
   </data>
-    <data name="Dropdown.Add" xml:space="preserve">
-    <value>UK: Add</value>
+  <data name="Dropdown.Add" xml:space="preserve">
+    <value>Додати</value>
   </data>
-    <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>UK: Nothing is selected</value>
+  <data name="Dropdown.NothingSelected" xml:space="preserve">
+    <value>Нічого не вибрано</value>
   </data>
-    <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>UK: at least 8 characters long</value>
+  <data name="PasswordInput.HelpText.Length" xml:space="preserve">
+    <value>Не менше 8 символів</value>
   </data>
-    <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>UK: Download</value>
+  <data name="DocumentPreviewModal.Download" xml:space="preserve">
+    <value>Завантажити</value>
   </data>
-    <data name="FileInput.Preview" xml:space="preserve">
-    <value>UK: Preview</value>
+  <data name="FileInput.Preview" xml:space="preserve">
+    <value>Переглянути</value>
   </data>
     <data name="Grid" xml:space="preserve">
     <value />
@@ -233,8 +233,8 @@
     <data name="NumberWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>UK: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+  <data name="QrWidget.Scan.Error" xml:space="preserve">
+    <value>QR код сканер не доступний, можливо немає дозволу на використання камери вашого девайсу.</value>
   </data>
     <data name="SwitchWidget" xml:space="preserve">
     <value />
