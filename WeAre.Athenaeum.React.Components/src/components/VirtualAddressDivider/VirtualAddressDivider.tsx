@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import LayoutTwoColumns from "../LayoutTwoColumns/LayoutTwoColumns";
+import TwoColumns from "../Layout.TwoColumns/TwoColumns";
 import TextInput from "../TextInput/TextInput";
 import { IInput } from "../BaseInput/BaseInput";
 import OneColumn from "../Layout.OneColumn/OneColumn";
@@ -116,7 +116,7 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                     />
                 </OneColumn>
                 
-                <LayoutTwoColumns>
+                <TwoColumns>
                     
                     <TextInput ref={this._cityInputRef}
                                id={`${this.id}_city`} required
@@ -132,7 +132,7 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
                                onChange={(sender, value) => this.onPostalCodeChangeAsync(value)}
                     />
                     
-                </LayoutTwoColumns>
+                </TwoColumns>
                 
             </React.Fragment>
         )

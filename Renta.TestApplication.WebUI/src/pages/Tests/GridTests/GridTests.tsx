@@ -1,7 +1,7 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import { Checkbox, ColumnDefinition, Form, Grid, GridHoveringType, GridOddType, LayoutTwoColumns } from "@weare/athenaeum-react-components";
+import { Checkbox, ColumnDefinition, Form, Grid, GridHoveringType, GridOddType, TwoColumns } from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
@@ -86,7 +86,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return (
             <React.Fragment>
 
-                <LayoutTwoColumns>
+                <TwoColumns>
 
                     <Form>
 
@@ -105,7 +105,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                           fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(sender, pageNumber, pageSize, sortColumnName, sortDirection)}
                     />
 
-                </LayoutTwoColumns>
+                </TwoColumns>
 
             </React.Fragment>
         );

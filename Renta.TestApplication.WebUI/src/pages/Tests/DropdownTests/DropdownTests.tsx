@@ -1,8 +1,5 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-
-
-import styles from "./DropdownTests.module.scss";
 import {
     Checkbox,
     Dropdown,
@@ -17,9 +14,10 @@ import {
     IconStyle,
     IIconProps,
     IStringInputModel,
-    LayoutTwoColumns, SelectListItem, TextInput
+    TwoColumns, SelectListItem, TextInput
 } from "@weare/athenaeum-react-components";
 
+import styles from "./DropdownTests.module.scss";
 
 export interface IDropdownTestsState {
     generateGroups: boolean,
@@ -183,7 +181,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         return (
             <div className={styles.dropdownTests}>
 
-                <LayoutTwoColumns>
+                <TwoColumns>
 
                     <Form>
 
@@ -351,7 +349,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                               onAdd={() => this.addAsync()}
                     />
 
-                </LayoutTwoColumns>
+                </TwoColumns>
 
             </div>
         );
