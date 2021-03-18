@@ -28,6 +28,15 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             public Item[] Items { get; set; }
         }
 
+        public sealed class Component
+        {
+            public string Name { get; set; }
+            
+            public string FullName { get; set; }
+            
+            public string DestinationPath { get; set; }
+        }
+
         private static ResourceDocument Deserialize(XmlDocument doc)
         {
             using (var reader = new XmlNodeReader(doc.DocumentElement))
@@ -70,32 +79,64 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return resources;
         }
 
-        private static (string ComponentName, string DestinationPath)[] GetSplittedDestinationFiles(Dictionary<string, Dictionary<string, string>> items, string destinationPathPattern)
+        private static string ExtractComponentName(string languageItemName)
         {
-            string[] componentNames = items
-                .Keys
-                .Select(item => item.Split('.').FirstOrDefault())
-                .Where(item => !string.IsNullOrWhiteSpace(item))
-                .Distinct()
-                .ToArray();
+            return languageItemName.Split('.').LastOrDefault();
+        }
 
-            Console.WriteLine("Components to generate: {0}.", string.Join(", ", componentNames.Select(item => $"\"{item}\"")));
+        private static Component[] GetSplittedDestinationFiles(Dictionary<string, Dictionary<string, string>> items, string destinationPathPattern)
+        {
+            bool supportFullName = destinationPathPattern.Contains(LocalizatorResourceSettings.ComponentFullNameTag);
+            
+            var components = new Dictionary<string, Component>();
 
-            (string ComponentName, string DestinationPath)[] componentFileNames = componentNames
-                .Select(item => (ComponentName: item, DestinationPath: destinationPathPattern.Replace(LocalizatorResourceSettings.ComponentNameTag, item))
-                )
-                .ToArray();
-
-            foreach ((string ComponentName, string DestinationPath) item in componentFileNames)
+            foreach (string languageItemName in items.Keys)
             {
-                string directory = Path.GetDirectoryName(item.DestinationPath);
-                if (!Directory.Exists(directory))
+                string[] componentNameElements = languageItemName.Split(new[] {"."}, StringSplitOptions.RemoveEmptyEntries);
+
+                bool canBeLongName = (supportFullName) && (componentNameElements.Length > 1);
+
+                string name = (canBeLongName)
+                    ? componentNameElements[1]
+                    : componentNameElements[0];
+                string fullName = (canBeLongName)
+                    ? $"{componentNameElements[0]}.{componentNameElements[1]}"
+                    : componentNameElements[0];
+
+                string path = destinationPathPattern
+                    .Replace(LocalizatorResourceSettings.ComponentFullNameTag, fullName)
+                    .Replace(LocalizatorResourceSettings.ComponentNameTag, name);
+
+                string directory = Path.GetDirectoryName(path);
+
+                bool exists = Directory.Exists(directory);
+
+                if ((!exists) && (canBeLongName))
                 {
-                    throw new InvalidOperationException($"{Program.Name}: The folder \"{directory}\" cannot be found for component \"{item.ComponentName}\".");
+                    name = componentNameElements[0];
+                    fullName = componentNameElements[0];
+
+                    path = destinationPathPattern
+                        .Replace(LocalizatorResourceSettings.ComponentFullNameTag, fullName)
+                        .Replace(LocalizatorResourceSettings.ComponentNameTag, name);
+
+                    directory = Path.GetDirectoryName(path);
+
+                    exists = Directory.Exists(directory);
+                }
+                
+                if (!exists)
+                    throw new InvalidOperationException($"{Program.Name}: The folder \"{directory}\" cannot be found for component \"{fullName}\".");
+
+                if (!components.ContainsKey(fullName))
+                {
+                    components.Add(fullName, new Component {Name = name, FullName = fullName, DestinationPath = path});
                 }
             }
 
-            return componentFileNames;
+            Console.WriteLine("Components to generate: {0}.", string.Join(", ", components.Keys.Select(item => $"\"{item}\"")));
+
+            return components.Values.ToArray();
         }
 
         private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, out CultureInfo[] cultures)
@@ -437,11 +478,11 @@ namespace {0}
 
                 if (settings.SplitByComponent)
                 {
-                    (string ComponentName, string DestinationPath)[] splittedDestinationFiles = GetSplittedDestinationFiles(languageItems, settings.DestinationPath);
+                    Component[] splittedDestinationFiles = GetSplittedDestinationFiles(languageItems, settings.DestinationPath);
 
-                    foreach ((string ComponentName, string DestinationPath) item in splittedDestinationFiles)
+                    foreach (Component item in splittedDestinationFiles)
                     {
-                        Dictionary<string, Dictionary<string, string>> componentLanguageItems = Filter(languageItems, item.ComponentName);
+                        Dictionary<string, Dictionary<string, string>> componentLanguageItems = Filter(languageItems, item.Name);
                         
                         GenerateFile(settings, componentLanguageItems, cultures, item.DestinationPath);
                     }

@@ -28,7 +28,7 @@ export default class FourColumns extends BaseComponent<IFourColumnsProps> {
         );
     }
     
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         const children: React.ReactElement[] = this.children;
         return (
             <React.Fragment>

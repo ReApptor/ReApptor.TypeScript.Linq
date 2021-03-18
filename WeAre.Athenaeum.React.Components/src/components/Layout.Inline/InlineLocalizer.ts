@@ -2,7 +2,7 @@
 
 import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 
-class LayoutInlineLocalizer extends BaseComponentLocalizer {
+class InlineLocalizer extends BaseComponentLocalizer {
 
     //Constants
 
@@ -28,4 +28,4 @@ class LayoutInlineLocalizer extends BaseComponentLocalizer {
 }
 
 //Singleton
-export default new LayoutInlineLocalizer();
+export default new InlineLocalizer();

@@ -1,4 +1,5 @@
 using System;
+using Renta.TestApplication.Common;
 using WeAre.Athenaeum.TemplateApp.Common;
 
 namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models
