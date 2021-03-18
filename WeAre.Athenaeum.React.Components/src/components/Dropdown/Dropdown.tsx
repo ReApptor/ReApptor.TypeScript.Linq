@@ -1,5 +1,4 @@
 import React from "react";
-import $ from "jquery";
 import { Utility } from "@weare/athenaeum-toolkit";
 import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";

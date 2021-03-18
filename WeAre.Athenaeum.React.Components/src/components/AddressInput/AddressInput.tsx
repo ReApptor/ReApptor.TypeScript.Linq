@@ -1,5 +1,4 @@
 import React from "react";
-import $ from "jquery";
 import Autocomplete from "react-google-autocomplete";
 import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
 import {ch} from "@weare/athenaeum-react-common";

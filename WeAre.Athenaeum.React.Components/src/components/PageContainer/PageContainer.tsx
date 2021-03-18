@@ -1,31 +1,16 @@
 import React from "react";
-import $ from "jquery";
 import {ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
-import {
-    ch,
-    IBasePage,
-    IManualProps,
-    AlertModel,
-    DescriptionModel,
-    DocumentPreviewModel,
-    IPageContainer,
-    IBaseAsyncComponentState,
-    BaseAsyncComponent,
-    IContainer,
-    IGlobalResize,
-    IConfirmation,
-    ConfirmationDialogTitleCallback
-} from "@weare/athenaeum-react-common";
+import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPreviewModel, IPageContainer, IBaseAsyncComponentState, BaseAsyncComponent, IContainer, IGlobalResize, IConfirmation, ConfirmationDialogTitleCallback} from "@weare/athenaeum-react-common";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 import Alert from "../Alert/Alert";
 import PageRow from "./PageRow/PageRow";
 import Modal from "../Modal/Modal";
 import DocumentPreviewModal from "../DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
+import PageContainerLocalizer from "./PageContainerLocalizer";
 
 import styles from "./PageContainer.module.scss";
-import PageContainerLocalizer from "./PageContainerLocalizer";
-import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
-import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 
 interface IPageContainerProps {
     id?: string;
@@ -71,9 +56,9 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     
     private toggleVerticalScroll() {
         if(!this.mobile && this.props.scale) {
-            $("html").addClass("vertical-scroll");
+            this.JQuery("html").addClass("vertical-scroll");
         } else {
-            $("html").removeClass("vertical-scroll");
+            this.JQuery("html").removeClass("vertical-scroll");
         }
     }
     
