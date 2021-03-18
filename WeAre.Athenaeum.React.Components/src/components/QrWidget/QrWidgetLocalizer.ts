@@ -21,7 +21,7 @@ class QrWidgetLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.scanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `uk`, value: `UK-UA: QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
+        this.set(this.scanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `uk`, value: `UK: QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
     }
 
     /**
