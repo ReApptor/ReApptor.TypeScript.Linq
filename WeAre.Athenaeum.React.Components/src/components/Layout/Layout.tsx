@@ -1,5 +1,4 @@
 import React from "react";
-import $ from "jquery";
 import queryString, {ParsedQuery} from "query-string";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";

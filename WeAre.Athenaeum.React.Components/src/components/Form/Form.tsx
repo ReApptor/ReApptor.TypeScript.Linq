@@ -2,11 +2,11 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
 import { Dictionary } from "typescript-collections";
-import LayoutInline from "../LayoutInline/LayoutInline";
+import Inline from "../Layout.Inline/Inline";
+import { IInput } from "../BaseInput/BaseInput";
+import FormLocalizer from "./FormLocalizer";
 
 import styles from "./Form.module.scss";
-import FormLocalizer from "./FormLocalizer";
-import { IInput } from "../BaseInput/BaseInput";
 
 interface IFormProps {
     id?: string;
@@ -153,7 +153,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
                 
                 {
                     (this.props.inline)
-                        ? <LayoutInline>{this.children}</LayoutInline>
+                        ? <Inline>{this.children}</Inline>
                         : <React.Fragment>{this.children}</React.Fragment>
                 }
                 

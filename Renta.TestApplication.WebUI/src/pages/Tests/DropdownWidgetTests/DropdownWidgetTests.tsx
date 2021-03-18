@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import { AmountListItem, Checkbox, DropdownWidget, Form, LayoutTwoColumns, List, WidgetContainer } from "@weare/athenaeum-react-components";
+import { AmountListItem, Checkbox, DropdownWidget, Form, TwoColumns, List, WidgetContainer } from "@weare/athenaeum-react-components";
 
 
 export interface IDropdownWidgetTestsState {
@@ -89,7 +89,7 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
         return (
             <React.Fragment>
 
-                <LayoutTwoColumns>
+                <TwoColumns>
 
                     <Form>
 
@@ -140,7 +140,7 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
 
                     </WidgetContainer>
 
-                </LayoutTwoColumns>
+                </TwoColumns>
 
             </React.Fragment>
         );

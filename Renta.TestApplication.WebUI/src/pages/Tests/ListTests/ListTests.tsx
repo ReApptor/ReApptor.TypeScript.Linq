@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { Checkbox, Form, LayoutTwoColumns, List } from "@weare/athenaeum-react-components";
+import { Checkbox, Form, TwoColumns, List } from "@weare/athenaeum-react-components";
 
 export interface IListTestsState {
     multiSelect: boolean,
@@ -62,7 +62,7 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
         return (
             <React.Fragment>
 
-                <LayoutTwoColumns>
+                <TwoColumns>
 
                     <Form>
 
@@ -99,7 +99,7 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
                           disabled={this.state.disabled}
                     />
 
-                </LayoutTwoColumns>
+                </TwoColumns>
 
             </React.Fragment>
         );

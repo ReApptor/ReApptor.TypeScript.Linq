@@ -89,22 +89,6 @@ export enum PasswordValidationError {
     Length
 }
 
-export enum DropdownSchema {
-    Default,
-
-    Widget,
-
-    Transparent
-}
-
-export enum ConstructionSiteStatus {
-    Active = 0,
-
-    Inactive = 1,
-
-    Closed = 2
-}
-
 export enum ActionType {
     Default,
 
@@ -143,10 +127,4 @@ export enum ActionType {
     Grey,
 
     Blue,
-}
-
-export enum AuthType {
-    Email,
-
-    Phone
 }

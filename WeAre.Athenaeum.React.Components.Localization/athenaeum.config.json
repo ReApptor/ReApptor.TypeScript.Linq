@@ -8,7 +8,7 @@
     "baseClassName": "BaseComponentsLocalizer"
   }, {
     "neutralResourcePath": "$(ProjectDir)/resources/SharedResources.resx",
-    "destinationPath": "$(ProjectDir)/../WeAre.Athenaeum.React.Components/src/components/$(COMPONENT_NAME)/$(COMPONENT_NAME)Localizer.ts",
+    "destinationPath": "$(ProjectDir)/../WeAre.Athenaeum.React.Components/src/components/$(COMPONENT_FULL_NAME)/$(COMPONENT_NAME)Localizer.ts",
     "type": "0",
     "neutralLanguage": "en",
     "import": "import {BaseComponentLocalizer} from \"@weare/athenaeum-react-common\";",

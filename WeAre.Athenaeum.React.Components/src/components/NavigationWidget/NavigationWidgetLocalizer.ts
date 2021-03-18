@@ -24,10 +24,10 @@ class NavigationWidgetLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.previousLanguageItemName, { language: `en`, value: `Previous` }, { language: `uk`, value: `UK: Previous` }, { language: `sv`, value: `Föregående` }, { language: `ru`, value: `RU: Previous` }, { language: `pl`, value: `PL: Previous` }, { language: `fi`, value: `Edellinen` },);
-        this.set(this.returnToPreviousLanguageItemName, { language: `en`, value: `Return to previous step` }, { language: `uk`, value: `UK: Return to previous step` }, { language: `sv`, value: `Återgå till föregående steg` }, { language: `ru`, value: `RU: Return to previous step` }, { language: `pl`, value: `PL: Return to previous step` }, { language: `fi`, value: `Palaa edelliseen vaiheeseen` },);
-        this.set(this.nextLanguageItemName, { language: `en`, value: `Next` }, { language: `uk`, value: `UK: Next` }, { language: `sv`, value: `Nästa` }, { language: `ru`, value: `RU: Next` }, { language: `pl`, value: `PL: Next` }, { language: `fi`, value: `Seuraava` },);
-        this.set(this.goToNextLanguageItemName, { language: `en`, value: `Go to next step` }, { language: `uk`, value: `UK: Go to next step` }, { language: `sv`, value: `Gå till nästa steg` }, { language: `ru`, value: `RU: Go to next step` }, { language: `pl`, value: `PL: Go to next step` }, { language: `fi`, value: `Siirry seuraavaan vaiheeseen` },);
+        this.set(this.previousLanguageItemName, { language: `en`, value: `Previous` }, { language: `uk`, value: `UK-UA: Previous` }, { language: `sv`, value: `Föregående` }, { language: `ru`, value: `RU: Previous` }, { language: `pl`, value: `PL: Previous` }, { language: `fi`, value: `Edellinen` },);
+        this.set(this.returnToPreviousLanguageItemName, { language: `en`, value: `Return to previous step` }, { language: `uk`, value: `UK-UA: Return to previous step` }, { language: `sv`, value: `Återgå till föregående steg` }, { language: `ru`, value: `RU: Return to previous step` }, { language: `pl`, value: `PL: Return to previous step` }, { language: `fi`, value: `Palaa edelliseen vaiheeseen` },);
+        this.set(this.nextLanguageItemName, { language: `en`, value: `Next` }, { language: `uk`, value: `UK-UA: Next` }, { language: `sv`, value: `Nästa` }, { language: `ru`, value: `RU: Next` }, { language: `pl`, value: `PL: Next` }, { language: `fi`, value: `Seuraava` },);
+        this.set(this.goToNextLanguageItemName, { language: `en`, value: `Go to next step` }, { language: `uk`, value: `UK-UA: Go to next step` }, { language: `sv`, value: `Gå till nästa steg` }, { language: `ru`, value: `RU: Go to next step` }, { language: `pl`, value: `PL: Go to next step` }, { language: `fi`, value: `Siirry seuraavaan vaiheeseen` },);
     }
 
     /**

@@ -46,6 +46,7 @@
         <Content Include="tsconfig.paths.json" />
         <Content Include="tslint.json" />
         <Content Remove="build\**" />
+        <Content Remove="src\@weare\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -54,6 +55,7 @@
         <Compile Remove="src\localization\**" />
         <Compile Remove="src\lib\**" />
         <Compile Remove="build\**" />
+        <Compile Remove="src\@weare\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -64,11 +66,13 @@
     <ItemGroup>
       <EmbeddedResource Remove="src\lib\**" />
       <EmbeddedResource Remove="build\**" />
+      <EmbeddedResource Remove="src\@weare\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="src\lib\**" />
       <None Remove="build\**" />
+      <None Remove="src\@weare\**" />
     </ItemGroup>
 
     <ItemGroup>

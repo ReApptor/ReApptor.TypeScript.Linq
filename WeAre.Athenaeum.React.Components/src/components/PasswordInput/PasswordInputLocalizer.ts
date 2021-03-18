@@ -21,7 +21,7 @@ class PasswordInputLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.helpTextLengthLanguageItemName, { language: `en`, value: `at least 8 characters long` }, { language: `uk`, value: `UK: at least 8 characters long` }, { language: `sv`, value: `åtminstone 8 tecken` }, { language: `ru`, value: `RU: at least 8 characters long` }, { language: `pl`, value: `PL: at least 8 characters long` }, { language: `fi`, value: `vähintään 8 merkkiä` },);
+        this.set(this.helpTextLengthLanguageItemName, { language: `en`, value: `at least 8 characters long` }, { language: `uk`, value: `UK-UA: at least 8 characters long` }, { language: `sv`, value: `åtminstone 8 tecken` }, { language: `ru`, value: `RU: at least 8 characters long` }, { language: `pl`, value: `PL: at least 8 characters long` }, { language: `fi`, value: `vähintään 8 merkkiä` },);
     }
 
     /**
