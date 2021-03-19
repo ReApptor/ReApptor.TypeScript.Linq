@@ -117,101 +117,74 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>Данные не найдены</value>
-  </data>
-  <data name="Dropdown.NoData" xml:space="preserve">
-    <value>Нет данных</value>
-  </data>
-  <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>RU: Filter results</value>
-  </data>
-  <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>Начните писать, чтобы увидеть данные</value>
-  </data>
-  <data name="Dropdown.Add" xml:space="preserve">
-    <value>Новый</value>
-  </data>
-  <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>RU: Nothing is selected</value>
-  </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>{0} выбрано</value>
+    <value>{0} selected</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>Закрыть...</value>
+    <value>Loading...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>Очистить</value>
+    <value>Clear</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>Завершить</value>
+    <value>Done</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>Созранить изменения</value>
+    <value>Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>Закрыть</value>
+    <value>Close</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>Справка</value>
+    <value>Page help</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>RU: Previous</value>
+    <value>Previous</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>RU: Return to previous step</value>
+    <value>Return to previous step</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>RU: Next</value>
+    <value>Next</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>RU: Go to next step</value>
+    <value>Go to next step</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>Вы уверены?</value>
-  </data>
-  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-  <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>Пожалуйста, оставьте комментарий</value>
+    <value>Are you sure?</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>Подтвердить</value>
+    <value>Confirm</value>
+  </data>
+  <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ConfirmationDialog.Comment" xml:space="preserve">
+    <value>Please leave a comment</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
-    <value>RU: Address</value>
+    <value>Address</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>RU: Street</value>
+    <value>Street</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>RU: City</value>
+    <value>City</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>RU: Postal code</value>
+    <value>Postal code</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>RU: Drag'n'drop file here, or click to select</value>
+    <value>Drag'n'drop file here, or click to select</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
-    <value>RU: File is readonly</value>
+    <value>File is readonly</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>RU: Preview</value>
+    <value>Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>RU: Choose file</value>
-  </data>
-  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>RU: Set location</value>
-  </data>
-  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>RU: Choose location on map</value>
-  </data>
-  <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>RU: Location picker</value>
+    <value>Choose file</value>
   </data>
   <data name="Alert" xml:space="preserve">
     <value />
@@ -231,16 +204,169 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
+  <data name="WidgetContainer" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LocationPickerModal.Title" xml:space="preserve">
+    <value>Location picker</value>
+  </data>
+  <data name="LocationPickerModal.Subtitle" xml:space="preserve">
+    <value>Choose location on map</value>
+  </data>
+  <data name="LocationPickerModal.SetLocation" xml:space="preserve">
+    <value>Set location</value>
+  </data>
+  <data name="Dropdown.NoItems" xml:space="preserve">
+    <value>No items found</value>
+  </data>
+  <data name="Dropdown.NoData" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="Dropdown.FilterResults" xml:space="preserve">
+    <value>Filter results</value>
+  </data>
+  <data name="Dropdown.GetResults" xml:space="preserve">
+    <value>Start typing to get results</value>
+  </data>
+  <data name="Dropdown.Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Dropdown.NothingSelected" xml:space="preserve">
+    <value>Nothing is selected</value>
+  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>RU: at least 8 characters long</value>
+    <value>at least 8 characters long</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>RU: Download</value>
+    <value>Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
-    <value>RU: Preview</value>
+    <value>Preview</value>
+  </data>
+  <data name="Grid" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddressInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ButtonContainer" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Checkbox" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CheckboxNullable" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DocumentPreview" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EmailInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout.FourColumns" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LocationPicker" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NumberInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout.OneColumn" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout.Inline" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Pagination" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PhoneInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Popover" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Slider" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Spinner" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Switch" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SwitchNullable" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabContainer" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextAreaInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout.ThreeColumns" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout.TwoColumns" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CheckboxWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CheckStepWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DateInputWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LinkWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RouteWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TimeWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NumberWidget" xml:space="preserve">
+    <value />
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>RU: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
+    <value>QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+  </data>
+  <data name="SwitchWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextAreaWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextInputWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StepsWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TitleWidget" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DateInput" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Form" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value />
+  </data>
+  <data name="WizardContainer" xml:space="preserve">
+    <value />
   </data>
 </root>

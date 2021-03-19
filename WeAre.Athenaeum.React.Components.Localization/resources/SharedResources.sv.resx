@@ -231,9 +231,6 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>åtminstone 8 tecken</value>
   </data>
@@ -245,5 +242,17 @@
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
     <value>QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.</value>
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>{0} krävs</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>Text för kort</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Dokumenttyp stöds inte. Välj dokument som är {0}.</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>Dokument filen är för stor</value>
   </data>
 </root>

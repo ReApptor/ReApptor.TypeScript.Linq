@@ -231,9 +231,6 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>PL: at least 8 characters long</value>
   </data>

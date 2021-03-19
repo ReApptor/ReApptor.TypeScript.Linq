@@ -5,14 +5,21 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class BaseInputLocalizer extends BaseComponentLocalizer {
 
     //Constants
-
+    public readonly validatorsRequiredLanguageItemName: string = `Validators.Required`;
+    public readonly validatorsLengthLanguageItemName: string = `Validators.Length`;
+    public readonly validatorsNumberRangeLanguageItemName: string = `Validators.NumberRange`;
+    public readonly validatorsDocumentTypeNotSupportedLanguageItemName: string = `Validators.DocumentTypeNotSupported`;
+    public readonly validatorsDocumentTooBigLanguageItemName: string = `Validators.DocumentTooBig`;
+    public readonly validatorsTotalSizeTooBigLanguageItemName: string = `Validators.TotalSizeTooBig`;
 
     constructor() {
 
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -21,10 +28,55 @@ class BaseInputLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-
+        this.set(this.validatorsRequiredLanguageItemName, { language: `en`, value: `{0} is required` }, { language: `sv`, value: `{0} krävs` }, { language: `nb`, value: `{0} er påkrevd` }, { language: `fi`, value: `{0} on pakollinen` },);
+        this.set(this.validatorsLengthLanguageItemName, { language: `en`, value: `Text is too short` }, { language: `sv`, value: `Text för kort` }, { language: `nb`, value: `Teksten er for kort` }, { language: `fi`, value: `Teksti on liian lyhyt` },);
+        this.set(this.validatorsNumberRangeLanguageItemName, { language: `en`, value: `Value must be in range {0} - {1}` }, { language: `fi`, value: `Arvo pitää olla välistä {0} - {1}` },);
+        this.set(this.validatorsDocumentTypeNotSupportedLanguageItemName, { language: `en`, value: `Document type is not supported, choose file with extension {0}` }, { language: `sv`, value: `Dokumenttyp stöds inte. Välj dokument som är {0}.` }, { language: `fi`, value: `Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}` },);
+        this.set(this.validatorsDocumentTooBigLanguageItemName, { language: `en`, value: `Document file is too big` }, { language: `sv`, value: `Dokument filen är för stor` }, { language: `fi`, value: `Dokumentti tiedosto liian iso` },);
+        this.set(this.validatorsTotalSizeTooBigLanguageItemName, { language: `en`, value: `Total size of documents is too big` }, { language: `fi`, value: `Dokumenttien kokonaiskoko on liian iso` },);
     }
 
+    /**
+    /* "Validators.Required" ({0} is required)
+    */
+    public get validatorsRequired() : string {
+        return this.get(this.validatorsRequiredLanguageItemName);
+    }
 
+    /**
+    /* "Validators.Length" (Text is too short)
+    */
+    public get validatorsLength() : string {
+        return this.get(this.validatorsLengthLanguageItemName);
+    }
+
+    /**
+    /* "Validators.NumberRange" (Value must be in range {0} - {1})
+    */
+    public get validatorsNumberRange() : string {
+        return this.get(this.validatorsNumberRangeLanguageItemName);
+    }
+
+    /**
+    /* "Validators.DocumentTypeNotSupported" (Document type is not supported, choose file with extension {0})
+    */
+    public get validatorsDocumentTypeNotSupported() : string {
+        return this.get(this.validatorsDocumentTypeNotSupportedLanguageItemName);
+    }
+
+    /**
+    /* "Validators.DocumentTooBig" (Document file is too big)
+    */
+    public get validatorsDocumentTooBig() : string {
+        return this.get(this.validatorsDocumentTooBigLanguageItemName);
+    }
+
+    /**
+    /* "Validators.TotalSizeTooBig" (Total size of documents is too big)
+    */
+    public get validatorsTotalSizeTooBig() : string {
+        return this.get(this.validatorsTotalSizeTooBigLanguageItemName);
+    }
 }
 
 //Singleton

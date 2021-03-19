@@ -204,9 +204,6 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
   <data name="WidgetContainer" xml:space="preserve">
     <value />
   </data>
@@ -371,5 +368,23 @@
   </data>
   <data name="WizardContainer" xml:space="preserve">
     <value />
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>{0} is required</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>Text is too short</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>Value must be in range {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>Document file is too big</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>Total size of documents is too big</value>
   </data>
 </root>

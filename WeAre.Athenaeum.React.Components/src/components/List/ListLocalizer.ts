@@ -12,7 +12,9 @@ class ListLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -21,7 +23,7 @@ class ListLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `uk`, value: `UK: Loading...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Закрыть...` }, { language: `pl`, value: `PL: Loading...` }, { language: `fi`, value: `Ladataan...` },);
+        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `uk`, value: `UK: Loading...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Закрыть...` }, { language: `pl`, value: `PL: Loading...` }, { language: `nb`, value: `Loading...` }, { language: `fi`, value: `Ladataan...` }, { language: `da`, value: `Loading...` },);
     }
 
     /**
