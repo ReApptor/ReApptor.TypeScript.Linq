@@ -116,6 +116,7 @@ namespace Renta.Apps.Common.Helpers
                     case "finland":
                         return "fi";
                     case "se":
+                    case "sv":
                     case "svenska":
                     case "sweden":
                         return "se";
@@ -142,6 +143,7 @@ namespace Renta.Apps.Common.Helpers
                     case "finland":
                         return "Suomi";
                     case "se":
+                    case "sv":
                     case "sweden":
                     case "svenska":
                         return "Svenska";
