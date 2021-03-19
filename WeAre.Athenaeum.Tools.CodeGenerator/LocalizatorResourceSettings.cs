@@ -20,6 +20,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         
         public string BaseClassName { get; set; }
         
+        public string[] Exclude { get; set; }
+        
         public bool SplitByComponent
         {
             get { return (!string.IsNullOrWhiteSpace(DestinationPath)) && (DestinationPath.Contains(ComponentNameTag)); }

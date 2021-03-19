@@ -16,7 +16,7 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
 
         private static int GenerateResources(LocalizatorResourceSettings settings)
         {
-            Console.WriteLine($"{Name}: neutralResourcePath=\"{settings.NeutralResourcePath}\", destinationPath=\"{settings.DestinationPath}\" type=\"{settings.Type}\", neutralLanguage=\"{settings.NeutralLanguage}\".");
+            Console.WriteLine($"{Name}: neutralResourcePath=\"{settings.NeutralResourcePath}\", destinationPath=\"{settings.DestinationPath}\" type=\"{settings.Type}\", neutralLanguage=\"{settings.NeutralLanguage}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\".");
             
             LocalizatorResourceManager.Generate(settings);
 
