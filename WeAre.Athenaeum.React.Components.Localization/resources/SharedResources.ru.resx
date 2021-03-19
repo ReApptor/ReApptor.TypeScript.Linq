@@ -133,13 +133,13 @@
     <value>Новый</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>RU: Nothing is selected</value>
+    <value>Ничего не выбрано</value>
   </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>{0} выбрано</value>
+    <value>{0} выбран(о)</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>Закрыть...</value>
+    <value>Загрузка...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>Очистить</value>
@@ -148,7 +148,7 @@
     <value>Завершить</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>Созранить изменения</value>
+    <value>Сохранить изменения</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
     <value>Закрыть</value>
@@ -181,7 +181,7 @@
     <value>Подтвердить</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
-    <value>RU: Address</value>
+    <value>Адрес</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>RU: Street</value>
@@ -235,7 +235,7 @@
     <value>RU: at least 8 characters long</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>RU: Download</value>
+    <value>Загрузить</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>RU: Preview</value>
