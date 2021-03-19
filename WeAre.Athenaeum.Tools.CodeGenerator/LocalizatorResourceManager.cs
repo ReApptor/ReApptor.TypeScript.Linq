@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
@@ -139,8 +140,28 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return components.Values.ToArray();
         }
 
-        private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, out CultureInfo[] cultures)
+        private static bool Exclude(string[] excludePatterns, string name)
         {
+            if (excludePatterns.Length == 0)
+            {
+                return false;
+            }
+            
+            return excludePatterns.Any(pattern => Regex.IsMatch(name, pattern));
+        }
+
+        private static string WildCardToRegular(string value)
+        {
+            return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
+        }
+
+        private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, string[] exclude, out CultureInfo[] cultures)
+        {
+            string[] excludePatterns = (exclude ?? new string[0])
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Select(item => WildCardToRegular(item.Trim()))
+                .ToArray();
+            
             Dictionary<string, ResourceDocument> resources = LoadResources(neutralResourcePath, neutralLanguage);
 
             var cultureItems = new List<CultureInfo>();
@@ -160,21 +181,25 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     foreach (ResourceDocument.Item item in doc.Items)
                     {
                         string name = item.Name;
+                        bool excludeItem = Exclude(excludePatterns, name);
 
-                        Dictionary<string, string> languages;
-                        if (!items.ContainsKey(name))
+                        if (!excludeItem)
                         {
-                            languages = new Dictionary<string, string>();
-                            items.Add(name, languages);
-                        }
-                        else
-                        {
-                            languages = items[name];
-                        }
+                            Dictionary<string, string> languages;
+                            if (!items.ContainsKey(name))
+                            {
+                                languages = new Dictionary<string, string>();
+                                items.Add(name, languages);
+                            }
+                            else
+                            {
+                                languages = items[name];
+                            }
 
-                        if (!languages.ContainsKey(language))
-                        {
-                            languages.Add(language, item.Value);
+                            if (!languages.ContainsKey(language))
+                            {
+                                languages.Add(language, item.Value);
+                            }
                         }
                     }
                 }
@@ -474,7 +499,7 @@ namespace {0}
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;
 
-                Dictionary<string, Dictionary<string, string>> languageItems = LoadLanguageItems(settings.NeutralResourcePath, settings.NeutralLanguage, out CultureInfo[] cultures);
+                Dictionary<string, Dictionary<string, string>> languageItems = LoadLanguageItems(settings.NeutralResourcePath, settings.NeutralLanguage, settings.Exclude, out CultureInfo[] cultures);
 
                 if (settings.SplitByComponent)
                 {

@@ -261,4 +261,40 @@
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>Dokumenttien kokonaiskoko on liian iso</value>
   </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>Joulukuu</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>Marraskuu</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>Lokakuu</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>Syyskuu</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>Elokuu</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>Heinäkuu</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>Kesäkuu</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>Toukokuu</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>Huhtikuu</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>Maaliskuu</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>Helmikuu</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>Tammikuu</value>
+  </data>
 </root>
