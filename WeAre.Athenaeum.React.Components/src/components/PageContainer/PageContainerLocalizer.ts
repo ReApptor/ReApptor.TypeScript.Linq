@@ -12,7 +12,9 @@ class PageContainerLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -21,7 +23,7 @@ class PageContainerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `uk`, value: `UK: Page help` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `fi`, value: `Sivun ohje` },);
+        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `uk`, value: `UK: Page help` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `nb`, value: `Page help` }, { language: `fi`, value: `Sivun ohje` }, { language: `da`, value: `Page help` },);
     }
 
     /**

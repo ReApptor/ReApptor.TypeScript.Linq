@@ -98,10 +98,7 @@
     <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
-    <data name="WidgetContainer" xml:space="preserve">
+  <data name="WidgetContainer" xml:space="preserve">
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">

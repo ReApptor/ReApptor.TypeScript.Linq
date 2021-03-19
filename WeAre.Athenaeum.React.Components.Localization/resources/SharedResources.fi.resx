@@ -231,9 +231,6 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>vähintään 8 merkkiä</value>
   </data>
@@ -245,5 +242,23 @@
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
     <value>QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.</value>
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>{0} on pakollinen</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>Teksti on liian lyhyt</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>Arvo pitää olla välistä {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>Dokumentti tiedosto liian iso</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>Dokumenttien kokonaiskoko on liian iso</value>
   </data>
 </root>
