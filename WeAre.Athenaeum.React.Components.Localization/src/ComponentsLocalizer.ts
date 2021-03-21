@@ -95,6 +95,18 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly baseInputValidatorsDocumentTypeNotSupportedLanguageItemName: string = `BaseInput.Validators.DocumentTypeNotSupported`;
     public readonly baseInputValidatorsDocumentTooBigLanguageItemName: string = `BaseInput.Validators.DocumentTooBig`;
     public readonly baseInputValidatorsTotalSizeTooBigLanguageItemName: string = `BaseInput.Validators.TotalSizeTooBig`;
+    public readonly monthJanuaryLanguageItemName: string = `Month.January`;
+    public readonly monthFebruaryLanguageItemName: string = `Month.February`;
+    public readonly monthMarchLanguageItemName: string = `Month.March`;
+    public readonly monthAprilLanguageItemName: string = `Month.April`;
+    public readonly monthMayLanguageItemName: string = `Month.May`;
+    public readonly monthJuneLanguageItemName: string = `Month.June`;
+    public readonly monthJulyLanguageItemName: string = `Month.July`;
+    public readonly monthAugustLanguageItemName: string = `Month.August`;
+    public readonly monthSeptemberLanguageItemName: string = `Month.September`;
+    public readonly monthOctoberLanguageItemName: string = `Month.October`;
+    public readonly monthNovemberLanguageItemName: string = `Month.November`;
+    public readonly monthDecemberLanguageItemName: string = `Month.December`;
 
     constructor() {
 
@@ -202,6 +214,18 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.baseInputValidatorsDocumentTypeNotSupportedLanguageItemName, { language: `en`, value: `Document type is not supported, choose file with extension {0}` }, { language: `sv`, value: `Dokumenttyp stöds inte. Välj dokument som är {0}.` }, { language: `fi`, value: `Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}` },);
         this.set(this.baseInputValidatorsDocumentTooBigLanguageItemName, { language: `en`, value: `Document file is too big` }, { language: `sv`, value: `Dokument filen är för stor` }, { language: `fi`, value: `Dokumentti tiedosto liian iso` },);
         this.set(this.baseInputValidatorsTotalSizeTooBigLanguageItemName, { language: `en`, value: `Total size of documents is too big` }, { language: `fi`, value: `Dokumenttien kokonaiskoko on liian iso` },);
+        this.set(this.monthJanuaryLanguageItemName, { language: `en`, value: `January` }, { language: `ru`, value: `Январь` }, { language: `fi`, value: `Helmikuu` },);
+        this.set(this.monthFebruaryLanguageItemName, { language: `en`, value: `February` }, { language: `ru`, value: `Февраль` }, { language: `fi`, value: `Tammikuu` },);
+        this.set(this.monthMarchLanguageItemName, { language: `en`, value: `March` }, { language: `ru`, value: `Март` }, { language: `fi`, value: `Maaliskuu` },);
+        this.set(this.monthAprilLanguageItemName, { language: `en`, value: `April` }, { language: `ru`, value: `Апрель` }, { language: `fi`, value: `Huhtikuu` },);
+        this.set(this.monthMayLanguageItemName, { language: `en`, value: `May` }, { language: `ru`, value: `Май` }, { language: `fi`, value: `Toukokuu` },);
+        this.set(this.monthJuneLanguageItemName, { language: `en`, value: `June` }, { language: `ru`, value: `Июнь` }, { language: `fi`, value: `Kesäkuu` },);
+        this.set(this.monthJulyLanguageItemName, { language: `en`, value: `July` }, { language: `ru`, value: `Июль` }, { language: `fi`, value: `Heinäkuu` },);
+        this.set(this.monthAugustLanguageItemName, { language: `en`, value: `August` }, { language: `ru`, value: `Август` }, { language: `fi`, value: `Elokuu` },);
+        this.set(this.monthSeptemberLanguageItemName, { language: `en`, value: `September` }, { language: `ru`, value: `Декабрь` }, { language: `fi`, value: `Syyskuu` },);
+        this.set(this.monthOctoberLanguageItemName, { language: `en`, value: `October` }, { language: `ru`, value: `Октябрь` }, { language: `fi`, value: `Lokakuu` },);
+        this.set(this.monthNovemberLanguageItemName, { language: `en`, value: `November` }, { language: `ru`, value: `Ноябрь` }, { language: `fi`, value: `Marraskuu` },);
+        this.set(this.monthDecemberLanguageItemName, { language: `en`, value: `December` }, { language: `ru`, value: `Декабрь` }, { language: `fi`, value: `Joulukuu` },);
     }
 
     /**
@@ -832,6 +856,90 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get baseInputValidatorsTotalSizeTooBig() : string {
         return this.get(this.baseInputValidatorsTotalSizeTooBigLanguageItemName);
+    }
+
+    /**
+    /* "Month.January" (January)
+    */
+    public get monthJanuary() : string {
+        return this.get(this.monthJanuaryLanguageItemName);
+    }
+
+    /**
+    /* "Month.February" (February)
+    */
+    public get monthFebruary() : string {
+        return this.get(this.monthFebruaryLanguageItemName);
+    }
+
+    /**
+    /* "Month.March" (March)
+    */
+    public get monthMarch() : string {
+        return this.get(this.monthMarchLanguageItemName);
+    }
+
+    /**
+    /* "Month.April" (April)
+    */
+    public get monthApril() : string {
+        return this.get(this.monthAprilLanguageItemName);
+    }
+
+    /**
+    /* "Month.May" (May)
+    */
+    public get monthMay() : string {
+        return this.get(this.monthMayLanguageItemName);
+    }
+
+    /**
+    /* "Month.June" (June)
+    */
+    public get monthJune() : string {
+        return this.get(this.monthJuneLanguageItemName);
+    }
+
+    /**
+    /* "Month.July" (July)
+    */
+    public get monthJuly() : string {
+        return this.get(this.monthJulyLanguageItemName);
+    }
+
+    /**
+    /* "Month.August" (August)
+    */
+    public get monthAugust() : string {
+        return this.get(this.monthAugustLanguageItemName);
+    }
+
+    /**
+    /* "Month.September" (September)
+    */
+    public get monthSeptember() : string {
+        return this.get(this.monthSeptemberLanguageItemName);
+    }
+
+    /**
+    /* "Month.October" (October)
+    */
+    public get monthOctober() : string {
+        return this.get(this.monthOctoberLanguageItemName);
+    }
+
+    /**
+    /* "Month.November" (November)
+    */
+    public get monthNovember() : string {
+        return this.get(this.monthNovemberLanguageItemName);
+    }
+
+    /**
+    /* "Month.December" (December)
+    */
+    public get monthDecember() : string {
+        return this.get(this.monthDecemberLanguageItemName);
     }
 }
 
