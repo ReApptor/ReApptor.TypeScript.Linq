@@ -3,7 +3,7 @@ import {IEnumProvider} from "./BaseEnumProvider";
 import Utility from "../Utility";
 import {TFormat} from "./BaseTransformProvider";
 import {TDecoratorConstructor} from "./TypeResolver";
-import TypeConverter, {ITypeConverter, TClassDecorator} from "./TypeConverter";
+import TypeConverter, {ITypeConverter, TClassDecorator, TTypeConverter} from "./TypeConverter";
 
 const StringType: ServiceType = "string";
 
@@ -32,18 +32,23 @@ class StringConverter implements IStringConverter {
         if (item == null) {
             return "";
         }
-
-        if (typeof item === "string") {
-            return item;
+        
+        switch (typeof item) {
+            case "string":
+                return item;
+            case "bigint":
+            case "number":
+            case "boolean":
+                return item.toString();
         }
 
         if (Array.isArray(item)) {
             return item.length.toString();
         }
 
-        const converter: IStringConverter | TStringConverter | null = TypeConverter.getConverter(item, StringType);
+        const converter: IStringConverter | TStringConverter | null = this.getConverter(item);
         
-        if (converter) {
+        if (converter != null) {
             return (typeof converter === "function")
                 ? converter(item, format)
                 : converter.toString(item, format)
@@ -71,13 +76,25 @@ class StringConverter implements IStringConverter {
     public addConverter(from: TType, converter: IStringConverter | TStringConverter): void {
         TypeConverter.addConverter(from, StringType, converter);
     }
+
+    public addObjectConverter(converter: ITypeConverter | TTypeConverter): void {
+        TypeConverter.addObjectConverter(StringType, converter);
+    }
     
     public getConverter(from: TType): IStringConverter | TStringConverter | null {
         return TypeConverter.getConverter(from, StringType);
     }
+
+    public getObjectConverter(): IStringConverter | TStringConverter | null {
+        return TypeConverter.getObjectConverter(StringType);
+    }
     
     public getRequiredConverter(from: TType): IStringConverter | TStringConverter {
         return TypeConverter.getRequiredConverter(from, StringType);
+    }
+
+    public getRequiredObjectConverter(): IStringConverter | TStringConverter | null {
+        return TypeConverter.getRequiredObjectConverter(StringType);
     }
 
     public canConvert(from: TType): boolean {
