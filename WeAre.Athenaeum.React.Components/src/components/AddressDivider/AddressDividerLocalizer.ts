@@ -12,7 +12,9 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -21,7 +23,7 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.addressLanguageItemName, { language: `en`, value: `Address` }, { language: `uk`, value: `UK: Address` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `RU: Address` }, { language: `pl`, value: `PL: Address` }, { language: `fi`, value: `Osoite` },);
+        this.set(this.addressLanguageItemName, { language: `en`, value: `Address` }, { language: `uk`, value: `Адреса` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `Адрес` }, { language: `pl`, value: `PL: Address` }, { language: `nb`, value: `Address` }, { language: `fi`, value: `Osoite` }, { language: `da`, value: `Address` },);
     }
 
     /**

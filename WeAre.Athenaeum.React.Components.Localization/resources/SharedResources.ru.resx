@@ -133,13 +133,13 @@
     <value>Новый</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>RU: Nothing is selected</value>
+    <value>Ничего не выбрано</value>
   </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>{0} выбрано</value>
+    <value>{0} выбран(о)</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>Закрыть...</value>
+    <value>Загрузка...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>Очистить</value>
@@ -148,7 +148,7 @@
     <value>Завершить</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>Созранить изменения</value>
+    <value>Сохранить изменения</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
     <value>Закрыть</value>
@@ -181,7 +181,7 @@
     <value>Подтвердить</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
-    <value>RU: Address</value>
+    <value>Адрес</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>RU: Street</value>
@@ -231,19 +231,52 @@
   <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
-  <data name="BaseInput" xml:space="preserve">
-    <value />
-  </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>RU: at least 8 characters long</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>RU: Download</value>
+    <value>Загрузить</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>RU: Preview</value>
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
     <value>RU: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>Апрель</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>Август</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>Декабрь</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>Февраль</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>Январь</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>Июль</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>Июнь</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>Март</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>Май</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>Ноябрь</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>Октябрь</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>Декабрь</value>
   </data>
 </root>

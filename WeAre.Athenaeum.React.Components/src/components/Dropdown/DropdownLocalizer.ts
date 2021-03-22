@@ -18,7 +18,9 @@ class DropdownLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -27,13 +29,13 @@ class DropdownLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.multipleSelectedLanguageItemName, { language: `en`, value: `{0} selected` }, { language: `uk`, value: `UK: {0} selected` }, { language: `sv`, value: `{0} valt` }, { language: `ru`, value: `{0} выбрано` }, { language: `pl`, value: `PL: {0} selected` }, { language: `fi`, value: `{0} valittu` },);
-        this.set(this.noItemsLanguageItemName, { language: `en`, value: `No items found` }, { language: `uk`, value: `UK: No items found` }, { language: `sv`, value: `Inga objekt hittades` }, { language: `ru`, value: `Данные не найдены` }, { language: `pl`, value: `PL: No items found` }, { language: `fi`, value: `Kohteita ei löytynyt` },);
-        this.set(this.noDataLanguageItemName, { language: `en`, value: `No data` }, { language: `uk`, value: `UK: No data` }, { language: `sv`, value: `Ingen information` }, { language: `ru`, value: `Нет данных` }, { language: `pl`, value: `PL: No data` }, { language: `fi`, value: `Ei tietoja` },);
-        this.set(this.filterResultsLanguageItemName, { language: `en`, value: `Filter results` }, { language: `uk`, value: `UK: Filter results` }, { language: `sv`, value: `Filtrera resultat` }, { language: `ru`, value: `RU: Filter results` }, { language: `pl`, value: `PL: Filter results` }, { language: `fi`, value: `Suodata tulokset` },);
-        this.set(this.getResultsLanguageItemName, { language: `en`, value: `Start typing to get results` }, { language: `uk`, value: `UK: Start typing to get results` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `ru`, value: `Начните писать, чтобы увидеть данные` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` },);
-        this.set(this.addLanguageItemName, { language: `en`, value: `Add` }, { language: `uk`, value: `UK: Add` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `Новый` }, { language: `pl`, value: `PL: Add` }, { language: `fi`, value: `Lisää` },);
-        this.set(this.nothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `uk`, value: `UK: Nothing is selected` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `RU: Nothing is selected` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` },);
+        this.set(this.multipleSelectedLanguageItemName, { language: `en`, value: `{0} selected` }, { language: `uk`, value: `{0} вибран(о)` }, { language: `sv`, value: `{0} valt` }, { language: `ru`, value: `{0} выбран(о)` }, { language: `pl`, value: `PL: {0} selected` }, { language: `nb`, value: `{0} selected` }, { language: `fi`, value: `{0} valittu` }, { language: `da`, value: `{0} selected` },);
+        this.set(this.noItemsLanguageItemName, { language: `en`, value: `No items found` }, { language: `uk`, value: `Нічого не знайдено` }, { language: `sv`, value: `Inga objekt hittades` }, { language: `ru`, value: `Данные не найдены` }, { language: `pl`, value: `PL: No items found` }, { language: `nb`, value: `No items found` }, { language: `fi`, value: `Kohteita ei löytynyt` }, { language: `da`, value: `No items found` },);
+        this.set(this.noDataLanguageItemName, { language: `en`, value: `No data` }, { language: `uk`, value: `Немає даних` }, { language: `sv`, value: `Ingen information` }, { language: `ru`, value: `Нет данных` }, { language: `pl`, value: `PL: No data` }, { language: `nb`, value: `No data` }, { language: `fi`, value: `Ei tietoja` }, { language: `da`, value: `No data` },);
+        this.set(this.filterResultsLanguageItemName, { language: `en`, value: `Filter results` }, { language: `uk`, value: `UK: Filter results` }, { language: `sv`, value: `Filtrera resultat` }, { language: `ru`, value: `RU: Filter results` }, { language: `pl`, value: `PL: Filter results` }, { language: `nb`, value: `Filter results` }, { language: `fi`, value: `Suodata tulokset` }, { language: `da`, value: `Filter results` },);
+        this.set(this.getResultsLanguageItemName, { language: `en`, value: `Start typing to get results` }, { language: `uk`, value: `Почніть писати, щоб побачити дані` }, { language: `sv`, value: `Börja skriva för att få resultat` }, { language: `ru`, value: `Начните писать, чтобы увидеть данные` }, { language: `pl`, value: `PL: Start typing to get results` }, { language: `nb`, value: `Start typing to get results` }, { language: `fi`, value: `Aloita kirjoittaminen saadaksesi tuloksia` }, { language: `da`, value: `Start typing to get results` },);
+        this.set(this.addLanguageItemName, { language: `en`, value: `Add` }, { language: `uk`, value: `Додати` }, { language: `sv`, value: `SV: Add` }, { language: `ru`, value: `Новый` }, { language: `pl`, value: `PL: Add` }, { language: `nb`, value: `Add` }, { language: `fi`, value: `Lisää` }, { language: `da`, value: `Add` },);
+        this.set(this.nothingSelectedLanguageItemName, { language: `en`, value: `Nothing is selected` }, { language: `uk`, value: `Нічого не вибрано` }, { language: `sv`, value: `Ingenting är valt` }, { language: `ru`, value: `Ничего не выбрано` }, { language: `pl`, value: `PL: Nothing is selected` }, { language: `nb`, value: `Nothing is selected` }, { language: `fi`, value: `Ei mitään valittu` }, { language: `da`, value: `Nothing is selected` },);
     }
 
     /**

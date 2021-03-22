@@ -15,7 +15,9 @@ class FileInputLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -24,10 +26,10 @@ class FileInputLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.dragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `uk`, value: `UK: Drag'n'drop file here, or click to select` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` },);
-        this.set(this.readonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `uk`, value: `UK: File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` },);
-        this.set(this.chooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `uk`, value: `UK: Choose file` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `fi`, value: `Valitse tiedosto` },);
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
+        this.set(this.dragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `uk`, value: `Перетягніть файл, або оберіть його` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `nb`, value: `Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` }, { language: `da`, value: `Drag'n'drop file here, or click to select` },);
+        this.set(this.readonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `uk`, value: `UK: File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `nb`, value: `File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` }, { language: `da`, value: `File is readonly` },);
+        this.set(this.chooseFileLanguageItemName, { language: `en`, value: `Choose file` }, { language: `uk`, value: `Оберіть файл` }, { language: `sv`, value: `Välj fil` }, { language: `ru`, value: `RU: Choose file` }, { language: `pl`, value: `PL: Choose file` }, { language: `nb`, value: `Choose file` }, { language: `fi`, value: `Valitse tiedosto` }, { language: `da`, value: `Choose file` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `Preview` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `Preview` },);
     }
 
     /**
