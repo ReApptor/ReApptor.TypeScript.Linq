@@ -763,7 +763,7 @@ export default class Utility {
 
     private static findInstanceByAccessor(instance: any, accessor: string): [any, string] | undefined {
 
-        if ((instance == null) || (accessor == null)) {
+        if ((instance == null) || (accessor == null) || (typeof instance !== "object")) {
             return undefined;
         }
 
