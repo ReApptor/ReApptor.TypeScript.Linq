@@ -1,7 +1,7 @@
 import BaseTransformProvider, {TFormat} from "../providers/BaseTransformProvider";
 import Utility from "../Utility";
+import ISelectListItem from "../models/ISelectListItem";
 import StringConverter, {IStringConverter, ToString, TStringConverter} from "../providers/StringConverter";
-import {ISelectListItem} from "@weare/athenaeum-toolkit";
 
 describe("StringConverter", function() {
     

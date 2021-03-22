@@ -21,7 +21,7 @@ export class AmountListItem extends SelectListItem {
 
     public amount: number = 0.0;
 
-    public isAmountListItem: boolean = true;
+    public isAmountListItem: true = true;
 
     public get amountValue(): string {
         return (this.step >= 1)
