@@ -18,7 +18,6 @@ export default class ch {
 
     private static readonly _initializeCallbacks: (() => Promise<void>)[] = [];
     private static readonly _authorizeCallbacks: (() => Promise<void>)[] = [];
-    private static _number: number = 1;
     private static _context: ApplicationContext | null = null;
     private static _layout: ILayoutPage | null = null;
     private static _page: IBasePage | null = null;
@@ -369,7 +368,7 @@ export default class ch {
      * @returns id - number
      */
     public static getId(): number {
-        return ++this._number;
+        return Utility.getId();
     }
 
     /**
@@ -377,6 +376,6 @@ export default class ch {
      * @returns id - number
      */
     public static getComponentId(): string {
-        return `_${this.getId()}`;
+        return Utility.getComponentId();
     }
 }

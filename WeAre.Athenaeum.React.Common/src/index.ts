@@ -1,5 +1,5 @@
 //Enums:
-import { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection } from "./Enums";
+import { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType } from "./Enums";
 //Models:
 import AlertModel from "./models/AlertModel";
 import BasePageParameters from "./models/BasePageParameters";
@@ -8,6 +8,7 @@ import DescriptionModel from "./models/DescriptionModel";
 import DocumentPreviewModel, { DocumentPreviewSize, DocumentPreviewCallback } from "./models/DocumentPreviewModel";
 import PageRoute from "./models/PageRoute";
 import ServerError from "./models/ServerError";
+import ArrayScope from "./models/ArrayScope";
 //Interfaces:
 import IApplicationSettings from "./models/IApplicationSettings";
 import IConfirmation, { ConfirmationDialogTitleCallback } from "./models/IConfirmation";
@@ -37,13 +38,13 @@ import DocumentEventsProvider, {DocumentEventType, DocumentEventCallback} from "
 import {LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer} from "./localization/BaseComponentLocalizer";
 
 //Enums:
-export { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, };
+export { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType };
 
 //Models:
 export {
     AlertModel, ApplicationContext, BasePageParameters, DescriptionModel,
     DocumentPreviewModel, DocumentPreviewSize,
-    PageRoute, ServerError,
+    PageRoute, ServerError, ArrayScope
 };
 export type { DocumentPreviewCallback };
 
