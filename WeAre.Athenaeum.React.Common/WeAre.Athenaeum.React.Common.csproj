@@ -24,6 +24,7 @@
       <TypeScriptCompile Include="src\localization\BaseComponentLocalizer.ts" />
       <TypeScriptCompile Include="src\models\AlertModel.ts" />
       <TypeScriptCompile Include="src\models\ApplicationContext.ts" />
+      <TypeScriptCompile Include="src\models\ArrayScope.ts" />
       <TypeScriptCompile Include="src\models\DescriptionModel.ts" />
       <TypeScriptCompile Include="src\models\DocumentPreviewModel.ts" />
       <TypeScriptCompile Include="src\models\IApplicationSettings.ts" />
