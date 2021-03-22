@@ -7,10 +7,10 @@ import Row from "./Row/Row";
 import GridSpinner from "./GridSpinner/GridSpinner";
 import TotalRow from "./TotalRow/TotalRow";
 import CheckHeaderCell from "./Cell/CheckHeaderCell";
-
-import styles from "./Grid.module.scss";
 import Pagination from "../Pagination/Pagintation";
 import GridLocalizer from "./GridLocalizer";
+
+import styles from "./Grid.module.scss";
 
 interface IGridProps<TItem = {}> extends IGridDefinition {
     data?: TItem[] | null;

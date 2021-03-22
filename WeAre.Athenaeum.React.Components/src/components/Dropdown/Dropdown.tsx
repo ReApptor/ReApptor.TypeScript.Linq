@@ -6,7 +6,6 @@ import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
-import {ch} from "../../../../WeAre.Athenaeum.React.Common";
 import Button, { ButtonType } from "../Button/Button";
 import DropdownLocalizer from "./DropdownLocalizer";
 
@@ -235,7 +234,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 ? id.toString()
                 : (name)
                     ? name
-                    : ch.getId().toString();
+                    : Utility.getComponentId();
 
         selectListItem.text = name ?? "";
         selectListItem.subtext = subtext ?? "";
