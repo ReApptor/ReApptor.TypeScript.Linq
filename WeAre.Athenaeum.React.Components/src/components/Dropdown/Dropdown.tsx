@@ -203,6 +203,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
     
     private dynamicTransform(item: TItem): SelectListItem {
+        
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
         
         if (provider != null) {
@@ -240,6 +241,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         selectListItem.subtext = subtext ?? "";
         selectListItem.favorite = favorite;
         selectListItem.group = (groupName) ? SelectListGroup.create(groupName) : null;
+        selectListItem.ref = item;
         
         return selectListItem;
     }
