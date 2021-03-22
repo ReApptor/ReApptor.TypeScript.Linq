@@ -80,6 +80,11 @@ class TypeResolver implements ITypeResolver, IService {
         }
     }
     
+    public is(value: TType | null | undefined, type: TType): boolean {
+        return (value != null)
+            ? this.resolve(value) === this.resolve(type)
+            : false;
+    }
 }
 
 export default new TypeResolver();

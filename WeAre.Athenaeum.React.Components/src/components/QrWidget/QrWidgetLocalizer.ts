@@ -12,7 +12,9 @@ class QrWidgetLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -21,7 +23,7 @@ class QrWidgetLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.scanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `uk`, value: `UK: QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` },);
+        this.set(this.scanErrorLanguageItemName, { language: `en`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `uk`, value: `QR код сканер не доступний, можливо немає дозволу на використання камери вашого девайсу.` }, { language: `sv`, value: `QR-kodskanner inte tillgänglig, förmodligen inga behörigheter för kameran på din mobila enhet.` }, { language: `ru`, value: `RU: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `pl`, value: `PL: QR code scanner not available, probably no permissions to camera on you mobile device.` }, { language: `nb`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` }, { language: `fi`, value: `QR koodi skanneri ei käytössä. Mahdollisesti kameran käyttöoikeudet puuttuvat laitteeltasi.` }, { language: `da`, value: `QR code scanner is not available, probably no permissions to camera on your mobile device.` },);
     }
 
     /**

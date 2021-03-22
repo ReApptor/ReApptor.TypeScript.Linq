@@ -12,7 +12,9 @@ class LocationPickerLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },

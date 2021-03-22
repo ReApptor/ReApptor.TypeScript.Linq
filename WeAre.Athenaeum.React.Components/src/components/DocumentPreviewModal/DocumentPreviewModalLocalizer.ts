@@ -13,7 +13,9 @@ class DocumentPreviewModalLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -22,8 +24,8 @@ class DocumentPreviewModalLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `fi`, value: `Esikatselu` },);
-        this.set(this.downloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `UK: Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `fi`, value: `FI: Download` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `Preview` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `Preview` },);
+        this.set(this.downloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `Завантажити` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `Загрузить` }, { language: `pl`, value: `PL: Download` }, { language: `nb`, value: `Download` }, { language: `fi`, value: `FI: Download` }, { language: `da`, value: `Download` },);
     }
 
     /**

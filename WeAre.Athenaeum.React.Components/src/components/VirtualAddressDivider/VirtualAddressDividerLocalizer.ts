@@ -14,7 +14,9 @@ class VirtualAddressDividerLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -23,9 +25,9 @@ class VirtualAddressDividerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `UK: Street` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `fi`, value: `Katu` },);
-        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `UK: City` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `fi`, value: `Kaupunki` },);
-        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `UK: Postal code` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `fi`, value: `Postinumero` },);
+        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `Street` },);
+        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `City` },);
+        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postal code` },);
     }
 
     /**

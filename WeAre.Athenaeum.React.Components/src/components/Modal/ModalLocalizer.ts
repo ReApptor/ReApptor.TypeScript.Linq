@@ -13,7 +13,9 @@ class ModalLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -22,8 +24,8 @@ class ModalLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.saveChangesLanguageItemName, { language: `en`, value: `Save changes` }, { language: `uk`, value: `UK: Save changes` }, { language: `sv`, value: `Spara ändringar` }, { language: `ru`, value: `Созранить изменения` }, { language: `pl`, value: `PL: Save changes` }, { language: `fi`, value: `Tallenna muutokset` },);
-        this.set(this.closeLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `UK: Close` }, { language: `sv`, value: `Stäng` }, { language: `ru`, value: `Закрыть` }, { language: `pl`, value: `PL: Close` }, { language: `fi`, value: `Sulje` },);
+        this.set(this.saveChangesLanguageItemName, { language: `en`, value: `Save changes` }, { language: `uk`, value: `Зберегти зміни` }, { language: `sv`, value: `Spara ändringar` }, { language: `ru`, value: `Сохранить изменения` }, { language: `pl`, value: `PL: Save changes` }, { language: `nb`, value: `Save changes` }, { language: `fi`, value: `Tallenna muutokset` }, { language: `da`, value: `Save changes` },);
+        this.set(this.closeLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `Закрити` }, { language: `sv`, value: `Stäng` }, { language: `ru`, value: `Закрыть` }, { language: `pl`, value: `PL: Close` }, { language: `nb`, value: `Close` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Close` },);
     }
 
     /**

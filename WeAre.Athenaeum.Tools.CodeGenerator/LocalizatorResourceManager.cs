@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
@@ -139,8 +140,43 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             return components.Values.ToArray();
         }
 
-        private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, out CultureInfo[] cultures)
+        private static bool Exclude(string[] excludePatterns, string name)
         {
+            if (excludePatterns.Length == 0)
+            {
+                return false;
+            }
+            
+            return excludePatterns.Any(pattern => Regex.IsMatch(name, pattern));
+        }
+
+        private static bool Include(string[] includePatterns, string name)
+        {
+            if (includePatterns.Length == 0)
+            {
+                return true;
+            }
+            
+            return includePatterns.Any(pattern => Regex.IsMatch(name, pattern));
+        }
+
+        private static string WildCardToRegular(string value)
+        {
+            return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
+        }
+
+        private static Dictionary<string, Dictionary<string, string>> LoadLanguageItems(string neutralResourcePath, string neutralLanguage, string[] include, string[] exclude, out CultureInfo[] cultures)
+        {
+            string[] includePatterns = (include ?? new string[0])
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Select(item => WildCardToRegular(item.Trim()))
+                .ToArray();
+
+            string[] excludePatterns = (exclude ?? new string[0])
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Select(item => WildCardToRegular(item.Trim()))
+                .ToArray();
+
             Dictionary<string, ResourceDocument> resources = LoadResources(neutralResourcePath, neutralLanguage);
 
             var cultureItems = new List<CultureInfo>();
@@ -161,20 +197,26 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     {
                         string name = item.Name;
 
-                        Dictionary<string, string> languages;
-                        if (!items.ContainsKey(name))
-                        {
-                            languages = new Dictionary<string, string>();
-                            items.Add(name, languages);
-                        }
-                        else
-                        {
-                            languages = items[name];
-                        }
+                        bool excludeItem = Exclude(excludePatterns, name);
+                        bool includeItem = (!excludeItem) && Include(includePatterns, name);
 
-                        if (!languages.ContainsKey(language))
+                        if (includeItem)
                         {
-                            languages.Add(language, item.Value);
+                            Dictionary<string, string> languages;
+                            if (!items.ContainsKey(name))
+                            {
+                                languages = new Dictionary<string, string>();
+                                items.Add(name, languages);
+                            }
+                            else
+                            {
+                                languages = items[name];
+                            }
+
+                            if (!languages.ContainsKey(language))
+                            {
+                                languages.Add(language, item.Value);
+                            }
                         }
                     }
                 }
@@ -474,7 +516,7 @@ namespace {0}
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;
 
-                Dictionary<string, Dictionary<string, string>> languageItems = LoadLanguageItems(settings.NeutralResourcePath, settings.NeutralLanguage, out CultureInfo[] cultures);
+                Dictionary<string, Dictionary<string, string>> languageItems = LoadLanguageItems(settings.NeutralResourcePath, settings.NeutralLanguage, settings.Include, settings.Exclude, out CultureInfo[] cultures);
 
                 if (settings.SplitByComponent)
                 {

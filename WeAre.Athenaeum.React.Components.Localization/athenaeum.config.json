@@ -12,6 +12,7 @@
     "type": "0",
     "neutralLanguage": "en",
     "import": "import {BaseComponentLocalizer} from \"@weare/athenaeum-react-common\";",
-    "baseClassName": "BaseComponentLocalizer"
+    "baseClassName": "BaseComponentLocalizer",
+    "exclude": ["Month.*", "DayOfWeek.*"]
   }]
 }

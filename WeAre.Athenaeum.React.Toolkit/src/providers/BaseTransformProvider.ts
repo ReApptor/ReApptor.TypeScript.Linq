@@ -14,6 +14,7 @@ export default abstract class BaseTransformProvider implements ITransformProvide
     
     protected constructor() {
         ServiceProvider.addSingleton(this);
+        StringConverter.addObjectConverter((item: any, format?: TFormat | null) => this.toString(item, format));
     }
 
     public getType(): ServiceType {

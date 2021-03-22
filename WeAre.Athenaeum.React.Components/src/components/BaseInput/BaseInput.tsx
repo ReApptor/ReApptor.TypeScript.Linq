@@ -2,11 +2,11 @@ import React from "react";
 import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback} from "@weare/athenaeum-react-common";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
+import { BaseInputType, InputValidationRule } from "../../models/Enums";
+import BaseInputLocalizer from "./BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
-import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
-import BaseInputLocalizer from "./BaseInputLocalizer";
-import { BaseInputType, InputValidationRule } from "../../models/Enums";
 
 export type NullableCheckboxType = boolean | null;
 
@@ -184,11 +184,11 @@ export class RequiredValidator extends BaseValidator {
     
     public validate(value: BaseInputValue): string | null {
         if ((value != null) && (Array.isArray(value))) {
-            return (value.length === 0) ? BaseInputLocalizer.get("Validators.Required") : null;
+            return (value.length === 0) ? BaseInputLocalizer.validatorsRequired : null;
         }
         const str: string | null = BaseValidator.toString(value);
         if ((str == null) || (str.length === 0)) {
-            return BaseInputLocalizer.get("Validators.Required");
+            return BaseInputLocalizer.validatorsRequired;
         }        
         return null;
     }
@@ -209,7 +209,7 @@ export class LengthValidator extends BaseValidator {
     public validate(value: BaseInputValue): string | null {
         const str: string | null = BaseValidator.toString(value);
         if ((this.minLength > 0) && ((str == null) || (str.length < this.minLength))) {
-            return BaseInputLocalizer.get("Validators.Length");
+            return BaseInputLocalizer.validatorsLength;
         }
         return null;
     }
@@ -233,7 +233,7 @@ export class NumberRangeValidator extends BaseValidator {
 
     public validate(value: BaseInputValue): string | null {
         if ((value == null) || (value < this.min) || (value > this.max)) {
-            return Utility.format(BaseInputLocalizer.get("Validators.NumberRange"), this.min, this.max);
+            return Utility.format(BaseInputLocalizer.validatorsNumberRange, this.min, this.max);
         }
         return null;
     }
@@ -264,7 +264,7 @@ export class FileSizeValidator extends BaseFileValidator {
             const fileSizes: number[] = files.map(file => BaseFileValidator.getSize(file) || 0);
 
             if (fileSizes.some((fileSize: number) => (fileSize > this.maxSize))) {
-                return BaseInputLocalizer.get("BaseInput.DocumentTooBig");
+                return BaseInputLocalizer.validatorsDocumentTooBig;
             }
         }
 
@@ -298,7 +298,7 @@ export class FilesSizeValidator extends BaseFileValidator {
             const totalSize: number = BaseFileValidator.getSize(files) || 0;
             
             if (totalSize > this.maxSize) {
-                return BaseInputLocalizer.get("BaseInput.TotalSizeTooBig");
+                return BaseInputLocalizer.validatorsTotalSizeTooBig;
             }
         }
 
@@ -331,7 +331,7 @@ export class FileTypeValidator extends BaseFileValidator {
             const fileTypes: string[] = files.map(file => BaseFileValidator.getType(file) || "");
 
             if ((fileTypes.length !== 0) && (!fileTypes.every((fileType: string) => this.fileTypes.includes(fileType)))) {
-                return Utility.format(BaseInputLocalizer.get("BaseInput.DocumentTypeNotSupported"), Utility.getExtensionsFromMimeTypes(this.fileTypes))
+                return Utility.format(BaseInputLocalizer.validatorsDocumentTypeNotSupported, Utility.getExtensionsFromMimeTypes(this.fileTypes))
             }
         }
 
@@ -716,7 +716,9 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                     (
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
-                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>{this.state.validationError ? BaseInputLocalizer.get(this.state.validationError, this.props.label) : this.props.label}</label>
+                                   onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
+                                {this.state.validationError ? BaseInputLocalizer.get(this.state.validationError, this.props.label) : this.props.label}
+                            </label>
                             {(this.props.required && !this.noValidate && !this.state.validationError) && <span className={styles.required}>*</span>}
                         </div>
                     )

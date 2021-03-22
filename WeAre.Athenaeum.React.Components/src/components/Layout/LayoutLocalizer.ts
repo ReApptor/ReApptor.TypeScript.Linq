@@ -16,7 +16,9 @@ class LayoutLocalizer extends BaseComponentLocalizer {
         super(
             [
                 { code: "en", label: "English" },
+                { code: "da", label: "Dansk" },
                 { code: "fi", label: "Suomi" },
+                { code: "nb", label: "Norsk bokmål" },
                 { code: "pl", label: "Polski" },
                 { code: "ru", label: "Русский" },
                 { code: "sv", label: "Svenska" },
@@ -25,11 +27,11 @@ class LayoutLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.fourColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` },);
-        this.set(this.oneColumnLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` },);
-        this.set(this.inlineLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` },);
-        this.set(this.threeColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` },);
-        this.set(this.twoColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` },);
+        this.set(this.fourColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.oneColumnLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.inlineLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.threeColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.twoColumnsLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
     }
 
     /**
