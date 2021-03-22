@@ -23,7 +23,7 @@ import BaseTransformProvider, { ITransformProvider, TFormat } from "./providers/
 import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
 import TypeResolver, { TDecoratorConstructor, ITypeResolver } from "./providers/TypeResolver";
 import ServiceProvider, { ServiceType, ServiceCallback, IService, TService, TType } from "./providers/ServiceProvider";
-import TypeConverter, { ITypeConverter, TClassDecorator } from "./providers/TypeConverter";
+import TypeConverter, { ITypeConverter, TClassDecorator, TTypeConverter } from "./providers/TypeConverter";
 import StringConverter, { TStringConverter, ToString, IStringConverter } from "./providers/StringConverter";
 //Helpers:
 import PwaHelper from "./helpers/PwaHelper";
@@ -67,7 +67,7 @@ export {
 export type {
     IEnumProvider, 
     ITransformProvider, 
-    TFormat, ITypeConverter,
+    TFormat, ITypeConverter, TTypeConverter,
     IStringConverter, 
     TClassDecorator, 
     TStringConverter, 
