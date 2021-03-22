@@ -303,7 +303,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             const maxHeight: number | string | undefined = this.getMaxHeightValue();
             if (maxHeight != undefined) {
                 this._maxHeight = maxHeight;
-                const element = $(this._itemsListRef.current);
+                const element = this.JQuery(this._itemsListRef.current);
                 element.css("max-height", maxHeight);
             }
         }
