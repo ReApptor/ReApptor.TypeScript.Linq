@@ -1,6 +1,7 @@
 import BaseTransformProvider, {TFormat} from "../providers/BaseTransformProvider";
 import Utility from "../Utility";
 import StringConverter, {IStringConverter, ToString, TStringConverter} from "../providers/StringConverter";
+import {ISelectListItem} from "@weare/athenaeum-toolkit";
 
 describe("StringConverter", function() {
     
@@ -41,10 +42,19 @@ describe("StringConverter", function() {
             this.value = value || "VALUE-2";
         }
     }
-    
+
     class MyTransformProvider extends BaseTransformProvider {
         public constructor() {
             super();
+        }
+
+        protected createSelectListItem(value: string, text: string, subtext: string, groupName?: string | null, favorite?: boolean | null): ISelectListItem {
+            return {
+                value: value,
+                text: text,
+                selected: false,
+                disabled: false
+            };
         }
     }
 
