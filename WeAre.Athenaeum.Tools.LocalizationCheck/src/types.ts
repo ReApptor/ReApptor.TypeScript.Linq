@@ -8,5 +8,6 @@ export interface Configuration {
     typescriptLocalizationPrefix: TypescriptLocalizationPrefix;
     typescriptComponentsDirectories: string[];
     cSharpDirectories: string[];
-    enumsToKeep: string[];
+    prefixesToExclude: string[],
+    postfixesToExclude: string[]
 }
