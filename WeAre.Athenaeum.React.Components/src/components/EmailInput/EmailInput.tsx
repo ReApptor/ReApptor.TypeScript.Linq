@@ -1,6 +1,6 @@
 import TextInput from "../TextInput/TextInput";
+import {BaseInputType} from "@weare/athenaeum-react-common";
 import { EmailValidator, ValidatorCallback } from "../BaseInput/BaseInput";
-import { BaseInputType } from "../../models/Enums";
 
 export default class EmailInput extends TextInput {
     protected getType(): BaseInputType {

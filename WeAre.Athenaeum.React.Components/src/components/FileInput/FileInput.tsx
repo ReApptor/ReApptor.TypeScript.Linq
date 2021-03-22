@@ -1,11 +1,11 @@
 import React from "react";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
+import {BaseInputType} from "@weare/athenaeum-react-common";
 import BaseInput, { ValidatorCallback, IBaseInputProps, IBaseInputState, FileSizeValidator, FileTypeValidator, FilesSizeValidator } from "../BaseInput/BaseInput";
 import Icon from "../Icon/Icon";
 import FileInputLocalizer from "./FileInputLocalizer";
 
 import styles from "./FileInput.module.scss";
-import { BaseInputType } from "../../models/Enums";
 
 export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[] | null> {
     forwardedRef?: React.RefObject<HTMLInputElement>;

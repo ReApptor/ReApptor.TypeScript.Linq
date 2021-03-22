@@ -44,7 +44,7 @@
     "build": "react-app-rewired build",
     "copy:components": "rsync -av '../WeAre.Athenaeum.React.Components/src/.' './src/@weare/athenaeum-react-components/' --delete",
     "copy:components:back": "rsync -av './src/@weare/athenaeum-react-components/.' '../WeAre.Athenaeum.React.Components/src/'",
-    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*'  --exec 'npm run copy:components'",
+    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*' --exec 'npm run copy:components'",
     "watch:components:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-components/*' --exec 'npm run copy:components:back'",
     "copy:common": "rsync -av '../WeAre.Athenaeum.React.Common/src/.' './src/@weare/athenaeum-react-common/' --delete",
     "copy:common:back": "rsync -av './src/@weare/athenaeum-react-common/.' '../WeAre.Athenaeum.React.Common/src/'",

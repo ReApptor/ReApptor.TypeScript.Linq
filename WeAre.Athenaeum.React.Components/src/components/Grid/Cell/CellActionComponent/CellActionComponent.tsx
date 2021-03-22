@@ -1,12 +1,10 @@
 import React from "react";
-import { ch, DescriptionModel, IConfirmation } from "@weare/athenaeum-react-common";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {ActionType, ch, DescriptionModel, IConfirmation, BaseComponent} from "@weare/athenaeum-react-common";
 import { CellAction, CellModel, ColumnAction, DescriptionCellAction, GridConfirmationDialogTitleCallback, ICellAction } from "../../GridModel";
 import Icon, { IIconProps } from "../../../Icon/Icon";
 import Button from "../../../Button/Button";
 
 import gridStyles from "../../Grid.module.scss";
-import { ActionType } from "../../../../models/Enums";
 
 interface ICellActionComponentProps<TItem = {}> {
     cell: CellModel<TItem>;
