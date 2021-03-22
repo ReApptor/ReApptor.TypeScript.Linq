@@ -54,8 +54,6 @@
       <TypeScriptCompile Include="src\components\WizardContainer\WizardContainer.tsx" />
       <TypeScriptCompile Include="src\index.ts" />
       <TypeScriptCompile Include="src\AthenaeumComponentsConstants.ts" />
-      <TypeScriptCompile Include="src\models\ArrayScope.ts" />
-      <TypeScriptCompile Include="src\models\Enums.ts" />
       <TypeScriptCompile Include="src\module.d.ts" />
       <TypeScriptCompile Include="src\react-app-env.d.ts" />
     </ItemGroup>

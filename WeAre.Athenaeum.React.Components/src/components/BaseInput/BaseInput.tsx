@@ -1,9 +1,8 @@
 import React from "react";
 import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType } from "@weare/athenaeum-react-common";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
-import { BaseInputType, InputValidationRule } from "../../models/Enums";
 import BaseInputLocalizer from "./BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
@@ -77,17 +76,20 @@ export abstract class BaseValidator implements IValidator {
             if (typeof value === "string") {
                 return value as string;
             }
-            if (typeof value === "number") {
-                return (value as number).toString();
-            }
-            if (typeof value === "boolean") {
-                return (value as boolean).toString();
-            }
             if ((value instanceof FileModel) || ((value as any).isFileModel)) {
                 return (value as FileModel).src;
             }
+            if (typeof value === "number") {
+                //return (value as number).toString();
+                return Utility.formatValue(value, format);
+            }
+            if (typeof value === "boolean") {
+                //return (value as boolean).toString();
+                return Utility.formatValue(value, format);
+            }
             if (value instanceof Date) {
-                return (value as Date).toDateString();
+                //return (value as Date).toDateString();
+                return Utility.formatValue(value, format || "D");
             }
         }
         return null;
@@ -117,14 +119,14 @@ export enum BaseRegexValidatorErrorMessage {
     validatorsEmailLanguageItemName= "Validators.Email",
     validatorsPasswordLanguageItemName= "Validators.Password",
     validatorsPhoneLanguageItemName= "Validators.Phone"
-    
 }
+
 export abstract class BaseRegexValidator extends BaseValidator {
 
     protected regex: RegExp;
     protected errorMessage: string;
 
-    constructor(regex: string, errorMessage: BaseRegexValidatorErrorMessage) {
+    constructor(regex: string, errorMessage: string) {
         super();
         this.regex = new RegExp(regex);
         this.errorMessage = BaseInputLocalizer.get(errorMessage);
@@ -145,7 +147,7 @@ export abstract class BaseRegexValidator extends BaseValidator {
 
 export class RegexValidator extends BaseRegexValidator {
     public static validator(regex: string, errorMessage: string): ValidatorCallback<BaseInputValue> {
-        const instance: RegexValidator = new RegexValidator(regex, BaseRegexValidatorErrorMessage.validatorsEmailLanguageItemName);
+        const instance: RegexValidator = new RegexValidator(regex, errorMessage);
         return (value: BaseInputValue) => instance.validate(value);
     }
 }

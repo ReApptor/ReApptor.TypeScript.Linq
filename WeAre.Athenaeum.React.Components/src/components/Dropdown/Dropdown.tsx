@@ -1,12 +1,12 @@
 import React from "react";
-import { Utility } from "@weare/athenaeum-toolkit";
-import { ComponentHelper, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign } from "@weare/athenaeum-react-common";
+import {ISelectListItem, ITransformProvider, ITypeConverter, TTypeConverter, Utility, ServiceProvider, TypeConverter} from "@weare/athenaeum-toolkit";
+import { IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign, BaseInputType } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
-import { BaseInputType } from "../../models/Enums";
+import {ch} from "../../../../WeAre.Athenaeum.React.Common";
 import Button, { ButtonType } from "../Button/Button";
 import DropdownLocalizer from "./DropdownLocalizer";
 
@@ -204,20 +204,20 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
     
     private dynamicTransform(item: TItem): SelectListItem {
-        if (typeof item === "number") {
-            const listItem = new SelectListItem();
-            listItem.value = item.toString();
-            listItem.text = item.toString();
-            listItem.ref = item;
-            return listItem;
+        const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
+        
+        if (provider != null) {
+            return provider.toSelectListItem(item) as SelectListItem;
         }
 
-        if (typeof item === "string") {
-            const listItem = new SelectListItem();
-            listItem.value = item;
-            listItem.text = item;
-            listItem.ref = item;
-            return listItem;
+        const anyItem = item as any;
+        const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(anyItem, nameof<ISelectListItem>()) ?? 
+                                                                  TypeConverter.getConverter(anyItem, SelectListItem);
+
+        if (converter != null) {
+            return (typeof converter === "function")
+                ? converter(item)
+                : converter.convert(item)
         }
 
         const value: any = Utility.findStringValueByAccessor(item, ["value"]);
@@ -226,45 +226,34 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const subtext: string | null = Utility.findStringValueByAccessor(item, ["subtext", "description"]);
         const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
         const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
+        
+        const selectListItem = new SelectListItem();
 
-        const listItem = new SelectListItem();
-
-        listItem.value = (value)
+        selectListItem.value = (value)
             ? value
             : (id != null)
                 ? id.toString()
                 : (name)
                     ? name
-                    : ComponentHelper.getId().toString();
+                    : ch.getId().toString();
 
-        if (name) {
-            listItem.text = name;
-        }
-
-        if (subtext) {
-            listItem.subtext = subtext;
-        }
-
-        if (groupName) {
-            listItem.group = SelectListGroup.create(groupName);
-        }
-
-        listItem.favorite = favorite;
-        listItem.ref = item;
-
-        return listItem;
+        selectListItem.text = name ?? "";
+        selectListItem.subtext = subtext ?? "";
+        selectListItem.favorite = favorite;
+        selectListItem.group = (groupName) ? SelectListGroup.create(groupName) : null;
+        
+        return selectListItem;
     }
 
     private transform(item: TItem): SelectListItem {
-
-        //const transformProvider: ITransformProvider | null = ServiceProvider.getRequiredService(nameof<ITransformProvider>());
-        // const typeConverter: TConverter = ServiceProvider.getRequiredService(nameof<ITransformProvider>());
-        
-        const listItem: SelectListItem = ((item as any).isSelectListSeparator)
-            ? (item as any) as SelectListSeparator
-            : (this.props.transform)
-                ? this.props.transform(item)
-                : this.dynamicTransform(item);
+        const anyItem = item as any;
+        const listItem: SelectListItem = (anyItem.isSelectListSeparator)
+            ? anyItem as SelectListSeparator
+            : (anyItem.isSelectListItem)
+                ? (anyItem as SelectListItem)
+                : (this.props.transform)
+                    ? this.props.transform(item)
+                    : this.dynamicTransform(item);
 
         if (listItem.ref == null) {
             listItem.ref = item;

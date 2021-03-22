@@ -1,6 +1,6 @@
+import {BaseInputType} from "@weare/athenaeum-react-common";
 import TextInput from "../TextInput/TextInput";
 import { PhoneValidator, ValidatorCallback } from "../BaseInput/BaseInput";
-import { BaseInputType } from "../../models/Enums";
 
 export default class PhoneInput extends TextInput {
     protected getType(): BaseInputType {

@@ -1,13 +1,12 @@
 import React from "react";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, ReactUtility} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, LinkTarget, ReactUtility} from "@weare/athenaeum-react-common";
 import Icon, { IconSize, IIconProps } from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import BaseWidgetContainer from "./BaseWidgetContainer";
+import WidgetContainerLocalizer from "./WidgetContainerLocalizer";
 
 import styles from "./WidgetContainer.module.scss";
-import { LinkTarget } from "../../models/Enums";
-import WidgetContainerLocalizer from "./WidgetContainerLocalizer";
 
 export interface IBaseWidget {
     isWidget(): boolean;

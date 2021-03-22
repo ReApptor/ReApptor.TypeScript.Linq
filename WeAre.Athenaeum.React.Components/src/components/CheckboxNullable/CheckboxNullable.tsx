@@ -1,8 +1,8 @@
 import React from "react";
+import {BaseInputType} from "@weare/athenaeum-react-common";
 import BaseInput, { IBaseInputProps, IBaseInputState, NullableCheckboxType, ValidatorCallback } from "../BaseInput/BaseInput";
-
-import { BaseInputType } from "../../models/Enums";
 import Icon, { IconSize } from "../Icon/Icon";
+
 import styles from "../Checkbox/Checkbox.module.scss";
 
 export interface INullableCheckboxProps extends IBaseInputProps<NullableCheckboxType> {

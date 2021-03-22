@@ -1,7 +1,7 @@
 import React from "react";
-import {TypeConverter} from "@weare/athenaeum-toolkit";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
 import { IconSize, IIconProps } from "../Icon/Icon";
+import {TypeConverter} from "@weare/athenaeum-toolkit";
 import TitleWidgetLocalizer from "./TitleWidgetLocalizer";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";

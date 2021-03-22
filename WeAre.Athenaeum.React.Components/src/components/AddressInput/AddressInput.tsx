@@ -1,11 +1,10 @@
 import React from "react";
 import Autocomplete from "react-google-autocomplete";
 import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
-import {ch} from "@weare/athenaeum-react-common";
+import {ch, BaseInputType} from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import LocationPickerModal from "../LocationPickerModal/LocationPickerModal";
 import AddressHelper, { GoogleApiResult } from "../../helpers/AddressHelper";
-import { BaseInputType } from "../../models/Enums";
 import Comparator from "../../helpers/Comparator";
 import Icon from "../Icon/Icon";
 
