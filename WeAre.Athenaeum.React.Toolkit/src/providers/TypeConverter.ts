@@ -60,7 +60,20 @@ class TypeConverter {
             : null;
         return (value != null) ? value : defaultValue;
     }
-    
 }
 
-export default new TypeConverter();
+const typeConverter = new TypeConverter();
+
+export function ObjectConverter(to?: TType) {
+    return function decorator(target: Object, propertyKey: string, descriptor: PropertyDescriptor): void {
+        const method: Function = descriptor.value;
+        if (to == null) {
+            to = method.apply(target, [{}]) as TType;
+        }
+        if (to != null) {
+            typeConverter.addObjectConverter(to, (item) => method.apply(target, [item]));
+        }
+    }
+}
+
+export default typeConverter;

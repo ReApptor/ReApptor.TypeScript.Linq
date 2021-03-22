@@ -3,7 +3,7 @@ import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 import HashCodeUtility from "./HashCodeUtility";
 import FileModel from "./models/FileModel";
-import Position from "./models/Position";
+//import Position from "./models/Position";
 import {Dictionary} from "typescript-collections";
 import {ILocalizer} from "./localization/BaseLocalizer";
 import {ITransformProvider, TFormat} from "./providers/BaseTransformProvider";
@@ -17,6 +17,7 @@ import ServiceProvider from "./providers/ServiceProvider";
 export default class Utility {
 
     private static _geoEnabled: boolean | null = null;
+    private static _number: number = 1;
 
     public static setTimeout(asyncCallback: (...args: any[]) => void, ms: number, ...args: any[]): NodeJS.Timeout {
         const timer: any = setTimeout(() => asyncCallback(args), ms, args);
@@ -39,7 +40,8 @@ export default class Utility {
                     return position;
                 })
                 .catch((e) => {
-                    if (e.code != 3) {
+                    const timeout: boolean = (e.code == 3);
+                    if (!timeout) {
                         this._geoEnabled = false;
                     }
                     return null;
@@ -52,10 +54,7 @@ export default class Utility {
     public static async getLocationAsync(options: PositionOptions | null | undefined = null): Promise<GeoCoordinate | null> {
         const position: Position | null = await this.getPositionAsync(options);
         if (position) {
-            const location = new GeoCoordinate();
-            location.lat = position.coords.latitude;
-            location.lon = position.coords.longitude;
-            return location;
+            return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
         }
         return null;
     }
@@ -959,6 +958,22 @@ export default class Utility {
             return mimeTypes.map(type => type.split("/")[1]).join(", ");
         }
         return "";
+    }
+
+    /**
+     * Gets unique id
+     * @returns id - number
+     */
+    public static getId(): number {
+        return ++this._number;
+    }
+
+    /**
+     * Gets component id
+     * @returns id - number
+     */
+    public static getComponentId(): string {
+        return `_${this.getId()}`;
     }
 }
 

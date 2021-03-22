@@ -1,4 +1,5 @@
 import {ArrayExtensions, TypeConverter, Utility} from "..";
+import {ObjectConverter} from "../providers/TypeConverter";
 
 ArrayExtensions();
 
@@ -52,6 +53,37 @@ describe("TypeConverter.toTitle", function() {
         
     }
     
+    class TransformProviderWithAttribute {
+        
+        @ObjectConverter(nameof<ITitleModel>())
+        // @ts-ignore
+        public toTitle(item: any): ITitleModel {
+
+            let label: string | null = null;
+            let description: string | null = null;
+
+            if (item != null) {
+                
+                if ((item instanceof MyEntity) || (item as MyEntity).isMyEntity === true) {
+                    return {
+                        label: (item as MyEntity).value1,
+                        description: (item as MyEntity).value2,
+                    };
+                }
+                
+                
+                label = Utility.findStringValueByAccessor(item, ["label", "name"]);
+                description = Utility.findStringValueByAccessor(item, ["description", "text"]);
+            }
+
+            return {
+                description: description || "",
+                label: label || ""
+            };
+        }
+        
+    }
+    
     test("MyTitle", function () {
         new TransformProvider();
         
@@ -63,8 +95,19 @@ describe("TypeConverter.toTitle", function() {
         expect(title!.description).toBe("MyTitle.description");
     });
     
-    test("MyEntity", function () {
+    test("MyEntity.ToTitle.Constructor", function () {
         new TransformProvider();
+        
+        const item = new MyEntity();
+        const title: ITitleModel | null = TypeConverter.convert(item, nameof<ITitleModel>());
+
+        expect(title).not.toBeNull();
+        expect(title!.label).toBe("value1");
+        expect(title!.description).toBe("value2");
+    });
+    
+    test("MyEntity.ToTitle.Decorator", function () {
+        new TransformProviderWithAttribute();
         
         const item = new MyEntity();
         const title: ITitleModel | null = TypeConverter.convert(item, nameof<ITitleModel>());

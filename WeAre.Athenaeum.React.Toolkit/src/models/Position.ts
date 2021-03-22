@@ -1,4 +1,5 @@
 export default interface Position {
+
     readonly coords: {
         readonly accuracy: number;
         readonly altitude: number | null;
@@ -8,5 +9,6 @@ export default interface Position {
         readonly longitude: number;
         readonly speed: number | null;
     };
+
     readonly timestamp: number;
 }
