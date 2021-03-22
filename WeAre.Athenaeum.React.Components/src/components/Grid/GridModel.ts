@@ -1,9 +1,9 @@
 import React from "react";
+import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import {HashCodeUtility, IPagedList, SortDirection, TFormat, Utility} from "@weare/athenaeum-toolkit";
 import {Align, ch, IAsyncComponent, IBaseComponent, IConfirmation, Justify, PageRoute, TextAlign, VerticalAlign, ArrayScope, ActionType} from "@weare/athenaeum-react-common";
 import {IIconProps} from "../Icon/Icon";
 import Comparator from "../../helpers/Comparator";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "../Dropdown/Dropdown";
 import { IInput } from "../BaseInput/BaseInput";
 

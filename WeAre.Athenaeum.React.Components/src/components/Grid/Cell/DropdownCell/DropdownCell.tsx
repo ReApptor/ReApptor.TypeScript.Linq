@@ -2,10 +2,10 @@ import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
 import { CellModel, ColumnSettings } from "../../GridModel";
 import Comparator from "../../../../helpers/Comparator";
-
-import gridStyles from "../../Grid.module.scss";
 import Dropdown, { DropdownOrderBy } from "../../../Dropdown/Dropdown";
 import { IInput } from "../../../BaseInput/BaseInput";
+
+import gridStyles from "../../Grid.module.scss";
 
 interface IDropdownCellProps<TItem = {}> {
     id?: string;
