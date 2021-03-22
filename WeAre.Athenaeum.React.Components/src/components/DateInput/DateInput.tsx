@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from "jquery";
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
@@ -117,7 +118,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         //super
         await super.componentDidMount();
         //set input as readonly to avoid auto complete
-        this.JQuery(`#${this.getInputId()}`).prop("readonly", true);
+        $(`#${this.getInputId()}`).prop("readonly", true);
     }
 
     public renderInput(): React.ReactNode {
@@ -126,25 +127,26 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
-                <DatePicker id={this.getInputId()}
-                            title={DateInputLocalizer.get(this.props.title)}
-                            dateFormat={this.format as string}
-                            minDate={this.props.minDate}
-                            maxDate={this.props.maxDate}
-                            selected={this.selected}
-                            onChange={async (date: Date) => await this.handleChangeAsync(date)}
-                            className="form-control"
-                            calendarClassName={this.css("datepicker", this.calendarClassName)}
-                            todayButton={this.todayButton}
-                            inline={this.props.expanded}
-                            withPortal={this.props.popup}
-                            showMonthDropdown={this.props.showMonthDropdown}
-                            showMonthYearPicker={this.props.showMonthYearPicker}
-                            onChangeRaw={(e) => this.handleRawChange(e)}
-                            ref={this.props.forwardedRef}
-                            locale={DateInputLocalizer.language}
-                            readOnly={this.readonly}
-                            customInput={this.renderCustomInput()}
+                <DatePicker
+                    id={this.getInputId()}
+                    title={DateInputLocalizer.get(this.props.title)}
+                    dateFormat={this.format as string}
+                    minDate={this.props.minDate}
+                    maxDate={this.props.maxDate}
+                    selected={this.selected}
+                    onChange={async (date: Date) => await this.handleChangeAsync(date)}
+                    className="form-control"
+                    calendarClassName={this.css("datepicker", this.calendarClassName)}
+                    todayButton={this.todayButton}
+                    inline={this.props.expanded}
+                    withPortal={this.props.popup}
+                    showMonthDropdown={this.props.showMonthDropdown}
+                    showMonthYearPicker={this.props.showMonthYearPicker}
+                    onChangeRaw={(e) => this.handleRawChange(e)}
+                    ref={this.props.forwardedRef}
+                    locale={DateInputLocalizer.language}
+                    readOnly={this.readonly}
+                    customInput={this.renderCustomInput()}
                 />
             </div>
         );
