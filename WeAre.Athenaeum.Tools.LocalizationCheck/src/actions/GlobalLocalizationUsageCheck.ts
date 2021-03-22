@@ -10,7 +10,8 @@ export async function checkForUnUsedLocalizationsGlobally(input: {
     resources: Map<string, string[]>[];
     localizationPrefix: TypescriptLocalizationPrefix;
     logSearchStrings: boolean;
-    enumsToKeep: string[];
+    prefixesToExclude: string[];
+    postfixesToExclude: string[];
 }): Promise<string[]> {
     const output: string[] = [];
     const unUsedGlobalLocalizations: { key: string; searchString: string }[] = [];
@@ -44,12 +45,9 @@ export async function checkForUnUsedLocalizationsGlobally(input: {
 
     localizationSet.map((localizations) => {
         localizations.map((localization) => {
-            const isEnum = StringUtilities.isEnum(localization);
-            if (isEnum) {
-                const enumName = StringUtilities.getEnumName(localization);
-                const isExcluded = input.enumsToKeep.includes(enumName);
-                if (isExcluded) return;
-            }
+            const prefixExcluded = input.prefixesToExclude.find(x => localization.startsWith(x));
+            const postfixExcluded = input.postfixesToExclude.find(x => localization.endsWith(x));
+            if (prefixExcluded || postfixExcluded) return;
 
             const tscGetterString = StringUtilities.createTypescriptGetterName(localization);
             const tscConstantString = StringUtilities.createTypescriptConstantName(localization);

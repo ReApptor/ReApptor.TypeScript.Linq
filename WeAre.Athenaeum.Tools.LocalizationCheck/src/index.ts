@@ -19,7 +19,8 @@ main({
     cSharpDirectories,
     localizationPrefix: config.typescriptLocalizationPrefix,
     logSearchStrings: config.logSearchStrings,
-    enumsToKeep: config.enumsToKeep,
+    prefixesToExclude: config.prefixesToExclude,
+    postfixesToExclude: config.postfixesToExclude,
 }).then();
 
 export { TypescriptLocalizationPrefix, Configuration };

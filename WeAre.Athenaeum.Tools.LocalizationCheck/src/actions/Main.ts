@@ -4,7 +4,7 @@ import { checkForUnUsedLocalizationsGlobally } from "./GlobalLocalizationUsageCh
 import { ResxUtilities } from "../utilities/ResxUtilities";
 import { TypescriptLocalizationPrefix } from "../types";
 
-export async function main(input: { typescriptDirectories: string[]; cSharpDirectories: string[]; resourcePaths: string[]; localizationPrefix: TypescriptLocalizationPrefix; logSearchStrings: boolean; enumsToKeep: string[] }) {
+export async function main(input: { typescriptDirectories: string[]; cSharpDirectories: string[]; resourcePaths: string[]; localizationPrefix: TypescriptLocalizationPrefix; logSearchStrings: boolean; prefixesToExclude: string[]; postfixesToExclude: string[] }) {
     const resources: Map<string, string[]>[] = [];
     for (const resourcePath of input.resourcePaths) {
         resources.push(await ResxUtilities.convertResxFileToMap(fs.readFileSync(resourcePath)));
