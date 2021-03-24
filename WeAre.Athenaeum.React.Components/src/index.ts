@@ -131,6 +131,7 @@ import SwitchWidget, {ISwitchWidgetProps} from "./components/SwitchWidget/Switch
 import TextAreaWidget from "./components/TextAreaWidget/TextAreaWidget";
 import TextInputWidget from "./components/TextInputWidget/TextInputWidget";
 import TitleWidget, {ITitleModel, ITitleWidgetProps} from "./components/TitleWidget/TitleWidget";
+import Pagination from "./components/Pagination/Pagintation";
 
 
 export { AddressHelper };
@@ -345,3 +346,5 @@ export {TextInputWidget};
 export {TitleWidget};
 
 export type {ITitleModel, ITitleWidgetProps};
+
+export {Pagination};
