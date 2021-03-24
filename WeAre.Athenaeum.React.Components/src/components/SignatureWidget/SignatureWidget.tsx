@@ -1,7 +1,7 @@
 import React from "react";
 import SignatureCanvas from "react-signature-canvas";
 
-import styles from "../WidgetContainer.module.scss";
+import styles from "../WidgetContainer/WidgetContainer.module.scss";
 import SignatureWidgetLocalizer from "./SignatureWidgetLocalizer";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import Button, { ButtonType } from "../Button/Button";

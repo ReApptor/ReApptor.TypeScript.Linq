@@ -125,7 +125,7 @@ import NavigationWidget, {INavigationWidgetProps} from "./components/NavigationW
 import NumberWidget, {INumberWidgetProps} from "./components/NumberWidget/NumberWidget";
 import QrWidget, {IQrWidgetProps} from "./components/QrWidget/QrWidget";
 import RouteWidget, {IRouteWidgetProps} from "./components/RouteWidget/RouteWidget";
-// import SignatureWidget, {ISignatureWidgetProps} from "./components/SignatureWidget/SignatureWidget";
+import SignatureWidget, {ISignatureWidgetProps} from "./components/SignatureWidget/SignatureWidget";
 import StepsWidget, {IWizardStep, IStepsWidgetProps, IWizardSteps} from "./components/StepsWidget/StepsWidget";
 import SwitchWidget, {ISwitchWidgetProps} from "./components/SwitchWidget/SwitchWidget";
 import TextAreaWidget from "./components/TextAreaWidget/TextAreaWidget";
@@ -329,8 +329,8 @@ export type {IQrWidgetProps};
 export {RouteWidget};
 export type {IRouteWidgetProps};
 
-// export {SignatureWidget};
-// export type {ISignatureWidgetProps};
+export {SignatureWidget};
+export type {ISignatureWidgetProps};
 
 export {StepsWidget};
 export type {IWizardStep, IStepsWidgetProps, IWizardSteps};
