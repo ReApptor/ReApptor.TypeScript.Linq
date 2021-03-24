@@ -116,7 +116,21 @@ import LanguageDropdown from "./components/TopNav/LanguageDropdown/LanguageDropd
 import WidgetContainer, { IWidgetContainerProps } from "./components/WidgetContainer/WidgetContainer";
 import DropdownWidget from "./components/DropdownWidget/DropdownWidget";
 import SwitchNullable from "./components/SwitchNullable/SwitchNullable";
-import NumberWidget from "./components/NumberWidget/NumberWidget";
+import TimeWidget, {ITimeWidgetProps} from "./components/TimeWidget/TimeWidget";
+import CheckboxWidget, {ICheckboxWidgetProps} from "./components/CheckboxWidget/CheckboxWidget";
+import CheckStepWidget, {ICheckStepWidgetProps} from "./components/CheckStepWidget/CheckStepWidget";
+import DateInputWidget from "./components/DateInputWidget/DateInputWidget";
+import LinkWidget, {ILinkWidgetProps} from "./components/LinkWidget/LinkWidget";
+import NavigationWidget, {INavigationWidgetProps} from "./components/NavigationWidget/NavigationWidget";
+import NumberWidget, {INumberWidgetProps} from "./components/NumberWidget/NumberWidget";
+import QrWidget, {IQrWidgetProps} from "./components/QrWidget/QrWidget";
+import RouteWidget, {IRouteWidgetProps} from "./components/RouteWidget/RouteWidget";
+import SignatureWidget, {ISignatureWidgetProps} from "./components/SignatureWidget/SignatureWidget";
+import StepsWidget, {IWizardStep, IStepsWidgetProps, IWizardSteps} from "./components/StepsWidget/StepsWidget";
+import SwitchWidget, {ISwitchWidgetProps} from "./components/SwitchWidget/SwitchWidget";
+import TextAreaWidget from "./components/TextAreaWidget/TextAreaWidget";
+import TextInputWidget from "./components/TextInputWidget/TextInputWidget";
+import TitleWidget, {ITitleModel, ITitleWidgetProps} from "./components/TitleWidget/TitleWidget";
 
 
 export { AddressHelper };
@@ -288,4 +302,46 @@ export { Hamburger };
 export { LanguageDropdown };
 export { WidgetContainer };
 export type { IWidgetContainerProps };
+
+export {CheckboxWidget};
+export type {ICheckboxWidgetProps};
+
+export {TimeWidget};
+export type {ITimeWidgetProps};
+
+export {CheckStepWidget};
+export type {ICheckStepWidgetProps};
+
+export {DateInputWidget};
+
+export {LinkWidget};
+export type {ILinkWidgetProps};
+
+export {NavigationWidget};
+export type {INavigationWidgetProps};
+
 export { NumberWidget };
+export type {INumberWidgetProps};
+
+export {QrWidget};
+export type {IQrWidgetProps};
+
+export {RouteWidget};
+export type {IRouteWidgetProps};
+
+export {SignatureWidget};
+export type {ISignatureWidgetProps};
+
+export {StepsWidget};
+export type {IWizardStep, IStepsWidgetProps, IWizardSteps};
+
+export {SwitchWidget};
+export type {ISwitchWidgetProps};
+
+export {TextAreaWidget};
+
+export {TextInputWidget};
+
+export {TitleWidget};
+
+export type {ITitleModel, ITitleWidgetProps};
