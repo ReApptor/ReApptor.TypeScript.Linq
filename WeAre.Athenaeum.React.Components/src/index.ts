@@ -133,6 +133,7 @@ import TextInputWidget from "./components/TextInputWidget/TextInputWidget";
 import TitleWidget, {ITitleModel, ITitleWidgetProps} from "./components/TitleWidget/TitleWidget";
 import Pagination from "./components/Pagination/Pagintation";
 import WizardContainer, {IWizardPage, IWizardContainerProps} from "./components/WizardContainer/WizardContainer";
+import BaseExpandableWidget, {IBaseExpandableWidgetProps} from "./components/WidgetContainer/BaseExpandableWidget";
 
 
 export { AddressHelper };
@@ -350,5 +351,5 @@ export type {ITitleModel, ITitleWidgetProps};
 
 export {Pagination};
 
-export {WizardContainer};
-export type {IWizardPage, IWizardContainerProps};
+export {WizardContainer, BaseExpandableWidget};
+export type {IWizardPage, IWizardContainerProps ,IBaseExpandableWidgetProps };
