@@ -132,6 +132,7 @@ import TextAreaWidget from "./components/TextAreaWidget/TextAreaWidget";
 import TextInputWidget from "./components/TextInputWidget/TextInputWidget";
 import TitleWidget, {ITitleModel, ITitleWidgetProps} from "./components/TitleWidget/TitleWidget";
 import Pagination from "./components/Pagination/Pagintation";
+import WizardContainer, {IWizardPage, IWizardContainerProps} from "./components/WizardContainer/WizardContainer";
 
 
 export { AddressHelper };
@@ -348,3 +349,6 @@ export {TitleWidget};
 export type {ITitleModel, ITitleWidgetProps};
 
 export {Pagination};
+
+export {WizardContainer};
+export type {IWizardPage, IWizardContainerProps};
