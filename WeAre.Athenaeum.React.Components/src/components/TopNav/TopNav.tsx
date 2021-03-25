@@ -3,10 +3,12 @@ import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClic
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-
 import logo from "./renta-logo.png"
-import styles from "./TopNav.module.scss";
 import TopNavLocalizer from "./TopNavLocalizer";
+import Icon, {IconSize, IconStyle} from "../Icon/Icon";
+
+import styles from "./TopNav.module.scss";
+
 
 export interface IMenuItem {
     route: PageRoute;
@@ -120,12 +122,11 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             ((this.manual.manual) || (this.manual.onClick))  && 
                             (
-                                <span>{this.manual.icon || "question-circle"}</span>
-                                // <Icon name={this.manual.icon || "question-circle"} 
-                                //       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)} 
-                                //       style={IconStyle.Regular} size={IconSize.X2}
-                                //       toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
-                                // />
+                                <Icon name={this.manual.icon || "question-circle"}
+                                className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
+                                style={IconStyle.Regular} size={IconSize.X2}
+                                toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
+                                />
                             )
                         }
                         
