@@ -321,12 +321,12 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
                                   toggleButtonId={this.id}
                                   transform={this.props.transform}
                                   onAdd={() => this.onAddHandlerAsync()}
-                                  onChange={(sender: any, item: TItem | null, userInteraction: boolean) => this.onChangeHandlerAsync(sender, item, userInteraction)}
-                                  onChangeAmount={(sender: any, item: TItem | null, amount: number) => this.onChangeAmountHandlerAsync(sender, item, amount)}
-                                  onFavoriteChange={(sender: any, item: TItem | null, favorite: boolean) => this.onFavoriteChangeAsync(sender, item, favorite)}
-                                  onToggle={(sender: any, expanded: boolean) => this.onToggleHandlerAsync(sender, expanded)}
+                                  onChange={(sender, item, userInteraction) => this.onChangeHandlerAsync(sender, item, userInteraction)}
+                                  onChangeAmount={(sender, item, amount) => this.onChangeAmountHandlerAsync(sender, item, amount)}
+                                  onFavoriteChange={(sender, item, favorite) => this.onFavoriteChangeAsync(sender, item, favorite)}
+                                  onToggle={(sender, expanded) => this.onToggleHandlerAsync(sender, expanded)}
                                   onItemsChange={() => this.onItemsChangeHandlerAsync()}
-                                  onItemClick={(sender: any, item: TItem) => this.onItemClickHandlerAsync(item)}
+                                  onItemClick={(sender, item) => this.onItemClickHandlerAsync(item)}
                         />
                     )
                 }
