@@ -8,7 +8,6 @@ import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInpu
 import formStyles from "../Form/Form.module.scss";
 import styles from "./DateInput.module.scss";
 
-import "react-datepicker/dist/react-datepicker.css";
 import "./BootstrapOverride.scss";
 
 // Locale imports
