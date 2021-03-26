@@ -33,6 +33,7 @@ namespace WeAre.Athenaeum.Common.Helpers
                 return Countries.FirstOrDefault(item => item.Code.Equals(country, StringComparison.InvariantCultureIgnoreCase)) ??
                        Countries.FirstOrDefault(item => item.Name.Equals(country, StringComparison.InvariantCultureIgnoreCase)) ??
                        Countries.FirstOrDefault(item => item.EnglishName.Equals(country, StringComparison.InvariantCultureIgnoreCase)) ??
+                       Countries.FirstOrDefault(item => item.Culture.Equals(country, StringComparison.InvariantCultureIgnoreCase)) ??
                        Countries.FirstOrDefault(item => item.Aliases.Any(alias => alias.Equals(country, StringComparison.InvariantCultureIgnoreCase)));
             }
 
