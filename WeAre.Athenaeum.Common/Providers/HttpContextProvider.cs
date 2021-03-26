@@ -31,15 +31,15 @@ namespace WeAre.Athenaeum.Common.Providers
         private string _sessionId;
         private string _userData;
 
-        private string GetCountry()
-        {
-            CultureInfo culture = Configuration?.Country.GetCountryCulture() ?? Thread.CurrentThread.CurrentCulture;
-            return culture.TwoLetterISOLanguageName;
-        }
-
         private string GetLanguage()
         {
             CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            return culture.TwoLetterISOLanguageName;
+        }
+
+        private string GetCountry()
+        {
+            CultureInfo culture = Configuration?.Country.GetCountryCulture() ?? Thread.CurrentThread.CurrentCulture;
             return culture.TwoLetterISOLanguageName;
         }
 
