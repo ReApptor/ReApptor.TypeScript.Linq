@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using WeAre.Athenaeum.Common.Helpers;
 
 namespace WeAre.Athenaeum.Common.Configuration
 {
@@ -12,6 +13,7 @@ namespace WeAre.Athenaeum.Common.Configuration
         #region Private/Protected
         
         private string _version;
+        private string _country;
         
         private static string NormalizeVersion(string version)
         {
@@ -142,5 +144,20 @@ namespace WeAre.Athenaeum.Common.Configuration
         {
             get { return _version ??= NormalizeVersion(GetEnvironmentVariable("VERSION", GetEntryVersion())); }
         }
+
+        public virtual string Country
+        {
+            get { return _country ??= GetEnvironmentVariable("COUNTRY", CountryHelper.DefaultCountry.Code); }
+        }
+
+        public bool IsSweden => Country.IsCountry("se");
+
+        public bool IsFinland => Country.IsCountry("fi");
+
+        public bool IsNorway => Country.IsCountry("nor");
+        
+        public bool IsDenmark => Country.IsCountry("da");
+        
+        public bool IsPoland => Country.IsCountry("pl");
     }
 }

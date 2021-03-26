@@ -1,4 +1,5 @@
 ﻿using NLog.LayoutRenderers;
+using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Providers;
 
 namespace WeAre.Athenaeum.Common.Logging.NLog
@@ -9,6 +10,11 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         protected override string GetValue(HttpContextProvider provider)
         {
             return provider.Country;
+        }
+
+        protected override string GetValue(IEnvironmentConfiguration configuration)
+        {
+            return configuration?.Country;
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using WeAre.Athenaeum.Toolkit;
 
-namespace WeAre.Athenaeum.Common
+namespace WeAre.Athenaeum.Common.Models
 {
     public sealed class ErrorDetails
     {

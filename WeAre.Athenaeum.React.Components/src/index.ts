@@ -136,7 +136,6 @@ import WizardContainer, {IWizardPage, IWizardContainerProps} from "./components/
 import BaseExpandableWidget, {IBaseExpandableWidgetProps} from "./components/WidgetContainer/BaseExpandableWidget";
 import BaseWidget, {IBaseWidget, IBaseWidgetProps, IBaseWidgetState} from "./components/WidgetContainer/BaseWidget";
 
-
 export { AddressHelper };
 export type { GoogleApiResult, IGoogleApiSettings };
 

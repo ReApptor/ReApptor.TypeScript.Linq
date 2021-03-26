@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using WeAre.Athenaeum.Common.Models;
 
 namespace WeAre.Athenaeum.Common.Middlewares
 {
