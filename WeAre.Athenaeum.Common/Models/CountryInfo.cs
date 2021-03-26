@@ -11,7 +11,7 @@ namespace WeAre.Athenaeum.Common.Models
             Aliases = new string[0];
         }
 
-        public CountryInfo(string code, string name, string englishName = null, params string[] aliases)
+        public CountryInfo(string code, string name, string englishName, string culture, params string[] aliases)
         {
             if (code == null)
                 throw new ArgumentNullException(nameof(code));
@@ -21,11 +21,20 @@ namespace WeAre.Athenaeum.Common.Models
                 throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentOutOfRangeException(nameof(name), "Native name is empty or whitespace.");
+            if (englishName == null)
+                throw new ArgumentNullException(nameof(englishName));
+            if (string.IsNullOrWhiteSpace(englishName))
+                throw new ArgumentOutOfRangeException(nameof(englishName), "English name is empty or whitespace.");
+            if (culture == null)
+                throw new ArgumentNullException(nameof(culture));
+            if (string.IsNullOrWhiteSpace(culture))
+                throw new ArgumentOutOfRangeException(nameof(culture), "Culture is empty or whitespace.");
 
             Code = code.Trim().ToLowerInvariant();
             Name = name.Trim();
-            EnglishName = (!string.IsNullOrWhiteSpace(englishName)) ? englishName.Trim() : null;
-            Aliases = (aliases ?? new string[0]).AddRange(new[] {code, name, englishName})
+            EnglishName = englishName.Trim();
+            Culture = culture.Trim();
+            Aliases = (aliases ?? new string[0]).AddRange(new[] {code, name, englishName, culture})
                 .Where(item => !string.IsNullOrWhiteSpace(item))
                 .Select(item => item.Trim())
                 .Distinct()
@@ -46,6 +55,8 @@ namespace WeAre.Athenaeum.Common.Models
         /// Country code
         /// </summary>
         public string Code { get; set; }
+        
+        public string Culture { get; set; }
             
         public string[] Aliases { get; set; }
     }
