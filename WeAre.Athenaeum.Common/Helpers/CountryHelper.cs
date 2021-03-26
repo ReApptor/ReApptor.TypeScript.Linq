@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using WeAre.Athenaeum.Common.Models;
+using WeAre.Athenaeum.Toolkit;
 
 namespace WeAre.Athenaeum.Common.Helpers
 {
@@ -11,6 +12,7 @@ namespace WeAre.Athenaeum.Common.Helpers
         {
             //http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
             //Culture: [language-COUNTRYCODE]
+            //TODO: Generate from all culture
             new CountryInfo("fi", "Suomi", "Finland", "fi-fi"),
             new CountryInfo("se", "Svenska", "Sweden", "sv-se", "sv"),
             new CountryInfo("no", "Norge", "Norway", "nb-no", "nb", "nor"),
@@ -40,7 +42,7 @@ namespace WeAre.Athenaeum.Common.Helpers
         public static string GetCountryCode(this string country)
         {
             CountryInfo countryInfo = country.FindCountryInfo();
-
+            
             return countryInfo?.Code ?? country;
         }
 
