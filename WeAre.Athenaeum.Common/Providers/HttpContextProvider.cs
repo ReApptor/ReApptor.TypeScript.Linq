@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
+using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Toolkit.Extensions;
 using WeAre.Athenaeum.Common.Extensions;
 
@@ -15,6 +16,7 @@ namespace WeAre.Athenaeum.Common.Providers
 
         private readonly IServiceProvider _serviceProvider;
         private IHttpContextAccessor _accessor;
+        private IEnvironmentConfiguration _configuration;
         private string _scopeId;
         private string _nameIdentifier;
         private string _email;
@@ -26,6 +28,23 @@ namespace WeAre.Athenaeum.Common.Providers
         private string _securityStamp;
         private string _sessionId;
         private string _userData;
+
+        private string GetCountry()
+        {
+            string country = Configuration?.Country;
+            
+            if (string.IsNullOrWhiteSpace(country))
+            {
+                country = Thread.CurrentThread.CurrentCulture.Name;
+            }
+
+            return country;
+        }
+
+        private string GetLanguage()
+        {
+            return Thread.CurrentThread.CurrentCulture.Name;
+        }
 
         private static string FindFromCaller(ClaimsIdentity caller, string claimType)
         {
@@ -136,6 +155,11 @@ namespace WeAre.Athenaeum.Common.Providers
 
         #region Properties
 
+        public IEnvironmentConfiguration Configuration
+        {
+            get { return _configuration ??= _serviceProvider.GetService(typeof(IEnvironmentConfiguration)) as IEnvironmentConfiguration; }
+        }
+
         public IHttpContextAccessor Accessor
         {
             get { return _accessor ??= _serviceProvider.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor; }
@@ -159,6 +183,24 @@ namespace WeAre.Athenaeum.Common.Providers
         #endregion
 
         #region Claim Values
+
+        public string Language
+        {
+            get
+            {
+                ValidateCache();
+                return _languageId ??= Find(AthenaeumConstants.ClaimTypes.Language) ?? GetLanguage();
+            }
+        }
+
+        public string Country
+        {
+            get
+            {
+                ValidateCache();
+                return _country ??= Find(AthenaeumConstants.ClaimTypes.Country) ?? GetCountry();
+            }
+        }
 
         public string NameIdentifier
         {
@@ -211,24 +253,6 @@ namespace WeAre.Athenaeum.Common.Providers
             {
                 ValidateCache();
                 return _sessionId ??= Find(AthenaeumConstants.ClaimTypes.SessionId);
-            }
-        }
-
-        public string Language
-        {
-            get
-            {
-                ValidateCache();
-                return _languageId ??= Find(AthenaeumConstants.ClaimTypes.Language);
-            }
-        }
-
-        public string Country
-        {
-            get
-            {
-                ValidateCache();
-                return _country ??= Find(AthenaeumConstants.ClaimTypes.Country);
             }
         }
 
