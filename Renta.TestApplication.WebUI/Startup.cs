@@ -1,21 +1,16 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Amazon.XRay.Recorder.Handlers.System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Renta.TestApplication.WebUI.Server.Providers;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Filters;
 using WeAre.Athenaeum.Common.Helpers;
@@ -24,7 +19,6 @@ using WeAre.Athenaeum.Common.Providers;
 using WeAre.Athenaeum.TemplateApp.Common;
 using WeAre.Athenaeum.TemplateApp.Common.Configuration;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Middlewares;
-using WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers;
 using WebEssentials.AspNetCore.Pwa;
 using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
@@ -277,20 +271,20 @@ namespace Renta.TestApplication.WebUI
             Logger.LogInformation($"Startup WebUI on \"{Environment.MachineName}\" initialized.");
         }
         
-        private static Task WriteResponse(HttpContext httpContext, HealthReport result)
-        {
-            httpContext.Response.ContentType = TestApplicationConstants.Http.ApiContextType;
-
-            var json = new JObject(
-                new JProperty("status", result.Status.ToString()),
-                new JProperty("results", new JObject(result.Entries.Select(pair =>
-                    new JProperty(pair.Key, new JObject(
-                        new JProperty("status", pair.Value.Status.ToString()),
-                        new JProperty("description", pair.Value.Description),
-                        new JProperty("data", new JObject(pair.Value.Data.Select(
-                            p => new JProperty(p.Key, p.Value))))))))));
-            
-            return httpContext.Response.WriteAsync(json.ToString(Formatting.Indented));
-        }
+        // private static Task WriteResponse(HttpContext httpContext, HealthReport result)
+        // {
+        //     httpContext.Response.ContentType = TestApplicationConstants.Http.ApiContextType;
+        //
+        //     var json = new JObject(
+        //         new JProperty("status", result.Status.ToString()),
+        //         new JProperty("results", new JObject(result.Entries.Select(pair =>
+        //             new JProperty(pair.Key, new JObject(
+        //                 new JProperty("status", pair.Value.Status.ToString()),
+        //                 new JProperty("description", pair.Value.Description),
+        //                 new JProperty("data", new JObject(pair.Value.Data.Select(
+        //                     p => new JProperty(p.Key, p.Value))))))))));
+        //     
+        //     return httpContext.Response.WriteAsync(json.ToString(Formatting.Indented));
+        // }
     }
 }
