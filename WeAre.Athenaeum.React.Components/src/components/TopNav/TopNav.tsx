@@ -16,6 +16,8 @@ export interface IMenuItem {
 }
 
 export interface ITopNavProps {
+    logo?: any;
+    logoText?: string;
     applicationName?: string;
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
     onLogoClick?(sender: TopNav): Promise<void>;
@@ -107,7 +109,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             <i className="fas fa-chevron-circle-left" />
                         </div>
 
-                        <img src={logo} alt="renta" onClick={async () => await this.onLogoClick()} />
+                        <img src={this.props.logo || logo} alt={this.props.logoText || "renta"} onClick={async () => await this.onLogoClick()} />
                         
                     </div>
 
