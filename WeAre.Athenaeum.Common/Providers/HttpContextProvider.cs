@@ -151,6 +151,8 @@ namespace WeAre.Athenaeum.Common.Providers
         #endregion
 
         #region Properties
+        
+        #region Services
 
         public IEnvironmentConfiguration Configuration
         {
@@ -176,7 +178,7 @@ namespace WeAre.Athenaeum.Common.Providers
         {
             get { return (HttpContext?.User?.Identity as ClaimsIdentity) ?? (Thread.CurrentPrincipal?.Identity as ClaimsIdentity); }
         }
-
+        
         #endregion
 
         #region Claim Values
@@ -270,6 +272,8 @@ namespace WeAre.Athenaeum.Common.Providers
                 return _userData ??= Find(AthenaeumConstants.ClaimTypes.UserData);
             }
         }
+
+        #endregion
 
         #endregion
     }
