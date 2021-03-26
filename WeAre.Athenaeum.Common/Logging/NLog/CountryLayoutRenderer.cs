@@ -14,7 +14,7 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
 
         protected override string GetValue(IEnvironmentConfiguration configuration)
         {
-            return configuration?.Country;
+            return configuration.Country;
         }
 
         /// <summary>

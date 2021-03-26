@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using WeAre.Athenaeum.Common.Models;
 
@@ -11,12 +12,12 @@ namespace WeAre.Athenaeum.Common.Helpers
             //http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
             //Culture: [language-COUNTRYCODE]
             new CountryInfo("fi", "Suomi", "Finland", "fi-fi"),
-            new CountryInfo("se", "Svenska", "Sweden", "sv", "sv-se"),
-            new CountryInfo("no", "Norge", "Norway", "nb", "nor", "nb-no"),
-            new CountryInfo("dk", "Danmark", "Denmark", "da", "da-dk"),
+            new CountryInfo("se", "Svenska", "Sweden", "sv-se", "sv"),
+            new CountryInfo("no", "Norge", "Norway", "nb-no", "nb", "nor"),
+            new CountryInfo("dk", "Danmark", "Denmark", "da-dk", "da"),
             new CountryInfo("pl", "Polska", "Poland", "pl-pl"),
             new CountryInfo("ru", "Россия", "Russia", "ru-ru"),
-            new CountryInfo("ua", "Україна", "Ukraine", "uk", "uk-ua")
+            new CountryInfo("ua", "Україна", "Ukraine", "uk-ua", "uk")
         };
 
         public static readonly CountryInfo DefaultCountry = Countries[0];
@@ -40,14 +41,23 @@ namespace WeAre.Athenaeum.Common.Helpers
         {
             CountryInfo countryInfo = country.FindCountryInfo();
 
-            return countryInfo?.Code;
+            return countryInfo?.Code ?? country;
         }
 
-        public static string GetCountryName(this string countryCode)
+        public static string GetCountryName(this string country)
         {
-            CountryInfo countryInfo = countryCode.FindCountryInfo();
+            CountryInfo countryInfo = country.FindCountryInfo();
 
-            return countryInfo?.Name;
+            return countryInfo?.Name ?? country;
+        }
+
+        public static CultureInfo GetCountryCulture(this string country)
+        {
+            CountryInfo countryInfo = country.FindCountryInfo();
+
+            return (countryInfo != null)
+                ? CultureInfo.GetCultureInfo(countryInfo.Culture)
+                : null;
         }
 
         public static bool IsCountry(this string countryCode, string name)

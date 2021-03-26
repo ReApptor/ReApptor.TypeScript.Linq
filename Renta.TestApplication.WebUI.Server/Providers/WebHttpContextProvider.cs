@@ -5,8 +5,9 @@ using WeAre.Athenaeum.Common.Extensions;
 using WeAre.Athenaeum.Common.Providers;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Extensions;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
+using WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers
+namespace Renta.TestApplication.WebUI.Server.Providers
 {
     public sealed class WebHttpContextProvider : HttpContextProvider
     {
