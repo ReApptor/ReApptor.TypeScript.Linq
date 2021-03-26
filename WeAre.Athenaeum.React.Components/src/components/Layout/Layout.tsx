@@ -12,6 +12,8 @@ export interface ILayoutProps {
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
+    topNavLogo?: any;
+    topNavLogoText?: string;
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
@@ -316,6 +318,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     (
                         <TopNav applicationName={this.applicationName}
                                 fetchItems={this.props.fetchTopNavItems}
+                                logo={this.props.topNavLogo}
+                                logoText={this.props.topNavLogoText}
                         />
                     )
                 }
