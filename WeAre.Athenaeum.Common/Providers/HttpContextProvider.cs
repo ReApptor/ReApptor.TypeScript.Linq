@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Toolkit.Extensions;
 using WeAre.Athenaeum.Common.Extensions;
+using WeAre.Athenaeum.Common.Helpers;
 
 namespace WeAre.Athenaeum.Common.Providers
 {
@@ -31,19 +33,14 @@ namespace WeAre.Athenaeum.Common.Providers
 
         private string GetCountry()
         {
-            string country = Configuration?.Country;
-            
-            if (string.IsNullOrWhiteSpace(country))
-            {
-                country = Thread.CurrentThread.CurrentCulture.Name;
-            }
-
-            return country;
+            CultureInfo culture = Configuration?.Country.GetCountryCulture() ?? Thread.CurrentThread.CurrentCulture;
+            return culture.TwoLetterISOLanguageName;
         }
 
         private string GetLanguage()
         {
-            return Thread.CurrentThread.CurrentCulture.Name;
+            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            return culture.TwoLetterISOLanguageName;
         }
 
         private static string FindFromCaller(ClaimsIdentity caller, string claimType)
