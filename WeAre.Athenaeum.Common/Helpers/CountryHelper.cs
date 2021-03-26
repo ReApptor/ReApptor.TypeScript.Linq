@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using WeAre.Athenaeum.Common.Models;
-using WeAre.Athenaeum.Toolkit;
 
 namespace WeAre.Athenaeum.Common.Helpers
 {
