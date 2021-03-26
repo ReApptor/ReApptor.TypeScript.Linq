@@ -17,5 +17,7 @@ namespace WeAre.Athenaeum.Common.Configuration
         IHostEnvironment HostingEnvironment { get; }
         
         string Version { get; }
+        
+        string Country { get; }
     }
 }

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Renta.Apps.Common.Interfaces.Geo;
 using Renta.Apps.Common.Models.Geo;
+using WeAre.Athenaeum.Common.Helpers;
 
 namespace Renta.Apps.Common.Helpers
 {
@@ -101,60 +102,6 @@ namespace Renta.Apps.Common.Helpers
             }
 
             return "";
-        }
-
-        public static string GetCountryCode(this string country)
-        {
-            if (!string.IsNullOrWhiteSpace(country))
-            {
-                country = country.Trim().ToLowerInvariant();
-
-                switch (country)
-                {
-                    case "fi":
-                    case "suomi":
-                    case "finland":
-                        return "fi";
-                    case "se":
-                    case "sv":
-                    case "svenska":
-                    case "sweden":
-                        return "se";
-                    case "no":
-                    case "norge":
-                    case "norway":
-                        return "no";
-                }
-            }
-
-            return country;
-        }
-        
-        public static string GetCountryName(this string countryCode)
-        {
-            if (!string.IsNullOrWhiteSpace(countryCode))
-            {
-                countryCode = countryCode.Trim().ToLowerInvariant();
-
-                switch (countryCode)
-                {
-                    case "fi":
-                    case "suomi":
-                    case "finland":
-                        return "Suomi";
-                    case "se":
-                    case "sv":
-                    case "sweden":
-                    case "svenska":
-                        return "Svenska";
-                    case "no":
-                    case "norway":
-                    case "norge":
-                        return "Norge";
-                }
-            }
-
-            return countryCode;
         }
     }
 }
