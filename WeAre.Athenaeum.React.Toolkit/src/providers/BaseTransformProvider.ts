@@ -17,9 +17,9 @@ export interface ITransformProvider {
 }
 
 export default abstract class BaseTransformProvider<TSelectListItem extends ISelectListItem = any> implements ITransformProvider, IService {
-    
+
     private _selectListItemType: ServiceType | null = null;
-    
+
     private get selectListItemType(): ServiceType {
         if (this._selectListItemType == null) {
             const selectListItem: TSelectListItem = this.createSelectListItem("", "", "");
@@ -27,11 +27,11 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
         }
         return this._selectListItemType;
     }
-    
+
     protected constructor() {
         // register the service
         ServiceProvider.addSingleton(this);
-        
+
         // register converters
         // object to string converters:
         StringConverter.addObjectConverter((item: any, format?: TFormat | null) => this.toString(item, format));
@@ -51,7 +51,7 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
             ? [location.address, location.postalCode, location.city].filter(item => !!item).join(", ")
             : "";
     }
-    
+
     public toString(item: any, format?: TFormat | null): string {
 
         if (item == null) {
@@ -61,10 +61,10 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
         if ((item instanceof GeoLocation) || (item.isGeoLocation)) {
             return this.locationToString(item as GeoLocation);
         }
-        
+
         return StringConverter.toString(item, format);
     }
-    
+
     public toSelectListItem(item: any): ISelectListItem {
         if (typeof item === "number") {
             const value: string = item.toString();
@@ -76,7 +76,7 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
         }
 
         const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(item, nameof<ISelectListItem>()) ?? TypeConverter.getConverter(item, this.selectListItemType);
-        
+
         if ((converter != null) && (converter !== this.toSelectListItem)) {
             return (typeof converter === "function")
                 ? converter(item)
