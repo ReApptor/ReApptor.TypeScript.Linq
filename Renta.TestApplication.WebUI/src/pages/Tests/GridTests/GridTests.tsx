@@ -14,7 +14,9 @@ class GridItem {
 
     public code: string = "";
 
-    public n: number = 0;
+    public float: number = 0;
+    
+    public int: number = 0;
     
     public date: Date = new Date();
 }
@@ -47,9 +49,17 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             noWrap: true
         } as ColumnDefinition,
         {
-            header: "Number",
-            accessor: "n",
+            header: "Float",
+            accessor: "float",
             format: "0.00",
+            sorting: true,
+            minWidth: 90,
+            noWrap: true,
+            textAlign: TextAlign.Center
+        } as ColumnDefinition,
+        {
+            header: "Int",
+            accessor: "int",
             sorting: true,
             minWidth: 90,
             noWrap: true,
@@ -71,7 +81,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             this._items = [];
             const count: number = 100;
             for (let i: number = 0; i < count; i++) {
-                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, n: Math.random(), date: new Date() };
+                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, float: Math.random(), int: Math.round(100 * Math.random()), date: new Date() } as GridItem;
                 this._items.push(item);
             }
         }

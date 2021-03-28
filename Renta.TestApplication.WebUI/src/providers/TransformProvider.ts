@@ -1,11 +1,14 @@
-import {BaseTransformProvider, Utility, GeoLocation, TFormat, StringConverter} from "@weare/athenaeum-toolkit";
-import {ITitleModel, SelectListItem} from "@weare/athenaeum-react-components";
+import {BaseTransformProvider, Utility, GeoLocation, TFormat} from "@weare/athenaeum-toolkit";
+import {ITitleModel, SelectListGroup, SelectListItem} from "@weare/athenaeum-react-components";
 
 class TransformProvider extends BaseTransformProvider {
     
     protected createSelectListItem(value: string, text: string, subtext: string, groupName?: string | null, favorite?: boolean | null): SelectListItem {
-        const listItem = new SelectListItem(value, text, subtext, groupName);
+        const listItem = new SelectListItem(value, text, subtext);
         listItem.favorite = (favorite == true);
+        if (groupName) {
+            listItem.group = SelectListGroup.create(groupName);
+        }
         return listItem;
     }
 

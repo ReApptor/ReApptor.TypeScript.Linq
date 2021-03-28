@@ -184,13 +184,13 @@ export default class Utility {
     }
 
     public static formatValue(value: any, format: TFormat | null | undefined): string {
-        return (format)
-            ? (typeof format === "function")
-                ? format(value)
-                : Utility.format(`{0:${format}}`, value)
-            : (value != null)
-                ? value.toString()
-                : "";
+        return (value != null)
+            ? (format != null)
+                ? (typeof format === "function")
+                    ? format(value)
+                    : Utility.format(`{0:${format}}`, value)
+                : Utility.format(`{0}`, value)
+            : "";
     }
 
     public static getDayOfWeek(dayOfWeekOrDate: number | Date | string): string {
