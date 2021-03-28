@@ -16,6 +16,7 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
     state: ITabState = {
     };
 
+    private _initialized: boolean = false;
     private _rendered: boolean = false;
     private _model: TabModel | null = null;
 
@@ -47,6 +48,7 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
         this._model = null;
         this.model.container = container;
         this.model.index = index;
+        this._initialized = true;
     }
 
     public readonly isTab: boolean = true;
@@ -60,7 +62,7 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
         const activeStyle: any = (model.active) && "active";
         const scaleStyle: any = (container.scale) && "h-100";
 
-        this._rendered = (model.active) || (container.renderType == TabRenderType.Always) || ((container.renderType == TabRenderType.Once) && (this._rendered));
+        this._rendered = (this._initialized) && ((model.active) || (container.renderType == TabRenderType.Always) || ((container.renderType == TabRenderType.Once) && (this._rendered)));
         
         return (
             <div id={this.id} className={this.css("tab-pane", styles.tab, activeStyle, scaleStyle)}>
