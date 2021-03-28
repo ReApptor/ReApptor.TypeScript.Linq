@@ -207,7 +207,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
         
         if (provider != null) {
-            return provider.toSelectListItem(item) as SelectListItem;
+            const selectListItem = provider.toSelectListItem(item) as SelectListItem;
+            selectListItem.ref = item;
+            return selectListItem;
         }
 
         const anyItem = item as any;
@@ -215,9 +217,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                                                   TypeConverter.getConverter(anyItem, SelectListItem);
 
         if (converter != null) {
-            return (typeof converter === "function")
+            const selectListItem = (typeof converter === "function")
                 ? converter(item)
-                : converter.convert(item)
+                : converter.convert(item);
+            selectListItem.ref = item;
+            return selectListItem;
         }
 
         const value: any = Utility.findStringValueByAccessor(item, ["value"]);
@@ -452,7 +456,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         if (this.props.onChange) {
 
             const selectedItem: TItem = this.getItem(item);
-
+ 
             await this.props.onChange(this, selectedItem, userInteraction);
         }
     }
@@ -1136,7 +1140,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 if (selectedListItem) {
                     const selectedItemElement: any = scrollableContainerElement.querySelector(`.${styles.selectedItem}`);
                     if (selectedItemElement) {
-                        const scrollableContainerHeight: number = $(scrollableContainerElement).height() || 0;
+                        const scrollableContainerHeight: number = this.JQuery(scrollableContainerElement).height() || 0;
                         const top: number = selectedItemElement.offsetTop;
                         if (top > scrollableContainerHeight) {
                             const behavior: ScrollBehavior = (smooth) ? "smooth" : "auto";
