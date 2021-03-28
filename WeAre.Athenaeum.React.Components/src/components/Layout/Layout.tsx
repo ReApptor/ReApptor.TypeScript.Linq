@@ -244,7 +244,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
     
     public initializeTooltips(): void {
-        const tooltip = $('[data-toggle="tooltip"]');
+        const tooltip = this.JQuery('[data-toggle="tooltip"]');
 
         if (tooltip.length > 0) {
             tooltip.tooltip({
@@ -253,19 +253,19 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             });
 
             tooltip.on("show.bs.tooltip", () => {
-                $(".tooltip").not(tooltip).remove();
+                this.JQuery(".tooltip").not(tooltip).remove();
             });
         }
     }
 
     public reinitializeTooltips(): void {
-        $('[data-toggle="tooltip"]').tooltip("dispose");
+        this.JQuery('[data-toggle="tooltip"]').tooltip("dispose");
         
         this.initializeTooltips();
     }
     
     private removeTooltip(): void {
-        $('.tooltip').remove();
+        this.JQuery('.tooltip').remove();
     }
     
     //Do not delete - needs for REACT error handling
