@@ -48,7 +48,7 @@ class StringConverter implements IStringConverter {
 
         const converter: IStringConverter | TStringConverter | null = this.getConverter(item);
         
-        if (converter != null) {
+        if ((converter != null) && (converter !== this) && (converter !== this.toString)) {
             return (typeof converter === "function")
                 ? converter(item, format)
                 : converter.toString(item, format)
