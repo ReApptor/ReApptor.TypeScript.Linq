@@ -82,10 +82,15 @@
       <TypeScriptCompile Include="src\pages\PageDefinitions.ts" />
       <TypeScriptCompile Include="src\pages\TestApplicationController.ts" />
       <TypeScriptCompile Include="src\pages\Tests\Tests.tsx" />
+      <TypeScriptCompile Include="src\providers\TransformProvider.ts" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="build\manifest.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="src\models" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

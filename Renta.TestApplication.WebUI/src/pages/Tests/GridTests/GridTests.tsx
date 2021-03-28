@@ -15,6 +15,8 @@ class GridItem {
     public code: string = "";
 
     public n: number = 0;
+    
+    public date: Date = new Date();
 }
 
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
@@ -52,6 +54,15 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             minWidth: 90,
             noWrap: true,
             textAlign: TextAlign.Center
+        } as ColumnDefinition,
+        {
+            header: "Date",
+            accessor: "date",
+            format: "D",
+            sorting: true,
+            minWidth: 90,
+            noWrap: true,
+            textAlign: TextAlign.Center
         } as ColumnDefinition
     ];
 
@@ -60,7 +71,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             this._items = [];
             const count: number = 100;
             for (let i: number = 0; i < count; i++) {
-                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, n: Math.random() };
+                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, n: Math.random(), date: new Date() };
                 this._items.push(item);
             }
         }
