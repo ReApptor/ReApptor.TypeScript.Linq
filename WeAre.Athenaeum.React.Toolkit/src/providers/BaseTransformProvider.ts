@@ -76,8 +76,8 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
         }
 
         const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(item, nameof<ISelectListItem>()) ?? TypeConverter.getConverter(item, this.selectListItemType);
-
-        if ((converter != null) && (converter != this.toSelectListItem)) {
+        
+        if ((converter != null) && (converter !== this.toSelectListItem)) {
             return (typeof converter === "function")
                 ? converter(item)
                 : converter.convert(item)
