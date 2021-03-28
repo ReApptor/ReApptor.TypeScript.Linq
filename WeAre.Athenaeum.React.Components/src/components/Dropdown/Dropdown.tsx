@@ -203,6 +203,19 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
     
     private dynamicTransform(item: TItem): SelectListItem {
+
+        if (typeof item === "string") {
+            const selectListItem = new SelectListItem(item, item);
+            selectListItem.ref = item;
+            return selectListItem;
+        }
+
+        if (typeof item === "number") {
+            const value: string = item.toString();
+            const selectListItem = new SelectListItem(value, value);
+            selectListItem.ref = item;
+            return selectListItem;
+        }
         
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
         
