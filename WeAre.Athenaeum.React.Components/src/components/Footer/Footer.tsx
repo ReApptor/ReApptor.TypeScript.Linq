@@ -5,7 +5,7 @@ import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
 import FooterLocalizer from "./FooterLocalizer";
 
-interface IFooterLink {
+export interface IFooterLink {
     href: string,
     label: string;
 }

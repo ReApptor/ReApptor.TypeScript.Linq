@@ -3,7 +3,7 @@ import queryString, {ParsedQuery} from "query-string";
 import {Utility, FileModel} from "@weare/athenaeum-toolkit";
 import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";
 import TopNav, {IMenuItem} from "../TopNav/TopNav";
-import Footer from "../Footer/Footer";
+import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "./Layout.module.scss";
@@ -14,6 +14,7 @@ export interface ILayoutProps {
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
     topNavLogo?: any;
     topNavLogoText?: string;
+    footerLinks: IFooterLink[];
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
