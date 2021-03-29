@@ -11,10 +11,10 @@ export interface IFooterLink {
 }
 
 export interface IFooterProps {
-    links?: IFooterLink[]
     version?: string;
+    links?: IFooterLink[]
     logo?: any;
-    logoAlt?: string;
+    name?: string;
 }
 
 export default class Footer extends BaseComponent<IFooterProps> {
@@ -33,10 +33,14 @@ export default class Footer extends BaseComponent<IFooterProps> {
                 }
             ];
     }
+    
+    private get name(): string {
+        return this.props.name || "Renta";
+    }
 
     private renderCopyright(): React.ReactNode {
         const currentYear: number = new Date().getFullYear();
-        return <span>© Renta {currentYear}</span>;
+        return <span>© {this.name} {currentYear}</span>;
     }
 
     private renderVersion(): React.ReactNode {
@@ -59,7 +63,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
                 
                 <div className={styles.upperFooter}>
                     
-                    <img src={this.props.logo ?? logo} alt={this.props.logoAlt ?? "Renta Oy"} />
+                    <img src={this.props.logo ?? logo} alt={this.name} />
 
                     <div className={styles.footerLinks}>
                         {
