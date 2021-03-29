@@ -37,12 +37,16 @@
       <TypeScriptCompile Include="src\components\Modal\Modal.tsx" />
       <TypeScriptCompile Include="src\components\PageContainer\PageContainer.tsx" />
       <TypeScriptCompile Include="src\components\Pagination\Pagintation.tsx" />
+      <TypeScriptCompile Include="src\components\PasswordForm\PasswordForm.tsx" />
+      <TypeScriptCompile Include="src\components\PasswordForm\PasswordFormLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Popover\Popover.tsx" />
       <TypeScriptCompile Include="src\components\Spinner\Spinner.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabContainer.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabHeader\TabHeader.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabModel.ts" />
       <TypeScriptCompile Include="src\components\TextInput\TextInputLocalizer.ts" />
+      <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarButton\ToolbarButton.tsx" />
+      <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarContainer.tsx" />
       <TypeScriptCompile Include="src\components\TopNav\TopNav.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseCheckboxWidget.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseExpandableWidget.tsx" />
