@@ -66,7 +66,7 @@ export default class Utility {
     public static format(text: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined | any)[]): string {
         let result: string = text || "";
 
-        if ((result) && (params) && (params.length > 0)) {
+        if ((result) && (params != null) && (params.length > 0)) {
             params.forEach((param, index) => {
                 const prefix: string = `{${index}`;
 
@@ -183,9 +183,9 @@ export default class Utility {
         return result;
     }
 
-    public static formatValue(value: any, format: TFormat | null | undefined): string {
+    public static formatValue(value: any, format: TFormat | null | undefined = null): string {
         return (value != null)
-            ? (format != null)
+            ? (format)
                 ? (typeof format === "function")
                     ? format(value)
                     : Utility.format(`{0:${format}}`, value)

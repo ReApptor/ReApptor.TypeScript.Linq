@@ -413,7 +413,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     protected get inputElement(): HTMLInputElement | HTMLTextAreaElement | null {
-        if(this._inputContainerRef.current) {
+        if (this._inputContainerRef.current) {
             return this._inputContainerRef.current.querySelector("input")
                 || this._inputContainerRef.current.querySelector("textarea") || null;
         }
@@ -665,7 +665,9 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     
     public renderValue(): React.ReactNode {
         const formattedStr: string = this.getFormattedStr();
-        return <span className={styles.value} title={this.props.title || formattedStr}>{formattedStr}</span>
+        return (
+            <span className={styles.value} title={this.props.title || formattedStr}>{formattedStr}</span>
+        );
     }
     
     public renderPrepend(): React.ReactNode {
