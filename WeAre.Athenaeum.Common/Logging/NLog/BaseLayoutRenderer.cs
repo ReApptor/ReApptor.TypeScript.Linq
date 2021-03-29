@@ -12,7 +12,15 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
     {
         private AspNetLayoutAccessor _accessor;
         
-        protected abstract string GetValue(HttpContextProvider provider);
+        protected virtual string GetValue(HttpContextProvider provider)
+        {
+            return null;
+        }
+        
+        protected virtual string GetValue(SecurityProvider provider)
+        {
+            return null;
+        }
 
         protected virtual string GetValue(IEnvironmentConfiguration configuration)
         {
@@ -23,11 +31,20 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         //protected override void DoAppend(StringBuilder builder, LogEventInfo logEvent)
         {
             string value = null;
-
+            
             HttpContextProvider httpContextProvider = GetHttpContextProvider();
             if (httpContextProvider != null)
             {
                 value = GetValue(httpContextProvider);
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                SecurityProvider securityProvider = GetSecurityProvider();
+                if (securityProvider != null)
+                {
+                    value = GetValue(securityProvider);
+                }
             }
 
             if (string.IsNullOrWhiteSpace(value))
@@ -60,6 +77,12 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         protected IServiceProvider GetServiceProvider()
         {
             return AthenaeumLayoutRenderer.ServiceProvider ?? HttpContextAccessor?.HttpContext?.RequestServices;
+        }
+
+        protected SecurityProvider GetSecurityProvider()
+        {
+            IServiceProvider serviceProvider = GetServiceProvider();
+            return serviceProvider?.GetService(typeof(SecurityProvider)) as SecurityProvider;
         }
 
         protected HttpContextProvider GetHttpContextProvider()

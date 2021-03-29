@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Configuration.Settings;
+using GoogleSettings = Renta.TestApplication.Common.Configuration.Settings.GoogleSettings;
 using RedisSettings = WeAre.Athenaeum.Services.Cache.Models.RedisSettings;
 
 namespace WeAre.Athenaeum.TemplateApp.Common.Configuration
