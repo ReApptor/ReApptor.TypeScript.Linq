@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="WeAre.Athenaeum.Common" Version="1.0.336" />
-        <PackageReference Include="WeAre.Athenaeum.Services.Cache" Version="1.0.143" />
+      <ProjectReference Include="..\Renta.Apps.Common\Renta.Apps.Common.csproj" />
+      <ProjectReference Include="..\WeAre.Athenaeum.Services.Cache\WeAre.Athenaeum.Services.Cache.csproj" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

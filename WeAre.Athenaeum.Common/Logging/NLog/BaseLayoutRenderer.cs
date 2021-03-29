@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using NLog;
-using NLog.Web.LayoutRenderers;
+using NLog.LayoutRenderers;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Providers;
 
 namespace WeAre.Athenaeum.Common.Logging.NLog
 {
-    public abstract class BaseLayoutRenderer : AspNetLayoutRendererBase
+    public abstract class BaseLayoutRenderer : LayoutRenderer //AspNetLayoutRendererBase
     {
+        private AspNetLayoutAccessor _accessor;
+        
         protected abstract string GetValue(HttpContextProvider provider);
 
         protected virtual string GetValue(IEnvironmentConfiguration configuration)
@@ -16,7 +19,8 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
             return null;
         }
 
-        protected override void DoAppend(StringBuilder builder, LogEventInfo logEvent)
+        protected override void Append(StringBuilder builder, LogEventInfo logEvent)
+        //protected override void DoAppend(StringBuilder builder, LogEventInfo logEvent)
         {
             string value = null;
 
@@ -41,6 +45,18 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
             }
         }
 
+        protected override void CloseLayoutRenderer()
+        {
+            _accessor?.CloseLayoutRenderer();
+            _accessor = null;
+            base.CloseLayoutRenderer();
+        }
+
+        protected IHttpContextAccessor HttpContextAccessor
+        {
+            get { return (_accessor ??= new AspNetLayoutAccessor()).HttpContextAccessor; }
+        }
+
         protected IServiceProvider GetServiceProvider()
         {
             return AthenaeumLayoutRenderer.ServiceProvider ?? HttpContextAccessor?.HttpContext?.RequestServices;
@@ -49,13 +65,13 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         protected HttpContextProvider GetHttpContextProvider()
         {
             IServiceProvider serviceProvider = GetServiceProvider();
-            return serviceProvider.GetService(typeof(HttpContextProvider)) as HttpContextProvider;
+            return serviceProvider?.GetService(typeof(HttpContextProvider)) as HttpContextProvider;
         }
 
         protected IEnvironmentConfiguration GetEnvironmentConfiguration()
         {
             IServiceProvider serviceProvider = GetServiceProvider();
-            return serviceProvider.GetService(typeof(IEnvironmentConfiguration)) as IEnvironmentConfiguration;
+            return serviceProvider?.GetService(typeof(IEnvironmentConfiguration)) as IEnvironmentConfiguration;
         }
     }
 }
