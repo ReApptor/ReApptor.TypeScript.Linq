@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Renta.Apps.Common.Configuration.Settings
+namespace Renta.TestApplication.Common.Configuration.Settings
 {
     public sealed class GoogleSettings : IOptions<GoogleSettings>
     {

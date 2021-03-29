@@ -6,6 +6,11 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
     [LayoutRenderer(Name)]
     public sealed class UsernameLayoutRenderer : BaseLayoutRenderer
     {
+        protected override string GetValue(SecurityProvider provider)
+        {
+            return provider.CallerUsername;
+        }
+
         protected override string GetValue(HttpContextProvider provider)
         {
             return provider.Email;
