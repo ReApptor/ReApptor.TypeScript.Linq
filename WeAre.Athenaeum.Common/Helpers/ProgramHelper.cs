@@ -56,17 +56,14 @@ namespace WeAre.Athenaeum.Common.Helpers
 
         public static void Start<TStartup>(string[] args, bool web = true) where TStartup : class
         {
+            // NLog: setup the logger first to catch all errors
+            AthenaeumLayoutRenderer.Register();
+
             string name = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            // NLog: setup the logger first to catch all errors
-  
             Logger logger = (name == "DevelopmentVS")
                 ? NLogBuilder.ConfigureNLog("nlog.debug.config").GetCurrentClassLogger()
                 : NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-          
-            AthenaeumLayoutRenderer.Register();
-            
-            LogManager.Configuration = LogManager.Configuration;
 
             try
             {
