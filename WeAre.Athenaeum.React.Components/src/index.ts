@@ -355,5 +355,4 @@ export {Pagination};
 export {WizardContainer, BaseExpandableWidget, BaseWidget};
 export type {IWizardPage, IWizardContainerProps, IBaseExpandableWidgetProps, IBaseWidget, IBaseWidgetProps, IBaseWidgetState};
 
-export {PasswordForm};
-export type {PasswordFormType};
+export {PasswordForm, PasswordFormType};
