@@ -10,7 +10,7 @@ export interface IFooterLink {
     label: string;
 }
 
-interface IFooterProps {
+export interface IFooterProps {
     links?: IFooterLink[]
     version?: string;
 }
