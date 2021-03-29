@@ -1,9 +1,9 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import FooterLocalizer from "./FooterLocalizer";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
-import FooterLocalizer from "./FooterLocalizer";
 
 export interface IFooterLink {
     href: string,
@@ -13,10 +13,12 @@ export interface IFooterLink {
 export interface IFooterProps {
     links?: IFooterLink[]
     version?: string;
+    logo?: any;
+    logoAlt?: string;
 }
 
 export default class Footer extends BaseComponent<IFooterProps> {
-    
+
     private get links(): IFooterLink[] {
         return (this.props.links != null)
             ? this.props.links
@@ -42,22 +44,31 @@ export default class Footer extends BaseComponent<IFooterProps> {
             <span className={styles.version}>{this.props.version}</span>
         );
     }
-    
+
+    private renderLink(link: IFooterLink, index: number): React.ReactNode {
+        return (
+            <a key={index} href={link.href} rel="noreferrer" target="_blank">
+                {FooterLocalizer.get(link.label).toUpperCase()}
+            </a>
+        )
+    }
+
     render(): React.ReactNode {
-        return(
+        return (
             <footer className={styles.footer}>
+                
                 <div className={styles.upperFooter}>
-                    <img src={logo} alt="Renta" />
+                    
+                    <img src={this.props.logo ?? logo} alt={this.props.logoAlt ?? "Renta Oy"} />
 
                     <div className={styles.footerLinks}>
                         {
-                            (this.links) && this.links.map(
-                                (item, index) => (<a key={index} href={item.href} rel="noreferrer" target="_blank">{item.label.toUpperCase()}</a>)
-                            )
+                            (this.links.map((link, index) => (this.renderLink(link, index))))
                         }
                     </div>
+                    
                 </div>
-                
+
                 <div className={styles.lowerFooter}>
                     {
                         this.renderCopyright()
@@ -69,6 +80,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
                         )
                     }
                 </div>
+                
             </footer>
         );
     }
