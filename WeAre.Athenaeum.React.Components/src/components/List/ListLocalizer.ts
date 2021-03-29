@@ -23,7 +23,7 @@ class ListLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `uk`, value: `Завантаження...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Загрузка...` }, { language: `pl`, value: `PL: Loading...` }, { language: `nb`, value: `Loading...` }, { language: `fi`, value: `Ladataan...` }, { language: `da`, value: `Loading...` },);
+        this.set(this.loadingLanguageItemName, { language: `en`, value: `Loading...` }, { language: `uk`, value: `Завантаження...` }, { language: `sv`, value: `Laddar...` }, { language: `ru`, value: `Загрузка...` }, { language: `pl`, value: `PL: Loading...` }, { language: `nb`, value: `NB: Loading...` }, { language: `fi`, value: `Ladataan...` }, { language: `da`, value: `DA: Loading...` },);
     }
 
     /**
