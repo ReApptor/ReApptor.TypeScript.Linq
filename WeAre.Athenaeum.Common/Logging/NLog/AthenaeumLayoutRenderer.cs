@@ -7,7 +7,7 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
     {
         public static void Register()
         {
-            LayoutRenderer.Register(LoggerLayoutRenderer.Name, typeof(LoggerLayoutRenderer));
+            LayoutRenderer.Register(NLogLayoutRenderer.Name, typeof(NLogLayoutRenderer));
             LayoutRenderer.Register(UserAgentLayoutRenderer.Name, typeof(UserAgentLayoutRenderer));
             LayoutRenderer.Register(SessionIdLayoutRenderer.Name, typeof(SessionIdLayoutRenderer));
             LayoutRenderer.Register(BrowserIdLayoutRenderer.Name, typeof(BrowserIdLayoutRenderer));
