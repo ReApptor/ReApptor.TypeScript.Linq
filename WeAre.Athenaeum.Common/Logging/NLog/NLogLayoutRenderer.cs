@@ -13,8 +13,8 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
         }
 
         /// <summary>
-        /// "logger"
+        /// "nlog"
         /// </summary>
-        public const string Name = "NLog";
+        public const string Name = "nlog";
     }
 }
