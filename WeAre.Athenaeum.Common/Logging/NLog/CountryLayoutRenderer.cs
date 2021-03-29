@@ -38,10 +38,7 @@ namespace WeAre.Athenaeum.Common.Logging.NLog
                 }
             }
             
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                builder.Append($"Country={value};httpContextProvider={httpContextProvider!=null};configuration={GetEnvironmentConfiguration()!=null}");
-            }
+            builder.Append($"Country={value};httpContextProvider={httpContextProvider!=null};configuration={GetEnvironmentConfiguration()!=null}");
         }
 
         /// <summary>
