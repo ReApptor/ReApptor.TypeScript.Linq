@@ -45,6 +45,8 @@
       <TypeScriptCompile Include="src\components\TabContainer\TabHeader\TabHeader.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabModel.ts" />
       <TypeScriptCompile Include="src\components\TextInput\TextInputLocalizer.ts" />
+      <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarButton\ToolbarButton.tsx" />
+      <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarContainer.tsx" />
       <TypeScriptCompile Include="src\components\TopNav\TopNav.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseCheckboxWidget.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseExpandableWidget.tsx" />

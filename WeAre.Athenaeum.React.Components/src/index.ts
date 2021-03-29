@@ -136,6 +136,7 @@ import WizardContainer, {IWizardPage, IWizardContainerProps} from "./components/
 import BaseExpandableWidget, {IBaseExpandableWidgetProps} from "./components/WidgetContainer/BaseExpandableWidget";
 import BaseWidget, {IBaseWidget, IBaseWidgetProps, IBaseWidgetState} from "./components/WidgetContainer/BaseWidget";
 import PasswordForm, {PasswordFormType} from "./components/PasswordForm/PasswordForm";
+import ToolbarContainer from "./components/ToolbarContainer/ToolbarContainer";
 
 export { AddressHelper };
 export type { GoogleApiResult, IGoogleApiSettings };
@@ -356,3 +357,5 @@ export {WizardContainer, BaseExpandableWidget, BaseWidget};
 export type {IWizardPage, IWizardContainerProps, IBaseExpandableWidgetProps, IBaseWidget, IBaseWidgetProps, IBaseWidgetState};
 
 export {PasswordForm, PasswordFormType};
+
+export {ToolbarContainer};

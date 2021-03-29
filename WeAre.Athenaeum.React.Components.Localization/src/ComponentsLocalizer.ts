@@ -116,6 +116,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly passwordFormLoginPagePasswordInputLanguageItemName: string = `PasswordForm.LoginPage.PasswordInput`;
     public readonly passwordFormResetPasswordConfirmPasswordInputLanguageItemName: string = `PasswordForm.ResetPassword.ConfirmPasswordInput`;
     public readonly passwordFormSaveLanguageItemName: string = `PasswordForm.Save`;
+    public readonly toolbarContainerLanguageItemName: string = `ToolbarContainer`;
 
     constructor() {
 
@@ -244,6 +245,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.passwordFormLoginPagePasswordInputLanguageItemName, { language: `en`, value: `Password` }, { language: `uk`, value: `UK: Password` }, { language: `sv`, value: `Lösenord` }, { language: `ru`, value: `RU: Password` }, { language: `pl`, value: `PL: Password` }, { language: `nb`, value: `NB: Password` }, { language: `fi`, value: `Salasana` }, { language: `da`, value: `DA: Password` },);
         this.set(this.passwordFormResetPasswordConfirmPasswordInputLanguageItemName, { language: `en`, value: `Confirm password` }, { language: `uk`, value: `UK: Confirm password` }, { language: `sv`, value: `Bekräfta lösenord` }, { language: `ru`, value: `RU: Confirm password` }, { language: `pl`, value: `PL: Confirm password` }, { language: `nb`, value: `NB: Confirm password` }, { language: `fi`, value: `Vahista salasana` }, { language: `da`, value: `DA: Confirm password` },);
         this.set(this.passwordFormSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallenna` }, { language: `da`, value: `DA: Save` },);
+        this.set(this.toolbarContainerLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -1021,6 +1023,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get passwordFormSave() : string {
         return this.get(this.passwordFormSaveLanguageItemName);
+    }
+
+    /**
+    /* "ToolbarContainer" ()
+    */
+    public get toolbarContainer() : string {
+        return this.get(this.toolbarContainerLanguageItemName);
     }
 }
 
