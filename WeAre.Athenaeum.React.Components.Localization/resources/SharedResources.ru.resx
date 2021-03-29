@@ -279,4 +279,31 @@
   <data name="Month.September" xml:space="preserve">
     <value>Декабрь</value>
   </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>RU: one uppercase ('A'-'Z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>RU: one lowercase ('a'-'z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>RU: one number</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>RU: one non alphanumeric character</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>RU: Passwords don't match</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>RU: Current password</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>RU: Password</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>RU: Confirm password</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>RU: Save</value>
+  </data>
 </root>

@@ -263,4 +263,31 @@
     <data name="WizardContainer" xml:space="preserve">
     <value />
   </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>UK: one uppercase ('A'-'Z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>UK: one lowercase ('a'-'z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>UK: one number</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>UK: one non alphanumeric character</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>UK: Passwords don't match</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>UK: Current password</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>UK: Password</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>UK: Confirm password</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>UK: Save</value>
+  </data>
 </root>

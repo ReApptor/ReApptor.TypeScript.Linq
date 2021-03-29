@@ -243,4 +243,31 @@
   <data name="QrWidget.Scan.Error" xml:space="preserve">
     <value>PL: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
   </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>PL: one uppercase ('A'-'Z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>PL: one lowercase ('a'-'z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>PL: one number</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>PL: one non alphanumeric character</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>PL: Passwords don't match</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>PL: Current password</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>PL: Password</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>PL: Confirm password</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>PL: Save</value>
+  </data>
 </root>

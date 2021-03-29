@@ -23,7 +23,7 @@ class PageContainerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `uk`, value: `Довідка` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `nb`, value: `Page help` }, { language: `fi`, value: `Sivun ohje` }, { language: `da`, value: `Page help` },);
+        this.set(this.pageHelpLanguageItemName, { language: `en`, value: `Page help` }, { language: `uk`, value: `Довідка` }, { language: `sv`, value: `Sidhjälp` }, { language: `ru`, value: `Справка` }, { language: `pl`, value: `PL: Page help` }, { language: `nb`, value: `NB: Page help` }, { language: `fi`, value: `Sivun ohje` }, { language: `da`, value: `DA: Page help` },);
     }
 
     /**
