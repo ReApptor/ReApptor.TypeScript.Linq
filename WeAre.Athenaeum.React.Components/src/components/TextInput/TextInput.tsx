@@ -54,7 +54,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
     private async toggleAutoSuggest(): Promise<void> {
         const autoSuggest: AutoSuggest | null = this._autoSuggestRef.current;
         
-        if(autoSuggest) {
+        if (autoSuggest) {
             await autoSuggest.toggleAsync();
         }
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import { Checkbox, ColumnDefinition, Form, Grid, GridHoveringType, GridOddType, TwoColumns } from "@weare/athenaeum-react-components";
+import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, TwoColumns} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
@@ -19,6 +19,8 @@ class GridItem {
     public int: number = 0;
     
     public date: Date = new Date();
+    
+    public value: string = "";
 }
 
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
@@ -73,6 +75,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             minWidth: 90,
             noWrap: true,
             textAlign: TextAlign.Center
+        } as ColumnDefinition,
+        {
+            header: "Value",
+            accessor: "value",
+            editable: true,
+            type: ColumnType.Text,
+            minWidth: 150
         } as ColumnDefinition
     ];
 
@@ -81,7 +90,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             this._items = [];
             const count: number = 100;
             for (let i: number = 0; i < count; i++) {
-                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, float: Math.random(), int: Math.round(100 * Math.random()), date: new Date() } as GridItem;
+                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, float: Math.random(), int: Math.round(100 * Math.random()), date: new Date(), value: Math.round(100 * Math.random()).toString() } as GridItem;
                 this._items.push(item);
             }
         }
