@@ -1,20 +1,29 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import { Button, Icon, IconSize } from "@weare/athenaeum-react-components";
+import {Button, Checkbox, Icon, IconSize, InlineType} from "@weare/athenaeum-react-components";
 
 export default class AlertTests extends BaseComponent {
+    
+    private _autoClose: boolean = true;
 
     private async confirmAsync(): Promise<void> {
         if (await ch.confirmAsync("Are you sure you want to confirm?")) {
-            await ch.alertMessageAsync("YES", true);
+            await ch.alertMessageAsync("YES", this._autoClose);
         } else {
-            await ch.alertMessageAsync("NO", true);
+            await ch.alertMessageAsync("NO", this._autoClose);
         }
     }
 
     public render(): React.ReactNode {
         return (
             <React.Fragment>
+
+                <div className="p-2">
+                    <Checkbox label="Auto close" inline inlineType={InlineType.Right}
+                              value={this._autoClose}
+                              onChange={async (sender, value) => {this._autoClose = value}}
+                    />
+                </div>
 
                 <div className="p-2">
                     <Button label="Programmatically" onClick={async () => await this.confirmAsync()} />
