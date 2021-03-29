@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.toolbarContainer {
+  flex-direction: column;
+  justify-content: flex-end !important;
+  position: relative;
+  margin-bottom: $baseline / 2;
+
+  .toggleButton {
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    &:hover {
+      background-color:unset !important;
+    }
+  }
+}
