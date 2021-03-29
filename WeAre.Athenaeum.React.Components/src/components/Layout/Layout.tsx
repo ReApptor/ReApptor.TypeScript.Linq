@@ -16,7 +16,7 @@ export interface ILayoutProps {
     topNavLogoText?: string;
     footerLinks: IFooterLink[];
     footerLogo?: any;
-    footerLogoAlt?: string;
+    footerName?: string;
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
@@ -339,7 +339,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                         <Footer version={ch.version}
                                 links={this.props.footerLinks}
                                 logo={this.props.footerLogo}
-                                logoAlt={this.props.footerLogoAlt}
+                                name={this.props.footerName}
                         />
                     )
                 }
