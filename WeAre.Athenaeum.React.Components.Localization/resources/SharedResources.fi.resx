@@ -297,4 +297,31 @@
   <data name="Month.February" xml:space="preserve">
     <value>Tammikuu</value>
   </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>yksi iso kirjain ('A'-'Z')</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>yksi pieni kirjain ('a'-'z')</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>yksi numero</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>yksi erikoismerkki</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>Salasanat eivät täsmää</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>Nykyinen salasana</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>Salasana</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>Vahista salasana</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>Tallenna</value>
+  </data>
 </root>

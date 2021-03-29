@@ -118,49 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>{0} selected</value>
+    <value>NB: {0} selected</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>Loading...</value>
+    <value>NB: Loading...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>NB: Clear</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>Done</value>
+    <value>NB: Done</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>Save changes</value>
+    <value>NB: Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>Close</value>
+    <value>NB: Close</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>Page help</value>
+    <value>NB: Page help</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>Previous</value>
+    <value>NB: Previous</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>Return to previous step</value>
+    <value>NB: Return to previous step</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>Next</value>
+    <value>NB: Next</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>Go to next step</value>
+    <value>NB: Go to next step</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>Are you sure?</value>
+    <value>NB: Are you sure?</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>Confirm</value>
+    <value>NB: Confirm</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>NB: Close</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>Please leave a comment</value>
+    <value>NB: Please leave a comment</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
     <value>Address</value>
@@ -175,16 +175,16 @@
     <value>Postal code</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>Drag'n'drop file here, or click to select</value>
+    <value>NB: Drag'n'drop file here, or click to select</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
-    <value>File is readonly</value>
+    <value>NB: File is readonly</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>NB: Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>Choose file</value>
+    <value>NB: Choose file</value>
   </data>
   <data name="Alert" xml:space="preserve">
     <value />
@@ -208,40 +208,40 @@
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>Location picker</value>
+    <value>NB: Location picker</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>Choose location on map</value>
+    <value>NB: Choose location on map</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>Set location</value>
+    <value>NB: Set location</value>
   </data>
   <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>No items found</value>
+    <value>NB: No items found</value>
   </data>
   <data name="Dropdown.NoData" xml:space="preserve">
-    <value>No data</value>
+    <value>NB: No data</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>Filter results</value>
+    <value>NB: Filter results</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>Start typing to get results</value>
+    <value>NB: Start typing to get results</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>Add</value>
+    <value>NB: Add</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>Nothing is selected</value>
+    <value>NB: Nothing is selected</value>
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>at least 8 characters long</value>
+    <value>NB: at least 8 characters long</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>Download</value>
+    <value>NB: Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>NB: Preview</value>
   </data>
   <data name="Grid" xml:space="preserve">
     <value />
@@ -337,7 +337,7 @@
     <value />
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+    <value>NB: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
   </data>
   <data name="SwitchWidget" xml:space="preserve">
     <value />
@@ -374,5 +374,32 @@
   </data>
   <data name="BaseInput.Validators.Length" xml:space="preserve">
     <value>Teksten er for kort</value>
+  </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>NB: one uppercase ('A'-'Z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>NB: one lowercase ('a'-'z') character</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>NB: one number</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>NB: one non alphanumeric character</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>NB: Passwords don't match</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>NB: Current password</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>NB: Password</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>NB: Confirm password</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>NB: Save</value>
   </data>
 </root>

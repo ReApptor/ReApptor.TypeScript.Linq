@@ -255,4 +255,31 @@
   <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
     <value>Dokument filen är för stor</value>
   </data>
+  <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
+    <value>en stor bokstav ('A'-'Z')</value>
+  </data>
+  <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
+    <value>en liten bokstav ('a'-'z')</value>
+  </data>
+  <data name="PasswordForm.HelpText.Number" xml:space="preserve">
+    <value>en nummer</value>
+  </data>
+  <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
+    <value>ett special tecken</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
+    <value>Lösenorden matchar inte</value>
+  </data>
+  <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
+    <value>Nuvarande lösenord</value>
+  </data>
+  <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
+    <value>Bekräfta lösenord</value>
+  </data>
+  <data name="PasswordForm.Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
 </root>
