@@ -74,7 +74,7 @@ namespace WeAre.Athenaeum.Common.Helpers
                     IWebHost host = CreateWebHostBuilder<TStartup>(args).Build();
                 
                     AthenaeumLayoutRenderer.ServiceProvider = host.Services;
-                
+
                     host.Run();
                 }
                 else
