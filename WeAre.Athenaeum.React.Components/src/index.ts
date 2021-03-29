@@ -4,7 +4,7 @@ import ButtonContainer, { IButtonContainerProps, IButtonContainerState } from ".
 import ConfirmationDialog, { IConfirmation, ConfirmationDialogTitleCallback } from "./components/ConfirmationDialog/ConfirmationDialog";
 import DocumentPreview from "./components/DocumentPreview/DocumentPreview";
 import DocumentPreviewModal, { DocumentPreviewCallback } from "./components/DocumentPreviewModal/DocumentPreviewModal";
-import Footer from "./components/Footer/Footer";
+import Footer, {IFooterLink} from "./components/Footer/Footer";
 import Form from "./components/Form/Form";
 import CellActionComponent from "./components/Grid/Cell/CellActionComponent/CellActionComponent";
 import DropdownCell from "./components/Grid/Cell/DropdownCell/DropdownCell";
@@ -161,6 +161,7 @@ export { DocumentPreviewModal };
 export type { DocumentPreviewCallback };
 
 export { Footer };
+export type { IFooterLink };
 export { Form };
 export { DropdownWidget };
 export {
