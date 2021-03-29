@@ -334,7 +334,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 {
                     ((!this.state.error) && (!this.isLoading)) &&
                     (
-                        <Footer version={ch.version} />
+                        <Footer version={ch.version} links={this.props.footerLinks} />
                     )
                 }
 
