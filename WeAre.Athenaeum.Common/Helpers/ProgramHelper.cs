@@ -59,16 +59,18 @@ namespace WeAre.Athenaeum.Common.Helpers
             string name = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             // NLog: setup the logger first to catch all errors
-            AthenaeumLayoutRenderer.Register();
-            LogManager.Configuration = LogManager.Configuration;
-
+  
             Logger logger = (name == "DevelopmentVS")
                 ? NLogBuilder.ConfigureNLog("nlog.debug.config").GetCurrentClassLogger()
                 : NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+          
+            AthenaeumLayoutRenderer.Register();
+            
+            LogManager.Configuration = LogManager.Configuration;
 
             try
             {
-                logger.Info($"Program started. Web=\"{web}\". Environment=\"{name}\". Logger=\"{logger.Name}\".");
+                logger.Info($"Program started. Web=\"{web}\". Environment=\"{name}\".");
 
                 if (web)
                 {
