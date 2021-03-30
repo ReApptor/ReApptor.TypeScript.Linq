@@ -41,7 +41,10 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
     }
 
     protected abstract createSelectListItem(value: string, text: string, subtext: string, groupName?: string | null, favorite?: boolean | null): TSelectListItem;
-
+    
+    public initialize(): void {
+    }
+    
     public getType(): ServiceType {
         return nameof<ITransformProvider>();
     }
