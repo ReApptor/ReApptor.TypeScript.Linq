@@ -222,8 +222,8 @@
   <data name="TopNav" xml:space="preserve">
     <value />
   </data>
-  <data name="Footer" xml:space="preserve">
-    <value />
+  <data name="Footer.Frontpage" xml:space="preserve">
+    <value>RU: Frontpage</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value />
@@ -317,5 +317,17 @@
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
     <value>RU: Download</value>
+  </data>
+  <data name="Footer.Contact" xml:space="preserve">
+    <value>RU: Contact information</value>
+  </data>
+  <data name="AddressDivider.Street" xml:space="preserve">
+    <value>RU: Street</value>
+  </data>
+  <data name="AddressDivider.City" xml:space="preserve">
+    <value>RU: City</value>
+  </data>
+  <data name="AddressDivider.PostalCode" xml:space="preserve">
+    <value>RU: Postal code</value>
   </data>
 </root>

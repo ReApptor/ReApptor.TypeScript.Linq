@@ -6,6 +6,9 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
 
     //Constants
     public readonly addressLanguageItemName: string = `Address`;
+    public readonly streetLanguageItemName: string = `Street`;
+    public readonly cityLanguageItemName: string = `City`;
+    public readonly postalCodeLanguageItemName: string = `PostalCode`;
 
     constructor() {
 
@@ -24,6 +27,9 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
         
         //Initializer
         this.set(this.addressLanguageItemName, { language: `en`, value: `Address` }, { language: `uk`, value: `Адреса` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `Адрес` }, { language: `pl`, value: `PL: Address` }, { language: `nb`, value: `Address` }, { language: `fi`, value: `Osoite` }, { language: `da`, value: `DA: Address` },);
+        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `NB: Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `DA: Street` },);
+        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `NB: City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `DA: City` },);
+        this.set(this.postalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `NB: Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `DA: Postal code` },);
     }
 
     /**
@@ -31,6 +37,27 @@ class AddressDividerLocalizer extends BaseComponentLocalizer {
     */
     public get address() : string {
         return this.get(this.addressLanguageItemName);
+    }
+
+    /**
+    /* "Street" (Street)
+    */
+    public get street() : string {
+        return this.get(this.streetLanguageItemName);
+    }
+
+    /**
+    /* "City" (City)
+    */
+    public get city() : string {
+        return this.get(this.cityLanguageItemName);
+    }
+
+    /**
+    /* "PostalCode" (Postal code)
+    */
+    public get postalCode() : string {
+        return this.get(this.postalCodeLanguageItemName);
     }
 }
 

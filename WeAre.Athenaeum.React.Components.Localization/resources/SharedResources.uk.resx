@@ -89,8 +89,8 @@
     <data name="TopNav" xml:space="preserve">
     <value />
   </data>
-    <data name="Footer" xml:space="preserve">
-    <value />
+  <data name="Footer.Frontpage" xml:space="preserve">
+    <value>UK: Frontpage</value>
   </data>
     <data name="Icon" xml:space="preserve">
     <value />
@@ -298,5 +298,17 @@
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
     <value>UK: Download</value>
+  </data>
+  <data name="Footer.Contact" xml:space="preserve">
+    <value>UK: Contact information</value>
+  </data>
+  <data name="AddressDivider.Street" xml:space="preserve">
+    <value>Вулиця</value>
+  </data>
+  <data name="AddressDivider.City" xml:space="preserve">
+    <value>Місто</value>
+  </data>
+  <data name="AddressDivider.PostalCode" xml:space="preserve">
+    <value>Поштовий індекс</value>
   </data>
 </root>

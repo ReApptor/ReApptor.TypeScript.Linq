@@ -31,7 +31,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly alertLanguageItemName: string = `Alert`;
     public readonly textInputLanguageItemName: string = `TextInput`;
     public readonly topNavLanguageItemName: string = `TopNav`;
-    public readonly footerLanguageItemName: string = `Footer`;
+    public readonly footerFrontpageLanguageItemName: string = `Footer.Frontpage`;
     public readonly iconLanguageItemName: string = `Icon`;
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
     public readonly widgetContainerLanguageItemName: string = `WidgetContainer`;
@@ -123,6 +123,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageModalLanguageItemName: string = `ImageModal`;
     public readonly imageModalPreviewNotSupportedLanguageItemName: string = `ImageModal.PreviewNotSupported`;
     public readonly imageModalDownloadLanguageItemName: string = `ImageModal.Download`;
+    public readonly footerContactLanguageItemName: string = `Footer.Contact`;
+    public readonly addressDividerStreetLanguageItemName: string = `AddressDivider.Street`;
+    public readonly addressDividerCityLanguageItemName: string = `AddressDivider.City`;
+    public readonly addressDividerPostalCodeLanguageItemName: string = `AddressDivider.PostalCode`;
 
     constructor() {
 
@@ -156,9 +160,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.confirmationDialogCloseButtonLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `Закрити` }, { language: `sv`, value: `SV: Close` }, { language: `ru`, value: `Отмена` }, { language: `pl`, value: `PL: Close` }, { language: `nb`, value: `NB: Close` }, { language: `fi`, value: `Ei` }, { language: `da`, value: `DA: Close` },);
         this.set(this.confirmationDialogCommentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `uk`, value: `Будьласка, залиште коментар` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `ru`, value: `Пожалуйста, оставьте комментарий` }, { language: `pl`, value: `PL: Please leave a comment` }, { language: `nb`, value: `NB: Please leave a comment` }, { language: `fi`, value: `Ole hyvä ja kommentoi` }, { language: `da`, value: `DA: Please leave a comment` },);
         this.set(this.addressDividerAddressLanguageItemName, { language: `en`, value: `Address` }, { language: `uk`, value: `Адреса` }, { language: `sv`, value: `Adress` }, { language: `ru`, value: `Адрес` }, { language: `pl`, value: `PL: Address` }, { language: `nb`, value: `Address` }, { language: `fi`, value: `Osoite` }, { language: `da`, value: `DA: Address` },);
-        this.set(this.virtualAddressDividerStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `DA: Street` },);
-        this.set(this.virtualAddressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `DA: City` },);
-        this.set(this.virtualAddressDividerPostalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `DA: Postal code` },);
+        this.set(this.virtualAddressDividerStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `NB: Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `DA: Street` },);
+        this.set(this.virtualAddressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `NB: City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `DA: City` },);
+        this.set(this.virtualAddressDividerPostalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `NB: Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `DA: Postal code` },);
         this.set(this.fileInputDragAndDropLanguageItemName, { language: `en`, value: `Drag'n'drop file here, or click to select` }, { language: `uk`, value: `Перетягніть файл, або оберіть його` }, { language: `sv`, value: `dra och släpp filen här, eller välj med att klicka` }, { language: `ru`, value: `RU: Drag'n'drop file here, or click to select` }, { language: `pl`, value: `PL: Drag'n'drop file here, or click to select` }, { language: `nb`, value: `NB: Drag'n'drop file here, or click to select` }, { language: `fi`, value: `Pudota tiedosto tähän tai valitse klikkaamalla` }, { language: `da`, value: `DA: Drag'n'drop file here, or click to select` },);
         this.set(this.fileInputReadonlyLanguageItemName, { language: `en`, value: `File is readonly` }, { language: `uk`, value: `UK: File is readonly` }, { language: `sv`, value: `Filen är bara läsbar` }, { language: `ru`, value: `RU: File is readonly` }, { language: `pl`, value: `PL: File is readonly` }, { language: `nb`, value: `NB: File is readonly` }, { language: `fi`, value: `Tämä tiedosto on vain luettavissa` }, { language: `da`, value: `DA: File is readonly` },);
         this.set(this.documentPreviewModalPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `DA: Preview` },);
@@ -166,7 +170,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.topNavLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
-        this.set(this.footerLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.footerFrontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `uk`, value: `UK: Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `PL: Frontpage` }, { language: `nb`, value: `NB: Frontpage` }, { language: `fi`, value: `Etusivu` }, { language: `da`, value: `DA: Frontpage` },);
         this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.widgetContainerLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `nb`, value: `` }, { language: `da`, value: `` },);
@@ -258,6 +262,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageModalLanguageItemName, { language: `en`, value: `` },);
         this.set(this.imageModalPreviewNotSupportedLanguageItemName, { language: `en`, value: `Preview is not supported for this type of file, but you can download it instead` }, { language: `uk`, value: `UK: Preview is not supported for this type of file, but you can download it instead` }, { language: `sv`, value: `SV: Preview is not supported for this type of file, but you can download it instead` }, { language: `ru`, value: `RU: Preview is not supported for this type of file, but you can download it instead` }, { language: `pl`, value: `PL: Preview is not supported for this type of file, but you can download it instead` }, { language: `nb`, value: `NB: Preview is not supported for this type of file, but you can download it instead` }, { language: `fi`, value: `Tiedostotyypin esikatselu ei ole tuettu. Vaihtoehtoisesti voit ladata tiedoston` }, { language: `da`, value: `DA: Preview is not supported for this type of file, but you can download it instead` },);
         this.set(this.imageModalDownloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `UK: Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `nb`, value: `NB: Download` }, { language: `fi`, value: `Lataa` }, { language: `da`, value: `DA: Download` },);
+        this.set(this.footerContactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `uk`, value: `UK: Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `RU: Contact information` }, { language: `pl`, value: `PL: Contact information` }, { language: `nb`, value: `NB: Contact information` }, { language: `fi`, value: `Yhteystiedot` }, { language: `da`, value: `DA: Contact information` },);
+        this.set(this.addressDividerStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `NB: Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `DA: Street` },);
+        this.set(this.addressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `NB: City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `DA: City` },);
+        this.set(this.addressDividerPostalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `NB: Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `DA: Postal code` },);
     }
 
     /**
@@ -443,10 +451,10 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "Footer" ()
+    /* "Footer.Frontpage" (Frontpage)
     */
-    public get footer() : string {
-        return this.get(this.footerLanguageItemName);
+    public get footerFrontpage() : string {
+        return this.get(this.footerFrontpageLanguageItemName);
     }
 
     /**
@@ -1084,6 +1092,34 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageModalDownload() : string {
         return this.get(this.imageModalDownloadLanguageItemName);
+    }
+
+    /**
+    /* "Footer.Contact" (Contact information)
+    */
+    public get footerContact() : string {
+        return this.get(this.footerContactLanguageItemName);
+    }
+
+    /**
+    /* "AddressDivider.Street" (Street)
+    */
+    public get addressDividerStreet() : string {
+        return this.get(this.addressDividerStreetLanguageItemName);
+    }
+
+    /**
+    /* "AddressDivider.City" (City)
+    */
+    public get addressDividerCity() : string {
+        return this.get(this.addressDividerCityLanguageItemName);
+    }
+
+    /**
+    /* "AddressDivider.PostalCode" (Postal code)
+    */
+    public get addressDividerPostalCode() : string {
+        return this.get(this.addressDividerPostalCodeLanguageItemName);
     }
 }
 
