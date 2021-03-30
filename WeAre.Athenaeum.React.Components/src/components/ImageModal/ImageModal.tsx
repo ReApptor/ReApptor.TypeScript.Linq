@@ -1,12 +1,12 @@
 import React from "react";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-
-import styles from "./ImageModal.module.scss";
 import Modal, {ModalSize} from "../Modal/Modal";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
-import ImageModalLocalizer from "./ImageModalLocalizer";
 import Button, {ButtonType} from "../Button/Button";
+import ImageModalLocalizer from "./ImageModalLocalizer";
+
+import styles from "./ImageModal.module.scss";
 
 interface IImageModalProps {
     id?: string;
@@ -58,12 +58,12 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
     }
 
     private async download(): Promise<void> {
-        if(this.picture) {
-            if(!this.picture.src) {
+        if (this.picture) {
+            if (!this.picture.src) {
                 this.picture.src = `/files/images/${this.picture.id}`;
             }
 
-            return ch.getLayout().download(this.picture);
+            ch.download(this.picture);
         }
     }
 
@@ -98,16 +98,26 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
             >
                 <div>
                     {
-                        (this.picture && this.previewSupported) 
-                            && <div className={this.css(styles.image, mobileStyle, biggerStyle)} style={ImageProvider.getImageStyle(this.picture)} />
+                        (this.picture && this.previewSupported) &&
+                        (
+                            <div className={this.css(styles.image, mobileStyle, biggerStyle)} style={ImageProvider.getImageStyle(this.picture)} />
+                        )
                     }
                     {
-                        (this.picture && !this.previewSupported)
-                            && <span>{ImageModalLocalizer.previewNotSupported}</span>
+                        (this.picture && !this.previewSupported) && 
+                        (
+                            <span>{ImageModalLocalizer.previewNotSupported}</span>
+                        )
                     }
                 </div>
 
-                { (this.props.download && this.picture) && <Button type={ButtonType.Orange} onClick={async () => await this.download()} label={ImageModalLocalizer.download} /> }
+                {
+                    (this.props.download && this.picture) &&
+                    (
+                        <Button type={ButtonType.Orange} onClick={async () => await this.download()} label={ImageModalLocalizer.download} />
+                    )
+                }
+                
             </Modal>
         )
     }
