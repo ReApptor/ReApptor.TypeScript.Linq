@@ -117,7 +117,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         //super
         await super.componentDidMount();
         //set input as readonly to avoid auto complete
-        $(`#${this.getInputId()}`).prop("readonly", true);
+        this.JQuery(`#${this.getInputId()}`).prop("readonly", true);
     }
 
     public renderInput(): React.ReactNode {
