@@ -32,7 +32,9 @@ export enum IconStyle {
 
     Light,
 
-    Brands
+    Brands,
+
+    Duotone
 }
 
 export interface IIconProps {
@@ -113,6 +115,8 @@ export default class Icon extends BaseComponent<IIconProps> {
                     return Icon.add(lowerClassName, className, "fal");
                 case IconStyle.Brands:
                     return Icon.add(lowerClassName, className, "fab");
+                case IconStyle.Duotone:
+                    return Icon.add(lowerClassName, className, "fad");
             }
         }
 
@@ -129,6 +133,8 @@ export default class Icon extends BaseComponent<IIconProps> {
             classStyle = IconStyle.Light;
         } else if (lowerName.startsWith("fab ")) {
             classStyle = IconStyle.Brands;
+        } else if (lowerName.startsWith("fad ")) {
+            classStyle = IconStyle.Duotone;
         }
         return classStyle;
     }
