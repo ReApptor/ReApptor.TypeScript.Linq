@@ -324,4 +324,10 @@
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>Tallenna</value>
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>Dokumentti tiedosto liian iso</value>
+  </data>
 </root>

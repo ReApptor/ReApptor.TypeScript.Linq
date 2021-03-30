@@ -290,4 +290,7 @@
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>UK: Save</value>
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>UK: Document type is not supported, choose file with extension {0}</value>
+  </data>
 </root>

@@ -456,4 +456,10 @@
   <data name="Panel" xml:space="preserve">
     <value />
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>Document file is too big</value>
+  </data>
 </root>
