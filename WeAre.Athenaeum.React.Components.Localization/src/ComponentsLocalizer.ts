@@ -117,6 +117,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly passwordFormResetPasswordConfirmPasswordInputLanguageItemName: string = `PasswordForm.ResetPassword.ConfirmPasswordInput`;
     public readonly passwordFormSaveLanguageItemName: string = `PasswordForm.Save`;
     public readonly toolbarContainerLanguageItemName: string = `ToolbarContainer`;
+    public readonly panelLanguageItemName: string = `Panel`;
 
     constructor() {
 
@@ -246,6 +247,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.passwordFormResetPasswordConfirmPasswordInputLanguageItemName, { language: `en`, value: `Confirm password` }, { language: `uk`, value: `UK: Confirm password` }, { language: `sv`, value: `Bekräfta lösenord` }, { language: `ru`, value: `RU: Confirm password` }, { language: `pl`, value: `PL: Confirm password` }, { language: `nb`, value: `NB: Confirm password` }, { language: `fi`, value: `Vahista salasana` }, { language: `da`, value: `DA: Confirm password` },);
         this.set(this.passwordFormSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallenna` }, { language: `da`, value: `DA: Save` },);
         this.set(this.toolbarContainerLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.panelLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -1030,6 +1032,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get toolbarContainer() : string {
         return this.get(this.toolbarContainerLanguageItemName);
+    }
+
+    /**
+    /* "Panel" ()
+    */
+    public get panel() : string {
+        return this.get(this.panelLanguageItemName);
     }
 }
 
