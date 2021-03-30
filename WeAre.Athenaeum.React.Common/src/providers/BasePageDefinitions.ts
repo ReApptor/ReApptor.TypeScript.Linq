@@ -46,6 +46,9 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         ServiceProvider.addSingleton(this);
     }
 
+    public initialize(): void {
+    }
+
     public getType(): ServiceType {
         return "IPageDefinitions";
     }
