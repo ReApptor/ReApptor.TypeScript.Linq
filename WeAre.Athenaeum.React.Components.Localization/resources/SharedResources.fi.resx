@@ -330,4 +330,10 @@
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
     <value>Dokumentti tiedosto liian iso</value>
   </data>
+  <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
+    <value>Tiedostotyypin esikatselu ei ole tuettu. Vaihtoehtoisesti voit ladata tiedoston</value>
+  </data>
+  <data name="ImageModal.Download" xml:space="preserve">
+    <value>Lataa</value>
+  </data>
 </root>

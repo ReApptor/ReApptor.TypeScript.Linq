@@ -120,6 +120,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly panelLanguageItemName: string = `Panel`;
     public readonly imageInputDocumentTypeNotSupportedLanguageItemName: string = `ImageInput.DocumentTypeNotSupported`;
     public readonly imageInputDocumentTooBigLanguageItemName: string = `ImageInput.DocumentTooBig`;
+    public readonly imageModalLanguageItemName: string = `ImageModal`;
+    public readonly imageModalPreviewNotSupportedLanguageItemName: string = `ImageModal.PreviewNotSupported`;
+    public readonly imageModalDownloadLanguageItemName: string = `ImageModal.Download`;
 
     constructor() {
 
@@ -252,6 +255,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.panelLanguageItemName, { language: `en`, value: `` },);
         this.set(this.imageInputDocumentTypeNotSupportedLanguageItemName, { language: `en`, value: `Document type is not supported, choose file with extension {0}` }, { language: `uk`, value: `UK: Document type is not supported, choose file with extension {0}` }, { language: `sv`, value: `Dokumenttyp stöds inte. Välj dokument som är {0}.` }, { language: `ru`, value: `RU: Document type is not supported, choose file with extension {0}` }, { language: `pl`, value: `PL: Document type is not supported, choose file with extension` }, { language: `nb`, value: `NB: Document type is not supported, choose file with extension {0}` }, { language: `fi`, value: `Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}` }, { language: `da`, value: `DA: Document type is not supported, choose file with extension {0}` },);
         this.set(this.imageInputDocumentTooBigLanguageItemName, { language: `en`, value: `Document file is too big` }, { language: `sv`, value: `Dokument filen är för stor` }, { language: `ru`, value: `RU: Document file is too big` }, { language: `pl`, value: `PL: Document file is too big` }, { language: `nb`, value: `NB: Document file is too big` }, { language: `fi`, value: `Dokumentti tiedosto liian iso` }, { language: `da`, value: `DA: Document file is too big` },);
+        this.set(this.imageModalLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.imageModalPreviewNotSupportedLanguageItemName, { language: `en`, value: `Preview is not supported for this type of file, but you can download it instead` }, { language: `uk`, value: `UK: Preview is not supported for this type of file, but you can download it instead` }, { language: `sv`, value: `SV: Preview is not supported for this type of file, but you can download it instead` }, { language: `ru`, value: `RU: Preview is not supported for this type of file, but you can download it instead` }, { language: `pl`, value: `PL: Preview is not supported for this type of file, but you can download it instead` }, { language: `nb`, value: `NB: Preview is not supported for this type of file, but you can download it instead` }, { language: `fi`, value: `Tiedostotyypin esikatselu ei ole tuettu. Vaihtoehtoisesti voit ladata tiedoston` }, { language: `da`, value: `DA: Preview is not supported for this type of file, but you can download it instead` },);
+        this.set(this.imageModalDownloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `UK: Download` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `RU: Download` }, { language: `pl`, value: `PL: Download` }, { language: `nb`, value: `NB: Download` }, { language: `fi`, value: `Lataa` }, { language: `da`, value: `DA: Download` },);
     }
 
     /**
@@ -1057,6 +1063,27 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageInputDocumentTooBig() : string {
         return this.get(this.imageInputDocumentTooBigLanguageItemName);
+    }
+
+    /**
+    /* "ImageModal" ()
+    */
+    public get imageModal() : string {
+        return this.get(this.imageModalLanguageItemName);
+    }
+
+    /**
+    /* "ImageModal.PreviewNotSupported" (Preview is not supported for this type of file, but you can download it instead)
+    */
+    public get imageModalPreviewNotSupported() : string {
+        return this.get(this.imageModalPreviewNotSupportedLanguageItemName);
+    }
+
+    /**
+    /* "ImageModal.Download" (Download)
+    */
+    public get imageModalDownload() : string {
+        return this.get(this.imageModalDownloadLanguageItemName);
     }
 }
 

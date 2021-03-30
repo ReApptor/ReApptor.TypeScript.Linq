@@ -276,4 +276,10 @@
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
     <value>PL: Document file is too big</value>
   </data>
+  <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
+    <value>PL: Preview is not supported for this type of file, but you can download it instead</value>
+  </data>
+  <data name="ImageModal.Download" xml:space="preserve">
+    <value>PL: Download</value>
+  </data>
 </root>
