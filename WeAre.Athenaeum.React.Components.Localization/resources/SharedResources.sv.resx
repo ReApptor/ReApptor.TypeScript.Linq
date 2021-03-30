@@ -288,4 +288,10 @@
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
     <value>Dokument filen är för stor</value>
   </data>
+  <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
+    <value>SV: Preview is not supported for this type of file, but you can download it instead</value>
+  </data>
+  <data name="ImageModal.Download" xml:space="preserve">
+    <value>SV: Download</value>
+  </data>
 </root>
