@@ -5,7 +5,8 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class FooterLocalizer extends BaseComponentLocalizer {
 
     //Constants
-
+    public readonly frontpageLanguageItemName: string = `Frontpage`;
+    public readonly contactLanguageItemName: string = `Contact`;
 
     constructor() {
 
@@ -23,10 +24,23 @@ class FooterLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-
+        this.set(this.frontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `uk`, value: `UK: Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `PL: Frontpage` }, { language: `nb`, value: `NB: Frontpage` }, { language: `fi`, value: `Etusivu` }, { language: `da`, value: `DA: Frontpage` },);
+        this.set(this.contactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `uk`, value: `UK: Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `RU: Contact information` }, { language: `pl`, value: `PL: Contact information` }, { language: `nb`, value: `NB: Contact information` }, { language: `fi`, value: `Yhteystiedot` }, { language: `da`, value: `DA: Contact information` },);
     }
 
+    /**
+    /* "Frontpage" (Frontpage)
+    */
+    public get frontpage() : string {
+        return this.get(this.frontpageLanguageItemName);
+    }
 
+    /**
+    /* "Contact" (Contact information)
+    */
+    public get contact() : string {
+        return this.get(this.contactLanguageItemName);
+    }
 }
 
 //Singleton

@@ -25,11 +25,11 @@ export default class Footer extends BaseComponent<IFooterProps> {
             : [
                 {
                     href: "https://renta.fi/",
-                    label: FooterLocalizer.get("componentFooterFrontpage")
+                    label: FooterLocalizer.frontpage
                 },
                 {
                     href: "https://www.renta.fi/fi/yhteystiedot/",
-                    label: FooterLocalizer.get("componentFooterContact")
+                    label: FooterLocalizer.contact
                 }
             ];
     }

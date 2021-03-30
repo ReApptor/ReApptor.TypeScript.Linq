@@ -113,13 +113,13 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                                   onChange={async (location) => await this.onPlaceSelectedAsync(location)}
                     />
                     
-                    <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.get("Form.Input.Street")} value={this.location.address} readonly />
+                    <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly />
                     
                 </TwoColumns>
                 
                 <TwoColumns>
-                    <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.get("Form.Input.City")} value={this.location.city} readonly />
-                    <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.get("Form.Input.Postalcode")} value={this.location.postalCode} readonly />
+                    <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly />
+                    <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly />
                 </TwoColumns>
                 
             </React.Fragment>
