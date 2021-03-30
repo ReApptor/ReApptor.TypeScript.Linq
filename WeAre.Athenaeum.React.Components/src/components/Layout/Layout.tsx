@@ -14,7 +14,7 @@ export interface ILayoutProps {
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
     topNavLogo?: any;
     topNavLogoText?: string;
-    footerLinks: IFooterLink[];
+    footerLinks?: IFooterLink[];
     footerLogo?: any;
     footerName?: string;
 }
