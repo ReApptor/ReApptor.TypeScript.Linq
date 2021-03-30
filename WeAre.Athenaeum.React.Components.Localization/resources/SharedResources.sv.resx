@@ -282,4 +282,10 @@
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>Spara</value>
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>Dokumenttyp stöds inte. Välj dokument som är {0}.</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>Dokument filen är för stor</value>
+  </data>
 </root>

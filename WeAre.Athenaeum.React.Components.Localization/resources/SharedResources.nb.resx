@@ -402,4 +402,10 @@
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>NB: Save</value>
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>NB: Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>NB: Document file is too big</value>
+  </data>
 </root>

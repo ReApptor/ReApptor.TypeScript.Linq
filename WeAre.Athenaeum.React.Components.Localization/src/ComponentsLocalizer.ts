@@ -118,6 +118,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly passwordFormSaveLanguageItemName: string = `PasswordForm.Save`;
     public readonly toolbarContainerLanguageItemName: string = `ToolbarContainer`;
     public readonly panelLanguageItemName: string = `Panel`;
+    public readonly imageInputDocumentTypeNotSupportedLanguageItemName: string = `ImageInput.DocumentTypeNotSupported`;
+    public readonly imageInputDocumentTooBigLanguageItemName: string = `ImageInput.DocumentTooBig`;
 
     constructor() {
 
@@ -248,6 +250,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.passwordFormSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallenna` }, { language: `da`, value: `DA: Save` },);
         this.set(this.toolbarContainerLanguageItemName, { language: `en`, value: `` },);
         this.set(this.panelLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.imageInputDocumentTypeNotSupportedLanguageItemName, { language: `en`, value: `Document type is not supported, choose file with extension {0}` }, { language: `uk`, value: `UK: Document type is not supported, choose file with extension {0}` }, { language: `sv`, value: `Dokumenttyp stöds inte. Välj dokument som är {0}.` }, { language: `ru`, value: `RU: Document type is not supported, choose file with extension {0}` }, { language: `pl`, value: `PL: Document type is not supported, choose file with extension` }, { language: `nb`, value: `NB: Document type is not supported, choose file with extension {0}` }, { language: `fi`, value: `Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}` }, { language: `da`, value: `DA: Document type is not supported, choose file with extension {0}` },);
+        this.set(this.imageInputDocumentTooBigLanguageItemName, { language: `en`, value: `Document file is too big` }, { language: `sv`, value: `Dokument filen är för stor` }, { language: `ru`, value: `RU: Document file is too big` }, { language: `pl`, value: `PL: Document file is too big` }, { language: `nb`, value: `NB: Document file is too big` }, { language: `fi`, value: `Dokumentti tiedosto liian iso` }, { language: `da`, value: `DA: Document file is too big` },);
     }
 
     /**
@@ -1039,6 +1043,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get panel() : string {
         return this.get(this.panelLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.DocumentTypeNotSupported" (Document type is not supported, choose file with extension {0})
+    */
+    public get imageInputDocumentTypeNotSupported() : string {
+        return this.get(this.imageInputDocumentTypeNotSupportedLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.DocumentTooBig" (Document file is too big)
+    */
+    public get imageInputDocumentTooBig() : string {
+        return this.get(this.imageInputDocumentTooBigLanguageItemName);
     }
 }
 

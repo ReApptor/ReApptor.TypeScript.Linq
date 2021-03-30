@@ -270,4 +270,10 @@
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>PL: Save</value>
   </data>
+  <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
+    <value>PL: Document type is not supported, choose file with extension</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>PL: Document file is too big</value>
+  </data>
 </root>

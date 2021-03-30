@@ -139,6 +139,8 @@ import PasswordForm, {PasswordFormType} from "./components/PasswordForm/Password
 import ToolbarContainer from "./components/ToolbarContainer/ToolbarContainer";
 import ToolbarRow from "./components/ToolbarContainer/ToolbarRow/ToolbarRow";
 import ToolbarButton from "./components/ToolbarContainer/ToolbarButton/ToolbarButton";
+import Panel, {PanelCollapseType} from "./components/Panel/Panel";
+import ImageInput from "./components/ImageInput/ImageInput";
 
 export { AddressHelper };
 export type { GoogleApiResult, IGoogleApiSettings };
@@ -362,3 +364,8 @@ export type {IWizardPage, IWizardContainerProps, IBaseExpandableWidgetProps, IBa
 export {PasswordForm, PasswordFormType};
 
 export {ToolbarContainer, ToolbarRow, ToolbarButton};
+
+export {Panel};
+export type {PanelCollapseType};
+
+export {ImageInput};
