@@ -453,4 +453,7 @@
   <data name="ToolbarContainer" xml:space="preserve">
     <value />
   </data>
+  <data name="Panel" xml:space="preserve">
+    <value />
+  </data>
 </root>
