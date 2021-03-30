@@ -54,6 +54,9 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
     }
     
     // #endregion
+    
+    public initialize(): void {
+    }
 
     public getType(): ServiceType {
         return nameof<IEnumProvider>();
