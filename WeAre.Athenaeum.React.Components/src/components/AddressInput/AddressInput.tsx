@@ -147,6 +147,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
             this.state.inputValue = false;
 
             this.onValuePropsChanged();
+            
             await this.setState({location: nextLocation});
         }
 
