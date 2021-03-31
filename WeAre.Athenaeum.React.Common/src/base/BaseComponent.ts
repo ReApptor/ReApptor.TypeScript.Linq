@@ -333,15 +333,15 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._isMounted = true;
 
         if (this._asGlobalClick) {
-            DocumentEventsProvider.register(this.id, DocumentEventType.Mousedown, async (e: React.SyntheticEvent) => await this._asGlobalClick!.onGlobalClick(e));
+            DocumentEventsProvider.register(this.id, DocumentEventType.Mousedown, (e: React.SyntheticEvent) => this._asGlobalClick!.onGlobalClick(e));
         }
 
         if (this._asGlobalKeydown) {
-            DocumentEventsProvider.register(this.id, DocumentEventType.Keydown, async (e: React.SyntheticEvent) => await this._asGlobalKeydown!.onGlobalKeydown(e));
+            DocumentEventsProvider.register(this.id, DocumentEventType.Keydown,  (e: React.SyntheticEvent) => this._asGlobalKeydown!.onGlobalKeydown(e));
         }
 
         if (this._asGlobalResize) {
-            DocumentEventsProvider.register(this.id, DocumentEventType.Resize, async (e: React.SyntheticEvent) => await this._asGlobalResize!.onGlobalResize(e));
+            DocumentEventsProvider.register(this.id, DocumentEventType.Resize,  (e: React.SyntheticEvent) => this._asGlobalResize!.onGlobalResize(e));
         }
     }
 
