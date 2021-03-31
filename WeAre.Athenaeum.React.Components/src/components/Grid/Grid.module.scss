@@ -115,7 +115,7 @@
     }
 
     td {
-        vertical-align: middle;
+        vertical-align: middle !important;
 
         &:first-of-type{
             min-width: 40px;
