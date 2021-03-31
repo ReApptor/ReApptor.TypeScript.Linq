@@ -3,12 +3,11 @@ import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClic
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-import logo from "./renta-logo.png"
-import TopNavLocalizer from "./TopNavLocalizer";
 import Icon, {IconSize, IconStyle} from "../Icon/Icon";
+import TopNavLocalizer from "./TopNavLocalizer";
 
+import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";
-
 
 export interface IMenuItem {
     route: PageRoute;

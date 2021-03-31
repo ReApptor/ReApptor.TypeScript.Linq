@@ -9,14 +9,15 @@ import Spinner from "../Spinner/Spinner";
 import styles from "./Layout.module.scss";
 
 export interface ILayoutProps {
-    fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
-    tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
-    fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
     topNavLogo?: any;
     topNavLogoText?: string;
     footerLinks?: IFooterLink[];
     footerLogo?: any;
     footerName?: string;
+    fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
+    tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
+    fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
+    onLogoClick?(sender: IBaseComponent): Promise<void>;
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
@@ -323,6 +324,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 fetchItems={this.props.fetchTopNavItems}
                                 logo={this.props.topNavLogo}
                                 logoText={this.props.topNavLogoText}
+                                onLogoClick={this.props.onLogoClick}
                         />
                     )
                 }
