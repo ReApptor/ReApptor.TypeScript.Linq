@@ -1,6 +1,6 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
 import PageDefinitions from "@/pages/PageDefinitions";
-import { IMenuItem } from "@weare/athenaeum-react-components";
+import {IGoogleApiSettings, IMenuItem} from "@weare/athenaeum-react-components";
 
 class TestApplicationController {
     private _applicationContext: ApplicationContext | null = null;
@@ -12,7 +12,6 @@ class TestApplicationController {
             this._initializing = true;
             try {
                 console.log("TestApplicationController.initializeAsync()");
-                //TODO: place for initialization
                 this._initialized = true;
             } finally {
                 this._initializing = false;
@@ -36,6 +35,10 @@ class TestApplicationController {
             this._applicationContext.country = "fi";
             this._applicationContext.applicationName = "WeAre.Athenaeum.TestApplication";
             this._applicationContext.currentPage = PageDefinitions.testsRoute;
+            this._applicationContext.settings = {
+                googleMapApiUrl: "https://maps.googleapis.com/maps/",
+                googleMapApiKey: "AIzaSyBVcbAv50jbB3VKK-16OJ8kxz7Jn6eT4oc"
+            } as IGoogleApiSettings;
         }
         this._applicationContext.applicationType = applicationType;
         this._applicationContext.timezoneOffset = timezoneOffset;
