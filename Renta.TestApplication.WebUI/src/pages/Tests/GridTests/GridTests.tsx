@@ -1,7 +1,7 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, TwoColumns} from "@weare/athenaeum-react-components";
+import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
@@ -21,6 +21,8 @@ class GridItem {
     public date: Date = new Date();
     
     public value: string = "";
+    
+    public address: string = "";
 }
 
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
@@ -82,7 +84,18 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             editable: true,
             type: ColumnType.Text,
             minWidth: 150
-        } as ColumnDefinition
+        } as ColumnDefinition,
+        {
+            header: "Address",
+            accessor: "address",
+            type: ColumnType.Address,
+            sorting: true,
+            noWrap: true,
+            minWidth: "20rem",
+            settings: {
+                locationPicker: true
+            }
+        } as ColumnDefinition,
     ];
 
     private get items(): GridItem[] {
@@ -116,26 +129,23 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return (
             <React.Fragment>
 
-                <TwoColumns>
+                <Form>
 
-                    <Form>
-
-                        <Checkbox label="BE pagination"
-                                  inline
-                                  value={this.state.bePagination}
-                                  onChange={async (sender, value) => await this.setState({ bePagination:value })}
-                        />
-
-                    </Form>
-
-                    <Grid ref={this._gridRef} pagination={10}
-                          columns={this._columns}
-                          hovering={GridHoveringType.Row}
-                          odd={GridOddType.Row}
-                          fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(sender, pageNumber, pageSize, sortColumnName, sortDirection)}
+                    <Checkbox label="BE pagination"
+                              inline
+                              value={this.state.bePagination}
+                              onChange={async (sender, value) => await this.setState({ bePagination:value })}
                     />
 
-                </TwoColumns>
+                </Form>
+
+                <Grid ref={this._gridRef} pagination={10}
+                      columns={this._columns}
+                      hovering={GridHoveringType.Row}
+                      odd={GridOddType.Row}
+                      fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(sender, pageNumber, pageSize, sortColumnName, sortDirection)}
+                />
+
 
             </React.Fragment>
         );

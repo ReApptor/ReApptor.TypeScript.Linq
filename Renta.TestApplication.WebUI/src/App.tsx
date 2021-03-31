@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
-import { Layout } from "@weare/athenaeum-react-components";
+import {AddressHelper, Layout} from "@weare/athenaeum-react-components";
 import TestApplicationController from "@/pages/TestApplicationController";
 
 class App extends BaseComponent {
@@ -17,7 +17,7 @@ class App extends BaseComponent {
 }
 
 //Register initialize events
-//ch.registerInitializeCallback(async () => await AddressHelper.loadGoogleLibraryAsync());
+ch.registerInitializeCallback(async () => await AddressHelper.loadGoogleLibraryAsync());
 ch.registerInitializeCallback(async () => await TestApplicationController.initializeAsync());
 //Register authorize events
 ch.registerAuthorizeCallback(async () => await UserInteractionDataStorage.onAuthorize());
