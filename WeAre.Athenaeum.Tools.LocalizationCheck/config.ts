@@ -1,45 +1,36 @@
 import { Configuration, TypescriptLocalizationPrefix } from "./src/types";
-//
-// const configuration: Configuration = {
-//     typescriptLocalizationPrefix: TypescriptLocalizationPrefix.COMPONENT_NAME,
-//     logSearchStrings: false,
-//     resources: ["../WeAre.Athenaeum.React.Components.Localization/resources/SharedResources.resx"],
-//     cSharpDirectories: [],
-//     typescriptComponentsDirectories: ["../WeAre.Athenaeum.React.Components/src/components"],
-//     prefixesToExclude: [],
-//     postfixesToExclude: []
-// };
 
 
 const configuration: Configuration = {
     typescriptLocalizationPrefix: TypescriptLocalizationPrefix.LOCALIZER,
-    logSearchStrings: false,
-    resources: ["../../renta-tools/Renta.Tools.WebUI.Resources/SharedResources.resx"],
-    cSharpDirectories: [
-        "../../renta-tools/Renta.Tools.WebUI",
-        "../../renta-tools/Renta.Tools.WebUI.Server"
+    logSearchStrings: true,
+    deleteOnFound: false,
+    resources: [
+        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.Athenaeum.TemplateApp.WebUI.Resources/SharedResources.resx"
     ],
-    typescriptComponentsDirectories: ["../../renta-tools/Renta.Tools.WebUI/src"],
+    cSharpDirectories: [
+        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.Athenaeum.TemplateApp.WebUI",
+        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.Athenaeum.TemplateApp.WebUI.Server"
+    ],
+    typescriptComponentsDirectories: ["/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.Athenaeum.TemplateApp.WebUI/src"],
     prefixesToExclude: [
+        "Month.",
+        "DayOfWeek.",
+        "Enum.AuthType",
         "Enum.WebApplicationType",
         "Enum.ReportDefinitionType",
-        "Enum.DeviceCounterType",
         "Enum.MaintenanceReason",
         "Enum.FaultLevel",
         "Enum.ReportItemType",
         "Enum.ResourceItemType",
         "Enum.LoginResultStatus",
         "Enum.UserRole",
-        "Enum.MeasuringOperators",
         "Enum.InvitationType",
         "Enum.AuditTimestamp",
-        "Enum.AuthType",
         "Enum.DeviceStatus",
         "Enum.SavePasswordResultStatus",
         "Enum.SortDirection",
-        "Enum.InvoiceStatusFilter",
-        "Month.",
-        "DayOfWeek."
+        "Enum.InvoiceStatusFilter"
     ],
     postfixesToExclude: [
         "Page.Title",

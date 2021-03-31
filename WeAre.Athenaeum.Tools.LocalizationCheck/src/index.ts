@@ -13,14 +13,11 @@ if (config.typescriptLocalizationPrefix === TypescriptLocalizationPrefix.COMPONE
 const { cSharpDirectories, typescriptDirectories } = EntryChecks.checkDirectories(config);
 const { resourcePaths } = EntryChecks.checkFiles(config);
 
-main({
+main(config, 
+    {
     resourcePaths,
     typescriptDirectories,
     cSharpDirectories,
-    localizationPrefix: config.typescriptLocalizationPrefix,
-    logSearchStrings: config.logSearchStrings,
-    prefixesToExclude: config.prefixesToExclude,
-    postfixesToExclude: config.postfixesToExclude,
 }).then();
 
 export { TypescriptLocalizationPrefix, Configuration };

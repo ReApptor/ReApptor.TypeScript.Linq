@@ -18,17 +18,28 @@ export default abstract class FsUtilities {
 
     public static listAllTsAndTsxFiles(directory: string, exclude?: string): string[] {
         const allFiles = FsUtilities.listAllNestedFiles(directory);
+        
         return allFiles.filter((x) => (x.endsWith(".ts") || x.endsWith(".tsx")) && !x.endsWith(".d.ts")).filter((x) => (exclude ? !x.endsWith(exclude) : x));
     }
 
     public static listAllCSharpFiles(directory: string, exclude?: string): string[] {
         const allFiles = FsUtilities.listAllNestedFiles(directory);
+        
         return allFiles.filter((x) => x.endsWith(".cs")).filter((x) => (exclude ? !x.endsWith(exclude) : x));
+    }
+    
+    public static listAllResourceCultures(resourceDirectory: string): string[] {
+        const resourceFilter = (x: string) => x.endsWith('.resx');
+        
+        const resourceDirectoryFiles = FsUtilities.readDirectory(resourceDirectory);
+
+        return  resourceDirectoryFiles.filter(resourceFilter)
     }
 
     public static isDirectory(directory: string) {
         return fs.lstatSync(directory).isDirectory();
     }
+    
     public static isFile(path: string) {
         return fs.lstatSync(path).isFile();
     }

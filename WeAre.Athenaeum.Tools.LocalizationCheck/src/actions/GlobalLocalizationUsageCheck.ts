@@ -1,20 +1,14 @@
 import fs from "fs";
-import { LogUtilities } from "../utilities/LogUtilities";
 import { StringUtilities } from "../utilities/StringUtilities";
-import { TypescriptLocalizationPrefix } from "../types";
+import {Configuration} from "../types";
 import FsUtilities from "../utilities/FsUtilities";
 
-export async function checkForUnUsedLocalizationsGlobally(input: {
+export async function checkForUnUsedLocalizationsGlobally(config: Configuration, input: {
+    resources: Map<string, string[]>[];
     typescriptDirectories: string[];
     cSharpDirectories: string[];
-    resources: Map<string, string[]>[];
-    localizationPrefix: TypescriptLocalizationPrefix;
-    logSearchStrings: boolean;
-    prefixesToExclude: string[];
-    postfixesToExclude: string[];
-}): Promise<string[]> {
-    const output: string[] = [];
-    const unUsedGlobalLocalizations: { key: string; searchString: string }[] = [];
+}): Promise<{ key: string; searchString: string[] }[]> {
+    const unUsedGlobalLocalizations: { key: string; searchString: string[] }[] = [];
 
     console.log("Listing files ...");
     const typeScriptFiles: string[] = [];
@@ -38,15 +32,22 @@ export async function checkForUnUsedLocalizationsGlobally(input: {
         return Array.from(resource.keys()).reduce((prev, curr) => {
             const key = curr;
             const values: string[] = resource.get(curr) as string[];
-            const stringsToSearch = values.map((x) => [key, x].join("."));
+            
+            const stringsToSearch = values.map((x) => {
+                if (x) {
+                    return [key, x].join(".");
+                }
+                return key;
+            });
+            
             return [...prev, ...stringsToSearch];
         }, [] as string[]);
     });
 
     localizationSet.map((localizations) => {
         localizations.map((localization) => {
-            const prefixExcluded = input.prefixesToExclude.find(x => localization.startsWith(x));
-            const postfixExcluded = input.postfixesToExclude.find(x => localization.endsWith(x));
+            const prefixExcluded = config.prefixesToExclude.find(x => localization.startsWith(x));
+            const postfixExcluded = config.postfixesToExclude.find(x => localization.endsWith(x));
             if (prefixExcluded || postfixExcluded) return;
 
             const tscGetterString = StringUtilities.createTypescriptGetterName(localization);
@@ -64,7 +65,7 @@ export async function checkForUnUsedLocalizationsGlobally(input: {
             if (!isUsed) {
                 unUsedGlobalLocalizations.push({
                     key: localization,
-                    searchString: `${tscGetterString} | ${tscConstantString} | ${cSharpConstantString}`,
+                    searchString: [tscGetterString, tscConstantString, cSharpConstantString],
                 });
             }
         });
@@ -83,14 +84,5 @@ export async function checkForUnUsedLocalizationsGlobally(input: {
     console.log("------");
     console.log(" ");
 
-    unUsedGlobalLocalizations.map((warnings) => {
-        const space = LogUtilities.logSpace(
-            unUsedGlobalLocalizations.map((x) => x.key),
-            warnings.key
-        );
-        const staticString = "";
-        output.push(`️"${warnings.key}"  ${space} ${staticString}  ${input.logSearchStrings ? "(" + warnings.searchString + ")" : ""}`);
-    });
-
-    return output;
+    return unUsedGlobalLocalizations;
 }
