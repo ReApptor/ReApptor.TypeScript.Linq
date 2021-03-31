@@ -207,7 +207,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                               value={cellValue || ""}
                               locationPicker={settings.locationPicker}    
                               append={settings.locationPicker}
-                              onChange={async (location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
+                              onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
                 />
             </div>
         );

@@ -1,9 +1,9 @@
 import React from 'react';
-import $ from "jquery";
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
+import DateInputLocalizer from "./DateInputLocalizer";
 
 import formStyles from "../Form/Form.module.scss";
 import styles from "./DateInput.module.scss";
@@ -15,7 +15,6 @@ import fi from "date-fns/locale/fi";
 import en from "date-fns/locale/en-GB";
 //import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
-import DateInputLocalizer from "./DateInputLocalizer";
 
 registerLocale("fi", fi);
 registerLocale("en", en);
