@@ -18,7 +18,8 @@ interface ILocationPickerModalProps {
     location?: GeoLocation;
     infoWindow?: boolean;
     readonly?: boolean;
-    onSubmit?(sender: IBaseComponent, location: GeoLocation): Promise<void>
+    onSubmit?(sender: IBaseComponent, location: GeoLocation): Promise<void>;
+    onClose?(sender: IBaseComponent): Promise<void>;
 }
 
 interface ILocationPickerModalState {
@@ -41,6 +42,12 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         
         if (this.modal) {
             await this.modal.closeAsync();
+        }
+    }
+
+    private async onCloseAsync(): Promise<void> {
+        if (this.props.onClose) {
+            await this.props.onClose(this);
         }
     }
 
@@ -85,6 +92,10 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         return (this.props.readonly == true);
     }
 
+    public get isOpen(): boolean {
+        return (this.modal != null) && (this.modal.isOpen);
+    }
+
     render(): React.ReactNode {
         return (
             <Modal id={this.id}
@@ -92,13 +103,14 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                    title={this.props.title || LocationPickerModalLocalizer.title}
                    subtitle={this.props.subtitle || LocationPickerModalLocalizer.subtitle}
                    className={styles.locationPickerModal}
+                   onClose={() => this.onCloseAsync()}
             >
                 <div className={styles.map}>
                     <LocationPicker ref={this._locationPickerRef} 
                                     location={this.location || undefined}
                                     infoWindow={this.props.infoWindow}
                                     readonly={this.readonly}
-                                    onChange={async (sender, location) => await this.onChangeAsync(location)}
+                                    onChange={(sender, location) => this.onChangeAsync(location)}
                     />
                 </div>
                 
@@ -120,7 +132,7 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                     {
                         (!this.readonly)
                             ? (<Button type={ButtonType.Orange} label={LocationPickerModalLocalizer.setLocation} onClick={async () => await this.onSubmitAsync()}/>)
-                            : <div/>
+                            : (<div/>)
                     }
                     
                 </ButtonContainer>

@@ -1,11 +1,11 @@
 import React from "react";
 import {GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-
-import styles from "./LocationPicker.module.scss";
 import Comparator from "../../helpers/Comparator";
 import AddressHelper from "../../helpers/AddressHelper";
 import AddressInput from "../AddressInput/AddressInput";
+
+import styles from "./LocationPicker.module.scss";
 
 interface ILocationPickerProps {
     id?: string;
@@ -187,9 +187,10 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
                 {
                     (!this.readonly) &&
                     (
-                        <AddressInput id={`AddressInput_within_location${this.id}`}
+                        <AddressInput id={`AddressInput_within_location_${this.id}`}
                                       value={this.state.searchLocation}
-                                      onChange={async (location: GeoLocation) => await this.onInputChange(location)} />
+                                      onChange={(location: GeoLocation) => this.onInputChange(location)}
+                        />
                     )
                 }
 
