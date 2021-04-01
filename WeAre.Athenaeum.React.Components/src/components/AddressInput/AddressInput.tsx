@@ -63,8 +63,13 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     private async invokeOnChangeAsync(): Promise<void> {
-        if (this.props.onChange && this.state.location) {
-            await this.props.onChange(this.state.location);
+        
+        if (this.state.location) {
+            await this.setEditAsync(false);
+
+            if (this.props.onChange) {
+                await this.props.onChange(this.state.location);
+            }
         }
     }
 

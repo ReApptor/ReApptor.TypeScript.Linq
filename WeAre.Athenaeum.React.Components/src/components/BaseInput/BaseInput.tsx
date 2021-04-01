@@ -469,6 +469,12 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         return (!this.state.validationError);
     }
     
+    public focus(): void {
+        if (this.inputElement) {
+            this.inputElement.focus();
+        }
+    }
+    
     public get noValidate(): boolean {
         return (!!this.props.noValidate || this.readonly);
     }

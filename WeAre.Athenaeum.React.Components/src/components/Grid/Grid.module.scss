@@ -391,7 +391,8 @@
                                 margin-left: 3px;
 
                                 span {
-                                    padding:0;
+                                    padding: 0;
+                                    line-height: 22px;
                                 }
 
                                 input {
@@ -570,6 +571,7 @@
             .textCell {
                 
                 .textContainer {
+                    
                     .addressInput {
                         > div {
                             > div {
@@ -577,7 +579,8 @@
                                 margin-left: 3px;
 
                                 span {
-                                    padding:0;
+                                    padding: 0;
+                                    line-height: 22px;
                                 }
 
                                 input {
@@ -588,6 +591,7 @@
                             }
                         }
                     }
+                    
                     .textInput {
                         > div {
                             > div {
@@ -959,6 +963,7 @@
                             padding:0;
                             height: auto;
                             min-height: 16px;
+                            line-height: 22px;
                         }
                     }
                 }
