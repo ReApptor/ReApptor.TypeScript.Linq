@@ -372,9 +372,9 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     protected async setEditAsync(edit: boolean): Promise<void> {
-        if (this.state.edit !== edit) {
+        if ((this.props.clickToEdit) && (this.state.edit !== edit)) {
 
-            await this.setState({ edit: edit });
+            await this.setState({edit: edit});
 
             if (edit) {
                 await this.onShowEditAsync();
