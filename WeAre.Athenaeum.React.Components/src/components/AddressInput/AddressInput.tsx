@@ -44,10 +44,15 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     private get locationPickerModal(): LocationPickerModal | null {
         return this._locationPickerModalRef.current;
     }
+    
+    private get locationPickerIsOpen(): boolean {
+        return (this.locationPickerModal != null) && (this.locationPickerModal.isOpen);
+    }
 
     private async openLocationPickerAsync(): Promise<void> {
         if (this.locationPickerModal) {
             await this.locationPickerModal.openAsync();
+            await this.reRenderAsync();
         }
     }
 
@@ -79,6 +84,10 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                 await this.setState({edit: false});
             }
         }
+    }
+    
+    private async onLocationCloseAsync(): Promise<void> {
+        await this.reRenderAsync();
     }
 
     private async onLocationSetAsync(location: GeoLocation): Promise<void> {
@@ -120,16 +129,15 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     public async onGlobalClick(e: React.SyntheticEvent<Element, Event>): Promise<void> {
-        
         if (this.props.clickToEdit) {
-            
+
             const targetNode = e.target as Node;
             let outside: boolean = Utility.clickedOutside(targetNode, this.id);
 
             if (this.props.locationPicker) {
                 outside = outside && Utility.clickedOutside(targetNode, this.locationPickerId);
             }
-            
+
             outside = outside && (!this.JQuery(targetNode).parents(".pac-container").length);
 
             if (outside) {
@@ -161,7 +169,9 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                                      id={this.locationPickerId}
                                      location={this.state.location || undefined}
                                      readonly={this.readonly}
-                                     onSubmit={async (sender, location) => await this.onLocationSetAsync(location)}/>
+                                     onClose={() => this.onLocationCloseAsync()}
+                                     onSubmit={(sender, location) => this.onLocationSetAsync(location)}
+                />
             )
         }
 
@@ -169,6 +179,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     public renderAppend(): React.ReactNode {
+        
         if (this.props.locationPicker && this.state.edit) {
             return (
                 <div className={"input-group-append cursor-pointer"} onClick={() => this.openLocationPickerAsync()}>
@@ -178,6 +189,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                 </div>
             )
         }
+        
         if (this.state.edit) {
             return super.renderAppend();
         }
@@ -186,20 +198,22 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
 
     public renderInput(): React.ReactNode {
         const smallStyle: any = (this.props.small) && textInputStyles.small;
-
         return (
             <React.Fragment>
-                
-                <Autocomplete key={`${this.getInputId()}_${this.state.generation}`}
-                              className={this.css(textInputStyles.textInput, "form-control", smallStyle)}
-                              onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
-                              onPlaceSelected={async (place: GoogleApiResult) => await this.onPlaceSelectedAsync(place)}
-                              types={["address"]}
-                              fields={["address_components", "formatted_address", "geometry"]}
-                              componentRestrictions={{country: ch.country}}
-                              defaultValue={this.defaultValue || undefined}
-                              readOnly={this.readonly}
-                />
+
+                {
+                    <Autocomplete key={`${this.getInputId()}_${this.state.generation}`}
+                                  className={this.css(textInputStyles.textInput, "form-control", smallStyle)}
+                                  onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
+                                  onPlaceSelected={async (place: GoogleApiResult) => await this.onPlaceSelectedAsync(place)}
+                                  types={["address"]}
+                                  fields={["address_components", "formatted_address", "geometry"]}
+                                  componentRestrictions={{country: ch.country}}
+                                  defaultValue={this.defaultValue || undefined}
+                                  disabled={this.locationPickerIsOpen}
+                                  readOnly={this.readonly}
+                    />
+                }
 
                 {this.renderLocationPicker()}
                 

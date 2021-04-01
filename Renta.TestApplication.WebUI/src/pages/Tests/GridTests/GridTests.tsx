@@ -101,7 +101,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     private get items(): GridItem[] {
         if (this._items == null) {
             this._items = [];
-            const count: number = 1;//100;
+            const count: number = 100;
             for (let i: number = 0; i < count; i++) {
                 const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, float: Math.random(), int: Math.round(100 * Math.random()), date: new Date(), value: Math.round(100 * Math.random()).toString() } as GridItem;
                 this._items.push(item);
