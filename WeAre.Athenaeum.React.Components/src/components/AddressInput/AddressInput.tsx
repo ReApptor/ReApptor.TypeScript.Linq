@@ -59,6 +59,8 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
         if (e.keyCode === 13) {
             e.preventDefault();
+        } else if (e.keyCode === 27) {
+            await this.setEditAsync(false);
         }
     }
 
