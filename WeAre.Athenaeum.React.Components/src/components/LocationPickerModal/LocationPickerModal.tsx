@@ -1,14 +1,14 @@
 import React from "react";
 import {GeoLocation} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
-
-import styles from "./LocationPickerModal.module.scss";
 import LocationPicker from "../LocationPicker/LocationPicker";
 import Modal from "../Modal/Modal";
-import LocationPickerModalLocalizer from "./LocationPickerModalLocalizer";
 import AddressHelper from "../../helpers/AddressHelper";
 import Button, { ButtonType } from "../Button/Button";
 import ButtonContainer from '../ButtonContainer/ButtonContainer';
+import LocationPickerModalLocalizer from "./LocationPickerModalLocalizer";
+
+import styles from "./LocationPickerModal.module.scss";
 
 interface ILocationPickerModalProps {
     id?: string;
@@ -19,6 +19,7 @@ interface ILocationPickerModalProps {
     infoWindow?: boolean;
     readonly?: boolean;
     onSubmit?(sender: IBaseComponent, location: GeoLocation): Promise<void>;
+    onOpen?(sender: IBaseComponent): Promise<void>;
     onClose?(sender: IBaseComponent): Promise<void>;
 }
 
@@ -42,6 +43,17 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         
         if (this.modal) {
             await this.modal.closeAsync();
+        }
+    }
+
+    private async onOpenAsync(): Promise<void> {
+        
+        if (this.locationPicker) {
+            this.locationPicker.focus();
+        }
+        
+        if (this.props.onOpen) {
+            await this.props.onOpen(this);
         }
     }
 
@@ -103,6 +115,7 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                    title={this.props.title || LocationPickerModalLocalizer.title}
                    subtitle={this.props.subtitle || LocationPickerModalLocalizer.subtitle}
                    className={styles.locationPickerModal}
+                   onOpen={() => this.onOpenAsync()}
                    onClose={() => this.onCloseAsync()}
             >
                 <div className={styles.map}>

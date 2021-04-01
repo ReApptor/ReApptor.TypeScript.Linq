@@ -28,6 +28,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
         searchLocation: this.props.location != null ? this.props.location.formattedAddress : ""
     };
     
+    private readonly _addressInputRef: React.RefObject<AddressInput> = React.createRef();
     private readonly _locationPickerRef: React.RefObject<HTMLDivElement> = React.createRef();
     
     private _googleMap: google.maps.Map | null = null;
@@ -38,12 +39,12 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
         return this._locationPickerRef.current!;
     }
     
+    private get addressInput(): AddressInput {
+        return this._addressInputRef.current!;
+    }
+    
     private get googleMap():google.maps.Map {
         return this._googleMap!;
-    }
-
-    public get location(): GeoLocation | null {
-        return this.state.location;
     }
 
     private get isValidLocation(): boolean {
@@ -57,12 +58,6 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
                     <span class="dms">${AddressHelper.toDMS(this.location)}</span>
                </div>
                `
-            : "";
-    }
-    
-    public get formattedAddress(): string {
-        return this.location 
-            ? this.location.formattedAddress
             : "";
     }
     
@@ -175,9 +170,23 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     public async componentDidMount(): Promise<void> {
         await this.initAsync();
     }
+    
+    public focus(): void {
+        this.addressInput.focus();
+    }
 
     public get readonly(): boolean {
         return (this.props.readonly == true);
+    }
+
+    public get location(): GeoLocation | null {
+        return this.state.location;
+    }
+
+    public get formattedAddress(): string {
+        return this.location
+            ? this.location.formattedAddress
+            : "";
     }
 
     public render(): React.ReactElement {
@@ -188,6 +197,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
                     (!this.readonly) &&
                     (
                         <AddressInput id={`AddressInput_within_location_${this.id}`}
+                                      ref={this._addressInputRef}
                                       value={this.state.searchLocation}
                                       onChange={(location: GeoLocation) => this.onInputChange(location)}
                         />
