@@ -863,22 +863,34 @@ namespace WeAre.Athenaeum.Toolkit
             return date;
         }
         
-        public static DateTime ToLocal(DateTime date, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
+        public static DateTime ToLocal(DateTime now, DateTime date, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
         {
             if ((defaultTimeZone != null) && (timezoneOffset != null))
             {
-                bool todayIsWinterTime = (!defaultTimeZone.IsDaylightSavingTime(DateTime.Now));
+                bool todayIsSummerTime = (defaultTimeZone.IsDaylightSavingTime(now));
+                bool todayIsWinterTime = (!todayIsSummerTime);
                 bool dayIsSummerTime = (defaultTimeZone.IsDaylightSavingTime(date));
-                bool compensateDaylightSavingTime = todayIsWinterTime && dayIsSummerTime;
-                if (compensateDaylightSavingTime)
+                bool dayIsWinterTime = (!dayIsSummerTime);
+                bool addDaylightSavingTimeCompensation = todayIsWinterTime && dayIsSummerTime;
+                bool removeDaylightSavingTimeCompensation = todayIsSummerTime && dayIsWinterTime;
+                if (addDaylightSavingTimeCompensation)
                 {
                     timezoneOffset += 60;
+                }
+                else if (removeDaylightSavingTimeCompensation)
+                {
+                    timezoneOffset -= 60;
                 }
                 
                 return ToLocal(date, timezoneOffset);
             }
 
             return date;
+        }
+        
+        public static DateTime ToLocal(DateTime date, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
+        {
+            return ToLocal(DateTime.Now, date, defaultTimeZone, timezoneOffset);
         }
 
         public static object ToLocal(object instance, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
