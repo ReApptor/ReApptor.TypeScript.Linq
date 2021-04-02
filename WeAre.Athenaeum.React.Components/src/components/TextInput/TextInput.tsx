@@ -103,9 +103,9 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
     }
 
     public renderInput(): React.ReactNode {
-        
+
         const smallStyle: any = (this.props.small) && styles.small;
-        
+
         const autoSuggestStyle: any = (this.autoSuggestItems.length) && styles.autoSuggest;
 
         const inlineStyles: React.CSSProperties = {};
@@ -113,37 +113,36 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
         if (this.props.width) {
             inlineStyles.width = this.props.width;
         }
-        
+
         return (
             <React.Fragment>
-                <input
-                    id={this.getInputId()}
-                    type={this.getType()}
-                    value={this.str}
-                    title={this.props.title}
-                    readOnly={this.readonly}
-                    onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
-                    onBlur={async () => await this.valueBlurHandlerAsync()}
-                    onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
-                    className={this.css(styles.textInput, "form-control", smallStyle, autoSuggestStyle)}
-                    style={inlineStyles}
-                    size={this.props.size || 10}
-                    maxLength={this.props.maxLength || 255}
-                    placeholder={TextInputLocalizer.get(this.props.placeholder)}
-                    autoFocus={this.props.autoFocus}
-                    autoComplete={(this.props.autoComplete === false) ? "off" : ""}
+                <input id={this.getInputId()}
+                       type={this.getType()}
+                       value={this.str}
+                       title={this.props.title}
+                       readOnly={this.readonly}
+                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
+                       onBlur={async () => await this.valueBlurHandlerAsync()}
+                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
+                       className={this.css(styles.textInput, "form-control", smallStyle, autoSuggestStyle)}
+                       style={inlineStyles}
+                       size={this.props.size || 10}
+                       maxLength={this.props.maxLength || 255}
+                       placeholder={TextInputLocalizer.get(this.props.placeholder)}
+                       autoFocus={this.props.autoFocus}
+                       autoComplete={(this.props.autoComplete === false) ? "off" : ""}
                 />
-                
+
                 {
                     (this.autoSuggestItems.length > 0) &&
                     (
                         <React.Fragment>
-                            <i id={this.toggleButtonId} className={this.css(styles.icon, "fa fa-caret-down")} onClick={async () => await this.toggleAutoSuggest()} />
+                            <i id={this.toggleButtonId} className={this.css(styles.icon, "fa fa-caret-down")} onClick={async () => await this.toggleAutoSuggest()}/>
 
                             <AutoSuggest ref={this._autoSuggestRef}
-                                         items={this.autoSuggestItems} 
+                                         items={this.autoSuggestItems}
                                          toggleButtonId={this.toggleButtonId}
-                                         onSelect={async (_, value) => await this.setValueFromAutoSuggest(value) } />
+                                         onSelect={async (_, value) => await this.setValueFromAutoSuggest(value)}/>
                         </React.Fragment>
                     )
                 }

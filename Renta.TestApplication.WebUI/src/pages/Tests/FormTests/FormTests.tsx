@@ -30,7 +30,7 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                     <ThreeColumns>
 
-                        <TextInput label={"Text input #1"}  />
+                        <TextInput label={"Text input #1 (NoAutoComplete)"} autoComplete={false} />
 
                         <TextInput label={"Text input #2"} required />
 
