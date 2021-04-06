@@ -13,6 +13,52 @@ export interface IGoogleApiSettings {
 export default class AddressHelper {
     
     private static _google: any = null;
+
+    private static toDegreesMinutesAndSeconds(coordinate: number): string {
+        const absolute = Math.abs(coordinate);
+        const degrees = Math.floor(absolute);
+        const minutesNotTruncated = (absolute - degrees) * 60;
+        const minutes = Math.floor(minutesNotTruncated);
+        const seconds = Math.floor((minutesNotTruncated - minutes) * 60);
+
+        return `${degrees}°${minutes}'${seconds}"`
+    }
+    
+    private static improveGoogleFormattedAddress(formattedAddress: string, address: string, streetNumber: string): string {
+        if ((formattedAddress) && (address) && (streetNumber)) {
+            const parts: string[] = formattedAddress
+                .split(",")
+                .map(item => item.trim());
+
+            if (parts.length == 4) {
+                const fullAddress = `${address} ${streetNumber}`;
+
+                if ((parts[0] !== fullAddress) && (parts[1] == fullAddress)) {
+                    // for example: "Koronakatu 1 C, Koronakatu 1, 02210 Espoo, Finland" to "Koronakatu 1, 02210 Espoo, Finland"
+                    const index = formattedAddress.indexOf(",") + 1;
+                    formattedAddress = formattedAddress.substr(index).trim();
+                }
+            }
+        }
+
+        return formattedAddress;
+    }
+
+    private static getFormattedAddress(googleFormattedAddress: string, lat: number, lon: number): string {
+        return ((googleFormattedAddress) && (lat > 0) && (lon > 0))
+            ? `${googleFormattedAddress}, #${lat}, ${lon}`
+            : googleFormattedAddress;
+    }
+
+    private static get googleApiUrl(): string {
+        const context: ApplicationContext = ch.getContext();
+        const settings = context.settings as IGoogleApiSettings;
+
+        if ((!settings.googleMapApiKey) || (!settings.googleMapApiUrl))
+            throw new Error("Application context doesn't provide Google API settings: \"googleMapApiKey\" or \"googleMapApiUrl\" are empty.");
+
+        return `${settings.googleMapApiUrl}api/js?key=${settings.googleMapApiKey}&libraries=places`;
+    }
     
     public static async loadGoogleLibraryAsync(): Promise<void> {
         if (this.isGoogleApiRegistered) {
@@ -40,26 +86,6 @@ export default class AddressHelper {
 
             window.document.body.appendChild(googleMapScript);
         });
-    }
-
-    private static get googleApiUrl(): string {
-        const context: ApplicationContext = ch.getContext();
-        const settings = context.settings as IGoogleApiSettings;
-        
-        if ((!settings.googleMapApiKey) || (!settings.googleMapApiUrl))
-            throw new Error("Application context doesn't provide Google API settings: \"googleMapApiKey\" or \"googleMapApiUrl\" are empty.");
-        
-        return `${settings.googleMapApiUrl}api/js?key=${settings.googleMapApiKey}&libraries=places`;
-    }
-
-    private static toDegreesMinutesAndSeconds(coordinate: number): string {
-        const absolute = Math.abs(coordinate);
-        const degrees = Math.floor(absolute);
-        const minutesNotTruncated = (absolute - degrees) * 60;
-        const minutes = Math.floor(minutesNotTruncated);
-        const seconds = Math.floor((minutesNotTruncated - minutes) * 60);
-
-        return `${degrees}°${minutes}'${seconds}"`
     }
 
     public static get isGoogleApiRegistered(): boolean {
@@ -133,13 +159,6 @@ export default class AddressHelper {
         return 0;
     }
 
-    public static getFormattedAddress(place: GoogleApiResult, lat: number, lon: number): string {
-        const address: string = place.formatted_address || "";
-        return ((address) && (lat > 0) && (lon > 0))
-            ? `${address}, #${lat}, ${lon}`
-            : address;
-    }
-
     public static findAddressComponent(place: GoogleApiResult, name: string): string {
         if (place.address_components) {
             const component: google.maps.GeocoderAddressComponent | undefined = place.address_components.find(component => (component.types != null) && (component.types.some(type => type === name)));
@@ -166,18 +185,52 @@ export default class AddressHelper {
             countryCode = countryCode.trim().toLowerCase();
 
             switch (countryCode) {
+                //"fi", "Suomi", "Finland", "fi-fi"
                 case "fi":
+                case "fi-fi":
                 case "suomi":
                 case "finland":
                     return "Suomi";
+                //"se", "Svenska", "Sweden", "sv-se", "sv"
                 case "se":
+                case "sv":
+                case "sv-se":
                 case "sweden":
                 case "svenska":
                     return "Svenska";
+                //"no", "Norge", "Norway", "nb-no", "nb", "nor"
                 case "no":
+                case "nb":
+                case "nb-no":
                 case "norway":
                 case "norge":
                     return "Norge";
+                //"dk", "Danmark", "Denmark", "da-dk", "da"
+                case "dk":
+                case "da":
+                case "da-dk":
+                case "denmark":
+                case "danmark":
+                    return "Danmark";
+                //"pl", "Polska", "Poland", "pl-pl"
+                case "pl":
+                case "pl-pl":
+                case "poland":
+                case "polska":
+                    return "Polska";
+                //"ru", "Россия", "Russia", "ru-ru"
+                case "ru":
+                case "ru-ru":
+                case "russia":
+                case "россия":
+                    return "Россия";
+                //"ua", "Україна", "Ukraine", "uk-ua", "uk"
+                case "ua":
+                case "uk":
+                case "uk-ua":
+                case "ukraine":
+                case "україна":
+                    return "Україна";
             }
         }
 
@@ -189,7 +242,7 @@ export default class AddressHelper {
         if (index > 0) {
             let items: string[] = formattedAddress.split("#");
             
-            if (items.length > 1 && items[1]) {
+            if ((items.length > 1) && (items[1])) {
                 items = items[1].split(",");
                 
                 if (items.length > 1 && items[0] && items[1]) {
@@ -300,13 +353,13 @@ export default class AddressHelper {
         const lon: number = this.findLon(result);
 
         const address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
-
-        const formattedAddress: string = this.getFormattedAddress(result, lat, lon);
         const country: string = this.findAddressComponent(result, "country");
         const town: string = this.findAddressComponent(result, "locality");
         const postalCode: string = this.findAddressComponent(result, "postal_code");
-        const streetNumber: any = this.findAddressComponent(result, "street_number");
-
+        const streetNumber: string = this.findAddressComponent(result, "street_number");
+        const googleFormattedAddress: string = this.improveGoogleFormattedAddress(result.formatted_address || "", address, streetNumber);
+        const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat, lon);
+        
         const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat > 0) && (lon > 0);
 
         const geoLocation: GeoLocation = new GeoLocation();
