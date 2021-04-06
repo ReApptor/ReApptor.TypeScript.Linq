@@ -839,7 +839,7 @@ export default class Utility {
         return null;
     }
 
-    public static setValueByAccessor(instance: any, accessor: string, value: any): void {
+    public static setValueByAccessor(instance: any, accessor: string, value: any) {
         const tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
         if (tuple) {
             instance = tuple[0];
@@ -931,7 +931,9 @@ export default class Utility {
             from.keys().forEach((key: string) => {
                 const value: any = from.getValue(key);
                 to.forEach(instance => {
-                    Utility.setValueByAccessor(instance, key, value);
+                    if ((instance != null) && (instance.hasOwnProperty(key))) {
+                        instance[key] = value;
+                    }
                 });
             });
             return;
@@ -943,7 +945,9 @@ export default class Utility {
             if (copy.hasOwnProperty(key)) {
                 const value: any = from[key];
                 to.forEach(instance => {
-                    Utility.setValueByAccessor(instance, key, value);
+                    if ((instance != null) && (instance.hasOwnProperty(key))) {
+                        instance[key] = value;
+                    }
                 });
             }
         }
