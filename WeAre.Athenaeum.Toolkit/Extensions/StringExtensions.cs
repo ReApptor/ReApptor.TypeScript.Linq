@@ -145,6 +145,16 @@ namespace WeAre.Athenaeum.Toolkit.Extensions
             return Utility.TryToDouble(value, out result);
         }
 
+        public static decimal ToDecimal(this string value)
+        {
+            return Utility.ToDecimal(value);
+        }
+
+        public static bool TryTToDecimal(string value, out decimal result)
+        {
+            return Utility.TryToDecimal(value, out result);
+        }
+
         #endregion
     }
 }

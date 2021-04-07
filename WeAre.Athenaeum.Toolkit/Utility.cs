@@ -25,6 +25,21 @@ namespace WeAre.Athenaeum.Toolkit
         private static readonly SortedList<string, List<KeyValuePair<Assembly, Guid>>> AssembliesIdentifiers = new SortedList<string, List<KeyValuePair<Assembly, Guid>>>();
         private static readonly SortedList<Guid, byte[]> CacheAssemblyContentHash = new SortedList<Guid, byte[]>();
 
+        private static string NormalizeFloat(string value)
+        {
+            value ??= string.Empty;
+            
+            string separator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+            value = value
+                .Trim()
+                .Replace(" ", string.Empty)
+                .Replace(".", separator)
+                .Replace(",", separator);
+
+            return value;
+        }
+
         private static object ToLocal(PropertyInfo instanceProperty, object instance, TimeZoneInfo defaultTimeZone, int? timezoneOffset = null)
         {
             if (instance != null)
@@ -1079,6 +1094,10 @@ namespace WeAre.Athenaeum.Toolkit
 
             return value;
         }
+        
+        #endregion
+        
+        #region Parse
 
         public static double ToDouble(string value)
         {
@@ -1088,31 +1107,55 @@ namespace WeAre.Athenaeum.Toolkit
             }
             catch (Exception)
             {
-                if (!string.IsNullOrWhiteSpace(value))
+                value = NormalizeFloat(value);
+                
+                if (double.TryParse(value, out double parsed))
                 {
-                    string separator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-
-                    value = value
-                        .Trim()
-                        .Replace(" ", string.Empty)
-                        .Replace(".", separator)
-                        .Replace(",", separator);
-
-                    if (double.TryParse(value, out double parsed))
-                    {
-                        return parsed;
-                    }
+                    return parsed;
                 }
 
                 throw;
             }
         }
 
-        public static Boolean TryToDouble(string value, out double result)
+        public static bool TryToDouble(string value, out double result)
         {
             try
             {
                 result = value.ToDouble();
+                return true;
+            }
+            catch (Exception)
+            {
+                result = 0;
+                return false;
+            }
+        }
+
+        public static decimal ToDecimal(string value)
+        {
+            try
+            {
+                return decimal.Parse(value);
+            }
+            catch (Exception)
+            {
+                value = NormalizeFloat(value);
+
+                if (decimal.TryParse(value, out decimal parsed))
+                {
+                    return parsed;
+                }
+
+                throw;
+            }
+        }
+
+        public static bool TryToDecimal(string value, out decimal result)
+        {
+            try
+            {
+                result = value.ToDecimal();
                 return true;
             }
             catch (Exception)

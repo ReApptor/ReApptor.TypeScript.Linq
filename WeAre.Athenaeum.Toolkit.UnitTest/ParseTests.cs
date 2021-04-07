@@ -5,7 +5,7 @@ using Xunit;
 
 namespace WeAre.Athenaeum.Toolkit.UnitTest
 {
-    public sealed class DoubleParseTests
+    public sealed class ParseTests
     {
         private void Init()
         {
@@ -53,6 +53,20 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest
         {
             Init();
             Assert.Equal(1, "1,".ToDouble());
+        }
+        
+        [Fact]
+        public void IntDotSeparatorParseDecimalTest()
+        {
+            Init();
+            Assert.Equal(1, "1.".ToDecimal());
+        }
+        
+        [Fact]
+        public void IntCommaSeparatorParseDecimalTest()
+        {
+            Init();
+            Assert.Equal(1, "1,".ToDecimal());
         }
     }
 }
