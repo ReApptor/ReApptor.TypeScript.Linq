@@ -58,7 +58,12 @@ export interface IButtonProps {
     disabled?: boolean;
     style?: React.CSSProperties;
     confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
+    /**
+     * The button will aligned to the right in the ButtonContainer
+     */
+    right?: boolean;
     children?: React.ReactNode | React.ReactNode[];
+
     onClick?(sender: Button, data: string | null): Promise<void>;
 }
 

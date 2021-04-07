@@ -23,21 +23,28 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
 
     private get left(): React.ReactElement[] {
         const buttons: React.ReactElement[] = this.buttons;
-        return (buttons.length > 1)
-            ? buttons.slice(0, buttons.length - 1)
-            : [];
+        const leftButtons: React.ReactElement[] = this.buttons.filter(item => item.props.button !== true);
+        return (leftButtons.length != buttons.length)
+            ? leftButtons
+            : (buttons.length > 1)
+                ? buttons.slice(0, buttons.length - 1)
+                : [];
     }
 
     private get right(): React.ReactElement[] {
         const buttons: React.ReactElement[] = this.buttons;
-        return (buttons.length > 1)
-            ? buttons.slice(buttons.length - 1)
-            : buttons;
+        const rightButtons: React.ReactElement[] = this.buttons.filter(item => item.props.button === true);
+        return (rightButtons.length > 0)
+            ? (rightButtons)
+            : (buttons.length > 1)
+                ? buttons.slice(buttons.length - 1)
+                : buttons;
     }
     
     public render(): React.ReactNode {
         return (
             <div className={this.css(styles.buttonContainer, this.props.className)}>
+                
                 <div className={this.css(styles.left, "col-md-6")}>
                     {this.left}
                 </div>
@@ -45,6 +52,7 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
                 <div className={this.css(styles.right, "col-md-6")}>
                     {this.right}
                 </div>
+                
             </div>
         )
     }
