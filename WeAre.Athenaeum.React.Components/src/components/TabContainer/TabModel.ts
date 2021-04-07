@@ -22,7 +22,7 @@ export interface ITabContainerDefinition {
     id?: string;
     className?: string;
     scale?: boolean;
-    dataStorageType?: any;
+    dataStorageType?: DataStorageType;
     renderType?: TabRenderType;
     onClose?(tab: TabModel): Promise<void>;
     onSelect?(tab: TabModel): Promise<void>;
