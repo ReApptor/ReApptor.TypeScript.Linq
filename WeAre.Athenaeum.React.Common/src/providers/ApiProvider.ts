@@ -84,7 +84,8 @@ export default class ApiProvider {
 
             const apiResponse: any | null = await this.processServerResponseAsync(httpResponse);
 
-            const dataResponse: TResponse = ((apiResponse != null) ? apiResponse : {}) as TResponse;
+            //const dataResponse: TResponse = ((apiResponse != null) ? apiResponse : {}) as TResponse;
+            const dataResponse: TResponse = apiResponse as TResponse;
 
             return dataResponse;
         } catch (e) {
