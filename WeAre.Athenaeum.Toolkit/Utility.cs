@@ -1108,6 +1108,20 @@ namespace WeAre.Athenaeum.Toolkit
             }
         }
 
+        public static Boolean TryToDouble(string value, out double result)
+        {
+            try
+            {
+                result = value.ToDouble();
+                return true;
+            }
+            catch (Exception)
+            {
+                result = 0;
+                return false;
+            }
+        }
+
         #endregion
     }
 }

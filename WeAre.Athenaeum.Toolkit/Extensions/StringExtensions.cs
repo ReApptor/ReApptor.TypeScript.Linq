@@ -139,7 +139,12 @@ namespace WeAre.Athenaeum.Toolkit.Extensions
         {
             return Utility.ToDouble(value);
         }
-        
+
+        public static bool TryToDouble(string value, out double result)
+        {
+            return Utility.TryToDouble(value, out result);
+        }
+
         #endregion
     }
 }
