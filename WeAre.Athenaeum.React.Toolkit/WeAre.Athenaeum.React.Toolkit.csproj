@@ -51,6 +51,7 @@
       <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.test.ts" />
       <TypeScriptCompile Include="src\tests\StringConverter.toString.test.ts" />
       <TypeScriptCompile Include="src\tests\TypeResolver.resove.test.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.copyTo.test.ts" />
       <TypeScriptCompile Include="src\tests\Utility.format.test.ts" />
       <TypeScriptCompile Include="src\tests\Utility.test.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
