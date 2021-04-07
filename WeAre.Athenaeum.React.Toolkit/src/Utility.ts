@@ -929,10 +929,8 @@ export default class Utility {
 
         if (from instanceof Dictionary) {
             from.keys().forEach((key: string) => {
-                const value: any = Utility.findValueByAccessor(from, key);
-                if (value !== undefined) {
-                    to.forEach(instance => Utility.setValueByAccessor(instance, key, value));
-                }
+                const value: any = from.getValue(key);
+                to.forEach(instance => Utility.setValueByAccessor(instance, key, value));
             });
             return;
         }
