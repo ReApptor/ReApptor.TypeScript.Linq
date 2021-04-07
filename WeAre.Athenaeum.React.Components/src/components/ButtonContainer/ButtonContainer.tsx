@@ -23,7 +23,8 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
 
     private get left(): React.ReactElement[] {
         const buttons: React.ReactElement[] = this.buttons;
-        const leftButtons: React.ReactElement[] = this.buttons.filter(item => item.props.button !== true);
+        const leftButtons: React.ReactElement[] = this.buttons.filter(item => item.props.right !== true);
+        console.log(leftButtons);
         return (leftButtons.length != buttons.length)
             ? leftButtons
             : (buttons.length > 1)
@@ -33,7 +34,8 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
 
     private get right(): React.ReactElement[] {
         const buttons: React.ReactElement[] = this.buttons;
-        const rightButtons: React.ReactElement[] = this.buttons.filter(item => item.props.button === true);
+        const rightButtons: React.ReactElement[] = this.buttons.filter(item => item.props.right === true);
+        console.log(rightButtons);
         return (rightButtons.length > 0)
             ? (rightButtons)
             : (buttons.length > 1)

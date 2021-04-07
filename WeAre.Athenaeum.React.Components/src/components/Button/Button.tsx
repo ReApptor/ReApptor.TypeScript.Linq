@@ -3,11 +3,10 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IChildrenProps, IGlobalClick, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
-
-import styles from "./Button.module.scss";
-import { IPageHeaderProps } from "../PageContainer/PageHeader/PageHeader";
 import ButtonAction, { IButtonActionProps } from "./ButtonAction/ButtonAction";
 import ButtonLocalizer from "./ButtonLocalizer";
+
+import styles from "./Button.module.scss";
 
 export enum ButtonType {
     Default,
@@ -80,7 +79,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
 
     public static get Action(): (props: IButtonActionProps & IChildrenProps) => React.ReactElement {
-        return (props: IPageHeaderProps & IChildrenProps) => <ButtonAction {...props as IButtonActionProps} />;
+        return (props: IButtonActionProps & IChildrenProps) => <ButtonAction {...props as IButtonActionProps} />;
     }
 
     public isButton(): boolean { return true; }

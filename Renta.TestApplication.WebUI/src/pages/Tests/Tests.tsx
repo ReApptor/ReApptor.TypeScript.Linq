@@ -13,6 +13,7 @@ import ListTests from "@/pages/Tests/ListTests/ListTests";
 import ModalTests from "@/pages/Tests/ModalTests/ModalTests";
 import GridTests from "@/pages/Tests/GridTests/GridTests";
 import FormTests from "@/pages/Tests/FormTests/FormTests";
+import ButtonContainerTests from "@/pages/Tests/ButtonContainerTests/ButtonContainerTests";
 import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
 
 export default class Tests extends AnonymousPage {
@@ -32,6 +33,10 @@ export default class Tests extends AnonymousPage {
                     
                         <Tab id="buttonTests" title="Button">
                             <ButtonTests />
+                        </Tab>
+                    
+                        <Tab id="buttonContainerTests" title="Button Container">
+                            <ButtonContainerTests />
                         </Tab>
                         
                         <Tab id="alertTests" title="Alerts">
