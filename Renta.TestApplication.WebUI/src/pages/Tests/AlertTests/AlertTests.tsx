@@ -1,6 +1,7 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Button, Checkbox, Icon, IconSize, InlineType} from "@weare/athenaeum-react-components";
+import {Utility} from "@weare/athenaeum-toolkit";
 
 export default class AlertTests extends BaseComponent {
     
@@ -12,6 +13,13 @@ export default class AlertTests extends BaseComponent {
         } else {
             await ch.alertMessageAsync("NO", this._autoClose);
         }
+    }
+    
+    private async onSubmitAsync(delay: boolean): Promise<void> {
+        if (delay) {
+            await Utility.wait(5000);
+        }
+        await ch.alertMessageAsync("YES");
     }
 
     public render(): React.ReactNode {
@@ -34,7 +42,7 @@ export default class AlertTests extends BaseComponent {
                 </div>
 
                 <div className="p-2">
-                    <Button label="Button with comment" confirm={{ title: "Are you sure?", comment: true }} onClick={async () => await ch.alertMessageAsync("YES")} />
+                    <Button label="Button with comment and delay" confirm={{ title: "Are you sure?", comment: true }} onClick={async () => this.onSubmitAsync(true)} />
                 </div>
 
                 <div className="p-2">

@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
 import Button, { ButtonType } from "../Button/Button";
+import TextAreaInput from "../TextAreaInput/TextAreaInput";
 import ConfirmationDialogLocalizer from "./ConfirmationDialogLocalizer";
 
 import styles from "./ConfirmationDialog.module.scss";
-import TextAreaInput from "../TextAreaInput/TextAreaInput";
 
 export type ConfirmationDialogTitleCallback = () => string | IConfirmation;
 
@@ -27,16 +27,17 @@ interface IConfirmationDialogProps {
 interface IConfirmationDialogState {
     isOpened: boolean;
     comment: string;
+    processing: boolean;
 }
 
 export default class ConfirmationDialog extends BaseComponent<IConfirmationDialogProps, IConfirmationDialogState> implements IGlobalClick, IGlobalKeydown {
 
     private _model: IConfirmation | null = null;
-    private _processing: boolean = false;
     
     state: IConfirmationDialogState = {
         isOpened: false,
-        comment: ""
+        comment: "",
+        processing: false
     };
 
     private readonly _commentRef: React.RefObject<TextAreaInput> = React.createRef();
@@ -86,13 +87,23 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         return ((!this.hasComment) || (this.state.comment.length > this.minLength));
     }
 
+    private get processing(): boolean {
+        return this.state.processing;
+    }
+
     private async setCommentAsync(comment: string): Promise<void> {
         await this.setState({ comment });
     }
 
     private async setDialogAsync(isOpened: boolean): Promise<void> {
         if (this.isMounted) {
-            await this.setState({isOpened});
+            await this.setState({ isOpened });
+        }
+    }
+
+    private async setProcessingAsync(processing: boolean): Promise<void> {
+        if (this.isMounted) {
+            await this.setState({ processing });
         }
     }
 
@@ -100,17 +111,24 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
         if (confirm) {
             if (this.props.callback) {
-                if (!this._processing) {
+                if (!this.processing) {
                     try {
-                        this._processing = true;
+                        await this.setProcessingAsync(true);
                         await this.props.callback(this, this.state.comment);
                     } finally {
-                        this._processing = false;
+                        await this.setProcessingAsync(false);
                     }
                 }
             }
         } else if (this.props.onDecline) {
-            await this.props.onDecline(this);
+            if (!this.processing) {
+                try {
+                    await this.setProcessingAsync(true);
+                    await this.props.onDecline(this);
+                } finally {
+                    await this.setProcessingAsync(false);
+                }
+            }
         }
 
         if (this._resolver) {
@@ -181,7 +199,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
     private renderDialog(): React.ReactNode {
         return (
-            <div id={this.id} className={this.css(styles.confirmDialog, this.state.isOpened && styles.opened)}>
+            <div id={this.id} className={this.css(styles.confirmDialog, this.state.isOpened && styles.opened, this.processing && styles.processing)}>
 
                 <div className={styles.dialogOverlay} />
 
@@ -198,13 +216,25 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                                            placeholder={this.model.placeholder || ConfirmationDialogLocalizer.comment}
                                            className={styles.commentInput}
                                            value={this.state.comment}
+                                           readonly={this.processing}
                                            onChange={async (sender, value) => await this.setCommentAsync(value)}
                             />
                         )
                     }
 
-                    <Button label={ConfirmationDialogLocalizer.confirmButton} block type={ButtonType.Orange} onClick={() => this.invokeCloseAsync(true)} disabled={!this.canConfirm} />
-                    <Button label={ConfirmationDialogLocalizer.closeButton} block type={ButtonType.Default} onClick={() => this.invokeCloseAsync()} />
+                    <Button block
+                            label={ConfirmationDialogLocalizer.confirmButton}
+                            type={ButtonType.Orange}
+                            disabled={this.processing || !this.canConfirm}
+                            onClick={() => this.invokeCloseAsync(true)}
+                    />
+                            
+                    <Button block
+                            label={ConfirmationDialogLocalizer.closeButton}
+                            type={ButtonType.Default}
+                            disabled={this.processing}
+                            onClick={() => this.invokeCloseAsync()}
+                    />
 
                 </div>
 
