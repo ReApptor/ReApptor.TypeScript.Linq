@@ -202,7 +202,7 @@ export default class Icon extends BaseComponent<IIconProps> {
         }
     }
     
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
                 <i id={this.id}
