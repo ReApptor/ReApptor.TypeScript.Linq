@@ -682,9 +682,14 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             : (typeof this.props.prepend === "boolean")
                 ? ""
                 : this.props.prepend;
+        const icon: boolean = (typeof prepend === "string") && ((prepend.startsWith("fa ") || prepend.endsWith(" fa") || (prepend.includes(" fa "))));
         return (
             <div className="input-group-prepend">
-                <span className={this.css("input-group-text", styles.prepend)}>{prepend}</span>
+                {
+                    (icon)
+                        ? (<i className={prepend as string} />) 
+                        : (<span className={this.css("input-group-text", styles.prepend)}>{prepend}</span>)
+                }
             </div>
         );
     }
@@ -695,6 +700,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             : (typeof this.props.append === "boolean")
                 ? ""
                 : this.props.append;
+        const icon: boolean = (typeof append === "string") && ((append.startsWith("fa ") || append.endsWith(" fa") || (append.includes(" fa "))));
         return (
             <div className="input-group-append">
                 <span className={this.css("input-group-text", styles.append)}>{append}</span>
