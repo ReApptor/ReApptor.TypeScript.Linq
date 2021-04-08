@@ -703,7 +703,11 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const icon: boolean = (typeof append === "string") && ((append.startsWith("fa ") || append.endsWith(" fa") || (append.includes(" fa "))));
         return (
             <div className="input-group-append">
-                <span className={this.css("input-group-text", styles.append)}>{append}</span>
+                {
+                    (icon)
+                        ? (<i className={append as string}/>)
+                        : (<span className={this.css("input-group-text", styles.append)}>{append}</span>)
+                }
             </div>
         );
     }
