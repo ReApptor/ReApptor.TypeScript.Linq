@@ -55,7 +55,7 @@ export default {
                         .replace(/[\s_]+/g, "-")
                         .toLowerCase();
                     
-                    return `athenaeum-${kebabCaseClassName}-${name}`;
+                    return `____athenaeum-${kebabCaseClassName}-${name}`;
                 },
             },
             extract: false
