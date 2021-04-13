@@ -6,9 +6,6 @@
     white-space: nowrap;
     position: relative;
 
-    &:not(:global(.btn-warning)):not(:global(.btn-light)):not(:global(.btn-link)):not(.text) {
-        color: white;
-    }
 
     &:focus {
         box-shadow: none !important;
