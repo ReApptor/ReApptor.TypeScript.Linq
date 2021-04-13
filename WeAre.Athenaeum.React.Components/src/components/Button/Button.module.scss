@@ -47,18 +47,18 @@
     }
 
     &.color_grey {
-        background-color: white !important;
-        color: $text-black !important;
+        background-color: white;
+        color: $text-black;
     }
 
     &.color_orange {
-        background-color: $orange !important;
-        color: white !important;
+        background-color: $orange;
+        color: white;
     }
 
     &.color_unset {
-        color: #000000 !important;
-        background-color: #8c8c8c !important;
+        color: #000000;
+        background-color: #8c8c8c;
         border-color: black;
     }
     
