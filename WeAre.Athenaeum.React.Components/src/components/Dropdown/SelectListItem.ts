@@ -197,6 +197,13 @@ export class SelectListItem implements ISelectListItem {
 
 export class StatusListItem extends SelectListItem {
 
+    constructor(lineThrough: boolean = false, completed: boolean = false, value: string | null = null, text: string | null = null, subtext: string | null = null, ref: any = null) {
+        super(value, text, subtext, ref);
+        
+        this.lineThrough = lineThrough;
+        this.completed = completed;
+    }
+
     public completed: boolean = false;
 
     public lineThrough: boolean = false;
