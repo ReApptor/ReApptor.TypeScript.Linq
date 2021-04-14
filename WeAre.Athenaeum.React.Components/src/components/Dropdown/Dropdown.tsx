@@ -3,7 +3,7 @@ import {ISelectListItem, ITransformProvider, ITypeConverter, TTypeConverter, Uti
 import { IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign, BaseInputType } from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
-import {SelectListGroup, SelectListItem, SelectListSeparator} from "./SelectListItem";
+import {SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
 import Button, { ButtonType } from "../Button/Button";
@@ -243,8 +243,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const subtext: string | null = Utility.findStringValueByAccessor(item, ["subtext", "description"]);
         const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
         const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
+        const deleted: any | null = Utility.findValueByAccessor(item, ["delete", "isDeleted"]);
         
-        const selectListItem = new SelectListItem();
+        const selectListItem = (deleted == true) 
+            ? new StatusListItem(true, true)
+            : new SelectListItem();
 
         selectListItem.value = (value)
             ? value
