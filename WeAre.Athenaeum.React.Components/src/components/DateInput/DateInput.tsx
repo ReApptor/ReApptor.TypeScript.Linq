@@ -38,6 +38,8 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     small?: boolean;
     readonly?: boolean;
     customInput?: RenderCallback;
+    showTime?: boolean;
+    showOnlyTime?: boolean;
     onChange?(date: Date): Promise<void>;
 }
 
@@ -81,13 +83,22 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     }
 
     protected get format(): TFormat {
-        const format: string = (this.props.showMonthYearPicker)
+        let format: string = (this.props.showMonthYearPicker)
             ? (this.props.shortDate)
                 ? "MM.yy"
                 : "MM.yyyy"
             : (this.props.shortDate)
                 ? "dd.MM.yy"
                 : "dd.MM.yyyy";
+
+        if (this.props.showTime) {
+            format = "dd.MM.yyyy H:mm";
+        }
+
+        if (this.props.showOnlyTime) {
+            format = "H:mm";
+        }
+
         return this.props.format || format;
     }
     
@@ -145,6 +156,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                     locale={DateInputLocalizer.language}
                     readOnly={this.readonly}
                     customInput={this.renderCustomInput()}
+                    showTimeSelect={this.props.showTime}
+                    showTimeSelectOnly={this.props.showOnlyTime}
                 />
             </div>
         );
