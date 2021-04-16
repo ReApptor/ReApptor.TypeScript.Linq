@@ -114,6 +114,7 @@ import TopNav, { IMenuItem, ITopNavProps } from "./components/TopNav/TopNav";
 import Hamburger from "./components/TopNav/Hamburger/Hamburger";
 import LanguageDropdown from "./components/TopNav/LanguageDropdown/LanguageDropdown";
 import WidgetContainer, { IWidgetContainerProps } from "./components/WidgetContainer/WidgetContainer";
+import BaseWidgetContainer, { IBaseWidgetContainerProps, IBaseWidgetContainerState, IWidgetContainer } from "./components/WidgetContainer/BaseWidgetContainer";
 import DropdownWidget from "./components/DropdownWidget/DropdownWidget";
 import SwitchNullable from "./components/SwitchNullable/SwitchNullable";
 import TimeWidget, {ITimeWidgetProps} from "./components/TimeWidget/TimeWidget";
@@ -313,6 +314,9 @@ export { Hamburger };
 export { LanguageDropdown };
 export { WidgetContainer };
 export type { IWidgetContainerProps };
+
+export { BaseWidgetContainer }
+export type { IBaseWidgetContainerProps, IBaseWidgetContainerState, IWidgetContainer };
 
 export {CheckboxWidget};
 export type {ICheckboxWidgetProps};
