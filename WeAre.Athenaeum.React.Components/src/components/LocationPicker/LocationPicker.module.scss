@@ -1,11 +1,15 @@
 .locationPicker {
     width: 640px;
     height: 480px;
-    
+
+    &.fullWidth {
+        width: 100%;
+    }
+
     > div {
         margin-bottom: 4px;
     }
-    
+
     .map {
         width: 100%;
         height: calc(100% - 39px);

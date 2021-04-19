@@ -308,7 +308,7 @@ export type { IPageRowProps };
 export { Popover };
 export { Description };
 export { Spinner };
-export { TopNav,  };
+export { TopNav };
 export type { IMenuItem, ITopNavProps };
 export { Hamburger };
 export { LanguageDropdown };
