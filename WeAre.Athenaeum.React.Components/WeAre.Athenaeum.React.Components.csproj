@@ -16,6 +16,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="src\components\Accordion\Accordion.tsx" />
       <TypeScriptCompile Include="src\components\Alert\Alert.tsx" />
       <TypeScriptCompile Include="src\components\Alert\AlertLocalizer.ts" />
       <TypeScriptCompile Include="src\components\ButtonContainer\ButtonContainer.tsx" />

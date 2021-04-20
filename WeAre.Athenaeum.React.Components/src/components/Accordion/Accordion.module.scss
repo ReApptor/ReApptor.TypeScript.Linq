@@ -1,0 +1,62 @@
+@import "src/variables";
+
+.accordion {
+    overflow: hidden;
+    box-shadow: 
+            0px 2px 1px -1px rgba(0,0,0,0.2),
+            0px 1px 1px 0px rgba(0,0,0,0.14),
+            0px 1px 3px 0px rgba(0,0,0,0.12);
+    border-radius: 4px;
+
+    .headerContainer {
+        display: flex;
+        justify-content: space-between;
+
+        .header {
+            flex: 1;
+            align-self: center;
+
+            h3 {
+                margin: 0;
+            }
+            
+            padding: 16px 12px;
+        }
+
+        .toggler {
+            width: 48px;
+            background-color: $orange;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+
+            .icon {
+                transition: transform 0.2s ease-in-out;
+
+                &.expanded {
+                    transform:rotate(180deg);
+                }
+            }
+        }
+    }
+
+    .contentContainer {
+        height: auto;
+        transition: max-height 0.2s ease-in-out;
+
+        .separator {
+            margin: 0 !important;
+            border-color: grey;
+        }
+
+        &.collapsed {
+            max-height: 0 !important;
+        }
+
+        .content {
+            padding: 16px 12px;
+        }
+    }
+}
