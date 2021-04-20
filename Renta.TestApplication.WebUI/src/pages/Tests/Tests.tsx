@@ -16,6 +16,7 @@ import FormTests from "@/pages/Tests/FormTests/FormTests";
 import ButtonContainerTests from "@/pages/Tests/ButtonContainerTests/ButtonContainerTests";
 import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
 import LocationPickerTests from "@/pages/Tests/LocationPickerTests/LocationPickerTests";
+import AccordionTests from "@/pages/Tests/AccordionTests/AccordionTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -90,6 +91,10 @@ export default class Tests extends AnonymousPage {
                         
                         <Tab id="locationPickerTests" title="Location picker">
                             <LocationPickerTests />
+                        </Tab>
+                        
+                        <Tab id="AccordionTests" title="Accordion">
+                            <AccordionTests />
                         </Tab>
                     
                     </TabContainer>
