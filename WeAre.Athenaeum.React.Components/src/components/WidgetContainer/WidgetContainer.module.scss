@@ -11,25 +11,25 @@
 
     .widget {
         padding: 4px 6px;
-        
+
         &.readonly {
             opacity: 0.8;
             pointer-events: none;
             cursor: not-allowed;
         }
-        
+
         &.approved {
             opacity: 1;
-            
+
             a {
                 background-color: #28a745;
-                
+
                 &:hover {
                     background-color: #28a745;
                 }
             }
         }
-        
+
         a, .content {
             text-decoration: none;
             color: white;
@@ -74,7 +74,7 @@
             
             .date {
                 @extend .number;
-                
+
                 font-size: 2rem;
             }
 
@@ -97,7 +97,7 @@
                 justify-content: center;
                 flex-direction: column;
                 flex-grow: 1;
-                
+
                 .numberWidget {
                     display: flex;
                     flex-direction: row;
@@ -134,10 +134,10 @@
                     justify-content: center;
                     padding: 10px 0 14px;
                 }
-                
+
                 .signature {
                     padding: 8px 0 12px 0;
-                    
+
                     .signaturePad {
                         background-color: #ff7e51;
                         border-radius: 5px;
@@ -145,16 +145,16 @@
                         height: 200px;
                         cursor: pointer;
                     }
-                    
+
                     .buttonContainer {
                         display: flex;
                         justify-content: space-between;
                         padding-top: $baseline;
-                        
+
                         button {
                             display: block;
                             width: 100%;
-                            
+
                             &:first-child {
                                 margin-right: $baseline;
                             }
@@ -166,11 +166,11 @@
             .compactContainer {
                 display: none;
                 align-items: center;
-                
+
                 .status {
                     display: none;
                 }
-                
+
                 .dropdownWidget {
                     display: none;
                 }
@@ -215,15 +215,16 @@
                 .labelAndDescription {
                     width: 100%;
                     word-break: break-word;
+
                     .description {
                         @extend .description;
-                        
+
                         display: block;
                     }
-                    
+
                     .label {
                         @extend .label;
-                        
+
                         display: block;
                     }
                 }
@@ -238,11 +239,11 @@
             .contentContainer {
                 display: none;
             }
-            
+
             .description {
                 display: none;
             }
-            
+
             .label {
                 display: none;
             }
@@ -259,18 +260,18 @@
         .transparent:hover {
             background: rgba(234, 60, 0, 0.6);
         }
-        
+
         .switchContent {
             display: flex;
             justify-content: space-evenly;
             align-items: center;
             padding: 10px 10px 14px;
             line-height: 42px;
-            
+
             .status {
                 width: 76px;
             }
-            
+
             .switch {
                 width: 56px;
                 height: 32px;
@@ -278,7 +279,7 @@
                 border-radius: 5px;
                 background-color: white;
                 position: relative;
-                
+
                 .toggler {
                     position: absolute;
                     top: -1px;
@@ -297,36 +298,36 @@
 
                 .toggler {
                     @extend .toggler;
-                    
+
                     background-color: white;
                     left: 35px;
                 }
             }
         }
-        
+
         .textInput {
             .inputContainer {
                 padding: 10px 10px 14px;
                 margin: 2px 0;
                 text-align: left;
                 position: relative;
-                
+
                 > input {
                     margin-top: 1px;
                     margin-bottom: 2px;
                 }
-                
+
                 .autoCompleteToggler {
                     position: absolute;
                     color: black;
                     right: 1.3rem;
                     top: 1.3rem;
                 }
-                
+
                 .autoCompleteContainer {
                     padding: 0 10px;
                     position: relative;
-                    
+
                     &.mobile {
                         padding: 0;
 
@@ -339,27 +340,21 @@
                     }
                 }
             }
-            
+
             .valueContainer {
                 height: 66px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 word-break: break-word;
-                
-                > span {
-                    max-height: 100%;
-                    max-width: 100%;
-                    overflow: hidden;
-                }
             }
         }
-        
+
         .products {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            
+
             .category {
                 width: 100px;
                 height: 100px;
@@ -413,7 +408,7 @@
                 margin-top: -6px;
                 font-size: 0.8em;
                 position: absolute;
-                
+
                 .labelsContainer {
                     display: none;
                 }
@@ -421,20 +416,20 @@
                 span {
                     display: block;
                 }
-                
+
                 .averageRent {
-                    
+
                 }
             }
 
             .sets {
                 width: 100%;
-                
+
                 .setsContainer {
                     display: flex;
                     height: calc(100% - 18px);
                     border-right: 1px dashed #ffd1bb;
-                    
+
                     span {
                         min-width: 4px;
                         width: 100%;
@@ -451,36 +446,36 @@
                             border: 1px solid #31afd4;
                         }
                     }
-                    
+
                     &.borderLeft {
                         border-left: 1px dashed #ffd1bb;
                     }
                 }
             }
-            
+
             &.hideLabels {
                 .labels {
                     display: none;
                 }
             }
-            
+
             &:hover {
                 .labels {
                     opacity: 1;
                 }
-                
+
                 .labelsContainer {
                     display: block;
                 }
             }
         }
     }
-    
+
     > button {
         margin: 4px 6px;
         height: 80px;
     }
-    
+
     .dropdownWidget {
         .noDescription {
             :global {
