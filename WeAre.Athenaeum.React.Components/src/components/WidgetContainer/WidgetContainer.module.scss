@@ -30,7 +30,8 @@
             }
         }
 
-        a, .content {
+        a,
+        .content {
             text-decoration: none;
             color: white;
             background: $orange;
@@ -71,7 +72,7 @@
                     font-size: 50%;
                 }
             }
-            
+
             .date {
                 @extend .number;
 
@@ -109,7 +110,7 @@
                         input {
                             width: 100px;
                             margin-bottom: 3px; //4px
-                            margin-top: 4px;    //8px
+                            margin-top: 4px; //8px
                         }
                     }
 
@@ -231,7 +232,8 @@
             }
         }
 
-        a:hover, .content:hover {
+        a:hover,
+        .content:hover {
             background-color: $orange-hover;
         }
 
@@ -288,7 +290,7 @@
                     width: 20px;
                     border: inherit;
                     border-radius: 5px;
-                    transition: all .3s ease;
+                    transition: all 0.3s ease;
                 }
             }
 
@@ -418,7 +420,6 @@
                 }
 
                 .averageRent {
-
                 }
             }
 
