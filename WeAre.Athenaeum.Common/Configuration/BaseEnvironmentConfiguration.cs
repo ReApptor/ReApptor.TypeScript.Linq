@@ -72,6 +72,18 @@ namespace WeAre.Athenaeum.Common.Configuration
             return @default.Value;
         }
 
+        protected int? GetNullableIntEnvironmentVariable(string key, int? @default = null)
+        {
+            string value = GetEnvironmentVariable(key, false);
+
+            if ((!string.IsNullOrWhiteSpace(value)) && (int.TryParse(value, out int intValue)))
+            {
+                return intValue;
+            }
+
+            return @default;
+        }
+
         protected bool GetBoolEnvironmentVariable(string key, bool? @default = null)
         {
             string value = GetEnvironmentVariable(key, false);
