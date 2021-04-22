@@ -169,6 +169,15 @@ pipelines:
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.Cache/WeAre.Athenaeum.Services.Cache.csproj -o obj/weare-athenaeum-cache/publish
                 - dotnet nuget push obj/weare-athenaeum-cache/publish/WeAre.Athenaeum.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
           - step:
+              name: Athenaeum Sms Build
+              image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+              caches:
+                - dotnetcore
+              script:
+                - echo $BITBUCKET_BUILD_NUMBER
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.Sms/WeAre.Athenaeum.Services.Sms.csproj -o obj/weare-athenaeum-sms/publish
+                - dotnet nuget push obj/weare-athenaeum-sms/publish/WeAre.Athenaeum.Services.Sms.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/renta-apps/api/v2/package
+          - step:
               name: UI Toolkit Tests
               image: node:14
               caches:

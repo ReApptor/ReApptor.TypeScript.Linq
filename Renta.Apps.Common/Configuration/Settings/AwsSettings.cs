@@ -15,8 +15,6 @@ namespace Renta.Apps.Common.Configuration.Settings
         public string AwsPinpointOriginationNumber { get; set; }
         
         public string AwsPinpointSenderId { get; set; }
-
-
-
+        
     }
 }
