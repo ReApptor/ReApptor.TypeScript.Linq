@@ -85,7 +85,7 @@ export default class Checkbox<TProps extends ICheckboxProps = ICheckboxProps> ex
 
     public renderInput(): React.ReactNode {
         return (
-            <div className={this.css(styles.checkbox, this.readonly && styles.readonly)}>
+            <div className={this.css(styles.checkbox, this.readonly && styles.readonly, (this.checked) ? styles.checked : styles.unchecked)}>
                 <div onClick={async (event) => await this.toggleAsync(event)}>
                     {
                         (this.checked)
