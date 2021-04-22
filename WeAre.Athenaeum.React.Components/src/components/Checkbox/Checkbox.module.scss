@@ -5,14 +5,6 @@
     position: relative;
     color: $orange;
 
-    &.checked {
-        //  for easier style overwrites
-    }
-
-    &.unchecked {
-        //  for easier style overwrites
-    }
-
     &.readonly {
         color: $grey;
     }
@@ -31,6 +23,16 @@
         border-radius: 2px;
         background-color: #fe5000;
     }
+}
+
+.checked {
+    //  for easier style overwrites
+    cursor: pointer;
+}
+
+.unchecked {
+    //  for easier style overwrites
+    cursor: pointer;
 }
 
 .inlineRight {
