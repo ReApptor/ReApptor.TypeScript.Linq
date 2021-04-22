@@ -5,18 +5,26 @@ import {AthenaeumConstants} from "@weare/athenaeum-toolkit";
 export default class ReactUtility {
     
     private static toTags(regex: RegExp, tag: string, text: string, containerIndex: number): (ReactElement | string)[] {
-        if (!text) {
+        if ((!text) || (!tag)) {
+            return [];
+        }
+        
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
             return [];
         }
 
         const items: string[] = text.split(regex);
 
-        return items
+        const tags = items
             .map((item: string, index: number) => (index % 2 != 0)
                 ? [React.createElement(tag, {key: `${containerIndex}${tag}${index}`}, item)]
                 : [item]
-            )
-            .flat();
+            );
+
+        return ((tags) && (Array.isArray(tags)))
+            ? tags.flat().filter(tag => !!tag)
+            : [];
     }
     
     private static containerToMarks(text: string, containerIndex: number): (ReactElement | string)[] {
