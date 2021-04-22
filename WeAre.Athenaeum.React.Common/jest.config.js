@@ -1,4 +1,11 @@
 module.exports = {
+    globals: {
+        "ts-jest": {
+            "astTransformers": {
+                before: ["ts-nameof"]
+            }
+        }
+    },
     roots: ['<rootDir>/src'],
     transform: {
         '^.+\\.tsx?$': 'ts-jest',

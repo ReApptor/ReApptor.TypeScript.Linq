@@ -7,5 +7,7 @@
         DbSettings IOptions<DbSettings>.Value => this;
 
         public string ConnectionString { get; set; }
+        
+        public int? CommandTimeoutInSeconds { get; set; }
     }
 }

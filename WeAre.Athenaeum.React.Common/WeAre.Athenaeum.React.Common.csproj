@@ -46,6 +46,7 @@
       <TypeScriptCompile Include="src\providers\UserInteractionDataStorage.ts" />
       <TypeScriptCompile Include="src\ReactUtility.ts" />
       <TypeScriptCompile Include="src\StylesUtility.ts" />
+      <TypeScriptCompile Include="src\tests\ReactUtility.toMarks.test.ts" />
     </ItemGroup>
 
     <ItemGroup>
