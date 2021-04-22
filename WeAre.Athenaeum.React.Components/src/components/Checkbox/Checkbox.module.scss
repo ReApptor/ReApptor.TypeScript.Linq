@@ -5,6 +5,14 @@
     position: relative;
     color: $orange;
 
+    &.checked {
+        //  for easier style overwrites
+    }
+
+    &.unchecked {
+        //  for easier style overwrites
+    }
+
     &.readonly {
         color: $grey;
     }
@@ -12,7 +20,7 @@
     i {
         vertical-align: middle;
     }
-    
+
     .square {
         display: block;
         position: absolute;
@@ -28,7 +36,7 @@
 .inlineRight {
     align-items: center;
     height: 100%;
-    
+
     :global {
         .base-input-label {
             order: 2;
