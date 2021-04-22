@@ -23,6 +23,17 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
 
         private static SendMessagesRequest CreateSendMessagesRequest(SmsMessage message, AwsSettings settings)
         {
+            var smsMessage = new SMSMessage
+            {
+                Body = message.Message,
+                MessageType = MessageType,
+                SenderId = settings.AwsPinpointSenderId
+            };
+            if (!string.IsNullOrWhiteSpace(settings.AwsPinpointOriginationNumber))
+            {
+                smsMessage.OriginationNumber = settings.AwsPinpointOriginationNumber;
+            }
+
             var sendRequest = new SendMessagesRequest
             {
                 ApplicationId = settings.AwsPinpointAppId,
@@ -40,13 +51,7 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
                     },
                     MessageConfiguration = new DirectMessageConfiguration
                     {
-                        SMSMessage = new SMSMessage
-                        {
-                            Body = message.Message,
-                            MessageType = MessageType,
-                            OriginationNumber = settings.AwsPinpointOriginationNumber,
-                            SenderId = settings.AwsPinpointSenderId
-                        }
+                        SMSMessage = smsMessage
                     }
                 }
             };
