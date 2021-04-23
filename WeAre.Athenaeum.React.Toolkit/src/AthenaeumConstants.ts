@@ -22,10 +22,6 @@ export default class AthenaeumConstants {
     public static readonly markTagRegex: RegExp = /<\s*mark[^>]*>(.*?)<\s*\/\s*mark>/ig;
 
     public static readonly smallTagRegex: RegExp = /<\s*small[^>]*>(.*?)<\s*\/\s*small>/ig;
-    
-    public static readonly boldTagRegex: RegExp = /<\s*b[^>]*>(.*?)<\s*\/\s*b>/ig;
-    
-    public static readonly italicTagRegex: RegExp = /<\s*i[^>]*>(.*?)<\s*\/\s*i>/ig;
 
     public static readonly defaultGuid: string = "00000000-0000-0000-0000-000000000000";
 

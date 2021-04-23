@@ -53,7 +53,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
         return "IPageDefinitions";
     }
     
-    protected abstract async require(pageContainer: string, pageName: string): Promise<any>;
+    protected abstract require(pageContainer: string, pageName: string): Promise<any>;
 
     public static readonly logoutRouteName: string = "Logout";
 
@@ -111,6 +111,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
         const module: any = BasePageDefinitions._modules.getValue(pageName);
 
+        // noinspection UnnecessaryLocalVariableJS
         const element: React.ReactElement = React.createElement(module.default, props);
 
         return element;

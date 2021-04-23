@@ -1,12 +1,12 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, ReactUtility} from "@weare/athenaeum-react-common";
 import Icon, {IconSize} from "../../Icon/Icon";
 import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";
+import DropdownLocalizer from "../DropdownLocalizer";
 
 import styles from "../Dropdown.module.scss";
-import DropdownLocalizer from "../DropdownLocalizer";
 
 export interface IDropdownListItemProps {
     item: SelectListItem;
@@ -123,7 +123,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) && 
                         (
-                            <small>{DropdownLocalizer.get(item.subtext)}</small>
+                            <small>{ReactUtility.toMultiLines(DropdownLocalizer.get(item.subtext))}</small>
                         )
                     }
                 </div>
