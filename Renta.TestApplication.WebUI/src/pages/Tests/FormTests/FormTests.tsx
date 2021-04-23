@@ -59,8 +59,16 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                         <DateInput label={"Date input #3"} readonly />
 
                         <DateInput label={"Date input #4"} shortDate append={"?"} />
-
+                        
                     </FourColumns>
+
+                    <TwoColumns>
+
+                        <DateInput label={"Date input #5"} showTime />
+                        
+                        <DateInput label={"Date input #6"} showTime showOnlyTime />
+                        
+                    </TwoColumns>
 
                     <ButtonContainer>
 
