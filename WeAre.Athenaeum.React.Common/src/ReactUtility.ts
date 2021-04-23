@@ -4,21 +4,14 @@ import {AthenaeumConstants} from "@weare/athenaeum-toolkit";
 
 export default class ReactUtility {
     
-    private static toTags(regex: RegExp, tag: string, text: string, containerIndex: number): (ReactElement | string)[] {
-        if ((!text) || (!tag)) {
-            return [];
-        }
-        
-        // noinspection SuspiciousTypeOfGuard
-        if (typeof text !== "string") {
-            return [];
-        }
-
+    //#region Private
+    
+    private static split(regex: RegExp, tag: string, text: string, containerIndex: number): (ReactElement | string)[] {
         const items: string[] = text.split(regex);
 
         const tags = items
             .map((item: string, index: number) => (index % 2 != 0)
-                ? [React.createElement(tag, {key: `${containerIndex}${tag}${index}`}, item)]
+                ? [React.createElement(tag, {key: `_${containerIndex}${tag}${index}`}, item)]
                 : [item]
             );
 
@@ -26,65 +19,123 @@ export default class ReactUtility {
             ? tags.flat().filter(tag => !!tag)
             : [];
     }
+
+    private static containerToTags(text: string, containerIndex: number): (ReactElement | string)[] {
+        let tags: (ReactElement | string)[] = this.containerToMarks(text, containerIndex);
+
+        tags = this.invoke(tags, item => this.containerToSmalls(item, containerIndex));
+
+        tags = this.invoke(tags, item => this.containerToItalics(item, containerIndex));
+        
+        tags = this.invoke(tags, item => this.containerToBolds(item, containerIndex));
+
+        return tags;
+    }
     
     private static containerToMarks(text: string, containerIndex: number): (ReactElement | string)[] {
-        return this.toTags(AthenaeumConstants.markTagRegex, "mark", text, containerIndex);
+        return this.split(AthenaeumConstants.markTagRegex, "mark", text, containerIndex);
     }
     
     private static containerToSmalls(text: string, containerIndex: number): (ReactElement | string)[] {
-        return this.toTags(AthenaeumConstants.smallTagRegex, "small", text, containerIndex);
+        return this.split(AthenaeumConstants.smallTagRegex, "small", text, containerIndex);
     }
     
     private static containerToBolds(text: string, containerIndex: number): (ReactElement | string)[] {
-        return this.toTags(AthenaeumConstants.boldTagRegex, "b", text, containerIndex);
+        return this.split(AthenaeumConstants.boldTagRegex, "b", text, containerIndex);
+    }
+    
+    private static containerToItalics(text: string, containerIndex: number): (ReactElement | string)[] {
+        return this.split(AthenaeumConstants.italicTagRegex, "i", text, containerIndex);
+    }
+    
+    private static invoke(tags: (ReactElement | string)[], action: (item: string) => (ReactElement | string)[]): (ReactElement | string)[] {
+
+        const items: ((ReactElement | string) | (ReactElement | string)[])[] = tags.map(item => {
+                return (typeof item === "string")
+                    ? action(item)
+                    : Array.isArray(item)
+                        ? this.invoke(item, action)
+                        : item;
+            }
+        );
+
+        return items.flat();
     }
 
-    public static toMarks(text: string): (ReactElement | string)[] {
+    //#endregion
+
+    public static toMarks(text: string | null | undefined): (ReactElement | string)[] {
+        // check
+        if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return [];
+        }
+
         return this.containerToMarks(text, 0);
     }
 
-    public static toSmalls(text: string): (ReactElement | string)[] {
+    public static toSmalls(text: string | null | undefined): (ReactElement | string)[] {
+        // check
+        if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return [];
+        }
+
         return this.containerToSmalls(text, 0);
     }
     
-    public static toBolds(text: string): (ReactElement | string)[] {
-        return this.containerToBolds(text, 0);
-    }    
-    
-    public static toMarksSmallsAndBolds(text: string): (ReactElement | string)[] {
-        const marksAndStrings: (ReactElement | string)[] = this.toMarks(text);
+    public static toBolds(text: string | null | undefined): (ReactElement | string)[] {
+        // check
+        if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return [];
+        }
 
-        const marksAndNestedSmallsAndStrings: (ReactElement | string | (ReactElement | string)[])[] = marksAndStrings.map(x => {
-            if (typeof x !== 'string') {
-                return x
-            }
-            return this.toSmalls(x);
-        });
-        
-        const marksAndSmallsAndStrings: (ReactElement | string)[] = marksAndNestedSmallsAndStrings.flat();
-        
-        const marksAndSmallsAndNestedBoldsAndStrings: (ReactElement | string | (ReactElement | string)[])[] = marksAndSmallsAndStrings.map(x => {
-            if (typeof x !== 'string') {
-                return x
-            }
-            return this.toBolds(x);
-        })
-        
-        // noinspection UnnecessaryLocalVariableJS
-        const marksAndSmallsAndBoldsAndStrings: (ReactElement | string)[] = marksAndSmallsAndNestedBoldsAndStrings.flat();
-        
-        return marksAndSmallsAndBoldsAndStrings;
+        return this.containerToBolds(text, 0);
+    }
+    
+    public static toItalics(text: string | null | undefined): (ReactElement | string)[] {
+        // check
+        if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return [];
+        }
+
+        return this.containerToItalics(text, 0);
     }
 
     public static toSingleLine(text: string | null | undefined): string {
-        if (text) {
-            text = text.replace(AthenaeumConstants.newLineRegex, " ");
+        // check
+        if (!text) {
+            return "";
         }
-        return text || "";
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return "";
+        }
+
+        return text.replace(AthenaeumConstants.newLineRegex, " ");
     }
 
     public static toMultiLines(text: string | null | undefined): (ReactElement | string)[] {
+        // check
         if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
             return [];
         }
 
@@ -92,9 +143,26 @@ export default class ReactUtility {
 
         return lines
             .map((line: string, index: number) => (index < lines.length - 1)
-                ? [...this.containerToMarks(line, index), React.createElement("br", {key: "br" + index})]
-                : [...this.containerToMarks(line, index)]
+                ? [...this.containerToTags(line, index), React.createElement("br", {key: "br" + index})]
+                : [...this.containerToTags(line, index)]
             )
             .flat();
+    }
+
+    public static toTags(text: string | null | undefined, toSingleLine: boolean = true): (ReactElement | string)[] {
+        // check
+        if (!text) {
+            return [];
+        }
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof text !== "string") {
+            return [];
+        }
+        
+        if (toSingleLine) {
+            text = this.toSingleLine(text);
+        }
+
+        return this.containerToTags(text, 0);
     }
 }
