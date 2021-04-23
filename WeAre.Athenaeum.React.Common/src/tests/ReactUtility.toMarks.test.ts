@@ -74,6 +74,76 @@ describe("toMarks", function() {
         expect(output.length).toEqual(1);
         expect(output[0]).toEqual(input);
     });
+
+    test("textAndBold", function () {
+        const input: string = "Simple text <b>boldText</b>";
+        const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
+        expect(output.length).toEqual(2);
+        expect("Simple text ").toEqual(output[0]);
+        expect((output[1] as ReactElement).type).toEqual("b");
+        expect((output[1] as ReactElement).props.children).toEqual("boldText");
+    });
+
+    test("boldAndText", function () {
+        const input: string = "<b>boldText</b> Simple text";
+        const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
+        expect(output.length).toEqual(2);
+        expect((output[0] as ReactElement).type).toEqual("b");
+        expect((output[0] as ReactElement).props.children).toEqual("boldText");
+        expect(" Simple text").toEqual(output[1]);
+    });
+    
+    test("boldOnly", function () {
+        const input: string = "<b>boldText</b>";
+        const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
+        expect(output.length).toEqual(1);
+        expect((output[0] as ReactElement).type).toEqual("b");
+        expect((output[0] as ReactElement).props.children).toEqual("boldText");
+    });
+    
+    test("emptyBold", function () {
+        const input: string = "<b></b>";
+        const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
+        expect(output.length).toEqual(1);
+        expect((output[0] as ReactElement).type).toEqual("b");
+        expect((output[0] as ReactElement).props.children).toEqual("");
+    });
+    
+    test("closedBold", function () {
+        const input: string = "<b />";
+        const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
+        expect(output.length).toEqual(1);
+        expect(output[0]).toEqual(input);
+    });
+
+    test("convertWithText", function () {
+        const input: string = " Simple text ";
+        const output: (ReactElement | string)[] = ReactUtility.toMarksSmallsAndBolds(input);
+
+        expect(output.length).toEqual(1);
+        
+        expect((output[0] as string)).toEqual(" Simple text ");
+    });
+    
+    test("convertWithMarkAndSmallAndBoldAndText", function () {
+        const input: string = "<mark>address</mark> Simple text <small>Small text</small> <b>Bold Text</b>";
+        const output: (ReactElement | string)[] = ReactUtility.toMarksSmallsAndBolds(input);
+
+        expect(output.length).toEqual(5);
+        
+        expect((output[0] as ReactElement).type).toEqual("mark");
+        expect((output[0] as ReactElement).props.children).toEqual("address");
+        
+        expect((output[1] as string)).toEqual(" Simple text ");
+        
+        expect((output[2] as ReactElement).type).toEqual("small");
+        expect((output[2] as ReactElement).props.children).toEqual("Small text");
+        
+        expect((output[3] as string)).toEqual(" ");
+        
+        expect((output[4] as ReactElement).type).toEqual("b");
+        expect((output[4] as ReactElement).props.children).toEqual("Bold Text");
+    });
     
     //FAILED:
     // test("markInMark", function () {

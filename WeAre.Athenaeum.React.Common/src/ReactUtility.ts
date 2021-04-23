@@ -34,6 +34,10 @@ export default class ReactUtility {
     private static containerToSmalls(text: string, containerIndex: number): (ReactElement | string)[] {
         return this.toTags(AthenaeumConstants.smallTagRegex, "small", text, containerIndex);
     }
+    
+    private static containerToBolds(text: string, containerIndex: number): (ReactElement | string)[] {
+        return this.toTags(AthenaeumConstants.boldTagRegex, "b", text, containerIndex);
+    }
 
     public static toMarks(text: string): (ReactElement | string)[] {
         return this.containerToMarks(text, 0);
@@ -41,6 +45,35 @@ export default class ReactUtility {
 
     public static toSmalls(text: string): (ReactElement | string)[] {
         return this.containerToSmalls(text, 0);
+    }
+    
+    public static toBolds(text: string): (ReactElement | string)[] {
+        return this.containerToBolds(text, 0);
+    }    
+    
+    public static toMarksSmallsAndBolds(text: string): (ReactElement | string)[] {
+        const marksAndStrings: (ReactElement | string)[] = this.toMarks(text);
+
+        const marksAndNestedSmallsAndStrings: (ReactElement | string | (ReactElement | string)[])[] = marksAndStrings.map(x => {
+            if (typeof x !== 'string') {
+                return x
+            }
+            return this.toSmalls(x);
+        });
+        
+        const marksAndSmallsAndStrings: (ReactElement | string)[] = marksAndNestedSmallsAndStrings.flat();
+        
+        const marksAndSmallsAndNestedBoldsAndStrings: (ReactElement | string | (ReactElement | string)[])[] = marksAndSmallsAndStrings.map(x => {
+            if (typeof x !== 'string') {
+                return x
+            }
+            return this.toBolds(x);
+        })
+        
+        // noinspection UnnecessaryLocalVariableJS
+        const marksAndSmallsAndBoldsAndStrings: (ReactElement | string)[] = marksAndSmallsAndNestedBoldsAndStrings.flat();
+        
+        return marksAndSmallsAndBoldsAndStrings;
     }
 
     public static toSingleLine(text: string | null | undefined): string {
