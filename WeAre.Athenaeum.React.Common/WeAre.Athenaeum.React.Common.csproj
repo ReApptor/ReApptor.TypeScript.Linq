@@ -46,7 +46,11 @@
       <TypeScriptCompile Include="src\providers\UserInteractionDataStorage.ts" />
       <TypeScriptCompile Include="src\ReactUtility.ts" />
       <TypeScriptCompile Include="src\StylesUtility.ts" />
+      <TypeScriptCompile Include="src\tests\ReactUtility.toBolds.test.ts" />
+      <TypeScriptCompile Include="src\tests\ReactUtility.toItalics.test.ts" />
       <TypeScriptCompile Include="src\tests\ReactUtility.toMarks.test.ts" />
+      <TypeScriptCompile Include="src\tests\ReactUtility.toMultilines.test.ts" />
+      <TypeScriptCompile Include="src\tests\ReactUtility.toTags.test.ts" />
     </ItemGroup>
 
     <ItemGroup>
