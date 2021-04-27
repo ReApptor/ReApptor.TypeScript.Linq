@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 - ButtonAction changed to class component
+- Button with Action now will change the button label to selected action label during onClick call.
 
 #### Removed
 
