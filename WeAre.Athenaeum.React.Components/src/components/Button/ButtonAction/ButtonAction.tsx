@@ -1,7 +1,7 @@
 import React from "react";
-import {Justify} from "@weare/athenaeum-react-common";
+import { BaseComponent, Justify } from "@weare/athenaeum-react-common";
 
-import styles from "../Button.module.scss"
+import styles from "../Button.module.scss";
 import Icon, { IIconProps } from "../../Icon/Icon";
 
 export interface IButtonActionProps {
@@ -11,26 +11,34 @@ export interface IButtonActionProps {
     onClick(): Promise<void>;
 }
 
-const ButtonAction: React.FC<IButtonActionProps> = ({title, icon, iconPosition, onClick}) => {
-    const hasIcon: boolean = !!icon;
-    const hasPosition: boolean = !!iconPosition;
+export default class ButtonAction extends BaseComponent<IButtonActionProps, {}> {
+    private get hasIcon(): boolean {
+        return !!this.props.icon;
+    }
 
-    const positionLeft: boolean = hasIcon && !hasPosition;
-    const positionRight: boolean = hasIcon && hasPosition && iconPosition == Justify.Right;
+    private get hasIconPosition(): boolean {
+        return !!this.props.iconPosition;
+    }
 
-    return (
-        <div className={styles.action} onClick={async () => await onClick()}>
-            {
-                positionLeft && <Icon {...icon as IIconProps} />
-            }
-            
-            <span>{title}</span>
+    private get isIconPositionLeft(): boolean {
+        return this.hasIcon && !this.hasIconPosition;
+    }
 
-            {
-                positionRight && <Icon {...icon as IIconProps} />
-            }
-        </div>
-    );
+    private get isIconPositionRight(): boolean {
+        return this.hasIcon && this.hasIconPosition && this.props.iconPosition == Justify.Right;
+    }
+
+    public render(): React.ReactNode {
+        return (
+            <div className={styles.action} onClick={async () => await this.props.onClick()}>
+                
+                {this.isIconPositionLeft && <Icon {...(this.props.icon as IIconProps)} />}
+
+                <span>{this.props.title}</span>
+
+                {this.isIconPositionRight && <Icon {...(this.props.icon as IIconProps)} />}
+                
+            </div>
+        );
+    }
 }
-
-export default ButtonAction;

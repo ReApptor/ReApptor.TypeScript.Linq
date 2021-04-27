@@ -21,6 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Changed
 - Changed dropdown default alignVertical to Auto
 
+#### Removed
+
+
+### [1.0.640] - 2021-04-27
+
+#### Added
+
+#### Changed
+- ButtonAction changed to class component
 
 #### Removed
 
