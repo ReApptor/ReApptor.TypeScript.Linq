@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ./WeAre.Athenaeum.React.Components
 
 
+latest version: `npm show @weare/athenaeum-react-components version`
+
 `npm install @weare/athenaeum-react-components@latest`
 
 
@@ -48,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## @weare/athenaeum-react-common
 ./WeAre.Athenaeum.Common
 
+latest version: `npm show @weare/athenaeum-react-common version`
 
 `npm install @weare/athenaeum-react-common@latest`
 
@@ -62,6 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## @weare/athenaeum-toolkit
 ./WeAre.Athenaeum.React.Toolkit
 
+latest version: `npm show @weare/athenaeum-toolkit version`
 
 `npm install @weare/athenaeum-toolkit@latest`
 
