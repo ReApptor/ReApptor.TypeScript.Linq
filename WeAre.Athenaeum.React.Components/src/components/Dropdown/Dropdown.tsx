@@ -385,7 +385,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private getVerticalAlign(): DropdownVerticalAlign {
-        let align: DropdownVerticalAlign = this.props.verticalAlign || DropdownVerticalAlign.Bottom;
+        let align: DropdownVerticalAlign = this.props.verticalAlign || DropdownVerticalAlign.Auto;
         if (align == DropdownVerticalAlign.Auto) {
             if (!this.expandBottom) {
                 align = DropdownVerticalAlign.Top;
