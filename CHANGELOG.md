@@ -28,13 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-<br/>
-
----
----
 ---
 
-<br/>
 
 
 
@@ -47,13 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 `npm install @weare/athenaeum-react-common@latest`
 
 
-<br/>
+
 
 ---
----
----
 
-<br/>
 
 
 
@@ -62,9 +54,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 `npm install @weare/athenaeum-toolkit@latest`
-
-
-
-------
-
 
