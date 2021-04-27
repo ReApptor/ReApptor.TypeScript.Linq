@@ -1,5 +1,6 @@
 import Alert, { IAlertProps } from "./components/Alert/Alert";
 import Button, { IButtonProps, ButtonType } from "./components/Button/Button";
+import ButtonAction, { IButtonActionProps } from "./components/Button/ButtonAction/ButtonAction";
 import ButtonContainer, { IButtonContainerProps, IButtonContainerState } from "./components/ButtonContainer/ButtonContainer";
 import ConfirmationDialog, { IConfirmation, ConfirmationDialogTitleCallback } from "./components/ConfirmationDialog/ConfirmationDialog";
 import DocumentPreview from "./components/DocumentPreview/DocumentPreview";
@@ -153,6 +154,9 @@ export type { IAlertProps };
 
 export { Button, ButtonType };
 export type { IButtonProps };
+
+export { ButtonAction };
+export type { IButtonActionProps };
 
 export { ButtonContainer };
 export type { IButtonContainerProps, IButtonContainerState };
