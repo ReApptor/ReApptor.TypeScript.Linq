@@ -1,14 +1,3 @@
-
-# README #
-
-
-## Change Log
-
-Please refer to [`CHANGELOG.md`](CHANGELOG.md) to see the complete list of changes for each release.
-
-<br/>
-<br/>
-
 ## How run Components development setup
 
 
@@ -27,3 +16,11 @@ watch:toolkit:back
 ```
 
 Stop these commands and create new Compound profile and add these to it plus Launch setting for `Renta.TestApplication.WebUI`
+
+
+
+## Change Log
+
+Please refer to [`CHANGELOG.md`](CHANGELOG.md) to see the complete list of changes for each release.
+
+---
