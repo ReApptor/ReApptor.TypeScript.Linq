@@ -6,6 +6,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+<br />
+
+---
+
+<br />
+
+
+
+example : 
+
+### [VERSION] - DATE
+
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
+<br />
+
+---
+
+<br />
+
+
 ## @weare/athenaeum-react-components
 ./WeAre.Athenaeum.React.Components
 
@@ -13,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 latest version: `npm show @weare/athenaeum-react-components version`
 
 `npm install @weare/athenaeum-react-components@latest`
-
 
 ### [1.0.638] - 2021-04-27
 
@@ -23,25 +53,21 @@ latest version: `npm show @weare/athenaeum-react-components version`
 #### Changed
 - Changed dropdown default alignVertical to Auto
 
-#### Removed
-
 
 ### [1.0.640] - 2021-04-27
-
-#### Added
 
 #### Changed
 - ButtonAction changed to class component
 - Button with Action now will change the button label to selected action label during onClick call.
 
-#### Removed
 
 
 
-
+<br />
 
 ---
 
+<br />
 
 
 
@@ -57,7 +83,11 @@ latest version: `npm show @weare/athenaeum-react-common version`
 
 
 
+<br />
+
 ---
+
+<br />
 
 
 
