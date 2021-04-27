@@ -1,6 +1,16 @@
+
 # README #
 
-#### How run Components development setup
+
+## Change Log
+
+Please refer to [`CHANGELOG.md`](CHANGELOG.md) to see the complete list of changes for each release.
+
+<br/>
+<br/>
+
+## How run Components development setup
+
 
 make sure to run `npm install` in `Renta.TestApplication.WebUI`
 
