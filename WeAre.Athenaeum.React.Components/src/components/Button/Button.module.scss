@@ -5,7 +5,13 @@
     font-size: 14px !important;
     white-space: nowrap;
     position: relative;
-
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    
+    span {
+        flex-grow: 1;
+    }
 
     &:focus {
         box-shadow: none !important;
@@ -28,17 +34,17 @@
             padding-right: $baseline;
         }
     }
-    
+
     &.small {
         font-size: 0.8rem !important;
         padding: 0.375rem;
         height: auto;
-        
+
         &.iconPadding.labelPadding {
             padding-right: 0.7rem;
         }
     }
-    
+
     &.disabled {
         pointer-events: none;
     }
@@ -58,18 +64,18 @@
         background-color: #8c8c8c;
         border-color: black;
     }
-    
+
     &.text {
         padding: 0;
         border: 0;
         color: $orange;
-        
+
         &:hover {
             background-color: inherit !important;
             color: inherit !important;
         }
     }
-    
+
     &.withActions {
         padding-right: 24px;
 

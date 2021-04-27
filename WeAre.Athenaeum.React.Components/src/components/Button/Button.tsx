@@ -1,9 +1,9 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IChildrenProps, IGlobalClick, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
+import ButtonAction, {IButtonActionProps} from "./ButtonAction/ButtonAction";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
-import ButtonAction, { IButtonActionProps } from "./ButtonAction/ButtonAction";
 import ButtonLocalizer from "./ButtonLocalizer";
 
 import styles from "./Button.module.scss";
@@ -77,9 +77,13 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
-
-    public static get Action(): (props: IButtonActionProps & IChildrenProps) => React.ReactElement {
-        return (props: IButtonActionProps & IChildrenProps) => <ButtonAction {...props as IButtonActionProps} />;
+    private _actionLoading: boolean = false;
+    private _actionLabel: string | undefined | null = null;
+    private _actionIcon: IIconProps | undefined | null = null;
+    private _actionIconPosition: Justify | undefined | null = null;
+    
+    public static get Action(): typeof ButtonAction {
+        return ButtonAction;
     }
 
     public isButton(): boolean { return true; }
@@ -167,6 +171,89 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         return !!this.props.children;
     }
 
+    private get showCaret(): boolean {
+        return this.hasActions && !this.rightSideIcon && !this._actionLabel;
+    }
+    
+    private get showActions(): boolean {
+        return this.hasActions && this.state.isOpen;
+    }
+
+    private get leftSideIcon(): IIconProps | null {
+        if (this._actionLabel && this._actionIcon && this._actionIconPosition !== Justify.Right) {
+            return this._actionIcon;
+        }
+
+        if (this._actionLabel) {
+            return null;
+        }
+        
+        if (this.props.icon) {
+            return this.props.icon; 
+        }
+        
+        return null;
+    }
+    
+    private get rightSideIcon(): IIconProps | null {
+        if (this._actionIcon && this._actionIconPosition === Justify.Right) {
+            return this._actionIcon;
+        }
+
+        if (this._actionIcon) {
+            return null;
+        }
+        
+        return null;
+    }
+
+    private get label(): string | undefined {
+        return this._actionLabel || this.props.label;
+    }
+    
+    // overriding children's onClick 
+    protected extendChildProps(element: React.ReactElement): any | null {
+        return {
+            onClick: async () => {
+                await this.onActionClickAsync(element.props);
+            }
+        }
+    }
+    
+    private async onActionClickAsync(childrenProps: IButtonActionProps): Promise<void> {
+        const node = this.getNode();
+        const width = node.outerWidth();
+
+        if (this._actionLoading) {
+            return; 
+        }
+
+        node.css({
+            width: `${width}px`
+        });
+
+        this._actionLabel = childrenProps.title;
+        this._actionIconPosition = childrenProps.iconPosition;
+        this._actionIcon = childrenProps.icon;
+        this._actionLoading = true;
+        await this.reRenderAsync();
+        
+        try {
+            await childrenProps.onClick();
+        } finally {
+            node.css({
+                width: ''
+            });
+
+            this._actionLabel = null;
+            this._actionIconPosition = null;
+            this._actionIcon = null;
+
+            this._actionLoading = false;
+            await this.reRenderAsync();
+        }
+    }
+
     public async onGlobalClick(e: React.MouseEvent): Promise<void> {
         const target = e.target as Node;
 
@@ -203,22 +290,16 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         data-dismiss={this.dataDismissModal}
                         onClick={async () => await this.onClickAsync(false)}
                         style={inlineStyles}>
-                    {this.props.icon && <Icon {...this.props.icon} tooltip={ButtonLocalizer.get(this.props.title)} />}
-                    <span>{this.props.label}</span>
+                    
+                    {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
-                    {
-                        this.hasActions && (
-                            <Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />
-                        )
-                    }
+                    <span>{this.label}</span>
 
-                    {
-                        this.hasActions && this.state.isOpen && (
-                            <div className={this.css(styles.actions, this.getStyleColor(), "actions-container")}>
-                                {this.props.children}
-                            </div>
-                        )
-                    }
+                    {this.rightSideIcon && <Icon {...this.rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
+
+                    {this.showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
+
+                    {this.showActions && (<div className={this.css(styles.actions, this.getStyleColor(), "actions-container")}> {this.children}</div>)}
 
                 </button>
                 {

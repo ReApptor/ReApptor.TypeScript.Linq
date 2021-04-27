@@ -1,6 +1,7 @@
 import React from "react";
 import {BaseComponent, ch, Justify} from "@weare/athenaeum-react-common";
-import {Button, ButtonType, Form, TwoColumns, ButtonContainer, FourColumns} from "@weare/athenaeum-react-components";
+import {Button, ButtonType, Form, TwoColumns, ButtonContainer, FourColumns, ButtonAction} from "@weare/athenaeum-react-components";
+import {Utility} from "@weare/athenaeum-toolkit";
 
 interface IButtonTestsState {
 }
@@ -146,9 +147,9 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         </Button>
 
                         <Button type={ButtonType.Orange} label={"Orange (multi, icon)"} icon={{name: "far plus"}}>
-                            <Button.Action title={"Action #1"} onClick={() => ch.alertMessageAsync("Action #1", true)} />
-                            <Button.Action title={"Action #2"} icon={{name: "fal plus"}} onClick={() => ch.alertMessageAsync("Action #2", true)} />
-                            <Button.Action title={"Action #3"} icon={{name: "fal plus"}} iconPosition={Justify.Right} onClick={() => ch.alertMessageAsync("Action #3", true)} />
+                            <Button.Action title={"Action #1"} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #1", true)}} />
+                            <Button.Action title={"Action #2"} icon={{name: "fal plus"}} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #2", true)}} />
+                            <Button.Action title={"Action #3"} icon={{name: "fal plus"}} iconPosition={Justify.Right} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #3", true)}} />
                         </Button>
 
                     </TwoColumns>
