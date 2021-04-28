@@ -242,7 +242,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             await childrenProps.onClick();
         } finally {
             node.css({
-                width: ''
+                width: ""
             });
 
             this._actionLabel = null;
