@@ -32,18 +32,6 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
 
                     <FourColumns>
 
-                        <Button label={"Default (block, disabled)"} type={ButtonType.Default} block disabled />
-
-                        <Button label={"Orange (block, disabled)"} type={ButtonType.Orange} block disabled />
-
-                        <Button label={"Blue (block, disabled)"} type={ButtonType.Blue} block disabled />
-
-                        <Button label={"Primary (block, disabled)"} type={ButtonType.Primary} block disabled />
-
-                    </FourColumns>
-
-                    <FourColumns>
-
                         <Button label={"Default (block, icon)"} type={ButtonType.Default} icon={{name: "far plus"}} block />
 
                         <Button label={"Orange (block, icon)"} type={ButtonType.Orange} icon={{name: "far plus"}} block />
@@ -54,6 +42,18 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
 
                     </FourColumns>
 
+                    <FourColumns>
+
+                        <Button label={"Default (block, disabled)"} type={ButtonType.Default} block disabled />
+
+                        <Button label={"Orange (block, disabled)"} type={ButtonType.Orange} block disabled />
+
+                        <Button label={"Blue (block, disabled)"} type={ButtonType.Blue} block disabled />
+
+                        <Button label={"Primary (block, disabled)"} type={ButtonType.Primary} block disabled />
+
+                    </FourColumns>
+                    
                     <FourColumns className={"mt-3"}>
 
                         <Button label={"Secondary (block)"} type={ButtonType.Secondary} block />
@@ -117,42 +117,6 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         <Button label={"Text (block, disabled)"} type={ButtonType.Text} block disabled />
 
                     </FourColumns>
-
-                    <ButtonContainer className={"mt-3"}>
-
-                        <Button label={"Default (icon)"} icon={{name: "far plus"}} />
-
-                        <Button label={"Blue (icon)"} icon={{name: "far user"}} type={ButtonType.Blue} />
-
-                        <Button label={"Orange (icon)"} icon={{name: "far user"}} type={ButtonType.Orange} />
-
-                    </ButtonContainer>
-
-                    <ButtonContainer>
-
-                        <Button label={"Default (icon, disabled)"} icon={{name: "far plus"}} disabled />
-
-                        <Button label={"Blue (icon, disabled)"} icon={{name: "far user"}} type={ButtonType.Blue} disabled />
-
-                        <Button label={"Orange (icon, disabled)"} icon={{name: "far user"}} type={ButtonType.Orange} disabled />
-
-                    </ButtonContainer>
-
-                    <TwoColumns className={"mt-3"}>
-
-                        <Button type={ButtonType.Orange} label={"Orange (multi)"}>
-                            <Button.Action title={"Action #1"} onClick={() => ch.alertMessageAsync("Action #1", true)} />
-                            <Button.Action title={"Action #2"} icon={{name: "fal plus"}} onClick={() => ch.alertMessageAsync("Action #2", true)} />
-                            <Button.Action title={"Action #3"} icon={{name: "fal plus"}} iconPosition={Justify.Right} onClick={() => ch.alertMessageAsync("Action #3", true)} />
-                        </Button>
-
-                        <Button type={ButtonType.Orange} label={"Orange (multi, icon)"} icon={{name: "far plus"}}>
-                            <Button.Action title={"Action #1"} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #1", true)}} />
-                            <Button.Action title={"Action #2"} icon={{name: "fal plus"}} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #2", true)}} />
-                            <Button.Action title={"Action #3"} icon={{name: "fal plus"}} iconPosition={Justify.Right} onClick={ async () => { await Utility.wait(3000); await ch.alertMessageAsync("Action #3", true)}} />
-                        </Button>
-
-                    </TwoColumns>
 
                     <FourColumns className={"mt-3"}>
 
