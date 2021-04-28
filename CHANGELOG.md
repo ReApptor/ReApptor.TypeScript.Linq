@@ -6,11 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-<br />
 
 ---
 
-<br />
 
 
 
@@ -30,11 +28,9 @@ example :
 
 #### Security
 
-<br />
 
 ---
 
-<br />
 
 
 ## @weare/athenaeum-react-components
@@ -71,11 +67,9 @@ latest version: `npm show @weare/athenaeum-react-components version`
 
 
 
-<br />
 
 ---
 
-<br />
 
 
 
@@ -91,11 +85,9 @@ latest version: `npm show @weare/athenaeum-react-common version`
 
 
 
-<br />
 
 ---
 
-<br />
 
 
 
