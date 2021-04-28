@@ -7,6 +7,7 @@ import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from
 import ButtonLocalizer from "./ButtonLocalizer";
 
 import styles from "./Button.module.scss";
+import {log} from "util";
 
 export enum ButtonType {
     Default,
@@ -151,6 +152,10 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         await this.setState({isOpen: false});
     }
 
+    private get actionsId(): string {
+        return `${this.id}_actions`
+    }
+    
     private get dataTarget(): string {
         return this.props.dataTarget || "";
     }
@@ -276,7 +281,12 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (this.props.minWidth) {
             inlineStyles.minWidth = this.props.minWidth;
         }
-
+        const width = this.getNode().outerWidth();
+        const actionsWidth = this.JQuery(`#${this.actionsId}`).outerWidth();
+        if (width && actionsWidth && actionsWidth >= width) {
+            inlineStyles.minWidth = actionsWidth;
+        }
+ 
         return (
             <React.Fragment>
                 <button id={this.id}
@@ -293,13 +303,13 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                     
                     {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
-                    <span>{this.label}</span>
+                    {this.label && <span>{this.label}</span>}
 
                     {this.rightSideIcon && <Icon {...this.rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
                     {this.showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
 
-                    {this.showActions && (<div className={this.css(styles.actions, this.getStyleColor(), "actions-container")}> {this.children}</div>)}
+                    {<div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
 
                 </button>
                 {
