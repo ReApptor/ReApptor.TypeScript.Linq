@@ -7,7 +7,6 @@ import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from
 import ButtonLocalizer from "./ButtonLocalizer";
 
 import styles from "./Button.module.scss";
-import {log} from "util";
 
 export enum ButtonType {
     Default,
@@ -78,6 +77,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
+    private _forcedMinWidth: number | null = null;
     private _actionLoading: boolean = false;
     private _actionLabel: string | undefined | null = null;
     private _actionIcon: IIconProps | undefined | null = null;
@@ -268,6 +268,18 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             await this.closeActions();
         }
     }
+    
+    async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+
+        const width = this.getNode().outerWidth();
+        const actionsWidth = this.JQuery(`#${this.actionsId}`).outerWidth();
+        if (width && actionsWidth && actionsWidth >= width) {
+            this._forcedMinWidth = actionsWidth;
+            await this.reRenderAsync();
+        }
+        return; 
+    }
 
     public render(): React.ReactNode {
         const blockStyle: any = (this.props.block) && "btn-block";
@@ -278,13 +290,12 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
 
         const inlineStyles: React.CSSProperties = this.props.style || {};
 
+        if (this._forcedMinWidth) {
+            inlineStyles.minWidth = this._forcedMinWidth;
+        }
+        
         if (this.props.minWidth) {
             inlineStyles.minWidth = this.props.minWidth;
-        }
-        const width = this.getNode().outerWidth();
-        const actionsWidth = this.JQuery(`#${this.actionsId}`).outerWidth();
-        if (width && actionsWidth && actionsWidth >= width) {
-            inlineStyles.minWidth = actionsWidth;
         }
  
         return (
@@ -303,13 +314,13 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                     
                     {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
-                    {this.label && <span>{this.label}</span>}
+                    {<span>{this.label}</span>}
 
                     {this.rightSideIcon && <Icon {...this.rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
                     {this.showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
 
-                    {<div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
+                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
 
                 </button>
                 {
