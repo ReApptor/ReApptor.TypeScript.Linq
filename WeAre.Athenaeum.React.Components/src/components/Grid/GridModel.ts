@@ -406,12 +406,13 @@ export class GridModel<TItem = {}> {
         this.clearAsync();
     }
     
-    public find(model: TItem): RowModel<TItem> | null {
-        return this.rows.find(row => Comparator.isEqual(row.model, model)) || null;
+    public find(model: TItem, equals?: (x: TItem, y: TItem) => boolean): RowModel<TItem> | null {
+        equals = equals ?? Comparator.isEqual;
+        return this.rows.find(row => equals!(row.model, model)) || null;
     }
 
-    public get(model: TItem): RowModel<TItem> {
-        const row: RowModel<TItem> | null = this.find(model);
+    public get(model: TItem, equals?: (x: TItem, y: TItem) => boolean): RowModel<TItem> {
+        const row: RowModel<TItem> | null = this.find(model, equals);
         
         if (row == null)
             throw Error("Row cannot be found, unknown model.");
