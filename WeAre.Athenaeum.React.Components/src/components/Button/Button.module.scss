@@ -89,7 +89,7 @@
 
 .actions {
     position: absolute;
-    width: calc(100% + 2px);
+    min-width: calc(100% + 2px);
     border-radius: 0.25rem;
     border: 1px solid #ccc !important;
     top: 33px;

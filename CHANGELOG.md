@@ -63,6 +63,14 @@ latest version: `npm show @weare/athenaeum-react-components version`
 
 
 
+### [1.0.643] - 2021-04-28
+
+#### Changed
+- ButtonAction width will be actions width if there is a longer text in actions and prevents jumping.
+
+
+
+
 <br />
 
 ---

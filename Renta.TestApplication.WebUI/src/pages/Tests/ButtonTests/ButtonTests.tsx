@@ -43,6 +43,18 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
 
                     <FourColumns>
 
+                        <Button type={ButtonType.Default} icon={{name: "far plus"}} block />
+
+                        <Button type={ButtonType.Orange} icon={{name: "far plus"}} block />
+
+                        <Button type={ButtonType.Blue} icon={{name: "far plus"}} block />
+
+                        <Button type={ButtonType.Primary} icon={{name: "far plus"}} block />
+
+                    </FourColumns>
+
+                    <FourColumns>
+
                         <Button label={"Default (block, disabled)"} type={ButtonType.Default} block disabled />
 
                         <Button label={"Orange (block, disabled)"} type={ButtonType.Orange} block disabled />
@@ -122,14 +134,18 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         <Button label={"Orange"} type={ButtonType.Orange} />
 
                         <Button label={"Orange (icon)"} icon={{name: "fal plus"}} type={ButtonType.Orange} />
+                        
+                        <Button icon={{name: "fal plus"}} type={ButtonType.Orange} />
 
                     </FourColumns>
 
                     <FourColumns>
 
-                        <Button label={"Orange (small)"} type={ButtonType.Orange} />
+                        <Button small label={"Orange (small)"} type={ButtonType.Orange} />
 
-                        <Button label={"Orange (small, icon)"} icon={{name: "fal plus"}} type={ButtonType.Orange} small />
+                        <Button small label={"Orange (small, icon)"} icon={{name: "fal plus"}} type={ButtonType.Orange} />
+                        
+                        <Button small icon={{name: "fal plus"}} type={ButtonType.Orange} />
 
                     </FourColumns>
 
