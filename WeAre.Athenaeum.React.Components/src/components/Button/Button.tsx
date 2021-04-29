@@ -274,8 +274,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
-        const width = this.getNode().outerWidth();
-        const actionsWidth = this.JQuery(`#${this.actionsId}`).outerWidth();
+        const width: number | undefined = this.getNode().outerWidth();
+        const actionsWidth: number | undefined = this.JQuery(`#${this.actionsId}`).outerWidth();
+        
         if (width && actionsWidth && actionsWidth >= width) {
             this._forcedMinWidth = actionsWidth;
             await this.reRenderAsync();
