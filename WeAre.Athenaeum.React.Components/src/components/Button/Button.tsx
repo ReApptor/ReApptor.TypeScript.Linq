@@ -153,7 +153,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private get actionsId(): string {
-        return `${this.id}_actions`
+        return `${this.id}_actions`;
     }
     
     private get dataTarget(): string {
@@ -225,8 +225,8 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
     }
     
-    private async onActionClickAsync(childrenProps: IButtonActionProps): Promise<void> {
-        const node = this.getNode();
+    private async onActionClickAsync(actionProps: IButtonActionProps): Promise<void> {
+        const node: JQuery = this.getNode();
         const width = node.outerWidth();
 
         if (this._actionLoading) {
@@ -237,14 +237,16 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             width: `${width}px`
         });
 
-        this._actionLabel = childrenProps.title;
-        this._actionIconPosition = childrenProps.iconPosition;
-        this._actionIcon = childrenProps.icon;
+        this._actionLabel = actionProps.title;
+        this._actionIconPosition = actionProps.iconPosition;
+        this._actionIcon = actionProps.icon;
         this._actionLoading = true;
         await this.reRenderAsync();
         
         try {
-            await childrenProps.onClick();
+            
+            await actionProps.onClick();
+            
         } finally {
             node.css({
                 width: ""
@@ -305,12 +307,13 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         disabled={this.props.disabled}
                         title={ButtonLocalizer.get(this.props.title)}
                         className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, iconPaddingStyle, labelPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
+                        style={inlineStyles}
                         data-target={`#${this.dataTarget}`}
                         data-modal={this.dataModal}
                         data-toggle={this.dataToggleModal}
                         data-dismiss={this.dataDismissModal}
-                        onClick={async () => await this.onClickAsync(false)}
-                        style={inlineStyles}>
+                        onClick={() => this.onClickAsync(false)}
+                >
                     
                     {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
@@ -323,6 +326,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                     {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
 
                 </button>
+                
                 {
                     (this.props.confirm) &&
                     (
@@ -332,6 +336,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         />
                     )
                 }
+                
             </React.Fragment>
         );
     }
