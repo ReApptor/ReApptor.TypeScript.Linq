@@ -300,6 +300,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public outerHeight(includeMargin: boolean = true): number {
         const node: JQuery = this.getNode();
         return node.outerHeight(includeMargin) || 0;
+    }    
+    
+    public outerWidth(includeMargin: boolean = true): number {
+        const node: JQuery = this.getNode();
+        return node.outerWidth(includeMargin) || 0;
     }
 
     protected constructor(props: TProps) {

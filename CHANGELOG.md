@@ -83,6 +83,11 @@ latest version: `npm show @weare/athenaeum-react-common version`
 `npm install @weare/athenaeum-react-common@latest`
 
 
+### [1.0.648] - 2021-04-30
+
+#### Added
+
+outerWidth method added to BaseComponent
 
 
 
