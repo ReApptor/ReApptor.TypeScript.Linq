@@ -18,6 +18,7 @@ import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } 
 import LocationPickerTests from "@/pages/Tests/LocationPickerTests/LocationPickerTests";
 import AccordionTests from "@/pages/Tests/AccordionTests/AccordionTests";
 import ButtonActionTests from "@/pages/Tests/ButtonActionTests/ButtonActionTests";
+import CheckboxTests from "@/pages/Tests/CheckboxTests/CheckboxTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -27,7 +28,7 @@ export default class Tests extends AnonymousPage {
 
     public render(): React.ReactNode {
         return (
-            <PageContainer>
+            <PageContainer  className="tests-page">
                 <PageHeader title="Tests" />
 
                 <PageRow>
@@ -36,6 +37,10 @@ export default class Tests extends AnonymousPage {
                     
                         <Tab id="buttonTests" title="Button">
                             <ButtonTests />
+                        </Tab> 
+                        
+                        <Tab id="checkboxTests" title="Checkbox">
+                            <CheckboxTests />
                         </Tab> 
                         
                         <Tab id="buttonActionTests" title="Button Action">
