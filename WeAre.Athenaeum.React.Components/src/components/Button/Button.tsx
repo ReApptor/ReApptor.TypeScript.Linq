@@ -77,11 +77,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
-    private _forcedMinWidth: number | null = null;
+    private _forcedWidth: number | null = null;
     private _actionLoading: boolean = false;
-    private _actionLabel: string | undefined | null = null;
-    private _actionIcon: IIconProps | undefined | null = null;
-    private _actionIconPosition: Justify | undefined | null = null;
+    private _actionProps: IButtonActionProps | null = null;
     
     public static get Action(): typeof ButtonAction {
         return ButtonAction;
@@ -177,7 +175,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private get showCaret(): boolean {
-        return this.hasActions && !this.rightSideIcon && !this._actionLabel;
+        return this.hasActions && !this.rightSideIcon && !this._actionProps?.title;
     }
     
     private get showActions(): boolean {
@@ -185,11 +183,11 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private get leftSideIcon(): IIconProps | null {
-        if (this._actionLabel && this._actionIcon && this._actionIconPosition !== Justify.Right) {
-            return this._actionIcon;
+        if (this._actionProps && this._actionProps.title && this._actionProps.icon && this._actionProps.iconPosition !== Justify.Right) {
+            return this._actionProps.icon;
         }
 
-        if (this._actionLabel) {
+        if (this._actionProps && this._actionProps.title) {
             return null;
         }
         
@@ -201,11 +199,11 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
     
     private get rightSideIcon(): IIconProps | null {
-        if (this._actionIcon && this._actionIconPosition === Justify.Right) {
-            return this._actionIcon;
+        if (this._actionProps && this._actionProps.icon && this._actionProps.iconPosition === Justify.Right) {
+            return this._actionProps.icon;
         }
 
-        if (this._actionIcon) {
+        if (this._actionProps && this._actionProps.icon) {
             return null;
         }
         
@@ -213,7 +211,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     private get label(): string | undefined {
-        return this._actionLabel || this.props.label;
+        return this._actionProps?.title || this.props.label;
     }
     
     // overriding children's onClick 
@@ -226,36 +224,19 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
     
     private async onActionClickAsync(actionProps: IButtonActionProps): Promise<void> {
-        const node: JQuery = this.getNode();
-        const width = node.outerWidth();
-
         if (this._actionLoading) {
             return; 
         }
-
-        node.css({
-            width: `${width}px`
-        });
-
-        this._actionLabel = actionProps.title;
-        this._actionIconPosition = actionProps.iconPosition;
-        this._actionIcon = actionProps.icon;
+        
+        this._actionProps = actionProps;
         this._actionLoading = true;
         await this.reRenderAsync();
         
         try {
-            
             await actionProps.onClick();
             
         } finally {
-            node.css({
-                width: ""
-            });
-
-            this._actionLabel = null;
-            this._actionIconPosition = null;
-            this._actionIcon = null;
-
+            this._actionProps = null;
             this._actionLoading = false;
             await this.reRenderAsync();
         }
@@ -274,14 +255,18 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
-        const width: number | undefined = this.getNode().outerWidth();
-        const actionsWidth: number | undefined = this.JQuery(`#${this.actionsId}`).outerWidth();
+        const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
         
-        if (width && actionsWidth && actionsWidth >= width) {
-            this._forcedMinWidth = actionsWidth;
-            await this.reRenderAsync();
+        const buttonWidth: number = this.outerWidth();
+        const actionsWidth: number = actionsDiv.outerWidth() || 0;
+
+        if (actionsWidth >= buttonWidth) {
+            this._forcedWidth = actionsWidth;
+        } else {
+            this._forcedWidth = buttonWidth;
         }
-        return; 
+        
+        this.reRenderAsync();
     }
 
     public render(): React.ReactNode {
@@ -293,8 +278,8 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
 
         const inlineStyles: React.CSSProperties = this.props.style || {};
 
-        if (this._forcedMinWidth) {
-            inlineStyles.minWidth = this._forcedMinWidth;
+        if (this._forcedWidth) {
+            inlineStyles.width = this._forcedWidth;
         }
         
         if (this.props.minWidth) {
