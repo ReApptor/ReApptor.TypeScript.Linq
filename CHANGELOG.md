@@ -65,6 +65,12 @@ latest version: `npm show @weare/athenaeum-react-components version`
 - ButtonAction width will be actions width if there is a longer text in actions and prevents jumping.
 
 
+### [1.0.650] - 2021-05-03
+
+#### Changed
+- DropDownListItem  changed from toMultiLines to toSmalls.
+
+
 
 
 
@@ -83,7 +89,7 @@ latest version: `npm show @weare/athenaeum-react-common version`
 `npm install @weare/athenaeum-react-common@latest`
 
 
-### [1.0.648] - 2021-04-30
+### [1.0.649] - 2021-04-30
 
 #### Added
 
