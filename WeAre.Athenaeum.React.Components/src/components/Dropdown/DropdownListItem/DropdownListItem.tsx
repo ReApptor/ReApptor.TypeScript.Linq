@@ -123,7 +123,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) && 
                         (
-                            <small>{ReactUtility.toMultiLines(DropdownLocalizer.get(item.subtext))}</small>
+                            <small>{ReactUtility.toSmalls(DropdownLocalizer.get(item.subtext))}</small>
                         )
                     }
                 </div>
