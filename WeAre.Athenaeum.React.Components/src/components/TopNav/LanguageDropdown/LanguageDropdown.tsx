@@ -16,7 +16,7 @@ let flags: any = {
     fi: fiFlag,
     no: noFlag,
     pl: plFlag,
-    sv: svFlag,
+    sv: svFlag
 };
 
 interface ILanguageDropdownProps {
