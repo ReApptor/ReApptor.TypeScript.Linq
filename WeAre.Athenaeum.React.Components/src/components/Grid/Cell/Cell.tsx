@@ -186,11 +186,13 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     private renderTextCellContent(cell: CellModel<TItem>, cellValue: string | null): React.ReactNode {
+        const noWrapStyle = cell.column.noWrap && gridStyles.noWrap;
+
         return (
             <div className={this.css(gridStyles.textContainer)}>
                 <TextInput clickToEdit
                            ref={this._inputRef as React.RefObject<TextInput>}
-                           className={this.css(gridStyles.textInput)}
+                           className={this.css(gridStyles.textInput, noWrapStyle)}
                            value={cellValue || ""}
                            title={cell.title}
                            onChange={async (sender, value, userInteraction, done) => await this.onTextCellChangeAsync(cell, value, userInteraction, done)}
