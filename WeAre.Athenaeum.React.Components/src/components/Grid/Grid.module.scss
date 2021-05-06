@@ -401,6 +401,18 @@
                                 }
                             }
                         }
+
+                        &.noWrap {
+                            > div {
+                                > div {
+                                    span {
+                                        max-height: 1px;
+                                        white-space: initial;
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
 
 
@@ -606,6 +618,17 @@
                                     height: 22px;
                                     padding: 0 2px;
                                     width: calc(100% + 3px);
+                                }
+                            }
+                        }
+
+                        &.noWrap {
+                            > div {
+                                > div {
+                                    span {
+                                        max-height: 1px;
+                                        white-space: initial;
+                                    }
                                 }
                             }
                         }
