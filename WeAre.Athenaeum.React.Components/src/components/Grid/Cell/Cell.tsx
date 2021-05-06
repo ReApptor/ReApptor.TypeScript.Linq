@@ -130,7 +130,9 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
             hasInfoValue = false;
         }
 
-        const overflow: boolean = !!cell.column.maxWidth || !!cell.column.maxHeight;
+        const overflowX: boolean = !!cell.column.maxWidth;
+        const overflowY: boolean = !!cell.column.maxHeight;
+        const overflow: boolean = overflowX || overflowY;
 
         const inlineStyles: React.CSSProperties = {
             textAlign: StylesUtility.textAlign(cell.column.textAlign),
@@ -140,7 +142,12 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         
         if (overflow) {
             inlineStyles.textOverflow = "ellipsis";
-            inlineStyles.overflowX = "hidden";
+            if (overflowX) {
+                inlineStyles.overflowX = "hidden";
+            }
+            if (overflowY) {
+                inlineStyles.overflowY = "hidden";
+            }
 
             if (!title) {
                 title = cellValue;
