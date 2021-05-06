@@ -255,18 +255,20 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
-        const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
-        
-        const buttonWidth: number = this.outerWidth();
-        const actionsWidth: number = actionsDiv.outerWidth() || 0;
+        if (this.hasActions) {
+            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
 
-        if (actionsWidth >= buttonWidth) {
-            this._forcedWidth = actionsWidth;
-        } else {
-            this._forcedWidth = buttonWidth;
+            const buttonWidth: number = this.outerWidth();
+            const actionsWidth: number = actionsDiv.outerWidth() || 0;
+
+            if (actionsWidth >= buttonWidth) {
+                this._forcedWidth = actionsWidth;
+            } else {
+                this._forcedWidth = buttonWidth;
+            }
+
+            this.reRenderAsync();
         }
-        
-        this.reRenderAsync();
     }
 
     public render(): React.ReactNode {
