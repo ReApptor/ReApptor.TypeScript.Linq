@@ -8,10 +8,7 @@
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    
-    span {
-        flex-grow: 1;
-    }
+
 
     &:focus {
         box-shadow: none !important;
@@ -84,6 +81,11 @@
             top: 10px;
             right: 0;
         }
+
+        span {
+            flex-grow: 1;
+        }
+        
     }
 }
 
