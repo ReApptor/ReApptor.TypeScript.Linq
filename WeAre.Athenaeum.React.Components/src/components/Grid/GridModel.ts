@@ -175,6 +175,8 @@ export class ColumnModel<TItem = {}> {
 
     public maxWidth: string | number | null = null;
     
+    public maxHeight: string | number | null = null;
+    
     public noWrap: boolean = false;
     
     public wordBreak: boolean = false;
@@ -730,6 +732,8 @@ export class ColumnDefinition {
     public minWidth?: string | number;
     
     public maxWidth?: string | number;
+    
+    public maxHeight?: string | number;
     
     public noWrap?: boolean;
     
@@ -1565,6 +1569,7 @@ export class GridTransformer {
         to.format = from.format || null;
         to.minWidth = from.minWidth || null;
         to.maxWidth = from.maxWidth || null;
+        to.maxHeight = from.maxHeight || null;
         to.noWrap = from.noWrap || false;
         to.wordBreak = from.wordBreak || false;
         to.stretch = from.stretch || false;

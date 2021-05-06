@@ -120,22 +120,24 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         let hasValue: boolean = (!!cellValue);
+        // noinspection SuspiciousTypeOfGuard
         let hasInfoValue: boolean = (!!infoValue) && (typeof infoValue === "string");
 
         if ((!hasValue) && (hasInfoValue)) {
             cellValue = infoValue;
             infoValue = "";
-            hasValue = true;
+            //hasValue = true;
             hasInfoValue = false;
         }
 
-        const overflow: boolean = !!cell.column.maxWidth;
+        const overflow: boolean = !!cell.column.maxWidth || !!cell.column.maxHeight;
 
         const inlineStyles: React.CSSProperties = {
             textAlign: StylesUtility.textAlign(cell.column.textAlign),
         };
 
         let title: string = cell.title;
+        
         if (overflow) {
             inlineStyles.textOverflow = "ellipsis";
             inlineStyles.overflowX = "hidden";
@@ -572,7 +574,8 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         const inlineStyles: React.CSSProperties = {
-            maxWidth: column.maxWidth || undefined
+            maxWidth: column.maxWidth || undefined,
+            maxHeight: column.maxHeight || undefined,
         };
 
         let noWrapClass: string | null = null;
