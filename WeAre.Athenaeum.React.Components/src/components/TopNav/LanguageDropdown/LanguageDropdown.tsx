@@ -6,6 +6,7 @@ import styles from "./LanguageDropdown.module.scss";
 import deFlag from './flags/de.png';
 import enFlag from './flags/en.png';
 import fiFlag from './flags/fi.png';
+import nbFlag from './flags/nb.png';
 import noFlag from './flags/no.png';
 import plFlag from './flags/pl.png';
 import svFlag from './flags/sv.png';
@@ -14,6 +15,7 @@ let flags: any = {
     de: deFlag,
     en: enFlag,
     fi: fiFlag,
+    nb: nbFlag,
     no: noFlag,
     pl: plFlag,
     sv: svFlag
