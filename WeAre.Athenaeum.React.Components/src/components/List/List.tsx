@@ -12,8 +12,8 @@ interface IListProps<TItem = {}> {
     className?: string;
     items?: TItem[];
     orderBy?: DropdownOrderBy;
-    selectedItem?: TItem | string;
-    selectedItems?: TItem[] | string[];
+    selectedItem?: TItem | string | number;
+    selectedItems?: TItem[] | string[] | number[];
     required?: boolean;
     multiple?: boolean;
     filterMinLength?: number;
@@ -100,7 +100,7 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
         return this.dropdown.selectedValue;
     }
 
-    public find(item: TItem | string | null): SelectListItem | null {
+    public find(item: TItem | string | number | null): SelectListItem | null {
         return this.dropdown.find(item);
     }
     
@@ -116,11 +116,11 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
         await this.dropdown.selectAsync(itemOrItems);
     }
     
-    public async selectListItemAsync(item: SelectListItem | string | null): Promise<void> {
+    public async selectListItemAsync(item: SelectListItem | string | number | null): Promise<void> {
         await this.dropdown.selectListItemAsync(item);
     }
     
-    public async selectListItemsAsync(items: SelectListItem[] | string[] | null): Promise<void> {
+    public async selectListItemsAsync(items: SelectListItem[] | string[] | number[] | null): Promise<void> {
         await this.dropdown.selectListItemsAsync(items);
     }
 

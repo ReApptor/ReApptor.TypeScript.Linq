@@ -118,8 +118,8 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     noWrap?: boolean;
     orderBy?: DropdownOrderBy;
     items: TItem[];
-    selectedItem?: TItem | string;
-    selectedItems?: TItem[] | string[];
+    selectedItem?: TItem | string | number;
+    selectedItems?: TItem[] | string[] | number[];
     selectType?: DropdownSelectType;
     align?: DropdownAlign;
     verticalAlign?: DropdownVerticalAlign;
@@ -166,15 +166,15 @@ export interface IDropdown<TItem = {}> {
     selectedItem: TItem | null;
     selectedValues: string[];
     selectedValue: string | null;
-    find(item: TItem | string | null): SelectListItem | null;
+    find(item: TItem | string | number | null): SelectListItem | null;
     unselectAllAsync(): Promise<void>;
     selectItemAsync(item: TItem | null): Promise<void>;
-    selectAsync(itemOrItems: TItem | string | TItem[] | string[] | null): Promise<void>;
-    selectListItemAsync(item: SelectListItem | string | null): Promise<void>;
-    selectListItemsAsync(items: SelectListItem[] | string[] | null): Promise<void>;
+    selectAsync(itemOrItems: TItem | string | TItem[] | string[] | number[] | null): Promise<void>;
+    selectListItemAsync(item: SelectListItem | string | number | null): Promise<void>;
+    selectListItemsAsync(items: SelectListItem[] | string[] | number[] | null): Promise<void>;
 }
 
-export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownProps<TItem>, IDropdownState> implements IGlobalClick, IGlobalKeydown, IDropdown {
+export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownProps<TItem>, IDropdownState> implements IGlobalClick, IGlobalKeydown, IDropdown<TItem> {
     private readonly _filterInputRef: React.RefObject<HTMLInputElement> = React.createRef();
     private readonly _scrollableContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _itemsListRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -196,7 +196,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         availableHeight: 0
     };
 
-    private onFilterInputClickAsync(): void {
+    private onFilterInputClick(): void {
         if ((this.desktop) && (this._filterInputRef.current)) {
             this._filterInputRef.current!.focus();
         }
@@ -237,15 +237,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             return selectListItem;
         }
 
-        const value: any = Utility.findStringValueByAccessor(item, ["value"]);
         const id: any = Utility.findValueByAccessor(item, ["id", "code"]);
+        const value: string | null = Utility.findStringValueByAccessor(item, ["value"]);
         const name: string | null = Utility.findStringValueByAccessor(item, ["name", "text", "label"]);
         const subtext: string | null = Utility.findStringValueByAccessor(item, ["subtext", "description"]);
         const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
         const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
         const deleted: any | null = Utility.findValueByAccessor(item, ["delete", "isDeleted"]);
         
-        const selectListItem = (deleted == true) 
+        const selectListItem = (deleted == true)
             ? new StatusListItem(true, true)
             : new SelectListItem();
 
@@ -612,7 +612,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.filterHandlerAsync();
     }
 
-    private async initializeItemsAsync(items: TItem[], selectedItem: TItem | string | null | undefined, selectedItems: TItem[] | string[] | null | undefined): Promise<void> {
+    private async initializeItemsAsync(items: TItem[], selectedItem: TItem | string | number | null | undefined, selectedItems: TItem[] | string[] | number[] | null | undefined): Promise<void> {
         
         const prevSelectedItem: SelectListItem | null = this.selectedListItem;
         
@@ -647,16 +647,20 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.invokeOnItemsChangeAsync();
     }
 
-    private async invokeSelectListItemsAsync(items: SelectListItem[] | string[] | null, callback: boolean): Promise<void> {
+    private async invokeSelectListItemsAsync(items: SelectListItem[] | string[] | number[] | null, callback: boolean): Promise<void> {
         
         if ((this.multiple) && (items != null)) {
 
             const itemValues = new Set<string>();
             for (let i: number = 0; i < items.length; i++) {
-                const item: SelectListItem | string = items[i];
+                const item: SelectListItem | string | number = items[i];
+                
                 const value: string = (typeof item === "string")
                     ? item
-                    : item.value;
+                    : (typeof item === "number")
+                        ? item.toString()
+                        : item.value;
+                
                 if (!itemValues.has(value)) {
                     itemValues.add(value);
                 }
@@ -697,7 +701,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     }
 
-    private async invokeSelectAsync(itemOrItems: TItem | string | TItem[] | string[] | null, callback: boolean): Promise<void> {
+    private async invokeSelectAsync(itemOrItems: TItem | string | number | TItem[] | string[] | number[] | null, callback: boolean): Promise<void> {
         if (itemOrItems != null) {
 
             if (Array.isArray(itemOrItems)) {
@@ -721,10 +725,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private async invokeSelectListItemAsync(item: SelectListItem | string | null, callback: boolean): Promise<void> {
+    private async invokeSelectListItemAsync(item: SelectListItem | string | number | null, callback: boolean): Promise<void> {
         if (item != null) {
 
-            const itemValue: string = (typeof item === "string") ? item : item.value;
+            const itemValue: string = (typeof item === "string")
+                ? item
+                : (typeof item === "number")
+                    ? item.toString()
+                    : item.value;
+            
             const listItem: SelectListItem | null = this.find(itemValue);
 
             if ((listItem != null) && (!listItem.selected)) {
@@ -913,7 +922,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         //If no items (data) yet, return props.selectedItems if it is specified
         if ((this.multiple) && (items.length == 0) && (this.listItems.length === 0)) {
-            const selectedItems: TItem[] | string[] | null = this.props.selectedItems || null;
+            const selectedItems: TItem[] | string[] | number[] | null = this.props.selectedItems || null;
             if ((selectedItems) && (typeof selectedItems[0] === "object")) {
                 return (selectedItems as TItem[]).map(item => this.transform(item));
             }
@@ -935,7 +944,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         //If no items (data) yet, return props.selectedItem if it is specified
         if (this.listItems.length === 0) {
-            const selectedItem: TItem | string | null = this.props.selectedItem || null;
+            const selectedItem: TItem | string | number | null = this.props.selectedItem || null;
             if ((selectedItem != null) && (typeof selectedItem === "object")) {
                 return this.transform(selectedItem);
             }
@@ -1029,11 +1038,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.invokeSelectAsync(itemOrItems, true);
     }
 
-    public async selectListItemAsync(item: SelectListItem | string | null): Promise<void> {
+    public async selectListItemAsync(item: SelectListItem | string | number | null): Promise<void> {
         await this.invokeSelectListItemAsync(item, true);
     }
 
-    public async selectListItemsAsync(items: SelectListItem[] | string[] | null): Promise<void> {
+    public async selectListItemsAsync(items: SelectListItem[] | string[] | number[] | null): Promise<void> {
         await this.invokeSelectListItemsAsync(items, true);
     }
 
@@ -1068,11 +1077,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired)) {
 
-            const selectedItem: TItem | string | null | undefined = (newSelectedListItem)
+            const selectedItem: TItem | string | number | null | undefined = (newSelectedListItem)
                 ? nextProps.selectedItem
                 : (nextProps.selectedItem || this.getSelectedListItem(nextProps.items) || this.selectedItem);
 
-            const selectedItems: TItem[] | string[] | null | undefined = (newSelectedListItems)
+            const selectedItems: TItem[] | string[] | number[] | null | undefined = (newSelectedListItems)
                 ? nextProps.selectedItems
                 : (nextProps.selectedItems || this.getSelectedListItems(nextProps.items) || this.selectedItems);
 
@@ -1102,7 +1111,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                     await this.scrollToSelected(false);
                 }
                 
-                await this.onFilterInputClickAsync();
+                this.onFilterInputClick();
             }
         }
     }
@@ -1129,12 +1138,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         this.reRenderAsync();
     }
     
-    public find(item: TItem | string | null): SelectListItem | null {
+    public find(item: TItem | string | number | null): SelectListItem | null {
         if ((item != null) && (this.listItems)) {
 
             const itemValue: string = (typeof item === "string")
                 ? item
-                : this.transform(item).value;
+                : (typeof item === "number")
+                    ? item.toString()
+                    : this.transform(item).value;
 
             if (itemValue) {
                 return this.listItems.find(item => item.value === itemValue) || null;
@@ -1428,7 +1439,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                     {
                         (this.hasFilter) &&
                         (
-                            <div className={styles.filter} onClick={async () => await this.onFilterInputClickAsync()}>
+                            <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
                                 
                                 <input ref={this._filterInputRef}
                                        className="form-control filter"

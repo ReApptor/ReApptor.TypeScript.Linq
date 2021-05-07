@@ -4,6 +4,7 @@ import { CellModel, ColumnSettings } from "../../GridModel";
 import Comparator from "../../../../helpers/Comparator";
 import Dropdown, { DropdownOrderBy } from "../../../Dropdown/Dropdown";
 import { IInput } from "../../../BaseInput/BaseInput";
+import {SelectListItem} from "../../../Dropdown/SelectListItem";
 
 import gridStyles from "../../Grid.module.scss";
 
@@ -29,6 +30,10 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
         const cell: CellModel<TItem> = this.model;
         
         let modelValue: any = value;
+        
+        if ((modelValue != null) && ((modelValue instanceof SelectListItem) || (modelValue.isSelectListItem))) {
+            modelValue = parseInt(modelValue.value);
+        }
         
         if ((this.settings.multiple) && (this.items)) {
             const selectedItems: TItem[] = sender.selectedItems;
@@ -91,28 +96,19 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
         return this.state.data || [];
     }
 
-    public get value(): TItem | string | null {
+    public get value(): TItem | string | number | null {
         return this.model.value;
     }
 
-    public get selectedItem(): TItem | null {
-        if (!this.settings.multiple) {
-            const value: TItem | string | null = this.value;
-            if (value != null) {
-                if (typeof value === "string") {
-                    return this.items.find(item => Comparator.isEqual(item, value)) || null;
-                }
-                return value;
-            }
-        }
-        return null;
+    public get selectedItem(): TItem | string | number | null {
+        return (!this.settings.multiple) ? this.value : null;
     }
 
-    public get values(): TItem[] | string[] | null {
+    public get values(): TItem[] | string[] | number[] | null {
         return this.model.value;
     }
 
-    public get selectedItems(): TItem[] | string[] | null {
+    public get selectedItems(): TItem[] | string[] | number[] | null {
         return (this.settings.multiple) ? this.values : null;
     }
 
@@ -122,7 +118,7 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
         this.props.cell.inputContentInstance = this._inputRef.current;
     }
     
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         
         this.model.asyncContentInstance = this;
         

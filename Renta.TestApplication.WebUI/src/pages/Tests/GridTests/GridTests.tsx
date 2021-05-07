@@ -1,10 +1,20 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType} from "@weare/athenaeum-react-components";
+import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
+}
+
+enum GridEnum {
+    First,
+    
+    Second,
+    
+    Third,
+    
+    Forth
 }
 
 class GridItem {
@@ -23,6 +33,8 @@ class GridItem {
     public value: string = "";
     
     public address: string = "";
+    
+    public enum: GridEnum = GridEnum.Second;
 }
 
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
@@ -86,6 +98,20 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             minWidth: 150
         } as ColumnDefinition,
         {
+            header: "Enum",
+            accessor: "enum",
+            type: ColumnType.Dropdown,
+            sorting: true,
+            noWrap: true,
+            minWidth: "5rem",
+            settings: {
+                required: true,
+                nothingSelectedText: "-",
+                fetchItems: async () => this.getEnumItems()
+            },
+            callback: async (cell) => this.setEnumAsync(cell),
+        } as ColumnDefinition,
+        {
             header: "Address",
             accessor: "address",
             type: ColumnType.Address,
@@ -98,12 +124,47 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         } as ColumnDefinition,
     ];
 
+    private getEnumItems(): SelectListItem[] {
+        return [
+            new SelectListItem(GridEnum.First.toString(), this.getEnumText(GridEnum.First)),
+            new SelectListItem(GridEnum.Second.toString(), this.getEnumText(GridEnum.Second)),
+            new SelectListItem(GridEnum.Third.toString(), this.getEnumText(GridEnum.Third)),
+            new SelectListItem(GridEnum.Forth.toString(), this.getEnumText(GridEnum.Forth)),
+        ];
+    }
+
+    private getEnumText(value: GridEnum): string {
+        switch (value) {
+            case GridEnum.First: return "First";
+            case GridEnum.Second: return "Second";
+            case GridEnum.Third: return "Third";
+            case GridEnum.Forth: return "Forth";
+        }
+        return "GridEnum:" + value;
+    }
+
+    private async setEnumAsync(cell: CellModel<GridItem>): Promise<void> {
+        const model: GridItem = cell.row.model;
+        const value: GridEnum = model.enum;
+        console.log("setEnumAsync:", model, value);
+    }
+
     private get items(): GridItem[] {
         if (this._items == null) {
             this._items = [];
             const count: number = 100;
             for (let i: number = 0; i < count; i++) {
-                const item = { index: i, name: `Item #${i + 1}`, code: "#" + i, float: Math.random(), int: Math.round(100 * Math.random()), date: new Date(), value: Math.round(100 * Math.random()).toString() } as GridItem;
+                const item: GridItem = {
+                    index: i,
+                    name: `Item #${i + 1}`,
+                    code: "#" + i,
+                    float: Math.random(),
+                    int: Math.round(100 * Math.random()),
+                    date: new Date(),
+                    value: Math.round(100 * Math.random()).toString(),
+                    enum: Math.round(3 * Math.random()),
+                    address: ""
+                };
                 this._items.push(item);
             }
         }
@@ -139,13 +200,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
                 </Form>
 
-                <Grid ref={this._gridRef} pagination={10}
+                <Grid ref={this._gridRef}
+                      pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.Row}
                       fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(sender, pageNumber, pageSize, sortColumnName, sortDirection)}
                 />
-
 
             </React.Fragment>
         );
