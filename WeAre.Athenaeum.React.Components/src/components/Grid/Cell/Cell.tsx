@@ -496,6 +496,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const readonly: boolean = cell.isReadonly;
         const deleted: boolean = cell.isDeleted;
         const visible: boolean = cell.visible;
+        const type: ColumnType = cell.type;
 
         if (column.render) {
             cellContent = column.render(cell);
@@ -503,7 +504,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
             let rendered: boolean = false;
 
-            if (column.type == ColumnType.Icon) {
+            if (type == ColumnType.Icon) {
                 cellStyle = gridStyles.defaultCell;
                 cellContent = this.renderIconCellContent(cell, cellValue);
                 rendered = true;
@@ -511,7 +512,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
             }
 
             if ((!readonly) && (!deleted)) {
-                switch (column.type) {
+                switch (type) {
                     case ColumnType.Enum:
 
                         if (!format)
