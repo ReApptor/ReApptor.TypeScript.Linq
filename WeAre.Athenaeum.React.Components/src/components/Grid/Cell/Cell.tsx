@@ -1,18 +1,18 @@
 import React from "react";
-import {Utility, TFormat, GeoLocation, IEnumProvider, ServiceProvider} from "@weare/athenaeum-toolkit";
-import {ReactUtility, StylesUtility, PageRouteProvider, BaseComponent} from "@weare/athenaeum-react-common";
+import {GeoLocation, IEnumProvider, ServiceProvider, TFormat, Utility} from "@weare/athenaeum-toolkit";
+import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility} from "@weare/athenaeum-react-common";
 import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell} from "../GridModel";
 import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
 import Comparator from "../../../helpers/Comparator";
-import Icon, { IconSize, IIconProps } from "../../Icon/Icon";
-import { SelectListItem } from "../../Dropdown/SelectListItem";
-import { IInput } from "../../BaseInput/BaseInput";
+import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
+import {SelectListItem} from "../../Dropdown/SelectListItem";
+import {IInput} from "../../BaseInput/BaseInput";
 import AddressInput from "../../AddressInput/AddressInput";
 import TextInput from "../../TextInput/TextInput";
 import NumberInput from "../../NumberInput/NumberInput";
 import DateInput from "../../DateInput/DateInput";
-import Dropdown, { DropdownAlign, DropdownOrderBy, DropdownVerticalAlign } from "../../Dropdown/Dropdown";
+import Dropdown, {DropdownAlign, DropdownOrderBy, DropdownVerticalAlign} from "../../Dropdown/Dropdown";
 import GridLocalizer from "../GridLocalizer";
 
 import gridStyles from "../Grid.module.scss";
@@ -24,15 +24,15 @@ interface ICellProps<TItem = {}> {
 export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> implements ICell {
 
     private readonly _inputRef: React.RefObject<IInput> = React.createRef();
-    
-    private findValueByAccessor(model: TItem, accessor: string | GridAccessorCallback<any> | null = null): any {
+
+    private findValueByGridAccessor(model: TItem, accessor: string | GridAccessorCallback<any> | null = null): any {
         return (accessor)
             ? (typeof accessor === "function")
                 ? accessor(model)
                 : Utility.findValueByAccessor(model, accessor)
             : null;
     }
-
+    
     private async invokeCallback(cell: CellModel<TItem>): Promise<void> {
         const column: ColumnModel<TItem> = cell.column;
 
@@ -99,7 +99,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         let infoValue: string = "";
 
         if (hasInfo) {
-            infoValue = this.findValueByAccessor(cell.model, settings.infoAccessor!) as string;
+            infoValue = this.findValueByGridAccessor(cell.model, settings.infoAccessor!) as string;
             const infoFormat: TFormat | null = (cell.column.settings.infoFormat != null) ? cell.column.settings.infoFormat : cell.column.format;
             
             infoValue = ((settings.hideZero) && (!infoValue))
@@ -251,7 +251,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         
         let hasInfo: boolean = (!!settings.infoAccessor);
 
-        let infoValue: any = (hasInfo) ? this.findValueByAccessor(cell.model, settings.infoAccessor!) : null;
+        let infoValue: any = (hasInfo) ? this.findValueByGridAccessor(cell.model, settings.infoAccessor!) : null;
 
         const hideInfo: boolean = (hasInfo) &&
             (
@@ -307,7 +307,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         let hasInfo: boolean = (!!settings.infoAccessor);
 
         let infoValue: any = (hasInfo)
-            ? this.findValueByAccessor(cell.model, settings.infoAccessor!)
+            ? this.findValueByGridAccessor(cell.model, settings.infoAccessor!)
             : null;
 
         const hideInfo: boolean = (hasInfo) &&
