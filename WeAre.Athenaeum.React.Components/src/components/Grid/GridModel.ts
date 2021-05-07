@@ -1070,6 +1070,8 @@ export class CellModel<TItem = {}> {
     public deleted: boolean = false;
     
     public title: string = "";
+
+    public type: ColumnType = ColumnType.Custom;
     
     public route: PageRoute | null = null;
     
@@ -1609,6 +1611,7 @@ export class GridTransformer {
         to.grid = grid;
         to.row = row;
         to.column = column;
+        to.type = column.type;
         to.actions = column.actions.map((columnAction) => this.toCellAction<TItem>(columnAction));
         if (column.settings.descriptionAccessor) {
             to.actions.push(this.toDescriptionCellAction(column));
