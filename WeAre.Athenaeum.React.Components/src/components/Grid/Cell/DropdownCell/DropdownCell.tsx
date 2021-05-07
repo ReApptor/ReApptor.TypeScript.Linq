@@ -41,7 +41,7 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
         }
 
         const cellState: boolean = cell.modified;
-        
+
         cell.setValue(modelValue);
 
         if ((userInteraction) && (cell.column.callback)) {

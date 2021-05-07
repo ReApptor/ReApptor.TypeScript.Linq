@@ -1,7 +1,7 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem} from "@weare/athenaeum-react-components";
+import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean
@@ -106,10 +106,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             minWidth: "5rem",
             settings: {
                 required: true,
+                requiredType: DropdownRequiredType.AutoSelect,
                 nothingSelectedText: "-",
                 fetchItems: async () => this.getEnumItems()
-            },
-            callback: async (cell) => this.setEnumAsync(cell),
+            }
         } as ColumnDefinition,
         {
             header: "Address",
@@ -143,16 +143,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return "GridEnum:" + value;
     }
 
-    private async setEnumAsync(cell: CellModel<GridItem>): Promise<void> {
-        const model: GridItem = cell.row.model;
-        const value: GridEnum = model.enum;
-        console.log("setEnumAsync:", model, value);
-    }
-
     private get items(): GridItem[] {
         if (this._items == null) {
             this._items = [];
-            const count: number = 100;
+            const count: number = 1;//100;
             for (let i: number = 0; i < count; i++) {
                 const item: GridItem = {
                     index: i,
