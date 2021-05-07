@@ -8,7 +8,8 @@
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-
+    min-width: 35px;
+    min-height: 35px;
 
     &:focus {
         box-shadow: none !important;
@@ -36,6 +37,8 @@
         font-size: 0.8rem !important;
         padding: 0.375rem;
         height: auto;
+        min-width: 33px;
+        min-height: 33px;
 
         &.iconPadding.labelPadding {
             padding-right: 0.7rem;
