@@ -14,7 +14,7 @@ import {
     IconStyle,
     IIconProps,
     IStringInputModel,
-    TwoColumns, SelectListItem, TextInput
+    TwoColumns, SelectListItem, TextInput, OneColumn
 } from "@weare/athenaeum-react-components";
 
 import styles from "./DropdownTests.module.scss";
@@ -68,7 +68,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         selectedTextFormat: false,
         width: styles.auto,
         align: null,
-        verticalAlign: null
+        verticalAlign: DropdownVerticalAlign.Auto
     };
 
     private readonly _ref: React.RefObject<Dropdown<any>> = React.createRef();
@@ -177,10 +177,44 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
     }
 
     public render(): React.ReactNode {
-
+        const DropdownTemplate = (id: string) => {
+            return (                    
+                <Dropdown id={id} ref={this._ref} noWrap
+                label="Dropdown"
+                className={this.state.width}
+                items={this.items}
+                multiple={this.state.multiple}
+                groupSelected={this.state.groupSelected}
+                noFilter={this.state.noFilter}
+                favorite={this.state.favorite}
+                required={this.state.required}
+                requiredType={this.state.requiredType}
+                disabled={this.state.disabled}
+                autoCollapse={this.state.autoCollapse}
+                noSubtext={this.state.noSubtext}
+                subtextType={this.state.subtextType}
+                selectType={this.state.selectType}
+                addButton={this.state.addButton}
+                selectedTextFormat={this.state.selectedTextFormat}
+                align={this.state.align || undefined}
+                verticalAlign={this.state.verticalAlign || undefined}
+                toggleIcon={(this.state.withToggleIconName && !this.state.withToggleIconProps)
+                    ? this._toggleIconNameModel.value
+                    : (!this.state.withToggleIconName && this.state.withToggleIconProps)
+                        ? this._customToggleIcon
+                        : undefined
+                }
+                onAdd={() => this.addAsync()}
+            />)
+        }
+        
         return (
             <div className={styles.dropdownTests}>
 
+                <OneColumn className="pb-3">
+                    {DropdownTemplate("ddTestTop")}
+                </OneColumn>
+                
                 <TwoColumns>
 
                     <Form>
@@ -321,35 +355,13 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
                     </Form>
 
-                    <Dropdown id="ddTest" ref={this._ref} noWrap
-                              label="Dropdown"
-                              className={this.state.width}
-                              items={this.items}
-                              multiple={this.state.multiple}
-                              groupSelected={this.state.groupSelected}
-                              noFilter={this.state.noFilter}
-                              favorite={this.state.favorite}
-                              required={this.state.required}
-                              requiredType={this.state.requiredType}
-                              disabled={this.state.disabled}
-                              autoCollapse={this.state.autoCollapse}
-                              noSubtext={this.state.noSubtext}
-                              subtextType={this.state.subtextType}
-                              selectType={this.state.selectType}
-                              addButton={this.state.addButton}
-                              selectedTextFormat={this.state.selectedTextFormat}
-                              align={this.state.align || undefined}
-                              verticalAlign={this.state.verticalAlign || undefined}
-                              toggleIcon={(this.state.withToggleIconName && !this.state.withToggleIconProps)
-                                  ? this._toggleIconNameModel.value
-                                    : (!this.state.withToggleIconName && this.state.withToggleIconProps)
-                                  ? this._customToggleIcon
-                                      : undefined
-                              }
-                              onAdd={() => this.addAsync()}
-                    />
+                    {DropdownTemplate("ddTestMiddle")}
 
                 </TwoColumns>
+                
+                <OneColumn>
+                    {DropdownTemplate("ddTestBottom")}
+                </OneColumn>
 
             </div>
         );
