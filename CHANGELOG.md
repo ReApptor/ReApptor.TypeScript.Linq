@@ -65,12 +65,22 @@ latest version: `npm show @weare/athenaeum-react-components version`
 - ButtonAction width will be actions width if there is a longer text in actions and prevents jumping.
 
 
+
+
+
 ### [1.0.650] - 2021-05-03
 
 #### Changed
 - DropDownListItem  changed from toMultiLines to toSmalls.
 
 
+
+
+### [1.0.662] - 2021-05-10
+
+#### Changed
+- Dropdown fix where Assigning to vertical align would turn to auto.
+- Added some padding to dropdown when opening to top.
 
 
 

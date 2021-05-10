@@ -197,7 +197,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                 addButton={this.state.addButton}
                 selectedTextFormat={this.state.selectedTextFormat}
                 align={this.state.align || undefined}
-                verticalAlign={this.state.verticalAlign || undefined}
+                verticalAlign={this.state.verticalAlign ?? undefined}
                 toggleIcon={(this.state.withToggleIconName && !this.state.withToggleIconProps)
                     ? this._toggleIconNameModel.value
                     : (!this.state.withToggleIconName && this.state.withToggleIconProps)
@@ -324,7 +324,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                                   orderBy={DropdownOrderBy.None}
                                   transform={(item) => new SelectListItem(item.toString(), this.getDropdownVerticalAlignName(item), null, item)}
                                   items={[-1, DropdownVerticalAlign.Auto, DropdownVerticalAlign.Top, DropdownVerticalAlign.Bottom]}
-                                  selectedItem={this.state.verticalAlign || -1}
+                                  selectedItem={this.state.verticalAlign ?? -1}
                                   onChange={async (sender, value) => await this.setState({ verticalAlign: (value != -1) ? value : null })}
                         />
 

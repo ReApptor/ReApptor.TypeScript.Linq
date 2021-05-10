@@ -1,12 +1,12 @@
 import React from "react";
-import {ISelectListItem, ITransformProvider, ITypeConverter, TTypeConverter, Utility, ServiceProvider, TypeConverter} from "@weare/athenaeum-toolkit";
-import { IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign, BaseInputType } from "@weare/athenaeum-react-common";
+import {ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/athenaeum-toolkit";
+import {BaseInputType, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/athenaeum-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem} from "./SelectListItem";
 import Comparator from "../../helpers/Comparator";
 import DropdownListItem from "./DropdownListItem/DropdownListItem";
-import Button, { ButtonType } from "../Button/Button";
+import Button, {ButtonType} from "../Button/Button";
 import DropdownLocalizer from "./DropdownLocalizer";
 
 import styles from "./Dropdown.module.scss";
@@ -14,6 +14,7 @@ import styles from "./Dropdown.module.scss";
 const FILTER_MIN_LENGTH = 6;
 const FILTER_MAX_LENGTH = 1000;
 const SELECTED_TEXT_FORMAT = 3;
+const EXPAND_TOP_PADDING = 150;
 
 export class AmountListItem extends SelectListItem {
 
@@ -177,6 +178,7 @@ export interface IDropdown<TItem = {}> {
 export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownProps<TItem>, IDropdownState> implements IGlobalClick, IGlobalKeydown, IDropdown<TItem> {
     private readonly _filterInputRef: React.RefObject<HTMLInputElement> = React.createRef();
     private readonly _scrollableContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
+    private readonly _listContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _itemsListRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private _maxHeight: number | string | null = null;
@@ -385,12 +387,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private getVerticalAlign(): DropdownVerticalAlign {
-        let align: DropdownVerticalAlign = this.props.verticalAlign || DropdownVerticalAlign.Auto;
+        let align: DropdownVerticalAlign = this.props.verticalAlign ?? DropdownVerticalAlign.Auto;
+
         if (align == DropdownVerticalAlign.Auto) {
-            if (!this.expandBottom) {
-                align = DropdownVerticalAlign.Top;
-            }
+            align = this.expandTop ? DropdownVerticalAlign.Top : DropdownVerticalAlign.Bottom;
         }
+        
         return align;
     }
     
@@ -802,35 +804,22 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.setState({filteredItems});
     }
     
-    private get expandBottom(): boolean {
+    private get expandTop(): boolean {
         const dropdownNode: JQuery = this.getNode();
         
         if (dropdownNode.length) {
-            const viewPortHeight: number = window.innerHeight;
             const pageYOffset: number = window.pageYOffset;
             
             const dropdownNodeTop: number = (dropdownNode.offset()!.top - pageYOffset) + dropdownNode.height()! * 2;
             
-            const filterInput: HTMLInputElement | null = this._filterInputRef.current;
-            const scrollableContainer: HTMLDivElement | null = this._scrollableContainerRef.current;
+            const listContainer: HTMLDivElement | null = this._listContainerRef.current;
             
-            const filterInputHeight: number = filterInput ? filterInput.clientHeight : 0;
-            const scrollableContainerHeight: number = scrollableContainer ? scrollableContainer.clientHeight : 0;
+            const listContainerHeight: number = listContainer ? listContainer.clientHeight : 0;
             
-            const expandableContainerHeight: number = filterInputHeight + scrollableContainerHeight;
-            
-            const availableBottomHeight: number = viewPortHeight - dropdownNodeTop;
-
-            const fitBottom: boolean = availableBottomHeight > expandableContainerHeight;
-
-            if (fitBottom) {
-                return true;
-            }
-            
-            return (dropdownNodeTop < expandableContainerHeight);
+            return  dropdownNodeTop > listContainerHeight + EXPAND_TOP_PADDING;
         }
         
-        return true;
+        return false;
     }
 
     protected get filterValue(): string {
@@ -1427,7 +1416,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                     (this.isDropdownType && this.styleSchema !== DropdownSchema.Widget) && this.renderSelectedItem()
                 }
 
-                <div className={toggleStyle} onClick={(e: React.MouseEvent) => this.onListContainerClickAsync(e)}>
+                <div className={toggleStyle}  ref={this._listContainerRef} onClick={(e: React.MouseEvent) => this.onListContainerClickAsync(e)}>
                     
                     {
                         (this.hasAddButton) &&
