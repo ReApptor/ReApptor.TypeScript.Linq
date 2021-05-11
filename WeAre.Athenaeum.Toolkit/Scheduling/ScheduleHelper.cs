@@ -18,23 +18,41 @@ namespace WeAre.Athenaeum.Toolkit.Scheduling
 
                 switch (countryCode)
                 {
+                    // Sweden ("se", "svenska", "sweden", "sv-se", "sv")
                     case "se":
+                    case "sv":
                     case "sv-se":
+                    case "sweden":
+                    case "svenska":
+                    // Norway ("no", "norge", "norway", "nb-no", "nb", "nor")
                     case "no":
                     case "nb":
+                    case "nor":
                     case "nb-no":
                     case "nn-no":
-                    case "nor":
+                    case "norge":
+                    case "norway":
+                    // Poland ("pl", "polska", "poland", "pl-pl")
                     case "pl":
                     case "pl-pl":
-                        //Sweden, Norway, Poland
+                    // Denmark ("dk", "danmark", "denmark", "da-dk", "da")
+                    case "dk":
+                    case "da":
+                    case "da-dk":
+                    case "danmark":
+                    case "denmark":
+                        //Sweden, Norway, Poland, Denmark
                         return Utility.GetTimeZone("Europe/Stockholm", "W. Europe Standard Time");
-
+                    
+                    // Estonia
                     case "ee":
                     case "et-ee":
+                    // Finland ("fi", "suomi", "finland", "fi-fi")
                     case "fi":
                     case "fi-fi":
                     case "sv-fi":
+                    case "suomi":
+                    case "finland":
                         //Estonia, Finland
                         return Utility.GetTimeZone("Europe/Helsinki", "FLE Standard Time");
                 }
