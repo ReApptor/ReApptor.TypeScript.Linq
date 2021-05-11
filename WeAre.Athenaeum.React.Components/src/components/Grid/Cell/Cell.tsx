@@ -464,7 +464,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         let cellContent: React.ReactNode | null = null;
         let cellValue: any = null;
         let cellStyle: string = "";
-        let editable: boolean = column.editable;
+        let editable: boolean = cell.editable;
 
         cell.instance = this;
 

@@ -1073,6 +1073,8 @@ export class CellModel<TItem = {}> {
 
     public type: ColumnType = ColumnType.Custom;
     
+    public editable: boolean = false;
+    
     public route: PageRoute | null = null;
     
     public instance: ICell = {} as ICell;
@@ -1225,12 +1227,12 @@ export class CellModel<TItem = {}> {
         }
     }
     
+    public get modifiable(): boolean {
+        return (this._valueInitialized) && (this.type != ColumnType.Icon) && ((this.type != ColumnType.Custom) || (this.editable));
+    }
+    
     public get modified(): boolean {
-        const modifiable: boolean = 
-            (this._valueInitialized) && 
-            (this.column.type != ColumnType.Icon) && 
-            ((this.column.type != ColumnType.Custom) || (this.column.editable));
-        if (modifiable) {
+        if (this.modifiable) {
             const hideZero: boolean = this.column.settings.hideZero;
             const value: any = (hideZero) ? (this._value || 0) : this._value;
             const initialValue: any = (hideZero) ? (this._initialValue || 0) : this._initialValue;
@@ -1488,7 +1490,7 @@ export class CellModel<TItem = {}> {
     }
 
     public async editAsync(select: boolean = false): Promise<void> {
-        if ((this.column.editable) && (!this.isReadonly) && (this.inputContentInstance)) {
+        if ((this.editable) && (!this.isReadonly) && (this.inputContentInstance)) {
             await this.inputContentInstance.showEditAsync(select);
         }
     }
@@ -1612,6 +1614,7 @@ export class GridTransformer {
         to.row = row;
         to.column = column;
         to.type = column.type;
+        to.editable = column.editable;
         to.actions = column.actions.map((columnAction) => this.toCellAction<TItem>(columnAction));
         if (column.settings.descriptionAccessor) {
             to.actions.push(this.toDescriptionCellAction(column));
