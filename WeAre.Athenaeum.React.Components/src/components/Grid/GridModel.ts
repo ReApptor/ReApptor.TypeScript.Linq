@@ -908,7 +908,7 @@ export class RowModel<TItem = {}> {
     public get(columnName: string): CellModel<TItem> {
         const cell: CellModel<TItem> | undefined =
             this.cells.find(item => item.column.name === columnName) ||
-            this.cells.find(item => item.column.accessor === columnName);
+            this.cells.find(item => item.accessor === columnName);
 
         if (cell == null)
             throw Error(`Column with name or accessor '${columnName}' cannot be found in the grid.`);
@@ -919,7 +919,7 @@ export class RowModel<TItem = {}> {
     public getIndex(columnName: string): number {
         let index: number = this.cells.findIndex(item => item.column.name === columnName);
         if (index === -1) {
-            index = this.cells.findIndex(item => item.column.accessor === columnName);
+            index = this.cells.findIndex(item => item.accessor === columnName);
         }
         return index;
     }
@@ -990,11 +990,11 @@ export class RowModel<TItem = {}> {
         const length: number = columns.length;
         for (let i: number = 0; i < length; i++) {
             const column: ColumnModel<TItem> = columns[i];
-            if (column.accessor) {
-                const cell: CellModel<TItem> = cells[column.index];
-                const value: any = (typeof column.accessor === "string")
-                    ? Utility.findValueByAccessor(model, column.accessor)
-                    : column.accessor(model);
+            const cell: CellModel<TItem> = cells[column.index];
+            if (cell.accessor) {
+                const value: any = (typeof cell.accessor === "string")
+                    ? Utility.findValueByAccessor(model, cell.accessor)
+                    : cell.accessor(model);
                 cell.setValue(value);
                 modified = modified || cell.modified;
             }
@@ -1074,6 +1074,8 @@ export class CellModel<TItem = {}> {
     public type: ColumnType = ColumnType.Custom;
     
     public editable: boolean = false;
+    
+    public accessor: string | GridAccessorCallback<TItem> | null = null;
     
     public route: PageRoute | null = null;
     
@@ -1211,11 +1213,11 @@ export class CellModel<TItem = {}> {
     }
 
     public set value(value: any) {
-        if (this.column.accessor) {
+        if (this.accessor) {
             if (this._value !== value) {
-                if (typeof this.column.accessor === "string") {
-                    Utility.setValueByAccessor(this.row.model, this.column.accessor, value);
-                    this._value = Utility.findValueByAccessor(this.row.model, this.column.accessor);
+                if (typeof this.accessor === "string") {
+                    Utility.setValueByAccessor(this.row.model, this.accessor, value);
+                    this._value = Utility.findValueByAccessor(this.row.model, this.accessor);
                 } else {
                     this._value = value;
                 }
@@ -1409,7 +1411,7 @@ export class CellModel<TItem = {}> {
     }
     
     public setValue(value: any): boolean {
-        if (this.column.accessor) {
+        if (this.accessor) {
             if (this.value !== value) {
                 const modified: boolean = this.modified;
                 this.value = value;
@@ -1432,10 +1434,10 @@ export class CellModel<TItem = {}> {
     }
     
     public bind(): boolean {
-        if (this.column.accessor) {
-            const value: any = (typeof this.column.accessor === "string")
-                ? Utility.findValueByAccessor(this.model, this.column.accessor)
-                : this.column.accessor(this.model);
+        if (this.accessor) {
+            const value: any = (typeof this.accessor === "string")
+                ? Utility.findValueByAccessor(this.model, this.accessor)
+                : this.accessor(this.model);
             this.setValue(value);
             if (this.modified) {
                 this.save();
@@ -1615,6 +1617,7 @@ export class GridTransformer {
         to.column = column;
         to.type = column.type;
         to.editable = column.editable;
+        to.accessor = column.accessor;
         to.actions = column.actions.map((columnAction) => this.toCellAction<TItem>(columnAction));
         if (column.settings.descriptionAccessor) {
             to.actions.push(this.toDescriptionCellAction(column));

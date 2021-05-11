@@ -461,19 +461,21 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const column: ColumnModel<TItem> = cell.column;
         const settings: ColumnSettings<TItem> = column.settings;
 
+        cell.instance = this;
+
         let cellContent: React.ReactNode | null = null;
         let cellValue: any = null;
         let cellStyle: string = "";
         let editable: boolean = cell.editable;
 
-        cell.instance = this;
+        const accessor: string | GridAccessorCallback<TItem> | null = cell.accessor;
 
-        if (column.accessor) {
-            cellValue = (typeof column.accessor === "string")
-                ? (column.accessor === "#")
+        if (accessor) {
+            cellValue = (typeof accessor === "string")
+                ? (accessor === "#")
                     ? cell.row.position
-                    : Utility.findValueByAccessor(cell.model, column.accessor)
-                : column.accessor(cell.model);
+                    : Utility.findValueByAccessor(cell.model, accessor)
+                : accessor(cell.model);
 
             cell.value = cellValue;
         }
@@ -500,7 +502,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
         if (column.render) {
             cellContent = column.render(cell);
-        } else if (column.accessor) {
+        } else if (accessor) {
 
             let rendered: boolean = false;
 
