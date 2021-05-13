@@ -22,6 +22,9 @@ namespace Renta.Apps.Common.Helpers
             return services.AddAthenaeumAuthentication(authenticationType);
         }
 
+        /// <summary>
+        /// https://damienbod.com/2019/05/17/updating-microsoft-account-logins-in-asp-net-core-with-openid-connect-and-azure-active-directory/
+        /// </summary>
         public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services, IOptions<AzureSsoSettings> settings, string authenticationType, Func<HttpContext, Exception, string, Task> onFailure = null)
         {
             return AddRentaAuthentication(
@@ -36,22 +39,21 @@ namespace Renta.Apps.Common.Helpers
                     {
                         options.ClientId = settings.Value.ApplicationId;
                         options.ClientSecret = settings.Value.ClientSecret;
-                        options.Events.OnRemoteFailure = context =>
+                        options.Events.OnRemoteFailure = async context =>
                         {
                             if (onFailure != null)
                             {
-                                string returnUrl = context.Properties.GetString("returnUrl");
-
-                                return onFailure(context.HttpContext, context.Failure, returnUrl);
+                                await onFailure(context.HttpContext, context.Failure, context.Properties.RedirectUri);
+                                
+                                context.HandleResponse();
                             }
-
-                            return Task.CompletedTask;
                         };
                         options.CorrelationCookie = new CookieBuilder
                         {
-                            Expiration = new TimeSpan(0, 5, 0),
-                            SameSite = SameSiteMode.None,
-                            IsEssential = true
+                            Expiration = TimeSpan.FromSeconds(settings.Value.ExpirationTimeoutInSec),
+                            SecurePolicy = settings.Value.SecurePolicy,
+                            SameSite = settings.Value.SameSite,
+                            IsEssential = true,
                         };
                     }),
                 authenticationType);
