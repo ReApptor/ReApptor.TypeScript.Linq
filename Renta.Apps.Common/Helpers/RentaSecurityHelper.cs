@@ -47,10 +47,16 @@ namespace Renta.Apps.Common.Helpers
 
                             return Task.CompletedTask;
                         };
+                        options.CorrelationCookie = new CookieBuilder
+                        {
+                            Expiration = new TimeSpan(0, 5, 0),
+                            SameSite = SameSiteMode.None,
+                            IsEssential = true
+                        };
                     }),
                 authenticationType);
         }
-        
+
         public static IServiceCollection AddRentaSecurityProvider(IServiceCollection services, string authenticationType, string packageConsoleUser = RentaConstants.Db.PackageConsoleUser)
         {
             return services?.AddSecurityProvider(options =>
