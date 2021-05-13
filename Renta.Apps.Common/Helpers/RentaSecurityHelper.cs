@@ -22,7 +22,7 @@ namespace Renta.Apps.Common.Helpers
             return services.AddAthenaeumAuthentication(authenticationType);
         }
 
-        public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services, IOptions<AzureSsoSettings> settings, string authenticationType, Func<HttpContext, Exception, Task> onFailure = null)
+        public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services, IOptions<AzureSsoSettings> settings, string authenticationType, Func<HttpContext, Exception, string, Task> onFailure = null)
         {
             return AddRentaAuthentication(
                 services
@@ -36,18 +36,16 @@ namespace Renta.Apps.Common.Helpers
                     {
                         options.ClientId = settings.Value.ApplicationId;
                         options.ClientSecret = settings.Value.ClientSecret;
-                        options.Events.OnRemoteFailure = async context =>
+                        options.Events.OnRemoteFailure = context =>
                         {
                             if (onFailure != null)
                             {
-                                await onFailure(context.HttpContext, context.Failure);
-
                                 string returnUrl = context.Properties.GetString("returnUrl");
 
-                                context.Response.Redirect(returnUrl);
-
-                                context.HandleResponse();
+                                return onFailure(context.HttpContext, context.Failure, returnUrl);
                             }
+
+                            return Task.CompletedTask;
                         };
                     }),
                 authenticationType);
