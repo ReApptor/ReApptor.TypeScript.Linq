@@ -36,14 +36,18 @@ namespace Renta.Apps.Common.Helpers
                     {
                         options.ClientId = settings.Value.ApplicationId;
                         options.ClientSecret = settings.Value.ClientSecret;
-                        options.Events.OnRemoteFailure = context =>
+                        options.Events.OnRemoteFailure = async context =>
                         {
                             if (onFailure != null)
                             {
-                                return onFailure(context.HttpContext, context.Failure);
+                                await onFailure(context.HttpContext, context.Failure);
+
+                                string returnUrl = context.Properties.GetString("returnUrl");
+
+                                context.Response.Redirect(returnUrl);
+
+                                context.HandleResponse();
                             }
-                            
-                            return Task.CompletedTask;
                         };
                     }),
                 authenticationType);
