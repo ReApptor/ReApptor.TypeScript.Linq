@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using WeAre.Athenaeum.Services.Cache.Interface;
@@ -106,12 +104,14 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
 
         public async Task ClearSessionAsync()
         {
-            IEnumerable<RedisKey> keysToDelete = GetKeysAsync(_settings.SessionName);
+            string keyToScan = $"{_settings.SessionName}*";
+
+            IEnumerable<RedisKey> keysToDelete = GetKeysAsync(keyToScan);
             
             foreach (RedisKey key in keysToDelete)
             {
                 await Cache.KeyDeleteAsync(key);
-                _logger.LogDebug($"Removing Key {key.ToString()} from cache");
+                _logger.LogDebug($"Removing Session Key {key.ToString()} from cache");
             }
         }
 
