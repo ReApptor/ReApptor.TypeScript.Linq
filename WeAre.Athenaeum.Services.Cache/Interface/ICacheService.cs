@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using WeAre.Athenaeum.Services.Cache.Models;
 
 namespace WeAre.Athenaeum.Services.Cache.Interface
 {
@@ -19,5 +18,7 @@ namespace WeAre.Athenaeum.Services.Cache.Interface
         Task ClearAllAsync();
 
         Task ClearEntryAsync(string cacheKey, object entityId);
+        
+        Task ClearSessionAsync();
     }
 }
