@@ -12,24 +12,12 @@ namespace WeAre.Athenaeum.Services.Cache.Models
         
         public string InstanceName { get; set; }
 
-        public string Url
-        {
-            get { return $"{Host}:{Port}"; }
-        }
+        public string Url => $"{Host}:{Port}";
 
-        public string CacheName
-        {
-            get { return  $"{InstanceName}:Cache:"; }
-        }
+        public string CacheName => $"{InstanceName}:Cache:";
 
-        public string SessionName
-        {
-            get { return  $"{InstanceName}:Session:"; }
-        }
+        public string SessionName => $"{InstanceName}:Session:";
 
-        public string DataProtectionKeysName
-        {
-            get { return  $"{InstanceName}:DataProtectionKeys:"; }
-        }
+        public string DataProtectionKeysName => $"{InstanceName}:DataProtectionKeys:";
     }
 }

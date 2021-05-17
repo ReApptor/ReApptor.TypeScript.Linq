@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -96,6 +97,17 @@ namespace WeAre.Athenaeum.Services.Cache.Implementation
 
             IEnumerable<RedisKey> keysToDelete = GetKeysAsync(keyToScan);
 
+            foreach (RedisKey key in keysToDelete)
+            {
+                await Cache.KeyDeleteAsync(key);
+                _logger.LogDebug($"Removing Key {key.ToString()} from cache");
+            }
+        }
+
+        public async Task ClearSessionAsync()
+        {
+            IEnumerable<RedisKey> keysToDelete = GetKeysAsync(_settings.SessionName);
+            
             foreach (RedisKey key in keysToDelete)
             {
                 await Cache.KeyDeleteAsync(key);
