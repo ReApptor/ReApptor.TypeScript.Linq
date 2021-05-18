@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using WeAre.Athenaeum.TemplateApp.Common;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers
+namespace Renta.TestApplication.WebUI.Server.Providers
 {
     public static class MobileTokenHelper
     {
@@ -13,7 +13,10 @@ namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers
             if (string.IsNullOrWhiteSpace(jwt))
                 throw new ArgumentOutOfRangeException(nameof(jwt), "Jwt is whitespace or empty.");
 
-            var options = new CookieOptions {Expires = DateTimeOffset.UtcNow.AddYears(1)};
+            var options = new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddYears(1)
+            };
             
             context
                 .Response
