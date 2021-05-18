@@ -39,22 +39,8 @@ namespace Renta.Apps.Common.Helpers
                     {
                         options.ClientId = settings.Value.ApplicationId;
                         options.ClientSecret = settings.Value.ClientSecret;
-                        options.Events.OnRemoteFailure = async context =>
-                        {
-                            if (onFailure != null)
-                            {
-                                await onFailure(context.HttpContext, context.Failure, context.Properties.RedirectUri);
-                                
-                                context.HandleResponse();
-                            }
-                        };
-                        options.CorrelationCookie = new CookieBuilder
-                        {
-                            Expiration = TimeSpan.FromSeconds(settings.Value.ExpirationTimeoutInSec),
-                            SecurePolicy = settings.Value.SecurePolicy,
-                            SameSite = settings.Value.SameSite,
-                            IsEssential = true,
-                        };
+                        options.Events.OnRemoteFailure = settings.Value.GetOnRemoteFailure(onFailure);
+                        options.CorrelationCookie = settings.Value.GetCorrelationCookie();
                     }),
                 authenticationType);
         }
