@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Providers
+namespace Renta.TestApplication.WebUI.Server.Providers
 {
     public static class LocalizationHelper
     {

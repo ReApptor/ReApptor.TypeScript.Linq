@@ -96,8 +96,16 @@ namespace WeAre.Athenaeum.Common.Extensions
                     {
                         string browserId = Guid.NewGuid().ToString("N");
                         logger?.LogInformation($"New browser id \"{browserId}\" generated at \"{DateTime.UtcNow}\".");
-                        var options = new CookieOptions { IsEssential = true, Expires = DateTimeOffset.MaxValue };
+                        
+                        var options = new CookieOptions
+                        {
+                            IsEssential = true,
+                            Expires = DateTime.Today.AddYears(1),
+                            SameSite = SameSiteMode.Lax
+                        };
+
                         context.Response.Cookies.Append(AthenaeumConstants.Http.BrowserIdTag, browserId, options);
+                        
                         if (sessionAvailable)
                         {
                             context.Session.Set(AthenaeumConstants.Http.BrowserIdTag, Encoding.UTF8.GetBytes(browserId));
