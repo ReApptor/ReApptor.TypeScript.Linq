@@ -153,7 +153,7 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
         const contentMaxHeightStyle: any = {maxHeight: this.contentMaxHeight};
 
         return (
-            <div id={this.id} className={this.css(styles.accordion, this.props.className)}>
+            <div id={this.id} className={this.css(this.classNames.accordion, styles.accordion, this.props.className)}>
                 <div className={this.css(this.classNames.headerContainer, styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
                     <div className={this.css(this.classNames.header, styles.header)}>
                         {this.getHeader()}
@@ -167,7 +167,7 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                 
                 </div>
 
-                <div className={this.css(this.classNames.contentContainer, styles.contentContainer, this.collapsed && styles.collapsed)} style={contentMaxHeightStyle}>
+                <div className={this.css(this.classNames.contentContainer, styles.contentContainer, this.collapsed && styles.collapsed, this.collapsed && this.classNames.collapsed)} style={contentMaxHeightStyle}>
                     
                     <hr className={this.css(styles.separator)} />
                     
