@@ -151,28 +151,27 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
 
     public render(): React.ReactNode {
         const contentMaxHeightStyle: any = {maxHeight: this.contentMaxHeight};
-        console.log('Test: ', Object.keys(styles))
 
         return (
             <div id={this.id} className={this.css(styles.accordion, this.props.className)}>
-                <div className={this.css(styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
-                    <div className={this.css(styles.header)}>
+                <div className={this.css(this.classNames.headerContainer, styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
+                    <div className={this.css(this.classNames.header, styles.header)}>
                         {this.getHeader()}
                     </div>
 
                     {(this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) && (
-                        <div className={this.css(styles.toggler)} onClick={async () => this.toggleAsync()}>
+                        <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
                             {this.getToggler()}
                         </div>
                     )}
                 
                 </div>
 
-                <div className={this.css(styles.contentContainer, this.collapsed && styles.collapsed)} style={contentMaxHeightStyle}>
+                <div className={this.css(this.classNames.contentContainer, styles.contentContainer, this.collapsed && styles.collapsed)} style={contentMaxHeightStyle}>
                     
                     <hr className={this.css(styles.separator)} />
                     
-                    <div ref={this._contentRef} className={this.css(styles.content)}>
+                    <div ref={this._contentRef} className={this.css(this.classNames.content, styles.content)}>
                         
                         {this.props.children}
                         
@@ -183,7 +182,7 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                 {
                     this.togglerPosition === TogglerPosition.Bottom && this.hasToggle &&
                     (
-                        <div className={this.css(styles.toggler)} onClick={async () => this.toggleAsync()}>
+                        <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
                             {this.getToggler()}
                         </div>
                     )
