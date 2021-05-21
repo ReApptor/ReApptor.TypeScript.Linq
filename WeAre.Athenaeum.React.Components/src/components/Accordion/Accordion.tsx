@@ -151,7 +151,8 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
 
     public render(): React.ReactNode {
         const contentMaxHeightStyle: any = {maxHeight: this.contentMaxHeight};
-        
+        console.log('Test: ', Object.keys(styles))
+
         return (
             <div id={this.id} className={this.css(styles.accordion, this.props.className)}>
                 <div className={this.css(styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
