@@ -17,12 +17,21 @@ interface IAccordionClassNames extends IBaseClassNames {
     readonly content?: string;
 }
 
+export enum TogglerPosition {
+    Header,
+
+    Bottom
+}
+
 export interface IAccordionProps {
     readonly className?: string;
     readonly classNames?: IAccordionClassNames;
     children: React.ReactNode;
     header: string | React.ReactNode;
     toggler?: boolean | React.ReactNode;
+    togglerIcon?: string | null;
+    togglerSize?: IconSize | null;
+    togglerPosition?: TogglerPosition | TogglerPosition.Header;
     expanded?: boolean;
     onToggle?(sender: Accordion, expanded: boolean): Promise<void>; 
 }
@@ -92,10 +101,28 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                 return this.props.toggler;
             }
 
-            return  <Icon className={this.css(styles.icon, this.expanded && styles.expanded)} name={"caret-down"} size={IconSize.X2} />
+            // return  <Icon className={this.css(styles.icon, this.expanded && styles.expanded)} name={"caret-down"} size={IconSize.X2} />
+            return  <Icon className={this.css(styles.icon, this.expanded && styles.expanded)}
+                          name={this.props.togglerIcon ?? "caret-down"} 
+                          size={this.props.togglerSize ?? IconSize.X2}
+            />
         }
         
         return null;
+    }
+
+    public get togglerPosition(): TogglerPosition {
+        return (this.props.togglerPosition !== undefined) && (this.props.togglerPosition !== null)
+            ? this.props.togglerPosition
+            : TogglerPosition.Header;
+    }
+
+    private get classNames(): IAccordionClassNames {
+        const classNamesCopy: IBaseClassNames = {...this.props.classNames};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
     }
     
     public async expandAsync(): Promise<void> {
@@ -132,7 +159,7 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                         {this.getHeader()}
                     </div>
 
-                    {this.hasToggle && (
+                    {(this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) && (
                         <div className={this.css(styles.toggler)} onClick={async () => this.toggleAsync()}>
                             {this.getToggler()}
                         </div>
@@ -140,15 +167,27 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                 
                 </div>
 
-                <div className={this.css(styles.contentContainer, this.collapsed && styles.collapsed)}
-                     style={contentMaxHeightStyle}
-                >
+                <div className={this.css(styles.contentContainer, this.collapsed && styles.collapsed)} style={contentMaxHeightStyle}>
+                    
                     <hr className={this.css(styles.separator)} />
-
+                    
                     <div ref={this._contentRef} className={this.css(styles.content)}>
+                        
                         {this.props.children}
+                        
                     </div>
+                    
                 </div>
+
+                {
+                    this.togglerPosition === TogglerPosition.Bottom && this.hasToggle &&
+                    (
+                        <div className={this.css(styles.toggler)} onClick={async () => this.toggleAsync()}>
+                            {this.getToggler()}
+                        </div>
+                    )
+                }
+                
             </div>
         );
     }
