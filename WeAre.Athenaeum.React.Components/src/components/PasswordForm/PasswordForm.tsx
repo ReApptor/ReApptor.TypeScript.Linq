@@ -20,55 +20,71 @@ interface IPasswordFormProps {
 }
 
 export default class PasswordForm extends BaseComponent<IPasswordFormProps> {
-    public currentPassword: IStringInputModel = { value: "" };
-    public password: IStringInputModel = { value: "" };
-    public passwordConfirmation: IStringInputModel = { value: "" };
+    public currentPassword: IStringInputModel = {value: ""};
+    public password: IStringInputModel = {value: ""};
+    public passwordConfirmation: IStringInputModel = {value: ""};
 
-    private readonly _formRef: React.RefObject<any> = React.createRef();   
-    
+    private readonly _formRef: React.RefObject<any> = React.createRef();
+
     private get validationRows(): ValidationRow[] {
-        const validationRows: ValidationRow[] = [
-                new ValidationRow(PasswordValidationRule.UpperCaseCharacter, PasswordFormLocalizer.helpTextUpperCase),
-                new ValidationRow(PasswordValidationRule.LowerCaseCharacter,  PasswordFormLocalizer.helpTextLowerCase),
-                new ValidationRow(PasswordValidationRule.NumberCharacter,  PasswordFormLocalizer.helpTextNumber),
-                new ValidationRow(PasswordValidationRule.SpecialCharacter,  PasswordFormLocalizer.helpTextSpecialCharacter)
-            ];
-        
-        return validationRows;
+        return [
+            new ValidationRow(PasswordValidationRule.UpperCaseCharacter, PasswordFormLocalizer.helpTextUpperCase),
+            new ValidationRow(PasswordValidationRule.LowerCaseCharacter, PasswordFormLocalizer.helpTextLowerCase),
+            new ValidationRow(PasswordValidationRule.NumberCharacter, PasswordFormLocalizer.helpTextNumber),
+            new ValidationRow(PasswordValidationRule.SpecialCharacter, PasswordFormLocalizer.helpTextSpecialCharacter)
+        ];
     }
 
-    public async handleSubmitAsync(): Promise<void> {       
-        if(this.password.value != this.passwordConfirmation.value){
+    public async handleSubmitAsync(): Promise<void> {
+        if (this.password.value != this.passwordConfirmation.value) {
             const form: Form = this._formRef.current!;
             const validationError: string = PasswordFormLocalizer.resetPasswordPasswordsDontMatchMessage;
             await form.setValidationErrorsAsync(validationError);
-        }
-        else {
+        } else {
             if (this.props.type == PasswordFormType.SetPassword) {
                 await this.props.onSubmit(this.password.value, "");
             }
             if (this.props.type == PasswordFormType.ChangePassword) {
                 await this.props.onSubmit(this.passwordConfirmation.value, this.currentPassword.value);
             }
-            
         }
     }
-    
-    render(): React.ReactNode {
-        
+
+    public render(): React.ReactNode {
+
         return (
             <React.Fragment>
-                <Form id="form" ref={this._formRef} onSubmit={async () => await this.handleSubmitAsync()}>                            
+                <Form id="form" ref={this._formRef} onSubmit={() => this.handleSubmitAsync()}>
+
                     {
                         (this.props.type == PasswordFormType.ChangePassword) &&
-                        <PasswordInput label={PasswordFormLocalizer.changePasswordCurrentPassword} model={this.currentPassword} required />                                     
-                    }                            
-                    <PasswordInput label={PasswordFormLocalizer.loginPagePasswordInput} model={this.password} liveValidator={this.validationRows} validLength={8} required />
-                    <PasswordInput label={PasswordFormLocalizer.resetPasswordConfirmPasswordInput} model={this.passwordConfirmation} required />
-    
+                        (
+                            <PasswordInput required
+                                           label={PasswordFormLocalizer.changePasswordCurrentPassword}
+                                           model={this.currentPassword}
+                            />
+                        )
+                    }
+
+                    <PasswordInput autoFocus required
+                                   validLength={8}
+                                   label={PasswordFormLocalizer.loginPagePasswordInput}
+                                   model={this.password}
+                                   liveValidator={this.validationRows}
+                    />
+
+                    <PasswordInput required
+                                   label={PasswordFormLocalizer.resetPasswordConfirmPasswordInput}
+                                   model={this.passwordConfirmation}
+                    />
+
                     <ButtonContainer>
-                        <Button type={ButtonType.Orange} label={PasswordFormLocalizer.save} submit />
+                        <Button submit
+                                type={ButtonType.Orange}
+                                label={PasswordFormLocalizer.save}
+                        />
                     </ButtonContainer>
+
                 </Form>
             </React.Fragment>
         );
