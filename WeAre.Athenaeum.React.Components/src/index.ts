@@ -144,7 +144,7 @@ import ToolbarButton from "./components/ToolbarContainer/ToolbarButton/ToolbarBu
 import Panel, {PanelCollapseType} from "./components/Panel/Panel";
 import ImageInput from "./components/ImageInput/ImageInput";
 import ImageModal from "./components/ImageModal/ImageModal";
-import Accordion, {IAccordionProps} from "./components/Accordion/Accordion";
+import Accordion, {IAccordionProps, TogglerPosition} from "./components/Accordion/Accordion";
 
 export { AddressHelper };
 export type { GoogleApiResult, IGoogleApiSettings };
@@ -382,5 +382,5 @@ export {ImageInput};
 
 export {ImageModal};
 
-export {Accordion};
+export {Accordion, TogglerPosition};
 export type {IAccordionProps};
