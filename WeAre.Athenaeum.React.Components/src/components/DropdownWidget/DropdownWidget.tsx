@@ -2,7 +2,7 @@ import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {RenderCallback} from "@weare/athenaeum-react-common";
 import PageContainer from "../PageContainer/PageContainer";
-import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownSchema, DropdownType, IDropdown} from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownSchema, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import BaseWidget, { IBaseWidgetProps, IBaseWidgetState } from "../WidgetContainer/BaseWidget";
 import { IWidgetContainer } from "../WidgetContainer/BaseWidgetContainer";
 import Comparator from "../../helpers/Comparator";
@@ -18,6 +18,7 @@ export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     required?: boolean;
     requiredType?: DropdownRequiredType;
     multiple?: boolean;
+    subtextType?: DropdownSubtextType;
     noSubtext?: boolean;
     noDescription?: boolean;
     autoCollapse?: boolean;
@@ -313,6 +314,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
                                   requiredType={this.props.requiredType}
                                   multiple={this.props.multiple}
                                   orderBy={this.props.orderBy}
+                                  subtextType={this.props.subtextType}
                                   groupSelected={this.props.groupSelected}
                                   selectedItem={this.props.selectedItem}
                                   selectedItems={this.props.selectedItems}
