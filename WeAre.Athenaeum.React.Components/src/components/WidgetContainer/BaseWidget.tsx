@@ -1,12 +1,22 @@
 import React from "react";
 import {Utility, TFormat} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, LinkTarget, ReactUtility} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, LinkTarget, ReactUtility, IBaseClassNames} from "@weare/athenaeum-react-common";
 import Icon, { IconSize, IIconProps } from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import BaseWidgetContainer from "./BaseWidgetContainer";
 import WidgetContainerLocalizer from "./WidgetContainerLocalizer";
 
 import styles from "./WidgetContainer.module.scss";
+
+export interface IBaseWidgetClassNames extends IBaseClassNames {
+    readonly widget?: string;
+    readonly contentContainer?: string;
+    readonly compactContainer?: string;
+    readonly labelAndDescription?: string;
+    readonly label?: string;
+    readonly description?: string;
+    readonly icon?: string;
+}
 
 export interface IBaseWidget {
     isWidget(): boolean;
@@ -19,6 +29,7 @@ export interface IBaseWidget {
 export interface IBaseWidgetProps {
     id?: string;
     className?: string;
+    classNames?: IBaseWidgetClassNames;
     wide?: boolean;
     label?: string;
     description?: string;
@@ -171,6 +182,14 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
         return "";
     }
 
+    private get classNames(): IBaseWidgetClassNames {
+        const classNamesCopy: IBaseWidgetClassNames = {...this.props.classNames} ?? {};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
+    }
+
     public isWidget(): boolean { return true; }
 
     public hasSpinner(): boolean { return true; }
@@ -209,14 +228,14 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     
     protected renderLabel(): React.ReactNode {
         return (
-            <div className={styles.label}><span>{this.toMultiLines(this.label)}</span></div>
+            <div className={this.css(styles.label, this.classNames.label)}><span>{this.toMultiLines(this.label)}</span></div>
         );
     }
 
     protected renderContent(): React.ReactNode {
         return (
             <React.Fragment>
-                {(this.icon) && <div className={this.css(styles.icon, (this.state.spinnerVisible && styles.icon_hidden))}><Icon {...this.icon} /></div>}
+                {(this.icon) && <div className={this.css(styles.icon, this.classNames.icon, (this.state.spinnerVisible && styles.icon_hidden))}><Icon {...this.icon} /></div>}
                 {(!this.icon && this.number) && (<div className={this.css(styles.number, (this.containsTagSmall) && styles.smallNumbers)}><span>{ReactUtility.toSmalls(this.number)}</span></div>)}
             </React.Fragment>
         );
@@ -224,7 +243,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     
     protected renderDescription(): React.ReactNode {
         return (
-            <div className={styles.description} style={this.descriptionFlexStyle}>
+            <div className={this.css(styles.description, this.classNames.description)} style={this.descriptionFlexStyle}>
                 <span>{this.toMultiLines(this.description)}</span>
             </div>
         );
@@ -232,13 +251,13 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     
     protected renderMinimized(): React.ReactNode {
         return (
-            <div className={styles.compactContainer}>
+            <div className={this.css(styles.compactContainer, this.classNames.compactContainer)}>
                 {
                     (this.minimized) && this.renderContent()
                 }
-                <div className={styles.labelAndDescription}>
-                    {(this.label) && <div className={styles.label}><span>{this.label}</span></div>}
-                    <div className={styles.description}><span>{this.description}</span></div>
+                <div className={this.css(styles.labelAndDescription, this.classNames.labelAndDescription)}>
+                    {(this.label) && <div className={this.css(styles.label, this.classNames.label)}><span>{this.label}</span></div>}
+                    {(this.description) && <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>}
                 </div>
             </div>
         );
@@ -271,7 +290,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
 
     render(): React.ReactNode {
         return (
-            <div id={this.id} className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"))}>
+            <div id={this.id} className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}>
                 
                 <a href={this.getHref()} 
                    rel="noreferrer" 
@@ -285,7 +304,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
 
                     { (!this.minimized) && this.renderLabel() }
 
-                    <div className={styles.contentContainer} style={this.contentFlexStyle}>
+                    <div className={this.css(styles.contentContainer, this.classNames.contentContainer)} style={this.contentFlexStyle}>
                         { (!this.minimized) && this.renderContent() }
                     </div>
                     

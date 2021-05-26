@@ -13,14 +13,17 @@ import "./BootstrapOverride.scss";
 // Locale imports
 import fi from "date-fns/locale/fi";
 import en from "date-fns/locale/en-GB";
-//import pl from "date-fns/locale/pl";
+import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
+import nb from "date-fns/locale/nb";
+import da from "date-fns/locale/da";
 
 registerLocale("fi", fi);
 registerLocale("en", en);
-//registerLocale("pl", pl);
+registerLocale("pl", pl);
+registerLocale("da", da);
 registerLocale("sv", sv);
-
+registerLocale("nb", nb);
 setDefaultLocale("fi");
 
 interface IDateInputProps extends IBaseInputProps<Date> {

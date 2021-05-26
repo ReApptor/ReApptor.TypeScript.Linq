@@ -136,7 +136,7 @@ import TitleWidget, {ITitleModel, ITitleWidgetProps} from "./components/TitleWid
 import Pagination from "./components/Pagination/Pagintation";
 import WizardContainer, {IWizardPage, IWizardContainerProps} from "./components/WizardContainer/WizardContainer";
 import BaseExpandableWidget, {IBaseExpandableWidgetProps} from "./components/WidgetContainer/BaseExpandableWidget";
-import BaseWidget, {IBaseWidget, IBaseWidgetProps, IBaseWidgetState} from "./components/WidgetContainer/BaseWidget";
+import BaseWidget, {IBaseWidget, IBaseWidgetProps, IBaseWidgetState, IBaseWidgetClassNames} from "./components/WidgetContainer/BaseWidget";
 import PasswordForm, {PasswordFormType} from "./components/PasswordForm/PasswordForm";
 import ToolbarContainer from "./components/ToolbarContainer/ToolbarContainer";
 import ToolbarRow from "./components/ToolbarContainer/ToolbarRow/ToolbarRow";
@@ -369,7 +369,7 @@ export type {ITitleModel, ITitleWidgetProps};
 export {Pagination};
 
 export {WizardContainer, BaseExpandableWidget, BaseWidget};
-export type {IWizardPage, IWizardContainerProps, IBaseExpandableWidgetProps, IBaseWidget, IBaseWidgetProps, IBaseWidgetState};
+export type {IWizardPage, IWizardContainerProps, IBaseExpandableWidgetProps, IBaseWidget, IBaseWidgetProps, IBaseWidgetState, IBaseWidgetClassNames};
 
 export {PasswordForm, PasswordFormType};
 
