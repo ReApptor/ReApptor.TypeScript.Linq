@@ -19,6 +19,7 @@ import LocationPickerTests from "@/pages/Tests/LocationPickerTests/LocationPicke
 import AccordionTests from "@/pages/Tests/AccordionTests/AccordionTests";
 import ButtonActionTests from "@/pages/Tests/ButtonActionTests/ButtonActionTests";
 import CheckboxTests from "@/pages/Tests/CheckboxTests/CheckboxTests";
+import LinkWidgetTests from "@/pages/Tests/LinkWidgetTests/LinkWidgetTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -69,6 +70,10 @@ export default class Tests extends AnonymousPage {
                         
                         <Tab id="numberWidgetTests" title="Number Widget">
                             <NumberWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="linkWidgetTests" title="Link Widget">
+                            <LinkWidgetTests />
                         </Tab>
                         
                         <Tab id="dropdownTests" title="Dropdown">
