@@ -257,7 +257,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                 }
                 <div className={this.css(styles.labelAndDescription, this.classNames.labelAndDescription)}>
                     {(this.label) && <div className={this.css(styles.label, this.classNames.label)}><span>{this.label}</span></div>}
-                    <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>
+                    {(this.description) && <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>}
                 </div>
             </div>
         );
