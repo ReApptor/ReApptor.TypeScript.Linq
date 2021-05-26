@@ -15,6 +15,7 @@ export interface IBaseWidgetClassNames extends IBaseClassNames {
     readonly labelAndDescription?: string;
     readonly label?: string;
     readonly description?: string;
+    readonly icon?: string;
 }
 
 export interface IBaseWidget {
