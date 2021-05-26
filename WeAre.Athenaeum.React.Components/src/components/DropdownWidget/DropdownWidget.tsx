@@ -93,10 +93,10 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         }
 
         if ((showSubtext) && (this.selectedListItem.subtext)) {
-            return `${DropdownWidgetLocalizer.get(this.selectedListItem.text.toUpperCase())}, ${DropdownWidgetLocalizer.get(this.selectedListItem.subtext)}`;
+            return `${DropdownWidgetLocalizer.get(this.selectedListItem.text)}, ${DropdownWidgetLocalizer.get(this.selectedListItem.subtext)}`;
         }
 
-        return DropdownWidgetLocalizer.get(this.selectedListItem.text).toUpperCase();
+        return DropdownWidgetLocalizer.get(this.selectedListItem.text);
     }
 
     protected getStyleSchema(): DropdownSchema {
