@@ -347,6 +347,6 @@ export default class ApiProvider {
     }
 
     public static isApiError(error: Error): boolean {
-        return ((error.name == AthenaeumConstants.apiError) || (error.message == AthenaeumConstants.apiError));
+        return ((error) && ((error.name == AthenaeumConstants.apiError) || (error.message == AthenaeumConstants.apiError)));
     }
 }
