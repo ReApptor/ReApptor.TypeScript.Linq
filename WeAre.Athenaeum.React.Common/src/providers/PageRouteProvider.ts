@@ -152,7 +152,7 @@ export default class PageRouteProvider {
 
     public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<boolean> {
         
-        if (!ApiProvider.isApiError(error)) {
+        if ((error) && (!ApiProvider.isApiError(error))) {
             
             const page: IBasePage | null = ch.findPage();
             const pageRouteName: string = ((page) && (page.routeName)) ? page.routeName : ``;
