@@ -82,15 +82,21 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
     }
 
     protected getDescription(): string | null {
-        return (!this.props.noDescription)
-            ? (this.selectedListItem != null)
-                ? ((this.props.noSubtext) && (this.selectedListItem.subtext))
-                    ? `${DropdownWidgetLocalizer.get(this.selectedListItem.text.toUpperCase())}, ${DropdownWidgetLocalizer.get(this.selectedListItem.subtext)}`
-                    : DropdownWidgetLocalizer.get(this.selectedListItem.text).toUpperCase()
-                : (this.props.description)
-                    ? DropdownWidgetLocalizer.get(this.props.description)
-                    : ""
-            : "";
+        const showSubtext = !this.props.noSubtext;
+        
+        if (this.props.noDescription) {
+            return "";
+        }
+
+        if (!this.selectedListItem) {
+            return (this.props.description) ? DropdownWidgetLocalizer.get(this.props.description) : "";
+        }
+
+        if ((showSubtext) && (this.selectedListItem.subtext)) {
+            return `${DropdownWidgetLocalizer.get(this.selectedListItem.text)}, ${DropdownWidgetLocalizer.get(this.selectedListItem.subtext)}`;
+        }
+
+        return DropdownWidgetLocalizer.get(this.selectedListItem.text);
     }
 
     protected getStyleSchema(): DropdownSchema {
