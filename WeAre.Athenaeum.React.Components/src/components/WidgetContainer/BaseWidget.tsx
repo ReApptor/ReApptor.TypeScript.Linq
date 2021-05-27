@@ -232,10 +232,10 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
         );
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
-                {(this.icon) && <div className={this.css(styles.icon, this.classNames.icon, (this.state.spinnerVisible && styles.icon_hidden))}><Icon {...this.icon} /></div>}
+                {this.icon && <div className={this.css(styles.icon, (this.state.spinnerVisible && styles.icon_hidden), (renderHidden && styles.icon_hidden))}><Icon {...this.icon} /></div>}
                 {(!this.icon && this.number) && (<div className={this.css(styles.number, (this.containsTagSmall) && styles.smallNumbers)}><span>{ReactUtility.toSmalls(this.number)}</span></div>)}
             </React.Fragment>
         );
@@ -259,6 +259,9 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                     {(this.label) && <div className={this.css(styles.label, this.classNames.label)}><span>{this.label}</span></div>}
                     {(this.description) && <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>}
                 </div>
+                {
+                    this.minimized && this.renderContent(true)
+                }
             </div>
         );
     }

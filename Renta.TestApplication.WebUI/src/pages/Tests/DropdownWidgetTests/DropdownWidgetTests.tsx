@@ -9,7 +9,8 @@ export interface IDropdownWidgetTestsState {
     favorite: boolean,
     required: boolean,
     expanded: boolean,
-    amountListItem: boolean
+    amountListItem: boolean,
+    noDescription: boolean
 }
 
 export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidgetTestsState> {
@@ -20,7 +21,8 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
         favorite: false,
         required: false,
         expanded: false,
-        amountListItem: false
+        amountListItem: false,
+        noDescription: false
     };
 
     private readonly _listRef: React.RefObject<List> = React.createRef();
@@ -124,22 +126,30 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
                                   onChange={async (sender, value) => await this.setState({amountListItem:value})}
                         />
 
-                    </Form>
-
-                    <WidgetContainer>
-
-                        <DropdownWidget id="amountListItems" wide
-                                        label="DropdownWidget"
-                                        items={this.dropdownItems()}
-                                        multiple={this.state.multiSelect}
-                                        favorite={this.state.favorite}
-                                        required={this.state.required}
-                                        expanded={this.state.expanded}
-                                        onChange={async (sender, item: AmountListItem) => await ch.flyoutMessageAsync(sender.id + ".onChange:" + item + " " + item.amount)}
+                        <Checkbox label="noDescription"
+                                  inline
+                                  value={this.state.noDescription}
+                                  onChange={async (sender, value) => await this.setState({noDescription:value})}
                         />
 
-                    </WidgetContainer>
+                    </Form>
+                    <div>
+                        <WidgetContainer>
 
+                            <DropdownWidget id="amountListItems" wide
+                                            label="DropdownWidget"
+                                            items={this.dropdownItems()}
+                                            noDescription={this.state.noDescription}
+                                            multiple={this.state.multiSelect}
+                                            favorite={this.state.favorite}
+                                            required={this.state.required}
+                                            expanded={this.state.expanded}
+                                            onChange={async (sender, item: AmountListItem) => await ch.flyoutMessageAsync(sender.id + ".onChange:" + item + " " + item.amount)}
+                            />
+
+                        </WidgetContainer>
+
+                    </div>
                 </TwoColumns>
 
             </React.Fragment>
