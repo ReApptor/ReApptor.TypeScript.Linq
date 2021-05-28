@@ -274,6 +274,13 @@ export default class ch {
         window.location.reload();
     }
 
+    public static async reRenderAsync(): Promise<void> {
+        const page: IBasePage | null = this.findPage();
+        if (page) {
+            await page.reRenderAsync();
+        }
+    }
+
     /**
      * Gets Xsrf Token
      * @returns XSRF token if it is specified
