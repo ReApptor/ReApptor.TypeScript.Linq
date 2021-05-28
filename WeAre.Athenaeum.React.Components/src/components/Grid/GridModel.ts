@@ -106,6 +106,8 @@ export interface IGridDefinition {
     hovering?: GridHoveringType;
 
     odd?: GridOddType;
+
+    responsive?: boolean;
     
     pagination?: boolean | number;
     
@@ -152,6 +154,8 @@ export class ColumnModel<TItem = {}> {
     public accessor: string | GridAccessorCallback<TItem> | null = null;
 
     public visible: boolean = true;
+
+    public responsive: boolean = true;
 
     public group: string | null = null;
 
@@ -220,6 +224,10 @@ export class ColumnModel<TItem = {}> {
     public get sortable(): boolean {
         return (this.sorting != null) && (this.sorting != false);
     }
+    
+    public get isVisible(): boolean {
+        return (this.visible) && ((this.responsive) || (this.grid.desktop));
+    }
 }
 
 export class GridModel<TItem = {}> {
@@ -250,6 +258,8 @@ export class GridModel<TItem = {}> {
     public hovering: GridHoveringType = GridHoveringType.Row;
 
     public odd: GridOddType = GridOddType.Row;
+    
+    public responsive: boolean = false;
     
     public pagination: boolean | number = false;
     
@@ -317,6 +327,14 @@ export class GridModel<TItem = {}> {
 
     public get lastRow(): RowModel<TItem> {
         return this.rows[this.rows.length - 1];
+    }
+
+    public get mobile(): boolean {
+        return (this.responsive) && (ch.mobile);
+    }
+
+    public get desktop(): boolean {
+        return (!this.mobile);
     }
     
     public getDump(): Dictionary<string, any> {
@@ -707,6 +725,8 @@ export class ColumnDefinition {
     public accessor?: string | GridAccessorCallback<any>;
 
     public visible?: boolean;
+    
+    public responsive?: boolean;
     
     public group?: string;
 
@@ -1122,7 +1142,7 @@ export class CellModel<TItem = {}> {
     }
 
     public get isVisible(): boolean {
-        return this.visible && this.column.visible;
+        return this.visible && this.column.isVisible;
     }
     
     public get rowSpan(): number {
@@ -1531,6 +1551,7 @@ export class GridTransformer {
         to.detailsColEnd = from.detailsColEnd || null;
         to.hovering = from.hovering || GridHoveringType.Row;
         to.odd = from.odd || GridOddType.Row;
+        to.responsive = from.responsive || false;
         to.pagination = from.pagination || false;
         to.checkable = from.checkable || false;
         to.readonly = from.readonly || false;
@@ -1569,7 +1590,7 @@ export class GridTransformer {
         to.verticalAlign = from.verticalAlign || null;
         to.type = from.type || ColumnType.Custom;
         to.editable = from.editable || false;
-        to.removable = (from.removable != null) ? from.removable : true;
+        to.removable = (from.removable != false);
         to.reRenderRow = from.reRenderRow || false;
         to.rotate = from.rotate || false;
         to.format = from.format || null;
@@ -1583,7 +1604,8 @@ export class GridTransformer {
         to.route = from.route || null;
         to.className = from.className || null;
         to.header = from.header || "";
-        to.visible = from.visible !== false;
+        to.visible = (from.visible !== false);
+        to.responsive = (grid.responsive) && (from.responsive !== false);
         to.init = from.init;
         to.transform = from.transform;
         to.render = from.render;
