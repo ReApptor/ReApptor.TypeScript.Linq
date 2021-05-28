@@ -290,7 +290,7 @@ export default class ch {
     }
 
     /**
-     * Gets layout (All pages are pleced in Layout component)
+     * Gets layout (All pages are placed in Layout component)
      * @returns layout - inherited from ILayoutPage
      */
     public static getLayout(): ILayoutPage {
