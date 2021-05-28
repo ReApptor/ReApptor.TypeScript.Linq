@@ -24,9 +24,9 @@ export class SelectListGroup {
 
     public get lowerName(): string {
         if (this.__lowerName == null) {
-            return (this.__lowerName = this.name.toLowerCase());
+            return (this.__lowerName = (this.name || "").toLowerCase());
         }
-        return this.__lowerName!;
+        return this.__lowerName;
     }
 
     public static compare(x: SelectListGroup | null, y: SelectListGroup | null): number {
@@ -51,7 +51,7 @@ export class SelectListGroup {
 
     public static create(name: string, disabled: boolean = false): SelectListGroup {
         const item = new SelectListGroup();
-        item.name = name;
+        item.name = name || "";
         item.disabled = disabled;
         return item;
     }
