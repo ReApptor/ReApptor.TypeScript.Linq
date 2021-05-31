@@ -3,6 +3,7 @@ import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
 
 export interface ILinkWidgetProps extends IBaseWidgetProps {
     url: string;
+    target?: LinkTarget;
 }
 
 export default class LinkWidget extends BaseWidget<ILinkWidgetProps> {
@@ -11,6 +12,6 @@ export default class LinkWidget extends BaseWidget<ILinkWidgetProps> {
     }
 
     protected getTarget(): LinkTarget {
-        return LinkTarget.Blank;
+        return this.props.target ?? LinkTarget.Blank;
     }
 }
