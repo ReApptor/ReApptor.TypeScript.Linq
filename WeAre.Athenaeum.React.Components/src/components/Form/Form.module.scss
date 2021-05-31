@@ -1,4 +1,6 @@
 @import "../../variables";
+@import "../NumberInput/NumberInput.module";
+
 
 .form {
     width: 100%;
@@ -143,31 +145,7 @@
         }
         
         .number {
-            position: relative;
-            
-            input[type="number"] {
-                &::-webkit-inner-spin-button,
-                &::-webkit-outer-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
-            }
-            
-            .arrowContainer {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                right: 0;
-                margin-right: 1px;
-                height: 100%;
-                width: 20px;
-                border-left: 1px solid #d4d4d4;
-                color: #d4d4d4;
-                cursor: pointer;
-            }
+            @extend .numberInput
         }
 
         .slider {
@@ -210,33 +188,7 @@
     }
 
     .number {
-        position: relative;
-
-        input[type="number"] {
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-            
-            -moz-appearance: textfield;
-        }
-
-        .arrowContainer {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin-right: 1px;
-            height: 100%;
-            width: 20px;
-            border-left: 1px solid #d4d4d4;
-            color: #d4d4d4;
-            cursor: pointer;
-        }
+        @extend .numberInput
     }
     
     .slider {

@@ -1,7 +1,7 @@
 import React from "react";
 import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/athenaeum-toolkit";
 import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../BaseInput/BaseInput";
-import Icon from "../Icon/Icon";
+import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "../Form/Form.module.scss";
 
@@ -266,16 +266,10 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     className="form-control"
                     title={this.props.title}
                 />
-
-                {
-                    (!this.props.hideArrows) &&
-                    (
-                        <div className={styles.arrowContainer}>
-                            <Icon name="arrow-up" onClick={() => this.increaseAsync()} />
-                            <Icon name="arrow-down" onClick={() => this.decreaseAsync()} />
-                        </div>
-                    )
-                }
+                
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)}><Icon name="arrow-up" size={IconSize.ExtraSmall} onClick={() => this.increaseAsync()}/></div>}
+                
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)}><Icon name="arrow-down" size={IconSize.ExtraSmall} onClick={() => this.decreaseAsync()}/></div>}
             </div>
         );
     }

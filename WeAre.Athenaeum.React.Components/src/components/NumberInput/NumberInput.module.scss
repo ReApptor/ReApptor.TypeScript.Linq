@@ -1,0 +1,34 @@
+.numberInput {
+  position: relative;
+
+  input[type="number"] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  .numberInputArrow {
+    position: absolute;
+    width: 20px;
+    border-left: 1px solid #d4d4d4;
+    border-right: 1px solid transparent;
+    color: #d4d4d4;
+    cursor: pointer;
+  }
+
+  .increaseArrow {
+    right: 0;
+    top: 0;
+    bottom: unset;
+    height: 50%;
+  }
+
+  .decreaseArrow {
+    top: unset;
+    right: 0;
+    bottom: 0;
+    height: 50%;
+  }
+}
