@@ -3,7 +3,7 @@ import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} fro
 import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize} from "../Icon/Icon";
 
-import styles from "../Form/Form.module.scss";
+import styles from "./NumberInput.module.scss";
 
 export enum NumberInputBehaviour {
     /*
@@ -253,7 +253,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
     public renderInput(): React.ReactNode {
         return (
-            <div className={styles.number}>
+            <div className={styles.numberInput}>
                 <input
                     id={this.getInputId()}
                     ref={this.ref}
@@ -267,9 +267,9 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     title={this.props.title}
                 />
                 
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)}><Icon name="arrow-up" size={IconSize.ExtraSmall} onClick={() => this.increaseAsync()}/></div>}
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)} onClick={() => this.increaseAsync()}><Icon name="arrow-up" size={IconSize.ExtraSmall}/></div>}
                 
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)}><Icon name="arrow-down" size={IconSize.ExtraSmall} onClick={() => this.decreaseAsync()}/></div>}
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)} onClick={() => this.decreaseAsync()}><Icon name="arrow-down" size={IconSize.ExtraSmall}/></div>}
             </div>
         );
     }

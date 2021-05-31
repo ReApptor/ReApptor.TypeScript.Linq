@@ -16,6 +16,9 @@
     border-right: 1px solid transparent;
     color: #d4d4d4;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .increaseArrow {
