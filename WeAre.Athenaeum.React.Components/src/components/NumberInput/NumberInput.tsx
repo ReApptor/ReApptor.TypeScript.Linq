@@ -26,6 +26,8 @@ export interface INumberInputProps extends IBaseInputProps<number> {
     forwardedRef?: React.RefObject<HTMLInputElement>;
     hideInput?: boolean;
     hideArrows?: boolean;
+    increaseInputIcon?: string;
+    decreaseInputIcon?: string;
     onChange?(sender: NumberInput, value: number, userInteraction: boolean, done: boolean): Promise<void>;
 }
 
@@ -266,10 +268,9 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     className="form-control"
                     title={this.props.title}
                 />
-                
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)} onClick={() => this.increaseAsync()}><Icon name="arrow-up" size={IconSize.ExtraSmall}/></div>}
-                
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)} onClick={() => this.decreaseAsync()}><Icon name="arrow-down" size={IconSize.ExtraSmall}/></div>}
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)} onClick={() => this.increaseAsync()}><Icon name={this.props.increaseInputIcon  ?? "arrow-up"} size={IconSize.ExtraSmall}/></div>}
+
+                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)} onClick={() => this.decreaseAsync()}><Icon name={this.props.decreaseInputIcon ?? "arrow-down"} size={IconSize.ExtraSmall}/></div>}
             </div>
         );
     }
