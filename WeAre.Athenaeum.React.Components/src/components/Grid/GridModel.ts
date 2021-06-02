@@ -583,6 +583,10 @@ export class ColumnSettingsDefinition {
     public fetchItems?<TDataItem>(cell: CellModel<any>): Promise<TDataItem[]>;
 
     public selectedTextTransform?(sender: Dropdown<any>): string;
+
+    public infoTransform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
+
+
 }
 
 export class ColumnSettings<TItem = {}> {
@@ -643,6 +647,9 @@ export class ColumnSettings<TItem = {}> {
     public fetchItems?<TDataItem>(cell: CellModel<TItem>): Promise<TDataItem[]>;
 
     public selectedTextTransform?(sender: Dropdown<TItem>): string;
+
+    public infoTransform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
+
 }
 
 export class ColumnActionDefinition {
@@ -1678,6 +1685,7 @@ export class GridTransformer {
         to.locationPicker = from.locationPicker || false;
         to.fetchItems = from.fetchItems;
         to.selectedTextTransform = from.selectedTextTransform;
+        to.infoTransform = from.infoTransform
         return to;
     }
 

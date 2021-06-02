@@ -104,7 +104,11 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             noWrap: true,
             minWidth: "5rem",
+            transform: (cell, value) => (value) ? this.transformEnumToSomething(value, true) : "",
+            init: (cell) => this.initCellAsync(cell),
             settings: {
+                infoAccessor: "name",
+                infoTransform:  (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
                 required: true,
                 requiredType: DropdownRequiredType.AutoSelect,
                 nothingSelectedText: "-",
@@ -204,5 +208,17 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
             </React.Fragment>
         );
+    }
+
+    private initCellAsync(cell: CellModel<any>) {
+        cell.readonly = true;
+    }
+
+    private transformEnumToSomething2(value: any, b: boolean) {
+        return value.toString() + " bbbbb";
+    }
+
+    private transformEnumToSomething(value: any, b: boolean) {
+        return value.toString() + " aaaaaa";
     }
 }

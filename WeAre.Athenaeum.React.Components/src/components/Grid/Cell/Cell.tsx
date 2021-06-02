@@ -32,7 +32,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                 : Utility.findValueByAccessor(model, accessor)
             : null;
     }
-    
+
     private async invokeCallback(cell: CellModel<TItem>): Promise<void> {
         const column: ColumnModel<TItem> = cell.column;
 
@@ -61,7 +61,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
     private async onPlaceSelectedAsync(cell: CellModel<TItem>, location: GeoLocation): Promise<void> {
         const value: string = location.formattedAddress;
-        
+
         await this.processNewValueAsync(cell, value, true);
     }
 
@@ -101,11 +101,11 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         if (hasInfo) {
             infoValue = this.findValueByGridAccessor(cell.model, settings.infoAccessor!) as string;
             const infoFormat: TFormat | null = (cell.column.settings.infoFormat != null) ? cell.column.settings.infoFormat : cell.column.format;
-            
+
             infoValue = ((settings.hideZero) && (!infoValue))
                 ? ""
-                : (cell.column.transform)
-                    ? cell.column.transform(cell, infoValue, infoFormat)
+                : (cell.column.settings && cell.column.settings.infoTransform)
+                    ? cell.column.settings.infoTransform(cell, infoValue, infoFormat)
                     : Utility.formatValue(infoValue, infoFormat);
 
             const hideInfo: boolean = (hasInfo) &&
@@ -139,7 +139,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         };
 
         let title: string = cell.title;
-        
+
         if (overflow) {
             inlineStyles.textOverflow = "ellipsis";
             if (overflowX) {
@@ -216,7 +216,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                 <AddressInput clickToEdit
                               className={this.css(gridStyles.addressInput)}
                               value={cellValue || ""}
-                              locationPicker={settings.locationPicker}    
+                              locationPicker={settings.locationPicker}
                               append={settings.locationPicker}
                               onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
                 />
@@ -229,7 +229,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
         return (
             <div>
-                { (icon) && (<Icon {...icon} size={size} />) }
+                {(icon) && (<Icon {...icon} size={size}/>)}
             </div>
         );
     }
@@ -248,7 +248,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     private renderNumberCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: number | null): React.ReactNode {
-        
+
         let hasInfo: boolean = (!!settings.infoAccessor);
 
         let infoValue: any = (hasInfo) ? this.findValueByGridAccessor(cell.model, settings.infoAccessor!) : null;
@@ -274,7 +274,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const valueBoldStyle: string = ((hasInfoValue) && (settings.infoBoldNotEqual) && (infoValue != cellValue)) && gridStyles.bold || "";
 
         const withArrowsStyle: string = (settings.arrows) && gridStyles.withArrows || "";
-        
+
         const min: number | null = (typeof settings.min === "number") ? settings.min : null;
         const max: number | null = (typeof settings.max === "number") ? settings.max : null;
 
@@ -323,11 +323,11 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         if (Utility.isDateType(infoValue)) {
             infoValue = Utility.formatValue(infoValue, cell.column.format);
         }
-        
+
         const minDate: Date | null = (typeof settings.min !== "number")
             ? settings.min
             : null;
-        
+
         const maxDate: Date | null = (typeof settings.max !== "number")
             ? settings.max
             : null;
@@ -390,7 +390,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
     private renderDropdownCellContent(cell: CellModel<TItem>): React.ReactNode {
         return (
-            <DropdownCell cell={cell} />
+            <DropdownCell cell={cell}/>
         );
     }
 
@@ -401,7 +401,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         return (
-            <CellActionComponent key={index} cell={cell} cellAction={cellAction} />
+            <CellActionComponent key={index} cell={cell} cellAction={cellAction}/>
         );
     }
 
@@ -456,7 +456,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     render(): React.ReactNode {
-        
+
         const cell: CellModel<TItem> = this.props.cell;
         const column: ColumnModel<TItem> = cell.column;
         const settings: ColumnSettings<TItem> = column.settings;
@@ -564,7 +564,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
                     case ColumnType.Address:
                         cellStyle = gridStyles.textCell;
-                        cellContent = this.renderAddressCellContent(cell, settings,  cellValue);
+                        cellContent = this.renderAddressCellContent(cell, settings, cellValue);
                         rendered = true;
                         editable = true;
                         break;
@@ -622,7 +622,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         (visible) &&
                         (
                             <div className={this.css(gridStyles.cell, cellStyle, noActionsStyle, notValidStyle)}>
-                                
+
                                 {
                                     (cellContent || this.props.children)
                                 }
