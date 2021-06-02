@@ -2,6 +2,8 @@ import Utility from "../Utility";
 import DateUtility from "../DateUtility";
 import HashCodeUtility from "../HashCodeUtility";
 
+/* eslint-disable no-extend-native */
+
 declare global {
     interface Date {
 

@@ -2,6 +2,8 @@ import Utility from "../Utility";
 import ArrayUtility from "../ArrayUtility";
 import IPagedList from "../models/IPagedList";
 
+/* eslint-disable no-extend-native */
+
 declare global {
     interface Array<T> {
         /**
