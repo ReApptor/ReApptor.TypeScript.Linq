@@ -66,7 +66,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     
     private async setModal(isOpen: boolean, animation: boolean = true): Promise<void> {
         
-        if (this.state.isOpen != isOpen) {
+        if (this.state.isOpen !== isOpen) {
 
             if (isOpen) {
                 if (this.props.onBeforeOpen) {
@@ -128,7 +128,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     private setData(data: TData | null = null): void {
-        if (data != null) {
+        if (data) {
             this._data = data;
         }
     }
@@ -147,7 +147,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.togglePageScroll(true);
 
         const data: any = this.JQuery(event.relatedTarget).data("modal");
-        if (data != null) {
+        if (data !== null && data !== undefined) {
             this.setData(this.transformData(data));
         }
 
