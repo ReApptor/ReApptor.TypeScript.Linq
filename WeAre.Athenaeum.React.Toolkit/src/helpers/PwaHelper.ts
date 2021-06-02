@@ -56,7 +56,7 @@ class PwaHelper {
             await this._deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
             const result: ChoiceResult = await this._deferredPrompt.userChoice;
-            if (result.outcome == "accepted") {
+            if (result.outcome === "accepted") {
                 this._accepted = true;
                 return true;
             }
