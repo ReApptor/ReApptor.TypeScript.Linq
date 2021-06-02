@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType } from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType, ReactUtility} from "@weare/athenaeum-react-common";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import BaseInputLocalizer from "./BaseInputLocalizer";
@@ -737,7 +737,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
-                                {this.state.validationError ? BaseInputLocalizer.get(this.state.validationError, this.props.label) : this.props.label}
+                                {this.state.validationError ? BaseInputLocalizer.get(this.state.validationError, this.props.label) : ReactUtility.toMultiLines(this.props.label)}
                             </label>
                             {(this.props.required && !this.noValidate && !this.state.validationError) && <span className={styles.required}>*</span>}
                         </div>

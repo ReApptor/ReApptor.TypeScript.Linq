@@ -87,7 +87,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
 
     public height(): number {
         
-        if (this._height == 0) {
+        if (this._height === 0) {
             const node: JQuery = this.getNode();
             this._height = node.children().first().height() || 0;
         }

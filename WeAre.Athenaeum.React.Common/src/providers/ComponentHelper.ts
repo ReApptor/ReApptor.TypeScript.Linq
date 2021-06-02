@@ -65,7 +65,7 @@ export default class ch {
     public static async setContextAsync(context: ApplicationContext): Promise<void> {
         if (this._context !== context) {
 
-            const authorize: boolean = (this._context != null) && ((this._context as IUserContext).username != (context as IUserContext).username);
+            const authorize: boolean = (!!this._context) && ((this._context as IUserContext).username !== (context as IUserContext).username);
 
             //set context
             this._context = context;

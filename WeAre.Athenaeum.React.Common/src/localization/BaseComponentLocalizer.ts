@@ -56,12 +56,15 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
     }
 
     protected getSupportedLanguages(): ILanguage[] {
-        if (this._allSupportedLanguages == null) {
-            const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
-            this._allSupportedLanguages = (applicationLocalizer)
-                ? applicationLocalizer.supportedLanguages
-                : super.getSupportedLanguages();
+        if (this._allSupportedLanguages) {
+            return this._allSupportedLanguages;
         }
+        
+        const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
+        this._allSupportedLanguages = (applicationLocalizer)
+            ? applicationLocalizer.supportedLanguages
+            : super.getSupportedLanguages();
+        
         return this._allSupportedLanguages;
     }
     
@@ -93,12 +96,15 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
     }
     
     public get browserLanguageCode(): string | null {
-        if (this._browserLanguageCode == null) {
-            const code: string = window.navigator.language.toLowerCase();
-            const supportedLanguages: ILanguage[] = this.getSupportedLanguages();
-            const supportedLanguage: ILanguage | null = supportedLanguages.find(item => (item.code.toLowerCase() == code) || (item.label.toLowerCase() == code)) || null;
-            this._browserLanguageCode = (supportedLanguage) ? supportedLanguage.code : null;
+        if (this._browserLanguageCode) {
+            return this._browserLanguageCode;
         }
+        
+        const code: string = window.navigator.language.toLowerCase();
+        const supportedLanguages: ILanguage[] = this.getSupportedLanguages();
+        const supportedLanguage: ILanguage | null = supportedLanguages.find(item => (item.code.toLowerCase() === code) || (item.label.toLowerCase() === code)) || null;
+        this._browserLanguageCode = (supportedLanguage) ? supportedLanguage.code : null;
+        
         return this._browserLanguageCode;
     }
     
