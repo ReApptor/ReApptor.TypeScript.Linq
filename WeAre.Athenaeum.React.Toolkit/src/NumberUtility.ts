@@ -7,13 +7,15 @@ export interface INumberFormat {
 
 export class NumberParsingResult {
     constructor(value: number | null | undefined = null) {
-        if (value != null) {
-            this.value = value;
-            this.valueStr = value.toString();
-            this.inputStr = value.toString();
-            this.acceptableStr = value.toString();
-            this.parsed = true;
+        if (value === null || value === undefined) {
+            return;
         }
+
+        this.value = value;
+        this.valueStr = value.toString();
+        this.inputStr = value.toString();
+        this.acceptableStr = value.toString();
+        this.parsed = true;
     }
 
     public value: number = 0;
@@ -55,12 +57,12 @@ export default class NumberUtility {
             (Number.isFinite(value)) &&
             (!escapedStr.includes("e")) && (!escapedStr.includes("E")) &&
             (escapedStr.length <= maxLength) &&
-            ((allowFloat) || (Math.trunc(value) == value))
+            ((allowFloat) || (Math.trunc(value) === value))
         );
 
         const isAcceptableStr: boolean = (parsed) &&
             (
-                (escapedStr.length == 0) ||
+                (escapedStr.length === 0) ||
                 (/^[-+]?[\d]*[.,]?[\d]*$/.test(escapedStr))
             );
 
@@ -98,14 +100,14 @@ export default class NumberUtility {
     public static resolveFormat(step: number | null | undefined, format: TFormat | null | undefined, defaultFormat: string | null | undefined = null): INumberFormat {
         format = format || defaultFormat || "";
 
-        if ((format == "") && (step != null)) {
+        if ((format === "") && (step != null)) {
             format = ((step >= 0.1) && (step < 1))
                 ? "0.0"
                 : (step <= 0.01)
                     ? "0.00"
                     : "0";
-        } else if ((format) && (step == null)) {
-            const item: INumberFormat | null = this._formats.find(item => item.format == format) || null;
+        } else if ((format) && (step === null || step === undefined)) {
+            const item: INumberFormat | null = this._formats.find(item => item.format === format) || null;
             if (item) {
                 return item;
             }

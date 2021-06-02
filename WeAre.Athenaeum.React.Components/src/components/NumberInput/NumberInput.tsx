@@ -41,7 +41,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     
     private async onChangeAsync(e: React.FormEvent<HTMLInputElement>): Promise<void> {
         const str: string = e.currentTarget.value;
-        const caretPosition: number = (e.currentTarget.selectionEnd != null)
+        const caretPosition: number = (e.currentTarget.selectionEnd !== null)
             ? e.currentTarget.selectionEnd
             : -1;
         
@@ -54,7 +54,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
         this._acceptableStr = acceptableStr;
 
-        if (this.behaviour == NumberInputBehaviour.ValidationOnChange) {
+        if (this.behaviour === NumberInputBehaviour.ValidationOnChange) {
             await this.saveChangesAsync(false);
         } else if (needToRender) {
             await this.reRenderAsync();
@@ -68,7 +68,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
             if (isNewStr) {
                 const prefix = str.substr(0, caretPosition);
                 index = newStr.indexOf(prefix);
-                if (index != -1) {
+                if (index !== -1) {
                     index += caretPosition;
                 } else {
                     index = caretPosition;
@@ -80,7 +80,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     : caretPosition - 1;
             }
             
-            if (index != -1) {
+            if (index !== -1) {
                 this.ref.current.selectionStart = index;
                 this.ref.current.selectionEnd = index;
             }
@@ -112,7 +112,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     
     private async saveChangesAsync(clearAcceptableStr: boolean = true): Promise<void> {
 
-        if (this._acceptableStr != null) {
+        if (this._acceptableStr !== null) {
             const parsingResult: NumberParsingResult = NumberUtility.parse(this._acceptableStr, this.allowFloat);
 
             if (clearAcceptableStr) {
@@ -134,7 +134,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     private async invokeSetAsync(value: number, userInteraction: boolean): Promise<boolean> {
         if (!this.readonly) {
             value = Utility.roundE(value);
-            const acceptInvalidNumbers: boolean = (this.behaviour != NumberInputBehaviour.Restricted) && (userInteraction);
+            const acceptInvalidNumbers: boolean = (this.behaviour !== NumberInputBehaviour.Restricted) && (userInteraction);
             if ((value !== this.value) && ((acceptInvalidNumbers) || (this.canSet(value)))) {
                 await this.invokeOnChange(value, userInteraction, true);
                 await this.updateValueAsync(value);
@@ -146,7 +146,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     }
 
     private getStr(): string {
-        return (this._acceptableStr != null)
+        return (this._acceptableStr !== null)
             ? this._acceptableStr
             : this.str;
     }
@@ -184,7 +184,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     }
 
     public getValidators(): ValidatorCallback<number>[] {
-        return (this.behaviour != NumberInputBehaviour.Restricted)
+        return (this.behaviour !== NumberInputBehaviour.Restricted)
             ? [NumberRangeValidator.validator(this.min, this.max)]
             : [];
     }
