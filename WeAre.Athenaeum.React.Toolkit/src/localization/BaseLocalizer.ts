@@ -99,7 +99,7 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     }
     
     public findLanguage(language: string | null | undefined): ILanguage {
-        const item: ILanguage | undefined = (language) ? this.getSupportedLanguages().find(item => item.code == language) : undefined;
+        const item: ILanguage | undefined = (language) ? this.getSupportedLanguages().find(item => item.code === language) : undefined;
         return item || this.findLanguage(this.getDefaultLanguage());
     }
     

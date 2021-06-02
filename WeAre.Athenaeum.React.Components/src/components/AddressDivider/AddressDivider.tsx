@@ -68,7 +68,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
     }
 
     public async setReadonlyAsync(value: boolean): Promise<void> {
-        if (value != this.state.readonly) {
+        if (value !== this.state.readonly) {
             await this.setState({ readonly: value });
             await this._addressInputRef.current!.setReadonlyAsync(value);
         }

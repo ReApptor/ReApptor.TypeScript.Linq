@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {ButtonType, Checkbox, Form, FourColumns, InlineType} from "@weare/athenaeum-react-components";
+import {Checkbox, Form, TwoColumns, InlineType} from "@weare/athenaeum-react-components";
 
 interface IButtonTestsState {
 }
@@ -15,24 +15,46 @@ export default class CheckboxTests extends BaseComponent<{}, IButtonTestsState> 
         return (
             <React.Fragment>
 
-                <Form className="pt-3" onSubmit={() => ch.alertMessageAsync("Submit", true) }>
+                <Form className="pt-3" onSubmit={() => ch.alertMessageAsync("Submit", true)}>
+                    <TwoColumns className="mt-4 mb-4">
 
-                    <FourColumns>
+                        <Checkbox label={"Default (false)"} inlineType={InlineType.Left}/>
 
-                        <Checkbox label={"Default (false)"}  inlineType={InlineType.Left}  />
-                        
-                        <Checkbox label={"Default (false) (readonly)"}  inlineType={InlineType.Left} readonly  />
-                        
-                    </FourColumns>
+                        <Checkbox value label={"Default (true)"} inlineType={InlineType.Left}/>
+
+                    </TwoColumns>
                     
-                    <FourColumns>
+                    <TwoColumns className="mt-4 mb-4">
 
-                        <Checkbox value label={"Default (true)"}  inlineType={InlineType.Left}  />
+                        <Checkbox label={"Default (false) (readonly)"} inlineType={InlineType.Left} readonly/>
+
+                        <Checkbox value label={"Default (true) (readonly)"} inlineType={InlineType.Left} readonly/>
+
+                    </TwoColumns>
+
+                    <TwoColumns className="mt-4 mb-4">
+
+                        <Checkbox value label={"Manual service\n<mark>Lorem ipsum dolor sit amet.</mark>"} inlineType={InlineType.Left}/>
+
+                        <Checkbox value label={"Manual service\n<small>Lorem ipsum dolor sit amet.</small>"} inlineType={InlineType.Left}/>
+
+                    </TwoColumns>
+
+                    <TwoColumns className="mt-4 mb-4">
+
+                        <Checkbox value label={"Manual service\n<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, ducimus?</b>"} inlineType={InlineType.Left}/>
+
+                        <Checkbox value label={"Manual service\n<i>The service is triggered manually</i>"} inlineType={InlineType.Left}/>
+
+                    </TwoColumns>
+
+                    <TwoColumns className="mt-4 mb-4">
+
+                        <Checkbox value label={"What is this \n<b>Bold</b> \n<small>SmallText</small> \n<i>Italic</i> \n<mark>Mark</mark>\nDoing here"} inlineType={InlineType.Left}/>
                         
-                        <Checkbox value label={"Default (true) (readonly)"}  inlineType={InlineType.Left} readonly  />
-                        
-                    </FourColumns>
-                        
+                        <Checkbox value label={"What is this <b>Bold</b> <small>SmallText</small> <i>Italic</i> <mark>Mark</mark> Doing here"} inlineType={InlineType.Left}/>
+
+                    </TwoColumns>
                 </Form>
 
             </React.Fragment>
