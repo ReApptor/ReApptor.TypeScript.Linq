@@ -46,7 +46,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
     
     private get locationPickerIsOpen(): boolean {
-        return (this.locationPickerModal != null) && (this.locationPickerModal.isOpen);
+        return !!this.locationPickerModal && this.locationPickerModal.isOpen;
     }
 
     private async openLocationPickerAsync(): Promise<void> {
@@ -76,7 +76,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     private async onPlaceSelectedAsync(place: GoogleApiResult): Promise<void> {
-        if (place.formatted_address != AddressHelper.removeLatLon(this.value)) {
+        if (place.formatted_address !== AddressHelper.removeLatLon(this.value)) {
 
             const geoLocation: GeoLocation = AddressHelper.getLocationFromGeocodeResult(place);
 
