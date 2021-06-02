@@ -45,12 +45,17 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
     }
 
     protected get localizer(): ILocalizer {
-        if (this._localizer == null) {
-            this._localizer = ServiceProvider.findLocalizer();
-            if (this._localizer == null)
-                throw new Error("EnumHelper. Localizer is not registered.");
+        if (this._localizer) {
+            return this._localizer;
         }
-        return this._localizer!;
+        
+        this._localizer = ServiceProvider.findLocalizer();
+        
+        if (this._localizer){
+            return this._localizer;
+        }
+        
+        throw new Error("EnumHelper. Localizer is not registered.");
     }
     
     // #endregion
@@ -68,12 +73,12 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
         const getter: ((reverse: boolean) => (TSelectListItem[])) | null | undefined = (this as any)[functionName] as ((reverse: boolean) => TSelectListItem[]) | null | undefined;
         
         const items: TSelectListItem[] = (getter)
-            ? getter.call(this, (reverse == true))
+            ? getter.call(this, !!reverse)
             : [];
 
         if ((selectedValues != null) && (selectedValues.length > 0) && (items.length > 0)) {
             selectedValues.forEach((value) => {
-                const selectedItem: TSelectListItem | undefined = items.find(item => item.value == value.toString());
+                const selectedItem: TSelectListItem | undefined = items.find(item => item.value === value.toString());
                 if (selectedItem) {
                     selectedItem.selected = true;
                 }
@@ -86,7 +91,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
     public getEnumItem(enumName: string, value: any): TSelectListItem {
         const values: TSelectListItem[] = this.getEnumItems(enumName);
         const enumValue: string = (value as number).toString();
-        const item: TSelectListItem | null = values.find(item => item.value == enumValue) || null;
+        const item: TSelectListItem | null = values.find(item => item.value === enumValue) || null;
 
         if (item == null)
             throw Error(`EnumHelper. Localization item for enum "${enumName}" cannot be found.`);
