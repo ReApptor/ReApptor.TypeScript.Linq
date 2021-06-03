@@ -82,7 +82,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
             await action.action.callback(cell, action);
         }
 
-        if (hadDescription != !!cell.description) {
+        if (hadDescription && !cell.description) {
             await cell.reRenderAsync();
         }
     }

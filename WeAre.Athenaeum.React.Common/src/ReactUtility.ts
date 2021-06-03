@@ -154,6 +154,7 @@ export default class ReactUtility {
         if (!text) {
             return [];
         }
+        
         // noinspection SuspiciousTypeOfGuard
         if (typeof text !== "string") {
             return [];
