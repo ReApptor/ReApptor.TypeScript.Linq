@@ -165,11 +165,11 @@ namespace WeAre.Athenaeum.Common.Configuration
         public bool IsSweden => Country.IsCountry("se");
 
         public bool IsFinland => Country.IsCountry("fi");
-
-        public bool IsNorway => Country.IsCountry("nor");
         
         public bool IsDenmark => Country.IsCountry("da");
         
         public bool IsPoland => Country.IsCountry("pl");
+
+        public bool IsNorway => Country.IsCountry("nor") || Country.IsCountry("no");
     }
 }

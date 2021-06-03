@@ -1,6 +1,6 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
+import {ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
 import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
@@ -126,6 +126,28 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                 locationPicker: true
             }
         } as ColumnDefinition,
+           {
+            actions:[
+                {
+                    name: "cancel",
+                    title: "save",
+                    type: ActionType.Blue,
+                    actions: ["test1", "test2"],
+                    callback:(cell, action: any, selectedAction: string  ) => this.cellActioncallBack(cell, action, selectedAction),
+
+                },
+                {
+                    name: "save",
+                    title: "save",
+                    icon: "far save",
+                    type: ActionType.Create,
+                    actions: ["test11", "test22"],
+                    callback:(cell, action: string, selectedAction: string  ) => this.cellActioncallBack(cell, action, selectedAction),
+
+                }
+            ]
+            
+        } as ColumnDefinition
     ];
 
     private getEnumItems(): SelectListItem[] {
@@ -220,5 +242,9 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     private transformEnumToSomething(value: any, b: boolean) {
         return value.toString() + " aaaaaa";
+    }
+
+    private cellActioncallBack(cell: CellModel<any>, cellAction: string, selectedAction: string) {
+        console.log(selectedAction)
     }
 }
