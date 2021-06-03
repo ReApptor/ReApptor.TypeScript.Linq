@@ -2,11 +2,11 @@
 
 .actions {
   position: absolute;
-  min-width: calc(150% + 50px);
+  min-width: calc(100% + 10px);
   border-radius: 0.25rem;
   border: 1px solid #ccc !important;
   top: calc(100% + 1px);
-  left: calc(-100% - 95px);
+  right: 0;
   text-align: left;
   z-index: 10;
   font-family: "DINProMedium", Arial, sans-serif;
@@ -47,7 +47,8 @@
   }
 
   .action {
-    padding: 16px 50px;
+    line-height: 1.5;
+    padding: 6px 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
