@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
 import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
@@ -20,7 +20,15 @@ interface IGridProps<TItem = {}> extends IGridDefinition {
 interface IGridState<TItem = {}> extends IBaseAsyncComponentState<TGridData<TItem>> {
 }
 
-export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TItem>, IGridState<TItem>,TGridData<TItem>> implements IGrid {
+interface IGridOverflowData {
+    containerWidth: number;
+    
+    gridWidth: number;
+    
+    gridFullWidth: number;
+}
+
+export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TItem>, IGridState<TItem>,TGridData<TItem>> implements IGrid, IGlobalResize {
 
     state: IGridState<TItem> = {
         isLoading: false,
@@ -28,10 +36,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     };
 
     private readonly _spinnerRef: React.RefObject<GridSpinner> = React.createRef();
+    private _overflowData: IGridOverflowData | null = null;
     private _language: string = GridLocalizer.language;
     private _grid: GridModel<TItem> | null = null;
     private _rows: RowModel<TItem>[] | null = null;
-    
+
     private async paginateAsync(pageNumber: number, pageSize: number): Promise<void> {
         if ((this.pageNumber != pageNumber) || (this.pageSize != pageSize)) {
             this.model.pageNumber = pageNumber;
@@ -39,7 +48,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             await this.reloadAsync();
         }
     }
-    
+
     private async setDataAsync(data: TItem[]): Promise<void> {
         const state: IGridState<TItem> = this.state;
         await this.processDataAsync(state, data);
@@ -47,7 +56,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             await this.setState(state);
         }
     }
-    
+
     private async buildModelAsync(): Promise<void> {
         const data: TItem[] = this.model.data;
         this._language = GridLocalizer.language;
@@ -55,7 +64,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         this._rows = null;
         await this.setDataAsync(data);
     }
-    
+
     private async onCheckRowAsync(): Promise<void> {
         const count: number = this.rows.length;
         const selected: number = Utility.count(this.rows, row => row.checked);
@@ -64,14 +73,112 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             : (selected === count)
                 ? true
                 : undefined;
-        
+
         if (newChecked !== this.model.checked) {
             this.model.checked = newChecked;
             await this.model.checkHeaderInstance.reRenderAsync();
         }
-        
+
         if (this.model.onCheck) {
             await this.model.onCheck(this.model);
+        }
+    }
+
+    public width(): number {
+        const gridNode: JQuery = this.JQuery(`#table_${this.id}`);
+
+        const width: number | undefined = gridNode.width();
+
+        return (width != null)
+            ? width + 1
+            : 0;
+    }
+    
+    public getNode(): JQuery {
+        return this.JQuery(`#table_${this.id}`);
+    }
+
+    public containerWidth(): number {
+        const gridNode: JQuery = this.getNode();
+
+        const parentNode: JQuery = gridNode.parent();
+
+        return parentNode.innerWidth() || gridNode.outerWidth() || 0;
+    }
+
+    private getOverflowData(): IGridOverflowData {
+
+        const gridContainerWidth: number = Math.round(this.containerWidth());
+
+        const gridWidth: number = Math.round(this.model.fullWidth());
+
+        const gridFullWidth: number = Math.round(this.model.fullWidth(false));
+
+        return {
+            containerWidth: gridContainerWidth,
+            gridWidth: gridWidth,
+            gridFullWidth: gridFullWidth,
+        }
+    }
+
+    private async processResponsiveAsync(): Promise<void> {
+        if (this.model.responsive) {
+            const overflowData: IGridOverflowData = this.getOverflowData();
+
+            let columns: ColumnModel<TItem>[] = this.model.columns;
+
+            const needToHide: boolean = (overflowData.containerWidth < overflowData.gridWidth);
+
+            if (needToHide) {
+
+                let widthToCompensate: number = (overflowData.gridWidth - overflowData.containerWidth);
+
+                while (true) {
+
+                    columns = columns.where(column => column.isVisible);
+
+                    if (columns.length <= 1) {
+                        return;
+                    }
+
+                    columns.order(column => column.responsivePriority);
+
+                    const lastColumn: ColumnModel<TItem> = columns[columns.length - 1];
+
+                    const columnWidth: number = lastColumn.outerWidth();
+
+                    widthToCompensate -= columnWidth;
+
+                    lastColumn.collapsed = true;
+
+                    if (widthToCompensate <= 0) {
+                        break;
+                    }
+                }
+
+                this._overflowData = overflowData;
+
+                this.reRenderAsync();
+
+                return;
+            }
+
+            const lastContainerWidth = (this._overflowData) ? this._overflowData.containerWidth : overflowData.containerWidth;
+
+            const needToShow: boolean = (lastContainerWidth < overflowData.containerWidth) && (columns.some(column => column.collapsed));
+
+            if (needToShow) {
+
+                columns.map(column => column.collapsed = false);
+
+                await this.reRenderAsync();
+
+                this._overflowData = overflowData;
+
+                await this.processResponsiveAsync();
+
+                return;
+            }
         }
     }
     
@@ -222,6 +329,10 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         await this.setDataAsync([]);
     }
     
+    public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
+        await this.processResponsiveAsync();
+    }
+
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
         
@@ -232,6 +343,10 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
     public async componentWillReceiveProps(nextProps: IGridProps<TItem>): Promise<void> {
         
+        await super.componentWillReceiveProps(nextProps);
+
+        await this.processResponsiveAsync();
+
         const newData: boolean = (this.props.data !== nextProps.data);
         if (newData) {
             const data: TItem[] = nextProps.data || [];
@@ -246,6 +361,13 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         if ((newReadonly) || (newLanguage)) {
             await this.buildModelAsync();
         }
+    }
+
+    public async componentDidMount(): Promise<void> {
+
+        await super.componentDidMount();
+
+        await this.processResponsiveAsync();
     }
 
     private renderHeader(column: ColumnModel<TItem>, top: boolean): React.ReactNode {
@@ -274,8 +396,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         );
     }
 
-    render(): React.ReactNode {
-        
+    public render(): React.ReactNode {
         const model: GridModel<TItem> = this.model;
         const rows: RowModel<TItem>[] = this.rows;
         
@@ -291,7 +412,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             inlineStyles.minWidth = model.minWidth;
         }
         
-        const columns: ColumnModel<TItem>[] = model.columns.where(item => item.visible);
+        const columns: ColumnModel<TItem>[] = model.columns.where(item => item.isVisible);
         
         return (
             <React.Fragment>
