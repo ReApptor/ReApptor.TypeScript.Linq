@@ -6,6 +6,7 @@ export default class PageDefinitions extends BasePageDefinitions {
         return await require(`./${pageContainer}${pageName}/${pageName}`);
     }
 
+    // eslint-disable-next-line
     constructor() {
         super();
     }

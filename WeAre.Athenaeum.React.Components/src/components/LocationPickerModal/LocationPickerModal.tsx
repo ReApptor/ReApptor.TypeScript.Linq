@@ -95,17 +95,17 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
     }
 
     public async componentWillReceiveProps(nextProps: ILocationPickerModalProps): Promise<void> {
-        if (nextProps.location && (nextProps.location != this.state.location)) {
+        if (nextProps.location && (nextProps.location !== this.state.location)) {
             await this.setState({ location: nextProps.location });
         }
     }
 
     public get readonly(): boolean {
-        return (this.props.readonly == true);
+        return !!this.props.readonly;
     }
 
     public get isOpen(): boolean {
-        return (this.modal != null) && (this.modal.isOpen);
+        return !!this.modal && this.modal.isOpen;
     }
 
     render(): React.ReactNode {

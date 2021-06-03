@@ -63,7 +63,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const checkRowSpan = (row.expanded) ? 2 : 1;
         
         const checkDisabledStyle: any = (grid.checkable) && (!row.checkable) && (gridStyles.disabled);
-        const borderStyle: any = (this.grid.borderType == BorderType.DarkSeparators) && styles.darkSeparators;
+        const borderStyle: any = (this.grid.borderType === BorderType.DarkSeparators) && styles.darkSeparators;
         
         const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
 

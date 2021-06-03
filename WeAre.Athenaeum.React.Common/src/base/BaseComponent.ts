@@ -50,7 +50,8 @@ export interface IBaseComponent extends IReactComponent, ISpinner {
     isComponent(): boolean;
     getPage(): IBasePage;
     hasSpinner(): boolean;
-    outerHeight(includeMargin: boolean): number;
+    outerHeight(includeMargin?: boolean): number;
+    outerWidth(includeMargin?: boolean): number;
     getAsync<TResponse>(endpoint: string): Promise<TResponse>;
     postAsync<TResponse>(endpoint: string, request: any | null): Promise<TResponse>;
     reRenderAsync(): Promise<void>;
