@@ -133,6 +133,10 @@ export interface IGrid extends IAsyncComponent {
 export interface ICell extends IBaseComponent {
 }
 
+export interface IHeaderCell extends ICell {
+    outerWidth(includeMargin?: boolean): number;
+}
+
 export interface IRow extends IBaseComponent {
 }
 
@@ -143,19 +147,22 @@ export interface ICellAction extends IBaseComponent {
 }
 
 export class ColumnModel<TItem = {}> {
-    public name: string | null = null;
     
+    private _lastOuterWidth: number = 0;
+    
+    public name: string | null = null;
+
     public index: number = 0;
 
     public header: string = "";
-    
+
     public title: string = "";
 
     public accessor: string | GridAccessorCallback<TItem> | null = null;
 
     public visible: boolean = true;
 
-    public responsive: boolean = true;
+    public responsivePriority: number | boolean = 0;
 
     public group: string | null = null;
 
@@ -166,11 +173,11 @@ export class ColumnModel<TItem = {}> {
     public type: ColumnType = ColumnType.Custom;
 
     public editable: boolean = false;
-    
+
     public removable: boolean = true;
 
     public reRenderRow: boolean = false;
-    
+
     public rotate: boolean = false;
 
     public format: TFormat | null = null;
@@ -178,37 +185,49 @@ export class ColumnModel<TItem = {}> {
     public minWidth: string | number | null = null;
 
     public maxWidth: string | number | null = null;
-    
+
     public maxHeight: string | number | null = null;
-    
+
     public noWrap: boolean = false;
-    
+
     public wordBreak: boolean = false;
-    
+
     public stretch: boolean = false;
-    
+
     public total: boolean = false;
 
     public route: PageRoute | GridRouteCallback<TItem> | null = null;
-    
+
     public className: string | null = null;
-    
+
     public settings: ColumnSettings<TItem> = new ColumnSettings<TItem>();
 
     public sorting: boolean | SortDirection | null = null;
 
     public actions: ColumnAction<TItem>[] = [];
 
+    public headerCellInstance: IHeaderCell = {} as IHeaderCell;
+    
+    public collapsed: boolean = false;
+
     public init?(cell: CellModel<any>): void;
 
     public transform?(cell: CellModel<TItem>, cellValue: any, format: TFormat | null): string;
 
     public render?(cell: CellModel<TItem>): React.ReactNode;
-    
+
     public callback?(cell: CellModel<TItem>, action: CellAction<TItem> | null): Promise<void>;
 
     public grid: GridModel<TItem> = new GridModel<TItem>();
-    
+
+    public outerWidth(visible: boolean = true): number {
+        return ((this.isVisible) && (this.headerCellInstance.outerWidth))
+            ? (this._lastOuterWidth = this.headerCellInstance.outerWidth())
+            : (visible)
+                ? 0
+                : this._lastOuterWidth;
+    }
+
     public get isFirst(): boolean {
         return (this.index === 0);
     }
@@ -216,17 +235,17 @@ export class ColumnModel<TItem = {}> {
     public get isLast(): boolean {
         return (this.index === this.grid.columns.length - 1);
     }
-    
+
     public get cells(): CellModel<TItem>[] {
         return this.grid.rows.map(row => row.cells[this.index]);
     }
-    
+
     public get sortable(): boolean {
         return (this.sorting != null) && (this.sorting != false);
     }
-    
+
     public get isVisible(): boolean {
-        return (this.visible) && ((this.responsive) || (this.grid.desktop));
+        return (this.visible) && (!this.collapsed);
     }
 }
 
@@ -290,14 +309,14 @@ export class GridModel<TItem = {}> {
     public totalItemCount: number = 0;
     
     public generation: number = 0;
-    
-    public get key(): string {
-        return `grid_${this.id}`;
-    }
 
     public onCheck?(sender: GridModel<any>): Promise<void>;
 
     public renderDetails?(row: RowModel<TItem>): React.ReactNode;
+    
+    public get key(): string {
+        return `grid_${this.id}`;
+    }
     
     public get modified(): boolean {
         return this.rows.some(item => item.modified);
@@ -337,6 +356,17 @@ export class GridModel<TItem = {}> {
         return (!this.mobile);
     }
     
+    public fullWidth(visible: boolean = true): number {
+        return this.columns.sum(column => column.outerWidth(visible));
+    }
+    
+    public collapsedWidth(): number {
+        return this
+            .columns
+            .where(column => column.collapsed)
+            .sum(column => column.outerWidth(false));
+    }
+
     public getDump(): Dictionary<string, any> {
         const dump = new Dictionary<string, string>();
         //const cells: CellModel<TItem>[] = [];
@@ -765,7 +795,7 @@ export class ColumnDefinition {
 
     public visible?: boolean;
     
-    public responsive?: boolean;
+    public responsivePriority?: number | boolean = 0;
     
     public group?: string;
 
@@ -1644,7 +1674,7 @@ export class GridTransformer {
         to.className = from.className || null;
         to.header = from.header || "";
         to.visible = (from.visible !== false);
-        to.responsive = (grid.responsive) && (from.responsive !== false);
+        to.responsivePriority = from.responsivePriority || 0;
         to.init = from.init;
         to.transform = from.transform;
         to.render = from.render;
