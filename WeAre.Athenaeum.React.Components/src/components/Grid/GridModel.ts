@@ -597,17 +597,35 @@ export class ColumnSettings<TItem = {}> {
     public step: number | null = null;
 
     public hideZero: boolean = false;
-    
+
+    /**
+     * Show additional info line below main text. 
+     */
     public infoAccessor: string | GridAccessorCallback<any> | null = null;
 
+    /**
+     * If number is used for infoAccessor: Option to hide value if 0
+     */
     public infoHideZero: boolean = false;
-
+    
+    /**
+     * If infoAccessor value equals to main text: Option to hide if equal
+     */
     public infoHideEqual: boolean = false;
 
+    /**
+     * Title for infoAccessor. 
+     */
     public infoTitle: string | null = null;
 
+    /**
+     * Show infoAccessor value with bold style
+     */
     public infoBold: boolean = false;
-    
+
+    /**
+     * Show infoAccessor value with bold style if it doesn't match to main text
+     */
     public infoBoldNotEqual: boolean = false;
 
     public infoFormat: TFormat | null = null;
@@ -648,6 +666,12 @@ export class ColumnSettings<TItem = {}> {
 
     public selectedTextTransform?(sender: Dropdown<TItem>): string;
 
+    /**
+     * Transform function for infoAccessor property
+     * @param cell
+     * @param cellValue
+     * @param format
+     */
     public infoTransform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
 
 }
@@ -670,10 +694,14 @@ export class ColumnActionDefinition {
     
     public toggleModal?: string;
 
+    /**
+     *  If specific action button/icon will show additional actions when clicked.
+     *  Selected action is available in callback function
+     */
     public actions?: string[];
 
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
-
+    
     public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
