@@ -147,10 +147,10 @@ export default class ch {
         return (this._page != null) && (await this._page.confirmAsync(title));
     }
 
-    public static async documentPreviewAsync(endpoint: string, id: string, title: string | null = null, size: DocumentPreviewSize = DocumentPreviewSize.Large): Promise<void> {
+    public static async documentPreviewAsync(endpoint: string, request: any, title: string | null = null, size: DocumentPreviewSize = DocumentPreviewSize.Large): Promise<void> {
         if (this._page != null) {
             const model = new DocumentPreviewModel();
-            model.document = async (sender) => await sender.postAsync<FileModel>(endpoint, id);
+            model.document = async (sender) => await sender.postAsync<FileModel>(endpoint, request);
             model.title = title;
             model.size = size;
             await this._page.documentPreviewAsync(model);
