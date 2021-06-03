@@ -198,7 +198,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
                 </Form>
 
-                <Grid ref={this._gridRef}
+                <Grid ref={this._gridRef} responsive
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
