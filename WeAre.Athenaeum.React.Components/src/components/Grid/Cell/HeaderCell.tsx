@@ -1,7 +1,7 @@
 import React from "react";
 import {SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseComponent, StylesUtility, TextAlign, VerticalAlign} from "@weare/athenaeum-react-common";
-import {ColumnModel, ColumnType, GridModel, GridTransformer} from "../GridModel";
+import {ColumnModel, ColumnType, GridModel, GridTransformer, IHeaderCell} from "../GridModel";
 import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
 import GridLocalizer from "../GridLocalizer";
 
@@ -12,7 +12,7 @@ interface IHeaderCellProps<TItem = {}> {
     top: boolean;
 }
 
-export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> {
+export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> implements IHeaderCell {
     
     private async sortAsync(column: ColumnModel<TItem>): Promise<void> {
         const grid: GridModel<TItem> = column.grid;
@@ -29,11 +29,10 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
         await grid.reloadAsync();
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
 
         const column: ColumnModel<TItem> = this.props.column;
         const top: boolean = this.props.top;
-        
         const grid: GridModel<TItem> = column.grid;
         const columnIndex: number = column.index;
 
@@ -105,6 +104,10 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
         const icon: IIconProps | null = (column.type == ColumnType.Icon)
             ? GridTransformer.toIcon(header)
             : null;
+        
+        if (render) {
+            column.headerCellInstance = this;
+        }
         
         return (
             (render) &&
