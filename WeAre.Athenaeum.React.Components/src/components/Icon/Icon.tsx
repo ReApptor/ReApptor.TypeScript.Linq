@@ -2,6 +2,9 @@ import React from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import IconLocalizer from "./IconLocalizer";
+import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
+import styles from "./Icon.module.scss";
+import {Utility} from "@weare/athenaeum-toolkit";
 
 export enum IconSize {
     Normal,
@@ -54,10 +57,25 @@ export interface IIconProps {
     onClick?(sender: Icon): Promise<void>;
 }
 
-export default class Icon extends BaseComponent<IIconProps> {
+interface IIconState {
+    isOpen: boolean;
+}
 
+export default class Icon extends BaseComponent<IIconProps, IIconState> {
+
+    state: IIconState = {
+        isOpen: false
+    }
+    
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
+    private _forcedWidth: number | null = null;
+    private _actionLoading: boolean = false;
+    private _actionProps: IIconActionProps | null = null;
 
+    public static get Action(): typeof IconAction {
+        return IconAction;
+    }
+    
     private static add(lowerClassName: string, className: string, style: string, asPrefix: boolean = false): string {
         const includes: boolean = (asPrefix)
             ? lowerClassName.startsWith(style + " ")
@@ -66,6 +84,43 @@ export default class Icon extends BaseComponent<IIconProps> {
             className += " " + style;
         }
         return className;
+    }
+
+    async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+
+        if (this.hasActions) {
+            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
+
+            const buttonWidth: number = this.outerWidth();
+            const actionsWidth: number = actionsDiv.outerWidth() || 0;
+
+            if (actionsWidth >= buttonWidth) {
+                this._forcedWidth = actionsWidth;
+            } else {
+                this._forcedWidth = buttonWidth;
+            }
+
+            this.reRenderAsync();
+        }
+    }
+
+    private get actionsId(): string {
+        return `${this.id}_actions`;
+    }
+
+    private async closeActions(): Promise<void> {
+        await this.setState({isOpen: false});
+    }
+
+    public async onGlobalClick(e: React.MouseEvent): Promise<void> {
+        const target = e.target as Node;
+
+        const outside: boolean = Utility.clickedOutside(target, this.id);
+
+        if (outside && this.state.isOpen) {
+            await this.closeActions();
+        }
     }
 
     private static addSize(lowerClassName: string, className: string, size?: IconSize): string {
@@ -139,6 +194,34 @@ export default class Icon extends BaseComponent<IIconProps> {
         return classStyle;
     }
 
+    // overriding children's onClick 
+    protected extendChildProps(element: React.ReactElement): any | null {
+        return {
+            onClick: async () => {
+                await this.onActionClickAsync(element.props);
+            }
+        }
+    }
+
+    private async onActionClickAsync(actionProps: IIconActionProps): Promise<void> {
+        if (this._actionLoading) {
+            return;
+        }
+
+        this._actionProps = actionProps;
+        this._actionLoading = true;
+        await this.reRenderAsync();
+
+        try {
+            await actionProps.onClick();
+
+        } finally {
+            this._actionProps = null;
+            this._actionLoading = false;
+            await this.reRenderAsync();
+        }
+    }
+
     private getClassName(): string {
 
         let name = this.props.name;
@@ -191,7 +274,24 @@ export default class Icon extends BaseComponent<IIconProps> {
         return this.props.dismissModal ? "modal" : "";
     }
 
+    private get hasActions(): boolean {
+        return !!this.props.children;
+    }
+
+    private async toggleActions(): Promise<void> {
+        await this.setState({isOpen: !this.state.isOpen});
+    }
+
+    private get showActions(): boolean {
+        return this.hasActions && this.state.isOpen;
+    }
+
     private async onClickAsync(confirmed: boolean): Promise<void> {
+        
+        if (this.hasActions) {
+            return await this.toggleActions();
+        }
+        
         const confirmNeeded: boolean = (!!this.props.confirm) && (!confirmed);
         if (confirmNeeded) {
             await this._confirmDialogRef.current!.openAsync();
@@ -206,7 +306,7 @@ export default class Icon extends BaseComponent<IIconProps> {
         return (
             <React.Fragment>
                 <i id={this.id}
-                   style={this.props.customStyle ? this.props.customStyle : (this.props.disabled) ? this.disabledStyle : {}}
+                   style={this.props.customStyle ? this.props.customStyle : (this.props.disabled) ? this.disabledStyle : (this.hasActions) ? {position:"relative"} : {}}
                    className={this.getClassName()}
                    title={IconLocalizer.get(this.props.tooltip)}
                    data-target={`#${this.dataTarget}`}
@@ -214,7 +314,10 @@ export default class Icon extends BaseComponent<IIconProps> {
                    data-dismiss={this.dataDismissModal}
                    data-modal={this.dataModal}
                    onClick={async (e: React.MouseEvent) => await this.onClickAsync(false)}
-                />
+                >
+                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, styles.color_unset,  "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
+
+                </i>
                 {
                     (this.props.confirm) &&
                     (

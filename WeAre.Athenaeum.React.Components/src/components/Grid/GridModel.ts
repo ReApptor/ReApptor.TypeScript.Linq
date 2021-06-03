@@ -700,9 +700,11 @@ export class ColumnActionDefinition {
     
     public toggleModal?: string;
 
+    public actions?: string[];
+
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
 
-    public callback?(cell: CellModel<any>, action: CellAction<any>): Promise<void>;
+    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
 }
@@ -721,12 +723,14 @@ export class ColumnAction<TItem = {}> {
     public toggleModal: string | null = null;
     
     public alwaysAvailable: boolean = false;
+    
+    public actions?: string[] | null = null;
 
     public confirm: string | IConfirmation | GridConfirmationDialogTitleCallback<TItem> | null = null;
 
     public column: ColumnModel<TItem> = new ColumnModel<TItem>();
 
-    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>): Promise<void>;
+    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void>;
 
     public render?(cell: CellModel<TItem>, action: CellAction<TItem>): React.ReactNode;
 }
@@ -1729,7 +1733,8 @@ export class GridTransformer {
         to.callback = from.callback;
         to.render = from.render;
         to.right = from.right || false;
-
+        to.actions = from.actions;
+        
         to.alwaysAvailable = from.alwaysAvailable || false;
         to.name = from.name || null;
         to.icon = this.toIcon(from.icon);
