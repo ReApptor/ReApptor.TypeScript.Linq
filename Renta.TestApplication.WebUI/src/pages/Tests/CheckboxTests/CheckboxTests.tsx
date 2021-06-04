@@ -42,17 +42,29 @@ export default class CheckboxTests extends BaseComponent<{}, IButtonTestsState> 
 
                     <TwoColumns className="mt-4 mb-4">
 
-                        <Checkbox value label={"Manual service\n<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, ducimus?</b>"} inlineType={InlineType.Left}/>
+                        <Checkbox value inline
+                                  inlineType={InlineType.Right}
+                                  label={"Manual service\n<b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, ducimus?</b>"}
+                        />
 
-                        <Checkbox value label={"Manual service\n<i>The service is triggered manually</i>"} inlineType={InlineType.Left}/>
+                        <Checkbox value inline
+                                  inlineType={InlineType.Right}
+                                  label={"Manual service\n<i>The service is triggered manually</i>"}
+                        />
 
                     </TwoColumns>
 
                     <TwoColumns className="mt-4 mb-4">
 
-                        <Checkbox value label={"What is this \n<b>Bold</b> \n<small>SmallText</small> \n<i>Italic</i> \n<mark>Mark</mark>\nDoing here"} inlineType={InlineType.Left}/>
+                        <Checkbox value inline
+                                  inlineType={InlineType.Left}
+                                  label={"What is this \n<b>Bold</b> \n<small>SmallText</small> \n<i>Italic</i> \n<mark>Mark</mark>\nDoing here"}
+                        />
                         
-                        <Checkbox value label={"What is this <b>Bold</b> <small>SmallText</small> <i>Italic</i> <mark>Mark</mark> Doing here"} inlineType={InlineType.Left}/>
+                        <Checkbox value inline
+                                  inlineType={InlineType.Left}
+                                  label={"What is this <b>Bold</b> <small>SmallText</small> <i>Italic</i> <mark>Mark</mark> Doing here"}
+                        />
 
                     </TwoColumns>
                 </Form>
