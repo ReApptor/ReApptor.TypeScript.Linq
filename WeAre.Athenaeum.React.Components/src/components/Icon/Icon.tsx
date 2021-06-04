@@ -315,7 +315,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                    data-modal={this.dataModal}
                    onClick={async (e: React.MouseEvent) => await this.onClickAsync(false)}
                 >
-                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, styles.color_unset,  "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
+                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, styles.color_grey,  "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
 
                 </i>
                 {
