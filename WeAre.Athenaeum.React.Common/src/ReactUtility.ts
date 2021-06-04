@@ -15,7 +15,7 @@ export default class ReactUtility {
                 : [item]
             );
 
-        return ((tags) && (Array.isArray(tags)))
+        return ((tags) && (Array.isArray(tags)) && (typeof tags.flat === "function"))
             ? tags.flat().filter(tag => !!tag)
             : [];
     }
