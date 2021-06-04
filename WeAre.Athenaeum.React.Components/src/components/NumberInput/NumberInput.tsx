@@ -1,7 +1,7 @@
 import React from "react";
-import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/athenaeum-toolkit";
+import {INumberFormat, NumberParsingResult, NumberUtility, TFormat, Utility} from "@weare/athenaeum-toolkit";
 import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../BaseInput/BaseInput";
-import Icon, {IconSize} from "../Icon/Icon";
+import Icon, {IconSize, IIconProps} from "../Icon/Icon";
 
 import styles from "./NumberInput.module.scss";
 
@@ -26,8 +26,8 @@ export interface INumberInputProps extends IBaseInputProps<number> {
     forwardedRef?: React.RefObject<HTMLInputElement>;
     hideInput?: boolean;
     hideArrows?: boolean;
-    increaseInputIcon?: string;
-    decreaseInputIcon?: string;
+    increaseIcon?: string | IIconProps;
+    decreaseIcon?: string | IIconProps;
     onChange?(sender: NumberInput, value: number, userInteraction: boolean, done: boolean): Promise<void>;
 }
 
@@ -219,6 +219,32 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public get canIncrease(): boolean {
         return this.canSet(this.value + this.step);
     }
+    
+    public get increaseIconProps(): IIconProps {
+        const increaseIconProp = this.props.increaseIcon || "arrow-up";
+        
+        if (typeof increaseIconProp === "string") {
+            return  {
+                name: increaseIconProp,
+                size: IconSize.ExtraSmall
+            };
+        }
+        
+        return increaseIconProp;
+    }
+
+    public get decreaseIconProps(): IIconProps {
+        const decreaseIconProp = this.props.decreaseIcon || "arrow-down";
+
+        if (typeof decreaseIconProp === "string") {
+            return  {
+                name: decreaseIconProp,
+                size: IconSize.ExtraSmall
+            };
+        }
+
+        return decreaseIconProp;
+    }
 
     protected get allowFloat(): boolean {
         return (this.step < 1.0);
@@ -268,9 +294,24 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     className="form-control"
                     title={this.props.title}
                 />
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.increaseArrow)} onClick={() => this.increaseAsync()}><Icon name={this.props.increaseInputIcon  ?? "arrow-up"} size={IconSize.ExtraSmall}/></div>}
 
-                {(!this.props.hideArrows) && <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)} onClick={() => this.decreaseAsync()}><Icon name={this.props.decreaseInputIcon ?? "arrow-down"} size={IconSize.ExtraSmall}/></div>}
+                {
+                    (!this.props.hideArrows) &&
+                    (
+                        <div className={this.css(styles.numberInputArrow, styles.increaseArrow)} onClick={() => this.increaseAsync()}>
+                            <Icon {...this.increaseIconProps}/>
+                        </div>
+                    )
+                }
+
+                {
+                    (!this.props.hideArrows) &&
+                    (
+                        <div className={this.css(styles.numberInputArrow, styles.decreaseArrow)} onClick={() => this.decreaseAsync()}>
+                            <Icon {...this.decreaseIconProps}/>
+                        </div>
+                    )
+                }
             </div>
         );
     }
