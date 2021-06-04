@@ -4,7 +4,7 @@ using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
 namespace Renta.TestApplication.WebUI.Server.Models
 {
     [DebuggerDisplay("{Name}")]
-    public class PageRoute
+    public sealed class PageRoute
     {
         public string Name { get; set; }
         
