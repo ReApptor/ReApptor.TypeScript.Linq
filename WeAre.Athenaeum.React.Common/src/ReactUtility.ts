@@ -7,7 +7,7 @@ export default class ReactUtility {
     //#region Private
     
     private static split(regex: RegExp, tag: string, text: string, containerIndex: number): (ReactElement | string)[] {
-        const items: string[] = text.split(regex);
+        const items: string[] = (text || "").split(regex);
 
         const tags = items
             .map((item: string, index: number) => (index % 2 != 0)
