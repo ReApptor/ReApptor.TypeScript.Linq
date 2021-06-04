@@ -91,7 +91,7 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
                             {
                                 model.tabs.map((tab: TabModel) =>
                                     (
-                                        <TabHeader model={tab} key={"tab_header_" + tab.id} />
+                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} />
                                     )
                                 )
                             }
