@@ -735,11 +735,23 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                     (this.props.label) &&
                     (
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
+                            
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
-                                {this.state.validationError ? BaseInputLocalizer.get(this.state.validationError, this.props.label) : ReactUtility.toMultiLines(this.props.label)}
+                                {
+                                    (this.state.validationError)
+                                        ? BaseInputLocalizer.get(this.state.validationError, this.props.label)
+                                        : ReactUtility.toMultiLines(this.props.label)
+                                }
                             </label>
-                            {(this.props.required && !this.noValidate && !this.state.validationError) && <span className={styles.required}>*</span>}
+                            
+                            {
+                                (this.props.required && !this.noValidate && !this.state.validationError) && 
+                                (
+                                    <span className={styles.required}>*</span>
+                                )
+                            }
+                            
                         </div>
                     )
                 }
