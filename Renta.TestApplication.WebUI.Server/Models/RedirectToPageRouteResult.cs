@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models
+namespace Renta.TestApplication.WebUI.Server.Models
 {
     public sealed class RedirectToPageRouteResult : RedirectToPageResult
     {
