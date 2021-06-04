@@ -5,8 +5,6 @@ export default class PageRoute {
     public name: string;
 
     public index: number | null;
-    
-    public data: string | null;
 
     public id: string | null;
 
@@ -14,11 +12,10 @@ export default class PageRoute {
 
     public isPageRoute: true = true;
 
-    constructor(name: string, index: number | null = null, id: string | null = null, data: string | null = null, parameters: BasePageParameters | null = null) {
+    constructor(name: string, index: number | null = null, id: string | null = null, parameters: BasePageParameters | null = null) {
         this.name = name;
         this.index = index;
         this.id = id;
-        this.data = data;
         this.parameters = parameters;
         this.isPageRoute = true;
     }
@@ -41,9 +38,6 @@ export default class PageRoute {
             return false;
         }
         if (x.id !== y.id) {
-            return false;
-        }
-        if (x.data !== y.data) {
             return false;
         }
         if ((x.parameters == null) && (y.parameters == null)) {
