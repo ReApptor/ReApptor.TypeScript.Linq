@@ -1,6 +1,7 @@
 using System.Diagnostics;
+using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
 
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models
+namespace Renta.TestApplication.WebUI.Server.Models
 {
     [DebuggerDisplay("{Name}")]
     public class PageRoute
