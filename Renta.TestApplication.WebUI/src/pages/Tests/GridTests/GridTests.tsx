@@ -133,8 +133,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     title: "save",
                     type: ActionType.Blue,
                     actions: ["test1", "test2"],
-                    callback:(cell, action: any, selectedAction: string  ) => this.cellActioncallBack(cell, action, selectedAction),
-
+                    callback:(cell, action: any, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
                 },
                 {
                     name: "save",
@@ -142,8 +141,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     icon: "far save",
                     type: ActionType.Create,
                     actions: ["test11", "test22"],
-                    callback:(cell, action: string, selectedAction: string  ) => this.cellActioncallBack(cell, action, selectedAction),
-
+                    callback:(cell, action: string, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
                 }
             ]
             
@@ -172,7 +170,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     private get items(): GridItem[] {
         if (this._items == null) {
             this._items = [];
-            const count: number = 1;//100;
+            const count: number = 100;
             for (let i: number = 0; i < count; i++) {
                 const item: GridItem = {
                     index: i,
