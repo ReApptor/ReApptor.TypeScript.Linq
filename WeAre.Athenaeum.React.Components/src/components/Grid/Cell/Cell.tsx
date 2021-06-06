@@ -19,6 +19,7 @@ import gridStyles from "../Grid.module.scss";
 
 interface ICellProps<TItem = {}> {
     cell: CellModel<TItem>;
+    colSpan?: number;
 }
 
 export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> implements ICell {
@@ -616,6 +617,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     className={this.css(rowSpanStyle, column.className, cell.className, cellHoveringStyle, notValidStyle, deletedStyle, deletedFirstCellStyle, deletedLastCellStyle, this.cellPaddingClassName, noWrapClass, wordBreakClass)}
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
+                    colSpan={this.props.colSpan}
                 >
 
                     {

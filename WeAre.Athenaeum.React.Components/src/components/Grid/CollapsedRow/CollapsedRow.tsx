@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import Cell from "../Cell/Cell";
-import {CellModel, GridModel, RowModel} from "../GridModel";
+import {CellModel, ColumnModel, GridModel, RowModel} from "../GridModel";
 import GridLocalizer from "../GridLocalizer";
 
 import gridStyles from "../Grid.module.scss";
@@ -26,6 +26,30 @@ export default class CollapsedRow<TItem = {}> extends BaseComponent<ICollapsedRo
     public get cells(): CellModel<TItem>[] {
         return this.props.cells;
     }
+    
+    public renderCell(cell: CellModel<TItem>): React.ReactNode {
+
+        const column: ColumnModel<TItem> = cell.column;
+        const hasHeader: boolean = !!column.group || !!column.header;
+
+        return (
+            <tr>
+                {
+                    (hasHeader) &&
+                    (
+                        <td>
+                            {(column.group) && (<span>{this.toMultiLines(GridLocalizer.get(column.group))}</span>)}
+                            {(column.header) && (<span>{this.toMultiLines(GridLocalizer.get(column.header))}</span>)}
+                        </td>
+                    )
+                }
+                <Cell key={cell.key}
+                      cell={cell}
+                      colSpan={hasHeader ? 1 : 2}
+                />
+            </tr>
+        )
+    }
 
     public render(): React.ReactNode {
 
@@ -46,18 +70,7 @@ export default class CollapsedRow<TItem = {}> extends BaseComponent<ICollapsedRo
                 <td colSpan={cells.length + 1}>
                     <table>
                         {
-                            collapsedCells.map((cell: CellModel<TItem>) => {
-                                return (
-                                    <tr>
-                                        <td>
-                                            <span>{this.toMultiLines(GridLocalizer.get(cell.column.header)) || this.props.children}</span>
-                                        </td>
-                                        <Cell key={cell.key}
-                                              cell={cell}
-                                        />
-                                    </tr>
-                                )
-                            })
+                            collapsedCells.map((cell: CellModel<TItem>) => this.renderCell(cell))
                         }
                     </table>
                 </td>
