@@ -41,8 +41,20 @@
         }
     }
     
-    &.collapsed {
-        
+    .responsive {
+        min-width: 40px;
+        max-width: 40px;
+        cursor: pointer;
+        text-align: center;
+        vertical-align: middle;
+
+        .responsiveIcon {
+            color: $blue;
+
+            &.expanded {
+                color: $danger;
+            }
+        }
     }
     
     &.heightLarge {
