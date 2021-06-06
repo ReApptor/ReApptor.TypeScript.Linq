@@ -1,7 +1,7 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
-import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
+import {CellModel, ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
 import GridSpinner from "./GridSpinner/GridSpinner";
@@ -11,6 +11,7 @@ import Pagination from "../Pagination/Pagintation";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
+import Icon, {IconSize} from "../Icon/Icon";
 
 interface IGridProps<TItem = {}> extends IGridDefinition {
     data?: TItem[] | null;
@@ -370,9 +371,9 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         await this.processResponsiveAsync();
     }
 
-    private renderHeader(column: ColumnModel<TItem>, top: boolean): React.ReactNode {
+    private renderHeader(column: ColumnModel<TItem>, top: boolean, colSpanLeft: boolean): React.ReactNode {
         return (
-            <HeaderCell key={`grid_header_${column.index}_${top}`} column={column} top={top} />
+            <HeaderCell key={`grid_header_${column.index}_${top}`} column={column} top={top} colSpanLeft={colSpanLeft} />
         )
     }
 
@@ -413,7 +414,12 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         }
         
         const columns: ColumnModel<TItem>[] = model.columns.where(item => item.isVisible);
-        
+
+        const collapsedColumns: ColumnModel<TItem>[] = (model.responsive)
+            ? model.columns.where(item => item.collapsed)
+            : [];
+        const responsive: boolean = (collapsedColumns.length > 0);
+
         return (
             <React.Fragment>
                 
@@ -435,11 +441,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                             {
                                                 <React.Fragment>
                                                     <tr>
-                                                        {(model.checkable) && (<CheckHeaderCell model={model} />)}
-                                                        {columns.map((column) => this.renderHeader(column, true))}
+                                                        {(model.checkable) && (<CheckHeaderCell model={model} colSpanLeft={responsive} />)}
+                                                        {columns.map((column, index) => this.renderHeader(column, true, (responsive) && (index == 0)))}
                                                     </tr>
                                                     <tr>
-                                                        {columns.map((column) => this.renderHeader(column, false))}
+                                                        {columns.map((column, index) => this.renderHeader(column, false, (responsive) && (index == 0)))}
                                                     </tr>
                                                 </React.Fragment>
                                             }

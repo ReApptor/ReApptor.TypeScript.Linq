@@ -6,6 +6,7 @@ import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, IRow, R
 
 import gridStyles from "../Grid.module.scss";
 import styles from "./Row.module.scss";
+import Icon, {IconSize} from "../../Icon/Icon";
 
 interface IRowProps<TItem = {}> {
     row: RowModel<TItem>;
@@ -25,6 +26,12 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                 await this.props.onCheck(this.model);
             }
         }
+    }
+    
+    private async onToggleAsync(row: RowModel<TItem>): Promise<void> {
+        row.responsiveContainerExpanded = !row.responsiveContainerExpanded;
+
+        await this.reRenderAsync();
     }
 
     public get grid(): GridModel<TItem> {
@@ -68,9 +75,25 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
 
         const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
         
+        const collapsedCells: CellModel<TItem>[] = (grid.responsive)
+            ? row.cells.where(item => item.column.collapsed)
+            : [];
+        
+        const responsive: boolean = (collapsedCells.length > 0);
+        const responsiveContainerExpanded: boolean = (responsive) && (row.responsiveContainerExpanded);
+        const responsiveIconName: string = (responsiveContainerExpanded) ? "fas minus-circle" : "fas plus-circle";
+
         return (
             <React.Fragment>
                 <tr className={this.css(styles.gridRow, rowHoveringStyle, styles.data, row.className, oddStyle, borderStyle)}>
+                    {
+                        (responsive) &&
+                        (
+                            <td className={this.css(gridStyles.check)} onClick={() => this.onToggleAsync(row)}>
+                                <Icon name={responsiveIconName} size={IconSize.Large} />
+                            </td>
+                        )
+                    }
                     {
                         (grid.checkable) &&
                         (

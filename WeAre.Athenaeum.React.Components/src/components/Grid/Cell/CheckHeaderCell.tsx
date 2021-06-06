@@ -6,6 +6,7 @@ import gridStyles from "../Grid.module.scss";
 
 interface ICheckHeaderCellProps<TItem = {}> {
     model: GridModel<TItem>;
+    colSpanLeft: boolean;
 }
 
 export default class CheckHeaderCell<TItem = {}> extends BaseComponent<ICheckHeaderCellProps<TItem>> {
@@ -39,13 +40,19 @@ export default class CheckHeaderCell<TItem = {}> extends BaseComponent<ICheckHea
         const model: GridModel<TItem> = this.model;
         
         model.checkHeaderInstance = this;
-        
+
         const checked: boolean = (model.checked !== false);
         const partiallyStyle: any = (model.checked === undefined) && gridStyles.partially;
 
+        const colSpan: number = this.props.colSpanLeft ? 2 : 1;
+
         return (
-            <th rowSpan={2} className={this.css(gridStyles.check, partiallyStyle)} onClick={async () => this.onCheckAsync()}>
+            <th rowSpan={2} colSpan={colSpan}
+                className={this.css(gridStyles.check, partiallyStyle)}
+                onClick={async () => this.onCheckAsync()}>
+                
                 <input type="checkbox" checked={checked} onChange={() => {}} />
+                
             </th>
         )
     }

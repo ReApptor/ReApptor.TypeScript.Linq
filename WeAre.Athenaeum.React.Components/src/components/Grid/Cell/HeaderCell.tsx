@@ -10,6 +10,7 @@ import styles from "../Grid.module.scss";
 interface IHeaderCellProps<TItem = {}> {
     column: ColumnModel<TItem>;
     top: boolean;
+    colSpanLeft: boolean;
 }
 
 export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> implements IHeaderCell {
@@ -109,6 +110,10 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             column.headerCellInstance = this;
         }
         
+        if (this.props.colSpanLeft) {
+            colSpan = (colSpan || 1) + 1;
+        }
+        
         return (
             (render) &&
             (
@@ -117,7 +122,8 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                     rowSpan={rowSpan || 1}
                     colSpan={colSpan || 1}>
                     
-                    <div className={this.css(rotateClassName, sortableClassName, sortDirectionClassName)} onClick={async () => (sortable) && await this.sortAsync(column)}>
+                    <div className={this.css(rotateClassName, sortableClassName, sortDirectionClassName)}
+                         onClick={async () => (sortable) && await this.sortAsync(column)}>
                         {
                             (icon)
                                 ?
