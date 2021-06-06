@@ -1,0 +1,49 @@
+@import "../../../variables";
+
+.collapsedRow {
+  
+  &:hover {
+    background-color: inherit !important;
+  }
+
+  > td {
+    
+    border: none !important;
+    padding: 0 !important;
+    
+    table {
+      width: 100%;
+
+      tr {
+
+        td:first-child {
+          width: auto;
+          text-align: left;
+          border-left: none;
+        }
+
+        td:last-child {
+          width: 100%;
+          border-right: none;
+        }
+
+      }
+
+    }
+
+    .primary {
+      td:first-child {
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        padding: 0;
+
+        i {
+          color: $dark-green;
+        }
+      }
+    }
+
+  }
+  
+}

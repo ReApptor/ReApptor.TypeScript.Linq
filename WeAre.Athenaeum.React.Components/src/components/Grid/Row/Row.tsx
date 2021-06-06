@@ -1,7 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import Cell from "../Cell/Cell";
-import { BorderType, CellModel, GridHoveringType, GridModel, GridOddType, IRow, RowModel } from "../GridModel";
+import CollapsedRow from "../CollapsedRow/CollapsedRow";
+import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, IRow, RowModel} from "../GridModel";
 
 import gridStyles from "../Grid.module.scss";
 import styles from "./Row.module.scss";
@@ -13,7 +14,7 @@ interface IRowProps<TItem = {}> {
 }
 
 export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> implements IRow {
-    
+
     private async onCheckAsync(): Promise<void> {
         if (this.model.checkable) {
             this.model.checked = !this.model.checked;
@@ -25,33 +26,33 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
             }
         }
     }
-    
+
     public get grid(): GridModel<TItem> {
         return this.model.grid;
     }
-    
+
     public get model(): RowModel<TItem> {
         return this.props.row;
     }
-    
+
     public get isLoading(): boolean {
         return this.grid.instance.isLoading;
     }
-    
+
     public shouldComponentUpdate(nextProps: Readonly<IRowProps<TItem>>, nextState: Readonly<{}>, nextContext: any): boolean {
         return (!this.isLoading) && (this.isMounted);
     }
 
-    render(): React.ReactNode {
-        
+    public render(): React.ReactNode {
+
         const grid: GridModel<TItem> = this.grid;
         const row: RowModel<TItem> = this.model;
-        
+
         row.instance = this;
-        
+
         const renderDetails: boolean = (row.grid.renderDetails != null) && ((row.hasDetails) || (row.expanded));
         row.hasDetails = renderDetails;
-        
+
         if (this.props.init) {
             this.props.init(row);
         }
@@ -61,12 +62,12 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const detailsVisibleStyle: any = (row.expanded) && (styles.visible);
         const colSpan: number = (row.detailsColEnd - row.detailsColStart + 1);
         const checkRowSpan = (row.expanded) ? 2 : 1;
-        
+
         const checkDisabledStyle: any = (grid.checkable) && (!row.checkable) && (gridStyles.disabled);
         const borderStyle: any = (this.grid.borderType === BorderType.DarkSeparators) && styles.darkSeparators;
-        
-        const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
 
+        const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
+        
         return (
             <React.Fragment>
                 <tr className={this.css(styles.gridRow, rowHoveringStyle, styles.data, row.className, oddStyle, borderStyle)}>
@@ -96,6 +97,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                         }
                     </td>
                 </tr>
+                <CollapsedRow grid={grid} row={row} cells={cells} />
             </React.Fragment>
         );
     }
