@@ -892,6 +892,8 @@ export class RowModel<TItem = {}> {
     
     public checked: boolean = false;
     
+    public collapsed: boolean = false;
+    
     public get model(): TItem {
         return this._model;
     }
