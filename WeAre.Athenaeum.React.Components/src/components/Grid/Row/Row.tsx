@@ -3,10 +3,10 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import Cell from "../Cell/Cell";
 import CollapsedRow from "../CollapsedRow/CollapsedRow";
 import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, IRow, RowModel} from "../GridModel";
+import Icon, {IconSize} from "../../Icon/Icon";
 
 import gridStyles from "../Grid.module.scss";
 import styles from "./Row.module.scss";
-import Icon, {IconSize} from "../../Icon/Icon";
 
 interface IRowProps<TItem = {}> {
     row: RowModel<TItem>;
@@ -82,6 +82,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const responsive: boolean = (collapsedCells.length > 0);
         const responsiveContainerExpanded: boolean = (responsive) && (row.responsiveContainerExpanded);
         const responsiveIconName: string = (responsiveContainerExpanded) ? "fas minus-circle" : "fas plus-circle";
+        const responsiveExpandedStyle = (responsiveContainerExpanded) && styles.expanded;
 
         return (
             <React.Fragment>
@@ -89,8 +90,8 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                     {
                         (responsive) &&
                         (
-                            <td className={this.css(gridStyles.check)} onClick={() => this.onToggleAsync(row)}>
-                                <Icon name={responsiveIconName} size={IconSize.Large} />
+                            <td className={this.css(styles.responsive)} onClick={() => this.onToggleAsync(row)}>
+                                <Icon className={this.css(styles.responsiveIcon, responsiveExpandedStyle)} name={responsiveIconName} size={IconSize.Large} />
                             </td>
                         )
                     }
