@@ -1,7 +1,7 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
-import {CellModel, ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
+import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
 import GridSpinner from "./GridSpinner/GridSpinner";
@@ -11,7 +11,6 @@ import Pagination from "../Pagination/Pagintation";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
-import Icon, {IconSize} from "../Icon/Icon";
 
 interface IGridProps<TItem = {}> extends IGridDefinition {
     data?: TItem[] | null;
@@ -111,7 +110,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
         const gridContainerWidth: number = Math.round(this.containerWidth());
 
-        const gridWidth: number = Math.round(this.model.fullWidth());
+        let gridWidth: number = Math.round(this.model.fullWidth());
 
         const gridFullWidth: number = Math.round(this.model.fullWidth(false));
 
@@ -133,6 +132,13 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             if (needToHide) {
 
                 let widthToCompensate: number = (overflowData.gridWidth - overflowData.containerWidth);
+
+                const gridCollapsed: boolean = this.model.columns.some(row => row.collapsed);
+                
+                if (gridCollapsed) {
+                    // Expand/Collapse TD width (hardcoded in styles)
+                    widthToCompensate -= 40;
+                }
 
                 while (true) {
 

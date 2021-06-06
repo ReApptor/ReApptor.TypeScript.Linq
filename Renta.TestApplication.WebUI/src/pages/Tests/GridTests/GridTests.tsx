@@ -122,6 +122,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             noWrap: true,
             minWidth: "20rem",
+            //responsivePriority: -1,
             settings: {
                 locationPicker: true
             }

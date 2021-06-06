@@ -76,7 +76,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
         
         const collapsedCells: CellModel<TItem>[] = (grid.responsive)
-            ? row.cells.where(item => item.column.collapsed)
+            ? row.cells.where(item => ((item.column.collapsed) && (item.column.responsivePriority >= 0)))
             : [];
         
         const responsive: boolean = (collapsedCells.length > 0);
