@@ -56,6 +56,7 @@ export default class CollapsedRow<TItem = {}> extends BaseComponent<ICollapsedRo
         const grid: GridModel<TItem> = this.grid;
         const row: RowModel<TItem> = this.row;
         const cells: CellModel<TItem>[] = this.cells;
+        const className: string | null = grid.responsiveRowClassName;
 
         const collapsedCells: CellModel<TItem>[] = (grid.responsive)
             ? row.cells.where(item => item.column.collapsed)
@@ -66,7 +67,7 @@ export default class CollapsedRow<TItem = {}> extends BaseComponent<ICollapsedRo
         }
 
         return (
-            <tr className={styles.collapsedRow}>
+            <tr className={this.css(styles.collapsedRow, className)}>
                 <td colSpan={cells.length + 1}>
                     <table>
                         {
