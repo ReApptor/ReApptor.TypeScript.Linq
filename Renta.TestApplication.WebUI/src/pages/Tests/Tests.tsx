@@ -1,4 +1,6 @@
 import React from "react";
+import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType, DateRangeInput } from "@weare/athenaeum-react-components";
+
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
@@ -14,7 +16,6 @@ import ModalTests from "@/pages/Tests/ModalTests/ModalTests";
 import GridTests from "@/pages/Tests/GridTests/GridTests";
 import FormTests from "@/pages/Tests/FormTests/FormTests";
 import ButtonContainerTests from "@/pages/Tests/ButtonContainerTests/ButtonContainerTests";
-import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
 import LocationPickerTests from "@/pages/Tests/LocationPickerTests/LocationPickerTests";
 import AccordionTests from "@/pages/Tests/AccordionTests/AccordionTests";
 import ButtonActionTests from "@/pages/Tests/ButtonActionTests/ButtonActionTests";
@@ -64,11 +65,15 @@ export default class Tests extends AnonymousPage {
                         <Tab id="formTests" title="Form">
                             <FormTests />
                         </Tab>
-                        
+
+                        <Tab id="dateRangeInputTests" title="DateRange Input">
+                            <DateRangeInput />
+                        </Tab>
+
                         <Tab id="dateInputTests" title="Date Input">
                             <DateInputTests />
                         </Tab>  
-                        
+  
                         <Tab id="numberInputTests" title="Number Input">
                             <NumberInputTests />
                         </Tab>
