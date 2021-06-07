@@ -23,6 +23,7 @@
       <TypeScriptCompile Include="src\components\Button\Button.tsx" />
       <TypeScriptCompile Include="src\components\ConfirmationDialog\ConfirmationDialogLocalizer.ts" />
       <TypeScriptCompile Include="src\components\ConfirmationDialog\ConfirmationDialog.tsx" />
+      <TypeScriptCompile Include="src\components\DateRangeInput\DateRangeInput.tsx" />
       <TypeScriptCompile Include="src\components\DocumentPreview\DocumentPreview.tsx" />
       <TypeScriptCompile Include="src\components\Footer\Footer.tsx" />
       <TypeScriptCompile Include="src\components\Form\Form.tsx" />

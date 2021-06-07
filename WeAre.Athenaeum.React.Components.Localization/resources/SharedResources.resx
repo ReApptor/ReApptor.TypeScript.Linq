@@ -483,4 +483,7 @@
   <data name="AddressDivider.PostalCode" xml:space="preserve">
     <value>Postal code</value>
   </data>
+  <data name="DateRangeInput" xml:space="preserve">
+    <value />
+  </data>
 </root>
