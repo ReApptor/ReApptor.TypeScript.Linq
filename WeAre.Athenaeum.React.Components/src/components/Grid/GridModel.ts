@@ -84,6 +84,11 @@ export interface IGridDefinition {
     id?: string;
 
     className?: string;
+
+    /**
+     * The class name for inner responsive collapsible columns (it applies only if responsive is enable and there are collapsed columns)
+     */
+    responsiveRowClassName?: string;
     
     columns: ColumnDefinition[];
     
@@ -253,6 +258,8 @@ export class GridModel<TItem = {}> {
     public id: string = "";
     
     public className: string | null = null;
+
+    public responsiveRowClassName: string | null = null;
     
     public rows: RowModel<TItem>[] = [];
 
@@ -1613,6 +1620,7 @@ export class GridTransformer {
         const to = new GridModel<TItem>();
         to.id = id;
         to.className = from.className || null;
+        to.responsiveRowClassName = from.responsiveRowClassName || null;
         to.headerMinHeight = from.headerMinHeight || null;
         to.noDataNoHeader = from.noDataNoHeader || false;
         to.minWidth = from.minWidth || null;
