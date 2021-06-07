@@ -127,6 +127,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly addressDividerStreetLanguageItemName: string = `AddressDivider.Street`;
     public readonly addressDividerCityLanguageItemName: string = `AddressDivider.City`;
     public readonly addressDividerPostalCodeLanguageItemName: string = `AddressDivider.PostalCode`;
+    public readonly dateRangeInputLanguageItemName: string = `DateRangeInput`;
 
     constructor() {
 
@@ -266,6 +267,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.addressDividerStreetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `PL: Street` }, { language: `nb`, value: `NB: Street` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `DA: Street` },);
         this.set(this.addressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `PL: City` }, { language: `nb`, value: `NB: City` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `DA: City` },);
         this.set(this.addressDividerPostalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `PL: Postal code` }, { language: `nb`, value: `NB: Postal code` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `DA: Postal code` },);
+        this.set(this.dateRangeInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -1120,6 +1122,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get addressDividerPostalCode() : string {
         return this.get(this.addressDividerPostalCodeLanguageItemName);
+    }
+
+    /**
+    /* "DateRangeInput" ()
+    */
+    public get dateRangeInput() : string {
+        return this.get(this.dateRangeInputLanguageItemName);
     }
 }
 
