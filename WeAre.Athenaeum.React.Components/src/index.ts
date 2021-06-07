@@ -57,6 +57,7 @@ import AddressInput, { IAddressInputProps, IAddressInputState } from "./componen
 import Checkbox, { ICheckboxProps, ICheckboxState, InlineType } from "./components/Checkbox/Checkbox";
 import CheckboxNullable, { INullableCheckboxProps, INullableCheckboxState } from "./components/CheckboxNullable/CheckboxNullable";
 import DateInput from "./components/DateInput/DateInput";
+import DateRangeInput from "./components/DateRangeInput/DateRangeInput";
 import Dropdown, {
     AmountListItem,
     DropdownVerticalAlign,
@@ -235,6 +236,8 @@ export { CheckboxNullable };
 export type { INullableCheckboxProps, INullableCheckboxState };
 
 export { DateInput };
+
+export { DateRangeInput };
 
 export {
     Dropdown,
