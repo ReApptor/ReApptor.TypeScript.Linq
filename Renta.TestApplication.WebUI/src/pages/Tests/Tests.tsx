@@ -20,6 +20,7 @@ import AccordionTests from "@/pages/Tests/AccordionTests/AccordionTests";
 import ButtonActionTests from "@/pages/Tests/ButtonActionTests/ButtonActionTests";
 import CheckboxTests from "@/pages/Tests/CheckboxTests/CheckboxTests";
 import LinkWidgetTests from "@/pages/Tests/LinkWidgetTests/LinkWidgetTests";
+import DateInputTests from "@/pages/Tests/DateInputTests/DateInputTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -63,6 +64,10 @@ export default class Tests extends AnonymousPage {
                         <Tab id="formTests" title="Form">
                             <FormTests />
                         </Tab>
+                        
+                        <Tab id="dateInputTests" title="Date Input">
+                            <DateInputTests />
+                        </Tab>  
                         
                         <Tab id="numberInputTests" title="Number Input">
                             <NumberInputTests />
