@@ -20,7 +20,14 @@ export default class DateRangeInputTests extends BaseComponent {
                     
                     <OneColumn>
 
-                        <DateRangeInput/>
+                        <DateRangeInput  clickToEdit/>
+                        
+                    </OneColumn>
+
+                    
+                    <OneColumn>
+
+                        <DateRangeInput  />
                         
                     </OneColumn>
 

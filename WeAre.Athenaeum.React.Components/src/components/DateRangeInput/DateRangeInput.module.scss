@@ -1,3 +1,53 @@
+@import "../../variables";
+
+$monthViewDayGridSize: 40px;
+$monthViewGridGap: 3px;
+$border: 0px;
+
 .dateRangeInput{
+  border: $border solid red;
+  max-width: calc(#{$monthViewDayGridSize} * 7 + #{$monthViewGridGap} * 6 + #{$border} * 2);
   
+  .topControlPanel {
+    height: 30px;
+    padding: 1.3rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .dateRangeInputMonthView {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: $monthViewGridGap;
+    width: calc(#{$monthViewDayGridSize} * 7);
+
+    .monthViewGridDay {
+      width: $monthViewDayGridSize;
+      height: $monthViewDayGridSize;
+      background: #c3ffd1;
+      display: flex;
+      justify-content: center;
+      transition: 50ms all;
+      &:hover {
+        background-color: $orange-hover;
+      }
+    }
+    
+    .isInRange {
+      background-color: rgba($orange-hover, 0.5);
+    }   
+    
+    .isSelected {
+      background-color: $orange-hover;
+    }
+  }
+
 }
