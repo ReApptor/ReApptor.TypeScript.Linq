@@ -5,7 +5,6 @@ $monthViewGridGap: 3px;
 $border: 0px;
 
 .dateRangeInput{
-  border: $border solid red;
   max-width: calc(#{$monthViewDayGridSize} * 7 + #{$monthViewGridGap} * 6 + #{$border} * 2);
   
   .topControlPanel {
@@ -32,7 +31,8 @@ $border: 0px;
     .monthViewGridDay {
       width: $monthViewDayGridSize;
       height: $monthViewDayGridSize;
-      background: #c3ffd1;
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
       display: flex;
       justify-content: center;
       transition: 50ms all;

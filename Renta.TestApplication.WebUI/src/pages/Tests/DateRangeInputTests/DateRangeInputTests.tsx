@@ -18,14 +18,14 @@ export default class DateRangeInputTests extends BaseComponent {
 
                 <Form className="pt-4">
                     
-                    <OneColumn>
+                    <OneColumn className="pt-4">
 
                         <DateRangeInput  clickToEdit/>
                         
                     </OneColumn>
 
                     
-                    <OneColumn>
+                    <OneColumn className="pt-4">
 
                         <DateRangeInput  />
                         
