@@ -3,6 +3,7 @@ import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInpu
 
 import styles from "./DateRangeInput.module.scss";
 import Icon, {IconSize} from "../Icon/Icon";
+import {BaseComponent} from "@weare/athenaeum-react-common";
 
 interface IDateRangeInputProps extends IBaseInputProps<Date> {
     onChange?(date: Date): Promise<void>;
@@ -19,22 +20,37 @@ enum DaysOfWeek {
 }
 
 interface IDateRangeInputState extends IBaseInputState<Date> {
+    currentMonthView: string[];
 }
 
 const GRID_MONTH_VIEW_DAYS = 35;
 
-export default class DateRangeInput extends BaseInput<Date, IDateRangeInputProps, IDateRangeInputState> {
+export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, IDateRangeInputState> {
     private gridDayIds: string[] = new Array(GRID_MONTH_VIEW_DAYS).fill(0).map((value, index) => this.getDayGridId(index));
 
-    lastHoveredGridId: string | null = null;
-    firstClickedGridId: string | null = null;
-    lastClickedGridId: string | null = null;
+    private lastHoveredGridId: string | null = null;
+    private firstClickedGridId: string | null = null;
+    private lastClickedGridId: string | null = null;
     
     private getDayGridId(index: number): string {
         return `${this.id}_day_${index}`;
     }
 
     private async onDayGridClick(id: string): Promise<void> {
+        if (this.firstClickedGridId === id) {
+            this.firstClickedGridId = null;
+            this.lastClickedGridId = null;
+            await this.reRenderAsync();
+            return;
+        }
+        
+        if (this.lastClickedGridId === id) {
+            this.firstClickedGridId = null;
+            this.lastClickedGridId = null;            
+            await this.reRenderAsync();
+            return;
+        }
+        
         if (!this.firstClickedGridId) {
             this.firstClickedGridId = id;
             this.lastClickedGridId = null;
@@ -98,10 +114,6 @@ export default class DateRangeInput extends BaseInput<Date, IDateRangeInputProps
             throw new Error("Unknown Clicked cell");
         }
 
-        const isHoveredGrid = lastHoveredGridIndex !== -1;
-        const isFirstClickedGrid = firstClickedGridIndex !== -1;
-        const isLastClickedGrid = lastClickedGridIndex !== -1;
-        
         const isSmallerThanHoveredGrid = currentGridIndex < lastHoveredGridIndex;
         const isBiggerThanLastHoveredGrid = currentGridIndex > lastHoveredGridIndex;
 
@@ -111,11 +123,11 @@ export default class DateRangeInput extends BaseInput<Date, IDateRangeInputProps
         const isSmallerThanFirstClickedGrid = currentGridIndex < firstClickedGridIndex;
         const isSmallerThanLastClickedGrid = currentGridIndex < lastClickedGridIndex;
 
-        if (isFirstClickedGrid && isLastClickedGrid) {
+        if (firstClickedGridIndex !== -1 && lastClickedGridIndex !== -1) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
         
-        if (isFirstClickedGrid && !isLastClickedGrid) {
+        if (firstClickedGridIndex !== -1 && lastClickedGridIndex === -1) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
         
@@ -135,7 +147,7 @@ export default class DateRangeInput extends BaseInput<Date, IDateRangeInputProps
         return <div id={id} className={className} onMouseEnter={onMouseEnter} onClick={onClick}/>
     }
     
-    public renderInput(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <div className={this.css(styles.dateRangeInput, this.props.className)}>
                 <div className={styles.topControlPanel}>
