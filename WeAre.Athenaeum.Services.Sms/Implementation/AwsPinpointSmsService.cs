@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.Pinpoint;
 using Amazon.Pinpoint.Model;
+using Amazon.SecurityToken;
+using Amazon.SecurityToken.Model;
+using Newtonsoft.Json;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Services.Sms.Interface;
 using WeAre.Athenaeum.Services.Sms.Models;
@@ -65,7 +70,7 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public Task SendAsync(SmsMessage message)
+        public async Task<SmsResponse> SendAsync(SmsMessage message)
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
@@ -74,11 +79,34 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
             if (string.IsNullOrWhiteSpace(message.Message))
                 throw new ArgumentOutOfRangeException(nameof(message), $"{nameof(message.Message)} is null, empty or whitespace.");
 
-            using AmazonPinpointClient client = new AmazonPinpointClient(RegionEndpoint.GetBySystemName(_settings.Region));
+            using AmazonSecurityTokenServiceClient amazonSecurityTokenServiceClient = new AmazonSecurityTokenServiceClient(RegionEndpoint.GetBySystemName(_settings.Region));
+
+            AssumeRoleResponse response = await amazonSecurityTokenServiceClient.AssumeRoleAsync(new AssumeRoleRequest
+            {
+                RoleArn = _settings.AwsPinpointRoleArn,
+                RoleSessionName = "RoleSession1"
+            });
+
+            using AmazonPinpointClient client = new AmazonPinpointClient(response.Credentials, RegionEndpoint.GetBySystemName(_settings.Region));
 
             SendMessagesRequest request = CreateSendMessagesRequest(message, _settings);
 
-            return client.SendMessagesAsync(request);
+            SendMessagesResponse smsResponse = await client.SendMessagesAsync(request);
+
+            if (smsResponse.HttpStatusCode == HttpStatusCode.OK)
+            {
+                return new SmsResponse
+                {
+                    Success = true,
+                    Response = JsonConvert.SerializeObject(smsResponse.MessageResponse)
+
+                };
+            }
+
+            return new SmsResponse
+            {
+                Error = JsonConvert.SerializeObject(smsResponse.MessageResponse)
+            };
         }
     }
 }
