@@ -268,7 +268,7 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     }
 
     public render(): React.ReactNode {
-        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: 'long'}).format(this.activeMonthView);
+        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
         const year: number = this.activeMonthView.getFullYear();
         
         return (
