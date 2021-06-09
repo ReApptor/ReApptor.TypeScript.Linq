@@ -97,6 +97,7 @@ export interface IIsLoading {
 
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
+    private _alert: AlertModel | null;
     private readonly _asIsLoading: IIsLoading | null;
 
     private asIsLoading(): IIsLoading | null {
@@ -113,6 +114,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         super(props || ({} as IBasePageProps<TParams>));
 
         this._asIsLoading = this.asIsLoading();
+        this._alert = null;
     }
 
     public async componentDidMount(): Promise<void> {
@@ -122,8 +124,9 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
         }
 
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        console.log("BasePage.componentDidMount: pageContainer=", pageContainer)
+        if (this._alert != null) {
+            await this.alertAsync(this._alert);
+        }
     }
 
     public async componentWillUnmount(): Promise<void> {
@@ -187,13 +190,16 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         console.log("BasePage.alertAsync: pageContainer=", pageContainer);
         if (pageContainer != null) {
+            this._alert = null;
             await pageContainer.alertAsync(alert);
+        } else {
+            this._alert = alert;
         }
     }
 
     public get alert(): AlertModel | null {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        return (pageContainer != null) ? pageContainer.alert : null;
+        return pageContainer?.alert ?? this._alert;
     }
 
     public async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
