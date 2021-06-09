@@ -33,7 +33,9 @@ export default class PageRouteProvider {
 
     private static async onRedirectAsync(route: PageRoute): Promise<void> {
         try {
-            route.parameters = null;
+            if (!this.sendParametersOnRedirect) {
+                route.parameters = null;
+            }
             await ApiProvider.postAsync("api/Application/OnRedirect", route);
         } catch (e) {
             //no additional action needed, not critical
@@ -203,4 +205,6 @@ export default class PageRouteProvider {
 
         return pageDefinitions.render(page, ref);
     }
+    
+    public static sendParametersOnRedirect: boolean = false;
 }

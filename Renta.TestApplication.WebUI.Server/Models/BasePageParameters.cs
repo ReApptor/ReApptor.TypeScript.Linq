@@ -1,4 +1,4 @@
-namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models
+namespace Renta.TestApplication.WebUI.Server.Models
 {
     public abstract class BasePageParameters
     {
