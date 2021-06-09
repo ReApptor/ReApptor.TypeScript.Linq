@@ -245,20 +245,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async setPageAsync(page: IBasePage): Promise<void> {
-
-        console.log("1) Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
-
+        
         await this.setState({ page: page });
         
         if (this.mobile) {
             this.removeTooltip();
             this.initializeTooltips();
-        }
-        
-        console.log("2) Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
-        
-        if (this.state.alert) {
-            await this.alertAsync(this.state.alert);
         }
     }
 
@@ -363,14 +355,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public renderPage(page: IBasePage): React.ReactNode {
         const node: React.ReactNode = PageRouteProvider.render(page, this._pageRef);
 
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-
-        console.log("Layout.renderPage: alert=", this.state.alert, " pageContainer=", pageContainer);
-        
-        if ((pageContainer) && (this.state.alert)) {
-            pageContainer.alertAsync(this.state.alert);
+        if (this.state.alert) {
+            // noinspection JSIgnoredPromiseFromCall
+            this.alertAsync(this.state.alert);
         }
-        
+
         return node;
     }
 
