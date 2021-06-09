@@ -19,9 +19,9 @@ interface IDateRangeInputProps extends IBaseInputProps<Date> {
 }
 
 interface IDateRangeInputState {
-    lastHoveredGridId: string | null;
-    firstClickedGridId: string | null;
-    lastClickedGridId: string | null;
+    lastHoveredGrid: GridDay | null;
+    firstClickedGrid: GridDay | null;
+    lastClickedGrid: GridDay | null;
 
 }
 
@@ -31,41 +31,33 @@ interface GridDay {
     day: number
 }
 
-const GRID_MONTH_VIEW_DAYS = 35;
 const WEEK_LENGTH = 7;
+const MONTH_GRID = 35;
+const LONG_MONTH_GRID = 42;
 
 export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, IDateRangeInputState> {
     private activeMonthView: Date = this.defaultActiveMonthView;
-    private gridDayIds: string[] = this.defaultGridDayIds;
     private gridDays: GridDay[] = this.defaultGridDays;
     
     state: IDateRangeInputState = {
-        lastHoveredGridId: null,
-        firstClickedGridId: null,
-        lastClickedGridId: null
+        lastHoveredGrid: null,
+        firstClickedGrid: null,
+        lastClickedGrid: null
     };
 
-    get defaultActiveMonthView(): Date {
+    private get defaultActiveMonthView(): Date {
         if (this.props.value) {
             return this.props.value
         }
 
         return new Date();
     }
-    
-    get defaultGridDayIds(): string[] {
-        return new Array(GRID_MONTH_VIEW_DAYS).fill(0).map((value, index: number) => this.getDayGridId(index));
+
+    private get defaultGridDays(): GridDay[] {
+        return this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
     }
 
-    get defaultGridDays(): GridDay[] {
-        return this.monthGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
-    }
-
-    private getDayGridId(index: number): string {
-        return `${this.id}_day_${index}`;
-    }
-
-    private monthGridDays(year: number, month: number): GridDay[] {
+    private getGridDays(year: number, month: number): GridDay[] {
         const firstDayOfNextMonth: number = 1;
         const previousMonth: number = month - 1;
         const nextMonth: number = month + 1;
@@ -77,11 +69,15 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         const firstDayWeekDay: WeekDaysEnum = firstDay.getDay();
         
         const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? WEEK_LENGTH - 1 : firstDayWeekDay - 1;
+
+        const isLongMonth = (introDaysCount + currentMonthDayCount) > MONTH_GRID;
+
+        const gridCount = isLongMonth ? LONG_MONTH_GRID : MONTH_GRID;
         
-        const outroDaysCount: number = GRID_MONTH_VIEW_DAYS - introDaysCount - currentMonthDayCount;
+        const outroDaysCount: number = gridCount - introDaysCount - currentMonthDayCount;
         
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
-        
+
         const currentMonthGridDays: GridDay[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): GridDay => {
             return  {
                 day: index + 1,
@@ -96,8 +92,8 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
                 month: previousMonth,
                 year
             }
-        }).reverse();  
-        
+        }).reverse();
+
         const outroMonthGridDays: GridDay[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): GridDay => {
             return  {
                 day: firstDayOfNextMonth + index,
@@ -109,90 +105,65 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
     }
 
-
-  
-    private getDayGridValue(id: string): string | number {
-        const index = this.gridDayIds.indexOf(id);
-        return this.gridDays[index]?.day;
-    }
-
-    private async onDayGridClick(id: string): Promise<void> {
-        if (this.state.firstClickedGridId === id) {
-            this.state.firstClickedGridId = null;
-            this.state.lastClickedGridId = null;
+    private async onDayGridClick(gridDay: GridDay): Promise<void> {
+        if (this.state.firstClickedGrid === gridDay) {
+            this.state.firstClickedGrid = null;
+            this.state.lastClickedGrid = null;
             await this.reRenderAsync();
             return;
         }
         
-        if (this.state.lastClickedGridId === id) {
-            this.state.firstClickedGridId = null;
-            this.state.lastClickedGridId = null;            
+        if (this.state.lastClickedGrid === gridDay) {
+            this.state.firstClickedGrid = null;
+            this.state.lastClickedGrid = null;            
             await this.reRenderAsync();
             return;
         }
         
-        if (!this.state.firstClickedGridId) {
-            this.state.firstClickedGridId = id;
-            this.state.lastClickedGridId = null;
+        if (!this.state.firstClickedGrid) {
+            this.state.firstClickedGrid = gridDay;
+            this.state.lastClickedGrid = null;
             await this.reRenderAsync();
             return; 
         }
         
-        if (this.state.firstClickedGridId && !this.state.lastClickedGridId) {
-            this.state.lastClickedGridId = id;
+        if (this.state.firstClickedGrid && !this.state.lastClickedGrid) {
+            this.state.lastClickedGrid = gridDay;
             await this.reRenderAsync();
             return;
         }
 
-        this.state.firstClickedGridId = id;
-        this.state.lastClickedGridId = null;
+        this.state.firstClickedGrid = gridDay;
+        this.state.lastClickedGrid = null;
         await this.reRenderAsync();
     }
     
-    private async onDayGridMouseEnter(id: string): Promise<void> {
-        this.state.lastHoveredGridId = id;
+    private async onDayGridMouseEnter(gridDay: GridDay): Promise<void> {
+        this.state.lastHoveredGrid = gridDay;
+        await this.reRenderAsync();
+    }
         
+    private async onNextMonthClick(): Promise<void> {
+        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() + 1));
+        this.gridDays = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
+        await this.reRenderAsync();
+    }
+         
+    private async onPreviousMonthClick(): Promise<void> {
+        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() - 1));
+        this.gridDays = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
         await this.reRenderAsync();
     }
 
-    private isDayGridSelected(dayGridId: string): boolean {
-
-        const currentGridIndex = this.gridDayIds.indexOf(dayGridId);
-        const firstClickedGridIndex = this.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
-        const lastClickedGridIndex = this.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
-
-        if (firstClickedGridIndex !== -1 && currentGridIndex === firstClickedGridIndex) {
-            return true;
-        }
-        
-        if (lastClickedGridIndex !== -1 && currentGridIndex === lastClickedGridIndex) {
-            return true;
-        }
-        
-        return  false
+    private isDayGridSelected(gridDay: GridDay): boolean {
+        return (gridDay === this.state.firstClickedGrid) || (gridDay === this.state.lastClickedGrid);
     }
     
-    private isDayGridInRange(dayGridId: string): boolean {
-        
-        const currentGridIndex: number = this.gridDayIds.indexOf(dayGridId);
-        const lastHoveredGridIndex: number = this.gridDayIds.indexOf(this.state.lastHoveredGridId || "-1");
-        const firstClickedGridIndex: number = this.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
-        const lastClickedGridIndex: number = this.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
-        
-        if (this.state.lastHoveredGridId && lastHoveredGridIndex === -1) {
-            this.state.lastHoveredGridId = null;
-            throw new Error("Unknown Clicked cell");
-        }
-        
-        if (this.state.firstClickedGridId && firstClickedGridIndex === -1) {
-            this.state.firstClickedGridId = null;
-            throw new Error("Unknown Clicked cell");
-        }  
-        
-        if (this.state.lastClickedGridId && lastClickedGridIndex === -1) {
-            this.state.lastClickedGridId = null;
-            throw new Error("Unknown Clicked cell");
-        }
+    private isDayGridInRange(gridDay: GridDay): boolean {
+        const currentGridIndex: number = this.gridDays.indexOf(gridDay);
+        const lastHoveredGridIndex: number = this.gridDays.indexOf((this.state.lastHoveredGrid || "-1") as GridDay);
+        const firstClickedGridIndex: number = this.gridDays.indexOf((this.state.firstClickedGrid || "-1") as GridDay);
+        const lastClickedGridIndex: number = this.gridDays.indexOf((this.state.lastClickedGrid || "-1") as GridDay);
 
         const isSmallerThanHoveredGrid = currentGridIndex < lastHoveredGridIndex;
         const isBiggerThanLastHoveredGrid = currentGridIndex > lastHoveredGridIndex;
@@ -214,32 +185,36 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         return  false
     }
 
-    private renderGridDayById(id: string): JSX.Element {
-        const isSelected = this.isDayGridSelected(id) && styles.isSelected || "";
-        const isInRange = this.isDayGridInRange(id) && styles.isInRange || "";
-        const className: string = this.css(styles.monthViewGridDay, isInRange, isSelected);
-        const onClick: () => void = async () => await this.onDayGridClick(id);
-        const onMouseEnter: () => void = async () => await this.onDayGridMouseEnter(id);
+    private renderGridDays(gridDay: GridDay): JSX.Element {
+        const isSelected = this.isDayGridSelected(gridDay) && styles.isSelected || "";
         
-        return <div id={id} className={className} onMouseEnter={onMouseEnter} onClick={onClick}>{this.getDayGridValue(id)}</div>
+        const isInRange = this.isDayGridInRange(gridDay) && styles.isInRange || "";
+        
+        const className: string = this.css(styles.monthViewGridDay, isInRange, isSelected);
+        
+        const onClick: () => void = async () => await this.onDayGridClick(gridDay);
+        
+        const onMouseEnter: () => void = async () => await this.onDayGridMouseEnter(gridDay);
+        
+        return <div className={className} onMouseEnter={onMouseEnter} onClick={onClick}>{gridDay.day}</div>
     }
 
     public render(): React.ReactNode {
         return (
             <div className={this.css(styles.dateRangeInput, this.props.className)}>
                 <div className={styles.topControlPanel}>
-                    
-                    <Icon name="caret-left" size={IconSize.Large}/>
-                    
+
+                    <Icon name="caret-left" size={IconSize.Large} onClick={() => this.onPreviousMonthClick()}/>
+
                     <span>Current month</span>
-                    
-                    <Icon name="caret-right" size={IconSize.Large}/>
-                    
+
+                    <Icon name="caret-right" size={IconSize.Large} onClick={() => this.onNextMonthClick()}/>
+
                 </div>
-                
+
                 <div className={this.css(styles.dateRangeInputMonthView)}>
                     {
-                        this.gridDayIds.map(gridDayId => this.renderGridDayById(gridDayId))
+                        this.gridDays.map(gridDay => this.renderGridDays(gridDay))
                     }
                 </div>
             </div>
