@@ -132,15 +132,17 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     public async componentDidMount(): Promise<void> {
         this.toggleVerticalScroll();
         PageContainer.instance = this;
+        console.log("PageContainer.componentDidMount: PageContainer.instance=", PageContainer.instance);
         await super.componentDidMount();
     }
 
     public async componentWillUnmount(): Promise<void> {
-        PageContainer.instance = null;
+        //PageContainer.instance = null;
+        console.log("PageContainer.componentWillUnmount: PageContainer.instance=", PageContainer.instance);
         await super.componentWillUnmount();
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         
         const transparentStyle = this.props.transparent ? { backgroundColor: "transparent" } : {};
         

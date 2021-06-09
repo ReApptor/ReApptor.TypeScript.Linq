@@ -18,7 +18,6 @@ export default class ErrorPage extends AnonymousPage<IErrorPageParameters> {
     }
 
     public render(): React.ReactNode {
-
         return (
             <PageContainer className={styles.error}>
                 <PageHeader title={"Error"} subtitle={"Unhandled exception"} />
