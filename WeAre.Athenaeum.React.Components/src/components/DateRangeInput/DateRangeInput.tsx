@@ -192,13 +192,13 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         await this.reRenderAsync();
     }
 
-    private async emitOutput() {
+    private async emitOutput(): Promise<void> {
         if (!this.props.onValueChange || !this.state.firstClickedGrid || !this.state.lastClickedGrid) {
             return;
         }
         
-        const start = new Date(this.state.firstClickedGrid.unixTime);
-        const end = new Date(this.state.lastClickedGrid.unixTime);
+        const start: Date = new Date(this.state.firstClickedGrid.unixTime);
+        const end: Date = new Date(this.state.lastClickedGrid.unixTime);
 
         if (start.getTime() > end.getTime()) {
             await this.props.onValueChange(end, start);
@@ -245,7 +245,6 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
             WeekDaysEnum.Saturday, 
             WeekDaysEnum.Sunday
         ];
-        
         
         return weekDays.map(weekDay => <div className={styles.weekDayName}>{Utility.getShortDayOfWeek(weekDay)}</div>)
     }
