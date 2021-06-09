@@ -123,6 +123,8 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         if (this._asIsLoading) {
             DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
         }
+        
+        console.log("Base.componentDidMount: _alert=", this._alert)
 
         if (this._alert != null) {
             await this.alertAsync(this._alert);
@@ -194,6 +196,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             await pageContainer.alertAsync(alert);
         } else {
             this._alert = alert;
+            console.log("BasePage.alertAsync: alert=", alert);
         }
     }
 
