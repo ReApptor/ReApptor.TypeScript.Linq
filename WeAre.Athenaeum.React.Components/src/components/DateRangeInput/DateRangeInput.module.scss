@@ -1,20 +1,25 @@
 @import "../../variables";
 
-$monthViewDayGridSize: 40px;
-$monthViewGridGap: 3px;
+$monthViewDayGridSize: 30px;
+$horizontalGridGap: 0px;
+$verticalGridGap: 5px;
 $border: 0px;
+$horizontalPadding: 0.5rem;
+$verticalPadding: 0.5rem;
 
 .dateRangeInput{
-  max-width: calc(#{$monthViewDayGridSize} * 7 + #{$monthViewGridGap} * 6 + #{$border} * 2);
+  max-width: calc(#{$monthViewDayGridSize} * 7 + #{$horizontalGridGap} * 6 + #{$border} * 2 + #{$horizontalPadding} * 2);
   display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: $monthViewGridGap;
+  grid-gap: $verticalGridGap $horizontalGridGap;
+  background: white;
+  padding: $verticalPadding $horizontalPadding;
+  grid-template-columns: repeat(7, 1fr);
 
-  .month {
-    grid-column: 2/7;
+  .monthName {
+    grid-column: 1/6;
     display: flex;
-    justify-content: center;
     align-items: center;
+    background: #ffffff;
   }
   
   .monthAction {
@@ -23,36 +28,70 @@ $border: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    cursor: pointer;
   }
   
-  .dateRangeInputMonthView {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: $monthViewGridGap;
-    width: calc(#{$monthViewDayGridSize} * 7);
+  .weekDayName {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    width: $monthViewDayGridSize;
+    height: $monthViewDayGridSize;
+    overflow: hidden;
+    font-size: 0.7rem;
+  }
+  
+  .isToday {
+    span {
+      border: 1px solid rgba(0,0,0,0.3);
+      border-radius: 100%;
+    }
+  }
 
-    .monthViewGridDay {
-      width: $monthViewDayGridSize;
-      height: $monthViewDayGridSize;
-      background: #ffffff;
-      border: 1px solid #dcdcdc;
+
+  .monthViewGridDay {
+    width: $monthViewDayGridSize;
+    height: $monthViewDayGridSize;
+    font-size: 0.8rem;
+    background: #ffffff;
+    display: flex;
+    transition: 50ms all;
+    cursor: pointer;
+    padding: 3px;
+    
+    span {
+      flex-grow: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: 50ms all;
+    }
 
-      &:hover {
-        background-color: $orange-hover;
-      }
-    }
-    
-    .isInRange {
-      background-color: rgba($orange-hover, 0.5);
-    }   
-    
-    .isSelected {
+    &:hover {
       background-color: $orange-hover;
+      color: white;
     }
+  }
+
+  .isInRange {
+    background-color: rgba($orange-hover, 0.5);
+    color: white;
+  }
+
+  .isInRangeAndNotSelected {
+    background-color: rgba($orange-hover, 0.1);
+  }
+
+  .isInRangeAndSelected {
+    background-color: #FBA587;
+    color: white;
+  }
+
+  .isSelected {
+    background-color: $orange;
+    color: white;
   }
 
 }
