@@ -121,6 +121,9 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         if (this._asIsLoading) {
             DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
         }
+
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        console.log("BasePage.componentDidMount: pageContainer=", pageContainer)
     }
 
     public async componentWillUnmount(): Promise<void> {
