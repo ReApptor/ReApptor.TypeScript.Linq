@@ -10,6 +10,8 @@ class App extends BaseComponent {
             <Layout fetchContext={(sender, timezoneOffset, applicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
                     tokenLogin={(sender, token) => TestApplicationController.tokenLoginAsync(token)}
                     fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
+                    topNavLogo="images/logo.svg"
+                    footerLogo="images/logo.svg"
             />
         );
     }
