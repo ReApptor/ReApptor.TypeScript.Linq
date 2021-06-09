@@ -569,6 +569,8 @@ export class ColumnSettingsDefinition {
 
     public step?: number;
     
+    public maxLength?: number;
+    
     public hideZero?: boolean;
 
     public infoAccessor?: string | GridAccessorCallback<any>;
@@ -632,6 +634,8 @@ export class ColumnSettings<TItem = {}> {
     public max: number | Date | null = null;
 
     public step: number | null = null;
+
+    public maxLength: number | null = null;
 
     public hideZero: boolean = false;
 
@@ -1732,6 +1736,7 @@ export class GridTransformer {
         to.min = from.min || null;
         to.max = from.max || null;
         to.step = from.step || null;
+        to.maxLength = from.maxLength || null;
         to.hideZero = from.hideZero || false;
         to.infoHideZero = from.infoHideZero || false;
         to.infoHideEqual = from.infoHideEqual || false;
