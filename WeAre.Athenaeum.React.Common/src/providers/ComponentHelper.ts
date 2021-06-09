@@ -120,11 +120,7 @@ export default class ch {
     }
 
     public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Danger;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
+        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout);
         await this.alertAsync(alert);
     }
 
@@ -133,11 +129,7 @@ export default class ch {
     }
 
     public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Success;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
+        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout);
         await this.alertAsync(alert);
     }
 
@@ -146,11 +138,7 @@ export default class ch {
     }
 
     public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Warning;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
+        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout);
         await this.alertAsync(alert);
     }
 

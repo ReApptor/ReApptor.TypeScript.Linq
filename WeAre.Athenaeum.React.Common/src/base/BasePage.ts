@@ -217,7 +217,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public static async flyoutWarningAsync(message: string): Promise<void> {
-        await ch.flyoutMessageAsync(message);
+        await ch.flyoutWarningAsync(message);
     }
 
     public async hideAlertAsync(): Promise<void> {
