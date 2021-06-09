@@ -1,7 +1,21 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {Utility, FileModel} from "@weare/athenaeum-toolkit";
-import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";
+import {Utility, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {
+    ch,
+    WebApplicationType,
+    SwipeDirection,
+    PageRouteProvider,
+    IBasePage,
+    ILayoutPage,
+    ApplicationContext,
+    IGlobalResize,
+    IBaseAsyncComponentState,
+    BaseAsyncComponent,
+    IAsyncComponent,
+    IBaseComponent,
+    AlertModel, IPageContainer
+} from "@weare/athenaeum-react-common";
 import TopNav, {IMenuItem} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
@@ -22,6 +36,7 @@ export interface ILayoutProps {
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     page: IBasePage | null;
+    alert: AlertModel | null;
     isSpinning: boolean;
     error: boolean;
 }
@@ -33,7 +48,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         isSpinning: false,
         data: null,
         page: null,
-        error: false
+        alert: null,
+        error: false,
     };
 
     private readonly _pageRef: React.RefObject<IBasePage> = React.createRef();
@@ -236,6 +252,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             this.removeTooltip();
             this.initializeTooltips();
         }
+        
+        if (this.state.alert) {
+            console.log("Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
+            await this.alertAsync(this.state.alert);
+        }
     }
 
     public async reloadTopNavAsync(): Promise<void> {
@@ -245,6 +266,31 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 await topNav.reloadAsync();
             }
         }
+    }
+
+    public async alertAsync(alert: AlertModel): Promise<void> {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        console.log("Layout.alertAsync: id=", this.id, " pageContainer=", pageContainer);
+        if (pageContainer != null) {
+            this.state.alert = null;
+            await pageContainer.alertAsync(alert);
+        } else {
+            this.state.alert = alert;
+            console.log("Layout.alertAsync: id=", this.id, " alert=", alert);
+        }
+    }
+
+    public async hideAlertAsync(): Promise<void> {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        if (pageContainer != null) {
+            await pageContainer.hideAlertAsync();
+        }
+        this.state.alert = null;
+    }
+
+    public get alert(): AlertModel | null {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        return pageContainer?.alert ?? this.state.alert;
     }
     
     public initializeTooltips(): void {
@@ -279,7 +325,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
-        
+
+        // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
         
         if ((processed) && (this.state.error)) {
