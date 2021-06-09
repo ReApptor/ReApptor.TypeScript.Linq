@@ -4,6 +4,7 @@ import {IBaseInputProps} from "../BaseInput/BaseInput";
 import styles from "./DateRangeInput.module.scss";
 import Icon, {IconSize} from "../Icon/Icon";
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
 
 enum WeekDaysEnum {
     Sunday,
@@ -22,13 +23,10 @@ interface IDateRangeInputState {
     lastHoveredGrid: GridDay | null;
     firstClickedGrid: GridDay | null;
     lastClickedGrid: GridDay | null;
-
 }
 
 interface GridDay {
-    year: number,
-    month: number,
-    day: number
+    unixTime: number
 }
 
 const WEEK_LENGTH = 7;
@@ -79,26 +77,24 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
 
         const currentMonthGridDays: GridDay[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): GridDay => {
+            const day = index + 1;
             return  {
-                day: index + 1,
-                month,
-                year
+                unixTime: DateRangeInput.startOfDayInUnix(year, month, day)
             }
         });
         
         const introMonthGridDays: GridDay[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): GridDay => {
+            const day = lastDayOfPreviousMonth - index;
             return  {
-                day: lastDayOfPreviousMonth - index,
-                month: previousMonth,
-                year
+                unixTime: DateRangeInput.startOfDayInUnix(year, previousMonth, day)
+
             }
         }).reverse();
 
         const outroMonthGridDays: GridDay[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): GridDay => {
+            const day = firstDayOfNextMonth + index;
             return  {
-                day: firstDayOfNextMonth + index,
-                month: nextMonth,
-                year
+                unixTime: DateRangeInput.startOfDayInUnix(year, nextMonth, day)
             }
         });
 
@@ -160,25 +156,22 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     }
     
     private isDayGridInRange(gridDay: GridDay): boolean {
-        const currentGridIndex: number = this.gridDays.indexOf(gridDay);
-        const lastHoveredGridIndex: number = this.gridDays.indexOf((this.state.lastHoveredGrid || "-1") as GridDay);
-        const firstClickedGridIndex: number = this.gridDays.indexOf((this.state.firstClickedGrid || "-1") as GridDay);
-        const lastClickedGridIndex: number = this.gridDays.indexOf((this.state.lastClickedGrid || "-1") as GridDay);
+        const isSmallerThanHoveredGrid = this.state.lastHoveredGrid ? gridDay.unixTime < this.state.lastHoveredGrid.unixTime : false;
+        const isBiggerThanLastHoveredGrid = this.state.lastHoveredGrid ? gridDay.unixTime > this.state.lastHoveredGrid.unixTime : false;
 
-        const isSmallerThanHoveredGrid = currentGridIndex < lastHoveredGridIndex;
-        const isBiggerThanLastHoveredGrid = currentGridIndex > lastHoveredGridIndex;
+        const isBiggerThanFirstClickedGrid = this.state.firstClickedGrid ? gridDay.unixTime > this.state.firstClickedGrid.unixTime : false;
+        const isBiggerThanLastClickedGrid = this.state.lastClickedGrid ? gridDay.unixTime > this.state.lastClickedGrid.unixTime : false;
 
-        const isBiggerThanFirstClickedGrid = currentGridIndex > firstClickedGridIndex;
-        const isBiggerThanLastClickedGrid = currentGridIndex > lastClickedGridIndex;
+        const isSmallerThanFirstClickedGrid = this.state.firstClickedGrid ? gridDay.unixTime < this.state.firstClickedGrid.unixTime : false;
+        
+        const isSmallerThanLastClickedGrid = this.state.lastClickedGrid ? gridDay.unixTime < this.state.lastClickedGrid.unixTime : false;
+        
 
-        const isSmallerThanFirstClickedGrid = currentGridIndex < firstClickedGridIndex;
-        const isSmallerThanLastClickedGrid = currentGridIndex < lastClickedGridIndex;
-
-        if (firstClickedGridIndex !== -1 && lastClickedGridIndex !== -1) {
+        if (this.state.firstClickedGrid && this.state.lastClickedGrid) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
         
-        if (firstClickedGridIndex !== -1 && lastClickedGridIndex === -1) {
+        if (this.state.firstClickedGrid && !this.state.lastClickedGrid) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
         
@@ -196,23 +189,25 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         
         const onMouseEnter: () => void = async () => await this.onDayGridMouseEnter(gridDay);
         
-        return <div className={className} onMouseEnter={onMouseEnter} onClick={onClick}>{gridDay.day}</div>
+        return <div className={className} onMouseEnter={onMouseEnter} onClick={onClick}>{DateRangeInput.getDayOfUnixTime(gridDay.unixTime)}</div>
     }
 
     public render(): React.ReactNode {
         return (
             <div className={this.css(styles.dateRangeInput, this.props.className)}>
-                <div className={styles.topControlPanel}>
-
-                    <Icon name="caret-left" size={IconSize.Large} onClick={() => this.onPreviousMonthClick()}/>
-
-                    <span>Current month</span>
-
-                    <Icon name="caret-right" size={IconSize.Large} onClick={() => this.onNextMonthClick()}/>
-
-                </div>
 
                 <div className={this.css(styles.dateRangeInputMonthView)}>
+
+                    <div className={styles.monthAction}  onClick={() => this.onPreviousMonthClick()}>
+                        <Icon name="caret-left" size={IconSize.Large}/>
+                    </div>
+
+                    <span className={styles.month}>{new Intl.DateTimeFormat(DateRangeInputLocalizer.language, { month: 'long'}).format(this.activeMonthView)}</span>
+
+                    <div className={styles.monthAction} onClick={() => this.onNextMonthClick()}>
+                        <Icon name="caret-right" size={IconSize.Large} />
+                    </div>
+
                     {
                         this.gridDays.map(gridDay => this.renderGridDays(gridDay))
                     }
@@ -227,5 +222,13 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
 
     private static lastDayInMonth (year: number, month: number): number {
         return new Date(year, month + 1, 0).getDate();
+    }
+
+    private static startOfDayInUnix (year: number, month: number, day: number): number {
+        return new Date(year, month, day, 0, 0, 0, 0).getTime();
+    }
+
+    private static getDayOfUnixTime (unixTime: number): number {
+        return new Date(unixTime).getDate();
     }
 }
