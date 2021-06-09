@@ -225,16 +225,15 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     
     private async onActionClickAsync(actionProps: IButtonActionProps): Promise<void> {
         if (this._actionLoading) {
-            return; 
+            return;
         }
-        
+
         this._actionProps = actionProps;
         this._actionLoading = true;
         await this.reRenderAsync();
-        
+
         try {
             await actionProps.onClick();
-            
         } finally {
             this._actionProps = null;
             this._actionLoading = false;

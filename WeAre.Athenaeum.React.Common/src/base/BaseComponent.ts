@@ -370,7 +370,4 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
     }
-
-    public async componentDidUpdate(prevProps: Readonly<TProps>, prevState: Readonly<TState>, snapshot?: any): Promise<void> {
-    }
 }
