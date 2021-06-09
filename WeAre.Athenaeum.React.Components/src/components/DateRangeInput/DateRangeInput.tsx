@@ -16,20 +16,16 @@ enum WeekDaysEnum {
 }
 
 interface IDateRangeInputProps extends IBaseInputProps<Date> {
-    
 }
 
 interface IDateRangeInputState {
     lastHoveredGridId: string | null;
     firstClickedGridId: string | null;
     lastClickedGridId: string | null;
-    gridDayIds: string[];
-    gridDayValues: number[];
-    gridDays: GridDay[];
+
 }
 
 interface GridDay {
-    id: string,
     year: number,
     month: number,
     day: number
@@ -39,32 +35,44 @@ const GRID_MONTH_VIEW_DAYS = 35;
 const WEEK_LENGTH = 7;
 
 export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, IDateRangeInputState> {
-    private now: Date = new Date();
+    private activeMonthView: Date = this.defaultActiveMonthView;
+    private gridDayIds: string[] = this.defaultGridDayIds;
+    private gridDays: GridDay[] = this.defaultGridDays;
     
     state: IDateRangeInputState = {
         lastHoveredGridId: null,
         firstClickedGridId: null,
-        lastClickedGridId: null,
-        gridDayIds: new Array(GRID_MONTH_VIEW_DAYS).fill(0).map((value, index) => this.getDayGridId(index)),
-        gridDayValues: [],
-        gridDays: []
+        lastClickedGridId: null
     };
+
+    get defaultActiveMonthView(): Date {
+        if (this.props.value) {
+            return this.props.value
+        }
+
+        return new Date();
+    }
     
-    async componentDidMount(): Promise<void> {
-        await super.componentDidMount();
+    get defaultGridDayIds(): string[] {
+        return new Array(GRID_MONTH_VIEW_DAYS).fill(0).map((value, index: number) => this.getDayGridId(index));
     }
 
-    async initializeAsync(): Promise<void> {
-        await super.initializeAsync();
-        this.monthViewDays(this.now.getFullYear(), this.now.getMonth());
+    get defaultGridDays(): GridDay[] {
+        return this.monthGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
     }
 
-    private monthViewDays(year: number, month: number): number[] {
-        const previousMonth = month - 1;
-        
+    private getDayGridId(index: number): string {
+        return `${this.id}_day_${index}`;
+    }
+
+    private monthGridDays(year: number, month: number): GridDay[] {
+        const firstDayOfNextMonth: number = 1;
+        const previousMonth: number = month - 1;
+        const nextMonth: number = month + 1;
+
         const currentMonthDayCount: number = DateRangeInput.daysInMonth(year, month);
         
-        const firstDay: Date = new Date(this.now.setDate(1));
+        const firstDay: Date = new Date(this.activeMonthView.setDate(1));
         
         const firstDayWeekDay: WeekDaysEnum = firstDay.getDay();
         
@@ -74,52 +82,38 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
         
-        const firstDayOfNextMonth: number = 1;
-        
-        const currentMonthDays: number[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): number => index + 1);
-        
-        const introDays: number[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): number => lastDayOfPreviousMonth - index).reverse();
-        
-        const outroDays: number[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): number => firstDayOfNextMonth + index);
-
-        const monthViewCalendar: number[] = [...introDays, ...currentMonthDays, ...outroDays];
-
-        this.state.gridDayValues = [...monthViewCalendar];
-
-        console.log({
-            year,
-            month,
-            firstDay,
-            firstDayWeekDay,
-            currentMonthDayCount,
-            introDaysCount,
-            outroDaysCount,
-            lastDayOfPreviousMonth,
-            firstDayOfNextMonth,
-            outroDays,
-            introDays,
-            currentMonthDays,
-            monthViewCalendar
+        const currentMonthGridDays: GridDay[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): GridDay => {
+            return  {
+                day: index + 1,
+                month,
+                year
+            }
         });
         
-        return monthViewCalendar;
+        const introMonthGridDays: GridDay[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): GridDay => {
+            return  {
+                day: lastDayOfPreviousMonth - index,
+                month: previousMonth,
+                year
+            }
+        }).reverse();  
+        
+        const outroMonthGridDays: GridDay[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): GridDay => {
+            return  {
+                day: firstDayOfNextMonth + index,
+                month: nextMonth,
+                year
+            }
+        });
+
+        return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
     }
 
-    private static daysInMonth (year: number, month: number): number {
-        return new Date(year, month + 1, 0).getDate();
-    }
-    
-    private static lastDayInMonth (year: number, month: number): number {
-        return new Date(year, month + 1, 0).getDate();
-    }
 
-    private getDayGridId(index: number): string {
-        return `${this.id}_day_${index}`;
-    }
   
     private getDayGridValue(id: string): string | number {
-        const index = this.state.gridDayIds.indexOf(id);
-        return this.state.gridDayValues[index];
+        const index = this.gridDayIds.indexOf(id);
+        return this.gridDays[index]?.day;
     }
 
     private async onDayGridClick(id: string): Promise<void> {
@@ -163,9 +157,9 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
 
     private isDayGridSelected(dayGridId: string): boolean {
 
-        const currentGridIndex = this.state.gridDayIds.indexOf(dayGridId);
-        const firstClickedGridIndex = this.state.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
-        const lastClickedGridIndex = this.state.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
+        const currentGridIndex = this.gridDayIds.indexOf(dayGridId);
+        const firstClickedGridIndex = this.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
+        const lastClickedGridIndex = this.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
 
         if (firstClickedGridIndex !== -1 && currentGridIndex === firstClickedGridIndex) {
             return true;
@@ -180,10 +174,10 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     
     private isDayGridInRange(dayGridId: string): boolean {
         
-        const currentGridIndex: number = this.state.gridDayIds.indexOf(dayGridId);
-        const lastHoveredGridIndex: number = this.state.gridDayIds.indexOf(this.state.lastHoveredGridId || "-1");
-        const firstClickedGridIndex: number = this.state.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
-        const lastClickedGridIndex: number = this.state.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
+        const currentGridIndex: number = this.gridDayIds.indexOf(dayGridId);
+        const lastHoveredGridIndex: number = this.gridDayIds.indexOf(this.state.lastHoveredGridId || "-1");
+        const firstClickedGridIndex: number = this.gridDayIds.indexOf(this.state.firstClickedGridId || "-1");
+        const lastClickedGridIndex: number = this.gridDayIds.indexOf(this.state.lastClickedGridId || "-1");
         
         if (this.state.lastHoveredGridId && lastHoveredGridIndex === -1) {
             this.state.lastHoveredGridId = null;
@@ -229,8 +223,7 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         
         return <div id={id} className={className} onMouseEnter={onMouseEnter} onClick={onClick}>{this.getDayGridValue(id)}</div>
     }
-    
-    
+
     public render(): React.ReactNode {
         return (
             <div className={this.css(styles.dateRangeInput, this.props.className)}>
@@ -246,10 +239,18 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
                 
                 <div className={this.css(styles.dateRangeInputMonthView)}>
                     {
-                        this.state.gridDayIds.map(gridDayId => this.renderGridDayById(gridDayId))
+                        this.gridDayIds.map(gridDayId => this.renderGridDayById(gridDayId))
                     }
                 </div>
             </div>
         );
+    }
+
+    private static daysInMonth (year: number, month: number): number {
+        return new Date(year, month + 1, 0).getDate();
+    }
+
+    private static lastDayInMonth (year: number, month: number): number {
+        return new Date(year, month + 1, 0).getDate();
     }
 }
