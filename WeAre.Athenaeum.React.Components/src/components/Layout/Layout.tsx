@@ -264,13 +264,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async alertAsync(alert: AlertModel): Promise<void> {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        console.log("Layout.alertAsync: id=", this.id, " pageContainer=", pageContainer);
         if (pageContainer != null) {
             this._alert = null;
             await pageContainer.alertAsync(alert);
         } else {
             this._alert = alert;
-            console.log("Layout.alertAsync: id=", this.id, " alert=", alert);
         }
     }
 
