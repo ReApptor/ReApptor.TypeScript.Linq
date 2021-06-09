@@ -246,6 +246,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
+        console.log("1) Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
+
         await this.setState({ page: page });
         
         if (this.mobile) {
@@ -253,8 +255,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             this.initializeTooltips();
         }
         
+        console.log("2) Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
+        
         if (this.state.alert) {
-            console.log("Layout.setPageAsync: id=", this.id, " _alert=", this.state.alert);
             await this.alertAsync(this.state.alert);
         }
     }
