@@ -35,7 +35,9 @@ $border: 0px;
       border: 1px solid #dcdcdc;
       display: flex;
       justify-content: center;
+      align-items: center;
       transition: 50ms all;
+
       &:hover {
         background-color: $orange-hover;
       }
