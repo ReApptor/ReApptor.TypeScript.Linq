@@ -108,6 +108,7 @@ export default class ch {
     }
 
     public static async alertAsync(alert: AlertModel): Promise<void> {
+        console.log("ch.alertAsync: _page=", this._page);
         if (this._page != null) {
             await this._page.alertAsync(alert);
         }

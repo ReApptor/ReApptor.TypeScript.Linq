@@ -182,6 +182,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     public async alertAsync(alert: AlertModel): Promise<void> {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        console.log("BasePage.alertAsync: pageContainer=", pageContainer);
         if (pageContainer != null) {
             await pageContainer.alertAsync(alert);
         }
