@@ -137,7 +137,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     }
 
     public async componentWillUnmount(): Promise<void> {
-        PageContainer.instance = null;
+        //PageContainer.instance = null;
         console.log("PageContainer.componentWillUnmount: PageContainer.instance=", PageContainer.instance);
         await super.componentWillUnmount();
     }
