@@ -68,9 +68,9 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         
         const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? WEEK_LENGTH - 1 : firstDayWeekDay - 1;
 
-        const isLongMonth = (introDaysCount + currentMonthDayCount) > MONTH_GRID;
+        const isLongMonth: boolean = (introDaysCount + currentMonthDayCount) > MONTH_GRID;
 
-        const gridCount = isLongMonth ? LONG_MONTH_GRID : MONTH_GRID;
+        const gridCount: number = isLongMonth ? LONG_MONTH_GRID : MONTH_GRID;
         
         const outroDaysCount: number = gridCount - introDaysCount - currentMonthDayCount;
         
@@ -152,7 +152,7 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     }
 
     private isDayGridSelected(gridDay: GridDay): boolean {
-        return (gridDay === this.state.firstClickedGrid) || (gridDay === this.state.lastClickedGrid);
+        return (gridDay.unixTime === this.state.firstClickedGrid?.unixTime) || (gridDay.unixTime === this.state.lastClickedGrid?.unixTime);
     }
     
     private isDayGridInRange(gridDay: GridDay): boolean {
