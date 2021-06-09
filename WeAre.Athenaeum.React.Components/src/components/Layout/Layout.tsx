@@ -348,16 +348,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         link.target = "_self";
         link.click();
     }
-    
-    public renderPage(page: IBasePage): React.ReactNode {
-        const node: React.ReactNode = PageRouteProvider.render(page, this._pageRef);
 
+    public async componentDidUpdate(): Promise<void> {
         if (this._alert) {
-            // noinspection JSIgnoredPromiseFromCall
-            this.alertAsync(this._alert);
+            await this.alertAsync(this._alert);
         }
-
-        return node;
     }
 
     public render(): React.ReactNode {        
@@ -381,7 +376,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
                 <main className={styles.main}>
                     {
-                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && this.renderPage(this.state.page)
+                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && PageRouteProvider.render(this.state.page, this._pageRef)
                     }
                 </main>
     
