@@ -105,7 +105,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             noWrap: true,
             minWidth: "5rem",
             transform: (cell, value) => (value) ? this.transformEnumToSomething(value, true) : "",
-            init: (cell) => this.initCellAsync(cell),
+            init: (cell) => this.initCell(cell),
             settings: {
                 infoAccessor: "name",
                 infoTransform:  (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
@@ -204,6 +204,22 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this.items;
     }
 
+    private initCell(cell: CellModel<any>): void {
+        cell.readonly = true;
+    }
+
+    private transformEnumToSomething2(value: any, b: boolean): string {
+        return value.toString() + " bbbbb";
+    }
+
+    private transformEnumToSomething(value: any, b: boolean): string {
+        return value.toString() + " aaaaaa";
+    }
+
+    private cellActioncallBack(cell: CellModel<any>, cellAction: string, selectedAction: string): void {
+        console.log(selectedAction)
+    }
+
     public render(): React.ReactNode {
 
         return (
@@ -229,21 +245,5 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
             </React.Fragment>
         );
-    }
-
-    private initCellAsync(cell: CellModel<any>) {
-        cell.readonly = true;
-    }
-
-    private transformEnumToSomething2(value: any, b: boolean) {
-        return value.toString() + " bbbbb";
-    }
-
-    private transformEnumToSomething(value: any, b: boolean) {
-        return value.toString() + " aaaaaa";
-    }
-
-    private cellActioncallBack(cell: CellModel<any>, cellAction: string, selectedAction: string) {
-        console.log(selectedAction)
     }
 }
