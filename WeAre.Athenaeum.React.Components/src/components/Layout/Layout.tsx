@@ -36,7 +36,6 @@ export interface ILayoutProps {
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     page: IBasePage | null;
-    alert: AlertModel | null;
     isSpinning: boolean;
     error: boolean;
 }
@@ -48,7 +47,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         isSpinning: false,
         data: null,
         page: null,
-        alert: null,
         error: false,
     };
 
@@ -59,7 +57,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _touch: React.Touch | null = null;
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
-    
+    private _alert: AlertModel | null = null;
+
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
         this._startTouch = e.touches[0];
@@ -267,25 +266,25 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         console.log("Layout.alertAsync: id=", this.id, " pageContainer=", pageContainer);
         if (pageContainer != null) {
-            this.state.alert = null;
+            this._alert = null;
             await pageContainer.alertAsync(alert);
         } else {
-            this.state.alert = alert;
+            this._alert = alert;
             console.log("Layout.alertAsync: id=", this.id, " alert=", alert);
         }
     }
 
     public async hideAlertAsync(): Promise<void> {
+        this._alert = null;
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.hideAlertAsync();
         }
-        this.state.alert = null;
     }
 
     public get alert(): AlertModel | null {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        return pageContainer?.alert ?? this.state.alert;
+        return pageContainer?.alert ?? this._alert;
     }
     
     public initializeTooltips(): void {
@@ -355,9 +354,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public renderPage(page: IBasePage): React.ReactNode {
         const node: React.ReactNode = PageRouteProvider.render(page, this._pageRef);
 
-        if (this.state.alert) {
+        if (this._alert) {
             // noinspection JSIgnoredPromiseFromCall
-            this.alertAsync(this.state.alert);
+            this.alertAsync(this._alert);
         }
 
         return node;
