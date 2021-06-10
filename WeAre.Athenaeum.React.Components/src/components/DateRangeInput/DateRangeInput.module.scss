@@ -20,6 +20,7 @@ $verticalPadding: 0.5rem;
   grid-template-columns: repeat(7, 1fr);
   border: 1px solid #ffffff;
   border-radius: 0.25rem;
+  z-index: 100;
 
   .monthName {
     grid-column: 1/6;
