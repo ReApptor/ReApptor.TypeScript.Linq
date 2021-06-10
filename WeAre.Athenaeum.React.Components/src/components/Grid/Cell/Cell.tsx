@@ -195,7 +195,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         );
     }
 
-    private renderTextCellContent(cell: CellModel<TItem>, cellValue: string | null): React.ReactNode {
+    private renderTextCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: string | null): React.ReactNode {
         const noWrapStyle = cell.column.noWrap && gridStyles.noWrap;
 
         return (
@@ -205,6 +205,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                            className={this.css(gridStyles.textInput, noWrapStyle)}
                            value={cellValue || ""}
                            title={cell.title}
+                           maxLength={settings.maxLength || undefined}
                            onChange={async (sender, value, userInteraction, done) => await this.onTextCellChangeAsync(cell, value, userInteraction, done)}
                 />
             </div>
@@ -537,7 +538,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
                     case ColumnType.Text:
                         cellStyle = gridStyles.textCell;
-                        cellContent = this.renderTextCellContent(cell, cellValue);
+                        cellContent = this.renderTextCellContent(cell, settings, cellValue);
                         rendered = true;
                         editable = true;
                         break;

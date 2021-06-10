@@ -140,7 +140,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
         await super.componentWillUnmount();
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         
         const transparentStyle = this.props.transparent ? { backgroundColor: "transparent" } : {};
         

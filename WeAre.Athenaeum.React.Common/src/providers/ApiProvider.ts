@@ -232,7 +232,7 @@ export default class ApiProvider {
             const responseContainer = jsonResponse as IResponseContainer;
             
             if ((responseContainer) && (responseContainer.isResponseContainer)) {
-                const value = responseContainer.value;
+                const value: any = responseContainer.value;
 
                 if (responseContainer.unauthorized) {
                     await ch.reinitializeContextAsync();
@@ -253,6 +253,7 @@ export default class ApiProvider {
                 }
 
                 if (responseContainer.alert) {
+                    console.log(" alert=", responseContainer.alert);
                     await ch.alertAsync(responseContainer.alert);
                 }
 

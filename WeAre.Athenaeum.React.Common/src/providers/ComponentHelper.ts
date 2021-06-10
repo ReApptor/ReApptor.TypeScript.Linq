@@ -9,6 +9,7 @@ import IUserContext from "../models/IUserContext";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
+import {AlertType} from "../Enums";
 
 /**
  * BaseComponent helper
@@ -108,38 +109,45 @@ export default class ch {
     }
 
     public static async alertAsync(alert: AlertModel): Promise<void> {
-        if (this._page != null) {
-            await this._page.alertAsync(alert);
+        if (this._layout != null) {
+            await this._layout.alertAsync(alert);
         }
     }
-    
+
+    public static get alert(): AlertModel | null {
+        return (this._layout != null) ? this._layout.alert : null;
+    }
+
     public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        if (this._page != null) {
-            await this._page.alertErrorAsync(message, autoClose, flyout);
-        }
+        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout);
+        await this.alertAsync(alert);
     }
 
     public static async flyoutErrorAsync(message: string): Promise<void> {
-        if (this._page != null) {
-            await this._page.alertErrorAsync(message, true, true);
-        }
+        await this.alertErrorAsync(message, true, true);
     }
 
     public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        if (this._page != null) {
-            await this._page.alertMessageAsync(message, autoClose, flyout);
-        }
+        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout);
+        await this.alertAsync(alert);
     }
 
     public static async flyoutMessageAsync(message: string): Promise<void> {
-        if (this._page != null) {
-            await this._page.alertMessageAsync(message, true, true);
-        }
+        await this.alertMessageAsync(message, true, true);
+    }
+
+    public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout);
+        await this.alertAsync(alert);
+    }
+
+    public static async flyoutWarningAsync(message: string): Promise<void> {
+        await this.alertWarningAsync(message, true, true);
     }
 
     public static async hideAlertAsync(): Promise<void> {
-        if (this._page != null) {
-            await this._page.hideAlertAsync();
+        if (this._layout != null) {
+            await this._layout.hideAlertAsync();
         }
     }
 
