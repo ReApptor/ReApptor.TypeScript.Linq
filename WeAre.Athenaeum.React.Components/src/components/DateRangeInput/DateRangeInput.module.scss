@@ -7,6 +7,10 @@ $border: 0px;
 $horizontalPadding: 0.5rem;
 $verticalPadding: 0.5rem;
 
+.dateRangeInputExpanded {
+
+}
+
 .dateRangeInput{
   max-width: calc(#{$monthViewDayGridSize} * 7 + #{$horizontalGridGap} * 6 + #{$border} * 2 + #{$horizontalPadding} * 2);
   display: grid;
@@ -95,3 +99,12 @@ $verticalPadding: 0.5rem;
   }
 
 }
+
+.input {
+  cursor: pointer;
+  
+  .dateSeparator {
+    padding: 0 0.5rem;
+  }
+}
+
