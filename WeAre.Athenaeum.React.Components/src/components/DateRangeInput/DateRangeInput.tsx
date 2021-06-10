@@ -19,6 +19,7 @@ enum WeekDaysEnum {
 type DateRangeInputValue = [Date, Date]; // [StartDate, EndDate] 
 
 interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
+    expanded?: boolean;
     sameDay?: boolean;
     onChange?: (value: DateRangeInputValue) => Promise<void>
 }
@@ -26,6 +27,7 @@ interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {}
 
 interface DayGridValue {
+    id?: string;
     unixTime: number
 }
 
@@ -34,12 +36,14 @@ const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
 export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> {
+    private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private activeMonthView: Date = this.defaultActiveMonthView;
     private dayGridValues: DayGridValue[] = this.defaultDayGridValues;
     private lastHoveredDayGrid: DayGridValue | null = null;
     private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
     private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
+    private showDatePicker: boolean = false;
 
 
     private get defaultActiveMonthView(): Date {
@@ -88,26 +92,31 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
 
         const currentMonthGridDays: DayGridValue[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): DayGridValue => {
+            const id = `${this.id}_day_intro_${index}`;
             const day = index + 1;
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, month, day)
+                unixTime: DateRangeInput.startOfDayInUnix(year, month, day),
+                id
             }
         });
         
         const introMonthGridDays: DayGridValue[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
+            const id = `${this.id}_day_${index}`;
             const day = lastDayOfPreviousMonth - index;
             
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, previousMonth, day)
-
+                unixTime: DateRangeInput.startOfDayInUnix(year, previousMonth, day),
+                id
             }
         }).reverse();
 
         const outroMonthGridDays: DayGridValue[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
+            const id = `${this.id}_day_outro_${index}`;
             const day = firstDayOfNextMonth + index;
             
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, nextMonth, day)
+                unixTime: DateRangeInput.startOfDayInUnix(year, nextMonth, day),
+                id
             }
         });
 
@@ -220,6 +229,18 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return  false
     }
 
+    private async toggleDatePicker() {
+        if (!this._inputRef.current) {
+            return;
+        }
+
+        this.showDatePicker = !this.showDatePicker;
+
+        console.log(this._inputRef.current.getBoundingClientRect());
+        
+        await this.reRenderAsync();
+    }
+
     private renderWeekDays(): JSX.Element[] {
         const weekDays = [
             WeekDaysEnum.Monday, 
@@ -230,34 +251,53 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             WeekDaysEnum.Saturday, 
             WeekDaysEnum.Sunday
         ];
-        
-        return weekDays.map(weekDay => <div className={styles.weekDayName}>{Utility.getShortDayOfWeek(weekDay)}</div>)
+
+        return weekDays.map(weekDay =>
+            (
+                <div
+                    key={weekDay}
+                    className={styles.weekDayName}>
+                    {Utility.getShortDayOfWeek(weekDay)}
+                </div>
+            )
+        );
     }
     
     private renderDayGrid(gridDay: DayGridValue): JSX.Element {
-        const isSelected = this.isDayGridSelected(gridDay) && styles.isSelected || "";
+        const isSelectedStyle = this.isDayGridSelected(gridDay) && styles.isSelected || "";
 
-        const isToday = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
+        const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
         
-        const isInRangeAndSelected = (this.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
+        const isInRangeAndSelectedStyle = (this.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
         
-        const isInRangeAndNotSelected = (this.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
+        const isInRangeAndNotSelectedStyle = (this.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
         
-        const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelected, isInRangeAndNotSelected, isSelected, isToday);
+        const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle);
         
         const onClick: () => void = async () => await this.onDayGridClick(gridDay);
         
         const onMouseEnter: () => void = async () => await this.onDayGridMouseEnter(gridDay);
-        
-        return <div className={className} onMouseEnter={onMouseEnter} onClick={onClick}><span>{DateRangeInput.getDayOfMonth(gridDay.unixTime)}</span></div>
+
+        return (
+            <div
+                className={className}
+                key={String(gridDay.unixTime)}
+                onMouseEnter={onMouseEnter}
+                onClick={onClick}>
+                    <span>
+                        {DateRangeInput.getDayOfMonth(gridDay.unixTime)}
+                    </span>
+            </div>
+        );
     }
 
-    public renderInput(): React.ReactNode {
+    public renderDateRangePicker(): React.ReactNode {
         const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
         const year: number = this.activeMonthView.getFullYear();
-        
+        const expandedStyle = this.props.expanded ? styles.dateRangeInputExpanded : "";
+
         return (
-            <div className={this.css(styles.dateRangeInput, this.props.className)}>
+            <div className={this.css(styles.dateRangeInput, this.props.className, expandedStyle)}>
 
                 <span className={styles.monthName}>{monthName} {year}</span>
 
@@ -270,14 +310,38 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                     <Icon name="chevron-down" size={IconSize.Normal}/>
                 </div>
 
-                {
-                    this.renderWeekDays()
-                }
+                {this.renderWeekDays()}
+
+                {this.dayGridValues.map(gridDay => this.renderDayGrid(gridDay))}
+            </div>
+        );
+    }
+    
+    public renderInput(): React.ReactNode {
+        return (
+            <React.Fragment>
+                <div
+                    ref={this._inputRef}
+                    className={this.css("form-control", styles.input)}
+                    onClick={async () => await this.toggleDatePicker()}>
+                    <span>
+                        {DateRangeInput.unixToDateFormat(this.firstClickedDayGrid?.unixTime)}
+                    </span>
+
+                    <span className={styles.dateSeparator}>-</span>
+
+                    <span>
+                        {DateRangeInput.unixToDateFormat(this.lastClickedDayGrid?.unixTime)}
+                    </span>
+                </div>
 
                 {
-                    this.dayGridValues.map(gridDay => this.renderDayGrid(gridDay))
+                    (this.showDatePicker) &&
+                    (
+                        this.renderDateRangePicker()
+                    )
                 }
-            </div>
+            </React.Fragment>
         );
     }
 
@@ -295,6 +359,11 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
     private static getDayOfMonth (unixTime: number): number {
         return new Date(unixTime).getDate();
+    }
+
+    private static unixToDateFormat(unixTime: number | undefined): string {
+        if (!unixTime) return '-'
+        return new Date(unixTime).toISODateString()
     }
 
     private static isValidDateRangeInputValue (dateRangeInputValue: DateRangeInputValue | undefined): dateRangeInputValue is DateRangeInputValue {
