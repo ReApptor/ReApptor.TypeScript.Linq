@@ -41,6 +41,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private absolutePositionTop: string = '';
     
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
+    private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private activeMonthView: Date = this.defaultActiveMonthView;
     private dayGridValues: DayGridValue[] = this.defaultDayGridValues;
@@ -128,13 +129,21 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
-        let target = e.target as Node;
-        let container = document.querySelector(`.${styles.dateRangeInput}`);
-        let outsideDateRangePicker: boolean = ((container != null) && (!container.contains(target)));
-        if (outsideDateRangePicker) {
-            this.showDatePicker = false;
-            await this.reRenderAsync();
+        const target: Node = e.target as Node;
+
+        if (!this._inputRef.current || !this._datePickerRef.current) {
+            return; 
         }
+        
+        const isInsideOfDatePicker: boolean = this._inputRef.current.contains(target);
+        const isInsideOfInput: boolean = this._datePickerRef.current.contains(target);
+        
+        if (isInsideOfDatePicker || isInsideOfInput) {
+            return; 
+        }
+        
+        this.showDatePicker = false;
+        await this.reRenderAsync();
     }
     
     private async onDayGridClick(dayGridValue: DayGridValue): Promise<void> {
@@ -328,16 +337,14 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const year: number = this.activeMonthView.getFullYear();
         const expandedStyle = this.props.expanded ? "" : styles.dateRangeInputExpanded;
 
-        
         return (
-            <div className={this.css(styles.dateRangeInput, this.props.className, expandedStyle)} style={style}>
+            <div ref={this._datePickerRef} className={this.css(styles.dateRangeInput, this.props.className, expandedStyle)} style={style}>
 
                 <span className={styles.monthName}>{monthName} {year}</span>
 
                 <div className={styles.monthAction} onClick={() => this.onPreviousMonthClick()}>
                     <Icon name="chevron-up" size={IconSize.Normal}/>
                 </div>
-
 
                 <div className={styles.monthAction} onClick={() => this.onNextMonthClick()}>
                     <Icon name="chevron-down" size={IconSize.Normal}/>
