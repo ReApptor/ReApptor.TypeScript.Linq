@@ -29,10 +29,10 @@ export default class DateRangeInputTests extends BaseComponent {
                     <OneColumn className="pt-4">
         
                         <DateRangeInput
+                            clickToEdit
                             sameDay={this.state.sameDay} 
-                            startValue={this.state.start}
-                            endValue={this.state.end}
-                            onValueChange={async (start: Date, end: Date)=>{await this.setState({start, end})}}
+                            value={[this.state.start, this.state.end]}
+                            onChange={async ([start, end]: [Date, Date])=>{await this.setState({start, end})}}
                         />
 
                     </OneColumn>
