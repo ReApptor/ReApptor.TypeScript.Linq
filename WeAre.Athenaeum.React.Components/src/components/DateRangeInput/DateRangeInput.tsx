@@ -229,6 +229,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         }
 
         this.showDatePicker = false;
+        await this.reRenderAsync();
         await this.props.onChange([start, end]);
         
     }
