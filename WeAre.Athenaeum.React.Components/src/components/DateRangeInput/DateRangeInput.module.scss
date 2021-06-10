@@ -20,6 +20,7 @@ $verticalPadding: 0.5rem;
   grid-template-columns: repeat(7, 1fr);
   border: 1px solid #ffffff;
   border-radius: 0.25rem;
+  box-shadow: $renta-shadow;
   z-index: 100;
 
   .monthName {
@@ -84,7 +85,6 @@ $verticalPadding: 0.5rem;
 
   .isInRange {
     background-color: rgba($orange-hover, 0.5);
-    color: white;
   }
 
   .isInRangeAndNotSelected {
