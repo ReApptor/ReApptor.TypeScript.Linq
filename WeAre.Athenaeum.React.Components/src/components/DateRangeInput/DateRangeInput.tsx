@@ -233,12 +233,14 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private async emitOutput(): Promise<void> {
         const [start, end] = this.output;
         
+        this.showDatePicker = false;
+        
+        await this.reRenderAsync();
+        
         if (!this.props.onChange || !start || !end) {
             return;
         }
 
-        this.showDatePicker = false;
-        await this.reRenderAsync();
         await this.props.onChange([start, end]);
         
     }
