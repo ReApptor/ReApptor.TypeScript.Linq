@@ -226,23 +226,22 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         }
 
         return [start, end];
-
-
     }
 
     private async emitOutput(): Promise<void> {
         const [start, end] = this.output;
+
+        if (!start || !end) {
+            return; 
+        }
         
         this.showDatePicker = false;
         
         await this.reRenderAsync();
         
-        if (!this.props.onChange || !start || !end) {
-            return;
+        if (this.props.onChange) {
+            await this.props.onChange([start, end]);
         }
-
-        await this.props.onChange([start, end]);
-        
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
