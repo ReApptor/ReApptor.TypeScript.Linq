@@ -5,6 +5,7 @@ import Icon, {IconSize} from "../Icon/Icon";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
 import styles from "./DateRangeInput.module.scss";
+import {IGlobalClick} from "@weare/athenaeum-react-common";
 
 enum WeekDaysEnum {
     Sunday,
@@ -35,7 +36,7 @@ const WEEK_LENGTH = 7;
 const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
-export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> {
+export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick{
     private readonly absolutePositionPadding: string = '5px';
     private absolutePositionTop: string = '';
     
@@ -126,6 +127,16 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
     }
 
+    public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
+        let target = e.target as Node;
+        let container = document.querySelector(`.${styles.dateRangeInput}`);
+        let outsideDateRangePicker: boolean = ((container != null) && (!container.contains(target)));
+        if (outsideDateRangePicker) {
+            this.showDatePicker = false;
+            await this.reRenderAsync();
+        }
+    }
+    
     private async onDayGridClick(dayGridValue: DayGridValue): Promise<void> {
 
         if (this.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
@@ -378,11 +389,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
     private static getDayOfMonth (unixTime: number): number {
         return new Date(unixTime).getDate();
-    }
-
-    private static unixToDateFormat(unixTime: number | undefined): string {
-        if (!unixTime) return '-'
-        return new Date(unixTime).toISODateString()
     }
 
     private static isValidDateRangeInputValue (dateRangeInputValue: DateRangeInputValue | undefined): dateRangeInputValue is DateRangeInputValue {
