@@ -79,7 +79,7 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
             if (string.IsNullOrWhiteSpace(message.Message))
                 throw new ArgumentOutOfRangeException(nameof(message), $"{nameof(message.Message)} is null, empty or whitespace.");
 
-            using AmazonSecurityTokenServiceClient amazonSecurityTokenServiceClient = new AmazonSecurityTokenServiceClient(RegionEndpoint.GetBySystemName(_settings.Region));
+            using AmazonSecurityTokenServiceClient amazonSecurityTokenServiceClient = new AmazonSecurityTokenServiceClient(RegionEndpoint.GetBySystemName(_settings.AwsPinpointRegion));
 
             AssumeRoleResponse response = await amazonSecurityTokenServiceClient.AssumeRoleAsync(new AssumeRoleRequest
             {
@@ -87,7 +87,7 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
                 RoleSessionName = "RoleSession1"
             });
 
-            using AmazonPinpointClient client = new AmazonPinpointClient(response.Credentials, RegionEndpoint.GetBySystemName(_settings.Region));
+            using AmazonPinpointClient client = new AmazonPinpointClient(response.Credentials, RegionEndpoint.GetBySystemName(_settings.AwsPinpointRegion));
 
             SendMessagesRequest request = CreateSendMessagesRequest(message, _settings);
 
@@ -99,7 +99,6 @@ namespace WeAre.Athenaeum.Services.Sms.Implementation
                 {
                     Success = true,
                     Response = JsonConvert.SerializeObject(smsResponse.MessageResponse)
-
                 };
             }
 
