@@ -289,8 +289,8 @@ pipelines:
           services:
             - docker
       - step:
-          name: Deploy Dev Athenaeum Documentation to FARGATE
-          deployment: dev-athenaeum-doc-deploy
+          name: Deploy Dev ReApptor Documentation to FARGATE
+          deployment: dev-reapptor-doc-deploy
           image: alpine:3.9
           script:
             - apk add --no-cache curl
