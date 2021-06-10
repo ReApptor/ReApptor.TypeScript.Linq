@@ -217,7 +217,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
+        this.showDatePicker = false;
         await this.props.onChange([start, end]);
+        
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
@@ -338,17 +340,18 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     
     public renderInput(): React.ReactNode {
         const [start, end] = this.output;
+        
         return (
             <React.Fragment>
                 <div
                     ref={this._inputRef}
                     className={this.css("form-control", styles.input)}
                     onClick={async () => await this.toggleDatePicker()}>
-                    <span>{start?.toDateString() || "-"}</span>
+                    <span>{start?.toISODateString() || "-"}</span>
 
                     <span className={styles.dateSeparator}>-</span>
 
-                    <span>{end?.toDateString() || "-"}</span>
+                    <span>{end?.toISODateString() || "-"}</span>
                 </div>
 
                 {
