@@ -6,7 +6,7 @@ import ApplicationContext from "../models/ApplicationContext";
 import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
-import {AlertType, SwipeDirection} from "../Enums";
+import {SwipeDirection} from "../Enums";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
@@ -69,6 +69,10 @@ export interface ILayoutPage extends IAsyncComponent {
 
     swipeRightAsync(): Promise<void>;
 
+    alertAsync(alert: AlertModel): Promise<void>;
+
+    hideAlertAsync(): Promise<void>;
+
     isSpinning(): boolean;
 
     isLayout(): boolean;
@@ -78,6 +82,8 @@ export interface ILayoutPage extends IAsyncComponent {
     reinitializeTooltips(): void;
 
     download(file: FileModel): void;
+
+    readonly alert: AlertModel | null;
 }
 
 export interface IBasePageConstructor {
@@ -97,6 +103,7 @@ export interface IIsLoading {
 
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
+    private _alert: AlertModel | null;
     private readonly _asIsLoading: IIsLoading | null;
 
     private asIsLoading(): IIsLoading | null {
@@ -113,6 +120,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         super(props || ({} as IBasePageProps<TParams>));
 
         this._asIsLoading = this.asIsLoading();
+        this._alert = null;
     }
 
     public async componentDidMount(): Promise<void> {
@@ -181,49 +189,39 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        if (pageContainer != null) {
-            await pageContainer.alertAsync(alert);
-        }
+        await ch.alertAsync(alert);
     }
 
     public get alert(): AlertModel | null {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        return (pageContainer != null) ? pageContainer.alert : null;
+        return ch.alert;
     }
 
     public async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Danger;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
-        await this.alertAsync(alert);
+        return ch.alertErrorAsync(message, autoClose, flyout);
+    }
+
+    public static async flyoutErrorAsync(message: string): Promise<void> {
+        await ch.flyoutErrorAsync(message);
     }
 
     public async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Success;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
-        await this.alertAsync(alert);
+        return ch.alertMessageAsync(message, autoClose, flyout);
+    }
+
+    public static async flyoutMessageAsync(message: string): Promise<void> {
+        await ch.flyoutMessageAsync(message);
     }
 
     public async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel();
-        alert.alertType = AlertType.Warning;
-        alert.message = message;
-        alert.autoClose = autoClose;
-        alert.flyout = flyout;
-        await this.alertAsync(alert);
+        return ch.alertWarningAsync(message, autoClose, flyout);
+    }
+
+    public static async flyoutWarningAsync(message: string): Promise<void> {
+        await ch.flyoutWarningAsync(message);
     }
 
     public async hideAlertAsync(): Promise<void> {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        if (pageContainer != null) {
-            await pageContainer.hideAlertAsync();
-        }
+        return ch.hideAlertAsync();
     }
 
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {

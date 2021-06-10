@@ -1,7 +1,21 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {Utility, FileModel} from "@weare/athenaeum-toolkit";
-import {ch, WebApplicationType, SwipeDirection, PageRouteProvider, IBasePage, ILayoutPage, ApplicationContext, IGlobalResize, IBaseAsyncComponentState, BaseAsyncComponent, IAsyncComponent, IBaseComponent} from "@weare/athenaeum-react-common";
+import {Utility, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {
+    ch,
+    WebApplicationType,
+    SwipeDirection,
+    PageRouteProvider,
+    IBasePage,
+    ILayoutPage,
+    ApplicationContext,
+    IGlobalResize,
+    IBaseAsyncComponentState,
+    BaseAsyncComponent,
+    IAsyncComponent,
+    IBaseComponent,
+    AlertModel, IPageContainer
+} from "@weare/athenaeum-react-common";
 import TopNav, {IMenuItem} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
@@ -33,7 +47,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         isSpinning: false,
         data: null,
         page: null,
-        error: false
+        error: false,
     };
 
     private readonly _pageRef: React.RefObject<IBasePage> = React.createRef();
@@ -43,7 +57,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _touch: React.Touch | null = null;
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
-    
+    private _alert: AlertModel | null = null;
+
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
         this._startTouch = e.touches[0];
@@ -229,7 +244,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async setPageAsync(page: IBasePage): Promise<void> {
-
+        
         await this.setState({ page: page });
         
         if (this.mobile) {
@@ -245,6 +260,29 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 await topNav.reloadAsync();
             }
         }
+    }
+
+    public async alertAsync(alert: AlertModel): Promise<void> {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        if (pageContainer != null) {
+            this._alert = null;
+            await pageContainer.alertAsync(alert);
+        } else {
+            this._alert = alert;
+        }
+    }
+
+    public async hideAlertAsync(): Promise<void> {
+        this._alert = null;
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        if (pageContainer != null) {
+            await pageContainer.hideAlertAsync();
+        }
+    }
+
+    public get alert(): AlertModel | null {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        return pageContainer?.alert ?? this._alert;
     }
     
     public initializeTooltips(): void {
@@ -279,7 +317,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
-        
+
+        // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
         
         if ((processed) && (this.state.error)) {
@@ -310,6 +349,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         link.click();
     }
 
+    public async componentDidUpdate(): Promise<void> {
+        if (this._alert) {
+            await this.alertAsync(this._alert);
+        }
+    }
+
     public render(): React.ReactNode {        
         return (
             <div className={styles.layout}
@@ -331,7 +376,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
                 <main className={styles.main}>
                     {
-                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
+                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && PageRouteProvider.render(this.state.page, this._pageRef)
                     }
                 </main>
     

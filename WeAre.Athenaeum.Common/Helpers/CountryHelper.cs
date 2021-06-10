@@ -39,6 +39,11 @@ namespace WeAre.Athenaeum.Common.Helpers
             return null;
         }
 
+        public static string GetCountryCode(this CultureInfo culture)
+        {
+            return GetCountryCode(culture?.TwoLetterISOLanguageName);
+        }
+
         public static string GetCountryCode(this string country)
         {
             CountryInfo countryInfo = country.FindCountryInfo();
@@ -53,6 +58,11 @@ namespace WeAre.Athenaeum.Common.Helpers
             return countryInfo?.Name ?? country;
         }
 
+        public static string GetCountryName(this CultureInfo culture)
+        {
+            return GetCountryName(culture?.TwoLetterISOLanguageName);
+        }
+
         public static CultureInfo GetCountryCulture(this string country)
         {
             CountryInfo countryInfo = country.FindCountryInfo();
@@ -60,6 +70,11 @@ namespace WeAre.Athenaeum.Common.Helpers
             return (countryInfo != null)
                 ? CultureInfo.GetCultureInfo(countryInfo.Culture)
                 : null;
+        }
+
+        public static CultureInfo GetCountryCulture(this CultureInfo culture)
+        {
+            return GetCountryCulture(culture?.TwoLetterISOLanguageName);
         }
 
         public static bool IsCountry(this string countryCode, string name)
