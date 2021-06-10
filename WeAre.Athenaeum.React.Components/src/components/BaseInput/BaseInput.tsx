@@ -9,7 +9,7 @@ import styles from "../Form/Form.module.scss";
 
 export type NullableCheckboxType = boolean | null;
 
-export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType;
+export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date, Date];
 
 export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null;
 

@@ -1,10 +1,10 @@
 import React from "react";
-
-import styles from "./DateRangeInput.module.scss";
-import Icon, {IconSize} from "../Icon/Icon";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
 import {Utility} from "@weare/athenaeum-toolkit";
+
+import Icon, {IconSize} from "../Icon/Icon";
+import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
+import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
+import styles from "./DateRangeInput.module.scss";
 
 enum WeekDaysEnum {
     Sunday,
@@ -16,19 +16,16 @@ enum WeekDaysEnum {
     Saturday
 }
 
-interface IDateRangeInputProps {
-    className?: string;
+type DateRangeInputValue = [Date, Date]; 
+
+interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
     sameDay?: boolean;
     startValue?: Date;
     endValue?: Date;
     onValueChange?: (start: Date, end: Date) => Promise<void>
 }
 
-interface IDateRangeInputState {
-    lastHoveredGrid: GridDay | null;
-    firstClickedGrid: GridDay | null;
-    lastClickedGrid: GridDay | null;
-}
+interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {}
 
 interface GridDay {
     unixTime: number
@@ -38,15 +35,14 @@ const WEEK_LENGTH = 7;
 const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
-export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, IDateRangeInputState> {
+export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> {
+
     private activeMonthView: Date = this.defaultActiveMonthView;
     private gridDays: GridDay[] = this.defaultGridDays;
+    private lastHoveredGrid: GridDay | null = null;
+    private firstClickedGrid: GridDay | null = this.defaultFirstClicked;
+    private lastClickedGrid: GridDay | null = this.defaultEndClicked;
 
-    state: IDateRangeInputState = {
-        lastHoveredGrid: null,
-        firstClickedGrid: this.defaultFirstClicked,
-        lastClickedGrid: this.defaultEndClicked
-    };
 
     private get defaultActiveMonthView(): Date {
         if (this.props.startValue) {
@@ -130,53 +126,53 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
 
     private async onDayGridClick(gridDay: GridDay): Promise<void> {
 
-        if (this.state.firstClickedGrid === gridDay && !this.state.lastClickedGrid && this.props.sameDay) {
-            this.state.lastClickedGrid = gridDay;
+        if (this.firstClickedGrid === gridDay && !this.lastClickedGrid && this.props.sameDay) {
+            this.lastClickedGrid = gridDay;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
         
-        if (this.state.firstClickedGrid === gridDay) {
+        if (this.firstClickedGrid === gridDay) {
             
-            this.state.firstClickedGrid = null;
-            this.state.lastClickedGrid = null;
+            this.firstClickedGrid = null;
+            this.lastClickedGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
         
-        if (this.state.lastClickedGrid === gridDay) {
-            this.state.firstClickedGrid = null;
-            this.state.lastClickedGrid = null;            
+        if (this.lastClickedGrid === gridDay) {
+            this.firstClickedGrid = null;
+            this.lastClickedGrid = null;            
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
         
-        if (!this.state.firstClickedGrid) {
-            this.state.firstClickedGrid = gridDay;
-            this.state.lastClickedGrid = null;
+        if (!this.firstClickedGrid) {
+            this.firstClickedGrid = gridDay;
+            this.lastClickedGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return; 
         }
         
-        if (this.state.firstClickedGrid && !this.state.lastClickedGrid) {
-            this.state.lastClickedGrid = gridDay;
+        if (this.firstClickedGrid && !this.lastClickedGrid) {
+            this.lastClickedGrid = gridDay;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        this.state.firstClickedGrid = gridDay;
-        this.state.lastClickedGrid = null;
+        this.firstClickedGrid = gridDay;
+        this.lastClickedGrid = null;
         await this.reRenderAsync();
         await this.emitOutput();
     }
     
     private async onDayGridMouseEnter(gridDay: GridDay): Promise<void> {
-        this.state.lastHoveredGrid = gridDay;
+        this.lastHoveredGrid = gridDay;
         await this.reRenderAsync();
     }
         
@@ -193,12 +189,12 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     }
 
     private async emitOutput(): Promise<void> {
-        if (!this.props.onValueChange || !this.state.firstClickedGrid || !this.state.lastClickedGrid) {
+        if (!this.props.onValueChange || !this.firstClickedGrid || !this.lastClickedGrid) {
             return;
         }
         
-        const start: Date = new Date(this.state.firstClickedGrid.unixTime);
-        const end: Date = new Date(this.state.lastClickedGrid.unixTime);
+        const start: Date = new Date(this.firstClickedGrid.unixTime);
+        const end: Date = new Date(this.lastClickedGrid.unixTime);
 
         if (start.getTime() > end.getTime()) {
             await this.props.onValueChange(end, start);
@@ -209,26 +205,25 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
     }
 
     private isDayGridSelected(gridDay: GridDay): boolean {
-        return (gridDay.unixTime === this.state.firstClickedGrid?.unixTime) || (gridDay.unixTime === this.state.lastClickedGrid?.unixTime);
+        return (gridDay.unixTime === this.firstClickedGrid?.unixTime) || (gridDay.unixTime === this.lastClickedGrid?.unixTime);
     }
     
     private isDayGridInRange(gridDay: GridDay): boolean {
-        const isSmallerThanHoveredGrid = this.state.lastHoveredGrid ? gridDay.unixTime < this.state.lastHoveredGrid.unixTime : false;
-        const isBiggerThanLastHoveredGrid = this.state.lastHoveredGrid ? gridDay.unixTime > this.state.lastHoveredGrid.unixTime : false;
+        const isSmallerThanHoveredGrid = this.lastHoveredGrid ? gridDay.unixTime < this.lastHoveredGrid.unixTime : false;
+        const isBiggerThanLastHoveredGrid = this.lastHoveredGrid ? gridDay.unixTime > this.lastHoveredGrid.unixTime : false;
 
-        const isBiggerThanFirstClickedGrid = this.state.firstClickedGrid ? gridDay.unixTime > this.state.firstClickedGrid.unixTime : false;
-        const isBiggerThanLastClickedGrid = this.state.lastClickedGrid ? gridDay.unixTime > this.state.lastClickedGrid.unixTime : false;
+        const isBiggerThanFirstClickedGrid = this.firstClickedGrid ? gridDay.unixTime > this.firstClickedGrid.unixTime : false;
+        const isBiggerThanLastClickedGrid = this.lastClickedGrid ? gridDay.unixTime > this.lastClickedGrid.unixTime : false;
 
-        const isSmallerThanFirstClickedGrid = this.state.firstClickedGrid ? gridDay.unixTime < this.state.firstClickedGrid.unixTime : false;
+        const isSmallerThanFirstClickedGrid = this.firstClickedGrid ? gridDay.unixTime < this.firstClickedGrid.unixTime : false;
         
-        const isSmallerThanLastClickedGrid = this.state.lastClickedGrid ? gridDay.unixTime < this.state.lastClickedGrid.unixTime : false;
+        const isSmallerThanLastClickedGrid = this.lastClickedGrid ? gridDay.unixTime < this.lastClickedGrid.unixTime : false;
         
-
-        if (this.state.firstClickedGrid && this.state.lastClickedGrid) {
+        if (this.firstClickedGrid && this.lastClickedGrid) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
         
-        if (this.state.firstClickedGrid && !this.state.lastClickedGrid) {
+        if (this.firstClickedGrid && !this.lastClickedGrid) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
         
@@ -254,9 +249,9 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
 
         const isToday = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
         
-        const isInRangeAndSelected = (this.state.firstClickedGrid && this.state.lastClickedGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
+        const isInRangeAndSelected = (this.firstClickedGrid && this.lastClickedGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
         
-        const isInRangeAndNotSelected = (this.state.firstClickedGrid && !this.state.lastClickedGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
+        const isInRangeAndNotSelected = (this.firstClickedGrid && !this.lastClickedGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
         
         const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelected, isInRangeAndNotSelected, isSelected, isToday);
         
@@ -267,7 +262,7 @@ export default class DateRangeInput extends BaseComponent<IDateRangeInputProps, 
         return <div className={className} onMouseEnter={onMouseEnter} onClick={onClick}><span>{DateRangeInput.getDayOfMonth(gridDay.unixTime)}</span></div>
     }
 
-    public render(): React.ReactNode {
+    public renderInput(): React.ReactNode {
         const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
         const year: number = this.activeMonthView.getFullYear();
         
