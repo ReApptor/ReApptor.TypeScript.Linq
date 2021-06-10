@@ -8,7 +8,7 @@ $horizontalPadding: 0.5rem;
 $verticalPadding: 0.5rem;
 
 .dateRangeInputExpanded {
-
+  position: absolute;
 }
 
 .dateRangeInput{
@@ -18,6 +18,8 @@ $verticalPadding: 0.5rem;
   background: white;
   padding: $verticalPadding $horizontalPadding;
   grid-template-columns: repeat(7, 1fr);
+  border: 1px solid #ffffff;
+  border-radius: 0.25rem;
 
   .monthName {
     grid-column: 1/6;

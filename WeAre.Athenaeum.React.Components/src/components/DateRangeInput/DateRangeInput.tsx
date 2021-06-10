@@ -36,6 +36,9 @@ const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
 export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> {
+    private readonly absolutePositionPadding: string = '5px';
+    private absolutePositionTop: string = '';
+    
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private activeMonthView: Date = this.defaultActiveMonthView;
@@ -187,19 +190,33 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         await this.reRenderAsync();
     }
 
-    private async emitOutput(): Promise<void> {
-        if (!this.props.onChange || !this.firstClickedDayGrid || !this.lastClickedDayGrid) {
-            return;
-        }
+    private get output(): [Date | null, Date | null] {
+        if (!this.firstClickedDayGrid || !this.lastClickedDayGrid) {
+            return [
+                this.firstClickedDayGrid ? new Date(this.firstClickedDayGrid.unixTime) : null, 
+                this.lastClickedDayGrid ? new Date(this.lastClickedDayGrid.unixTime) : null, 
+            ];
+        }        
         
         const start: Date = new Date(this.firstClickedDayGrid.unixTime);
         const end: Date = new Date(this.lastClickedDayGrid.unixTime);
 
         if (start.getTime() > end.getTime()) {
-            await this.props.onChange([end, start]);
+            return [end, start]
+        }
+
+        return [start, end];
+
+
+    }
+
+    private async emitOutput(): Promise<void> {
+        const [start, end] = this.output;
+        
+        if (!this.props.onChange || !start || !end) {
             return;
         }
-        
+
         await this.props.onChange([start, end]);
     }
 
@@ -236,7 +253,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         this.showDatePicker = !this.showDatePicker;
 
-        console.log(this._inputRef.current.getBoundingClientRect());
+        this.absolutePositionTop = `calc(${this._inputRef.current.getBoundingClientRect().height}px + ${this.absolutePositionPadding})`
         
         await this.reRenderAsync();
     }
@@ -292,12 +309,14 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     public renderDateRangePicker(): React.ReactNode {
+        const style = this.props.expanded ? {top: this.absolutePositionTop} : {};
         const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
         const year: number = this.activeMonthView.getFullYear();
-        const expandedStyle = this.props.expanded ? styles.dateRangeInputExpanded : "";
+        const expandedStyle = this.props.expanded ? "" : styles.dateRangeInputExpanded;
 
+        
         return (
-            <div className={this.css(styles.dateRangeInput, this.props.className, expandedStyle)}>
+            <div className={this.css(styles.dateRangeInput, this.props.className, expandedStyle)} style={style}>
 
                 <span className={styles.monthName}>{monthName} {year}</span>
 
@@ -318,21 +337,18 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
     
     public renderInput(): React.ReactNode {
+        const [start, end] = this.output;
         return (
             <React.Fragment>
                 <div
                     ref={this._inputRef}
                     className={this.css("form-control", styles.input)}
                     onClick={async () => await this.toggleDatePicker()}>
-                    <span>
-                        {DateRangeInput.unixToDateFormat(this.firstClickedDayGrid?.unixTime)}
-                    </span>
+                    <span>{start?.toDateString() || "-"}</span>
 
                     <span className={styles.dateSeparator}>-</span>
 
-                    <span>
-                        {DateRangeInput.unixToDateFormat(this.lastClickedDayGrid?.unixTime)}
-                    </span>
+                    <span>{end?.toDateString() || "-"}</span>
                 </div>
 
                 {
