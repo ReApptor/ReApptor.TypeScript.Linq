@@ -14,7 +14,7 @@ interface IHeaderCellProps<TItem = {}> {
 }
 
 export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> implements IHeaderCell {
-    
+
     private async sortAsync(column: ColumnModel<TItem>): Promise<void> {
         const grid: GridModel<TItem> = column.grid;
 
@@ -46,7 +46,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
 
         if (column.group) {
             header = (top) ? column.group : column.header;
-            
+
             if (top) {
                 textAlign = TextAlign.Center;
 
@@ -73,7 +73,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                 render = false;
             }
         }
-        
+
         const groupHeaderCell: boolean = (top) && (colSpan != null) && (colSpan > 1);
         const sortable: boolean = (!groupHeaderCell) && (column.sortable);
         const sortDirection: SortDirection | null = (sortable) && (grid.sortColumn == column)
@@ -86,57 +86,58 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
             minWidth: column.minWidth || undefined
         };
-        
+
         if (column.stretch) {
             inlineStyles.width = "100%";
         }
-        
+
         const rotateClassName: string = ((column.rotate) && ((!top) || (!column.group)))
             ? styles.rotateHeader
             : "";
-        
+
         const sortableClassName: any = (sortable) && styles.sortable;
         const sortDirectionClassName: string = (sortDirection == SortDirection.Asc)
             ? styles.asc
             : (sortDirection == SortDirection.Desc)
                 ? styles.desc
                 : "";
-        
+
         const icon: IIconProps | null = (column.type == ColumnType.Icon)
             ? GridTransformer.toIcon(header)
             : null;
-        
+
         if (render) {
             column.headerCellInstance = this;
         }
-        
+
         if (this.props.colSpanLeft) {
             colSpan = (colSpan || 1) + 1;
         }
-        
+
         return (
             (render) &&
             (
                 <th id={this.id}
                     style={inlineStyles}
-                    rowSpan={rowSpan || 1}
-                    colSpan={colSpan || 1}>
-                    
-                    <div className={this.css(rotateClassName, sortableClassName, sortDirectionClassName)}
-                         onClick={async () => (sortable) && await this.sortAsync(column)}>
+                    rowSpan={rowSpan || undefined}
+                    colSpan={colSpan || undefined}>
+
+                    <div className={this.css(rotateClassName, sortableClassName, sortDirectionClassName)} onClick={() => (sortable) && this.sortAsync(column)}>
+
                         {
                             (icon)
                                 ?
                                 (
-                                    <Icon {...icon} size={IconSize.Large} />
+                                    <Icon {...icon} size={IconSize.Large}/>
                                 )
                                 :
                                 (
                                     <span>{this.toMultiLines(GridLocalizer.get(header)) || this.props.children}</span>
                                 )
                         }
+
                     </div>
-                    
+
                 </th>
             )
         )
