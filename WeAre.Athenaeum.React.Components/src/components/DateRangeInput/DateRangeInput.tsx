@@ -282,8 +282,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private isOutOfRange (dayGridValue: DayGridValue): boolean {
-        const minDateUnixTime = this.props.minDate ? DateRangeInput.getStartOfDay(this.props.minDate).getTime() : null;
-        const maxDateUnixTime = this.props.maxDate ? DateRangeInput.getStartOfDay(this.props.maxDate).getTime() : null;
+        const minDateUnixTime: number | null = this.props.minDate ? DateRangeInput.getStartOfDay(this.props.minDate).getTime() : null;
+        const maxDateUnixTime: number | null = this.props.maxDate ? DateRangeInput.getStartOfDay(this.props.maxDate).getTime() : null;
         
         if (minDateUnixTime && maxDateUnixTime) {
             return minDateUnixTime > dayGridValue.unixTime || maxDateUnixTime < dayGridValue.unixTime;
@@ -409,23 +409,23 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         );
     }
 
-    private static daysInMonth (year: number, month: number): number {
+    private static daysInMonth(year: number, month: number): number {
         return new Date(year, month + 1, 0).getDate();
     }
 
-    private static lastDayInMonth (year: number, month: number): number {
+    private static lastDayInMonth(year: number, month: number): number {
         return new Date(year, month + 1, 0).getDate();
     }
 
-    private static getStartOfDay (date: Date): Date {
+    private static getStartOfDay(date: Date): Date {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
     }
 
-    private static getDayOfMonth (unixTime: number): number {
+    private static getDayOfMonth(unixTime: number): number {
         return new Date(unixTime).getDate();
     }
 
-    private static isValidDateRangeInputValue (dateRangeInputValue: DateRangeInputValue | undefined): dateRangeInputValue is DateRangeInputValue {
+    private static isValidDateRangeInputValue(dateRangeInputValue: DateRangeInputValue | undefined): dateRangeInputValue is DateRangeInputValue {
         return !!dateRangeInputValue && Array.isArray(dateRangeInputValue) && dateRangeInputValue.length === 2;
     }
 
