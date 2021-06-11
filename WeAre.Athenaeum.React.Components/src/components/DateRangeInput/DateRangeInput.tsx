@@ -23,6 +23,8 @@ interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
     expanded?: boolean;
     sameDay?: boolean;
     onChange?: (value: DateRangeInputValue) => Promise<void>
+    minDate?: Date;
+    maxDate?: Date;
 }
 
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {}
@@ -68,10 +70,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return [null, null]
         }
 
-        const [start, end] = this.props.value;
+        const [start, end]: [Date, Date] = this.props.value;
 
-        const startDefaultValue = DateRangeInput.startOfDayInUnix(start.getFullYear(), start.getMonth(), start.getDate());
-        const endDefaultValue = DateRangeInput.startOfDayInUnix(end.getFullYear(), end.getMonth(), end.getDate());
+        const startDefaultValue: number = DateRangeInput.startOfDayInUnix(start.getFullYear(), start.getMonth(), start.getDate());
+        const endDefaultValue: number = DateRangeInput.startOfDayInUnix(end.getFullYear(), end.getMonth(), end.getDate());
         return [{unixTime: startDefaultValue}, {unixTime: endDefaultValue}];
     }
 
@@ -147,7 +149,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
     
     private async onDayGridClick(dayGridValue: DayGridValue): Promise<void> {
-
+        if (this.isOutOfRange(dayGridValue)) {
+            return;
+        }
+        
         if (this.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
             this.lastClickedDayGrid = dayGridValue;
             await this.reRenderAsync();
@@ -249,6 +254,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
     
     private isDayGridInRange(dayGridValue: DayGridValue): boolean {
+        if (this.isOutOfRange(dayGridValue)) {
+            return false;
+        }
+        
         const isSmallerThanHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime < this.lastHoveredDayGrid.unixTime : false;
         const isBiggerThanLastHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime > this.lastHoveredDayGrid.unixTime : false;
 
@@ -270,6 +279,13 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return  false
     }
 
+    private isOutOfRange (dayGridValue: DayGridValue): boolean {
+        if (this.props.minDate && this.props.maxDate) return this.props.minDate.getTime() > dayGridValue.unixTime || this.props.maxDate.getTime() < dayGridValue.unixTime;
+        if (this.props.minDate) return this.props.minDate.getTime() > dayGridValue.unixTime;
+        if (this.props.maxDate) return this.props.maxDate.getTime() < dayGridValue.unixTime;
+        return false;
+    }
+    
     private async toggleDatePicker() {
         if (!this._inputRef.current) {
             return;
@@ -305,15 +321,17 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
     
     private renderDayGrid(gridDay: DayGridValue): JSX.Element {
-        const isSelectedStyle = this.isDayGridSelected(gridDay) && styles.isSelected || "";
+        const isOutOfRangeStyle = this.isOutOfRange(gridDay) ? styles.isOutOfRange : "";
 
+        const isSelectedStyle = this.isDayGridSelected(gridDay) && styles.isSelected || "";
+        
         const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
         
         const isInRangeAndSelectedStyle = (this.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
         
         const isInRangeAndNotSelectedStyle = (this.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
         
-        const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle);
+        const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle, isOutOfRangeStyle);
         
         const onClick: () => void = async () => await this.onDayGridClick(gridDay);
         
