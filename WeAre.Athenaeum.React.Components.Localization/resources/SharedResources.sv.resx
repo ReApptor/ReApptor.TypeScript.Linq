@@ -178,7 +178,7 @@
     <value>Bekräfta</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>SV: Close</value>
+    <value>Stäng</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>Gata</value>
