@@ -11,6 +11,7 @@ interface IHeaderCellProps<TItem = {}> {
     column: ColumnModel<TItem>;
     top: boolean;
     colSpanLeft: boolean;
+    hasHeaderGroups: boolean;
 }
 
 export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> implements IHeaderCell {
@@ -68,7 +69,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             verticalAlign = column.verticalAlign || verticalAlign;
             if (top) {
                 header = column.header;
-                rowSpan = 2;
+                rowSpan = (this.props.hasHeaderGroups) ? 2 : undefined;
             } else {
                 render = false;
             }

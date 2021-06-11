@@ -110,7 +110,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
         const gridContainerWidth: number = Math.round(this.containerWidth());
 
-        let gridWidth: number = Math.round(this.model.fullWidth());
+        const gridWidth: number = Math.round(this.model.fullWidth());
 
         const gridFullWidth: number = Math.round(this.model.fullWidth(false));
 
@@ -376,9 +376,9 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         await this.processResponsiveAsync();
     }
 
-    private renderHeader(column: ColumnModel<TItem>, top: boolean, colSpanLeft: boolean): React.ReactNode {
+    private renderHeader(column: ColumnModel<TItem>, hasHeaderGroups: boolean, top: boolean,  colSpanLeft: boolean): React.ReactNode {
         return (
-            <HeaderCell key={`grid_header_${column.index}_${top}`} column={column} top={top} colSpanLeft={colSpanLeft} />
+            <HeaderCell key={`grid_header_${column.index}_${top}`} column={column} hasHeaderGroups={hasHeaderGroups} top={top} colSpanLeft={colSpanLeft} />
         )
     }
 
@@ -424,6 +424,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             ? model.columns.where(item => item.collapsed)
             : [];
         const responsive: boolean = (collapsedColumns.length > 0);
+        const hasHeaderGroups: boolean = (visible) && (columns.some(column => !!column.group));
 
         return (
             <React.Fragment>
@@ -446,12 +447,17 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                             {
                                                 <React.Fragment>
                                                     <tr>
-                                                        {(model.checkable) && (<CheckHeaderCell model={model} colSpanLeft={responsive} />)}
-                                                        {columns.map((column, index) => this.renderHeader(column, true, (responsive) && (index == 0)))}
+                                                        {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
+                                                        {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0)))}
                                                     </tr>
-                                                    <tr>
-                                                        {columns.map((column, index) => this.renderHeader(column, false, (responsive) && (index == 0)))}
-                                                    </tr>
+                                                    {
+                                                        (hasHeaderGroups) &&
+                                                        (
+                                                            <tr>
+                                                                {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0)))}
+                                                            </tr>
+                                                        )
+                                                    }
                                                 </React.Fragment>
                                             }
                                             </thead>
