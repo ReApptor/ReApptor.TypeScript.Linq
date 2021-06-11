@@ -133,7 +133,7 @@
     <value>NB: Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>NB: Close</value>
+    <value>Lukke</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
     <value>NB: Page help</value>
