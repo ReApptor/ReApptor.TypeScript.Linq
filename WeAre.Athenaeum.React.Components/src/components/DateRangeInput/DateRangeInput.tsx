@@ -72,8 +72,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const [start, end]: [Date, Date] = this.props.value;
 
-        const startDefaultValue: number = DateRangeInput.startOfDayInUnix(start.getFullYear(), start.getMonth(), start.getDate());
-        const endDefaultValue: number = DateRangeInput.startOfDayInUnix(end.getFullYear(), end.getMonth(), end.getDate());
+        const startDefaultValue: number = DateRangeInput.getStartOfDay(start).getTime();
+        
+        const endDefaultValue: number = DateRangeInput.getStartOfDay(end).getTime();
+        
         return [{unixTime: startDefaultValue}, {unixTime: endDefaultValue}];
     }
 
@@ -102,7 +104,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             const id = `${this.id}_day_intro_${index}`;
             const day = index + 1;
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, month, day),
+                unixTime: DateRangeInput.getStartOfDay(new Date(year, month, day)).getTime(),
                 id
             }
         });
@@ -112,7 +114,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             const day = lastDayOfPreviousMonth - index;
             
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, previousMonth, day),
+                unixTime: DateRangeInput.getStartOfDay(new Date(year, previousMonth, day)).getTime(),
                 id
             }
         }).reverse();
@@ -122,7 +124,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             const day = firstDayOfNextMonth + index;
             
             return  {
-                unixTime: DateRangeInput.startOfDayInUnix(year, nextMonth, day),
+                unixTime: DateRangeInput.getStartOfDay(new Date(year, nextMonth, day)).getTime(),
                 id
             }
         });
@@ -280,9 +282,14 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private isOutOfRange (dayGridValue: DayGridValue): boolean {
-        if (this.props.minDate && this.props.maxDate) return this.props.minDate.getTime() > dayGridValue.unixTime || this.props.maxDate.getTime() < dayGridValue.unixTime;
-        if (this.props.minDate) return this.props.minDate.getTime() > dayGridValue.unixTime;
-        if (this.props.maxDate) return this.props.maxDate.getTime() < dayGridValue.unixTime;
+        const minDateUnixTime = this.props.minDate ? DateRangeInput.getStartOfDay(this.props.minDate).getTime() : null;
+        const maxDateUnixTime = this.props.maxDate ? DateRangeInput.getStartOfDay(this.props.maxDate).getTime() : null;
+        
+        if (minDateUnixTime && maxDateUnixTime) {
+            return minDateUnixTime > dayGridValue.unixTime || maxDateUnixTime < dayGridValue.unixTime;
+        }
+        if (minDateUnixTime) return minDateUnixTime > dayGridValue.unixTime;
+        if (maxDateUnixTime) return maxDateUnixTime < dayGridValue.unixTime;
         return false;
     }
     
@@ -410,8 +417,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return new Date(year, month + 1, 0).getDate();
     }
 
-    private static startOfDayInUnix (year: number, month: number, day: number): number {
-        return new Date(year, month, day, 0, 0, 0, 0).getTime();
+    private static getStartOfDay (date: Date): Date {
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
     }
 
     private static getDayOfMonth (unixTime: number): number {
@@ -424,6 +431,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
     private static todayInUnixTime(): number {
         const now = new Date();
-        return DateRangeInput.startOfDayInUnix(now.getFullYear(), now.getMonth(), now.getDate())
+        return DateRangeInput.getStartOfDay(now).getTime();
     }
 }
