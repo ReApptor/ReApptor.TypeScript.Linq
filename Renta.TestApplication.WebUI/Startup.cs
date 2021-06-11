@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Renta.TestApplication.Common.Configuration;
 using Renta.TestApplication.WebUI.Server.Providers;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Filters;

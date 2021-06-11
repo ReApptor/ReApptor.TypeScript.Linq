@@ -1,10 +1,11 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
 import {ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
+import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
-    bePagination: boolean
+    bePagination: boolean;
+    responsive: boolean;
 }
 
 enum GridEnum {
@@ -40,7 +41,8 @@ class GridItem {
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     state: IGridTestsState = {
-        bePagination: false
+        bePagination: false,
+        responsive: false
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -54,7 +56,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             minWidth: 40,
             noWrap: true,
-            className: "grey"
+            className: "grey",
+            actions: [
+                {
+                    type: ColumnActionType.Details,
+                    callback: async (cell) => await this.toggleDetailsAsync(cell)
+                } as ColumnActionDefinition
+            ]
         } as ColumnDefinition,
         {
             group: "Identifiers",
@@ -121,7 +129,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             type: ColumnType.Address,
             sorting: true,
             noWrap: true,
-            minWidth: "20rem",
+            minWidth: "10rem",
             //responsivePriority: -1,
             settings: {
                 locationPicker: true
@@ -148,6 +156,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             
         } as ColumnDefinition
     ];
+
+    private async toggleDetailsAsync(cell: CellModel<GridItem>): Promise<void> {
+        await cell.row.toggleAsync();
+    }
 
     private getEnumItems(): SelectListItem[] {
         return [
@@ -190,7 +202,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this._items!;
     }
 
-    private async fetchDataAsync(sender: Grid<GridItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
+    private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
         if (this.state.bePagination) {
 
             const items: GridItem[] = (sortColumnName)
@@ -202,6 +214,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         }
 
         return this.items;
+    }
+
+    private async fetchInnerDataAsync(): Promise<GridItem[]> {
+        return this.items.take(10);
     }
 
     private initCell(cell: CellModel<any>): void {
@@ -220,6 +236,19 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         console.log(selectedAction)
     }
 
+    public renderDetailsContent() {
+        return (
+            <div>
+                <Grid columns={this._columns}
+                      minWidth="auto"
+                      hovering={GridHoveringType.Row}
+                      odd={GridOddType.None}
+                      fetchData={() => this.fetchInnerDataAsync()}
+                />
+            </div>
+        );
+    }
+
     public render(): React.ReactNode {
 
         return (
@@ -227,20 +256,28 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
                 <Form>
 
-                    <Checkbox label="BE pagination"
-                              inline
+                    <Checkbox inline
+                              label="BE pagination"
                               value={this.state.bePagination}
-                              onChange={async (sender, value) => await this.setState({ bePagination:value })}
+                              onChange={async (sender, value) => await this.setState({ bePagination: value })}
+                    />
+
+                    <Checkbox inline
+                              label="Responsive"
+                              value={this.state.responsive}
+                              onChange={async (sender, value) => await this.setState({ responsive: value })}
                     />
 
                 </Form>
 
-                <Grid ref={this._gridRef} responsive
+                <Grid ref={this._gridRef}
+                      responsive={this.state.responsive}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.Row}
-                      fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(sender, pageNumber, pageSize, sortColumnName, sortDirection)}
+                      renderDetails={() => this.renderDetailsContent()}
+                      fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(pageNumber, pageSize, sortColumnName, sortDirection)}
                 />
 
             </React.Fragment>

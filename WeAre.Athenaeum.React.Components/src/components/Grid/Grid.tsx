@@ -349,10 +349,6 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     }
 
     public async componentWillReceiveProps(nextProps: IGridProps<TItem>): Promise<void> {
-        
-        await super.componentWillReceiveProps(nextProps);
-
-        await this.processResponsiveAsync();
 
         const newData: boolean = (this.props.data !== nextProps.data);
         if (newData) {
@@ -361,13 +357,16 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         }
         
         const newReadonly: boolean = (this.props.readonly !== nextProps.readonly);
+        const newResponsive: boolean = (this.props.responsive !== nextProps.responsive);
         const newLanguage: boolean = (this._language !== GridLocalizer.language);
 
         await super.componentWillReceiveProps(nextProps);
 
-        if ((newReadonly) || (newLanguage)) {
+        if ((newReadonly) || (newLanguage) || (newResponsive)) {
             await this.buildModelAsync();
         }
+
+        await this.processResponsiveAsync();
     }
 
     public async componentDidMount(): Promise<void> {

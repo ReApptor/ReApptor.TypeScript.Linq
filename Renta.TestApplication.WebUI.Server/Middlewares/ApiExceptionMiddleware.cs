@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Renta.TestApplication.Common.Configuration;
 using WeAre.Athenaeum.TemplateApp.Common;
 using WeAre.Athenaeum.TemplateApp.Common.Configuration;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
