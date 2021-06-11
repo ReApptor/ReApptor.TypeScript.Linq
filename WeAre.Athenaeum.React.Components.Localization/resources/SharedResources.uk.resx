@@ -297,7 +297,7 @@
     <value>UK: Preview is not supported for this type of file, but you can download it instead</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>UK: Download</value>
+    <value>Завантажити</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>UK: Contact information</value>
@@ -310,5 +310,23 @@
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
     <value>Поштовий індекс</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>UK: Document file is too big</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>UK: Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>UK: Text is too short</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>UK: Value must be in range {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>UK: {0} is required</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>UK: Total size of documents is too big</value>
   </data>
 </root>
