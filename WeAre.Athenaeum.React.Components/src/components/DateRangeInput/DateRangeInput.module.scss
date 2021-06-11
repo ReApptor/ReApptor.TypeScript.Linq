@@ -86,6 +86,10 @@ $verticalPadding: 0.5rem;
   .isInRange {
     background-color: rgba($orange-hover, 0.5);
   }
+  
+  .isOutOfRange {
+    color: rgba(0,0,0,0.1);
+  }
 
   .isInRangeAndNotSelected {
     background-color: rgba($orange-hover, 0.1);
