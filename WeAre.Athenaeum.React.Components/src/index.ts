@@ -146,6 +146,7 @@ import Panel, {PanelCollapseType} from "./components/Panel/Panel";
 import ImageInput from "./components/ImageInput/ImageInput";
 import ImageModal from "./components/ImageModal/ImageModal";
 import Accordion, {IAccordionProps, TogglerPosition} from "./components/Accordion/Accordion";
+import FooterLocalizer from './components/Footer/FooterLocalizer';
 
 export { AddressHelper };
 export type { GoogleApiResult, IGoogleApiSettings };
@@ -172,7 +173,10 @@ export type { DocumentPreviewCallback };
 
 export { Footer };
 export type { IFooterProps, IFooterLink };
+export { FooterLocalizer }
+
 export { Form };
+
 export { DropdownWidget };
 export {
     GridModel,

@@ -273,7 +273,7 @@
     <value>UK: one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>UK: one non alphanumeric character</value>
+    <value>UK: one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
     <value>UK: Passwords don't match</value>
@@ -297,7 +297,7 @@
     <value>UK: Preview is not supported for this type of file, but you can download it instead</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>UK: Download</value>
+    <value>Завантажити</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>UK: Contact information</value>
@@ -310,5 +310,59 @@
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
     <value>Поштовий індекс</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>UK: Document file is too big</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>UK: Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>UK: Text is too short</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>UK: Value must be in range {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>UK: {0} is required</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>UK: Total size of documents is too big</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>UK: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>UK: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>UK: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>UK: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>UK: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>UK: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>UK: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>UK: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>UK: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>UK: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>UK: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>UK: September</value>
   </data>
 </root>

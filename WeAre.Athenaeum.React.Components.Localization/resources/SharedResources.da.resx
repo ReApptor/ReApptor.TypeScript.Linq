@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -121,7 +121,7 @@
     <value>DA: {0} selected</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>DA: Loading...</value>
+    <value>Indlæser...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>DA: Clear</value>
@@ -133,7 +133,7 @@
     <value>DA: Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>DA: Close</value>
+    <value>Luk</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
     <value>DA: Page help</value>
@@ -151,31 +151,31 @@
     <value>DA: Go to next step</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>DA: Are you sure?</value>
+    <value>Er du sikker?</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>DA: Confirm</value>
+    <value>Bekræft</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>DA: Close</value>
+    <value>Luk</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>DA: Please leave a comment</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
-    <value>DA: Address</value>
+    <value>Adresse</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
     <value>DA: Street</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>DA: City</value>
+    <value>By</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>DA: Postal code</value>
+    <value>Postnummer</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>DA: Drag'n'drop file here, or click to select</value>
+    <value>Placer filen her, eller vælg ved at klikke</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>DA: File is readonly</value>
@@ -184,7 +184,7 @@
     <value>DA: Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>DA: Choose file</value>
+    <value>Vælg fil</value>
   </data>
   <data name="Alert" xml:space="preserve">
     <value />
@@ -223,7 +223,7 @@
     <value>DA: No data</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>DA: Filter results</value>
+    <value>Filtrer resultaterne</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
     <value>DA: Start typing to get results</value>
@@ -379,22 +379,22 @@
     <value>DA: one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>DA: one non alphanumeric character</value>
+    <value>DA: one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>DA: Passwords don't match</value>
+    <value>Adgangskoderne matcher ikke</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>DA: Current password</value>
+    <value>Nuværende adgangskode</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>DA: Password</value>
+    <value>Adgangskode</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
     <value>DA: Confirm password</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>DA: Save</value>
+    <value>Gem</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
     <value>DA: Document type is not supported, choose file with extension {0}</value>
@@ -409,15 +409,69 @@
     <value>DA: Download</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
-    <value>DA: Contact information</value>
+    <value>Kontaktinformation</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
     <value>DA: Street</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
-    <value>DA: City</value>
+    <value>By</value>
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
-    <value>DA: Postal code</value>
+    <value>Postnummer</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>DA: Document file is too big</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>DA: Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="BaseInput.Validators.Length" xml:space="preserve">
+    <value>DA: Text is too short</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>DA: Value must be in range {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.Required" xml:space="preserve">
+    <value>DA: {0} is required</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>DA: Total size of documents is too big</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>DA: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>DA: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>DA: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>DA: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>DA: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>DA: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>DA: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>DA: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>DA: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>DA: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>DA: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>DA: September</value>
   </data>
 </root>

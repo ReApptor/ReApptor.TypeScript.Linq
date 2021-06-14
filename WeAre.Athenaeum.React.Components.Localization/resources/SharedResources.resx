@@ -433,7 +433,7 @@
     <value>one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>one non alphanumeric character</value>
+    <value>one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
     <value>Passwords don't match</value>
