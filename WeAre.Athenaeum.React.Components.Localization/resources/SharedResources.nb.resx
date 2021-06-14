@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>NB: {0} selected</value>
+    <value>{0} valgt</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>NB: Loading...</value>
+    <value>Loading...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>NB: Clear</value>
@@ -133,7 +133,7 @@
     <value>NB: Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>NB: Close</value>
+    <value>Lukke</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
     <value>NB: Page help</value>
@@ -151,13 +151,13 @@
     <value>NB: Go to next step</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
-    <value>NB: Are you sure?</value>
+    <value>Er du sikker?</value>
   </data>
   <data name="ConfirmationDialog.ConfirmButton" xml:space="preserve">
-    <value>NB: Confirm</value>
+    <value>Bekreft</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>NB: Close</value>
+    <value>Stäng</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>NB: Please leave a comment</value>
@@ -169,13 +169,13 @@
     <value>NB: Street</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>NB: City</value>
+    <value>By</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>NB: Postal code</value>
+    <value>Postnummer</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>NB: Drag'n'drop file here, or click to select</value>
+    <value>Dra og drop filen hit, eller klikk for å velge</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
     <value>NB: File is readonly</value>
@@ -184,7 +184,7 @@
     <value>NB: Preview</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>NB: Choose file</value>
+    <value>Velg fil</value>
   </data>
   <data name="Alert" xml:space="preserve">
     <value />
@@ -196,7 +196,7 @@
     <value />
   </data>
   <data name="Footer.Frontpage" xml:space="preserve">
-    <value>NB: Frontpage</value>
+    <value>Hjemmeside</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value />
@@ -217,22 +217,22 @@
     <value>NB: Set location</value>
   </data>
   <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>NB: No items found</value>
+    <value>Ingen objekter funnet</value>
   </data>
   <data name="Dropdown.NoData" xml:space="preserve">
-    <value>NB: No data</value>
+    <value>Ingen data</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>NB: Filter results</value>
+    <value>Filtrer resultater</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>NB: Start typing to get results</value>
+    <value>Begynn å skrive for å få resultater</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
     <value>NB: Add</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>NB: Nothing is selected</value>
+    <value>Ingenting er valgt</value>
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
     <value>NB: at least 8 characters long</value>
@@ -385,22 +385,22 @@
     <value>NB: one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>NB: one non alphanumeric character</value>
+    <value>NB: one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>NB: Passwords don't match</value>
+    <value>Passord er ulike</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>NB: Current password</value>
+    <value>Nåverende passord</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>NB: Password</value>
+    <value>Passord</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>NB: Confirm password</value>
+    <value>Bekreft passord</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>NB: Save</value>
+    <value>Lagre</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
     <value>NB: Document type is not supported, choose file with extension {0}</value>
@@ -415,15 +415,63 @@
     <value>NB: Download</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
-    <value>NB: Contact information</value>
+    <value>Kontakt informasjon</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
     <value>NB: Street</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
-    <value>NB: City</value>
+    <value>By</value>
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
-    <value>NB: Postal code</value>
+    <value>Postnummer</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
+    <value>NB: Document file is too big</value>
+  </data>
+  <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
+    <value>NB: Document type is not supported, choose file with extension {0}</value>
+  </data>
+  <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
+    <value>NB: Value must be in range {0} - {1}</value>
+  </data>
+  <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
+    <value>NB: Total size of documents is too big</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>NB: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>NB: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>NB: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>NB: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>NB: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>NB: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>NB: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>NB: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>NB: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>NB: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>NB: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>NB: September</value>
   </data>
 </root>

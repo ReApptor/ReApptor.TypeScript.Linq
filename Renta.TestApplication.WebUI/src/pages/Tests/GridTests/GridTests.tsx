@@ -6,6 +6,7 @@ import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, Co
 export interface IGridTestsState {
     bePagination: boolean;
     responsive: boolean;
+    headerGroups: boolean;
 }
 
 enum GridEnum {
@@ -42,7 +43,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     state: IGridTestsState = {
         bePagination: false,
-        responsive: false
+        responsive: false,
+        headerGroups: true,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -50,7 +52,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     private readonly _columns: ColumnDefinition[] = [
         {
-            group: "Identifiers",
+            group: this.state.headerGroups ? "Identifiers" : undefined,
             header: "#",
             accessor: "code",
             sorting: true,
@@ -65,7 +67,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             ]
         } as ColumnDefinition,
         {
-            group: "Identifiers",
+            group: this.state.headerGroups ? "Identifiers" : undefined,
             header: "Name",
             accessor: "name",
             sorting: true,
@@ -116,7 +118,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             init: (cell) => this.initCell(cell),
             settings: {
                 infoAccessor: "name",
-                infoTransform:  (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
+                infoTransform: (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
                 required: true,
                 requiredType: DropdownRequiredType.AutoSelect,
                 nothingSelectedText: "-",
@@ -135,14 +137,14 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                 locationPicker: true
             }
         } as ColumnDefinition,
-           {
-            actions:[
+        {
+            actions: [
                 {
                     name: "cancel",
                     title: "save",
                     type: ActionType.Blue,
                     actions: ["test1", "test2"],
-                    callback:(cell, action: any, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
+                    callback: (cell, action: any, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
                 },
                 {
                     name: "save",
@@ -150,10 +152,28 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     icon: "far save",
                     type: ActionType.Create,
                     actions: ["test11", "test22"],
-                    callback:(cell, action: string, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
+                    callback: (cell, action: string, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
                 }
             ]
-            
+
+        } as ColumnDefinition
+    ];
+
+    private readonly _innerColumns: ColumnDefinition[] = [
+        {
+            header: "#",
+            accessor: "code",
+            sorting: true,
+            minWidth: 40,
+            noWrap: true,
+            className: "grey"
+        } as ColumnDefinition,
+        {
+            header: "Name",
+            accessor: "name",
+            sorting: true,
+            minWidth: 90,
+            noWrap: true
         } as ColumnDefinition
     ];
 
@@ -172,10 +192,14 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     private getEnumText(value: GridEnum): string {
         switch (value) {
-            case GridEnum.First: return "First";
-            case GridEnum.Second: return "Second";
-            case GridEnum.Third: return "Third";
-            case GridEnum.Forth: return "Forth";
+            case GridEnum.First:
+                return "First";
+            case GridEnum.Second:
+                return "Second";
+            case GridEnum.Third:
+                return "Third";
+            case GridEnum.Forth:
+                return "Forth";
         }
         return "GridEnum:" + value;
     }
@@ -200,6 +224,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             }
         }
         return this._items!;
+    }
+
+    private get grid(): Grid<GridItem> {
+        return this._gridRef.current!;
     }
 
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
@@ -239,7 +267,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     public renderDetailsContent() {
         return (
             <div>
-                <Grid columns={this._columns}
+                <Grid columns={this._innerColumns}
                       minWidth="auto"
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.None}
@@ -259,14 +287,20 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     <Checkbox inline
                               label="BE pagination"
                               value={this.state.bePagination}
-                              onChange={async (sender, value) => await this.setState({ bePagination: value })}
+                              onChange={async (sender, value) => await this.setState({bePagination: value})}
                     />
 
                     <Checkbox inline
                               label="Responsive"
                               value={this.state.responsive}
-                              onChange={async (sender, value) => await this.setState({ responsive: value })}
+                              onChange={async (sender, value) => await this.setState({responsive: value})}
                     />
+
+                    {/*<Checkbox inline*/}
+                    {/*          label="Header groups"*/}
+                    {/*          value={this.state.headerGroups}*/}
+                    {/*          onChange={async (sender, value) => { await this.setState({ headerGroups: value }); }}*/}
+                    {/*/>*/}
 
                 </Form>
 

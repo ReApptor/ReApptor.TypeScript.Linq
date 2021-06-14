@@ -20,6 +20,11 @@
           width: auto;
           text-align: left;
           border-left: none;
+          
+          > span {
+            display: inline-block;
+            width: 100%;
+          }
         }
 
         td:last-child {
