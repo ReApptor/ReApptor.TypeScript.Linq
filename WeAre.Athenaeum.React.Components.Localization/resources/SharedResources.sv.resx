@@ -312,4 +312,40 @@
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>SV: Total size of documents is too big</value>
   </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>SV: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>SV: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>SV: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>SV: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>SV: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>SV: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>SV: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>SV: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>SV: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>SV: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>SV: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>SV: September</value>
+  </data>
 </root>

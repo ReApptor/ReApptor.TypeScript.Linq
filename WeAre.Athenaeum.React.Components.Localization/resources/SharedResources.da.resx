@@ -133,7 +133,7 @@
     <value>DA: Save changes</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>DA: Close</value>
+    <value>Luk</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
     <value>DA: Page help</value>
@@ -169,10 +169,10 @@
     <value>DA: Street</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>DA: City</value>
+    <value>By</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>DA: Postal code</value>
+    <value>Postnummer</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Placer filen her, eller vælg ved at klikke</value>
@@ -379,22 +379,22 @@
     <value>DA: one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>DA: one non alphanumeric character</value>
+    <value>DA: one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>DA: Passwords don't match</value>
+    <value>Adgangskoderne matcher ikke</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>DA: Current password</value>
+    <value>Nuværende adgangskode</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>DA: Password</value>
+    <value>Adgangskode</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
     <value>DA: Confirm password</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>DA: Save</value>
+    <value>Gem</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
     <value>DA: Document type is not supported, choose file with extension {0}</value>
@@ -437,5 +437,41 @@
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>DA: Total size of documents is too big</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>DA: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>DA: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>DA: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>DA: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>DA: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>DA: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>DA: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>DA: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>DA: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>DA: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>DA: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>DA: September</value>
   </data>
 </root>

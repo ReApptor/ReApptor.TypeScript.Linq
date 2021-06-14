@@ -24,8 +24,8 @@ class SignatureWidgetLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.clearLanguageItemName, { language: `en`, value: `Clear` }, { language: `uk`, value: `Очистити` }, { language: `sv`, value: `Töm` }, { language: `ru`, value: `Очистить` }, { language: `pl`, value: `PL: Clear` }, { language: `nb`, value: `NB: Clear` }, { language: `fi`, value: `Tyhjennä` }, { language: `da`, value: `DA: Clear` },);
-        this.set(this.doneLanguageItemName, { language: `en`, value: `Done` }, { language: `uk`, value: `Завершити` }, { language: `sv`, value: `Färdig` }, { language: `ru`, value: `Завершить` }, { language: `pl`, value: `PL: Done` }, { language: `nb`, value: `NB: Done` }, { language: `fi`, value: `Valmis` }, { language: `da`, value: `DA: Done` },);
+        this.set(this.clearLanguageItemName, { language: `en`, value: `Clear` }, { language: `uk`, value: `Очистити` }, { language: `sv`, value: `Töm` }, { language: `ru`, value: `Очистить` }, { language: `pl`, value: `Wyczyść` }, { language: `nb`, value: `NB: Clear` }, { language: `fi`, value: `Tyhjennä` }, { language: `da`, value: `DA: Clear` },);
+        this.set(this.doneLanguageItemName, { language: `en`, value: `Done` }, { language: `uk`, value: `Завершити` }, { language: `sv`, value: `Färdig` }, { language: `ru`, value: `Завершить` }, { language: `pl`, value: `Gotowe` }, { language: `nb`, value: `NB: Done` }, { language: `fi`, value: `Valmis` }, { language: `da`, value: `DA: Done` },);
     }
 
     /**
