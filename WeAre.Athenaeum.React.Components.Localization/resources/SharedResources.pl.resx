@@ -139,31 +139,31 @@
     <value>PL: Add</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>PL: Clear</value>
+    <value>Wyczyść</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>PL: Done</value>
+    <value>Gotowe</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>PL: Save changes</value>
+    <value>Zachowaj zmiany</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
-    <value>PL: Close</value>
+    <value>Zamknij</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
     <value>PL: Page help</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>PL: Previous</value>
+    <value>Poprzedni</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>PL: Return to previous step</value>
+    <value>Powrót do poprzedniego kroku</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>PL: Next</value>
+    <value>Następny</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>PL: Go to next step</value>
+    <value>Następny krok</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
     <value>PL: Loading...</value>
@@ -181,7 +181,7 @@
     <value>Dodaj komentarz</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>PL: Street</value>
+    <value>Ulica</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
     <value>Adres</value>
@@ -190,7 +190,7 @@
     <value>PL: City</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>PL: Postal code</value>
+    <value>Kod pocztowy</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Przeciągnij pliki tutaj i upuść albo kliknij aby wybrać</value>
@@ -244,31 +244,31 @@
     <value>PL: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
-    <value>PL: one uppercase ('A'-'Z') character</value>
+    <value>jedną dużą literę (A-Z)</value>
   </data>
   <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
-    <value>PL: one lowercase ('a'-'z') character</value>
+    <value>jedną małą literę (a-z)</value>
   </data>
   <data name="PasswordForm.HelpText.Number" xml:space="preserve">
-    <value>PL: one number</value>
+    <value>jedną cyfrę</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>PL: one non alphanumeric character</value>
+    <value>jeden znak specjalny</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>PL: Passwords don't match</value>
+    <value>Hasła niejednakowe</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>PL: Current password</value>
+    <value>Aktualne hasło</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>PL: Password</value>
+    <value>Hasło</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>PL: Confirm password</value>
+    <value>Potwiedż hasło</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>PL: Save</value>
+    <value>Zapisz</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
     <value>Format dokumentu nieprawidłowy. Wybierz dokument {0}</value>
@@ -311,5 +311,41 @@
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>Rozmiar pliku za duży</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>PL: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>PL: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>PL: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>PL: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>PL: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>PL: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>PL: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>PL: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>PL: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>PL: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>PL: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>PL: September</value>
   </data>
 </root>

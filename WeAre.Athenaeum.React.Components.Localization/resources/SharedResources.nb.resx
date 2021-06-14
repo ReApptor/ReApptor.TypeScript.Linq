@@ -169,10 +169,10 @@
     <value>NB: Street</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>NB: City</value>
+    <value>By</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>NB: Postal code</value>
+    <value>Postnummer</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Dra og drop filen hit, eller klikk for å velge</value>
@@ -385,22 +385,22 @@
     <value>NB: one number</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>NB: one non alphanumeric character</value>
+    <value>NB: one special character</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>NB: Passwords don't match</value>
+    <value>Passord er ulike</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>NB: Current password</value>
+    <value>Nåverende passord</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>NB: Password</value>
+    <value>Passord</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>NB: Confirm password</value>
+    <value>Bekreft passord</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>NB: Save</value>
+    <value>Lagre</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
     <value>NB: Document type is not supported, choose file with extension {0}</value>
@@ -437,5 +437,41 @@
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>NB: Total size of documents is too big</value>
+  </data>
+  <data name="Month.April" xml:space="preserve">
+    <value>NB: April</value>
+  </data>
+  <data name="Month.August" xml:space="preserve">
+    <value>NB: August</value>
+  </data>
+  <data name="Month.December" xml:space="preserve">
+    <value>NB: December</value>
+  </data>
+  <data name="Month.February" xml:space="preserve">
+    <value>NB: February</value>
+  </data>
+  <data name="Month.January" xml:space="preserve">
+    <value>NB: January</value>
+  </data>
+  <data name="Month.July" xml:space="preserve">
+    <value>NB: July</value>
+  </data>
+  <data name="Month.June" xml:space="preserve">
+    <value>NB: June</value>
+  </data>
+  <data name="Month.March" xml:space="preserve">
+    <value>NB: March</value>
+  </data>
+  <data name="Month.May" xml:space="preserve">
+    <value>NB: May</value>
+  </data>
+  <data name="Month.November" xml:space="preserve">
+    <value>NB: November</value>
+  </data>
+  <data name="Month.October" xml:space="preserve">
+    <value>NB: October</value>
+  </data>
+  <data name="Month.September" xml:space="preserve">
+    <value>NB: September</value>
   </data>
 </root>
