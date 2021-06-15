@@ -248,17 +248,18 @@ namespace WeAre.Athenaeum.Toolkit
             RSACryptoServiceProvider serviceProvider;
             if (!usePrivateKey)
             {
-                serviceProvider = (RSACryptoServiceProvider)certificate.PublicKey.Key;
+                serviceProvider = (RSACryptoServiceProvider) certificate.PublicKey.Key;
                 byte[] encryptedData = serviceProvider.Encrypt(data, false);
                 return encryptedData;
             }
 
             if (!certificate.HasPrivateKey)
                 throw new ArgumentOutOfRangeException(nameof(certificate), "Certificate does not contain a private key.");
-            if ((usePrivateKey) && (!certificate.IsExportable()))
+            if (!certificate.IsExportable())
                 throw new ArgumentOutOfRangeException(nameof(certificate), "Private key should be exportable to encrypt.");
 
-            serviceProvider = (RSACryptoServiceProvider)certificate.PrivateKey;
+            serviceProvider = (RSACryptoServiceProvider) certificate.PrivateKey;
+            
             return PrivateEncryption(serviceProvider, data);
         }
 
