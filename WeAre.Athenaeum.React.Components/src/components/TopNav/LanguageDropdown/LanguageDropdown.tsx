@@ -11,7 +11,7 @@ import noFlag from './flags/no.png';
 import plFlag from './flags/pl.png';
 import svFlag from './flags/sv.png';
 
-let flags: any = {
+const flags: any = {
     de: deFlag,
     en: enFlag,
     fi: fiFlag,

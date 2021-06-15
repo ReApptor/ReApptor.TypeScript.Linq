@@ -17,6 +17,7 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     maxTotalSize?: number;
     fileTypes?: string[];
     removeConfirmation?: string;
+    placeholder?: string;
     
     onClickAsync?(sender: FileInput, value: FileModel): Promise<void>;
     
@@ -145,6 +146,12 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             ? this.props.fileTypes.join(",")
             : "";
     }
+    
+    private get placeholder(): string {
+        return (this.readonly)
+            ? FileInputLocalizer.readonly
+            : this.props.placeholder || FileInputLocalizer.dragAndDrop;
+    }
 
     private renderPreview(): React.ReactNode {
         let imagePreviewStyle = {};
@@ -201,9 +208,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                             
                             <label htmlFor={this.getInputId()}>
                                 <span>
-                                    {
-                                        (this.readonly) ? FileInputLocalizer.readonly : FileInputLocalizer.dragAndDrop
-                                    }
+                                    { this.placeholder }
                                 </span>
                                 
                                 {
