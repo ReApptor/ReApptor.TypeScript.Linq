@@ -355,7 +355,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public render(): React.ReactNode {        
+    public render(): React.ReactNode {
+        console.log("Layout.render: links=", this.props.footerLinks);
         return (
             <div className={styles.layout}
                  onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}

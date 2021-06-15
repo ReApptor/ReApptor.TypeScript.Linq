@@ -56,7 +56,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
 
         await super.componentWillReceiveProps(nextProps);
 
-        console.log("Footer.componentWillReceiveProps: linksChanged=true");
+        console.log("Footer.componentWillReceiveProps: linksChanged=", linksChanged, " links=", nextProps.links);
 
         if (linksChanged) {
             
@@ -73,7 +73,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
     }
 
     public render(): React.ReactNode {
-        console.log("Footer.render:");
+        console.log("Footer.render: footerLinks=", this.links);
         return (
             <footer className={styles.footer}>
                 
