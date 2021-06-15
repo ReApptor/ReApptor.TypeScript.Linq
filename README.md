@@ -1,10 +1,16 @@
 ## How run Components development setup
 
 
-make sure to run `npm install` in `Renta.TestApplication.WebUI`
+Make sure to run `npm install` in `Renta.TestApplication.WebUI`
 
-after that open package.json in `Renta.TestApplication.WebUI` and run these commands once manually (because they will apear in Rider Configuration npm scripts):
+After that open `package.json` in `Renta.TestApplication.WebUI` and run these scripts once:
 
+```
+prebuild
+build
+```
+
+Then run and stop these scripts so they appear in Riders Run/Debug Configuration settings:
 
 ```
 watch:components
@@ -15,8 +21,7 @@ watch:toolkit
 watch:toolkit:back
 ```
 
-Stop these commands and create new Compound profile and add these to it plus Launch setting for `Renta.TestApplication.WebUI`
-
+Create a new Compound profile and add `Renta.TestApplication.WebUI` and the above "watch"-scripts to it. 
 
 
 ## Change Log
