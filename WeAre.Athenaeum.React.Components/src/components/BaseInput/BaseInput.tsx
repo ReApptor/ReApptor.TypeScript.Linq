@@ -9,7 +9,7 @@ import styles from "../Form/Form.module.scss";
 
 export type NullableCheckboxType = boolean | null;
 
-export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date, Date];
+export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date | null, Date | null];
 
 export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null;
 
@@ -68,7 +68,7 @@ export interface IValidatable<TInputValue extends BaseInputValue> {
 }
 
 export abstract class BaseValidator implements IValidator {
-    
+
     abstract validate(value: BaseInputValue): string | null;
 
     public static toString(value: BaseInputValue, format: TFormat | null = null): string | null {
@@ -97,7 +97,7 @@ export abstract class BaseValidator implements IValidator {
 }
 
 export abstract class BaseFileValidator implements IValidator {
-    
+
     abstract validate(value: BaseInputValue): string | null;
 
     public static getSize(file: FileModel | FileModel[] | null): number | null {
@@ -183,7 +183,7 @@ export class PhoneValidator extends BaseRegexValidator {
 }
 
 export class RequiredValidator extends BaseValidator {
-    
+
     public validate(value: BaseInputValue): string | null {
         if ((value != null) && (Array.isArray(value))) {
             return (value.length === 0) ? BaseInputLocalizer.validatorsRequired : null;
@@ -191,7 +191,7 @@ export class RequiredValidator extends BaseValidator {
         const str: string | null = BaseValidator.toString(value);
         if ((str == null) || (str.length === 0)) {
             return BaseInputLocalizer.validatorsRequired;
-        }        
+        }
         return null;
     }
 
@@ -255,9 +255,9 @@ export class FileSizeValidator extends BaseFileValidator {
         super();
         this.maxSize = maxSize;
     }
-    
+
     public validate(value: BaseInputValue): string | null {
-        
+
         if ((value != null) && (this.maxSize > 0)) {
             const files: FileModel[] = (value instanceof Array)
                 ? value as FileModel[]
@@ -296,9 +296,9 @@ export class FilesSizeValidator extends BaseFileValidator {
             const files: FileModel[] = (value instanceof Array)
                 ? value as FileModel[]
                 : [value as FileModel];
-            
+
             const totalSize: number = BaseFileValidator.getSize(files) || 0;
-            
+
             if (totalSize > this.maxSize) {
                 return BaseInputLocalizer.validatorsTotalSizeTooBig;
             }
@@ -361,10 +361,10 @@ export interface IInput extends IBaseComponent {
 
 export default abstract class BaseInput<TInputValue extends BaseInputValue, TProps extends IBaseInputProps<TInputValue>, TState extends IBaseInputState<TInputValue>>
     extends BaseComponent<TProps, TState> implements IInput, IValidatable<TInputValue>, IGlobalClick {
-    
+
     private _inputContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _liveValidatorRef: React.RefObject<LiveValidator> = React.createRef();
-    
+
     private async onInputContainerClickAsync(): Promise<void> {
         if (this.props.clickToEdit) {
             await this.showEditAsync();
@@ -386,16 +386,16 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     protected async onLabelClick(e: React.MouseEvent): Promise<void> {
     }
-    
+
     protected async onShowEditAsync(): Promise<void> {
     }
-    
+
     protected async onHideEditAsync(): Promise<void> {
     }
-    
+
     protected onValuePropsChanged(): void {
     }
-    
+
     protected parse(str: string): TInputValue {
         return (str as any) as TInputValue
     }
@@ -403,11 +403,11 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     protected getFormattedStr(): string {
         return Utility.formatValue(this.value, this.format);
     }
-    
+
     protected ignoreValueProps(): boolean {
         return (this.props.model != null);
     }
-    
+
     protected get format(): TFormat {
         return (this.props.format || "") as TFormat;
     }
@@ -426,11 +426,11 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const varProps = props as any;
         const defValue: TInputValue = (null as TInputValue);
         const model: IInputModel<TInputValue> = (props.model || { value: defValue }) as IInputModel<TInputValue>;
-        
+
         if (props.value != null) {
             model.value = props.value as TInputValue;
         }
-        
+
         const readonly: boolean = varProps.readonly || varProps.disabled || false;
 
         this.state = {
@@ -441,15 +441,15 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             readonly: readonly
         } as any as TState;
     }
-    
+
     public getName(): string {
         return (this.props.name as string | null || this.id);
     }
-    
+
     public getValue(): any {
         return this.value;
     }
-    
+
     public get inline(): boolean {
         return (!!this.props.inline);
     }
@@ -468,13 +468,13 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         }
         return (!this.state.validationError);
     }
-    
+
     public focus(): void {
         if (this.inputElement) {
             this.inputElement.focus();
         }
     }
-    
+
     public get noValidate(): boolean {
         return (!!this.props.noValidate || this.readonly);
     }
@@ -482,7 +482,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     public get readonly(): boolean {
         return this.state.readonly;
     }
-    
+
     public async setReadonlyAsync(value: boolean): Promise<void> {
         if (value != this.state.readonly) {
             await this.setState({ readonly: value })
@@ -495,17 +495,17 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     public async showEditAsync(select?: boolean): Promise<void> {
         await this.setEditAsync(true);
-        
+
         if (this.inputElement) {
-            
+
             this.inputElement.focus();
-            
+
             if (select) {
                 this.inputElement.select();
             }
         }
     }
-    
+
     public async onGlobalClick(e: React.SyntheticEvent<Element, Event>): Promise<void> {
         if (this.props.clickToEdit) {
             const target = e.target as Node;
@@ -519,10 +519,10 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
-        
+
         const varProps = this.props as any;
         const varNewProps = nextProps as any;
-        
+
         await super.componentWillReceiveProps(nextProps);
 
         if (this.isMounted) {
@@ -536,59 +536,59 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             if ((nextModel) && (nextModel.value !== model.value)) {
 
                 this.onValuePropsChanged();
-                
+
                 const value: TInputValue = (nextModel.value != null)
                     ? nextModel.value as TInputValue
                     : (null as TInputValue);
-                
+
                 await this.updateValueAsync(value, false);
-                
+
             } else if ((!this.ignoreValueProps()) && (value !== nextValue)) {
 
                 this.onValuePropsChanged();
-                
+
                 const value: TInputValue = (nextValue != null)
                     ? nextValue as TInputValue
                     : (null as TInputValue);
 
                 await this.updateValueAsync(value, false);
-                
+
             } else if (resetValidator) {
                 await this.validateAsync();
             }
 
             if (newReadonly) {
                 const readonly: boolean = varNewProps.readonly || varNewProps.disabled || false;
-                
+
                 await this.setReadonlyAsync(readonly);
             }
         }
     }
 
     protected async valueChangeHandlerAsync(event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): Promise<void> {
-        
+
         const str: string = event.currentTarget.value;
 
         let value: TInputValue = this.parse(str);
 
         await this.updateValueAsync(value);
     }
-    
+
     protected async updateValueAsync(value: TInputValue, validate: boolean = true): Promise<void> {
         const state: IBaseInputState<TInputValue> = this.state;
-        
+
         const model: IInputModel<TInputValue> = state.model;
 
         if (model.value !== value) {
-            
+
             model.value = value;
-            
+
             if (validate) {
                 this.validate();
             } else {
                 state.validationError = null;
             }
-            
+
             if (this.isMounted) {
                 await this.setState(state);
             }
@@ -662,20 +662,20 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     protected getType(): string {
         return BaseInputType.Text;
     }
-    
+
     protected getContainerClassname(): string {
         return "";
     }
 
     public abstract renderInput(): React.ReactNode;
-    
+
     public renderValue(): React.ReactNode {
         const formattedStr: string = this.getFormattedStr();
         return (
             <span className={styles.value} title={this.props.title || formattedStr}>{formattedStr}</span>
         );
     }
-    
+
     public renderPrepend(): React.ReactNode {
         const prepend: string | React.ReactNode = (typeof this.props.prepend === "function")
             ? this.props.prepend(this)
@@ -687,7 +687,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             <div className="input-group-prepend">
                 {
                     (icon)
-                        ? (<i className={prepend as string} />) 
+                        ? (<i className={prepend as string} />)
                         : (<span className={this.css("input-group-text", styles.prepend)}>{prepend}</span>)
                 }
             </div>
@@ -714,7 +714,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     public render(): React.ReactNode {
         let inputBorderRadius: string = "";
-        
+
         if (this.props.prepend) {
             inputBorderRadius = styles.prepend;
         }
@@ -722,20 +722,20 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         if (this.props.append) {
             inputBorderRadius = styles.append;
         }
-        
+
         if (this.props.prepend && this.props.append) {
             inputBorderRadius = this.css(styles.append, styles.prepend)
         }
-        
+
         const inlineStyle: any = (this.inline) && ("d-flex flex-row align-items-center " + styles.inlineInputGroup);
-        
+
         return (
             <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassname(), this.props.className)} hidden={this.props.hidden}>
                 {
                     (this.props.label) &&
                     (
                         <div className={this.css(styles.label, "d-flex", "base-input-label", this.state.validationError && styles.validationError)}>
-                            
+
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
                                 {
@@ -744,34 +744,34 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                                         : ReactUtility.toMultiLines(this.props.label)
                                 }
                             </label>
-                            
+
                             {
-                                (this.props.required && !this.noValidate && !this.state.validationError) && 
+                                (this.props.required && !this.noValidate && !this.state.validationError) &&
                                 (
                                     <span className={styles.required}>*</span>
                                 )
                             }
-                            
+
                         </div>
                     )
                 }
-                
+
                 <div className="d-flex h-100">
-                
+
                     {
                         (this.props.prepend) && this.renderPrepend()
                     }
-                    
+
                     <div ref={this._inputContainerRef} className={this.css(styles.inputContainer, inputBorderRadius, this.state.validationError && styles.validationError)} onClick={async () => await this.onInputContainerClickAsync()}>
                         { (this.state.edit) ? this.renderInput() : this.renderValue() }
                     </div>
-    
+
                     {
                         (this.props.append) && this.renderAppend()
                     }
-                    
+
                 </div>
-                
+
                 {
                     (this.props.liveValidator && this.value) &&
                     (

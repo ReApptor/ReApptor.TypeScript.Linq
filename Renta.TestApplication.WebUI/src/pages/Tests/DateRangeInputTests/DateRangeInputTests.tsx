@@ -6,8 +6,8 @@ export interface IDateRangeInputTestsState {
     expanded: boolean;
     sameDay: boolean;
     clickToEdit: boolean;
-    start: Date;
-    end: Date;
+    start: Date | null;
+    end: Date | null;
     minDateActive: boolean;
     minDate: Date | null;
     maxDateActive: boolean;
@@ -27,7 +27,7 @@ export default class DateRangeInputTests extends BaseComponent {
         maxDateActive: false,
         maxDate: null
     };
-    
+
     public render(): React.ReactNode {
         return (
             <React.Fragment>
@@ -40,19 +40,19 @@ export default class DateRangeInputTests extends BaseComponent {
                     <Checkbox inline label="maxDate" value={this.state.maxDateActive} onChange={async (sender, maxDateActive) => await this.setState({maxDateActive, maxDate: maxDateActive ? this.state.maxDate : null})}/>
                     {(this.state.minDateActive) && (<DateInput label="minDate" value={this.state.minDate || undefined} onChange={async (minDate) => await this.setState({minDate})}/>)}
                     {(this.state.maxDateActive) && (<DateInput label="maxDate" value={this.state.maxDate || undefined} onChange={async (maxDate) => await this.setState({maxDate})}/>)}
-                    <div>start: {this.state.start.toDateString()}</div>
-                    <div>end: {this.state.end.toDateString()}</div>
-                    
+                    <div>start: {this.state.start?.toDateString()}</div>
+                    <div>end: {this.state.end?.toDateString()}</div>
+
                     <OneColumn className="pt-4">
-                        
+
                         <DateRangeInput
                             minDate={this.state.minDate || undefined}
                             maxDate={this.state.maxDate || undefined}
                             sameDay={this.state.sameDay}
                             expanded={this.state.expanded}
-                            clickToEdit={this.state.clickToEdit} 
+                            clickToEdit={this.state.clickToEdit}
                             value={[this.state.start, this.state.end]}
-                            onChange={async ([start, end]: [Date, Date])=>{await this.setState({start, end})}}
+                            onChange={async ([start, end]: [Date | null, Date | null]) => await this.setState({start, end})}
                         />
 
                     </OneColumn>
