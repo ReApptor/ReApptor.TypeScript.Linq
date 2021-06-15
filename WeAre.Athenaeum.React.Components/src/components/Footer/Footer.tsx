@@ -58,7 +58,6 @@ export default class Footer extends BaseComponent<IFooterProps> {
     }
 
     public render(): React.ReactNode {
-        console.log("Footer.render: footerLinks=", this.links);
         return (
             <footer className={styles.footer}>
                 

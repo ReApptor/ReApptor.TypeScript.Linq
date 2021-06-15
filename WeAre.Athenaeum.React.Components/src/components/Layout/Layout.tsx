@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {Utility, FileModel, ServiceProvider, HashCodeUtility} from "@weare/athenaeum-toolkit";
+import {Utility, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
 import {
     ch,
     WebApplicationType,
@@ -341,15 +341,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         if (this._alert) {
             await this.alertAsync(this._alert);
         }
-    }
-
-    public async componentWillReceiveProps(nextProps: ILayoutProps): Promise<void> {
-
-        //const linksChanged: boolean = (HashCodeUtility.getHashCode(nextProps.footerLinks) != HashCodeUtility.getHashCode(this.props.footerLinks));
-
-        //await super.componentWillReceiveProps(nextProps);
-
-        console.log("Layout.componentWillReceiveProps:");
     }
     
     public get applicationName(): string {
