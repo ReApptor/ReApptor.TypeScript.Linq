@@ -1,6 +1,5 @@
 import React from "react";
 import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
-
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
@@ -23,6 +22,7 @@ import CheckboxTests from "@/pages/Tests/CheckboxTests/CheckboxTests";
 import LinkWidgetTests from "@/pages/Tests/LinkWidgetTests/LinkWidgetTests";
 import DateInputTests from "@/pages/Tests/DateInputTests/DateInputTests";
 import DateRangeInputTests from "@/pages/Tests/DateRangeInputTests/DateRangeInputTests";
+import FileInputTests from "@/pages/Tests/FileInputTests/FileInputTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -121,6 +121,10 @@ export default class Tests extends AnonymousPage {
                         
                         <Tab id="AccordionTests" title="Accordion">
                             <AccordionTests />
+                        </Tab>
+
+                        <Tab id="FileInputTests" title="FileInput">
+                            <FileInputTests/>
                         </Tab>
                     
                     </TabContainer>

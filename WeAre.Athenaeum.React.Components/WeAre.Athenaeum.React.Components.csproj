@@ -81,6 +81,7 @@
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="coverage\**" />
+      <None Remove="package-lock.json" />
     </ItemGroup>
 
 </Project>
