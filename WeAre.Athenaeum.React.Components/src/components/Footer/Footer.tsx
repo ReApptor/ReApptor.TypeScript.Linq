@@ -4,6 +4,7 @@ import FooterLocalizer from "./FooterLocalizer";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
+import Comparator from "../../helpers/Comparator";
 
 export interface IFooterLink {
     href: string,
@@ -48,8 +49,22 @@ export default class Footer extends BaseComponent<IFooterProps> {
             <span className={styles.version}>{this.props.version}</span>
         );
     }
+    
+    public async componentWillReceiveProps(nextProps: IFooterProps): Promise<void> {
 
-    private renderLink(link: IFooterLink, index: number): React.ReactNode {
+        const linksChanged: boolean = (!Comparator.isEqual(nextProps.links, this.props.links));
+
+        await super.componentWillReceiveProps(nextProps);
+
+        console.log("Footer.componentWillReceiveProps: linksChanged=true");
+
+        if (linksChanged) {
+            
+            await this.reRenderAsync();
+        }
+    }
+
+    public renderLink(link: IFooterLink, index: number): React.ReactNode {
         return (
             <a key={index} href={link.href} rel="noreferrer" target="_blank">
                 {FooterLocalizer.get(link.label).toUpperCase()}
@@ -58,6 +73,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
     }
 
     public render(): React.ReactNode {
+        console.log("Footer.render:");
         return (
             <footer className={styles.footer}>
                 

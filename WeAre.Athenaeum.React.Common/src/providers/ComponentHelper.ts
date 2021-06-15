@@ -86,6 +86,8 @@ export default class ch {
 
                 const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
                 const newCountry: boolean = (context != null) && ((this._context == null) || (this._context.country != context.country));
+                
+                console.log("ch.setContextAsync: newLanguage=", newLanguage, " newCountry=", newCountry);
 
                 if ((newCountry) || (newLanguage)) {
                     //reload layout
