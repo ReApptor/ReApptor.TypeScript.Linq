@@ -280,7 +280,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         const inlineStyles: React.CSSProperties = this.props.style || {};
 
         if (this._forcedWidth) {
-            inlineStyles.width = this._forcedWidth;
+            inlineStyles.minWidth = this._forcedWidth;
         }
         
         if (this.props.minWidth) {
