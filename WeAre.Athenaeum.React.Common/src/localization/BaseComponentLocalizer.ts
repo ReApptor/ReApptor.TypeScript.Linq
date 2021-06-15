@@ -59,40 +59,25 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
         if (this._allSupportedLanguages) {
             return this._allSupportedLanguages;
         }
-        
+
         const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
+
         this._allSupportedLanguages = (applicationLocalizer)
             ? applicationLocalizer.supportedLanguages
             : super.getSupportedLanguages();
-        
+
         return this._allSupportedLanguages;
     }
     
     protected getLanguage(): string {
-        let language: string | null = null;
-
-        // const props = this._component.props as ILanguageProps;
-        //
-        // // Fetch language from component property
-        // if (props.language) {
-        //     language = (typeof props.language === "function")
-        //         ? props.language()
-        //         : props.language;
-        // }
-        //
-        // // Fetch language from component settings
-        // //TODO:
-
         // Fetch language from application localizer
-        const localizer: ILocalizer | null = this.getApplicationLocalizer();
-        if (localizer != null) {
-            return localizer.language;
+        const applicationLocalizer: ILocalizer | null = this.getApplicationLocalizer();
+        
+        if (applicationLocalizer != null) {
+            return applicationLocalizer.language;
         }
 
-        // Fetch language from browser country
-        language = this.browserLanguageCode;
-
-        return language || this.getDefaultLanguage();
+        return this.browserLanguageCode || this.getDefaultLanguage();
     }
     
     public get browserLanguageCode(): string | null {

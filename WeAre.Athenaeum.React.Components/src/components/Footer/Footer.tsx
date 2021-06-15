@@ -57,7 +57,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
         )
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <footer className={styles.footer}>
                 
@@ -66,23 +66,28 @@ export default class Footer extends BaseComponent<IFooterProps> {
                     <img src={this.props.logo ?? logo} alt={this.name} />
 
                     <div className={styles.footerLinks}>
+                        
                         {
                             (this.links.map((link, index) => (this.renderLink(link, index))))
                         }
+                        
                     </div>
                     
                 </div>
 
                 <div className={styles.lowerFooter}>
+                    
                     {
                         this.renderCopyright()
                     }
+                    
                     {
                         (this.props.version) &&
                         (
                             this.renderVersion()
                         )
                     }
+                    
                 </div>
                 
             </footer>
