@@ -4,7 +4,6 @@ import FooterLocalizer from "./FooterLocalizer";
 
 import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
-import Comparator from "../../helpers/Comparator";
 
 export interface IFooterLink {
     href: string,
@@ -13,7 +12,7 @@ export interface IFooterLink {
 
 export interface IFooterProps {
     version?: string;
-    links?: IFooterLink[]
+    links?: (sender: Footer) => IFooterLink[];
     logo?: any;
     name?: string;
 }
@@ -22,7 +21,7 @@ export default class Footer extends BaseComponent<IFooterProps> {
 
     private get links(): IFooterLink[] {
         return (this.props.links != null)
-            ? this.props.links
+            ? this.props.links(this)
             : [
                 {
                     href: "https://renta.fi/",
@@ -48,20 +47,6 @@ export default class Footer extends BaseComponent<IFooterProps> {
         return (
             <span className={styles.version}>{this.props.version}</span>
         );
-    }
-    
-    public async componentWillReceiveProps(nextProps: IFooterProps): Promise<void> {
-
-        const linksChanged: boolean = (!Comparator.isEqual(nextProps.links, this.props.links));
-
-        await super.componentWillReceiveProps(nextProps);
-
-        console.log("Footer.componentWillReceiveProps: linksChanged=", linksChanged, " links=", nextProps.links);
-
-        if (linksChanged) {
-            
-            await this.reRenderAsync();
-        }
     }
 
     public renderLink(link: IFooterLink, index: number): React.ReactNode {
