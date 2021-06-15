@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {Utility, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {Utility, FileModel, ServiceProvider, HashCodeUtility} from "@weare/athenaeum-toolkit";
 import {
     ch,
     WebApplicationType,
@@ -25,9 +25,9 @@ import styles from "./Layout.module.scss";
 export interface ILayoutProps {
     topNavLogo?: any;
     topNavLogoText?: string;
-    footerLinks?: IFooterLink[];
-    footerLogo?: any;
     footerName?: string;
+    footerLogo?: any;
+    footerLinks?: IFooterLink[];
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
@@ -352,6 +352,19 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public async componentDidUpdate(): Promise<void> {
         if (this._alert) {
             await this.alertAsync(this._alert);
+        }
+    }
+
+    public async componentWillReceiveProps(nextProps: ILayoutProps): Promise<void> {
+
+        const linksChanged: boolean = (HashCodeUtility.getHashCode(nextProps.footerLinks) != HashCodeUtility.getHashCode(this.props.footerLinks));
+
+        await super.componentWillReceiveProps(nextProps);
+
+        console.log("Layout.componentWillReceiveProps: linksChanged=", linksChanged, " footerLinks=", nextProps.footerLinks);
+
+        if (linksChanged) {
+            await this.reRenderAsync();
         }
     }
 

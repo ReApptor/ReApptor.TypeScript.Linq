@@ -76,4 +76,8 @@ export default class HashCodeUtility {
 
         return 0;
     }
+    
+    public static isEqual(x: any | string | null | undefined, y: any | string | null | undefined): boolean {
+        return (this.getHashCode(x) === this.getHashCode(y));
+    }
 }
