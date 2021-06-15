@@ -83,10 +83,11 @@ export default class ch {
             if (this._layout != null) {
 
                 const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-                
-                const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
 
-                if (newLanguage) {
+                const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
+                const newCountry: boolean = (context != null) && ((this._context == null) || (this._context.country != context.country));
+
+                if ((newCountry) || (newLanguage)) {
                     //reload layout
                     await this._layout.reRenderAsync();
                 } else {
