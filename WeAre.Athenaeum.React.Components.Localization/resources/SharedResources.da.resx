@@ -118,37 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>DA: {0} selected</value>
+    <value>{0} valgt</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
     <value>Indlæser...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>DA: Clear</value>
+    <value>Klar</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>DA: Done</value>
+    <value>Udført</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>DA: Save changes</value>
+    <value>Gem ændringer</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
     <value>Luk</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>DA: Page help</value>
+    <value>Hjælp til sider</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>DA: Previous</value>
+    <value>Forrige</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>DA: Return to previous step</value>
+    <value>Vend tilbage til forrige trin</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>DA: Next</value>
+    <value>Næste</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>DA: Go to next step</value>
+    <value>Gå til næste trin</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Er du sikker?</value>
@@ -160,13 +160,13 @@
     <value>Luk</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>DA: Please leave a comment</value>
+    <value>Efterlad en kommentar</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
     <value>Adresse</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>DA: Street</value>
+    <value>Gade</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
     <value>By</value>
@@ -178,10 +178,10 @@
     <value>Placer filen her, eller vælg ved at klikke</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
-    <value>DA: File is readonly</value>
+    <value>Fil er readonly</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>DA: Preview</value>
+    <value>Eksempel</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>Vælg fil</value>
@@ -196,7 +196,7 @@
     <value />
   </data>
   <data name="Footer.Frontpage" xml:space="preserve">
-    <value>DA: Frontpage</value>
+    <value>Forside</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value />
@@ -208,40 +208,40 @@
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>DA: Location picker</value>
+    <value>Placeringsvælger</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>DA: Choose location on map</value>
+    <value>Vælg placering på kortet</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>DA: Set location</value>
+    <value>Indstil placering</value>
   </data>
   <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>DA: No items found</value>
+    <value>Ingen genstande fundet</value>
   </data>
   <data name="Dropdown.NoData" xml:space="preserve">
-    <value>DA: No data</value>
+    <value>Ingen data</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
     <value>Filtrer resultaterne</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>DA: Start typing to get results</value>
+    <value>Begynd at skrive for at få resultater</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>DA: Add</value>
+    <value>Tilføj</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>DA: Nothing is selected</value>
+    <value>Intet er valgt</value>
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>DA: at least 8 characters long</value>
+    <value>Mindst 8 tegn lang</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>DA: Download</value>
+    <value>Download</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
-    <value>DA: Preview</value>
+    <value>Eksempel</value>
   </data>
   <data name="Grid" xml:space="preserve">
     <value />
@@ -337,7 +337,7 @@
     <value />
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>DA: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+    <value>QR-kodescanner er ikke tilgængelig, sandsynligvis ingen tilladelser til kameraet på din mobile enhed.</value>
   </data>
   <data name="SwitchWidget" xml:space="preserve">
     <value />
@@ -370,16 +370,16 @@
     <value />
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
-    <value>DA: one uppercase ('A'-'Z') character</value>
+    <value>Et stort ('A' - 'Z') tegn</value>
   </data>
   <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
-    <value>DA: one lowercase ('a'-'z') character</value>
+    <value>En lille bogstav ('a' - 'z')</value>
   </data>
   <data name="PasswordForm.HelpText.Number" xml:space="preserve">
-    <value>DA: one number</value>
+    <value>Et nummer</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>DA: one special character</value>
+    <value>En speciel karakter</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
     <value>Adgangskoderne matcher ikke</value>
@@ -391,28 +391,28 @@
     <value>Adgangskode</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>DA: Confirm password</value>
+    <value>Bekræft adgangskode</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>Gem</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
-    <value>DA: Document type is not supported, choose file with extension {0}</value>
+    <value>Dokumenttype understøttes ikke. Vælg fil med udvidelse {0}</value>
   </data>
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
-    <value>DA: Document file is too big</value>
+    <value>Dokumentfilen er for stor</value>
   </data>
   <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
-    <value>DA: Preview is not supported for this type of file, but you can download it instead</value>
+    <value>Preview understøttes ikke for denne type fil, men du kan downloade den i stedet</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>DA: Download</value>
+    <value>Download</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>Kontaktinformation</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
-    <value>DA: Street</value>
+    <value>Gade</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
     <value>By</value>
@@ -421,57 +421,57 @@
     <value>Postnummer</value>
   </data>
   <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
-    <value>DA: Document file is too big</value>
+    <value>Dokumentfilen er for stor</value>
   </data>
   <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
-    <value>DA: Document type is not supported, choose file with extension {0}</value>
+    <value>Dokumenttype understøttes ikke. Vælg fil med udvidelse {0}</value>
   </data>
   <data name="BaseInput.Validators.Length" xml:space="preserve">
-    <value>DA: Text is too short</value>
+    <value>Teksten er for kort</value>
   </data>
   <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
-    <value>DA: Value must be in range {0} - {1}</value>
+    <value>Værdien skal være i området {0} - {1}</value>
   </data>
   <data name="BaseInput.Validators.Required" xml:space="preserve">
-    <value>DA: {0} is required</value>
+    <value>{0} er påkrævet</value>
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
-    <value>DA: Total size of documents is too big</value>
+    <value>Den samlede størrelse af dokumenter er for stor</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>DA: April</value>
+    <value>April</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>DA: August</value>
+    <value>August</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>DA: December</value>
+    <value>December</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>DA: February</value>
+    <value>Februar</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>DA: January</value>
+    <value>Januar</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>DA: July</value>
+    <value>Juli</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>DA: June</value>
+    <value>Juni</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>DA: March</value>
+    <value>Marts</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>DA: May</value>
+    <value>Maj</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>DA: November</value>
+    <value>November</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>DA: October</value>
+    <value>Oktober</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>DA: September</value>
+    <value>September</value>
   </data>
 </root>

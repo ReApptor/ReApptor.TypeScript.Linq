@@ -124,31 +124,31 @@
     <value>Loading...</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
-    <value>NB: Clear</value>
+    <value>Tøm</value>
   </data>
   <data name="SignatureWidget.Done" xml:space="preserve">
-    <value>NB: Done</value>
+    <value>Ferdig</value>
   </data>
   <data name="Modal.SaveChanges" xml:space="preserve">
-    <value>NB: Save changes</value>
+    <value>Lagre endringer</value>
   </data>
   <data name="Modal.Close" xml:space="preserve">
     <value>Lukke</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>NB: Page help</value>
+    <value>Sidehjelp</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>NB: Previous</value>
+    <value>Forrige</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>NB: Return to previous step</value>
+    <value>Gå tilbake til forrige trinn</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>NB: Next</value>
+    <value>Neste</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>NB: Go to next step</value>
+    <value>Gå til neste trinn</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Er du sikker?</value>
@@ -160,13 +160,13 @@
     <value>Stäng</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
-    <value>NB: Please leave a comment</value>
+    <value>Vennligst legg igjen en kommentar</value>
   </data>
   <data name="AddressDivider.Address" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>NB: Street</value>
+    <value>Gate</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
     <value>By</value>
@@ -178,10 +178,10 @@
     <value>Dra og drop filen hit, eller klikk for å velge</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
-    <value>NB: File is readonly</value>
+    <value>Filen er skrivebeskyttet</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>NB: Preview</value>
+    <value>Forhåndsvisning</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>Velg fil</value>
@@ -208,13 +208,13 @@
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>NB: Location picker</value>
+    <value>Stedsvelger</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>NB: Choose location on map</value>
+    <value>Velg plassering på kartet</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>NB: Set location</value>
+    <value>Angi sted</value>
   </data>
   <data name="Dropdown.NoItems" xml:space="preserve">
     <value>Ingen objekter funnet</value>
@@ -229,19 +229,19 @@
     <value>Begynn å skrive for å få resultater</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>NB: Add</value>
+    <value>Legg til</value>
   </data>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
     <value>Ingenting er valgt</value>
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>NB: at least 8 characters long</value>
+    <value>Minst 8 tegn</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>NB: Download</value>
+    <value>Last ned</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
-    <value>NB: Preview</value>
+    <value>Forhåndsvisning</value>
   </data>
   <data name="Grid" xml:space="preserve">
     <value />
@@ -337,7 +337,7 @@
     <value />
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>NB: QR code scanner is not available, probably no permissions to camera on your mobile device.</value>
+    <value>QR-kodeskanner er ikke tilgjengelig, det er sannsynligvis ingen tillatelser til bruk av kamera på mobilenheten din.</value>
   </data>
   <data name="SwitchWidget" xml:space="preserve">
     <value />
@@ -376,16 +376,16 @@
     <value>Teksten er for kort</value>
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
-    <value>NB: one uppercase ('A'-'Z') character</value>
+    <value>En stor bokstav ('A' - 'Z')</value>
   </data>
   <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
-    <value>NB: one lowercase ('a'-'z') character</value>
+    <value>En liten bokstav ('a' - 'z')</value>
   </data>
   <data name="PasswordForm.HelpText.Number" xml:space="preserve">
-    <value>NB: one number</value>
+    <value>Ett nummer</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>NB: one special character</value>
+    <value>En spesiell karakter</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
     <value>Passord er ulike</value>
@@ -403,22 +403,22 @@
     <value>Lagre</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
-    <value>NB: Document type is not supported, choose file with extension {0}</value>
+    <value>Dokumenttype støttes ikke. Velg fil med filtypen {0}</value>
   </data>
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
-    <value>NB: Document file is too big</value>
+    <value>Dokumentfilen er for stor</value>
   </data>
   <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
-    <value>NB: Preview is not supported for this type of file, but you can download it instead</value>
+    <value>Forhåndsvisning støttes ikke for denne typen filer, men du kan laste den ned i stedet</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>NB: Download</value>
+    <value>Last ned</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>Kontakt informasjon</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
-    <value>NB: Street</value>
+    <value>Gate</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
     <value>By</value>
@@ -427,51 +427,51 @@
     <value>Postnummer</value>
   </data>
   <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
-    <value>NB: Document file is too big</value>
+    <value>Dokumentfilen er for stor</value>
   </data>
   <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
-    <value>NB: Document type is not supported, choose file with extension {0}</value>
+    <value>Dokumenttype støttes ikke. Velg fil med filtypen {0}</value>
   </data>
   <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
-    <value>NB: Value must be in range {0} - {1}</value>
+    <value>Verdien må være mellom {0} - {1}</value>
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
-    <value>NB: Total size of documents is too big</value>
+    <value>Dokumentets totale størrelse er for stor</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>NB: April</value>
+    <value>April</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>NB: August</value>
+    <value>August</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>NB: December</value>
+    <value>Desember</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>NB: February</value>
+    <value>Februar</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>NB: January</value>
+    <value>Januar</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>NB: July</value>
+    <value>Juli</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>NB: June</value>
+    <value>Juni</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>NB: March</value>
+    <value>Mars</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>NB: May</value>
+    <value>Mai</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>NB: November</value>
+    <value>November</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>NB: October</value>
+    <value>Oktober</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>NB: September</value>
+    <value>September</value>
   </data>
 </root>

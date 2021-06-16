@@ -136,7 +136,7 @@
     <value>Börja skriva för att få resultat</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>SV: Add</value>
+    <value>Lägg till</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
     <value>Laddar...</value>
@@ -235,7 +235,7 @@
     <value>åtminstone 8 tecken</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>SV: Download</value>
+    <value>Ladda ner</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>Förhandsvisning</value>
@@ -289,10 +289,10 @@
     <value>Dokument filen är för stor</value>
   </data>
   <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
-    <value>SV: Preview is not supported for this type of file, but you can download it instead</value>
+    <value>Förhandsgranskning stöds inte för denna typ av fil, men du kan ladda ner den istället</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>SV: Download</value>
+    <value>Ladda ner</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>Kontakt information</value>
@@ -307,45 +307,45 @@
     <value>Postnummer</value>
   </data>
   <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
-    <value>SV: Value must be in range {0} - {1}</value>
+    <value>Värde måste vara inom intervallet {0} - {1}</value>
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
-    <value>SV: Total size of documents is too big</value>
+    <value>Dokumentens totala storlek är för stor</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>SV: April</value>
+    <value>April</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>SV: August</value>
+    <value>Augusti</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>SV: December</value>
+    <value>December</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>SV: February</value>
+    <value>Februari</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>SV: January</value>
+    <value>Januari</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>SV: July</value>
+    <value>Juli</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>SV: June</value>
+    <value>Juni</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>SV: March</value>
+    <value>Mars</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>SV: May</value>
+    <value>Maj</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>SV: November</value>
+    <value>November</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>SV: October</value>
+    <value>Oktober</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>SV: September</value>
+    <value>September</value>
   </data>
 </root>
