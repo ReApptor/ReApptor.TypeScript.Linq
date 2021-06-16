@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>PL: Nothing is selected</value>
+    <value>Nic nie jest zaznaczone</value>
   </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
-    <value>PL: {0} selected</value>
+    <value>{0} wybrane</value>
   </data>
   <data name="Dropdown.NoItems" xml:space="preserve">
-    <value>PL: No items found</value>
+    <value>Nie znaleziono przedmiotów</value>
   </data>
   <data name="Dropdown.NoData" xml:space="preserve">
-    <value>PL: No data</value>
+    <value>Brak danych</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>PL: Filter results</value>
+    <value>Filtruj wyniki</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
-    <value>PL: Start typing to get results</value>
+    <value>Zacznij pisać, aby uzyskać wyniki</value>
   </data>
   <data name="Dropdown.Add" xml:space="preserve">
-    <value>PL: Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="SignatureWidget.Clear" xml:space="preserve">
     <value>Wyczyść</value>
@@ -151,7 +151,7 @@
     <value>Zamknij</value>
   </data>
   <data name="PageContainer.PageHelp" xml:space="preserve">
-    <value>PL: Page help</value>
+    <value>Pomoc strony</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
     <value>Poprzedni</value>
@@ -166,7 +166,7 @@
     <value>Następny krok</value>
   </data>
   <data name="List.Loading" xml:space="preserve">
-    <value>PL: Loading...</value>
+    <value>Ładowanie...</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Czy jesteś pewien?</value>
@@ -187,7 +187,7 @@
     <value>Adres</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>PL: City</value>
+    <value>Miasto</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
     <value>Kod pocztowy</value>
@@ -208,7 +208,7 @@
     <value>Wybierz lokalizację</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>PL: Choose location on map</value>
+    <value>Wybierz lokalizację na mapie</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
     <value>Ustaw lokalizację</value>
@@ -232,16 +232,16 @@
     <value />
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>PL: at least 8 characters long</value>
+    <value>Co najmniej 8 znaków</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
-    <value>PL: Download</value>
+    <value>Pobierz</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
     <value>Podgląd</value>
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>PL: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
+    <value>Skaner kodów QR niedostępny, prawdopodobnie brak uprawnień do kamery na Twoim urządzeniu mobilnym.</value>
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
     <value>jedną dużą literę (A-Z)</value>
@@ -280,7 +280,7 @@
     <value>Podgląd dokumentu niemożliwy</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
-    <value>PL: Download</value>
+    <value>Pobierz</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
     <value>Informacje kontaktowe</value>
@@ -289,7 +289,7 @@
     <value>Ulica</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
-    <value>PL: City</value>
+    <value>Miasto</value>
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
     <value>Kod pocztowy</value>
@@ -313,39 +313,39 @@
     <value>Rozmiar pliku za duży</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>PL: April</value>
+    <value>Kwiecień</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>PL: August</value>
+    <value>Sierpień</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>PL: December</value>
+    <value>Grudzień</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>PL: February</value>
+    <value>Luty</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>PL: January</value>
+    <value>Styczeń</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>PL: July</value>
+    <value>Lipiec</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>PL: June</value>
+    <value>Czerwiec</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>PL: March</value>
+    <value>Marzec</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>PL: May</value>
+    <value>Maj</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>PL: November</value>
+    <value>Listopad</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>PL: October</value>
+    <value>Październik</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>PL: September</value>
+    <value>Wrzesień</value>
   </data>
 </root>

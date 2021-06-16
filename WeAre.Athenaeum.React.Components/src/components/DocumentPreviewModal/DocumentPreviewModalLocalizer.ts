@@ -24,8 +24,8 @@ class DocumentPreviewModalLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `Podgląd` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `DA: Preview` },);
-        this.set(this.downloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `Завантажити` }, { language: `sv`, value: `SV: Download` }, { language: `ru`, value: `Загрузить` }, { language: `pl`, value: `PL: Download` }, { language: `nb`, value: `NB: Download` }, { language: `fi`, value: `Lataa` }, { language: `da`, value: `DA: Download` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `Podgląd` }, { language: `nb`, value: `Forhåndsvisning` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `Eksempel` },);
+        this.set(this.downloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `Завантажити` }, { language: `sv`, value: `Ladda ner` }, { language: `ru`, value: `Загрузить` }, { language: `pl`, value: `Pobierz` }, { language: `nb`, value: `Last ned` }, { language: `fi`, value: `Lataa` }, { language: `da`, value: `Download` },);
     }
 
     /**

@@ -24,7 +24,7 @@ class FooterLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.frontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `uk`, value: `UK: Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `Strona główna` }, { language: `nb`, value: `Hjemmeside` }, { language: `fi`, value: `Etusivu` }, { language: `da`, value: `DA: Frontpage` },);
+        this.set(this.frontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `uk`, value: `UK: Frontpage` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `RU: Frontpage` }, { language: `pl`, value: `Strona główna` }, { language: `nb`, value: `Hjemmeside` }, { language: `fi`, value: `Etusivu` }, { language: `da`, value: `Forside` },);
         this.set(this.contactLanguageItemName, { language: `en`, value: `Contact information` }, { language: `uk`, value: `UK: Contact information` }, { language: `sv`, value: `Kontakt information` }, { language: `ru`, value: `RU: Contact information` }, { language: `pl`, value: `Informacje kontaktowe` }, { language: `nb`, value: `Kontakt informasjon` }, { language: `fi`, value: `Yhteystiedot` }, { language: `da`, value: `Kontaktinformation` },);
     }
 
