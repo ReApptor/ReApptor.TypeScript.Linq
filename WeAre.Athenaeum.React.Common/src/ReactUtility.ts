@@ -59,7 +59,9 @@ export default class ReactUtility {
             }
         );
 
-        return items.flat();
+        return ((items) && (Array.isArray(items)) && (typeof items.flat === "function"))
+            ? items.flat()
+            : [];
     }
 
     //#endregion
@@ -139,7 +141,7 @@ export default class ReactUtility {
         if (!text) {
             return [];
         }
-        
+
         // noinspection SuspiciousTypeOfGuard
         if (typeof text !== "string") {
             return [];
@@ -147,12 +149,15 @@ export default class ReactUtility {
 
         const lines: string[] = text.split(AthenaeumConstants.newLineRegex);
 
-        return lines
+        const items: (ReactElement | string)[][] = lines
             .map((line: string, index: number) => (index < lines.length - 1)
                 ? [...this.containerToTags(line, index), React.createElement("br", {key: "br" + index})]
                 : [...this.containerToTags(line, index)]
-            )
-            .flat();
+            );
+
+        return ((items) && (Array.isArray(items)) && (typeof items.flat === "function"))
+            ? items.flat()
+            : [];
     }
 
     public static toTags(text: string | null | undefined, toSingleLine: boolean = true): (ReactElement | string)[] {
