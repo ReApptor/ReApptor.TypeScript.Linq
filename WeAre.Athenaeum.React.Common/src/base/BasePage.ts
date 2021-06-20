@@ -50,6 +50,9 @@ export interface IBasePage extends IBaseComponent {
     getManualProps(): IManualProps;
 
     isPage(): boolean;
+    
+    readonly hasTopNav: boolean;
+    readonly hasFooter: boolean;
 
     routeName: string;
     routeIndex: number | null;
@@ -83,6 +86,8 @@ export interface ILayoutPage extends IAsyncComponent {
 
     download(file: FileModel): void;
 
+    readonly hasTopNav: boolean;
+    readonly hasFooter: boolean;
     readonly alert: AlertModel | null;
 }
 
@@ -186,6 +191,14 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     public get route(): PageRoute {
         return new PageRoute(this.routeName, this.routeIndex, this.routeId, this.parameters);
+    }
+    
+    public get hasTopNav(): boolean {
+        return true;
+    }
+    
+    public get hasFooter(): boolean {
+        return true;
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
