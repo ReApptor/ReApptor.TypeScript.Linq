@@ -23,11 +23,14 @@ import Spinner from "../Spinner/Spinner";
 import styles from "./Layout.module.scss";
 
 export interface ILayoutProps {
+    className?: string;
     topNavLogo?: any;
     topNavLogoText?: string;
     footerName?: string;
     footerLogo?: any;
     footerLinks?: () => IFooterLink[];
+    noTopNav?: boolean;
+    noFooter?: boolean;
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
@@ -211,6 +214,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public isLayout(): boolean { return true; }
+    
+    public get hasTopNav(): boolean {
+        return ((this.props.noTopNav !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasTopNav));
+    }
+    
+    public get hasFooter(): boolean {
+        return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
+    }
 
     public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
         if (this.mobile !== this._mobile) {
@@ -357,13 +368,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public render(): React.ReactNode {
         return (
-            <div className={styles.layout}
+            <div className={this.css(styles.layout, this.props.className)}
                  onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}
                  onTouchEnd={async (e: React.TouchEvent) => await this.onTouchEndHandlerAsync(e)}
                  onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
                 
                 {
-                    (this.hasData) &&
+                    (this.hasTopNav) &&
                     (
                         <TopNav applicationName={this.applicationName}
                                 fetchItems={this.props.fetchTopNavItems}
@@ -381,7 +392,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 </main>
     
                 {
-                    ((!this.state.error) && (!this.isLoading)) &&
+                    ((this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
                     (
                         <Footer version={ch.version}
                                 links={this.props.footerLinks}
