@@ -137,7 +137,6 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
     }
 
     render(): React.ReactNode {
-
         return (
             <div id={this.id} className={this.css(this.props.className, styles.widgetContainer)}>
                 { this.renderContent() }
