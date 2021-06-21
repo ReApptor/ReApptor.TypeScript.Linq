@@ -9,6 +9,7 @@
     "query-string": "^6.8.2",
     "rc-slider": "^8.6.13",
     "react": "^16.8.2",
+    "react-cropper": "^2.1.7",
     "react-datepicker": "^2.5.0",
     "react-dependent-script": "^1.1.2",
     "react-dom": "^16.8.2",

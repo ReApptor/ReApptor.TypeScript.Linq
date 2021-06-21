@@ -1,0 +1,78 @@
+.ImageInput {
+  position: relative;
+  border: 1px solid saddlebrown;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 1rem;
+  padding: 1rem;
+  gap: 1rem;
+  width: 1000px;
+  height: 400px;
+
+  .fileInput {
+    display: none;
+  }
+
+
+  .controlPanel {
+    border: 1px solid saddlebrown;
+
+    .controlPanelButton {
+      margin: 0 1rem;
+    }
+  }
+
+  .viewPanel {
+    flex-grow: 1;
+    display: flex;
+
+    .dragDropArea {
+      flex-grow: 1;
+      position: relative;
+      border: 2px dashed black;
+      border-radius: 10px;
+
+      .dragDropAreaStaticText {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dragDropAreaOverlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .cropper {
+      flex-grow: 1;
+      overflow: hidden;
+      border: 1px solid saddlebrown;
+    }
+
+    .listView {
+      border: 1px solid saddlebrown;
+      flex-grow: 1;
+    }
+  }
+
+}
+
+
+
+
+
