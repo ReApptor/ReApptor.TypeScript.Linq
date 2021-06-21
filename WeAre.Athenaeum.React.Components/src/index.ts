@@ -394,3 +394,5 @@ export {ImageModal};
 
 export {Accordion, TogglerPosition};
 export type {IAccordionProps};
+
+export * from './components/ImageEditor/ImageEditor';
