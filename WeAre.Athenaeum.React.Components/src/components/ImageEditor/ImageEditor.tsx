@@ -93,11 +93,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return;
         }
 
-        const cropped = this.cropperRef.current.cropper.getCroppedCanvas().toDataURL();
-
         const updatedImageList = this.state.imageList.reduce((prev: ImageListItem[], curr: ImageListItem, index: number): ImageListItem[] => {
 
             if (index === this.state.selectedImageListItemIndex) {
+                const cropped = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || null;
+
                 return [
                     ...prev,
                     {
@@ -107,11 +107,17 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                 ]
             }
                 return [
-                    ...prev
+                    ...prev,
+                    curr
                 ];
         }, []);
+        console.log({updatedImageList})
+        if (this.multi) {
+            await this.setState({currentView: ImageEditorView.ListView, imageList: updatedImageList});
+            return;
+        }
 
-        await this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList})
+        await this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList});
     }
 
     async onRotateLeftButtonClick() {
@@ -131,7 +137,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     async onEditButtonClick() {
-
+        this.setState({currentView: ImageEditorView.Cropper})
     }
 
     async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
@@ -227,11 +233,21 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     renderListViewItems(): JSX.Element[] {
-        return this.state.imageList.map(fileListItem => {
+        return this.state.imageList.map((fileListItem: ImageListItem, index: number) => {
+            const activeListViewItemStyle = this.state.selectedImageListItemIndex === index && styles.activeListViewItem;
+
             return (
-                <div className={styles.listViewItem}>
+                <div
+                    className={this.css(styles.listViewItem, activeListViewItemStyle)}
+                    onClick={() => {
+                        this.state.selectedImageListItemIndex === index ? this.setState({selectedImageListItemIndex: null}) : this.setState({selectedImageListItemIndex: index})
+                    }}
+                >
                     <div className={styles.listViewItemThumbnail}>
-                        <img src={fileListItem.cropped || fileListItem.fileModel.src} alt={fileListItem.fileModel.name}/>
+                        <img
+                            src={fileListItem.cropped || fileListItem.fileModel.src}
+                            alt={fileListItem.fileModel.name}
+                        />
                     </div>
                     {fileListItem.fileModel.name}
                 </div>
@@ -299,7 +315,10 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
                     {
                         (
-                            this.state.currentView === ImageEditorView.ListView &&
+                            (
+                                this.state.currentView === ImageEditorView.Preview ||
+                                this.state.currentView === ImageEditorView.ListView
+                            ) &&
                             this.state.selectedImageListItemIndex !== null &&
                             this.state.selectedImageListItemIndex !== undefined
                         ) &&
@@ -356,7 +375,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     }
 
                     {
-                        (this.state.currentView === ImageEditorView.Cropper && this.state.selectedImageListItemIndex !== null && this.state.selectedImageListItemIndex !== undefined) &&
+                        (
+                            this.state.currentView === ImageEditorView.Cropper &&
+                            this.state.selectedImageListItemIndex !== null &&
+                            this.state.selectedImageListItemIndex !== undefined
+                        ) &&
                         (
                             <div
                                 className={styles.cropper}
