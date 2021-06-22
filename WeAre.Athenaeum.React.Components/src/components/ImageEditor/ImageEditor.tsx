@@ -1,8 +1,11 @@
 import React, {ChangeEvent, LegacyRef, DragEvent, MouseEvent, RefObject} from 'react';
-import Cropper from 'react-cropper';
+import Cropper, {ReactCropperElement} from 'react-cropper';
 import {FileModel} from "@weare/athenaeum-toolkit";
 import styles from './ImageEditor.module.scss';
 import 'cropperjs/dist/cropper.css';
+import {BaseComponent} from "@weare/athenaeum-react-common";
+import Button, {ButtonType} from "../Button/Button";
+import Spinner from "../Spinner/Spinner";
 
 type CropEvent = Cropper.CropEvent<HTMLImageElement>;
 type ReadyEvent = Cropper.ReadyEvent<HTMLImageElement>;
@@ -10,42 +13,40 @@ type ReadyEvent = Cropper.ReadyEvent<HTMLImageElement>;
 enum ImageEditorView {
     Cropper,
     ListView,
-    Preview,
-    DragDropArea
+    Preview
 }
 
-interface State {
-    currentView: ImageEditorView;
+interface ImageListItem {
+    original: File;
+    fileModel: FileModel;
+    cropped: string | null
+}
+
+
+interface IImageEditorState {
+    currentView: ImageEditorView | null;
     isDragOver: boolean;
     preview: string;
-    fileList: FileModel[];
-    cropperSource: string;
+    imageList: ImageListItem[];
     multi: boolean;
-    ready: boolean;
-    showEditButton: boolean;
-    showRotateButtons: boolean;
-    showSaveButton: boolean;
+    selectedImageListItemIndex: number | null;
 }
 
-interface Props {
+interface IImageEditorProps {
     multi?: boolean;
 }
 
-export class ImageEditor extends React.Component<Props, State> {
+export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorState> {
     fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    cropperRef = React.createRef<HTMLImageElement>();
+    cropperRef = React.createRef<ReactCropperElement>();
 
-    state: State = {
-        currentView: ImageEditorView.DragDropArea,
+    state: IImageEditorState = {
+        currentView: null,
         preview: '',
-        cropperSource: '',
-        ready: false,
         multi: false,
         isDragOver: false,
-        fileList: [],
-        showEditButton: true,
-        showRotateButtons: true,
-        showSaveButton: true,
+        imageList: [],
+        selectedImageListItemIndex: null
     };
 
     get multi(): boolean {
@@ -74,7 +75,70 @@ export class ImageEditor extends React.Component<Props, State> {
     }
 
     async onSwitchToDropDownAreaViewButtonClick() {
+        if (!this.fileInputRef) {
+            return;
+        }
 
+        const ref: RefObject<HTMLInputElement> = this.fileInputRef as RefObject<HTMLInputElement>;
+
+        if (!ref.current) {
+            return
+        }
+
+        ref.current.click();
+    }
+
+    async onSaveButtonClick() {
+        if (this.state.currentView !== ImageEditorView.Cropper || !this.cropperRef.current) {
+            return;
+        }
+
+        const cropped = this.cropperRef.current.cropper.getCroppedCanvas().toDataURL();
+
+        const updatedImageList = this.state.imageList.reduce((prev: ImageListItem[], curr: ImageListItem, index: number): ImageListItem[] => {
+
+            if (index === this.state.selectedImageListItemIndex) {
+                return [
+                    ...prev,
+                    {
+                        ...curr,
+                        cropped
+                    }
+                ]
+            }
+                return [
+                    ...prev
+                ];
+        }, []);
+
+        await this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList})
+    }
+
+    async onRotateLeftButtonClick() {
+        if (!this.cropperRef.current) {
+            console.log('Cropper ref is null')
+            return;
+        }
+        this.cropperRef.current.cropper.rotate(-90);
+    }
+
+    async onRotateRightButtonClick() {
+        if (!this.cropperRef.current) {
+            console.log('Cropper ref is null')
+            return;
+        }
+        this.cropperRef.current.cropper.rotate(90);
+    }
+
+    async onEditButtonClick() {
+
+    }
+
+    async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
+        event.preventDefault();
+        if (!this.state.isDragOver) {
+            await this.setState({ isDragOver: true });
+        }
     }
 
     async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
@@ -99,6 +163,8 @@ export class ImageEditor extends React.Component<Props, State> {
 
     async onDropDownAreaDrop(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
+        event.persist();
+
         if (this.state.isDragOver) {
             await this.setState({ isDragOver: false });
         }
@@ -121,11 +187,10 @@ export class ImageEditor extends React.Component<Props, State> {
     }
 
     async onCropperCrop(event: CropEvent): Promise<void> {
-        console.log('onCrop: ', event);
-    }
-
-    async onCropperReady(event: ReadyEvent): Promise<void> {
-        console.log('onReady: ', event);
+        // console.log('onCrop: ', event);
+        // const imageElement: any = this.cropperRef?.current;
+        // const cropper: any = imageElement?.cropper;
+        // console.log(cropper.getCroppedCanvas().toDataURL());
     }
 
     async updateFileList(fileList: FileList): Promise<void> {
@@ -137,22 +202,50 @@ export class ImageEditor extends React.Component<Props, State> {
 
         if (!this.multi) {
             const fileModel = await ImageEditor.fileToFileModel(fileListAsArray[0]);
-            await this.setState({fileList: [fileModel], currentView: ImageEditorView.Cropper });
+
+            const fileListItem: ImageListItem = {
+                fileModel,
+                original: fileListAsArray[0],
+                cropped: null
+            }
+
+            await this.setState({imageList: [fileListItem], currentView: ImageEditorView.Cropper, selectedImageListItemIndex: 0 });
             return;
         }
 
-        const fileModels: FileModel[] = await Promise.all(fileListAsArray.map(async (file: File) => await ImageEditor.fileToFileModel(file)));
+        const fileListItems: ImageListItem[] = await Promise.all(fileListAsArray.map(async (file: File): Promise<ImageListItem> => {
+            const fileModel = await ImageEditor.fileToFileModel(file);
+            return {
+                fileModel,
+                original: file,
+                cropped: null
+            }
+        }));
 
-        await this.setState({ fileList: [...this.state.fileList, ...fileModels], currentView: ImageEditorView.ListView });
+
+        await this.setState({ imageList: [...this.state.imageList, ...fileListItems], currentView: ImageEditorView.ListView });
     }
 
-    renderListViewItems(): JSX.Element {
-        return (<div></div>)
-
+    renderListViewItems(): JSX.Element[] {
+        return this.state.imageList.map(fileListItem => {
+            return (
+                <div className={styles.listViewItem}>
+                    <div className={styles.listViewItemThumbnail}>
+                        <img src={fileListItem.cropped || fileListItem.fileModel.src} alt={fileListItem.fileModel.name}/>
+                    </div>
+                    {fileListItem.fileModel.name}
+                </div>
+            );
+        });
     }
+
     render() {
         return (
-            <div className={styles.ImageInput}>
+            <div
+                className={styles.ImageInput}
+                onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
+
+            >
                 <input
                     ref={this.fileInputRef}
                     className={styles.fileInput}
@@ -164,45 +257,118 @@ export class ImageEditor extends React.Component<Props, State> {
                 <div
                     className={styles.controlPanel}
                 >
-                    <span className={styles.controlPanelButton} onClick={()=> this.onSwitchToListViewButtonClick()}>list</span>
-                    <span className={styles.controlPanelButton} onClick={()=> this.onSwitchToDropDownAreaViewButtonClick()}>drop</span>
-                </div>
-
-                <div className={styles.viewPanel}>
                     {
-                        (this.state.currentView === ImageEditorView.DragDropArea) &&
+                        (this.multi && this.state.currentView !== ImageEditorView.ListView) &&
                         (
-                            <div
-                                className={styles.dragDropArea}
-                                onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOver(event)}
-                                onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
-                                onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
-                                onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDrop(event)}
-                                onClick={(event: MouseEvent<HTMLDivElement>) => this.onDropDownAreaClick(event)}
-                            >
-                                {
-                                    (this.state.isDragOver) ?
-                                        (
-                                            <span className={styles.dragDropAreaOverlay}>DropIt</span>
-                                        ) : (
-                                            <span className={styles.dragDropAreaStaticText}>Click/Drop here</span>
-                                        )
-                                }
-                            </div>
+                            <Button
+                                small
+                                className={styles.controlPanelButton}
+                                icon={{name: "list"}}
+                                type={ButtonType.Orange}
+                                onClick={() => this.onSwitchToListViewButtonClick()}
+                            />
+                        )
+                    }
+
+
+                    {
+                        (this.state.currentView === ImageEditorView.Cropper) &&
+                        (
+                            <Button
+                                small
+                                className={styles.controlPanelButton}
+                                icon={{name: "undo"}}
+                                type={ButtonType.Light}
+                                onClick={() => this.onRotateLeftButtonClick()}
+                            />
                         )
                     }
 
                     {
                         (this.state.currentView === ImageEditorView.Cropper) &&
                         (
-                            <Cropper
-                                className={styles.cropper}
-                                ref={this.cropperRef}
-                                src={this.state.cropperSource}
-                                guides={false}
-                                crop={(event: CropEvent) => this.onCropperCrop(event)}
-                                ready={(event: ReadyEvent) => this.onCropperReady(event)}
+                            <Button
+                                small
+                                className={styles.controlPanelButton}
+                                icon={{name: "redo"}}
+                                type={ButtonType.Light}
+                                onClick={() => this.onRotateRightButtonClick()}
                             />
+                        )
+                    }
+
+                    {
+                        (
+                            this.state.currentView === ImageEditorView.ListView &&
+                            this.state.selectedImageListItemIndex !== null &&
+                            this.state.selectedImageListItemIndex !== undefined
+                        ) &&
+                        (
+                            <Button
+                                small
+                                className={styles.controlPanelButton}
+                                icon={{name: "edit"}}
+                                type={ButtonType.Orange}
+                                onClick={() => this.onEditButtonClick()}
+                            />
+                        )
+                    }
+
+                    <Button
+                        small
+                        right
+                        className={styles.controlPanelButton}
+                        icon={{name: "file-import"}}
+                        type={ButtonType.Info}
+                        onClick={() => this.onSwitchToDropDownAreaViewButtonClick()}
+                    />
+
+                    {
+                        (this.state.currentView === ImageEditorView.Cropper) &&
+                        (
+                            <Button
+                                small
+                                right
+                                className={styles.controlPanelButton}
+                                icon={{name: "save"}}
+                                type={ButtonType.Orange}
+                                onClick={() => this.onSaveButtonClick()}
+                            />
+                        )
+                    }
+
+                </div>
+
+                <div className={styles.viewPanel}>
+                    {
+                        (
+                            <div
+                                className={this.css(styles.dragDropArea, this.state.isDragOver && styles.dragDropAreaActive)}
+                                onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDrop(event)}
+                                onClick={(event: MouseEvent<HTMLDivElement>) => this.onDropDownAreaClick(event)}
+                                onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOver(event)}
+                                onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
+                                onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
+                            >
+                                <span className={styles.dragDropAreaOverlay}>DropIt</span>
+                            </div>
+                        )
+                    }
+
+                    {
+                        (this.state.currentView === ImageEditorView.Cropper && this.state.selectedImageListItemIndex !== null && this.state.selectedImageListItemIndex !== undefined) &&
+                        (
+                            <div
+                                className={styles.cropper}
+                            >
+                                <Cropper
+                                    ref={this.cropperRef}
+                                    src={this.state.imageList[this.state.selectedImageListItemIndex].fileModel.src}
+                                    style={{height: "100%", width: "100%"}}
+                                    guides={false}
+                                    crop={(event: CropEvent) => this.onCropperCrop(event)}
+                                />
+                            </div>
                         )
                     }
 
@@ -213,6 +379,24 @@ export class ImageEditor extends React.Component<Props, State> {
                                 className={styles.listView}
                             >
                                 {this.renderListViewItems()}
+                            </div>
+                        )
+                    }
+
+                    {
+                        (
+                            this.state.currentView === ImageEditorView.Preview &&
+                            this.state.selectedImageListItemIndex !== null &&
+                            this.state.selectedImageListItemIndex !== undefined
+                        ) &&
+                        (
+                            <div
+                                className={styles.preview}
+                            >
+                                <img
+                                    src={this.state.imageList[this.state.selectedImageListItemIndex].cropped || ""}
+                                    alt={this.state.imageList[this.state.selectedImageListItemIndex].fileModel.name}
+                                />
                             </div>
                         )
                     }
