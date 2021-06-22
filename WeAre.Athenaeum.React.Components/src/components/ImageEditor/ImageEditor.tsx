@@ -17,12 +17,13 @@ enum ImageEditorView {
 interface IImageEditorState {
     currentView: ImageEditorView | null;
     isDragOver: boolean;
-    imageList: FileModel[];
     selectedImageListItemIndex: number | null;
 }
 
 interface IImageEditorProps {
     multi?: boolean;
+    imageList?: FileModel[];
+    onChange?(imageList: FileModel[]): Promise<void>;
 }
 
 export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorState> {
@@ -32,12 +33,37 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     state: IImageEditorState = {
         currentView: null,
         isDragOver: false,
-        imageList: [],
         selectedImageListItemIndex: null
     };
 
     get multi(): boolean {
         return this.props.multi || false;
+    }
+
+    get imageList(): FileModel[] {
+        return this.props.imageList || [];
+    }
+
+    get previewSource(): string {
+        if (this.state.selectedImageListItemIndex === null) {
+            return "";
+        }
+        if (!this.imageList[this.state.selectedImageListItemIndex]) {
+            return "";
+        }
+
+       return  this.imageList[this.state.selectedImageListItemIndex].src
+    }
+
+    get previewName(): string {
+        if (this.state.selectedImageListItemIndex === null) {
+            return "";
+        }
+        if (!this.imageList[this.state.selectedImageListItemIndex]) {
+            return "";
+        }
+
+       return  this.imageList[this.state.selectedImageListItemIndex].name
     }
 
     async onDropDownAreaClick(event: MouseEvent<HTMLDivElement>): Promise<void> {
@@ -75,7 +101,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return;
         }
 
-        const updatedImageList = this.state.imageList.reduce((prev: FileModel[], curr: FileModel, index: number): FileModel[] => {
+        const updatedImageList = this.imageList.reduce((prev: FileModel[], curr: FileModel, index: number): FileModel[] => {
 
             if (index === this.state.selectedImageListItemIndex) {
                 const cropped: string = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
@@ -94,12 +120,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                 ];
         }, []);
 
-        if (this.multi) {
-            this.setState({currentView: ImageEditorView.ListView, imageList: updatedImageList});
-            return;
-        }
 
-        this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList});
+        if (this.props.onChange) {
+            await this.props.onChange(updatedImageList);
+            this.setState({currentView: this.multi ? ImageEditorView.ListView : ImageEditorView.Preview});
+        }
     }
 
     async onRotateLeftButtonClick(): Promise<void> {
@@ -109,8 +134,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
         this.cropperRef.current.cropper.rotate(-90);
         this.setCropAreaToImageFullSize();
-
-
     }
 
     async onRotateRightButtonClick(): Promise<void> {
@@ -193,7 +216,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         if (!this.multi) {
             const fileModel: FileModel = await ImageEditor.fileToFileModel(fileListAsArray[0]);
 
-            await this.setState({imageList: [fileModel], currentView: ImageEditorView.Cropper, selectedImageListItemIndex: 0 });
+            if (this.props.onChange) {
+                await this.props.onChange([fileModel]);
+                await this.setState({currentView: ImageEditorView.Cropper, selectedImageListItemIndex: 0 });
+            }
+
             return;
         }
 
@@ -201,8 +228,10 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return  await ImageEditor.fileToFileModel(file);
         }));
 
-
-        await this.setState({ imageList: [...this.state.imageList, ...fileListItems], currentView: ImageEditorView.ListView });
+        if (this.props.onChange) {
+            await this.props.onChange([...this.imageList, ...fileListItems]);
+            await this.setState({currentView: ImageEditorView.ListView});
+        }
     }
 
     setCropAreaToImageFullSize(): void {
@@ -229,7 +258,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     renderListViewItems(): JSX.Element[] {
-        return this.state.imageList.map((fileModel: FileModel, index: number) => {
+        return this.imageList.map((fileModel: FileModel, index: number) => {
             const activeListViewItemStyle = this.state.selectedImageListItemIndex === index && styles.activeListViewItem;
 
             return (
@@ -366,7 +395,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             >
                                 <Cropper
                                     ref={this.cropperRef}
-                                    src={this.state.imageList[this.state.selectedImageListItemIndex].src}
+                                    src={this.imageList[this.state.selectedImageListItemIndex].src}
                                     style={{height: "100%", width: "100%"}}
                                     guides={false}
                                     ready={() => this.setCropAreaToImageFullSize()}
@@ -396,10 +425,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             <div
                                 className={styles.preview}
                             >
-                                <img
-                                    src={this.state.imageList[this.state.selectedImageListItemIndex].src || ""}
-                                    alt={this.state.imageList[this.state.selectedImageListItemIndex].name}
-                                />
+                                <img src={this.previewSource} alt={this.previewName}/>
                             </div>
                         )
                     }

@@ -3,15 +3,19 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import {ImageEditor} from "@weare/athenaeum-react-components";
 
 export default class ImageEditorTests extends BaseComponent {
-
-    public render(): React.ReactNode {        
+    state = {
+        singleList: [],
+        multipleList: []
+    }
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
                 <h4 className="pt-2 pb-2 ">ImageEditor Single Upload</h4>
-                <ImageEditor/>
+                <ImageEditor imageList={this.state.singleList} onChange={async (imageList) => { this.setState({singleList: imageList}) }}/>
+
 
                 <h4 className="pt-2 pb-2 ">ImageEditor Multiple Upload</h4>
-                <ImageEditor multi/>
+                <ImageEditor multi imageList={this.state.multipleList} onChange={async (imageList) => { this.setState({multipleList: imageList}) }}/>
             </React.Fragment>
         );
     }
