@@ -14,6 +14,8 @@ export default class FileModel {
     
     public src: string = "";
 
+    public description: string  | null = null;
+    
     public lastModified: Date = new Date();
     
     public readonly isFileModel: boolean = true;
