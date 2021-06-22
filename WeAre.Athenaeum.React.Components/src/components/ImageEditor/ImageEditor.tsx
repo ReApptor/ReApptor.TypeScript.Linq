@@ -1,14 +1,12 @@
 import React, {ChangeEvent, LegacyRef, DragEvent, MouseEvent, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
+import {BaseComponent} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
+
+import Button, {ButtonType} from "../Button/Button";
+
 import styles from './ImageEditor.module.scss';
 import 'cropperjs/dist/cropper.css';
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import Button, {ButtonType} from "../Button/Button";
-import Spinner from "../Spinner/Spinner";
-
-type CropEvent = Cropper.CropEvent<HTMLImageElement>;
-type ReadyEvent = Cropper.ReadyEvent<HTMLImageElement>;
 
 enum ImageEditorView {
     Cropper,
@@ -55,7 +53,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
     async onDropDownAreaClick(event: MouseEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
-        console.log('onClick: ', event);
 
         if (!this.fileInputRef) {
             return;
@@ -68,10 +65,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
 
         ref.current.click();
-    }
-
-    async onSwitchToListViewButtonClick() {
-
     }
 
     async onSwitchToDropDownAreaViewButtonClick() {
@@ -111,37 +104,42 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     curr
                 ];
         }, []);
-        console.log({updatedImageList})
+
         if (this.multi) {
-            await this.setState({currentView: ImageEditorView.ListView, imageList: updatedImageList});
+            this.setState({currentView: ImageEditorView.ListView, imageList: updatedImageList});
             return;
         }
 
-        await this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList});
+        this.setState({currentView: ImageEditorView.Preview, imageList: updatedImageList});
     }
 
     async onRotateLeftButtonClick() {
         if (!this.cropperRef.current) {
-            console.log('Cropper ref is null')
             return;
         }
+
         this.cropperRef.current.cropper.rotate(-90);
     }
 
     async onRotateRightButtonClick() {
         if (!this.cropperRef.current) {
-            console.log('Cropper ref is null')
             return;
         }
+
         this.cropperRef.current.cropper.rotate(90);
     }
 
     async onEditButtonClick() {
-        this.setState({currentView: ImageEditorView.Cropper})
+        if (this.state.selectedImageListItemIndex === null) {
+            return;
+        }
+
+        this.setState({currentView: ImageEditorView.Cropper});
     }
 
     async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
+
         if (!this.state.isDragOver) {
             await this.setState({ isDragOver: true });
         }
@@ -149,7 +147,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
     async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
-        console.log('dragEnter: ', event);
+
         if (!this.state.isDragOver) {
             await this.setState({ isDragOver: true });
         }
@@ -161,7 +159,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
     async onDropDownAreaDragLeave(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
-        console.log('dragLeave: ', event);
+
         if (this.state.isDragOver) {
             await this.setState({ isDragOver: false });
         }
@@ -184,7 +182,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
     async onFileInputChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
         event.preventDefault();
-        console.log('fileInputOnChange: ', event);
+
         if (!event.target.files) {
             return;
         }
@@ -192,11 +190,13 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         await this.updateFileList(event.target.files)
     }
 
-    async onCropperCrop(event: CropEvent): Promise<void> {
-        // console.log('onCrop: ', event);
-        // const imageElement: any = this.cropperRef?.current;
-        // const cropper: any = imageElement?.cropper;
-        // console.log(cropper.getCroppedCanvas().toDataURL());
+    onListViewItemClick(index: number) {
+        if (this.state.selectedImageListItemIndex === index) {
+            this.setState({selectedImageListItemIndex: null});
+            return;
+        }
+
+        this.setState({selectedImageListItemIndex: index})
     }
 
     async updateFileList(fileList: FileList): Promise<void> {
@@ -239,9 +239,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return (
                 <div
                     className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                    onClick={() => {
-                        this.state.selectedImageListItemIndex === index ? this.setState({selectedImageListItemIndex: null}) : this.setState({selectedImageListItemIndex: index})
-                    }}
+                    onClick={() => {this.onListViewItemClick(index)}}
                 >
                     <div className={styles.listViewItemThumbnail}>
                         <img
@@ -273,20 +271,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                 <div
                     className={styles.controlPanel}
                 >
-                    {
-                        (this.multi && this.state.currentView !== ImageEditorView.ListView) &&
-                        (
-                            <Button
-                                small
-                                className={styles.controlPanelButton}
-                                icon={{name: "list"}}
-                                type={ButtonType.Orange}
-                                onClick={() => this.onSwitchToListViewButtonClick()}
-                            />
-                        )
-                    }
-
-
                     {
                         (this.state.currentView === ImageEditorView.Cropper) &&
                         (
@@ -389,7 +373,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                                     src={this.state.imageList[this.state.selectedImageListItemIndex].fileModel.src}
                                     style={{height: "100%", width: "100%"}}
                                     guides={false}
-                                    crop={(event: CropEvent) => this.onCropperCrop(event)}
                                 />
                             </div>
                         )
