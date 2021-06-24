@@ -23,6 +23,7 @@ interface IImageEditorState {
 interface IImageEditorProps {
     multi?: boolean;
     imageList?: FileModel[];
+    className?: string;
     onChange?(imageList: FileModel[]): Promise<void>;
 }
 
@@ -281,7 +282,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     render(): JSX.Element {
         return (
             <div
-                className={styles.ImageInput}
+                className={this.css(styles.ImageInput, this.props.className)}
                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
 
             >
