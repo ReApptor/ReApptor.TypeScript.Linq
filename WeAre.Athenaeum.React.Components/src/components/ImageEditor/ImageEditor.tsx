@@ -266,6 +266,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                 <div
                     className={this.css(styles.listViewItem, activeListViewItemStyle)}
                     onClick={() => {this.onListViewItemClick(index)}}
+                    key={JSON.stringify(fileModel)}
                 >
                     <div className={styles.listViewItemThumbnail}>
                         <img
