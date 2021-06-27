@@ -17,8 +17,8 @@ namespace WeAre.Athenaeum.Common.Api
     {
         #region Private/Protected
 
-        private bool _authorizing;
         private readonly TSettings _settings;
+        private bool _authorizing;
 
         private Dictionary<string, string> GetHeaders(HttpHeaders headers)
         {

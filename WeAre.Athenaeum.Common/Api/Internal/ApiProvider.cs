@@ -5,6 +5,8 @@ namespace WeAre.Athenaeum.Common.Api.Internal
 {
     internal class ApiProvider : BaseApiProvider
     {
+        #region Constructors
+        
         internal ApiProvider(ApiSettings settings)
             : base(settings)
         {
@@ -15,8 +17,9 @@ namespace WeAre.Athenaeum.Common.Api.Internal
         {
         }
         
+        #endregion
                 
-        #region Invoks
+        #region Invokes
 
         public new Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
             where TRequest : class
