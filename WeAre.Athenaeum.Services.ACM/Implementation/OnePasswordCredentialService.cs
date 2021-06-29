@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using WeAre.Athenaeum.Services.ACM.Interface;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
@@ -37,6 +38,12 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        }
+
+        public OnePasswordCredentialService(ILogger<OnePasswordCredentialService> logger, IOptions<OnePasswordCredentialServiceSettings> settings)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
         }
 
         public async Task<ICredential> GetCredentialAsync(ICredentialKey key)
