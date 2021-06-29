@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models
