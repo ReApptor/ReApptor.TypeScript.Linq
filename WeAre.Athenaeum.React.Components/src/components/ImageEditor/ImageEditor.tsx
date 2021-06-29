@@ -1,4 +1,4 @@
-import React, {ChangeEvent, LegacyRef, DragEvent, MouseEvent, RefObject} from 'react';
+import React, {ChangeEvent, DragEvent, LegacyRef, MouseEvent, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
@@ -8,6 +8,8 @@ import Button, {ButtonType} from "../Button/Button";
 import styles from './ImageEditor.module.scss';
 import 'cropperjs/dist/cropper.css';
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
+import ImageModal from "../ImageModal/ImageModal";
+import {ModalSize} from "../Modal/Modal";
 
 enum ImageEditorView {
     Cropper,
@@ -295,26 +297,26 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         this.setState({selectedPictureIndex: index})
     }
 
-    renderListViewItems(): JSX.Element[] {
-        return this.pictures.map((fileModel: FileModel, index: number) => {
-            const activeListViewItemStyle = this.state.selectedPictureIndex === index && styles.activeListViewItem;
+    renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
+        const activeListViewItemStyle = this.state.selectedPictureIndex === index && styles.activeListViewItem;
 
-            return (
-                <div
-                    className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                    onClick={() => {this.onListViewItemClick(index)}}
-                    key={JSON.stringify(fileModel)}
-                >
-                    <div className={styles.listViewItemThumbnail}>
-                        <img
-                            src={fileModel.src}
-                            alt={fileModel.name}
-                        />
-                    </div>
-                    {fileModel.name}
+        return (
+            <div
+                className={this.css(styles.listViewItem, activeListViewItemStyle)}
+                onClick={() => {
+                    this.onListViewItemClick(index)
+                }}
+                key={JSON.stringify(fileModel)}
+            >
+                <div className={styles.listViewItemThumbnail}>
+                    <img
+                        src={fileModel.src}
+                        alt={fileModel.name}
+                    />
                 </div>
-            );
-        });
+                {fileModel.name}
+            </div>
+        );
     }
 
     render(): JSX.Element {
@@ -426,7 +428,8 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                         (
                             this.state.currentView === ImageEditorView.Cropper &&
                             this.state.selectedPictureIndex !== null &&
-                            this.state.selectedPictureIndex !== undefined
+                            this.state.selectedPictureIndex !== undefined &&
+                            this.pictures[this.state.selectedPictureIndex]
                         ) &&
                         (
                             <div
@@ -449,8 +452,12 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             <div
                                 className={styles.listView}
                             >
-                                {this.renderListViewItems()}
+
+                                {
+                                    this.pictures.map((picture, index) => this.renderListViewItem(picture, index))
+                                }
                             </div>
+
                         )
                     }
 
