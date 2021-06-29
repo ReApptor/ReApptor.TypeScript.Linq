@@ -22,7 +22,7 @@ interface IImageModalState {
 }
 
 
-class ImageProvider {
+export class ImageProvider {
     public static getImageStyle(image: FileModel): any {
         const url: string = (image.src)
             ? image.src

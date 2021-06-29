@@ -8,8 +8,7 @@ import Button, {ButtonType} from "../Button/Button";
 import styles from './ImageEditor.module.scss';
 import 'cropperjs/dist/cropper.css';
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
-import ImageModal from "../ImageModal/ImageModal";
-import {ModalSize} from "../Modal/Modal";
+import {ImageProvider} from "../ImageModal/ImageModal";
 
 enum ImageEditorView {
     Cropper,
@@ -27,6 +26,7 @@ interface IImageEditorProps {
     multi?: boolean;
     pictures: FileModel[];
     className?: string;
+    imageProvider: ImageProvider;
     onChange?(sender: ImageEditor, pictures: FileModel[]): Promise<void>;
     convertImage?(file: FileModel): Promise<FileModel>;
 }
@@ -310,7 +310,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             >
                 <div className={styles.listViewItemThumbnail}>
                     <img
-                        src={fileModel.src}
+                        src={fileModel.src ? fileModel.src : `/files/images/${fileModel.id}`}
                         alt={fileModel.name}
                     />
                 </div>
