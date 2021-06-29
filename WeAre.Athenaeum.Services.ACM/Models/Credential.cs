@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using WeAre.Athenaeum.Services.ACM.Interface;
 
 namespace WeAre.Athenaeum.Services.ACM.Models

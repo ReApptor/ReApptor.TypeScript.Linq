@@ -7,7 +7,6 @@ using WeAre.Athenaeum.Services.ACM.Interface;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
 using WeAre.Athenaeum.Services.ACM.Models;
-using WeAre.Athenaeum.Services.ACM.Models.OnePassword;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation
 {
