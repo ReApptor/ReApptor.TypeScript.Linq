@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsPinpointSmsTestConsole",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Services.ACM", "WeAre.Athenaeum.Services.ACM\WeAre.Athenaeum.Services.ACM.csproj", "{7C2063B5-7901-44C9-A2D3-5275D7FB544E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Services.UnitTest", "WeAre.Athenaeum.Services.UnitTest\WeAre.Athenaeum.Services.UnitTest.csproj", "{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,7 @@ Global
 		{74E560E8-6BB9-4AE2-B04F-78563B66646F} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
 		{E83D51B1-5F11-474D-B2C4-F018CE88CD64} = {13C11342-8709-487B-A4DB-C6F3AB84B71E}
 		{7C2063B5-7901-44C9-A2D3-5275D7FB544E} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
+		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A} = {F55C67D5-2FDD-4C70-8555-F65A80B07602}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -175,5 +178,9 @@ Global
 		{7C2063B5-7901-44C9-A2D3-5275D7FB544E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C2063B5-7901-44C9-A2D3-5275D7FB544E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C2063B5-7901-44C9-A2D3-5275D7FB544E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
