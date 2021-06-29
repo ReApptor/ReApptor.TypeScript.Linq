@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Options;
-using WeAre.Athenaeum.Common.Api;
 
-namespace WeAre.Athenaeum.Services.ACM.Models.OnePassword
+namespace WeAre.Athenaeum.Services.ACM.Implementation
 {
-    public class OnePasswordCredentialServiceSettings : IOptions<OnePasswordCredentialServiceSettings>, IApiSettings
+    public class OnePasswordCredentialServiceSettings : IOptions<OnePasswordCredentialServiceSettings>
     {
         OnePasswordCredentialServiceSettings IOptions<OnePasswordCredentialServiceSettings>.Value => this;
 
