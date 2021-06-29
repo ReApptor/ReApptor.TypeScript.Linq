@@ -5,10 +5,9 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 
 import Button, {ButtonType} from "../Button/Button";
 
-import styles from './ImageEditor.module.scss';
-import 'cropperjs/dist/cropper.css';
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
-import {ImageProvider} from "../ImageModal/ImageModal";
+import 'cropperjs/dist/cropper.css';
+import styles from './ImageEditor.module.scss';
 
 enum ImageEditorView {
     Cropper,
@@ -26,9 +25,9 @@ interface IImageEditorProps {
     multi?: boolean;
     pictures: FileModel[];
     className?: string;
-    imageProvider: ImageProvider;
     onChange?(sender: ImageEditor, pictures: FileModel[]): Promise<void>;
     convertImage?(file: FileModel): Promise<FileModel>;
+    imageUrl?(file: FileModel): string;
 }
 
 export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorState> {
@@ -303,14 +302,14 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         return (
             <div
                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
+                key={`${index}_${fileModel.id}_${fileModel.name}`}
                 onClick={() => {
                     this.onListViewItemClick(index)
                 }}
-                key={JSON.stringify(fileModel)}
             >
                 <div className={styles.listViewItemThumbnail}>
                     <img
-                        src={fileModel.src ? fileModel.src : `/files/images/${fileModel.id}`}
+                        src={fileModel.src ? fileModel.src : this.props.imageUrl ? this.props.imageUrl(fileModel) : `/files/images/${fileModel.id}`}
                         alt={fileModel.name}
                     />
                 </div>
