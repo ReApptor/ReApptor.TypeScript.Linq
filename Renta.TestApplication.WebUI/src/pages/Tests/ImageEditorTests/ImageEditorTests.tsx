@@ -11,11 +11,22 @@ export default class ImageEditorTests extends BaseComponent {
         return (
             <React.Fragment>
                 <h4 className="pt-2 pb-2 ">ImageEditor Single Upload</h4>
-                <ImageEditor imageList={this.state.singleList} onChange={async (imageList) => { this.setState({singleList: imageList}) }}/>
-
+                <ImageEditor
+                    pictures={this.state.singleList}
+                    convertImage={async (image) => image}
+                    onChange={async (imageList) => {
+                        this.setState({singleList: imageList})
+                    }}/>
 
                 <h4 className="pt-2 pb-2 ">ImageEditor Multiple Upload</h4>
-                <ImageEditor multi imageList={this.state.multipleList} onChange={async (imageList) => { this.setState({multipleList: imageList}) }}/>
+
+                <ImageEditor
+                    multi
+                    pictures={this.state.multipleList}
+                    convertImage={async (image) => image}
+                    onChange={async (imageList) => {
+                        this.setState({multipleList: imageList})
+                    }}/>
             </React.Fragment>
         );
     }
