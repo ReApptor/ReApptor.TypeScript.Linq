@@ -36,7 +36,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     cropperRef = React.createRef<ReactCropperElement>();
 
     state: IImageEditorState = {
-        currentView: null,
+        currentView: this.multi ? ImageEditorView.ListView : null,
         isDragOver: false,
         selectedPictureIndex: null
     };
@@ -324,7 +324,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             <div
                 className={this.css(styles.ImageInput, this.props.className)}
                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
-
             >
                 <input
                     ref={this.fileInputRef}
