@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WeAre.Athenaeum.Common.Api;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
-using WeAre.Athenaeum.Services.ACM.Models.OnePassword;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
 {
