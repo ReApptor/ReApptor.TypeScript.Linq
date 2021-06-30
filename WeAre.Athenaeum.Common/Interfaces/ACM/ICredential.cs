@@ -1,4 +1,4 @@
-namespace WeAre.Athenaeum.Services.ACM.Interface
+namespace WeAre.Athenaeum.Common.Interfaces.ACM
 {
     public interface ICredential
     {

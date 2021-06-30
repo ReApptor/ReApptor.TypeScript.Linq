@@ -61,6 +61,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Renta.TestApplication.Common\Renta.TestApplication.Common.csproj" />
       <ProjectReference Include="..\Renta.TestApplication.WebUI.Server\Renta.TestApplication.WebUI.Server.csproj" />
+      <ProjectReference Include="..\WeAre.Athenaeum.Services.ACM\WeAre.Athenaeum.Services.ACM.csproj" />
     </ItemGroup>
 
     <ItemGroup>

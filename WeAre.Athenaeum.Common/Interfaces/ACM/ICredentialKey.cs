@@ -1,7 +1,7 @@
-namespace WeAre.Athenaeum.Services.ACM.Interface
+namespace WeAre.Athenaeum.Common.Interfaces.ACM
 {
     public interface ICredentialKey
-    { 
+    {
         /// <summary>
         /// Label, or a name, of a credential. Required.
         /// </summary>

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Configuration.Settings;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Services.Cache.Models;
 
 namespace Renta.TestApplication.Common.Configuration
@@ -25,8 +26,8 @@ namespace Renta.TestApplication.Common.Configuration
         private RedisSettings _redisSettings;
         private TokenSettings _tokenSettings;
 
-        public TestApplicationConfiguration(IHostEnvironment environment)
-            : base(environment)
+        public TestApplicationConfiguration(IHostEnvironment environment, ICredentialService credentialService = null)
+            : base(environment, credentialService)
         {
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using WeAre.Athenaeum.Services.ACM.Interface;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
 using WeAre.Athenaeum.Services.ACM.Models;

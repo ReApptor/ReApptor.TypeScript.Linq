@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.Serialization;
-using WeAre.Athenaeum.Services.ACM.Interface;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
 
 namespace WeAre.Athenaeum.Services.ACM.Models
 {
-    public sealed class CredentialKey : ICredentialKey
+    public sealed class CredentialKey : ICredentialKey, ICloneable
     {
         private string _label;
 
@@ -65,8 +63,9 @@ namespace WeAre.Athenaeum.Services.ACM.Models
 
         public override int GetHashCode()
         {
+            string label = Label ?? string.Empty;
             string path = Path ?? string.Empty;
-            string dump = $"Label:{Label}.Path:{path}";
+            string dump = $"Label:{label}.Path:{path}";
             return dump.GetHashCode();
         }
 
