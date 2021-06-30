@@ -51,38 +51,55 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     private get activePicture(): FileModel | null {
-        if (!this.state.selectedPictureIndex) {
+        if (this.state.selectedPictureIndex === null) {
             return null;
         }
 
         return this.pictures[this.state.selectedPictureIndex];
     }
 
-    private get previewSource(): string {
-        if (!this.activePicture) {
+    private previewName(index: number): string {
+        const picture: FileModel | undefined = this.pictures[index];
+
+        if (!picture) {
             return "";
         }
 
-        if (this.activePicture.src) {
-            return this.activePicture.src;
+        return picture.name
+    }
+
+    private previewSource(index: number): string {
+        const picture: FileModel | undefined = this.pictures[index];
+
+        if (!picture) {
+            return "";
+        }
+
+        if (picture.id) {
+            if (this.props.imageUrl) {
+                return this.props.imageUrl(picture);
+            }
+
+            return `/files/images/${picture.id}`
+        }
+
+        return picture.src;
+    }
+
+    private get cropperSource(): string {
+        if (this.state.selectedPictureIndex === null || !this.activePicture) {
+            return "";
         }
 
         if (this.activePicture.id) {
-            return this.props.imageUrl ? this.props.imageUrl(this.activePicture) : `/files/images/${this.activePicture.id}`
+            if (this.props.imageUrl) {
+                return this.props.imageUrl(this.activePicture);
+            }
+
+            return `/files/images/${this.activePicture.id}`
         }
 
-        return "";
-    }
-
-    private get previewName(): string {
-        if (this.state.selectedPictureIndex === null) {
-            return "";
-        }
-        if (!this.activePicture) {
-            return "";
-        }
-
-        return this.activePicture.name
+        return this.activePicture.src;
     }
 
     //  ViewIfStatements
@@ -95,10 +112,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     private get showDeleteButton(): boolean {
-        if (this.state.currentView !== ImageEditorView.Preview && this.state.currentView !== ImageEditorView.ListView) {
-            return false;
-        }
-        return this.state.selectedPictureIndex !== null && this.state.selectedPictureIndex !== undefined;
+        return this.state.selectedPictureIndex !== null;
     }
 
     private get showRotateButton(): boolean {
@@ -325,7 +339,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
-            await this.setState({currentView: ImageEditorView.ListView});
+            await this.setState({currentView: this.multi ? ImageEditorView.ListView : null, selectedPictureIndex: null});
         }
     }
 
@@ -430,7 +444,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                         <Button
                             small
                             className={styles.controlPanelButton}
-                            icon={{name: "delete"}}
+                            icon={{name: "trash"}}
                             type={ButtonType.Orange}
                             onClick={() => this.onDeleteButtonClick()}
                         />
@@ -476,11 +490,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             >
                 <div className={styles.listViewItemThumbnail}>
                     <img
-                        src={this.previewSource}
-                        alt={this.previewName}
+                        src={this.previewSource(index)}
+                        alt={this.previewName(index)}
                     />
                 </div>
-                {this.previewName}
+                {this.previewName(index)}
             </div>
         );
     }
@@ -502,7 +516,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     renderPreviewPanel(): JSX.Element {
         return (
             <div className={styles.preview}>
-                <img src={this.previewSource} alt={this.previewName}/>
+                <img src={this.previewSource(0)} alt={this.previewName(0)}/>
             </div>
         );
     }
@@ -514,7 +528,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             >
                 <Cropper
                     ref={this.cropperRef}
-                    src={this.pictures[this.state.selectedPictureIndex!].src}
+                    src={this.cropperSource}
                     style={{height: "100%", width: "100%"}}
                     guides={false}
                     ready={() => this.setCropAreaToImageFullSize()}
@@ -540,26 +554,18 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                 <div className={styles.controlPanel}> {this.renderControlPanel()} </div>
 
                 <div className={styles.viewPanel}>
-                    {
-                        (
-                            <div
-                                className={this.css(styles.dragDropArea, this.state.isDragOver && styles.dragDropAreaActive)}
-                                onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDrop(event)}
-                                onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOver(event)}
-                                onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
-                                onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
-                            >
-                                <span className={styles.dragDropAreaOverlay}>DropIt</span>
-                            </div>
-                        )
-                    }
+                    <div
+                        className={this.css(styles.dragDropArea, this.state.isDragOver && styles.dragDropAreaActive)}
+                        onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDrop(event)}
+                        onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOver(event)}
+                        onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
+                        onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
+                    >
+                        <span className={styles.dragDropAreaOverlay}>DropIt</span>
+                    </div>
 
                     {
-                        (
-                            this.state.currentView === ImageEditorView.Cropper &&
-                            this.state.selectedPictureIndex !== null &&
-                            this.activePicture
-                        ) &&
+                        (this.state.currentView === ImageEditorView.Cropper) &&
                         (this.renderCropperPanel())
                     }
 
