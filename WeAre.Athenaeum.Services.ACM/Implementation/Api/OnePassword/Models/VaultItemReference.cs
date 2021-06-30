@@ -17,6 +17,9 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models
         [JsonProperty("vault")]
         public VaultId Vault { get; set; }
         
+        [JsonProperty("category")]
+        public VaultId Category { get; set; }
+        
         [JsonProperty("lastEditedBy")]
         public string LastEditedBy { get; set; }
         
