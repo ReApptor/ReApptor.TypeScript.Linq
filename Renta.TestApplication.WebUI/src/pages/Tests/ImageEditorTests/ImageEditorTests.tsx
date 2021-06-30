@@ -16,6 +16,8 @@ export default class ImageEditorTests extends BaseComponent {
                     convertImage={async (picture) => picture}
                     onChange={async (sender, picture) => {
                         this.setState({picture})
+                        await this.reRenderAsync();
+
                     }}/>
 
                 <h4 className="pt-2 pb-2 ">ImageEditor Multiple Upload</h4>
@@ -25,7 +27,8 @@ export default class ImageEditorTests extends BaseComponent {
                     pictures={this.state.pictures}
                     convertImage={async (image) => image}
                     onChange={async (sender, pictures) => {
-                        this.setState({pictures: pictures})
+                        this.setState({pictures: pictures});
+                        await this.reRenderAsync();
                     }}/>
             </React.Fragment>
         );
