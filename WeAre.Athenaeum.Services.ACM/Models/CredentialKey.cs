@@ -42,7 +42,7 @@ namespace WeAre.Athenaeum.Services.ACM.Models
         }
         
         /// <summary>
-        /// Compares Label, ContractId and SecurityDomain of the credentials. Returns true if equal.
+        /// Compares to Label and Path. Returns true if equal.
         /// </summary>
         public bool Equals(ICredentialKey key)
         {
@@ -77,7 +77,7 @@ namespace WeAre.Athenaeum.Services.ACM.Models
         /// </summary>
         /// <remarks>
         /// Notice, that label alone does not constitue a "primary key" of a credential. 
-        /// Other credentials may share the same label, as long as either or both ContractId and SecurityDomain are different.
+        /// Other credentials may share the same label, as long as Path is different.
         /// </remarks>
         public string Label
         {
@@ -94,13 +94,8 @@ namespace WeAre.Athenaeum.Services.ACM.Models
         }
 
         /// <summary>
-        /// Security domain of the credential. For example ftp://files.acme.com, https://shs.skatteverket.se or teasp1.local. Not required.
+        /// Security domain of the credential. For example vaultId/itemId
         /// </summary>
-        /// <remarks>
-        /// Security domain may or may not contain the security protocol as well. 
-        /// Security domains containing and not containing the protocol are considered different, 
-        /// for example ftp://files.acme.com and files.acme.com are different security domains.
-        /// </remarks>
         public string Path { get; set; }
         
         #endregion
