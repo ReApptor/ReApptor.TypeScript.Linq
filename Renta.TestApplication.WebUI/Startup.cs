@@ -15,10 +15,11 @@ using Renta.TestApplication.WebUI.Server.Providers;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Filters;
 using WeAre.Athenaeum.Common.Helpers;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Common.Middlewares;
 using WeAre.Athenaeum.Common.Providers;
+using WeAre.Athenaeum.Services.ACM.Implementation;
 using WeAre.Athenaeum.TemplateApp.Common;
-using WeAre.Athenaeum.TemplateApp.Common.Configuration;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Middlewares;
 using WebEssentials.AspNetCore.Pwa;
 using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
@@ -43,6 +44,8 @@ namespace Renta.TestApplication.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICredentialService, OnePasswordCredentialService>();
+            
             var configuration = services.AddAthenaeumConfiguration<TestApplicationConfiguration>();
 
             ConfigureServices(services, configuration);
@@ -88,8 +91,6 @@ namespace Renta.TestApplication.WebUI
             services.AddScoped<HttpContextProvider, WebHttpContextProvider>();
 
             services.AddSecurityProvider();
-
-            services.AddAthenaeumConfiguration<TestApplicationConfiguration>();
         }
 
         private static void ConfigureCookies(IServiceCollection services)

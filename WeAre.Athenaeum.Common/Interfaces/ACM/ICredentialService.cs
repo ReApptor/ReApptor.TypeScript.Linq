@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WeAre.Athenaeum.Services.ACM.Interface
+namespace WeAre.Athenaeum.Common.Interfaces.ACM
 {
     public interface ICredentialService
     {

@@ -1,5 +1,5 @@
 using System;
-using WeAre.Athenaeum.Services.ACM.Interface;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
 
 namespace WeAre.Athenaeum.Services.ACM.Models
 {

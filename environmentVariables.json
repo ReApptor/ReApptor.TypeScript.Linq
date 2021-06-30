@@ -8,6 +8,8 @@
   "ALLOWED_HOSTS": "*",
   "BACKEND_INSTANCE_NAME": "local-templateapp-be",
   "SYNC_ENABLED": false,
+  "ACM_API": "https://dev-1password-api.reapptor.biz/v1/reapptor-test-1/test-reapptor-templateapp/",
+  "ACM_TOKEN": "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3sidSI6InV1czZ4M2dnY2Zka3lnMmI2bmhkZDZidHFxIiwiYSI6NDh9XSwiYXVkIjpbImNvbS4xcGFzc3dvcmQuY29ubmVjdCJdLCJzdWIiOiI1UVlRQlBXNTJORkEzREVRVklNT0c0NEZPVSIsImlhdCI6MTYyNDg3NzAzNywiaXNzIjoiY29tLjFwYXNzd29yZC5iNSIsImp0aSI6ImZyNGduaDJhanBrcjd2aHhrcnV3bjVoNXdlIn0.E7YKqaoHBjy6A_pakpjz8EUk1WiImgcDgeDYKf-KkRX9xyjqQIgr4GNvDEmSwwZkNiFiuwOI0i75B7ipJZHKeA",
   //Logging
   "MICROSOFT_LOGGING_LEVEL": "Information",
   "DEFAULT_LOGGING_LEVEL": "Trace",

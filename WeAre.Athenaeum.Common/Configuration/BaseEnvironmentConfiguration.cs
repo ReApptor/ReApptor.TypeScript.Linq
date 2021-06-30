@@ -1,10 +1,15 @@
 using System;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using WeAre.Athenaeum.Common.Helpers;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
+using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Configuration
 {
@@ -101,7 +106,7 @@ namespace WeAre.Athenaeum.Common.Configuration
             return ((value == "true") || (value == "1"));
         }
 
-        protected BaseEnvironmentConfiguration(IHostEnvironment environment)
+        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ICredentialService credentialService = null)
         {
             HostingEnvironment = environment ?? throw new ArgumentNullException(nameof(environment));
 
@@ -112,7 +117,7 @@ namespace WeAre.Athenaeum.Common.Configuration
 
             if ((IsDevelopmentVS) || (IsPackageManagerConsole))
             {
-                //Load configuration from file
+                // Load configuration from file
                 string path = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "EnvironmentVariables.json");
                 IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile(path, false, false);
                 IConfigurationRoot config = builder.Build();
@@ -120,6 +125,41 @@ namespace WeAre.Athenaeum.Common.Configuration
                 foreach (IConfigurationSection item in config.GetChildren())
                 {
                     Environment.SetEnvironmentVariable(item.Key, item.Value);
+                }
+            }
+            else
+            {
+                string credentialServiceApi = GetEnvironmentVariable("ACM_API", false);
+                if (!string.IsNullOrWhiteSpace(credentialServiceApi))
+                {
+                    // Load configuration from ACM
+                    if (credentialService == null)
+                        throw new ArgumentNullException(nameof(credentialService), "ACM (credential service) is not provider, probably the corresponding service is not registered in ServiceProvider. ICredentialService should be registered before Configuration is initialized.");
+                    
+                    Type credentialServiceSettingsType = typeof(ICredentialServiceSettings<>);
+
+                    //PropertyInfo[] credentialServiceSettingsProperties = typeof(TConfiguration).GetAllProperties(credentialServiceSettingsType);
+
+                    // foreach (PropertyInfo settingsProperty in credentialServiceSettingsProperties)
+                    // {
+                    //     object settings = settingsProperty.QuickGetValue(this);
+                    //
+                    //     Type settingsType = settings.GetType();
+                    //
+                    //     //services.AddSingleton(settingsType, settings);
+                    //
+                    //     Type[] optionsTypes = settingsType
+                    //         .GetInterfaces()
+                    //         .Where(item => item.IsSubClassOfGeneric(credentialServiceSettingsProperties))
+                    //         .ToArray();
+                    //
+                    //     foreach (Type optionsType in optionsTypes)
+                    //     {
+                    //         services.AddSingleton(optionsType, settings);
+                    //     }
+                    // }
+                    //
+                    // //credentialService.ListCredentialsAsync()
                 }
             }
 
