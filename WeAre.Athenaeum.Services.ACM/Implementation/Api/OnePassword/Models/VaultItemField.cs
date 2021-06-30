@@ -7,6 +7,9 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models
         [JsonProperty("id")]
         public string Id { get; set; }
         
+        [JsonProperty("section")]
+        public VaultItemSection Section { get; set; }
+        
         [JsonProperty("type")]
         public string Type { get; set; }
         
