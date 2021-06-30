@@ -58,7 +58,23 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         return this.pictures[this.state.selectedPictureIndex];
     }
 
-    private previewName(index: number): string {
+    private get cropperSource(): string {
+        if (this.state.selectedPictureIndex === null || !this.activePicture) {
+            return "";
+        }
+
+        if (this.activePicture.id) {
+            if (this.props.imageUrl) {
+                return this.props.imageUrl(this.activePicture);
+            }
+
+            return `/files/images/${this.activePicture.id}`
+        }
+
+        return this.activePicture.src;
+    }
+
+    private getPreviewName(index: number): string {
         const picture: FileModel | undefined = this.pictures[index];
 
         if (!picture) {
@@ -68,7 +84,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         return picture.name
     }
 
-    private previewSource(index: number): string {
+    private getPreviewSource(index: number): string {
         const picture: FileModel | undefined = this.pictures[index];
 
         if (!picture) {
@@ -84,22 +100,6 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
 
         return picture.src;
-    }
-
-    private get cropperSource(): string {
-        if (this.state.selectedPictureIndex === null || !this.activePicture) {
-            return "";
-        }
-
-        if (this.activePicture.id) {
-            if (this.props.imageUrl) {
-                return this.props.imageUrl(this.activePicture);
-            }
-
-            return `/files/images/${this.activePicture.id}`
-        }
-
-        return this.activePicture.src;
     }
 
     //  ViewIfStatements
@@ -490,11 +490,11 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             >
                 <div className={styles.listViewItemThumbnail}>
                     <img
-                        src={this.previewSource(index)}
-                        alt={this.previewName(index)}
+                        src={this.getPreviewSource(index)}
+                        alt={this.getPreviewName(index)}
                     />
                 </div>
-                {this.previewName(index)}
+                {this.getPreviewName(index)}
             </div>
         );
     }
@@ -516,7 +516,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     renderPreviewPanel(): JSX.Element {
         return (
             <div className={styles.preview}>
-                <img src={this.previewSource(0)} alt={this.previewName(0)}/>
+                <img src={this.getPreviewSource(0)} alt={this.getPreviewName(0)}/>
             </div>
         );
     }
