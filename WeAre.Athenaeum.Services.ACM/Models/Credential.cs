@@ -61,11 +61,11 @@ namespace WeAre.Athenaeum.Services.ACM.Models
         }
 
         /// <summary>
-        /// Compares ContractId and SecurityDomain of the credentials. Returns true if equal.
+        /// Compares credential path and credentials label. Returns true if equal.
         /// </summary>
-        public bool IsKeyMatch(string securityDomain = null, string contractId = null)
+        public bool IsKeyMatch(string path, string label)
         {
-            return _key.Match(securityDomain, contractId);
+            return _key.Match(path, label);
         }
 
         #region Properties
@@ -85,7 +85,7 @@ namespace WeAre.Athenaeum.Services.ACM.Models
         }
         
         /// <summary>
-        /// Password of the credential. If credential's file part contains a private key requiring a passphrase, contains the passphrase. Not required, if File property is set.
+        /// Password of the credential. Not required, if File property is set.
         /// </summary>
         public string Value { get; set; }
         

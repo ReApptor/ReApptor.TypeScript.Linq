@@ -7,24 +7,17 @@ namespace WeAre.Athenaeum.Services.ACM.Interface
         /// </summary>
         /// <remarks>
         /// Notice, that label alone does not constitue a "primary key" of a credential. 
-        /// Other credentials may share the same label, as long as either or both ContractId and SecurityDomain are different.
+        /// Other credentials may share the same label, as long as path is different.
         /// </remarks>
         string Label { get; set; }
 
         /// <summary>
-        /// Security domain of the credential. For example ftp://files.acme.com, https://shs.skatteverket.se or teasp1.local. Not required.
+        /// Security domain of the credential. For example vaultId/itemId
         /// </summary>
-        /// <remarks>
-        /// Security domain may or may not contain the security protocol as well. 
-        /// Security domains containing and not containing the protocol are considered different, 
-        /// for example ftp://files.acme.com and files.acme.com are different security domains.
-        /// </remarks>
         string Path { get; set; }
 
         /// <summary>
-        /// Compares ContractId and SecurityDomain of the credentials. Returns true if equal.
-        /// Not specified (null) arguments always match.
-        /// In case if securityDomain and contract id is null, result always true.
+        /// Compares credential path and credentials label. Returns true if equal.
         /// </summary>
         bool Match(string path, string label);
     }

@@ -13,15 +13,13 @@ namespace WeAre.Athenaeum.Services.ACM.Interface
         string Value { get; }
         
         /// <summary>
-        /// Compares Label, ContractId and SecurityDomain of the credentials. Returns true if equal.
+        /// Compares two credential references or credential path and credential key. Returns true if equal.
         /// </summary>
         bool IsKeyMatch(ICredentialKey key);
 
         /// <summary>
-        /// Compares ContractId and SecurityDomain of the credentials. Returns true if equal.
-        /// Not specified (null) arguments always match.
-        /// In case if securityDomain and contract id is null, result always true.
+        /// Compares credential path and credential key. Returns true if equal.
         /// </summary>
-        bool IsKeyMatch(string securityDomain = null, string contractId = null);
+        bool IsKeyMatch(string path, string label);
     }
 }
