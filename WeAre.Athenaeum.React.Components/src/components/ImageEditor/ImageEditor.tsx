@@ -149,7 +149,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             }
         }
 
-        await this.addPictures(newFileModel);
+        await this.updatePicture(newFileModel, this.state.selectedPictureIndex);
 
         this.setState({currentView: this.multi ? ImageEditorView.ListView : ImageEditorView.Preview});
     }
@@ -236,7 +236,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return;
         }
 
-        await this.addPictures(event.dataTransfer.files)
+        await this.addFileList(event.dataTransfer.files)
     }
 
     async onFileInputChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -246,7 +246,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return;
         }
 
-        await this.addPictures(event.target.files)
+        await this.addFileList(event.target.files)
     }
 
     //  Logic
@@ -261,7 +261,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         return await super.componentWillReceiveProps(nextProps);
     }
 
-    async addPictures(fileList: FileList): Promise<void> {
+    async addFileList(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
 
         if (fileListAsArray.length === 0) {
@@ -291,8 +291,12 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return converted;
         }));
 
+        await this.addPictures(fileModels)
+    }
+
+    async addPictures(fileModels: FileModel[]): Promise<void> {
         if (this.props.onChange) {
-            await this.props.onChange(this, fileModels);
+            await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
         }
 
         await this.setState({currentView: this.multi ? ImageEditorView.ListView : ImageEditorView.Cropper, selectedPictureIndex: this.multi ? this.state.selectedPictureIndex : 0});
@@ -376,7 +380,8 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         this.setState({selectedPictureIndex: index})
     }
 
-    //  SubRenders
+    //  Renders
+
     renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
@@ -576,6 +581,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     //  Statics
+
     static async fileToFileModel(file: File): Promise<FileModel> {
         const fileData = await ImageEditor.readFile(file);
         const fileModel = new FileModel(fileData);
