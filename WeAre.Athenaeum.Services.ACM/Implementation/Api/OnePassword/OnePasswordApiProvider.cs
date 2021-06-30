@@ -34,7 +34,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             if (vaultId == null)
                 throw new ArgumentNullException(nameof(vaultId));
             if (string.IsNullOrWhiteSpace(vaultId))
-                throw new ArgumentOutOfRangeException(nameof(vaultId), "VaultId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
             
             string[] keys = { vaultId, "items" };
             
@@ -46,7 +46,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             if (vaultId == null)
                 throw new ArgumentNullException(nameof(vaultId));
             if (string.IsNullOrWhiteSpace(vaultId))
-                throw new ArgumentOutOfRangeException(nameof(vaultId), "VaultId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
             
             string[] keys = { vaultId };
             
@@ -74,11 +74,11 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             if (vaultId == null)
                 throw new ArgumentNullException(nameof(vaultId));
             if (string.IsNullOrWhiteSpace(vaultId))
-                throw new ArgumentOutOfRangeException(nameof(vaultId), "VaultId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
             if (itemId == null)
                 throw new ArgumentNullException(nameof(itemId));
             if (string.IsNullOrWhiteSpace(itemId))
-                throw new ArgumentOutOfRangeException(nameof(itemId), "ItemId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(itemId), "Item Id is empty or whitespace.");
             
             string[] keys = { vaultId, "items", itemId };
             
@@ -102,11 +102,11 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             if (vaultId == null)
                 throw new ArgumentNullException(nameof(vaultId));
             if (string.IsNullOrWhiteSpace(vaultId))
-                throw new ArgumentOutOfRangeException(nameof(vaultId), "VaultId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
             if (itemId == null)
                 throw new ArgumentNullException(nameof(itemId));
             if (string.IsNullOrWhiteSpace(itemId))
-                throw new ArgumentOutOfRangeException(nameof(itemId), "ItemId is empty or whitespace.");
+                throw new ArgumentOutOfRangeException(nameof(itemId), "Item Id is empty or whitespace.");
             
             string[] keys = { vaultId, "items", itemId };
             
