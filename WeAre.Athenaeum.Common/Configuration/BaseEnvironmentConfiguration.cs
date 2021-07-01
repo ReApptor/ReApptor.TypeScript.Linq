@@ -1,12 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using WeAre.Athenaeum.Common.Helpers;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Toolkit.Extensions;
@@ -127,41 +126,23 @@ namespace WeAre.Athenaeum.Common.Configuration
                     Environment.SetEnvironmentVariable(item.Key, item.Value);
                 }
             }
-            else
-            {
-                string credentialServiceApi = GetEnvironmentVariable("ACM_API", false);
-                if (!string.IsNullOrWhiteSpace(credentialServiceApi))
-                {
-                    // Load configuration from ACM
-                    if (credentialService == null)
-                        throw new ArgumentNullException(nameof(credentialService), "ACM (credential service) is not provider, probably the corresponding service is not registered in ServiceProvider. ICredentialService should be registered before Configuration is initialized.");
-                    
-                    Type credentialServiceSettingsType = typeof(ICredentialServiceSettings<>);
 
-                    //PropertyInfo[] credentialServiceSettingsProperties = typeof(TConfiguration).GetAllProperties(credentialServiceSettingsType);
-
-                    // foreach (PropertyInfo settingsProperty in credentialServiceSettingsProperties)
-                    // {
-                    //     object settings = settingsProperty.QuickGetValue(this);
-                    //
-                    //     Type settingsType = settings.GetType();
-                    //
-                    //     //services.AddSingleton(settingsType, settings);
-                    //
-                    //     Type[] optionsTypes = settingsType
-                    //         .GetInterfaces()
-                    //         .Where(item => item.IsSubClassOfGeneric(credentialServiceSettingsProperties))
-                    //         .ToArray();
-                    //
-                    //     foreach (Type optionsType in optionsTypes)
-                    //     {
-                    //         services.AddSingleton(optionsType, settings);
-                    //     }
-                    // }
-                    //
-                    // //credentialService.ListCredentialsAsync()
-                }
-            }
+            // if (credentialService != null)
+            // {
+            //     PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
+            //     if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
+            //     {
+            //         credentialService.Initialize(acmSettings);
+            //         IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
+            //
+            //         credentials = credentials.Where(credential => (!string.IsNullOrWhiteSpace(credential.Key?.Label)) && (!string.IsNullOrWhiteSpace(credential.Value)));
+            //
+            //         foreach (ICredential credential in credentials)
+            //         {
+            //             Environment.SetEnvironmentVariable(credential.Key.Label, credential.Value);
+            //         }
+            //     }
+            // }
 
             Instance = this as TConfiguration;
         }

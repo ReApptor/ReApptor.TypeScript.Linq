@@ -8,6 +8,7 @@ using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItemReference;
+using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultReference;
 using WeAre.Athenaeum.Services.ACM.Models;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation
@@ -15,8 +16,8 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
     public sealed class OnePasswordCredentialService : ICredentialService
     {
         private OnePasswordApiProvider _client;
-        private readonly ILogger<OnePasswordCredentialService> _logger;
         private readonly OnePasswordCredentialServiceSettings _settings;
+        private readonly ILogger<OnePasswordCredentialService> _logger;
         
         private OnePasswordApiProvider GetClient()
         {
@@ -47,6 +48,29 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             _settings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
         }
 
+        public OnePasswordCredentialService(ILogger<OnePasswordCredentialService> logger, ICredentialServiceSettings settings)
+        {
+            if (settings == null)
+                throw new ArgumentOutOfRangeException(nameof(settings));
+            if (!(settings is OnePasswordCredentialServiceSettings onePasswordSettings))
+                throw new ArgumentOutOfRangeException(nameof(settings), $"\"{typeof(OnePasswordCredentialServiceSettings).FullName}\" is expected, but settings has type \"{settings.GetType().FullName}\".");
+
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = onePasswordSettings;
+        }
+
+        public void Initialize(ICredentialServiceSettings settings)
+        {
+            if (settings == null)
+                throw new ArgumentOutOfRangeException(nameof(settings));
+            if (!(settings is OnePasswordCredentialServiceSettings onePasswordSettings))
+                throw new ArgumentOutOfRangeException(nameof(settings), $"\"{typeof(OnePasswordCredentialServiceSettings).FullName}\" is expected, but settings has type \"{settings.GetType().FullName}\".");
+
+            _settings.ApiUrl = onePasswordSettings.ApiUrl;
+            _settings.AccessToken = onePasswordSettings.AccessToken;
+            _settings.TimeoutInSeconds = onePasswordSettings.TimeoutInSeconds;
+        }
+
         public async Task<ICredential> GetCredentialAsync(ICredentialKey key)
         {
             if (key == null)
@@ -70,23 +94,31 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             return credential;
         }
 
-        public async Task<IEnumerable<ICredential>> ListCredentialsAsync(string path)
+        public async Task<IEnumerable<ICredential>> ListCredentialsAsync(string path = "")
         {
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentOutOfRangeException(nameof(path), "Path is empty or whitespace.");
+            {
+                path = _settings.Path;
+            }
 
             OnePasswordApiProvider client = GetClient();
-            
-            VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(path);
+
+            VaultReference[] vaults = await client.ListVaultsAsync();
 
             var credentials = new List<ICredential>();
-            foreach (VaultItemReference vaultItemReference in vaultItemsReferences)
+            foreach (VaultReference vault in vaults)
             {
-                VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
-                
-                credentials.AddRange(vaultItem.Transform());
+                if ((string.IsNullOrWhiteSpace(path)) || (vault.Id == path) || (vault.Name == path))
+                {
+                    VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
+
+                    foreach (VaultItemReference vaultItemReference in vaultItemsReferences)
+                    {
+                        VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
+
+                        credentials.AddRange(vaultItem.Transform());
+                    }
+                }
             }
 
             return credentials;
