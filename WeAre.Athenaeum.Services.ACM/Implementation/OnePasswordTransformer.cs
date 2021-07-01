@@ -1,7 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
-using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
+using System.Collections.Generic;
+
 using WeAre.Athenaeum.Services.ACM.Models;
+using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation
 {

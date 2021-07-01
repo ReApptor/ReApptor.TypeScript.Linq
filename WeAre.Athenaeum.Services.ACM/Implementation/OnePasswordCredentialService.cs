@@ -6,7 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
-using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models;
+using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
+using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItemReference;
 using WeAre.Athenaeum.Services.ACM.Models;
 
 namespace WeAre.Athenaeum.Services.ACM.Implementation
