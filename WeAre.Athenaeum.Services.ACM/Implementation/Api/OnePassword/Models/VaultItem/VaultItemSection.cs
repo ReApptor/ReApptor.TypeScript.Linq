@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models
+namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem
 {
     public sealed class VaultItemSection
     {
