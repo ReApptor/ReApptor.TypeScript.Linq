@@ -6,6 +6,7 @@ using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Configuration;
 using WeAre.Athenaeum.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
+using WeAre.Athenaeum.Services.ACM.Implementation;
 using WeAre.Athenaeum.Services.Cache.Models;
 
 namespace Renta.TestApplication.Common.Configuration
@@ -21,6 +22,7 @@ namespace Renta.TestApplication.Common.Configuration
         private string _backendInstanceName;
         private string _frontendInstanceName;
         private string _dataProtectionKey;
+        private OnePasswordCredentialServiceSettings _acmSettings;
         private GoogleSettings _googleSettings;
         private SymmetricSecurityKey _tokenSecurityKey;
         private RedisSettings _redisSettings;
@@ -80,6 +82,19 @@ namespace Renta.TestApplication.Common.Configuration
         public string ApiUrl
         {
             get { return _apiUrl ??= GetEnvironmentVariable("API_URL"); }
+        }
+        
+        public OnePasswordCredentialServiceSettings AcmSettings
+        {
+            get
+            {
+                return _acmSettings ??= new OnePasswordCredentialServiceSettings
+                {
+                    ApiUrl = GetEnvironmentVariable("ACM_API"),
+                    AccessToken = GetEnvironmentVariable("ACM_TOKEN"),
+                    Path = GetEnvironmentVariable("ACM_PATH"),
+                };
+            }
         }
 
         public string DataProtectionKey

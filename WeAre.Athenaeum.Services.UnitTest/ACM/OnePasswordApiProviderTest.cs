@@ -14,12 +14,12 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
         private OnePasswordApiSettings GetSettings(bool needWriteAccess = false)
         {
             var readAccessToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3siYSI6NDgsInUiOiJveGE0aDNoc2s3eXU2amlrdnRtcTNxc3NiNCJ9XSwiYXVkIjpbImNvbS4xcGFzc3dvcmQuY29ubmVjdCJdLCJpYXQiOjE2MjUxMjc2MTUsImlzcyI6ImNvbS4xcGFzc3dvcmQuYjUiLCJqdGkiOiJ1ZHBqN3Fta2NybGV5bzQ2ZHFzdDRuc2N5dSIsInN1YiI6IjVRWVFCUFc1Mk5GQTNERVFWSU1PRzQ0Rk9VIn0.PdozB_biSF--2e4GeDcPvF6QXYsv85FX8p-G1q4O0NKyjQaqcwVfQKtk2AHwVTv1DI4GOtuJvRvrBr4DPfT-pg";
-            var writeAссessToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3siYSI6NDk2LCJ1Ijoib3hhNGgzaHNrN3l1Nmppa3Z0bXEzcXNzYjQifV0sImF1ZCI6WyJjb20uMXBhc3N3b3JkLmNvbm5lY3QiXSwiaWF0IjoxNjI1MTI3NjE3LCJpc3MiOiJjb20uMXBhc3N3b3JkLmI1IiwianRpIjoiYXp0eXpxM3kzdTNqcHZ3a2g0a2V2am5ibm0iLCJzdWIiOiI1UVlRQlBXNTJORkEzREVRVklNT0c0NEZPVSJ9.wuE_ZG2HcH2BufQbJiMhyc9bjhqyavJYJrrDXD1cvRx_orsGZmFxn0b33sNguQvW-psF7LyLvwdGGoHP5eOrSw";
+            var writeAccessToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3siYSI6NDk2LCJ1Ijoib3hhNGgzaHNrN3l1Nmppa3Z0bXEzcXNzYjQifV0sImF1ZCI6WyJjb20uMXBhc3N3b3JkLmNvbm5lY3QiXSwiaWF0IjoxNjI1MTI3NjE3LCJpc3MiOiJjb20uMXBhc3N3b3JkLmI1IiwianRpIjoiYXp0eXpxM3kzdTNqcHZ3a2g0a2V2am5ibm0iLCJzdWIiOiI1UVlRQlBXNTJORkEzREVRVklNT0c0NEZPVSJ9.wuE_ZG2HcH2BufQbJiMhyc9bjhqyavJYJrrDXD1cvRx_orsGZmFxn0b33sNguQvW-psF7LyLvwdGGoHP5eOrSw";
             
             return new OnePasswordApiSettings
             {
                 ApiUrl = "https://dev-1password-api.reapptor.biz/v1/",
-                AccessToken = needWriteAccess ? writeAссessToken : readAccessToken,
+                AccessToken = needWriteAccess ? writeAccessToken : readAccessToken,
                 TimeoutInSeconds = 3
             };
         }
@@ -52,9 +52,11 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             VaultReference reference = vaults.First();
             
             Assert.NotNull(reference.Id);
+            Assert.NotEmpty(reference.Id);
+            Assert.NotNull(reference.Name);
             Assert.NotEmpty(reference.Name);
 
-            VaultReference vault = await provider.GetVaultAsync(reference.Id);
+            VaultReference vault = await provider.FindVaultByNameAsync(reference.Name);
             
             Assert.NotNull(vault);
             Assert.Equal(reference.Id, vault.Id);
@@ -62,7 +64,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
         }
         
         [Fact]
-        public async Task ListVaultItemsAsynTest()
+        public async Task ListVaultItemsAsycnTest()
         {
             OnePasswordApiSettings settings = GetSettings();
 
@@ -129,7 +131,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             
             var provider = new OnePasswordApiProvider(settings);
 
-            VaultReference fakeVault = await provider.FindSingleVaultByNameAsync("fake");
+            VaultReference fakeVault = await provider.FindVaultByNameAsync("fake");
 
             Assert.Null(fakeVault);
             
@@ -143,7 +145,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             Assert.NotNull(reference.Id);
             Assert.NotEmpty(reference.Name);
 
-            VaultReference existingVaultReference = await provider.FindSingleVaultByNameAsync(reference.Name);
+            VaultReference existingVaultReference = await provider.FindVaultByNameAsync(reference.Name);
 
             Assert.NotNull(existingVaultReference);
             Assert.Equal(reference.Name, existingVaultReference.Name);

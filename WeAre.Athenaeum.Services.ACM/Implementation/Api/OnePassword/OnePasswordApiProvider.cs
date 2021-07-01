@@ -56,17 +56,17 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             return InvokeAsync<VaultReference>("/vaults/", keys, throwNotFound: false);
         }
 
-        public async Task<VaultReference> FindSingleVaultByNameAsync(string name)
+        public async Task<VaultReference> FindVaultByNameAsync(string name)
         {
             VaultReference[] vaults = await FindVaultsByNameAsync(name);
 
             if (vaults.Length > 1)
-                throw new InvalidOperationException($"Found more than one vault by name {name}");
+                throw new ArgumentOutOfRangeException(nameof(name), $"Found more than one vault with name \"{name}\".");
             
             return vaults.SingleOrDefault();
         }
 
-        public Task<VaultReference[]> FindVaultsByNameAsync(string name)
+        public async Task<VaultReference[]> FindVaultsByNameAsync(string name)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -79,7 +79,9 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
                 ("filter", $"name eq \"{name}\""),
             };
 
-            return InvokeAsync<VaultReference[]>("/vaults/", @params: @params, throwNotFound: false);
+            VaultReference[] vaults = await InvokeAsync<VaultReference[]>("/vaults/", @params: @params, throwNotFound: false);
+
+            return vaults ?? new VaultReference[0];
         }
 
         public Task<VaultItemReference[]> FindVaultItemReferencesByTitleAsync(string vaultId, string title)
