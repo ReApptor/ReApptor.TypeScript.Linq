@@ -68,6 +68,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
 
             _settings.ApiUrl = onePasswordSettings.ApiUrl;
             _settings.AccessToken = onePasswordSettings.AccessToken;
+            _settings.Path = onePasswordSettings.Path;
             _settings.TimeoutInSeconds = onePasswordSettings.TimeoutInSeconds;
         }
 
