@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using WeAre.Athenaeum.Common.Api;
-using WeAre.Athenaeum.Services.ACM.Implementation.Api.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultReference;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItemReference;
@@ -28,8 +27,6 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             _settings = settings;
         }
 
-        #region List
-
         public Task<VaultReference[]> ListVaultsAsync()
         {
             return InvokeAsync<VaultReference[]>("/vaults/", throwNotFound: false);
@@ -47,11 +44,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             return InvokeAsync<VaultItemReference[]>("/vaults/", keys, throwNotFound: false);
         }
 
-        #endregion
-
-        #region Get
-
-        public Task<VaultReference> GetVaultReferenceAsync(string vaultId)
+        public Task<VaultReference> GetVaultAsync(string vaultId)
         {
             if (vaultId == null)
                 throw new ArgumentNullException(nameof(vaultId));
@@ -63,37 +56,17 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             return InvokeAsync<VaultReference>("/vaults/", keys, throwNotFound: false);
         }
 
-        public Task<VaultItem> GetVaultItemAsync(string vaultId, string itemId)
-        {
-            if (vaultId == null)
-                throw new ArgumentNullException(nameof(vaultId));
-            if (string.IsNullOrWhiteSpace(vaultId))
-                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
-            if (itemId == null)
-                throw new ArgumentNullException(nameof(itemId));
-            if (string.IsNullOrWhiteSpace(itemId))
-                throw new ArgumentOutOfRangeException(nameof(itemId), "Item Id is empty or whitespace.");
-
-            string[] keys = {vaultId, "items", itemId};
-
-            return InvokeAsync<VaultItem>("/vaults/", keys, throwNotFound: true);
-        }
-
-        #endregion
-
-        #region Find
-
-        public async Task<VaultReference> FindSingleVaultByNameAsync(string name)
+        public async Task<VaultReference> FindVaultByNameAsync(string name)
         {
             VaultReference[] vaults = await FindVaultsByNameAsync(name);
 
             if (vaults.Length > 1)
-                throw new InvalidOperationException($"Found more than one vault by name {name}");
-
+                throw new ArgumentOutOfRangeException(nameof(name), $"Found more than one vault with name \"{name}\".");
+            
             return vaults.SingleOrDefault();
         }
 
-        public Task<VaultReference[]> FindVaultsByNameAsync(string name)
+        public async Task<VaultReference[]> FindVaultsByNameAsync(string name)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -106,7 +79,9 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
                 ("filter", $"name eq \"{name}\""),
             };
 
-            return InvokeAsync<VaultReference[]>("/vaults/", @params: @params, throwNotFound: false);
+            VaultReference[] vaults = await InvokeAsync<VaultReference[]>("/vaults/", @params: @params, throwNotFound: false);
+
+            return vaults ?? new VaultReference[0];
         }
 
         public Task<VaultItemReference[]> FindVaultItemReferencesByTitleAsync(string vaultId, string title)
@@ -126,20 +101,32 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
 
             return InvokeAsync<VaultItemReference[]>("/vaults/", keys, @params, throwNotFound: false);
         }
-
+        
         public async Task<VaultItemReference> FindSingleVaultItemReferenceByTitleAsync(string vaultId, string title)
         {
             VaultItemReference[] vaultItems = await FindVaultItemReferencesByTitleAsync(vaultId, title);
-
+            
             if (vaultItems.Length > 1)
                 throw new InvalidOperationException($"Found more than one vault by name {title}");
 
             return vaultItems.SingleOrDefault();
         }
 
-        #endregion
+        public Task<VaultItem> GetVaultItemAsync(string vaultId, string itemId)
+        {
+            if (vaultId == null)
+                throw new ArgumentNullException(nameof(vaultId));
+            if (string.IsNullOrWhiteSpace(vaultId))
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
+            if (itemId == null)
+                throw new ArgumentNullException(nameof(itemId));
+            if (string.IsNullOrWhiteSpace(itemId))
+                throw new ArgumentOutOfRangeException(nameof(itemId), "Item Id is empty or whitespace.");
 
-        #region Add
+            string[] keys = {vaultId, "items", itemId};
+
+            return InvokeAsync<VaultItem>("/vaults/", keys, throwNotFound: true);
+        }
 
         public Task<VaultItem> AddVaultItemAsync(VaultItem item)
         {
@@ -149,16 +136,11 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
                 throw new ArgumentOutOfRangeException(nameof(item), "Vault Id is empty or whitespace.");
 
             item.Validate();
-
+            
             string[] keys = {item.Vault.Id, "items"};
 
             return InvokeAsync<VaultItem, VaultItem>("/vaults/", keys, request: item);
         }
-
-
-        #endregion
-
-        #region Delete
 
         public Task DeleteVaultItemAsync(string vaultId, string itemId)
         {
@@ -175,21 +157,5 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
 
             return InvokeAsync(HttpMethod.Delete, "/vaults/", keys, throwNotFound: false);
         }
-        
-        #endregion
-
-        #region Patch
-
-        public Task<VaultItem> PatchVaultItemFieldsAsync(string vaultId, string itemId, params VaultItemDetailsPatch[] patches)
-        {
-            if (patches == null)
-                throw new ArgumentNullException(nameof(patches));
-
-            string[] keys = { vaultId, "items", itemId };
-
-            return InvokeAsync<VaultItemDetailsPatch[], VaultItem>(HttpMethod.Patch, "/vaults/", keys, request: patches);
-        }
-
-        #endregion
     }
 }
