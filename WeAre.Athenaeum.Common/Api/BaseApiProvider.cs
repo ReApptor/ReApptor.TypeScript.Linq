@@ -202,6 +202,11 @@ namespace WeAre.Athenaeum.Common.Api
                 return await tkHttpClient.PostAsync(url, content);
             }
 
+            if (method == HttpMethod.Patch)
+            {
+                return await tkHttpClient.PatchAsync(url, content);
+            }
+
             return (content != null)
                 ? await tkHttpClient.PostAsync(url, content)
                 : await tkHttpClient.GetAsync(url);

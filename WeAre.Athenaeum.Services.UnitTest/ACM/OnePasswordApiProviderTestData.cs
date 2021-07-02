@@ -11,11 +11,11 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
         public static readonly string UnitTestVaultName = "acm-unit-tests";
         
         private static readonly string _acmUnitTestVaultReferenceId = "oxa4h3hsk7yu6jikvtmq3qssb4";
-        public static VaultItem GetTestVaultItem()
+        public static VaultItem CreateNewTestVaultItem()
         {
             return new VaultItem
             {
-                Title = "Secrets Automation Item",
+                Title = "Unit Test Vault Item",
                 Tags = new []{"connect", "\ud83d\udc27"},
                 Vault = new VaultId(_acmUnitTestVaultReferenceId),
                 Category = VaultItemCategory.LOGIN.ToString(),
