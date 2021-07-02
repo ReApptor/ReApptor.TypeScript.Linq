@@ -19,7 +19,9 @@ namespace WeAre.Athenaeum.Common.Configuration
 
             services.AddSingleton<TConfiguration>();
 
-            TConfiguration configuration = services.BuildServiceProvider().GetService<TConfiguration>();
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            TConfiguration configuration = serviceProvider.GetService<TConfiguration>();
             
             services.AddSingleton<IEnvironmentConfiguration>(configuration);
 
