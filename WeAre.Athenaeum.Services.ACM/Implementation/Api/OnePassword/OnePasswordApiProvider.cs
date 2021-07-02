@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using WeAre.Athenaeum.Common.Api;
+using WeAre.Athenaeum.Services.ACM.Implementation.Api.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultReference;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItemReference;
@@ -156,6 +157,25 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
             string[] keys = {vaultId, "items", itemId};
 
             return InvokeAsync(HttpMethod.Delete, "/vaults/", keys, throwNotFound: false);
+        }
+        
+        public Task<VaultItem> PatchVaultItemFieldsAsync(string vaultId, string itemId, params VaultItemDetailsPatch[] patches)
+        {
+            if (vaultId == null)
+                throw new ArgumentNullException(nameof(vaultId));
+            if (string.IsNullOrWhiteSpace(vaultId))
+                throw new ArgumentOutOfRangeException(nameof(vaultId), "Vault Id is empty or whitespace.");
+            if (itemId == null)
+                throw new ArgumentNullException(nameof(itemId));
+            if (string.IsNullOrWhiteSpace(itemId))
+                throw new ArgumentOutOfRangeException(nameof(itemId), "Item Id is empty or whitespace.");
+
+            if (patches == null)
+                throw new ArgumentNullException(nameof(patches));
+
+            string[] keys = {vaultId, "items", itemId};
+
+            return InvokeAsync<VaultItemDetailsPatch[], VaultItem>(HttpMethod.Patch, "/vaults/", keys, request: patches);
         }
     }
 }
