@@ -243,74 +243,79 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             Assert.NotNull(fieldValue);
             Assert.NotEmpty(fieldValue);
             
-            //Test replace patch
-            string newItemFieldValue = "unitTestValue";
-            VaultItemDetailsPatch[] replacePatch =
+            try
             {
-                new VaultItemDetailsPatch
+                //Test replace patch
+                string newItemFieldValue = "unitTestValue";
+                VaultItemDetailsPatch[] replacePatch =
                 {
-                    Operation = VaultItemDetailsPatchOperation.Replace,
-                    Path = $"/fields/{fieldId}/value",
-                    Value = newItemFieldValue
-                }
-            };
+                    new VaultItemDetailsPatch
+                    {
+                        Operation = VaultItemDetailsPatchOperation.Replace,
+                        Path = $"/fields/{fieldId}/value",
+                        Value = newItemFieldValue
+                    }
+                };
 
-            VaultItem replacePatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, replacePatch);
+                VaultItem replacePatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, replacePatch);
 
-            Assert.NotNull(replacePatchVaultItem);
-            Assert.NotNull(replacePatchVaultItem.Fields);
-            Assert.NotEmpty(replacePatchVaultItem.Fields);
+                Assert.NotNull(replacePatchVaultItem);
+                Assert.NotNull(replacePatchVaultItem.Fields);
+                Assert.NotEmpty(replacePatchVaultItem.Fields);
 
-            VaultItemField replacePatchFieldValue = replacePatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
+                VaultItemField replacePatchFieldValue = replacePatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
 
-            Assert.NotNull(replacePatchFieldValue);
-            Assert.NotEqual(replacePatchFieldValue.Value,fieldValue);
-            Assert.Equal(replacePatchFieldValue.Value, newItemFieldValue);
+                Assert.NotNull(replacePatchFieldValue);
+                Assert.NotEqual(replacePatchFieldValue.Value, fieldValue);
+                Assert.Equal(replacePatchFieldValue.Value, newItemFieldValue);
 
-            //Test remove patch
-            VaultItemDetailsPatch[] removePatch =
+                //Test remove patch
+                VaultItemDetailsPatch[] removePatch =
+                {
+                    new VaultItemDetailsPatch
+                    {
+                        Operation = VaultItemDetailsPatchOperation.Remove,
+                        Path = $"/fields/{fieldId}/value",
+                        Value = ""
+                    }
+                };
+
+                VaultItem removePatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, removePatch);
+
+                VaultItemField removePatchFieldValue = removePatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
+
+                Assert.NotNull(removePatchFieldValue);
+                Assert.Null(removePatchFieldValue.Value);
+
+                //Test add patch
+
+                VaultItemDetailsPatch[] addPatch =
+                {
+                    new VaultItemDetailsPatch
+                    {
+                        Operation = VaultItemDetailsPatchOperation.Add,
+                        Path = $"/fields/{fieldId}/value",
+                        Value = newItemFieldValue
+                    }
+                };
+
+                VaultItem addPatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, addPatch);
+
+                VaultItemField addPatchFieldValue = addPatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
+
+                Assert.NotNull(addPatchFieldValue);
+                Assert.NotNull(addPatchFieldValue.Value);
+                Assert.Equal(newItemFieldValue, addPatchFieldValue.Value);
+            }
+            finally
             {
-                new VaultItemDetailsPatch
-                {
-                    Operation = VaultItemDetailsPatchOperation.Remove,
-                    Path = $"/fields/{fieldId}/value",
-                    Value = ""
-                }
-            };
+                //Clean vault 
+                await provider.DeleteVaultItemAsync(vaultItem.Vault.Id, vaultItem.Id);
 
-            VaultItem removePatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, removePatch);
+                var itemReference = await provider.FindSingleVaultItemReferenceByTitleAsync(vaultItem.Vault.Id, vaultItem.Title);
 
-            VaultItemField removePatchFieldValue = removePatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
-
-            Assert.NotNull(removePatchFieldValue);
-            Assert.Null(removePatchFieldValue.Value);
-
-            //Test add patch
-            
-            VaultItemDetailsPatch[] addPatch =
-            {
-                new VaultItemDetailsPatch
-                {
-                    Operation = VaultItemDetailsPatchOperation.Add,
-                    Path = $"/fields/{fieldId}/value",
-                    Value = newItemFieldValue
-                }
-            };
-
-            VaultItem addPatchVaultItem = await provider.PatchVaultItemFieldsAsync(vaultItem.Vault.Id, vaultItem.Id, addPatch);
-
-            VaultItemField addPatchFieldValue = addPatchVaultItem.Fields.SingleOrDefault(field => field.Id == fieldId);
-
-            Assert.NotNull(addPatchFieldValue);
-            Assert.NotNull(addPatchFieldValue.Value);
-            Assert.Equal(newItemFieldValue, addPatchFieldValue.Value);
-
-            //Clean vault 
-            await provider.DeleteVaultItemAsync(vaultItem.Vault.Id, vaultItem.Id);
-
-            var itemReference = await provider.FindSingleVaultItemReferenceByTitleAsync(vaultItem.Vault.Id, vaultItem.Title);
-
-            Assert.Null(itemReference);
+                Assert.Null(itemReference);
+            }
         }
 
         [Fact]
