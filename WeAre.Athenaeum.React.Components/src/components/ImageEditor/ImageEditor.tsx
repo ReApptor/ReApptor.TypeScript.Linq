@@ -1,12 +1,12 @@
-import React, {ChangeEvent, DragEvent, LegacyRef, MouseEvent, RefObject} from 'react';
+import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
-
 import Button, {ButtonType} from "../Button/Button";
-
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
+import ImageEditorLocalizer from "./ImageEditorLocalizer";
 import 'cropperjs/dist/cropper.css';
+
 import styles from './ImageEditor.module.scss';
 
 enum ImageEditorView {
@@ -309,13 +309,17 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     async addPictures(fileModels: FileModel[]): Promise<void> {
-        if (this.props.onChange) {
+        if (this.props.onChange && this.multi) {
             await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
+            await this.setState({currentView: ImageEditorView.ListView, selectedPictureIndex: this.state.selectedPictureIndex});
+            return;
         }
 
-        await this.setState({currentView: this.multi ? ImageEditorView.ListView : ImageEditorView.Cropper, selectedPictureIndex: this.multi ? this.state.selectedPictureIndex : 0});
-
-        return;
+        if (this.props.onChange && !this.multi) {
+            await this.props.onChange(this, fileModels.length > 0 ? fileModels.slice(0, 1) : []);
+            await this.setState({currentView: ImageEditorView.Cropper, selectedPictureIndex: 0});
+            return;
+        }
     }
 
     async updatePicture(fileModel: FileModel, index: number): Promise<void> {
@@ -399,6 +403,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
+
                 {
                     (this.showRotateButton) &&
                     (
@@ -407,6 +412,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             className={styles.controlPanelButton}
                             icon={{name: "undo"}}
                             type={ButtonType.Light}
+                            label={ImageEditorLocalizer.rotateLeft}
                             onClick={() => this.onRotateLeftButtonClick()}
                         />
                     )
@@ -420,6 +426,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             className={styles.controlPanelButton}
                             icon={{name: "redo"}}
                             type={ButtonType.Light}
+                            label={ImageEditorLocalizer.rotateRight}
                             onClick={() => this.onRotateRightButtonClick()}
                         />
                     )
@@ -433,20 +440,8 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             className={styles.controlPanelButton}
                             icon={{name: "edit"}}
                             type={ButtonType.Orange}
+                            label={ImageEditorLocalizer.edit}
                             onClick={() => this.onEditButtonClick()}
-                        />
-                    )
-                }
-
-                {
-                    (this.showDeleteButton) &&
-                    (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "trash"}}
-                            type={ButtonType.Orange}
-                            onClick={() => this.onDeleteButtonClick()}
                         />
                     )
                 }
@@ -457,6 +452,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     className={styles.controlPanelButton}
                     icon={{name: "file-import"}}
                     type={ButtonType.Info}
+                    label={ImageEditorLocalizer.browse}
                     onClick={() => this.onBrowseButtonClick()}
                 />
 
@@ -469,7 +465,21 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             className={styles.controlPanelButton}
                             icon={{name: "save"}}
                             type={ButtonType.Orange}
+                            label={ImageEditorLocalizer.save}
                             onClick={() => this.onSaveButtonClick()}
+                        />
+                    )
+                }
+                {
+                    (this.showDeleteButton) &&
+                    (
+                        <Button
+                            small
+                            className={styles.controlPanelButton}
+                            icon={{name: "trash"}}
+                            type={ButtonType.Warning}
+                            label={ImageEditorLocalizer.delete}
+                            onClick={() => this.onDeleteButtonClick()}
                         />
                     )
                 }
