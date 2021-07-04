@@ -128,6 +128,12 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly addressDividerCityLanguageItemName: string = `AddressDivider.City`;
     public readonly addressDividerPostalCodeLanguageItemName: string = `AddressDivider.PostalCode`;
     public readonly dateRangeInputLanguageItemName: string = `DateRangeInput`;
+    public readonly imageEditorSaveLanguageItemName: string = `ImageEditor.Save`;
+    public readonly imageEditorBrowseLanguageItemName: string = `ImageEditor.Browse`;
+    public readonly imageEditorRotateLeftLanguageItemName: string = `ImageEditor.RotateLeft`;
+    public readonly imageEditorRotateRightLanguageItemName: string = `ImageEditor.RotateRight`;
+    public readonly imageEditorDeleteLanguageItemName: string = `ImageEditor.Delete`;
+    public readonly imageEditorEditLanguageItemName: string = `ImageEditor.Edit`;
 
     constructor() {
 
@@ -268,6 +274,12 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.addressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `Miasto` }, { language: `nb`, value: `By` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `By` },);
         this.set(this.addressDividerPostalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `Kod pocztowy` }, { language: `nb`, value: `Postnummer` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postnummer` },);
         this.set(this.dateRangeInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.imageEditorSaveLanguageItemName, { language: `en`, value: `Save` },);
+        this.set(this.imageEditorBrowseLanguageItemName, { language: `en`, value: `Browse` },);
+        this.set(this.imageEditorRotateLeftLanguageItemName, { language: `en`, value: `Rotate left` },);
+        this.set(this.imageEditorRotateRightLanguageItemName, { language: `en`, value: `Rotate right` },);
+        this.set(this.imageEditorDeleteLanguageItemName, { language: `en`, value: `Delete` },);
+        this.set(this.imageEditorEditLanguageItemName, { language: `en`, value: `Edit` },);
     }
 
     /**
@@ -1129,6 +1141,48 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get dateRangeInput() : string {
         return this.get(this.dateRangeInputLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.Save" (Save)
+    */
+    public get imageEditorSave() : string {
+        return this.get(this.imageEditorSaveLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.Browse" (Browse)
+    */
+    public get imageEditorBrowse() : string {
+        return this.get(this.imageEditorBrowseLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.RotateLeft" (Rotate left)
+    */
+    public get imageEditorRotateLeft() : string {
+        return this.get(this.imageEditorRotateLeftLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.RotateRight" (Rotate right)
+    */
+    public get imageEditorRotateRight() : string {
+        return this.get(this.imageEditorRotateRightLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.Delete" (Delete)
+    */
+    public get imageEditorDelete() : string {
+        return this.get(this.imageEditorDeleteLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.Edit" (Edit)
+    */
+    public get imageEditorEdit() : string {
+        return this.get(this.imageEditorEditLanguageItemName);
     }
 }
 
