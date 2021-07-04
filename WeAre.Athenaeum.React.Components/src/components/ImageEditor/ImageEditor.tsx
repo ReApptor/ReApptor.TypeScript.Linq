@@ -6,6 +6,7 @@ import Button, {ButtonType} from "../Button/Button";
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
 import ImageEditorLocalizer from "./ImageEditorLocalizer";
 import 'cropperjs/dist/cropper.css';
+import './ReactCropperOverride.scss';
 
 import styles from './ImageEditor.module.scss';
 
@@ -110,6 +111,16 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
         return this.state.selectedPictureIndex !== null && this.state.selectedPictureIndex !== undefined;
     }
+    private get showBackButton(): boolean {
+        return this.multi && this.state.currentView === ImageEditorView.Preview;
+    }
+
+    private get showPreviewButton(): boolean {
+        if (this.state.currentView === ImageEditorView.Preview || !this.activePicture) {
+            return false;
+        }
+        return this.state.selectedPictureIndex !== null;
+    }
 
     private get showDeleteButton(): boolean {
         return this.state.selectedPictureIndex !== null;
@@ -174,6 +185,22 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
 
         this.setState({currentView: ImageEditorView.Cropper});
+    }
+
+    async onBackButtonClick(): Promise<void> {
+        if (this.multi) {
+            this.setState({currentView: ImageEditorView.ListView});
+            return;
+        }
+    }
+
+
+    async onPreviewButtonClick(): Promise<void> {
+        if (this.state.selectedPictureIndex === null) {
+            return;
+        }
+
+        this.setState({currentView: ImageEditorView.Preview});
     }
 
     async onDeleteButtonClick(): Promise<void> {
@@ -446,6 +473,34 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     )
                 }
 
+                {
+                    (this.showBackButton) &&
+                    (
+                        <Button
+                            small
+                            className={styles.controlPanelButton}
+                            icon={{name: "back"}}
+                            type={ButtonType.Orange}
+                            label={"Back"}
+                            onClick={() => this.onBackButtonClick()}
+                        />
+                    )
+                }
+
+                {
+                    (this.showPreviewButton) &&
+                    (
+                        <Button
+                            small
+                            className={styles.controlPanelButton}
+                            icon={{name: "preview"}}
+                            type={ButtonType.Orange}
+                            label={"Preview"}
+                            onClick={() => this.onPreviewButtonClick()}
+                        />
+                    )
+                }
+
                 <Button
                     small
                     right
@@ -494,9 +549,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             <div
                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
                 key={`${index}_${fileModel.id}_${fileModel.name}`}
-                onClick={() => {
-                    this.onListViewItemClick(index)
-                }}
+                onClick={() => this.onListViewItemClick(index)}
             >
                 <div className={styles.listViewItemThumbnail}>
                     <img
@@ -526,7 +579,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     renderPreviewPanel(): JSX.Element {
         return (
             <div className={styles.preview}>
-                <img src={this.getPreviewSource(0)} alt={this.getPreviewName(0)}/>
+                <img src={this.getPreviewSource(this.state.selectedPictureIndex || 0)} alt={this.getPreviewName(this.state.selectedPictureIndex || 0)}/>
             </div>
         );
     }
@@ -540,6 +593,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     ref={this.cropperRef}
                     src={this.cropperSource}
                     style={{height: "100%", width: "100%"}}
+                    className={styles.reactCropper}
                     guides={false}
                     ready={() => this.setCropAreaToImageFullSize()}
                 />
