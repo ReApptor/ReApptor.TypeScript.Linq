@@ -82,6 +82,7 @@
       <TypeScriptCompile Include="src\pages\PageDefinitions.ts" />
       <TypeScriptCompile Include="src\pages\TestApplicationController.ts" />
       <TypeScriptCompile Include="src\pages\Tests\FileInputTests\FileInputTests.tsx" />
+      <TypeScriptCompile Include="src\pages\Tests\ImageInputTests\ImageInputTests.tsx" />
       <TypeScriptCompile Include="src\pages\Tests\Tests.tsx" />
       <TypeScriptCompile Include="src\providers\TransformProvider.ts" />
     </ItemGroup>

@@ -25,6 +25,7 @@ import DateRangeInputTests from "@/pages/Tests/DateRangeInputTests/DateRangeInpu
 import FileInputTests from "@/pages/Tests/FileInputTests/FileInputTests";
 import SliderTests from "@/pages/Tests/SliderTests/SliderTests";
 import ImageEditorTests from "@/pages/Tests/ImageEditorTests/ImageEditorTests";
+import ImageInputTests from "@/pages/Tests/ImageInputTests/ImageInputTests";
 
 export default class Tests extends AnonymousPage {
     
@@ -127,6 +128,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="ImageEditorTests" title="ImageEditor">
                             <ImageEditorTests />
+                        </Tab>
+
+                        <Tab id="ImageInputTests" title="ImageInput">
+                            <ImageInputTests/>
                         </Tab>
 
                         <Tab id="FileInputTests" title="FileInput">

@@ -11,6 +11,8 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
     public readonly rotateRightLanguageItemName: string = `RotateRight`;
     public readonly deleteLanguageItemName: string = `Delete`;
     public readonly editLanguageItemName: string = `Edit`;
+    public readonly cameraLanguageItemName: string = `Camera`;
+    public readonly backLanguageItemName: string = `Back`;
 
     constructor() {
 
@@ -34,6 +36,8 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
         this.set(this.rotateRightLanguageItemName, { language: `en`, value: `Rotate right` },);
         this.set(this.deleteLanguageItemName, { language: `en`, value: `Delete` },);
         this.set(this.editLanguageItemName, { language: `en`, value: `Edit` },);
+        this.set(this.cameraLanguageItemName, { language: `en`, value: `Camera` },);
+        this.set(this.backLanguageItemName, { language: `en`, value: `Back` },);
     }
 
     /**
@@ -76,6 +80,20 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
     */
     public get edit() : string {
         return this.get(this.editLanguageItemName);
+    }
+
+    /**
+    /* "Camera" (Camera)
+    */
+    public get camera() : string {
+        return this.get(this.cameraLanguageItemName);
+    }
+
+    /**
+    /* "Back" (Back)
+    */
+    public get back() : string {
+        return this.get(this.backLanguageItemName);
     }
 }
 
