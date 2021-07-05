@@ -5,9 +5,9 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import ImageInputLocalizer from "../ImageInput/ImageInputLocalizer";
 import ImageEditorLocalizer from "./ImageEditorLocalizer";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import 'cropperjs/dist/cropper.css';
 import './ReactCropperOverride.scss';
-
 import styles from './ImageEditor.module.scss';
 
 enum ImageEditorView {
@@ -26,6 +26,7 @@ interface IImageEditorProps {
     multi?: boolean;
     pictures: FileModel[];
     className?: string;
+    maxImageRequestSizeInBytes?: number;
     onChange?(sender: ImageEditor, pictures: FileModel[]): Promise<void>;
     convertImage?(file: FileModel): Promise<FileModel>;
     imageUrl?(file: FileModel): string;
@@ -102,6 +103,10 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
 
         return picture.src;
+    }
+
+    private get maxImageRequestSizeInBytes(): number {
+        return this.props.maxImageRequestSizeInBytes || AthenaeumComponentsConstants.maxImageRequestSizeInBytes;
     }
 
     //  ViewIfStatements
@@ -346,6 +351,15 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             return await ImageEditor.fileToFileModel(file);
         }));
 
+        fileModels = fileModels.filter(fileModel => {
+            if (fileModel.size < this.maxImageRequestSizeInBytes) {
+                return true;
+            }
+
+            ch.alertErrorAsync(ImageInputLocalizer.documentTooBig, true);
+            return false;
+        });
+
         fileModels = await Promise.all(fileModels.map(async (fileModel): Promise<FileModel> => {
             if (!this.props.convertImage) {
                 return fileModel;
@@ -365,6 +379,10 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
     }
 
     async addPictures(fileModels: FileModel[]): Promise<void> {
+        if (fileModels.length === 0) {
+            return;
+        }
+
         if (this.props.onChange && this.multi) {
             await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
             await this.setState({currentView: ImageEditorView.ListView, selectedPictureIndex: this.state.selectedPictureIndex});
