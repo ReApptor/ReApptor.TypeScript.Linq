@@ -33,6 +33,7 @@ interface IImageEditorProps {
 
 export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorState> {
     fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
+    cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     cropperRef = React.createRef<ReactCropperElement>();
 
     state: IImageEditorState = {
@@ -111,15 +112,28 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
         return this.state.selectedPictureIndex !== null && this.state.selectedPictureIndex !== undefined;
     }
+
     private get showBackButton(): boolean {
-        return this.multi && this.state.currentView === ImageEditorView.Preview;
+        if (this.multi) {
+            return this.state.currentView === ImageEditorView.Preview || this.state.currentView === ImageEditorView.Cropper
+        }
+
+        return this.state.currentView === ImageEditorView.Cropper;
     }
 
     private get showPreviewButton(): boolean {
-        if (this.state.currentView === ImageEditorView.Preview || !this.activePicture) {
+        if (this.state.currentView === ImageEditorView.Preview || this.state.currentView === ImageEditorView.Cropper || !this.activePicture) {
             return false;
         }
         return this.state.selectedPictureIndex !== null;
+    }
+
+    private get showBrowseButton(): boolean {
+        return this.state.currentView !== ImageEditorView.Cropper;
+    }
+
+    private get showCameraButton(): boolean {
+        return this.state.currentView !== ImageEditorView.Cropper;
     }
 
     private get showDeleteButton(): boolean {
@@ -142,6 +156,20 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
         }
 
         const ref: RefObject<HTMLInputElement> = this.fileInputRef as RefObject<HTMLInputElement>;
+
+        if (!ref.current) {
+            return
+        }
+
+        ref.current.click();
+    }
+
+    async onCameraButtonClick(): Promise<void> {
+        if (!this.cameraFileInputRef) {
+            return;
+        }
+
+        const ref: RefObject<HTMLInputElement> = this.cameraFileInputRef as RefObject<HTMLInputElement>;
 
         if (!ref.current) {
             return
@@ -192,8 +220,9 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
             this.setState({currentView: ImageEditorView.ListView});
             return;
         }
-    }
 
+        this.setState({currentView: ImageEditorView.Preview});
+    }
 
     async onPreviewButtonClick(): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
@@ -465,24 +494,10 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                         <Button
                             small
                             className={styles.controlPanelButton}
-                            icon={{name: "edit"}}
+                            icon={{name: "crop"}}
                             type={ButtonType.Orange}
                             label={ImageEditorLocalizer.edit}
                             onClick={() => this.onEditButtonClick()}
-                        />
-                    )
-                }
-
-                {
-                    (this.showBackButton) &&
-                    (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "back"}}
-                            type={ButtonType.Orange}
-                            label={"Back"}
-                            onClick={() => this.onBackButtonClick()}
                         />
                     )
                 }
@@ -493,23 +508,45 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                         <Button
                             small
                             className={styles.controlPanelButton}
-                            icon={{name: "preview"}}
-                            type={ButtonType.Orange}
+                            icon={{name: "eye"}}
+                            type={ButtonType.Info}
                             label={"Preview"}
                             onClick={() => this.onPreviewButtonClick()}
                         />
                     )
                 }
 
-                <Button
-                    small
-                    right
-                    className={styles.controlPanelButton}
-                    icon={{name: "file-import"}}
-                    type={ButtonType.Info}
-                    label={ImageEditorLocalizer.browse}
-                    onClick={() => this.onBrowseButtonClick()}
-                />
+                {
+                    (this.showBrowseButton) &&
+                    (
+                        <Button
+                            small
+                            right
+                            className={styles.controlPanelButton}
+                            icon={{name: "file-import"}}
+                            type={ButtonType.Info}
+                            label={ImageEditorLocalizer.browse}
+                            onClick={() => this.onBrowseButtonClick()}
+                        />
+                    )
+
+                }
+
+                {
+                    (this.showCameraButton) &&
+                    (
+                        <Button
+                            small
+                            right
+                            className={styles.controlPanelButton}
+                            icon={{name: "camera"}}
+                            type={ButtonType.Info}
+                            label={ImageEditorLocalizer.camera}
+                            onClick={() => this.onCameraButtonClick()}
+                        />
+                    )
+
+                }
 
                 {
                     (this.showSaveButton) &&
@@ -525,6 +562,21 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                         />
                     )
                 }
+
+                {
+                    (this.showBackButton) &&
+                    (
+                        <Button
+                            small
+                            className={styles.controlPanelButton}
+                            icon={{name: "arrow-left"}}
+                            type={ButtonType.Info}
+                            label={ImageEditorLocalizer.back}
+                            onClick={() => this.onBackButtonClick()}
+                        />
+                    )
+                }
+
                 {
                     (this.showDeleteButton) &&
                     (
@@ -611,6 +663,17 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                     ref={this.fileInputRef}
                     className={styles.fileInput}
                     type="file"
+                    accept="image/*"
+                    multiple={this.multi}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChange(event)}
+                />
+
+                <input
+                    ref={this.cameraFileInputRef}
+                    className={styles.fileInput}
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
                     multiple={this.multi}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChange(event)}
                 />

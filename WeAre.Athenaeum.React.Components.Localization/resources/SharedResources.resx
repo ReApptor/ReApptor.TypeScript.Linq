@@ -504,4 +504,10 @@
   <data name="ImageEditor.Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="ImageEditor.Camera" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="ImageEditor.Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
 </root>
