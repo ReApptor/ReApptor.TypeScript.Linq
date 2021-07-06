@@ -361,7 +361,7 @@
     <value>Poistaa</value>
   </data>
   <data name="ImageEditor.Edit" xml:space="preserve">
-    <value>FI: Edit</value>
+    <value>Muokkaa</value>
   </data>
   <data name="ImageEditor.Save" xml:space="preserve">
     <value>Tallentaa</value>
