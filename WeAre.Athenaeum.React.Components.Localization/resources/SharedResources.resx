@@ -510,4 +510,7 @@
   <data name="ImageEditor.Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="ImageEditor.Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
 </root>

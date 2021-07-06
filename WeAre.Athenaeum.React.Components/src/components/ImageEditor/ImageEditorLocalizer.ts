@@ -13,6 +13,7 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
     public readonly editLanguageItemName: string = `Edit`;
     public readonly cameraLanguageItemName: string = `Camera`;
     public readonly backLanguageItemName: string = `Back`;
+    public readonly previewLanguageItemName: string = `Preview`;
 
     constructor() {
 
@@ -38,6 +39,7 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
         this.set(this.editLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `SV: Edit` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
         this.set(this.cameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
         this.set(this.backLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
     }
 
     /**
@@ -94,6 +96,13 @@ class ImageEditorLocalizer extends BaseComponentLocalizer {
     */
     public get back() : string {
         return this.get(this.backLanguageItemName);
+    }
+
+    /**
+    /* "Preview" (Preview)
+    */
+    public get preview() : string {
+        return this.get(this.previewLanguageItemName);
     }
 }
 

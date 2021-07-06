@@ -372,4 +372,7 @@
   <data name="ImageEditor.RotateRight" xml:space="preserve">
     <value>Kierrä oikealle</value>
   </data>
+  <data name="ImageEditor.Preview" xml:space="preserve">
+    <value>Esikatsele</value>
+  </data>
 </root>

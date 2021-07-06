@@ -528,7 +528,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             className={styles.controlPanelButton}
                             icon={{name: "eye"}}
                             type={ButtonType.Info}
-                            label={"Preview"}
+                            label={ImageEditorLocalizer.preview}
                             onClick={() => this.onPreviewButtonClick()}
                         />
                     )
