@@ -614,11 +614,12 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
 
     renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
         const activeListViewItemStyle = this.state.selectedPictureIndex === index && styles.activeListViewItem;
+        const key = `${index}_${fileModel.id}_${fileModel.name}`;
 
         return (
             <div
                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                key={`${index}_${fileModel.id}_${fileModel.name}`}
+                key={key}
                 onClick={() => this.onListViewItemClick(index)}
             >
                 <div className={styles.listViewItemThumbnail}>
