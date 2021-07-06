@@ -348,4 +348,28 @@
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>RU: Total size of documents is too big</value>
   </data>
+  <data name="ImageEditor.Back" xml:space="preserve">
+    <value>RU: Back</value>
+  </data>
+  <data name="ImageEditor.Browse" xml:space="preserve">
+    <value>RU: Browse</value>
+  </data>
+  <data name="ImageEditor.Camera" xml:space="preserve">
+    <value>RU: Camera</value>
+  </data>
+  <data name="ImageEditor.Delete" xml:space="preserve">
+    <value>RU: Delete</value>
+  </data>
+  <data name="ImageEditor.Edit" xml:space="preserve">
+    <value>RU: Edit</value>
+  </data>
+  <data name="ImageEditor.Save" xml:space="preserve">
+    <value>RU: Save</value>
+  </data>
+  <data name="ImageEditor.RotateLeft" xml:space="preserve">
+    <value>RU: RotateLeft</value>
+  </data>
+  <data name="ImageEditor.RotateRight" xml:space="preserve">
+    <value>RU: RotateRight</value>
+  </data>
 </root>
