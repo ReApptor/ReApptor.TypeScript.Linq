@@ -100,6 +100,7 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
         padding: 0 0.5rem;
         margin: 0.5rem;
         border: 1px solid transparent;
+        overflow-wrap: anywhere;
 
         &:hover {
           border: $border;
@@ -109,6 +110,8 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
         .listViewItemThumbnail {
           width: 100px;
           height: 100px;
+          min-width: 100px;
+          min-height: 100px;
           display: flex;
           justify-content: center;
           align-items: center;
