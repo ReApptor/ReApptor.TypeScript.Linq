@@ -372,4 +372,7 @@
   <data name="ImageEditor.RotateRight" xml:space="preserve">
     <value>RU: RotateRight</value>
   </data>
+  <data name="ImageEditor.Preview" xml:space="preserve">
+    <value>RU: Preview</value>
+  </data>
 </root>

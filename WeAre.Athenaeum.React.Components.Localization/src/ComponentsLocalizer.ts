@@ -136,6 +136,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageEditorEditLanguageItemName: string = `ImageEditor.Edit`;
     public readonly imageEditorCameraLanguageItemName: string = `ImageEditor.Camera`;
     public readonly imageEditorBackLanguageItemName: string = `ImageEditor.Back`;
+    public readonly imageEditorPreviewLanguageItemName: string = `ImageEditor.Preview`;
 
     constructor() {
 
@@ -284,6 +285,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageEditorEditLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `SV: Edit` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
         this.set(this.imageEditorCameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
         this.set(this.imageEditorBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
+        this.set(this.imageEditorPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
     }
 
     /**
@@ -1201,6 +1203,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageEditorBack() : string {
         return this.get(this.imageEditorBackLanguageItemName);
+    }
+
+    /**
+    /* "ImageEditor.Preview" (Preview)
+    */
+    public get imageEditorPreview() : string {
+        return this.get(this.imageEditorPreviewLanguageItemName);
     }
 }
 

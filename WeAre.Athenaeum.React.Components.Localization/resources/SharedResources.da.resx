@@ -498,4 +498,7 @@
   <data name="ImageEditor.RotateRight" xml:space="preserve">
     <value>DA: RotateRight</value>
   </data>
+  <data name="ImageEditor.Preview" xml:space="preserve">
+    <value>DA: Preview</value>
+  </data>
 </root>
