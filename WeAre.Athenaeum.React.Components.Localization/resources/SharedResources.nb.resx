@@ -484,7 +484,7 @@
     <value>NB: Camera</value>
   </data>
   <data name="ImageEditor.Delete" xml:space="preserve">
-    <value>NB: Delete</value>
+    <value>Slett</value>
   </data>
   <data name="ImageEditor.Edit" xml:space="preserve">
     <value>NB: Edit</value>
