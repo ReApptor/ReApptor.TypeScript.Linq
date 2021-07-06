@@ -348,4 +348,28 @@
   <data name="Month.September" xml:space="preserve">
     <value>September</value>
   </data>
+  <data name="ImageEditor.Back" xml:space="preserve">
+    <value>Tillbaka</value>
+  </data>
+  <data name="ImageEditor.Browse" xml:space="preserve">
+    <value>SV: Browse</value>
+  </data>
+  <data name="ImageEditor.Camera" xml:space="preserve">
+    <value>SV: Camera</value>
+  </data>
+  <data name="ImageEditor.Delete" xml:space="preserve">
+    <value>SV: Delete</value>
+  </data>
+  <data name="ImageEditor.Edit" xml:space="preserve">
+    <value>SV: Edit</value>
+  </data>
+  <data name="ImageEditor.Save" xml:space="preserve">
+    <value>SV: Save</value>
+  </data>
+  <data name="ImageEditor.RotateLeft" xml:space="preserve">
+    <value>SV: RotateLeft</value>
+  </data>
+  <data name="ImageEditor.RotateRight" xml:space="preserve">
+    <value>SV: RotateRight</value>
+  </data>
 </root>
