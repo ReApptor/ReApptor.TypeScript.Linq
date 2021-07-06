@@ -513,7 +513,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             small
                             className={styles.controlPanelButton}
                             icon={{name: "crop"}}
-                            type={ButtonType.Orange}
+                            type={ButtonType.Info}
                             label={ImageEditorLocalizer.edit}
                             onClick={() => this.onEditButtonClick()}
                         />
@@ -542,7 +542,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             right
                             className={styles.controlPanelButton}
                             icon={{name: "file-import"}}
-                            type={ButtonType.Info}
+                            type={ButtonType.Orange}
                             label={ImageEditorLocalizer.browse}
                             onClick={() => this.onBrowseButtonClick()}
                         />
@@ -558,7 +558,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             right
                             className={styles.controlPanelButton}
                             icon={{name: "camera"}}
-                            type={ButtonType.Info}
+                            type={ButtonType.Orange}
                             label={ImageEditorLocalizer.camera}
                             onClick={() => this.onCameraButtonClick()}
                         />
@@ -574,7 +574,7 @@ export class ImageEditor extends BaseComponent<IImageEditorProps, IImageEditorSt
                             right
                             className={styles.controlPanelButton}
                             icon={{name: "save"}}
-                            type={ButtonType.Orange}
+                            type={ButtonType.Success}
                             label={ImageEditorLocalizer.save}
                             onClick={() => this.onSaveButtonClick()}
                         />
