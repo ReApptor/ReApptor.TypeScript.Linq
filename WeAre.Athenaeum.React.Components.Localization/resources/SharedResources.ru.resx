@@ -348,4 +348,34 @@
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
     <value>RU: Total size of documents is too big</value>
   </data>
+  <data name="ImageInput.Back" xml:space="preserve">
+    <value>RU: Back</value>
+  </data>
+  <data name="ImageInput.Browse" xml:space="preserve">
+    <value>RU: Browse</value>
+  </data>
+  <data name="ImageInput.Camera" xml:space="preserve">
+    <value>RU: Camera</value>
+  </data>
+  <data name="ImageInput.Delete" xml:space="preserve">
+    <value>RU: Delete</value>
+  </data>
+  <data name="ImageInput.Edit" xml:space="preserve">
+    <value>RU: Edit</value>
+  </data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>RU: Save</value>
+  </data>
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
+    <value>RU: RotateLeft</value>
+  </data>
+  <data name="ImageInput.RotateRight" xml:space="preserve">
+    <value>RU: RotateRight</value>
+  </data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>RU: Preview</value>
+  </data>
+  <data name="ImageInput.DropIt" xml:space="preserve">
+    <value>RU: Drop it</value>
+  </data>
 </root>
