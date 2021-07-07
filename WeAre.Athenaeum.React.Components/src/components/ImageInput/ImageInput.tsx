@@ -723,7 +723,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                         onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
                         onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
                     >
-                        <span className={styles.dragDropAreaOverlay}>DropIt</span>
+                        <span className={styles.dragDropAreaOverlay}>{ImageInputLocalizer.dropIt}</span>
                     </div>
 
                     {

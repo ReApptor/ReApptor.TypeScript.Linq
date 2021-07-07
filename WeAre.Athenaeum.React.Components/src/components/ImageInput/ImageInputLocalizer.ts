@@ -16,6 +16,7 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     public readonly cameraLanguageItemName: string = `Camera`;
     public readonly backLanguageItemName: string = `Back`;
     public readonly previewLanguageItemName: string = `Preview`;
+    public readonly dropItLanguageItemName: string = `DropIt`;
 
     constructor() {
 
@@ -44,6 +45,7 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
         this.set(this.cameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
         this.set(this.backLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
         this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
+        this.set(this.dropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `SV: Drop it` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `FI: Drop it` }, { language: `da`, value: `DA: Drop it` },);
     }
 
     /**
@@ -121,6 +123,13 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     */
     public get preview() : string {
         return this.get(this.previewLanguageItemName);
+    }
+
+    /**
+    /* "DropIt" (Drop it)
+    */
+    public get dropIt() : string {
+        return this.get(this.dropItLanguageItemName);
     }
 }
 
