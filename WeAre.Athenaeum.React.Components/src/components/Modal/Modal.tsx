@@ -46,7 +46,7 @@ interface IModalProps<TData = {}> {
 
 interface IModalState extends IBaseAsyncComponentState<any> {
     isOpen: boolean;
-    parent: Modal | null;
+    openInstance: Modal | null;
 }
 
 export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TData>, IModalState> {
@@ -55,7 +55,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         isOpen: false,
         data: null,
         isLoading: false,
-        parent: null
+        openInstance: null
     };
 
     private static _openInstance: Modal | null = null;
@@ -121,63 +121,90 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     //  ViewMethodCalls
 
-    public async closeAsync(): Promise<void> {
-        await this.setModal(false);
+    private async onCloseButtonClick() {
+        await this.closeAsync();
     }
 
     private dismissModal(e: React.MouseEvent): void {
-        if (this.props.info) {
-            e.stopPropagation();
-
-            if(this.modal) {
-                this.close();
-            }
+        if (!this.props.info) {
+            return;
         }
+
+        e.stopPropagation();
+
+        this.close();
+    }
+
+    private enableBootstrapEventHandlers(): void {
+        if (!this.modal) {
+            return;
+        }
+
+        const node: JQuery = this.JQuery(this.modal);
+        node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
+        node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
+    }
+
+    private disableBootstrapEventHandlers(): void {
+        if (!this.modal) {
+            return;
+        }
+
+        const node: JQuery = this.JQuery(this.modal);
+
+        node.off("shown.bs.modal");
+        node.off("hide.bs.modal");
     }
 
     //  Logics
 
-    private async setModal(isOpen: boolean, animation: boolean = true): Promise<void> {
-        if (this.state.isOpen === isOpen) {
+    private async setModalToOpen(animation: boolean = true) {
+        if (this.state.isOpen) {
             return;
         }
 
-        if (isOpen) {
-            await this.onPropBeforeOpen();
-        } else {
-            await this.onPropBeforeClose();
+        await this.onPropBeforeOpen();
+
+        const openInstance: Modal | null = this.state.openInstance || Modal._openInstance;
+        console.log({openInstance});
+        console.log(Modal._openInstance);
+
+        await this.setState({ isOpen: true, openInstance });
+
+        this.open(animation);
+
+        await this.onPropOpen();
+
+        if (openInstance) {
+            await openInstance.closeAsync();
         }
 
-        const parent: Modal | null = (isOpen)
-            ? this.state.parent || Modal._openInstance
-            : this.state.parent;
+        await this.onPropToggle(true);
+    }
 
-        await this.setState({ isOpen, parent });
-
-        if (isOpen) {
-
-            this.open(animation);
-
-            await this.onPropOpen();
-
-            if (parent) {
-                await parent.closeAsync();
-            }
-
-        } else {
-
-            this.close();
-
-            await this.onPropClose();
-
-            if ((parent) && (Modal._openInstance == null)) {
-                await parent.openAsync();
-
-                await this.setState({parent: null})
-            }
+    private async setModalToClose(animation: boolean = true) {
+        if (!this.state.isOpen) {
+            return;
         }
 
-        await this.onPropToggle(isOpen);
+        await this.onPropBeforeClose();
+
+        const openInstance: Modal | null = this.state.openInstance;
+        console.log({openInstance});
+        console.log(Modal._openInstance);
+        await this.setState({ isOpen: false, openInstance });
+
+        this.close();
+
+        await this.onPropClose();
+
+        if ((openInstance) && (Modal._openInstance == null)) {
+            await openInstance.openAsync();
+
+            await this.setState({openInstance: null})
+        }
+
+        await this.onPropToggle(false);
     }
 
     private togglePageScroll(toggle: boolean): void {
@@ -209,7 +236,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             this.JQuery("body").addClass("mobile");
         }
 
-        await this.setModal(true);
+        await this.setModalToOpen();
     }
 
     private async onCloseHandlerAsync(): Promise<void> {
@@ -219,39 +246,37 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             this.JQuery("body").removeClass("mobile");
         }
         
-        await this.setModal(false);
+        await this.setModalToClose();
         
         this.scrollBack();
     }
 
     private close(): void {
-        if (this.modal) {
-            this.JQuery(this.modal).modal("hide");
+        if (!this.modal) {
+            return;
+        }
 
-            if (Modal._openInstance === this) {
-                Modal._openInstance = null;
-            }
+        this.JQuery(this.modal).modal("hide");
+
+        if (Modal._openInstance === this) {
+            Modal._openInstance = null;
         }
     }
 
     private open(animation: boolean = true): void {
-        if (this.modal) {
-            this._animation = animation;
-
-            this.JQuery(this.modal).modal("show");
-
-            Modal._openInstance = this;
+        if (!this.modal) {
+            return;
         }
+
+        this._animation = animation;
+
+        this.JQuery(this.modal).modal("show");
+
+        Modal._openInstance = this;
     }
 
     private scrollBack(): void {
         window.scrollTo(0, this.scrollY);
-    }
-
-    public async openAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
-        this._scrollY = window.scrollY;
-        this.setData(data);
-        await this.setModal(true, animation);
     }
 
     public getBodyNode(): JQuery {
@@ -276,26 +301,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
-
-        const modal: HTMLDivElement | null = this.modal;
-        if (modal) {
-            const node: JQuery = this.JQuery(modal);
-            node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
-            node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
-        }
+        this.enableBootstrapEventHandlers();
     }
 
     async componentWillUnmount(): Promise<void> {
         this.close();
-        
         await super.componentWillUnmount();
-
-        const modal: HTMLDivElement | null = this.modal;
-        if (modal) {
-            const node: JQuery = this.JQuery(modal);
-            node.off("shown.bs.modal");
-            node.off("hide.bs.modal");
-        }
+        this.disableBootstrapEventHandlers();
     }
 
     //  PropsMethodCallHelpers
@@ -331,6 +343,16 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     //  Helpers
+
+    public async openAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
+        this._scrollY = window.scrollY;
+        this.setData(data);
+        await this.setModalToOpen(animation);
+    }
+
+    public async closeAsync(): Promise<void> {
+        await this.setModalToClose()
+    }
 
     public async toggleAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
         if (this.state.isOpen) {
@@ -375,8 +397,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
                                 {
                                     (this.mobile)
-                                        ? <Icon name="chevron-down" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.closeAsync()} />
-                                        : <Icon name="times" className="dismiss" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.closeAsync()} />
+                                        ? <Icon name="chevron-down" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.onCloseButtonClick()} />
+                                        : <Icon name="times" className="dismiss" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.onCloseButtonClick()} />
 
                                 }
                                 
@@ -404,7 +426,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             (
                                 <div className="modal-footer">
                                     <Button label={ModalLocalizer.saveChanges} type={ButtonType.Orange} submit />
-                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.closeAsync()} />
+                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.onCloseButtonClick()} />
                                 </div>
                             )
                         }
