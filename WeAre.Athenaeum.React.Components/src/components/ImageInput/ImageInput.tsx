@@ -24,6 +24,7 @@ interface IImageInputState {
 interface IImageInputProps {
     multi?: boolean;
     pictures: FileModel[];
+    minimizeOnEmpty?: boolean;
     editOnAddInSingleMode?: boolean
     className?: string;
     maxImageRequestSizeInBytes?: number;
@@ -47,6 +48,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get multi(): boolean {
         return this.props.multi || false;
+    }
+
+    private get minimizeOnEmpty(): boolean {
+        return this.props.minimizeOnEmpty || false;
     }
 
     private get editOnAddInSingleMode(): boolean {
@@ -683,9 +688,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     render(): JSX.Element {
+        const minimizeStyle = this.minimizeOnEmpty ? this.state.currentView === null ? styles.minimize : null : null;
         return (
             <div
-                className={this.css(styles.ImageInput, this.props.className)}
+                className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
             >
                 <input

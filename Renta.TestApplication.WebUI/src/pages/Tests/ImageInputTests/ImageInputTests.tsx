@@ -12,6 +12,7 @@ export default class ImageInputTests extends BaseComponent {
             <React.Fragment>
                 <h4 className="pt-2 pb-2 ">ImageInput Single Upload</h4>
                 <ImageInput
+                    minimizeOnEmpty
                     pictures={this.state.picture}
                     convertImage={async (picture) => picture}
                     onChange={async (sender, picture) => {
