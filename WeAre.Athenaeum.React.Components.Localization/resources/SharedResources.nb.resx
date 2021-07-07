@@ -474,4 +474,34 @@
   <data name="Month.September" xml:space="preserve">
     <value>September</value>
   </data>
+  <data name="ImageInput.Back" xml:space="preserve">
+    <value>Tilbake</value>
+  </data>
+  <data name="ImageInput.Browse" xml:space="preserve">
+    <value>NB: Browse</value>
+  </data>
+  <data name="ImageInput.Camera" xml:space="preserve">
+    <value>NB: Camera</value>
+  </data>
+  <data name="ImageInput.Delete" xml:space="preserve">
+    <value>Slett</value>
+  </data>
+  <data name="ImageInput.Edit" xml:space="preserve">
+    <value>NB: Edit</value>
+  </data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>NB: Save</value>
+  </data>
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
+    <value>NB: RotateLeft</value>
+  </data>
+  <data name="ImageInput.RotateRight" xml:space="preserve">
+    <value>NB: RotateRight</value>
+  </data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>NB: Preview</value>
+  </data>
+  <data name="ImageInput.DropIt" xml:space="preserve">
+    <value>NB: Drop it</value>
+  </data>
 </root>

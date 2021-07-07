@@ -1,8 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {ImageEditor} from "@weare/athenaeum-react-components";
+import {ImageInput} from "@weare/athenaeum-react-components";
 
-export default class ImageEditorTests extends BaseComponent {
+export default class ImageInputTests extends BaseComponent {
     state = {
         picture: [],
         pictures: []
@@ -10,19 +10,19 @@ export default class ImageEditorTests extends BaseComponent {
     public render(): React.ReactNode {
         return (
             <React.Fragment>
-                <h4 className="pt-2 pb-2 ">ImageEditor Single Upload</h4>
-                <ImageEditor
+                <h4 className="pt-2 pb-2 ">ImageInput Single Upload</h4>
+                <ImageInput
+                    minimizeOnEmpty
                     pictures={this.state.picture}
                     convertImage={async (picture) => picture}
                     onChange={async (sender, picture) => {
                         this.setState({picture})
                         await this.reRenderAsync();
-
                     }}/>
 
-                <h4 className="pt-2 pb-2 ">ImageEditor Multiple Upload</h4>
+                <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
-                <ImageEditor
+                <ImageInput
                     multi
                     pictures={this.state.pictures}
                     convertImage={async (image) => image}

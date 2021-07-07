@@ -128,6 +128,16 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly addressDividerCityLanguageItemName: string = `AddressDivider.City`;
     public readonly addressDividerPostalCodeLanguageItemName: string = `AddressDivider.PostalCode`;
     public readonly dateRangeInputLanguageItemName: string = `DateRangeInput`;
+    public readonly imageInputSaveLanguageItemName: string = `ImageInput.Save`;
+    public readonly imageInputBrowseLanguageItemName: string = `ImageInput.Browse`;
+    public readonly imageInputRotateLeftLanguageItemName: string = `ImageInput.RotateLeft`;
+    public readonly imageInputRotateRightLanguageItemName: string = `ImageInput.RotateRight`;
+    public readonly imageInputDeleteLanguageItemName: string = `ImageInput.Delete`;
+    public readonly imageInputEditLanguageItemName: string = `ImageInput.Edit`;
+    public readonly imageInputCameraLanguageItemName: string = `ImageInput.Camera`;
+    public readonly imageInputBackLanguageItemName: string = `ImageInput.Back`;
+    public readonly imageInputPreviewLanguageItemName: string = `ImageInput.Preview`;
+    public readonly imageInputDropItLanguageItemName: string = `ImageInput.DropIt`;
 
     constructor() {
 
@@ -268,6 +278,16 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.addressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `Miasto` }, { language: `nb`, value: `By` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `By` },);
         this.set(this.addressDividerPostalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `Kod pocztowy` }, { language: `nb`, value: `Postnummer` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postnummer` },);
         this.set(this.dateRangeInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.imageInputSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallentaa` }, { language: `da`, value: `DA: Save` },);
+        this.set(this.imageInputBrowseLanguageItemName, { language: `en`, value: `Browse` }, { language: `uk`, value: `UK: Browse` }, { language: `sv`, value: `Bläddra` }, { language: `ru`, value: `RU: Browse` }, { language: `pl`, value: `PL: Browse` }, { language: `nb`, value: `NB: Browse` }, { language: `fi`, value: `Selaa` }, { language: `da`, value: `DA: Browse` },);
+        this.set(this.imageInputRotateLeftLanguageItemName, { language: `en`, value: `Rotate left` }, { language: `uk`, value: `UK: RotateLeft` }, { language: `sv`, value: `Rotera vänster` }, { language: `ru`, value: `RU: RotateLeft` }, { language: `pl`, value: `PL: RotateLeft` }, { language: `nb`, value: `NB: RotateLeft` }, { language: `fi`, value: `Kierrä vasemmalle` }, { language: `da`, value: `DA: RotateLeft` },);
+        this.set(this.imageInputRotateRightLanguageItemName, { language: `en`, value: `Rotate right` }, { language: `uk`, value: `UK: RotateRight` }, { language: `sv`, value: `Rotera höger` }, { language: `ru`, value: `RU: RotateRight` }, { language: `pl`, value: `PL: RotateRight` }, { language: `nb`, value: `NB: RotateRight` }, { language: `fi`, value: `Kierrä oikealle` }, { language: `da`, value: `DA: RotateRight` },);
+        this.set(this.imageInputDeleteLanguageItemName, { language: `en`, value: `Delete` }, { language: `uk`, value: `UK: Delete` }, { language: `sv`, value: `Radera` }, { language: `ru`, value: `RU: Delete` }, { language: `pl`, value: `PL: Delete` }, { language: `nb`, value: `Slett` }, { language: `fi`, value: `Poistaa` }, { language: `da`, value: `DA: Delete` },);
+        this.set(this.imageInputEditLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `Redigera` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
+        this.set(this.imageInputCameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `Kamera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
+        this.set(this.imageInputBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
+        this.set(this.imageInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisa` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
+        this.set(this.imageInputDropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `Släpp` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `Pudota` }, { language: `da`, value: `DA: Drop it` },);
     }
 
     /**
@@ -1129,6 +1149,76 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get dateRangeInput() : string {
         return this.get(this.dateRangeInputLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Save" (Save)
+    */
+    public get imageInputSave() : string {
+        return this.get(this.imageInputSaveLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Browse" (Browse)
+    */
+    public get imageInputBrowse() : string {
+        return this.get(this.imageInputBrowseLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.RotateLeft" (Rotate left)
+    */
+    public get imageInputRotateLeft() : string {
+        return this.get(this.imageInputRotateLeftLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.RotateRight" (Rotate right)
+    */
+    public get imageInputRotateRight() : string {
+        return this.get(this.imageInputRotateRightLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Delete" (Delete)
+    */
+    public get imageInputDelete() : string {
+        return this.get(this.imageInputDeleteLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Edit" (Edit)
+    */
+    public get imageInputEdit() : string {
+        return this.get(this.imageInputEditLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Camera" (Camera)
+    */
+    public get imageInputCamera() : string {
+        return this.get(this.imageInputCameraLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Back" (Back)
+    */
+    public get imageInputBack() : string {
+        return this.get(this.imageInputBackLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.Preview" (Preview)
+    */
+    public get imageInputPreview() : string {
+        return this.get(this.imageInputPreviewLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.DropIt" (Drop it)
+    */
+    public get imageInputDropIt() : string {
+        return this.get(this.imageInputDropItLanguageItemName);
     }
 }
 
