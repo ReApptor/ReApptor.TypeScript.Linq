@@ -24,7 +24,6 @@ import DateInputTests from "@/pages/Tests/DateInputTests/DateInputTests";
 import DateRangeInputTests from "@/pages/Tests/DateRangeInputTests/DateRangeInputTests";
 import FileInputTests from "@/pages/Tests/FileInputTests/FileInputTests";
 import SliderTests from "@/pages/Tests/SliderTests/SliderTests";
-import ImageEditorTests from "@/pages/Tests/ImageEditorTests/ImageEditorTests";
 import ImageInputTests from "@/pages/Tests/ImageInputTests/ImageInputTests";
 
 export default class Tests extends AnonymousPage {
@@ -126,12 +125,8 @@ export default class Tests extends AnonymousPage {
                             <AccordionTests />
                         </Tab>
 
-                        <Tab id="ImageEditorTests" title="ImageEditor">
-                            <ImageEditorTests />
-                        </Tab>
-
                         <Tab id="ImageInputTests" title="ImageInput">
-                            <ImageInputTests/>
+                            <ImageInputTests />
                         </Tab>
 
                         <Tab id="FileInputTests" title="FileInput">
