@@ -116,6 +116,13 @@ namespace WeAre.Athenaeum.Common.Api
                     }
                 }
             }
+            
+            bool addSlash = (!url.EndsWith("/")) && ((@params == null) || (@params.Length == 0)) && (keys?.LastOrDefault()?.EndsWith("/") == true);
+
+            if (addSlash)
+            {
+                url += "/";
+            }
 
             return url;
         }
