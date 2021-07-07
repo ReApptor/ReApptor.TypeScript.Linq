@@ -135,26 +135,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.close();
     }
 
-    private enableBootstrapEventHandlers(): void {
-        if (!this.modal) {
-            return;
-        }
-
-        const node: JQuery = this.JQuery(this.modal);
-        node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
-        node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
-    }
-
-    private disableBootstrapEventHandlers(): void {
-        if (!this.modal) {
-            return;
-        }
-
-        const node: JQuery = this.JQuery(this.modal);
-
-        node.off("shown.bs.modal");
-        node.off("hide.bs.modal");
-    }
 
     //  Logics
 
@@ -166,8 +146,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         await this.onPropBeforeOpen();
 
         const openInstance: Modal | null = this.state.openInstance || Modal._openInstance;
-        console.log({openInstance});
-        console.log(Modal._openInstance);
 
         await this.setState({ isOpen: true, openInstance });
 
@@ -190,8 +168,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         await this.onPropBeforeClose();
 
         const openInstance: Modal | null = this.state.openInstance;
-        console.log({openInstance});
-        console.log(Modal._openInstance);
+
         await this.setState({ isOpen: false, openInstance });
 
         this.close();
@@ -251,18 +228,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.scrollBack();
     }
 
-    private close(): void {
-        if (!this.modal) {
-            return;
-        }
-
-        this.JQuery(this.modal).modal("hide");
-
-        if (Modal._openInstance === this) {
-            Modal._openInstance = null;
-        }
-    }
-
     private open(animation: boolean = true): void {
         if (!this.modal) {
             return;
@@ -270,9 +235,21 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         this._animation = animation;
 
-        this.JQuery(this.modal).modal("show");
+        this.showBootstrapModal();
 
         Modal._openInstance = this;
+    }
+
+    private close(): void {
+        if (!this.modal) {
+            return;
+        }
+
+        this.hideBootstrapModal();
+
+        if (Modal._openInstance === this) {
+            Modal._openInstance = null;
+        }
     }
 
     private scrollBack(): void {
@@ -299,6 +276,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return true;
     }
 
+    //  LifeCycleHooks
+
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
         this.enableBootstrapEventHandlers();
@@ -308,6 +287,45 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.close();
         await super.componentWillUnmount();
         this.disableBootstrapEventHandlers();
+    }
+
+    //  Bootstrap Methods
+
+    private enableBootstrapEventHandlers(): void {
+        if (!this.modal) {
+            return;
+        }
+
+        const node: JQuery = this.JQuery(this.modal);
+        node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
+        node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
+    }
+
+    private disableBootstrapEventHandlers(): void {
+        if (!this.modal) {
+            return;
+        }
+
+        const node: JQuery = this.JQuery(this.modal);
+
+        node.off("shown.bs.modal");
+        node.off("hide.bs.modal");
+    }
+
+    private showBootstrapModal() {
+        if (!this.modal) {
+            return;
+        }
+
+        this.JQuery(this.modal).modal("show");
+    }
+
+    private hideBootstrapModal() {
+        if (!this.modal) {
+            return;
+        }
+
+        this.JQuery(this.modal).modal("hide");
     }
 
     //  PropsMethodCallHelpers
