@@ -137,6 +137,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageInputCameraLanguageItemName: string = `ImageInput.Camera`;
     public readonly imageInputBackLanguageItemName: string = `ImageInput.Back`;
     public readonly imageInputPreviewLanguageItemName: string = `ImageInput.Preview`;
+    public readonly imageInputDropItLanguageItemName: string = `ImageInput.DropIt`;
 
     constructor() {
 
@@ -286,6 +287,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageInputCameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
         this.set(this.imageInputBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
         this.set(this.imageInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
+        this.set(this.imageInputDropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `SV: Drop it` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `FI: Drop it` }, { language: `da`, value: `DA: Drop it` },);
     }
 
     /**
@@ -1210,6 +1212,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageInputPreview() : string {
         return this.get(this.imageInputPreviewLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.DropIt" (Drop it)
+    */
+    public get imageInputDropIt() : string {
+        return this.get(this.imageInputDropItLanguageItemName);
     }
 }
 

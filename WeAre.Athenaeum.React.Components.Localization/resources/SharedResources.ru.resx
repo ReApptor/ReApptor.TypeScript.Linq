@@ -375,4 +375,7 @@
   <data name="ImageInput.Preview" xml:space="preserve">
     <value>RU: Preview</value>
   </data>
+  <data name="ImageInput.DropIt" xml:space="preserve">
+    <value>RU: Drop it</value>
+  </data>
 </root>
