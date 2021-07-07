@@ -348,31 +348,31 @@
   <data name="AddressDivider.PostalCode" xml:space="preserve">
     <value>Postinumero</value>
   </data>
-  <data name="ImageEditor.Back" xml:space="preserve">
+  <data name="ImageInput.Back" xml:space="preserve">
     <value>Takaisin</value>
   </data>
-  <data name="ImageEditor.Browse" xml:space="preserve">
+  <data name="ImageInput.Browse" xml:space="preserve">
     <value>Selaa</value>
   </data>
-  <data name="ImageEditor.Camera" xml:space="preserve">
+  <data name="ImageInput.Camera" xml:space="preserve">
     <value>Kamera</value>
   </data>
-  <data name="ImageEditor.Delete" xml:space="preserve">
+  <data name="ImageInput.Delete" xml:space="preserve">
     <value>Poistaa</value>
   </data>
-  <data name="ImageEditor.Edit" xml:space="preserve">
+  <data name="ImageInput.Edit" xml:space="preserve">
     <value>Muokkaa</value>
   </data>
-  <data name="ImageEditor.Save" xml:space="preserve">
+  <data name="ImageInput.Save" xml:space="preserve">
     <value>Tallentaa</value>
   </data>
-  <data name="ImageEditor.RotateLeft" xml:space="preserve">
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
     <value>Kierrä vasemmalle</value>
   </data>
-  <data name="ImageEditor.RotateRight" xml:space="preserve">
+  <data name="ImageInput.RotateRight" xml:space="preserve">
     <value>Kierrä oikealle</value>
   </data>
-  <data name="ImageEditor.Preview" xml:space="preserve">
+  <data name="ImageInput.Preview" xml:space="preserve">
     <value>Esikatsele</value>
   </data>
 </root>
