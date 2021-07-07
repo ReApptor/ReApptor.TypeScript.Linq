@@ -7,7 +7,7 @@ import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import ImageInputLocalizer from "./ImageInputLocalizer";
 import 'cropperjs/dist/cropper.css';
 import './ReactCropperOverride.scss';
-import styles from './ImageEditor.module.scss';
+import styles from './ImageInput.module.scss';
 
 enum ImageInputView {
     Cropper,
