@@ -128,15 +128,15 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly addressDividerCityLanguageItemName: string = `AddressDivider.City`;
     public readonly addressDividerPostalCodeLanguageItemName: string = `AddressDivider.PostalCode`;
     public readonly dateRangeInputLanguageItemName: string = `DateRangeInput`;
-    public readonly imageEditorSaveLanguageItemName: string = `ImageEditor.Save`;
-    public readonly imageEditorBrowseLanguageItemName: string = `ImageEditor.Browse`;
-    public readonly imageEditorRotateLeftLanguageItemName: string = `ImageEditor.RotateLeft`;
-    public readonly imageEditorRotateRightLanguageItemName: string = `ImageEditor.RotateRight`;
-    public readonly imageEditorDeleteLanguageItemName: string = `ImageEditor.Delete`;
-    public readonly imageEditorEditLanguageItemName: string = `ImageEditor.Edit`;
-    public readonly imageEditorCameraLanguageItemName: string = `ImageEditor.Camera`;
-    public readonly imageEditorBackLanguageItemName: string = `ImageEditor.Back`;
-    public readonly imageEditorPreviewLanguageItemName: string = `ImageEditor.Preview`;
+    public readonly imageInputSaveLanguageItemName: string = `ImageInput.Save`;
+    public readonly imageInputBrowseLanguageItemName: string = `ImageInput.Browse`;
+    public readonly imageInputRotateLeftLanguageItemName: string = `ImageInput.RotateLeft`;
+    public readonly imageInputRotateRightLanguageItemName: string = `ImageInput.RotateRight`;
+    public readonly imageInputDeleteLanguageItemName: string = `ImageInput.Delete`;
+    public readonly imageInputEditLanguageItemName: string = `ImageInput.Edit`;
+    public readonly imageInputCameraLanguageItemName: string = `ImageInput.Camera`;
+    public readonly imageInputBackLanguageItemName: string = `ImageInput.Back`;
+    public readonly imageInputPreviewLanguageItemName: string = `ImageInput.Preview`;
 
     constructor() {
 
@@ -277,15 +277,15 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.addressDividerCityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `Miasto` }, { language: `nb`, value: `By` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `By` },);
         this.set(this.addressDividerPostalCodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `Kod pocztowy` }, { language: `nb`, value: `Postnummer` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postnummer` },);
         this.set(this.dateRangeInputLanguageItemName, { language: `en`, value: `` },);
-        this.set(this.imageEditorSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `SV: Save` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallentaa` }, { language: `da`, value: `DA: Save` },);
-        this.set(this.imageEditorBrowseLanguageItemName, { language: `en`, value: `Browse` }, { language: `uk`, value: `UK: Browse` }, { language: `sv`, value: `SV: Browse` }, { language: `ru`, value: `RU: Browse` }, { language: `pl`, value: `PL: Browse` }, { language: `nb`, value: `NB: Browse` }, { language: `fi`, value: `Selaa` }, { language: `da`, value: `DA: Browse` },);
-        this.set(this.imageEditorRotateLeftLanguageItemName, { language: `en`, value: `Rotate left` }, { language: `uk`, value: `UK: RotateLeft` }, { language: `sv`, value: `SV: RotateLeft` }, { language: `ru`, value: `RU: RotateLeft` }, { language: `pl`, value: `PL: RotateLeft` }, { language: `nb`, value: `NB: RotateLeft` }, { language: `fi`, value: `Kierrä vasemmalle` }, { language: `da`, value: `DA: RotateLeft` },);
-        this.set(this.imageEditorRotateRightLanguageItemName, { language: `en`, value: `Rotate right` }, { language: `uk`, value: `UK: RotateRight` }, { language: `sv`, value: `SV: RotateRight` }, { language: `ru`, value: `RU: RotateRight` }, { language: `pl`, value: `PL: RotateRight` }, { language: `nb`, value: `NB: RotateRight` }, { language: `fi`, value: `Kierrä oikealle` }, { language: `da`, value: `DA: RotateRight` },);
-        this.set(this.imageEditorDeleteLanguageItemName, { language: `en`, value: `Delete` }, { language: `uk`, value: `UK: Delete` }, { language: `sv`, value: `Radera` }, { language: `ru`, value: `RU: Delete` }, { language: `pl`, value: `PL: Delete` }, { language: `nb`, value: `Slett` }, { language: `fi`, value: `Poistaa` }, { language: `da`, value: `DA: Delete` },);
-        this.set(this.imageEditorEditLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `SV: Edit` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
-        this.set(this.imageEditorCameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
-        this.set(this.imageEditorBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
-        this.set(this.imageEditorPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
+        this.set(this.imageInputSaveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `SV: Save` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallentaa` }, { language: `da`, value: `DA: Save` },);
+        this.set(this.imageInputBrowseLanguageItemName, { language: `en`, value: `Browse` }, { language: `uk`, value: `UK: Browse` }, { language: `sv`, value: `SV: Browse` }, { language: `ru`, value: `RU: Browse` }, { language: `pl`, value: `PL: Browse` }, { language: `nb`, value: `NB: Browse` }, { language: `fi`, value: `Selaa` }, { language: `da`, value: `DA: Browse` },);
+        this.set(this.imageInputRotateLeftLanguageItemName, { language: `en`, value: `Rotate left` }, { language: `uk`, value: `UK: RotateLeft` }, { language: `sv`, value: `SV: RotateLeft` }, { language: `ru`, value: `RU: RotateLeft` }, { language: `pl`, value: `PL: RotateLeft` }, { language: `nb`, value: `NB: RotateLeft` }, { language: `fi`, value: `Kierrä vasemmalle` }, { language: `da`, value: `DA: RotateLeft` },);
+        this.set(this.imageInputRotateRightLanguageItemName, { language: `en`, value: `Rotate right` }, { language: `uk`, value: `UK: RotateRight` }, { language: `sv`, value: `SV: RotateRight` }, { language: `ru`, value: `RU: RotateRight` }, { language: `pl`, value: `PL: RotateRight` }, { language: `nb`, value: `NB: RotateRight` }, { language: `fi`, value: `Kierrä oikealle` }, { language: `da`, value: `DA: RotateRight` },);
+        this.set(this.imageInputDeleteLanguageItemName, { language: `en`, value: `Delete` }, { language: `uk`, value: `UK: Delete` }, { language: `sv`, value: `Radera` }, { language: `ru`, value: `RU: Delete` }, { language: `pl`, value: `PL: Delete` }, { language: `nb`, value: `Slett` }, { language: `fi`, value: `Poistaa` }, { language: `da`, value: `DA: Delete` },);
+        this.set(this.imageInputEditLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `SV: Edit` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
+        this.set(this.imageInputCameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `SV: Camera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
+        this.set(this.imageInputBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
+        this.set(this.imageInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `SV: Preview` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
     }
 
     /**
@@ -1150,66 +1150,66 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     }
 
     /**
-    /* "ImageEditor.Save" (Save)
+    /* "ImageInput.Save" (Save)
     */
-    public get imageEditorSave() : string {
-        return this.get(this.imageEditorSaveLanguageItemName);
+    public get imageInputSave() : string {
+        return this.get(this.imageInputSaveLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Browse" (Browse)
+    /* "ImageInput.Browse" (Browse)
     */
-    public get imageEditorBrowse() : string {
-        return this.get(this.imageEditorBrowseLanguageItemName);
+    public get imageInputBrowse() : string {
+        return this.get(this.imageInputBrowseLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.RotateLeft" (Rotate left)
+    /* "ImageInput.RotateLeft" (Rotate left)
     */
-    public get imageEditorRotateLeft() : string {
-        return this.get(this.imageEditorRotateLeftLanguageItemName);
+    public get imageInputRotateLeft() : string {
+        return this.get(this.imageInputRotateLeftLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.RotateRight" (Rotate right)
+    /* "ImageInput.RotateRight" (Rotate right)
     */
-    public get imageEditorRotateRight() : string {
-        return this.get(this.imageEditorRotateRightLanguageItemName);
+    public get imageInputRotateRight() : string {
+        return this.get(this.imageInputRotateRightLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Delete" (Delete)
+    /* "ImageInput.Delete" (Delete)
     */
-    public get imageEditorDelete() : string {
-        return this.get(this.imageEditorDeleteLanguageItemName);
+    public get imageInputDelete() : string {
+        return this.get(this.imageInputDeleteLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Edit" (Edit)
+    /* "ImageInput.Edit" (Edit)
     */
-    public get imageEditorEdit() : string {
-        return this.get(this.imageEditorEditLanguageItemName);
+    public get imageInputEdit() : string {
+        return this.get(this.imageInputEditLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Camera" (Camera)
+    /* "ImageInput.Camera" (Camera)
     */
-    public get imageEditorCamera() : string {
-        return this.get(this.imageEditorCameraLanguageItemName);
+    public get imageInputCamera() : string {
+        return this.get(this.imageInputCameraLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Back" (Back)
+    /* "ImageInput.Back" (Back)
     */
-    public get imageEditorBack() : string {
-        return this.get(this.imageEditorBackLanguageItemName);
+    public get imageInputBack() : string {
+        return this.get(this.imageInputBackLanguageItemName);
     }
 
     /**
-    /* "ImageEditor.Preview" (Preview)
+    /* "ImageInput.Preview" (Preview)
     */
-    public get imageEditorPreview() : string {
-        return this.get(this.imageEditorPreviewLanguageItemName);
+    public get imageInputPreview() : string {
+        return this.get(this.imageInputPreviewLanguageItemName);
     }
 }
 
