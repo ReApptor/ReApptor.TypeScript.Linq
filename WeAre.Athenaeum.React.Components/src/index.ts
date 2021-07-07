@@ -277,9 +277,6 @@ export {default as ToolbarButton} from "./components/ToolbarContainer/ToolbarBut
 export * from "./components/Panel/Panel";
 export {default as Panel} from "./components/Panel/Panel";
 
-export * from "./components/ImageInput/ImageInput";
-export {default as ImageInput} from "./components/ImageInput/ImageInput";
-
 export * from "./components/ImageModal/ImageModal";
 export {default as ImageModal} from "./components/ImageModal/ImageModal";
 
@@ -289,7 +286,7 @@ export {default as Accordion} from "./components/Accordion/Accordion";
 export {default as FooterLocalizer} from './components/Footer/FooterLocalizer';
 export {default as AthenaeumComponentsConstants} from "./AthenaeumComponentsConstants";
 
+export * from "./components/ImageInput/ImageInput";
 export * from "./components/TabContainer/TabModel";
 export * from "./components/Dropdown/SelectListItem";
 export * from "./components/Grid/GridModel";
-export * from './components/ImageEditor/ImageEditor';
