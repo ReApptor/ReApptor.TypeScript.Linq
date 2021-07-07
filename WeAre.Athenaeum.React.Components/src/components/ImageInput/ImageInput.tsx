@@ -24,6 +24,7 @@ interface IImageInputState {
 interface IImageInputProps {
     multi?: boolean;
     pictures: FileModel[];
+    editOnAddInSingleMode?: boolean
     className?: string;
     maxImageRequestSizeInBytes?: number;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
@@ -46,6 +47,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get multi(): boolean {
         return this.props.multi || false;
+    }
+
+    private get editOnAddInSingleMode(): boolean {
+        return this.props.editOnAddInSingleMode || false;
     }
 
     private get pictures(): FileModel[] {
@@ -384,13 +389,19 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         if (this.props.onChange && this.multi) {
             await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
+
             await this.setState({currentView: ImageInputView.ListView, selectedPictureIndex: this.state.selectedPictureIndex});
+
             return;
         }
 
         if (this.props.onChange && !this.multi) {
+            const selectedView = this.editOnAddInSingleMode ? ImageInputView.Cropper : ImageInputView.Preview
+
             await this.props.onChange(this, fileModels.length > 0 ? fileModels.slice(0, 1) : []);
-            await this.setState({currentView: ImageInputView.Cropper, selectedPictureIndex: 0});
+
+            await this.setState({currentView: selectedView, selectedPictureIndex: 0});
+
             return;
         }
     }
