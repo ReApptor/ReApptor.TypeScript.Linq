@@ -352,30 +352,30 @@
     <value>Tillbaka</value>
   </data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>SV: Browse</value>
+    <value>Bläddra</value>
   </data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>SV: Camera</value>
+    <value>Kamera</value>
   </data>
   <data name="ImageInput.Delete" xml:space="preserve">
     <value>Radera</value>
   </data>
   <data name="ImageInput.Edit" xml:space="preserve">
-    <value>SV: Edit</value>
+    <value>Redigera</value>
   </data>
   <data name="ImageInput.Save" xml:space="preserve">
-    <value>SV: Save</value>
+    <value>Spara</value>
   </data>
   <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>SV: RotateLeft</value>
+    <value>Rotera vänster</value>
   </data>
   <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>SV: RotateRight</value>
+    <value>Rotera höger</value>
   </data>
   <data name="ImageInput.Preview" xml:space="preserve">
-    <value>SV: Preview</value>
+    <value>Förhandsvisa</value>
   </data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>SV: Drop it</value>
+    <value>Släpp</value>
   </data>
 </root>
