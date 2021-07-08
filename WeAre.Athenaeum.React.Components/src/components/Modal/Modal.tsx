@@ -145,52 +145,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     //  Logics
 
-    private async setModalToOpen(animation: boolean = true) {
-        if (this.state.isOpen) {
-            return;
-        }
-
-        await this.onPropBeforeOpen();
-
-        const openInstance: Modal | null = this.state.openInstance || Modal._openInstance;
-
-        await this.setState({ isOpen: true, openInstance });
-
-        this.openModal(animation);
-
-        await this.onPropOpen();
-
-        if (openInstance) {
-            await openInstance.closeAsync();
-        }
-
-        await this.onPropToggle(true);
-    }
-
-    private async setModalToClose(animation: boolean = true) {
-        if (!this.state.isOpen) {
-            return;
-        }
-
-        await this.onPropBeforeClose();
-
-        const openInstance: Modal | null = this.state.openInstance;
-
-        await this.setState({ isOpen: false, openInstance });
-
-        this.closeModal();
-
-        await this.onPropClose();
-
-        if ((openInstance) && (Modal._openInstance == null)) {
-            await openInstance.openAsync();
-
-            await this.setState({openInstance: null})
-        }
-
-        await this.onPropToggle(false);
-    }
-
     private togglePageScroll(toggle: boolean): void {
         if (this.mobile) {
             return
@@ -238,6 +192,72 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.scrollBack();
     }
 
+    private scrollBack(): void {
+        window.scrollTo(0, this.scrollY);
+    }
+
+    protected getEndpoint(): string {
+        return "";
+    }
+
+    protected transformData(data: any): TData {
+        if (!this.props.transform) {
+            return data as TData;
+        }
+
+        return this.props.transform(data);
+    }
+    
+    public hasSpinner(): boolean {
+        return true;
+    }
+
+    private async setModalToOpen(animation: boolean = true) {
+        if (this.state.isOpen) {
+            return;
+        }
+
+        await this.onPropBeforeOpen();
+
+        const openInstance: Modal | null = this.state.openInstance || Modal._openInstance;
+
+        await this.setState({ isOpen: true, openInstance });
+
+        this.openModal(animation);
+
+        await this.onPropOpen();
+
+        if (openInstance) {
+            await openInstance.closeAsync();
+        }
+
+        await this.onPropToggle(true);
+    }
+
+    private async setModalToClose(animation: boolean = true) {
+        if (!this.state.isOpen) {
+            return;
+        }
+
+        await this.onPropBeforeClose();
+
+        const openInstance: Modal | null = this.state.openInstance;
+
+        await this.setState({ isOpen: false, openInstance });
+
+        this.closeModal();
+
+        await this.onPropClose();
+
+        if ((openInstance) && (Modal._openInstance == null)) {
+            await openInstance.openAsync();
+
+            await this.setState({openInstance: null})
+        }
+
+        await this.onPropToggle(false);
+    }
+
     private openModal(animation: boolean = true): void {
         if (!this.modal) {
             return;
@@ -260,27 +280,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         if (Modal._openInstance === this) {
             Modal._openInstance = null;
         }
-    }
-
-    private scrollBack(): void {
-        window.scrollTo(0, this.scrollY);
-    }
-
-
-    protected getEndpoint(): string {
-        return "";
-    }
-
-    protected transformData(data: any): TData {
-        if (!this.props.transform) {
-            return data as TData;
-        }
-
-        return this.props.transform(data);
-    }
-    
-    public hasSpinner(): boolean {
-        return true;
     }
 
     //  LifeCycleHooks
@@ -367,7 +366,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         }
     }
 
-    //  Helpers
+    //  Interface
 
     public async openAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
         this._scrollY = window.scrollY;
