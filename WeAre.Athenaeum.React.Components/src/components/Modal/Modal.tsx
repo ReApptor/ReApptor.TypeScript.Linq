@@ -397,13 +397,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         const modalContentStyle: any = (this.props.size === ModalSize.Auto) && "w-auto";
         const toolbarStyle: any = (this.mobile) ? "mobile-toolbar" : "toolbar";
         const infoContentStyle: any = this.props.keepTextFormatting ? "textFormatting" : "";
-        
+
         return (
             <div id={this.id} ref={this._modalRef}
                  tabIndex={-1} role="dialog"
                  className={this.css("modal", this.props.className)}
             >
-                
+
                 <div className={this.css("modal-dialog", this.desktop && "modal-dialog-centered", this.sizeStyle)} role="document">
 
                     <div className={this.css("modal-content", modalContentStyle, this.props.contentClassName)}>
@@ -412,20 +412,23 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                                 <h5 className="modal-title">{this.toMultiLines(this.title)}</h5>
                                 <h6 className="modal-title">{this.toMultiLines(this.subtitle)}</h6>
                             </div>
-                            
+
                             <div className={toolbarStyle}>
-                                
+
                                 {
                                     this.renderToolbar()
                                 }
 
                                 {
-                                    (this.mobile)
-                                        ? <Icon name="chevron-down" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.onCloseButtonClick()} />
-                                        : <Icon name="times" className="dismiss" style={IconStyle.Regular} size={IconSize.X2} onClick={() => this.onCloseButtonClick()} />
-
+                                    <Icon
+                                        name={this.mobile ? "chevron-down" : "times"}
+                                        className={this.mobile ? "" : "dismiss"}
+                                        style={IconStyle.Regular}
+                                        size={IconSize.X2}
+                                        onClick={() => this.onCloseButtonClick()}
+                                    />
                                 }
-                                
+
                             </div>
 
                         </div>
@@ -449,8 +452,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             ((!this.props.info) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
-                                    <Button label={ModalLocalizer.saveChanges} type={ButtonType.Orange} submit />
-                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.onCloseButtonClick()} />
+                                    <Button label={ModalLocalizer.saveChanges} type={ButtonType.Orange} submit/>
+                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.onCloseButtonClick()}/>
                                 </div>
                             )
                         }
@@ -460,11 +463,11 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                         }
 
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-        )
+        );
     }
     
     // This needs improvement in next version
