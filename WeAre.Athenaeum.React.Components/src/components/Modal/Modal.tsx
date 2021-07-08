@@ -115,6 +115,14 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return this.state.isOpen;
     }
 
+    public get isInfo(): boolean {
+        return this.props.info || false;
+    }
+
+    public getBodyNode(): JQuery {
+        return this.JQuery(`#${this.id}_body`);
+    }
+
     public get body(): React.ReactNode {
         return this._modalBodyRef.current!;
     }
@@ -125,16 +133,15 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         await this.closeAsync();
     }
 
-    private dismissModal(e: React.MouseEvent): void {
-        if (!this.props.info) {
+    private onModalBodyClick(e: React.MouseEvent): void {
+        if (!this.isInfo) {
             return;
         }
 
         e.stopPropagation();
 
-        this.close();
+        this.closeModal();
     }
-
 
     //  Logics
 
@@ -149,7 +156,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         await this.setState({ isOpen: true, openInstance });
 
-        this.open(animation);
+        this.openModal(animation);
 
         await this.onPropOpen();
 
@@ -171,7 +178,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         await this.setState({ isOpen: false, openInstance });
 
-        this.close();
+        this.closeModal();
 
         await this.onPropClose();
 
@@ -185,13 +192,16 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     private togglePageScroll(toggle: boolean): void {
-        if (!this.mobile) {
-            if (toggle) {
-                this.JQuery("html").addClass("prevent-scroll");
-            } else {
-                this.JQuery("html").removeClass("prevent-scroll");
-            }
+        if (this.mobile) {
+            return
         }
+
+        if (toggle) {
+            this.JQuery("html").addClass("prevent-scroll");
+            return;
+        }
+
+        this.JQuery("html").removeClass("prevent-scroll");
     }
 
     private setData(data: TData | null = null): void {
@@ -228,7 +238,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         this.scrollBack();
     }
 
-    private open(animation: boolean = true): void {
+    private openModal(animation: boolean = true): void {
         if (!this.modal) {
             return;
         }
@@ -240,7 +250,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         Modal._openInstance = this;
     }
 
-    private close(): void {
+    private closeModal(): void {
         if (!this.modal) {
             return;
         }
@@ -256,9 +266,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         window.scrollTo(0, this.scrollY);
     }
 
-    public getBodyNode(): JQuery {
-        return this.JQuery(`#${this.id}_body`);
-    }
 
     protected getEndpoint(): string {
         return "";
@@ -284,7 +291,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     async componentWillUnmount(): Promise<void> {
-        this.close();
+        this.closeModal();
         await super.componentWillUnmount();
         this.disableBootstrapEventHandlers();
     }
@@ -424,7 +431,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
                         </div>
 
-                        <div id={`${this.id}_body`} ref={this._modalBodyRef} className={this.css("modal-body", this.props.bodyClassName)} onClick={(e: React.MouseEvent) => this.dismissModal(e)}>
+                        <div id={`${this.id}_body`} ref={this._modalBodyRef} className={this.css("modal-body", this.props.bodyClassName)} onClick={(e: React.MouseEvent) => this.onModalBodyClick(e)}>
 
                             {
                                 (!this.props.children) &&
