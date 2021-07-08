@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\WeAre.Athenaeum.Common\WeAre.Athenaeum.Common.csproj" />
       <ProjectReference Include="..\WeAre.Athenaeum.Toolkit\WeAre.Athenaeum.Toolkit.csproj" />
     </ItemGroup>
 
