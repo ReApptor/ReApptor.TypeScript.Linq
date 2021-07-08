@@ -1,7 +1,8 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=62c1c937_002D7e8e_002D4335_002Dbf91_002Db3320a6ab2c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddVaultItemReadAccessTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=62c1c937_002D7e8e_002D4335_002Dbf91_002Db3320a6ab2c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddVaultItemReadAccessTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::443AA3C3-53D8-4CDF-9D99-4A572E8C962A::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Services.UnitTest.ACM.OnePasswordApiProviderTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.Extensions.EnumExtensionsTests.GetEnumNameTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	
@@ -14,7 +15,7 @@
     &lt;/TestAncestor&gt;
   &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fcfbf05d_002D6dce_002D40ee_002Db28b_002D282b22d4b756/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="WinterWinterTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fcfbf05d_002D6dce_002D40ee_002Db28b_002D282b22d4b756/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WinterWinterTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.DateOnlyAttributeTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.DoubleParseTests&lt;/TestId&gt;
@@ -22,6 +23,7 @@
     &lt;TestId&gt;xUnit::443AA3C3-53D8-4CDF-9D99-4A572E8C962A::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Services.UnitTest.ACM.OnePasswordApiProviderTest.FindVaultByNameAsyncTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::443AA3C3-53D8-4CDF-9D99-4A572E8C962A::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Services.UnitTest.ACM.OnePasswordApiProviderTest.ListVaultItemsTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::443AA3C3-53D8-4CDF-9D99-4A572E8C962A::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Services.UnitTest.ACM.OnePasswordApiProviderTest.GetVaultItemTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.Extensions.EnumExtensionsTests.GetEnumNameTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Frontend_002FReact_002FWeAre_002EAthenaeum_002EReact_002EComponents_002ELocalization_002Fresources_002FSharedResources/@EntryIndexedValue">True</s:Boolean>
