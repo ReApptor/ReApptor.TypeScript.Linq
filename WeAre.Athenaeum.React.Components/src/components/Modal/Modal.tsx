@@ -30,7 +30,6 @@ interface IModalProps<TData = {}> {
     subtitle?: string;
     content?: string;
     info?: boolean;
-    fullScreen?: boolean;
     className?: string;
     contentClassName?: string;
     bodyClassName?: string;
