@@ -231,9 +231,16 @@ namespace WeAre.Athenaeum.Common.Api
 
             if (request != null)
             {
-                string requestJson = JsonConvert.SerializeObject(request);
+                if (request is string stringRequest)
+                {
+                    content = new StringContent(stringRequest, Encoding.UTF8, "text/html");
+                }
+                else
+                {
+                    string requestJson = JsonConvert.SerializeObject(request);
 
-                content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+                    content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+                }
             }
 
             HttpResponseMessage httpResponse = await Utility.InvokeAsync(() => SendAsync(url, method, content), 3);
