@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -8,17 +7,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using WeAre.Athenaeum.Common.Helpers;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
-using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Configuration
 {
     public abstract class BaseEnvironmentConfiguration<TConfiguration> : IEnvironmentConfiguration where TConfiguration : BaseEnvironmentConfiguration<TConfiguration>
     {
         #region Private/Protected
-        
+
         private string _version;
         private string _country;
-        
+
         private static string NormalizeVersion(string version)
         {
             //latest-(2019-10-24-15:45:51-UTC/GMT+0)
@@ -33,14 +31,14 @@ namespace WeAre.Athenaeum.Common.Configuration
 
             return version;
         }
-        
+
         private static string GetEntryVersion()
         {
             Assembly assembly = Assembly.GetEntryAssembly() ?? typeof(TConfiguration).Assembly;
             Version version = assembly.GetName().Version;
             return version?.ToString() ?? "1.0";
         }
-        
+
         protected string GetEnvironmentVariable(string key, bool throwExceptionIfNotFound = true)
         {
             string value = Environment.GetEnvironmentVariable(key);
@@ -59,6 +57,19 @@ namespace WeAre.Athenaeum.Common.Configuration
             string value = GetEnvironmentVariable(key, false);
 
             return (!string.IsNullOrWhiteSpace(value)) ? value : @default;
+        }
+
+        protected string[] GetArrayEnvironmentVariable(string key, string[] @default = null)
+        {
+            string value = GetEnvironmentVariable(key, false);
+
+            return (!string.IsNullOrWhiteSpace(value))
+                ? value
+                    .Split(new[] {",", ";"}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(item => item.Trim())
+                    .Where(item => !string.IsNullOrWhiteSpace(item))
+                    .ToArray()
+                : @default ?? new string[0];
         }
 
         protected int GetIntEnvironmentVariable(string key, int? @default = null)
@@ -120,7 +131,7 @@ namespace WeAre.Athenaeum.Common.Configuration
                 string path = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "EnvironmentVariables.json");
                 IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile(path, false, false);
                 IConfigurationRoot config = builder.Build();
-                
+
                 foreach (IConfigurationSection item in config.GetChildren())
                 {
                     Environment.SetEnvironmentVariable(item.Key, item.Value);
@@ -148,9 +159,9 @@ namespace WeAre.Athenaeum.Common.Configuration
         }
 
         #endregion
-        
+
         public static TConfiguration Instance { get; private set; }
-        
+
         public string EnvironmentName { get; }
 
         public bool IsDevelopment { get; }
@@ -158,7 +169,7 @@ namespace WeAre.Athenaeum.Common.Configuration
         public bool IsDevelopmentVS { get; }
 
         public bool IsPackageManagerConsole { get; }
-        
+
         public virtual IHostEnvironment HostingEnvironment { get; }
 
         public bool IsDebug
@@ -172,7 +183,7 @@ namespace WeAre.Athenaeum.Common.Configuration
 #endif
             }
         }
-        
+
         public virtual string Version
         {
             get { return _version ??= NormalizeVersion(GetEnvironmentVariable("VERSION", GetEntryVersion())); }
@@ -186,9 +197,9 @@ namespace WeAre.Athenaeum.Common.Configuration
         public bool IsSweden => Country.IsCountry("se");
 
         public bool IsFinland => Country.IsCountry("fi");
-        
+
         public bool IsDenmark => Country.IsCountry("da");
-        
+
         public bool IsPoland => Country.IsCountry("pl");
 
         public bool IsNorway => Country.IsCountry("nor") || Country.IsCountry("no");
