@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using WeAre.Athenaeum.Common.Helpers;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
+using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace WeAre.Athenaeum.Common.Configuration
 {
@@ -138,22 +140,22 @@ namespace WeAre.Athenaeum.Common.Configuration
                 }
             }
 
-            // if (credentialService != null)
-            // {
-            //     PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
-            //     if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
-            //     {
-            //         credentialService.Initialize(acmSettings);
-            //         IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
-            //
-            //         credentials = credentials.Where(credential => (!string.IsNullOrWhiteSpace(credential.Key?.Label)) && (!string.IsNullOrWhiteSpace(credential.Value)));
-            //
-            //         foreach (ICredential credential in credentials)
-            //         {
-            //             Environment.SetEnvironmentVariable(credential.Key.Label, credential.Value);
-            //         }
-            //     }
-            // }
+            if (credentialService != null)
+            {
+                PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
+                if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
+                {
+                    credentialService.Initialize(acmSettings);
+                    IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
+
+                    credentials = credentials.Where(credential => (!string.IsNullOrWhiteSpace(credential.Key?.Label)) && (!string.IsNullOrWhiteSpace(credential.Value)));
+
+                    foreach (ICredential credential in credentials)
+                    {
+                        Environment.SetEnvironmentVariable(credential.Key.Label, credential.Value);
+                    }
+                }
+            }
 
             Instance = this as TConfiguration;
         }
