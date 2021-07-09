@@ -1,6 +1,10 @@
 {
   "name": "WeAre.Athenaeum.TemplateApp.WebUI",
   "private": true,
+  "scripts": {
+    "start": "HOST=0.0.0.0 npm run start:application:test --prefix ..",
+    "build": "npm run build:application:test --prefix .."
+  },
   "dependencies": {
     "async-mutex": "^0.1.3",
     "bootstrap": "^4.3.1",
@@ -38,23 +42,6 @@
     "ts-node": "^9.1.1",
     "typescript": "3.8",
     "typescript-collections": "^1.3.2"
-  },
-  "scripts": {
-    "start": "HOST=0.0.0.0 react-app-rewired start",
-    "prebuild": "mkdir -p src/@weare && npm run copy:toolkit && npm run copy:common && npm run copy:components",
-    "build": "react-app-rewired build",
-    "copy:components": "rsync -av '../WeAre.Athenaeum.React.Components/src/.' './src/@weare/athenaeum-react-components/' --delete",
-    "copy:components:back": "rsync -av './src/@weare/athenaeum-react-components/.' '../WeAre.Athenaeum.React.Components/src/'",
-    "watch:components": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Components/src/*' --exec 'npm run copy:components'",
-    "watch:components:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-components/*' --exec 'npm run copy:components:back'",
-    "copy:common": "rsync -av '../WeAre.Athenaeum.React.Common/src/.' './src/@weare/athenaeum-react-common/' --delete",
-    "copy:common:back": "rsync -av './src/@weare/athenaeum-react-common/.' '../WeAre.Athenaeum.React.Common/src/'",
-    "watch:common": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Common/src/*'  --exec 'npm run copy:common'",
-    "watch:common:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-react-common/*' --exec 'npm run copy:common:back'",
-    "copy:toolkit": "rsync -av '../WeAre.Athenaeum.React.Toolkit/src/.' './src/@weare/athenaeum-toolkit/' --delete --exclude 'tests'",
-    "copy:toolkit:back": "rsync -av './src/@weare/athenaeum-toolkit/.' '../WeAre.Athenaeum.React.Toolkit/src/'",
-    "watch:toolkit": "nodemon --ext '.' --watch '../WeAre.Athenaeum.React.Toolkit/src/*'  --exec 'npm run copy:toolkit'",
-    "watch:toolkit:back": "sleep 1 && nodemon --ext '.' --watch './src/@weare/athenaeum-toolkit/*'  --exec 'npm run copy:toolkit:back'"
   },
   "browserslist": []
 }
