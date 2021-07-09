@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "jsx": "react",
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@weare/athenaeum-react-components": [
+        "./WeAre.Athenaeum.React.Components/src/index.ts"
+      ],
+      "@weare/athenaeum-react-common": [
+        "./WeAre.Athenaeum.React.Common/src/index.ts"
+      ],
+      "@weare/athenaeum-toolkit": [
+        "./WeAre.Athenaeum.React.Toolkit/src/index.ts"
+      ]
+    }
+  }
+}
