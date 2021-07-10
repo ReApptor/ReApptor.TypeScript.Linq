@@ -78,15 +78,17 @@ pipelines:
                 - npm publish
               artifacts:
                 - Documentation/docs-input/**
+
           - step:
-              name: Athenaeum React Components Localization Build
+              name: Athenaeum React Components Build
               image: node:14
               caches:
-                - node
+                - node-root
+                - node-components
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Components.Localization
+                - cd WeAre.Athenaeum.React.Components
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -113,15 +115,14 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Athenaeum React Components Build
+              name: Athenaeum React Components Localization Build
               image: node:14
               caches:
-                - node-root
-                - node-components
+                - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Components
+                - cd WeAre.Athenaeum.React.Components.Localization
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""

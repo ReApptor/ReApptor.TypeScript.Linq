@@ -1,6 +1,4 @@
-import TypeResolver, {ITypeResolver} from "../providers/TypeResolver";
-import {ArrayExtensions} from "../extensions/ArrayExtensions";
-import ServiceProvider from "../providers/ServiceProvider";
+import {TypeResolver, ITypeResolver, ArrayExtensions, ServiceProvider} from "..";
 
 ArrayExtensions();
 
