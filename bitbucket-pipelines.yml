@@ -5,12 +5,23 @@ options:
 pipelines:
   branches:
     master: # Pipelines that will be triggered automatically
+      - step:
+          name: Install Dependencies
+          image: node:14
+          caches:
+            - node-root
+            - node-toolkit
+            - node-common
+            - node-components
+          script:
+            - npm run install:all
       - parallel:
           - step:
               name: Athenaeum React Toolkit Build
               image: node:14
               caches:
-                - node
+                - node-root
+                - node-toolkit
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -21,32 +32,32 @@ pipelines:
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
-                # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
                 # - npm test
                 # Run build
                 - npm run build
                 # Create documentation
-                - mkdir ./etc
-                - api-extractor run --local
+                - npm run build:documentation
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
                 - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
                 # Create package
                 - npm pack
+                # Get latest version number
+                - npm run version:latest
                 # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                - npm run version:patch
                 # Publish to MyGet
                 - npm publish
               artifacts:
-                - WeAre.Athenaeum.React.Toolkit/temp/**
+                - Documentation/docs-input/**
           - step:
               name: Athenaeum React Common Build
               image: node:14
               caches:
-                - node
+                - node-root
+                - node-common
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -57,15 +68,12 @@ pipelines:
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
                 - npm install
-                 # Dependencies for documentation create
-                - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
                 # - npm test
                 # Run build
                 - npm run build
                 # Create documentation
-                - mkdir ./etc
-                - api-extractor run --local
+                - npm run build:documentation
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -77,7 +85,7 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
               artifacts:
-                - WeAre.Athenaeum.React.Common/temp/**
+                - Documentation/docs-input/**
           - step:
               name: Athenaeum React Components Localization Build
               image: node:14
@@ -101,9 +109,6 @@ pipelines:
                 # Run build
                 - npm run build
                 ## Create documentation
-                #- mkdir ./etc
-                #- api-extractor run --local
-                #- api-documenter markdown -i ./temp/ -o ../Documentation/docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -118,7 +123,8 @@ pipelines:
               name: Athenaeum React Components Build
               image: node:14
               caches:
-                - node
+                - node-root
+                - node-components
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
@@ -137,9 +143,6 @@ pipelines:
                 # Run build
                 - npm run build
                 ## Create documentation
-                #- mkdir ./etc
-                #- api-extractor run --local
-                #- api-documenter markdown -i ./temp/ -o ../Documentation/docs/
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -255,50 +258,48 @@ pipelines:
           name: Build Documentation
           image: node:14
           caches:
-            - node
+            - node-root
           script:
             - node -v && npm -v
             - npm config set strict-ssl true
             - npm config set ca ""
-            - npm install -g @microsoft/api-documenter
-            - cd Documentation
-            - mkdir input
-            - cp -a ../WeAre.Athenaeum.React.Toolkit/temp/. ./input/
-            - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
-            - api-documenter markdown -i ./input/ -o ./docs/
-            - cp index.html ./docs/index.html
-            - mv ./docs/index.md ./docs/README.md
+            - npm install
+            - npm run build:documentation
           artifacts:
-            - Documentation/docs/**
-      - step:
-          name: Deploy Documentation
-          image: amazon/aws-cli
-          caches:
-            - docker
-          script:
-            - export VERSION=latest
-            # Print version from AWS CLI & Python
-            - aws --version && python -V
-            # Deploy documentation
-            - cd Documentation
-            # Build container image and push to ECR repository
-            - aws ecr get-login-password --region ${AWS_REGION} | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-            - docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION -f Dockerfile .
-            - docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
-            - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
-          services:
-            - docker
-      - step:
-          name: Deploy Dev ReApptor Documentation to FARGATE
-          deployment: dev-reapptor-doc-deploy
-          image: alpine:3.9
-          script:
-            - apk add --no-cache curl
-            - 'curl -X POST -is -H "Authorization: Basic Y2ljZHdlYXJldXNlcjpoNXZISk04NnpzblI4S3VGcmFoNg==" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"master\"}}" https://api.bitbucket.org/2.0/repositories/wearesolutions/reapptor-documentation-deploy/pipelines/'
+            - Documentation/docs-output/**
+#      - step:
+#          name: Deploy Documentation
+#          image: amazon/aws-cli
+#          caches:
+#            - docker
+#          script:
+#            - export VERSION=latest
+#            # Print version from AWS CLI & Python
+#            - aws --version && python -V
+#            # Deploy documentation
+#            - cd Documentation
+#            # Build container image and push to ECR repository
+#            - aws ecr get-login-password --region ${AWS_REGION} | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+#            - docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION -f Dockerfile .
+#            - docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
+#            - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPOSITORY}:$VERSION
+#          services:
+#            - docker
+#      - step:
+#          name: Deploy Dev ReApptor Documentation to FARGATE
+#          deployment: dev-reapptor-doc-deploy
+#          image: alpine:3.9
+#          script:
+#            - apk add --no-cache curl
+#            - 'curl -X POST -is -H "Authorization: Basic Y2ljZHdlYXJldXNlcjpoNXZISk04NnpzblI4S3VGcmFoNg==" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"master\"}}" https://api.bitbucket.org/2.0/repositories/wearesolutions/reapptor-documentation-deploy/pipelines/'
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
     node: node_modules
+    node-root: ~/node_modules
+    node-toolkit: ~/WeAre.Athenaeum.React.Toolkit/node_modules
+    node-common: ~/WeAre.Athenaeum.React.Common/node_modules
+    node-components: ~/WeAre.Athenaeum.React.Components/node_modules
   services:
     docker:
       memory: 2048
