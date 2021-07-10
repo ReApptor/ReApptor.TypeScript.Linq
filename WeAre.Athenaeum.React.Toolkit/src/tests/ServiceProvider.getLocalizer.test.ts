@@ -1,4 +1,5 @@
-import {BaseLocalizer, ILocalizer, ServiceProvider} from "..";
+import BaseLocalizer, {ILocalizer} from "../localization/BaseLocalizer";
+import ServiceProvider from "../providers/ServiceProvider";
 
 describe("getLocalizer", function() {
     

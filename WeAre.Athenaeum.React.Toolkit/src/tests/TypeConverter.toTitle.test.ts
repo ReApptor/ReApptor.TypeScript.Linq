@@ -1,5 +1,6 @@
-import {ArrayExtensions, TypeConverter, Utility} from "..";
 import {ObjectConverter} from "../providers/TypeConverter";
+import {ArrayExtensions, TypeConverter} from "../index";
+import Utility from "../Utility";
 
 ArrayExtensions();
 
