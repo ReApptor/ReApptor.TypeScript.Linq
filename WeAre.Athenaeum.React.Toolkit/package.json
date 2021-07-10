@@ -1,33 +1,7 @@
 {
   "name": "@weare/athenaeum-toolkit",
-  "private": false,
   "version": "1.0.0",
-  "type": "commonjs",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/types/src/index.d.ts",
-  "scripts": {
-    "build": "TYPES_ONLY=true rollup -c=../rollup.config.js && rollup -c=../rollup.config.js",
-    "test": "jest -c jest.config.js  --passWithNoTests",
-    "coverage": "jest -c jest.config.js --coverage"
-  },
-  "dependencies": {
-    "typescript-collections": "^1.3.2"
-  },
-  "peerDependencies": {},
-  "devDependencies": {
-    "@types/jest": "^26.0.14",
-    "@types/node": "11.9.4",
-    "@types/ts-nameof": "^4.2.1",
-    "jest": "^26.4.2",
-    "ts-jest": "^26.4.0",
-    "ts-nameof": "^5.0.0",
-    "typescript": "3.8"
-  },
-  "files": [
-    "lib"
-  ],
-  "browserslist": [],
+  "private": false,
   "keywords": [
     "weare",
     "athenaeum",
@@ -36,5 +10,39 @@
     "extensions",
     "typescript",
     "npm"
-  ]
+  ],
+  "type": "commonjs",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/src/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "TYPES_ONLY=true rollup -c=../rollup.config.js && rollup -c=../rollup.config.js",
+    "test": "jest -c jest.config.js  --passWithNoTests",
+    "coverage": "jest -c jest.config.js --coverage",
+    "version:latest": "npm version $(npm view @weare/athenaeum-toolkit version)",
+    "version:patch": "npm version patch",
+    "build:documentation": "npm run build && npm run build:documentation:extract && npm run build:documentation:copy",
+    "build:documentation:extract": "mkdir -p etc && api-extractor run --local --typescript-compiler-folder $(npm root)/typescript",
+    "build:documentation:copy": "cp -a ./temp/. ../Documentation/docs-input/"
+  },
+  "browserslist": [],
+  "dependencies": {
+    "typescript-collections": "^1.3.2"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.13.30",
+    "@microsoft/api-extractor": "^7.12.1",
+    "@types/jest": "^26.0.14",
+    "@types/node": "11.9.4",
+    "@types/ts-nameof": "^4.2.1",
+    "jest": "^26.4.2",
+    "rollup": "^2.49.0",
+    "ts-jest": "^26.4.0",
+    "ts-nameof": "^5.0.0",
+    "typescript": "3.8"
+  },
+  "peerDependencies": {}
 }

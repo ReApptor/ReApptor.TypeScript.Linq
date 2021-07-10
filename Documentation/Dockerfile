@@ -33,7 +33,7 @@ WORKDIR /usr/src/app
 # Copy the required files from the build step
 COPY --from=build /usr/src/app/server.js ./server.js
 COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/docs ./docs
+COPY --from=build /usr/src/app/docs-output ./docs
 
 # Print Node.js version
 RUN node --version
