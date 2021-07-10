@@ -14,6 +14,7 @@ pipelines:
             - node-common
             - node-components
           script:
+            - pwd
             - npm run install:all
       - parallel:
           - step:
@@ -300,10 +301,10 @@ definitions:
   caches:
     dotnetcore: ~/.nuget/packages
     node: node_modules
-    node-root: ~/node_modules
-    node-toolkit: ~/WeAre.Athenaeum.React.Toolkit/node_modules
-    node-common: ~/WeAre.Athenaeum.React.Common/node_modules
-    node-components: ~/WeAre.Athenaeum.React.Components/node_modules
+    node-root: ./node_modules
+    node-toolkit: ./WeAre.Athenaeum.React.Toolkit/node_modules
+    node-common: ./WeAre.Athenaeum.React.Common/node_modules
+    node-components: ./WeAre.Athenaeum.React.Components/node_modules
   services:
     docker:
       memory: 2048
