@@ -1,5 +1,4 @@
-import TypeResolver from "../providers/TypeResolver";
-import {IService, ServiceType} from "../providers/ServiceProvider";
+import {IService, ServiceType, TypeResolver} from "..";
 
 describe("TypeResolver", function() {
     

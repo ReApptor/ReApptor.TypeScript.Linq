@@ -1,5 +1,4 @@
-import ServiceProvider, {IService, ServiceType, TService} from "../providers/ServiceProvider";
-import {ArrayExtensions} from "../extensions/ArrayExtensions";
+import  {ServiceProvider, ArrayExtensions, IService, ServiceType, TService} from "../";
 
 ArrayExtensions();
 
