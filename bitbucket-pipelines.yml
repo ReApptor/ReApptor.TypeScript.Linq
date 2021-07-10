@@ -31,6 +31,7 @@ pipelines:
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
+                - npm install --prefix ..
                 - npm install
                 # Run tests
                 # - npm test
@@ -67,6 +68,7 @@ pipelines:
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
+                - npm install --prefix ..
                 - npm install
                 # Run tests
                 # - npm test
@@ -100,6 +102,7 @@ pipelines:
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
+                - npm install --prefix ..
                 - npm install
                 ## Dependencies for documentation create
                 #- npm install -g @microsoft/api-extractor@7.12.1
@@ -134,6 +137,7 @@ pipelines:
                 - npm config set ca ""
                 - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Install dependencies
+                - npm install --prefix ..
                 - npm install
                 ## Dependencies for documentation create
                 #- npm install -g @microsoft/api-extractor@7.12.1
