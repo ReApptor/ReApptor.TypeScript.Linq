@@ -24,7 +24,7 @@
     "coverage": "jest -c jest.config.js --coverage",
     "version:latest": "npm version $(npm view @weare/athenaeum-toolkit version)",
     "version:patch": "npm version patch",
-    "build:documentation": "npm run build && npm run build:documentation:extract && npm run build:documentation:copy",
+    "build:documentation": "npm run build:documentation:extract && npm run build:documentation:copy",
     "build:documentation:extract": "mkdir -p etc && api-extractor run --local --typescript-compiler-folder $(npm root)/typescript",
     "build:documentation:copy": "cp -a ./temp/. ../Documentation/docs-input/"
   },
