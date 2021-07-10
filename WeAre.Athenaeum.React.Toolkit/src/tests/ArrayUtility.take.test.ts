@@ -1,4 +1,4 @@
-import {ArrayExtensions} from "..";
+import {ArrayExtensions} from "../extensions/ArrayExtensions";
 
 ArrayExtensions();
 
