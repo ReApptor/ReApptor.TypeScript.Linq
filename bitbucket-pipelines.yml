@@ -35,10 +35,8 @@ pipelines:
                 - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
                 # Create package
                 - npm pack
-                # Get latest version number
-                - npm run version:latest
                 # Change version number
-                - npm run version:patch
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Publish to MyGet
                 - npm publish
               artifacts:
