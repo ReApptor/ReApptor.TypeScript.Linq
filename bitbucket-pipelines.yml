@@ -5,17 +5,6 @@ options:
 pipelines:
   branches:
     master: # Pipelines that will be triggered automatically
-      - step:
-          name: Install Dependencies
-          image: node:14
-          caches:
-            - node-root
-            - node-toolkit
-            - node-common
-            - node-components
-          script:
-            - pwd
-            - npm run install:all
       - parallel:
           - step:
               name: Athenaeum React Toolkit Build
