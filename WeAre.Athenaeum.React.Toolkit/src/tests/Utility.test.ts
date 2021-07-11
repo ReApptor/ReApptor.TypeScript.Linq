@@ -1,4 +1,4 @@
-import Utility from "../Utility";
+import {Utility} from "..";
 
 describe('roundTests', function() {
     
