@@ -1,60 +1,96 @@
 //Models:
-export * from "./models/FileModel";
-export * from "./models/GeoCoordinate";
-export * from "./models/GeoLocation";
-export * from "./models/TimeSpan";
-export * from "./models/IPagedList";
-export *  from "./models/ISelectListItem";
+import FileModel from "./models/FileModel";
+import GeoCoordinate from "./models/GeoCoordinate";
+import GeoLocation from "./models/GeoLocation";
+import TimeSpan from "./models/TimeSpan";
+import IPagedList from "./models/IPagedList";
+import ISelectListItem from "./models/ISelectListItem";
 //Utilities:
-export * from "./ArrayUtility";
-export * from "./NumberUtility";
-export * from "./StringUtility";
-export * from "./BoolUtility";
-export * from "./DateUtility";
-export * from "./Utility";
-export * from "./HashCodeUtility";
+import ArrayUtility, {SortDirection} from "./ArrayUtility";
+import NumberUtility, { INumberFormat, NumberParsingResult } from "./NumberUtility";
+import StringUtility from "./StringUtility";
+import BoolUtility from "./BoolUtility";
+import DateUtility from "./DateUtility";
+import Utility from "./Utility";
+import HashCodeUtility from "./HashCodeUtility";
 //Extensions:
-export * from "./extensions/DateExtensions";
-export * from "./extensions/StringExtensions";
-export * from "./extensions/ArrayExtensions";
-export * from "./extensions/NumberExtensions";
+import { DateExtensions } from "./extensions/DateExtensions";
+import { StringExtensions } from "./extensions/StringExtensions";
+import { ArrayExtensions } from "./extensions/ArrayExtensions";
+import { NumberExtensions } from "./extensions/NumberExtensions";
 //Providers:
-export * from "./providers/BaseTransformProvider";
-export * from "./providers/BaseEnumProvider";
-export * from "./providers/TypeResolver";
-export * from "./providers/ServiceProvider";
-export * from "./providers/TypeConverter";
-export * from "./providers/StringConverter";
+import BaseTransformProvider, { ITransformProvider, TFormat } from "./providers/BaseTransformProvider";
+import BaseEnumProvider, { IEnumProvider } from "./providers/BaseEnumProvider";
+import TypeResolver, { TDecoratorConstructor, ITypeResolver } from "./providers/TypeResolver";
+import ServiceProvider, { ServiceType, ServiceCallback, IService, TService, TType } from "./providers/ServiceProvider";
+import TypeConverter, { ITypeConverter, TClassDecorator, TTypeConverter } from "./providers/TypeConverter";
+import StringConverter, { TStringConverter, ToString, IStringConverter } from "./providers/StringConverter";
 //Helpers:
-export * from "./helpers/PwaHelper";
+import PwaHelper from "./helpers/PwaHelper";
 //Other:
-export * from "./localization/BaseLocalizer";
-export *  from "./AthenaeumConstants";
+import BaseLocalizer, { ILanguage, ILocalizer } from "./localization/BaseLocalizer";
+import AthenaeumConstants from "./AthenaeumConstants";
 
 //Models:
-export {default as FileModel} from "./models/FileModel";
-export {default as GeoCoordinate} from "./models/GeoCoordinate";
-export {default as GeoLocation} from "./models/GeoLocation";
-export {default as TimeSpan} from "./models/TimeSpan";
-export type {default as IPagedList} from "./models/IPagedList";
-export type {default as ISelectListItem}  from "./models/ISelectListItem";
+export {
+    FileModel, GeoLocation, GeoCoordinate, TimeSpan,
+};
+export type { IPagedList, ISelectListItem };
+
 //Utilities:
-export {default as ArrayUtility} from "./ArrayUtility";
-export {default as NumberUtility} from "./NumberUtility";
-export {default as StringUtility} from "./StringUtility";
-export {default as BoolUtility} from "./BoolUtility";
-export {default as DateUtility} from "./DateUtility";
-export {default as Utility} from "./Utility";
-export {default as HashCodeUtility} from "./HashCodeUtility";
+export {
+    ArrayUtility, SortDirection,
+    NumberUtility, NumberParsingResult,
+    StringUtility,
+    BoolUtility,
+    DateUtility,
+    HashCodeUtility,
+    Utility,
+};
+export type { INumberFormat };
+
+//Extensions:
+export {
+    DateExtensions,
+    StringExtensions,
+    ArrayExtensions,
+    NumberExtensions,
+};
+
 //Providers:
-export {default as BaseTransformProvider} from "./providers/BaseTransformProvider";
-export {default as BaseEnumProvider} from "./providers/BaseEnumProvider";
-export {default as TypeResolver} from "./providers/TypeResolver";
-export {default as ServiceProvider} from "./providers/ServiceProvider";
-export {default as TypeConverter} from "./providers/TypeConverter";
-export {default as StringConverter} from "./providers/StringConverter";
+export {
+    BaseTransformProvider,
+    BaseEnumProvider,
+    TypeResolver,
+    ServiceProvider, ToString, TypeConverter, StringConverter
+}
+export type {
+    IEnumProvider, 
+    ITransformProvider, 
+    TFormat, ITypeConverter, TTypeConverter,
+    IStringConverter, 
+    TClassDecorator, 
+    TStringConverter, 
+    ServiceType, 
+    ServiceCallback, 
+    IService, 
+    TService, 
+    TType, 
+    TDecoratorConstructor, 
+    ITypeResolver
+};
+
 //Helpers:
-export {default as PwaHelper} from "./helpers/PwaHelper";
+export {
+    PwaHelper
+}
+
+export type {
+    ILanguage, ILocalizer
+};
+
 //Other:
-export {default as BaseLocalizer} from "./localization/BaseLocalizer";
-export {default as AthenaeumConstants}  from "./AthenaeumConstants";
+export {
+    BaseLocalizer,
+    AthenaeumConstants
+};

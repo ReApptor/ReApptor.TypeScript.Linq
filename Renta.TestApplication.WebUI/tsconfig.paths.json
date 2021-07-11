@@ -1,12 +1,11 @@
 ﻿{
-  "exclude": ["../tsconfig.workspace.json"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@weare/athenaeum-react-components": ["../WeAre.Athenaeum.React.Components/src/index.ts"],
-      "@weare/athenaeum-react-common": ["../WeAre.Athenaeum.React.Common/src/index.ts"],
-      "@weare/athenaeum-toolkit": ["../WeAre.Athenaeum.React.Toolkit/src/index.ts"],
-      "@/*": ["src/*"]
+      "@weare/athenaeum-react-components": ["src/@weare/athenaeum-react-components/index.ts"],
+      "@weare/athenaeum-react-common": ["src/@weare/athenaeum-react-common/index.ts"],
+      "@weare/athenaeum-toolkit": ["src/@weare/athenaeum-toolkit/index.ts"],
+      "@/*": ["src/*"],
     }
   }
 }

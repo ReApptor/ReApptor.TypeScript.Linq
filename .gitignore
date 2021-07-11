@@ -20,21 +20,6 @@ bld/
 packages/
 TestResults/
 
-WeAre.Athenaeum.React.Toolkit/dist/
-WeAre.Athenaeum.React.Toolkit/docs/
-WeAre.Athenaeum.React.Toolkit/etc/
-WeAre.Athenaeum.React.Toolkit/temp/
-WeAre.Athenaeum.React.Common/dist/
-WeAre.Athenaeum.React.Common/docs/
-WeAre.Athenaeum.React.Common/etc/
-WeAre.Athenaeum.React.Common/temp/
-WeAre.Athenaeum.React.Components/dist/
-WeAre.Athenaeum.React.Components/docs/
-WeAre.Athenaeum.React.Components/etc/
-WeAre.Athenaeum.React.Components/temp/
-Documentation/docs-input/
-Documentation/docs-output/
-
 # Package managers
 node_modules/
 package-lock.json

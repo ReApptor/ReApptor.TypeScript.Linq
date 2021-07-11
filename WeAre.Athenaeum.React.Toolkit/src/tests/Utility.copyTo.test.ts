@@ -1,4 +1,4 @@
-import {Utility} from "..";
+import Utility from "../Utility";
 import {Dictionary} from "typescript-collections";
 
 describe("copyTo", function() {
