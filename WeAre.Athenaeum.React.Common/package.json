@@ -49,5 +49,7 @@
     "typescript": "3.8",
     "typescript-transform-paths": "^1.1.15"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "@weare/athenaeum-toolkit": "*"
+  }
 }
