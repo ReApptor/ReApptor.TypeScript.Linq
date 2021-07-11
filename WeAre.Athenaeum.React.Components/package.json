@@ -54,5 +54,8 @@
     "ts-nameof": "^5.0.0",
     "typescript": "3.8"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "@weare/athenaeum-toolkit": "*",
+    "@weare/athenaeum-react-common": "*"
+  }
 }
