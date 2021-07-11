@@ -24,23 +24,14 @@ pipelines:
                 - npm install --prefix ..
                 - npm install
                 # Run tests
-                # - npm test
+                - npm test
                 # Run build
                 - npm run build
                 # Create documentation
                 - npm run build:documentation
-                # Create .npmrc file
-                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
-                - echo always-auth=true >> ~/.npmrc
-                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
-                # Create package
-                - npm pack
-                # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
-                # Publish to MyGet
-                - npm publish
               artifacts:
                 - Documentation/docs-input/**
+                - WeAre.Athenaeum.React.Toolkit/lib/**
           - step:
               name: Athenaeum React Common Build
               image: node:14
@@ -59,24 +50,14 @@ pipelines:
                 - npm install --prefix ..
                 - npm install
                 # Run tests
-                # - npm test
+                - npm test
                 # Run build
                 - npm run build
                 # Create documentation
                 - npm run build:documentation
-                # Create .npmrc file
-                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
-                - echo always-auth=true >> ~/.npmrc
-                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
-                # Create package
-                - npm pack
-                # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
-                # Publish to MyGet
-                - npm publish
               artifacts:
                 - Documentation/docs-input/**
-
+                - WeAre.Athenaeum.React.Common/lib/**
           - step:
               name: Athenaeum React Components Build
               image: node:14
@@ -94,14 +75,25 @@ pipelines:
                 # Install dependencies
                 - npm install --prefix ..
                 - npm install
-                ## Dependencies for documentation create
-                #- npm install -g @microsoft/api-extractor@7.12.1
-                #- npm install -g @microsoft/api-documenter
                 ## Run tests
-                # - npm test
+                - npm test
                 # Run build
                 - npm run build
-                ## Create documentation
+              artifacts:
+                - Documentation/docs-input/**
+                - WeAre.Athenaeum.React.Components/lib/**
+      - parallel:
+          - step:
+              name: Publish Athenaeum React Toolkit Build
+              image: node:14
+              script:
+                # Update npm settings
+                - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.React.Toolkit
+                - node -v && npm -v
+                - npm config set strict-ssl true
+                - npm config set ca ""
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
                 # Create .npmrc file
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
                 - echo always-auth=true >> ~/.npmrc
@@ -112,6 +104,54 @@ pipelines:
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Publish to MyGet
                 - npm publish
+              artifacts:
+                - Documentation/docs-input/**
+          - step:
+              name: Publish Athenaeum React Common Build
+              image: node:14
+              script:
+                # Update npm settings
+                - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.React.Common
+                - node -v && npm -v
+                - npm config set strict-ssl true
+                - npm config set ca ""
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
+                # Create .npmrc file
+                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
+                - echo always-auth=true >> ~/.npmrc
+                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
+                # Create package
+                - npm pack
+                # Change version number
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                # Publish to MyGet
+                - npm publish
+              artifacts:
+                - Documentation/docs-input/**
+          - step:
+              name: Publish Athenaeum React Components Build
+              image: node:14
+              script:
+                # Update npm settings
+                - echo $BITBUCKET_BUILD_NUMBER
+                - cd WeAre.Athenaeum.React.Components
+                - node -v && npm -v
+                - npm config set strict-ssl true
+                - npm config set ca ""
+                - npm config set @weare:registry ${MYGET_NPM_SOURCE}
+                # Create .npmrc file
+                - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
+                - echo always-auth=true >> ~/.npmrc
+                - echo //${MYGET_NPM_REGISTRY_URL}:_authToken=${MYGET_NPM_APIKEY} >> ~/.npmrc
+                # Create package
+                - npm pack
+                # Change version number
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                # Publish to MyGet
+                - npm publish
+              artifacts:
+                - Documentation/docs-input/**
           - step:
               name: Athenaeum React Components Localization Build
               image: node:14
