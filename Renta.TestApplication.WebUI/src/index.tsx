@@ -6,7 +6,7 @@ import App from './App';
 /* FA (Font Awesome Pro) */
 import "./lib/fa/fa.ts";
 /* Bootstrap 4 */
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
 /* JQuery required by bootstrap */
 import "jquery";

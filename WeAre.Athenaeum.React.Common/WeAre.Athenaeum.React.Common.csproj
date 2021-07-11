@@ -55,15 +55,24 @@
 
     <ItemGroup>
       <Compile Remove="lib\**" />
+      <Compile Remove="dist\**" />
+      <Compile Remove="etc\**" />
+      <Compile Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
+      <EmbeddedResource Remove="dist\**" />
+      <EmbeddedResource Remove="etc\**" />
+      <EmbeddedResource Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="package-lock.json" />
+      <None Remove="dist\**" />
+      <None Remove="etc\**" />
+      <None Remove="temp\**" />
     </ItemGroup>
 
 </Project>
