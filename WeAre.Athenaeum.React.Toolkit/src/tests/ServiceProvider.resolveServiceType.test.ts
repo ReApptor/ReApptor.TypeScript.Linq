@@ -1,4 +1,4 @@
-import {ServiceProvider, ArrayExtensions, ServiceType} from "..";
+import {ArrayExtensions, ServiceProvider, ServiceType} from "..";
 
 ArrayExtensions();
 

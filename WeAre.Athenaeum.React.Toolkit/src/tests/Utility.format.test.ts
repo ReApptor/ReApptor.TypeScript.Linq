@@ -1,4 +1,4 @@
-import {Utility} from "..";
+import Utility from "../Utility";
 
 describe("format", function() {    
     

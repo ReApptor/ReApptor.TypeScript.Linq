@@ -1,54 +1,27 @@
 ## How run Components development setup
 
 
-### Install dependencies for all workspaces
+Make sure to run `npm install` in `Renta.TestApplication.WebUI`
 
-        npm run install:all
+After that open `package.json` in `Renta.TestApplication.WebUI` and run these scripts once:
 
+```
+prebuild
+build
+```
 
-### Starting Test application
+Then run and stop these scripts so they appear in Riders Run/Debug Configuration settings:
 
-        npm run start:application:test
+```
+watch:components
+watch:components:back
+watch:common
+watch:common:back
+watch:toolkit
+watch:toolkit:back
+```
 
-
-### Building all packages
-
-        npm run build
-
-
-### Building Components
-
-        npm run build:components
-
-
-### Building Common
-
-        npm run build:common
-
-
-### Building Toolkit
-
-        npm run build:toolkit
-
-
-## Testing
-
-        npm run test
-
-
-### Testing Components
-
-        npm run test:components
-
-
-### Testing Common
-
-        npm run test:common
-
-
-### Testing Toolkit
-
-        npm run test:toolkit
+Create a new Compound profile and add `Renta.TestApplication.WebUI` and the above "watch"-scripts to it. 
 
 
 ## Change Log
