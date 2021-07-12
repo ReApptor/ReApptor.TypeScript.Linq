@@ -6,12 +6,13 @@ namespace WeAre.Athenaeum.Common.Helpers
 {
     public static class ApiHelper
     {
-        public static Task<TResponse> InvokeAsync<TRequest, TResponse>(string url, HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
+        public static Task<TResponse> InvokeAsync<TRequest, TResponse>(string url, HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = 
+        true)
             where TRequest : class
             where TResponse : class
         {
             var provider = new ApiProvider(new ApiSettings(url));
-            return provider.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, throwNotFound);
+            return provider.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, contentType, throwNotFound);
         }
 
         public static Task<TResponse> InvokeAsync<TRequest, TResponse>(string url, string action, TRequest request = null, bool throwNotFound = true)
