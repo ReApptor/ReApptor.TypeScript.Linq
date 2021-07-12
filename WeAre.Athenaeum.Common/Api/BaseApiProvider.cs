@@ -221,7 +221,7 @@ namespace WeAre.Athenaeum.Common.Api
         
         #region Invoks
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = true)
             where TRequest : class
             where TResponse : class
         {
@@ -239,7 +239,8 @@ namespace WeAre.Athenaeum.Common.Api
                 {
                     string requestJson = JsonConvert.SerializeObject(request);
 
-                    content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+                    //contentType provided as parameter to support vendor specific content types. For example: "application/vnd.api+json".
+                    content = new StringContent(requestJson, Encoding.UTF8, contentType ?? "application/json");
                 }
             }
 
@@ -277,7 +278,7 @@ namespace WeAre.Athenaeum.Common.Api
             where TRequest : class
             where TResponse : class
         {
-            return InvokeAsync<TRequest, TResponse>(null, action, keys, @params, request, throwNotFound);
+            return InvokeAsync<TRequest, TResponse>(null, action, keys, @params, request, throwNotFound: throwNotFound);
         }
 
         protected Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)

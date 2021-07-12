@@ -21,11 +21,11 @@ namespace WeAre.Athenaeum.Common.Api.Internal
                 
         #region Invokes
 
-        public new Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
+        public new Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = true)
             where TRequest : class
             where TResponse : class
         {
-            return base.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, throwNotFound);
+            return base.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, contentType, throwNotFound);
         }
 
         public new Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
