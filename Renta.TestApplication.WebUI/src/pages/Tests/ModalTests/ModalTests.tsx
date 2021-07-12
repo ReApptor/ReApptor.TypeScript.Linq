@@ -1,7 +1,7 @@
 import React from "react";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, Modal, ImageModal} from "@weare/athenaeum-react-components";
+import {Button, Checkbox, Modal, ImageModal, ModalSize} from "@weare/athenaeum-react-components";
 import {samplePdf} from './samplePdf';
 import {sampleImage} from './sampleImage';
 
@@ -46,7 +46,7 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
 
                 <Button label={"Document preview #1"} onClick={async () => await ch.preloadedDocumentPreviewAsync(this._document1, "document 1", this.state.documentPreviewSize)} />
 
-                <ImageModal id={"imageModal_1"} title={"ImageModal"} picture={this.exampleImageFileModel}/>
+                <ImageModal id={"imageModal_1"} title={"ImageModal"} picture={this.exampleImageFileModel} size={ModalSize.ExtraLarge}/>
 
                 <Button label={"Open ImageModal #1"} toggleModal dataTarget={"imageModal_1"} />
 
