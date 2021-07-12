@@ -25,7 +25,7 @@ namespace WeAre.Athenaeum.Common.Api.Internal
             where TRequest : class
             where TResponse : class
         {
-            return base.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, contentType, throwNotFound);
+            return base.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, throwNotFound, contentType);
         }
 
         public new Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)

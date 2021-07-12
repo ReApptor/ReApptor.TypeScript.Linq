@@ -221,7 +221,7 @@ namespace WeAre.Athenaeum.Common.Api
         
         #region Invoks
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = true)
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string contentType = null)
             where TRequest : class
             where TResponse : class
         {
