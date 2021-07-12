@@ -34,7 +34,6 @@
       <TypeScriptCompile Include="src\components\Grid\TotalRow\TotalRow.tsx" />
       <TypeScriptCompile Include="src\components\Icon\Icon.tsx" />
       <TypeScriptCompile Include="src\components\Icon\IconAction.tsx\IconAction.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageEditor.tsx" />
       <TypeScriptCompile Include="src\components\ImageModal\ImageModal.tsx" />
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
       <TypeScriptCompile Include="src\components\Link\Link.tsx" />
