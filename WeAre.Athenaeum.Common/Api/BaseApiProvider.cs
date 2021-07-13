@@ -221,7 +221,7 @@ namespace WeAre.Athenaeum.Common.Api
         
         #region Invoks
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string contentType = null)
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string customContentType = null)
             where TRequest : class
             where TResponse : class
         {
@@ -239,8 +239,14 @@ namespace WeAre.Athenaeum.Common.Api
                 {
                     string requestJson = JsonConvert.SerializeObject(request);
 
-                    //contentType provided as parameter to support vendor specific content types. For example: "application/vnd.api+json".
-                    content = new StringContent(requestJson, Encoding.UTF8, contentType ?? "application/json");
+                    //Custom content type provided as parameter to support vendor specific content types. For example: "application/vnd.api+json".
+                    content = new StringContent(requestJson, Encoding.UTF8, customContentType ?? "application/json");
+
+                    //Custom content type doesn't work with a CharSet being set.
+                    if (customContentType != null)
+                    {
+                        content.Headers.ContentType.CharSet = string.Empty;
+                    }
                 }
             }
 
