@@ -78,6 +78,11 @@ namespace WeAre.Athenaeum.Common
             public const string ApiContextType = "application/json";
 
             /// <summary>
+            /// "text/html"
+            /// </summary>
+            public const string TextMimeType = "text/html";
+
+            /// <summary>
             /// "application/octet-stream"
             /// </summary>
             public const string DefaultMimeType = @"application/octet-stream";
@@ -86,6 +91,16 @@ namespace WeAre.Athenaeum.Common
             /// "application/pdf"
             /// </summary>
             public const string PdfMimeType = @"application/pdf";
+            
+            /// <summary>
+            /// "Terraform vendor specific (custom) content type"
+            /// </summary>
+            public const string TerraformVendorMimeType = @"application/vnd.api+json";
+            
+            /// <summary>
+            /// An array of custom mime types that has to be set in content type without a charset
+            /// </summary>
+            public static readonly string[] CustomMimeTypesDoNotWorkWithCharset = {TerraformVendorMimeType};
         }
     }
 }
