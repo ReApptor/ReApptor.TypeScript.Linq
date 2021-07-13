@@ -25,9 +25,10 @@ import DateRangeInputTests from "@/pages/Tests/DateRangeInputTests/DateRangeInpu
 import FileInputTests from "@/pages/Tests/FileInputTests/FileInputTests";
 import SliderTests from "@/pages/Tests/SliderTests/SliderTests";
 import ImageInputTests from "@/pages/Tests/ImageInputTests/ImageInputTests";
+import CarouselTests from "./CarouselTests/CarouselTests";
 
 export default class Tests extends AnonymousPage {
-    
+
     public getTitle(): string {
         return "Tests";
     }
@@ -40,31 +41,31 @@ export default class Tests extends AnonymousPage {
                 <PageRow>
 
                     <TabContainer id="TestsTabs" renderType={TabRenderType.ActiveOnly}>
-                    
+
                         <Tab id="buttonTests" title="Button">
                             <ButtonTests />
-                        </Tab> 
-                        
+                        </Tab>
+
                         <Tab id="checkboxTests" title="Checkbox">
                             <CheckboxTests />
-                        </Tab> 
-                        
+                        </Tab>
+
                         <Tab id="buttonActionTests" title="Button Action">
                             <ButtonActionTests />
                         </Tab>
-                    
+
                         <Tab id="buttonContainerTests" title="Button Container">
                             <ButtonContainerTests />
                         </Tab>
-                        
+
                         <Tab id="alertTests" title="Alerts">
                             <AlertTests />
                         </Tab>
-                    
+
                         <Tab id="gridTest" title="Grids">
                             <GridTests />
                         </Tab>
-                        
+
                         <Tab id="formTests" title="Form">
                             <FormTests />
                         </Tab>
@@ -75,52 +76,52 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="dateInputTests" title="Date Input">
                             <DateInputTests />
-                        </Tab>  
-  
+                        </Tab>
+
                         <Tab id="numberInputTests" title="Number Input">
                             <NumberInputTests />
                         </Tab>
-                        
+
                         <Tab id="numberWidgetTests" title="Number Widget">
                             <NumberWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="linkWidgetTests" title="Link Widget">
                             <LinkWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="dropdownTests" title="Dropdown">
                             <DropdownTests />
                         </Tab>
-                        
+
                         <Tab id="dropdownPerformanceTests" title="DD Performance">
                             <DropdownPerformanceTests />
                         </Tab>
-                        
+
                         <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">
                             <DropdownSelectItemsTests />
                         </Tab>
-                        
+
                         <Tab id="dropdownWidgetTests" title="DropdownWidget">
                             <DropdownWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="listTests" title="List">
                             <ListTests />
                         </Tab>
-                        
+
                         <Tab id="nullableSwitchTests" title="Nullable switch">
                             <NullableSwitchTests />
                         </Tab>
-                        
+
                         <Tab id="modalTests" title="Modal">
                             <ModalTests />
                         </Tab>
-                        
+
                         <Tab id="locationPickerTests" title="Location picker">
                             <LocationPickerTests />
                         </Tab>
-                        
+
                         <Tab id="AccordionTests" title="Accordion">
                             <AccordionTests />
                         </Tab>
@@ -133,6 +134,9 @@ export default class Tests extends AnonymousPage {
                             <FileInputTests/>
                         </Tab>
 
+                        <Tab id="CarouselTests" title="Carousel">
+                            <CarouselTests/>
+                        </Tab>
 
                         <Tab id="SliderTests" title="Slider">
                             <SliderTests/>

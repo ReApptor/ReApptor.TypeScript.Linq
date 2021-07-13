@@ -1,0 +1,86 @@
+@import "src/variables";
+
+$navigation-size: 42px;
+$opacity-active: 0.6;
+$opacity-active-hover: 0.8;
+$opacity-disabled: 0.25;
+$opacity-disabled-hover: 0.5;
+$color: black;
+
+.carousel {
+  position: relative;
+
+  &.paginationBottomOutside {
+    :global(.swiper-container) {
+      padding-bottom: 20px;
+
+      :global(.swiper-pagination) {
+        bottom: 1px;
+      }
+    }
+  }
+
+  &.navigationOutside {
+    padding: 0 $navigation-size;
+
+    @media screen and (max-width: $break-sm) {
+      padding: 0;
+    }
+  }
+
+  :global(.swiper-pagination-bullet) {
+    background-color: $color;
+    opacity: $opacity-disabled;
+
+    &:hover {
+      opacity: $opacity-disabled-hover;
+    }
+
+    &:global(.swiper-pagination-bullet-active) {
+      opacity: $opacity-active;
+
+      &:hover {
+        opacity: $opacity-active-hover;
+      }
+    }
+  }
+
+  .slide {
+    width: auto;
+  }
+
+  .navigation {
+    position: absolute;
+    top: 50%;
+    margin-top: calc(0px - #{$navigation-size} / 2);
+    display: flex;
+    justify-content: center;
+    width: $navigation-size;
+    height: $navigation-size;
+    color: $color;
+    opacity: $opacity-active;
+    z-index: 1;
+    cursor: pointer;
+
+    &:hover {
+      opacity: $opacity-active-hover;
+    }
+
+    &.next {
+      right: 0;
+    }
+
+    &.previous {
+      left: 0;
+    }
+
+    &:global(.swiper-button-disabled) {
+      opacity: $opacity-disabled;
+      cursor: initial;
+    }
+
+    @media screen and (max-width: $break-sm) {
+      display: none;
+    }
+  }
+}
