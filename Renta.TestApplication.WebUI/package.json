@@ -15,7 +15,8 @@
     "react-dom": "^16.8.2",
     "react-google-autocomplete": "^1.1.2",
     "react-qr-reader": "^2.2.1",
-    "react-signature-canvas": "^1.0.1"
+    "react-signature-canvas": "^1.0.1",
+    "swiper": "^6.7.5"
   },
   "devDependencies": {
     "@types/bootstrap": "^4.3.0",
