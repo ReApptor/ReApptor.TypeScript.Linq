@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties, ReactElement} from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
@@ -11,6 +11,9 @@ import styles from "./Carousel.module.scss";
 
 // Swiper modules need to be explicitly loaded
 SwiperCore.use([Navigation, Pagination]);
+
+
+// TODO: If a child-elements width changes, swiper-slides width/swipers snapping grid won't be updated.
 
 
 export enum CarouselNavigation {
@@ -26,20 +29,39 @@ export enum CarouselPagination {
 }
 
 interface ICarouselProps {
+    /**
+     * Appended to the {@link Carousel}s containers classname.
+     */
     className?: string;
+
+    /**
+     * Should the {@link Carousel} loop when it reaches start or end.
+     */
     loop?: boolean;
+
+    /**
+     * Enable or disable navigation.
+     */
     navigation?: CarouselNavigation;
+
+    /**
+     * Enable or disable pagination.
+     */
     pagination?: CarouselPagination;
+
+    /**
+     * How many slides should be visible at the same time.
+     */
     slidesPerView?: "auto" | number;
+
+    /**
+     * How many pixels of space should be between slides.
+     */
     spaceBetweenSlides?: number;
 }
 
-interface ICarouselState {
-}
 
-export default class Carousel extends BaseComponent<ICarouselProps, ICarouselState> {
-    public state: ICarouselState = {
-    };
+export default class Carousel extends BaseComponent<ICarouselProps, {}> {
 
     private get hasChildren(): boolean {
         return (this.children?.length > 0);
@@ -75,19 +97,12 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     }
 
     private get pagination(): CarouselPagination {
-        switch (this.props.pagination) {
-            case CarouselPagination.BottomInside:
-                return CarouselPagination.BottomInside;
-            case CarouselPagination.BottomOutside:
-                return CarouselPagination.BottomOutside;
-            default:
-                return CarouselPagination.None;
-        }
+        return Carousel.getPagination(this.props.pagination);
     }
 
     private get paginationOptions(): PaginationOptions | false {
         return (this.pagination)
-            ? {clickable: true}
+            ? {clickable: true, dynamicBullets: true, dynamicMainBullets: 10}
             : false;
     }
 
@@ -102,6 +117,15 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
         return (this.props.spaceBetweenSlides)
             ? this.props.spaceBetweenSlides
             : 0;
+    }
+
+    private getSwiperSlideStyle(child: ReactElement): CSSProperties {
+        // If slidesPerView has first been set to a number and then to "auto", the swiper-slide elements widths remain unchanged, and must be reset manually.
+        return (this.slidesPerView === "auto")
+            ? (child.props.style.width)
+                ? {width: child.props.style.width}
+                : {width: "auto"}
+            : {};
     }
 
     public get children(): React.ReactElement[] {
@@ -120,12 +144,24 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
         }
     }
 
+    public static getPagination(pagination: any): CarouselPagination {
+        switch (pagination) {
+            case CarouselPagination.BottomInside:
+                return CarouselPagination.BottomInside;
+            case CarouselPagination.BottomOutside:
+                return CarouselPagination.BottomOutside;
+            default:
+                return CarouselPagination.None;
+        }
+    }
+
     public render(): React.ReactNode {
         if (!this.hasChildren) {
             return null;
         }
         return (
             <div className={this.className}>
+
                 <Swiper loop={this.loop}
                         navigation={this.navigationOptions}
                         pagination={this.paginationOptions}
@@ -136,7 +172,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                         this.children.map((child) => {
                             return (
                                 <SwiperSlide key={child.key}
-                                             className={styles.slide}
+                                             style={this.getSwiperSlideStyle(child)}
                                 >
                                     {child}
                                 </SwiperSlide>
@@ -144,6 +180,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                         })
                     }
                 </Swiper>
+
                 {
                     (this.navigationOptions) &&
                     (
@@ -153,6 +190,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                         </React.Fragment>
                     )
                 }
+
             </div>
         );
     }
