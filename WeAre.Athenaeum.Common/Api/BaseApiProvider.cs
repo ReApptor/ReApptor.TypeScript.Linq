@@ -233,17 +233,17 @@ namespace WeAre.Athenaeum.Common.Api
             {
                 if (request is string stringRequest)
                 {
-                    content = new StringContent(stringRequest, Encoding.UTF8, "text/html");
+                    content = new StringContent(stringRequest, Encoding.UTF8, AthenaeumConstants.Http.TextMimeType);
                 }
                 else
                 {
                     string requestJson = JsonConvert.SerializeObject(request);
 
                     //Custom content type provided as parameter to support vendor specific content types. For example: "application/vnd.api+json".
-                    content = new StringContent(requestJson, Encoding.UTF8, customContentType ?? "application/json");
+                    content = new StringContent(requestJson, Encoding.UTF8, customContentType ?? AthenaeumConstants.Http.ApiContextType);
 
                     //Custom content type doesn't work with a CharSet being set.
-                    if (customContentType != null)
+                    if (!string.IsNullOrWhiteSpace(customContentType) && AthenaeumConstants.Http.CustomMimeTypesDoNotWorkWithCharset.Contains(customContentType))
                     {
                         content.Headers.ContentType.CharSet = string.Empty;
                     }
