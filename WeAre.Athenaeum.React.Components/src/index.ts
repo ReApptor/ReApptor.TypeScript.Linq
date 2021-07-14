@@ -10,6 +10,9 @@ export {default as ButtonAction} from "./components/Button/ButtonAction/ButtonAc
 export * from "./components/ButtonContainer/ButtonContainer";
 export {default as ButtonContainer} from "./components/ButtonContainer/ButtonContainer";
 
+export * from "./components/Carousel/Carousel";
+export {default as Carousel} from "./components/Carousel/Carousel";
+
 export * from "./components/ConfirmationDialog/ConfirmationDialog";
 export {default as ConfirmationDialog} from "./components/ConfirmationDialog/ConfirmationDialog";
 
