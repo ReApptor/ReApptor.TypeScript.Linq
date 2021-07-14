@@ -185,6 +185,13 @@ export default class CarouselTests extends BaseComponent {
                               onChange={async (_, loop) => {await this.setState({loop})}}
                     />
 
+                    <NumberInput inline required noValidate
+                                 className="pt-1 pb-1"
+                                 label="Max pagination bullets"
+                                 value={this.state.maxPaginationBullets}
+                                 onChange={async (_, maxPaginationBullets) => {await this.setState({maxPaginationBullets})}}
+                    />
+
                     <Dropdown inline required noValidate noWrap noFilter
                               orderBy={DropdownOrderBy.Value}
                               className="pt-1 pb-1"
@@ -243,6 +250,7 @@ export default class CarouselTests extends BaseComponent {
 
                     <div style={{backgroundColor: (this.state.background) ? "pink" : "initial"}}>
                         <Carousel loop={this.state.loop}
+                                  maxPaginationBullets={this.state.maxPaginationBullets}
                                   navigation={this.state.navigation}
                                   pagination={this.state.pagination}
                                   slidesPerView={this.state.slidesPerView}
