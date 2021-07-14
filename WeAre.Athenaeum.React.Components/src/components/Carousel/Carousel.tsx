@@ -1,5 +1,5 @@
 import React, {CSSProperties, ReactElement} from "react";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/athenaeum-react-common";
 import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
@@ -131,7 +131,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
     private getSwiperSlideStyle(child: ReactElement): CSSProperties {
         // If slidesPerView has first been set to a number and then to "auto", the swiper-slide elements widths remain unchanged, and must be reset manually.
         return (this.slidesPerView === "auto")
-            ? (child.props.style.width)
+            ? (child?.props?.style?.width)
                 ? {width: child.props.style.width}
                 : {width: "auto"}
             : {};
