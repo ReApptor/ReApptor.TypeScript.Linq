@@ -14,6 +14,10 @@ import styles from "./Carousel.module.scss";
 //       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
 
 
+// TODO: remove
+console.log("page", SwiperCore.prototype.modules, Navigation, Pagination);
+
+
 export enum CarouselNavigation {
     None = 0,
     Inside = 1,
@@ -161,15 +165,18 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
         }
     }
 
-    public async componentWillMount(): Promise<void> {
-        // Swiper modules need to be explicitly loaded
-        SwiperCore.use([Navigation, Pagination]);
-    }
-
     public render(): React.ReactNode {
         if (!this.hasChildren) {
             return null;
         }
+
+        // Swiper modules need to be explicitly loaded
+        SwiperCore.use([Navigation, Pagination]);
+
+
+        // TODO: remove
+        console.log("render", SwiperCore.prototype.modules, Navigation, Pagination);
+
 
         return (
             <div className={this.className}>
