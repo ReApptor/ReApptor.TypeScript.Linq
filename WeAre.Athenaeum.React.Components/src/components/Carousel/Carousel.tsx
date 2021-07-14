@@ -9,9 +9,6 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import styles from "./Carousel.module.scss";
 
-// Swiper modules need to be explicitly loaded
-SwiperCore.use([Navigation, Pagination]);
-
 
 // TODO: If a child-elements width changes, Swipers slide width/snapping grid won't be updated.
 //       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
@@ -164,10 +161,16 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
         }
     }
 
+    public async componentWillMount(): Promise<void> {
+        // Swiper modules need to be explicitly loaded
+        SwiperCore.use([Navigation, Pagination]);
+    }
+
     public render(): React.ReactNode {
         if (!this.hasChildren) {
             return null;
         }
+
         return (
             <div className={this.className}>
 
