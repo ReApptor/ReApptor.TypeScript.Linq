@@ -13,7 +13,8 @@ import styles from "./Carousel.module.scss";
 SwiperCore.use([Navigation, Pagination]);
 
 
-// TODO: If a child-elements width changes, swiper-slides width/swipers snapping grid won't be updated.
+// TODO: If a child-elements width changes, Swipers slide width/snapping grid won't be updated.
+//       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
 
 
 export enum CarouselNavigation {
@@ -38,6 +39,14 @@ interface ICarouselProps {
      * Should the {@link Carousel} loop when it reaches start or end.
      */
     loop?: boolean;
+
+    /**
+     * How many pagination bullets can be displayed at the same time.
+     * Default is 10.
+     *
+     * TODO: Changing this won't cause the Carousel pagination to rerender.
+     */
+    maxPaginationBullets?: number;
 
     /**
      * Enable or disable navigation.
@@ -102,7 +111,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
 
     private get paginationOptions(): PaginationOptions | false {
         return (this.pagination)
-            ? {clickable: true, dynamicBullets: true, dynamicMainBullets: 10}
+            ? {clickable: true, dynamicBullets: true, dynamicMainBullets: this.props.maxPaginationBullets || 10}
             : false;
     }
 
