@@ -10,14 +10,16 @@ import commonJs from '@rollup/plugin-commonjs';
 export default {
     input: "src/index.ts",
     external: [
-        ...Object.keys(pkg.dependencies || {}) ,
+        "swiper/react",
+        "swiper/types",
+        ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.devDependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
         "date-fns/locale/fi",
         "date-fns/locale/pl",
         "date-fns/locale/sv",
         "date-fns/locale/en-GB"
-    ],    
+    ],
     output: [
         {
             file: pkg.main,
@@ -44,17 +46,17 @@ export default {
                     const path = require("path");
                     const file = path.basename(filename);
                     const isModule = file.endsWith(".module.scss");
-                    
+
                     if (!isModule)
                         throw new Error("SCSS module generation failed (postcss.generateScopedName). Supported only *.module.scss files. Check \"rollup.config.js\" file.");
-                    
+
                     const className = file.split(".module.scss")[0];
-                    
+
                     const kebabCaseClassName = className
                         .replace(/([a-z])([A-Z])/g, "$1-$2")
                         .replace(/[\s_]+/g, "-")
                         .toLowerCase();
-                    
+
                     return `athenaeum-${kebabCaseClassName}-${name}`;
                 },
             },
