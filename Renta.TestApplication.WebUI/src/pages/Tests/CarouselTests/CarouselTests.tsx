@@ -254,14 +254,6 @@ export default class CarouselTests extends BaseComponent {
                                   pagination={this.state.pagination}
                                   slidesPerView={this.state.slidesPerView}
                                   spaceBetweenSlides={this.state.spaceBetweenSlides}
-
-
-                                  // TODO: remove
-
-                                  onInit={async (swiper: any) => console.log("onInit", swiper)}
-                                  onAfterInit={async (swiper: any) => console.log("onAfterInit", swiper)}
-                                  onSwiper={async (swiper: any) => console.log("onSwiper", swiper)}
-                                  onUpdate={async (swiper: any) => console.log("onUpdate", swiper)}
                         >
                             {this.slides}
                         </Carousel>
