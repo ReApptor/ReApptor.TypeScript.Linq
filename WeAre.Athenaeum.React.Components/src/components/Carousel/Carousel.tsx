@@ -4,22 +4,21 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
 
+
+// TODO: if rollup.js tree-shaking is enabled, the 'swiper/components'-styles will be missing from the bundle.
+
+
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import styles from "./Carousel.module.scss";
 
-
-// TODO: If a child-elements width changes, Swipers slide width/snapping grid won't be updated.
-//       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
-
-
 // Swiper modules need to be explicitly loaded
 SwiperCore.use([Navigation, Pagination]);
 
 
-// TODO: remove
-console.log("file", SwiperCore.prototype, Navigation, Pagination);
+// TODO: If a child-elements width changes, Swipers slide width/snapping grid won't be updated.
+//       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
 
 
 export enum CarouselNavigation {
@@ -72,13 +71,6 @@ interface ICarouselProps {
      * How many pixels of space should be between slides.
      */
     spaceBetweenSlides?: number;
-
-
-    // TODO: remove
-    onInit?: (swiper: SwiperCore) => Promise<void>;
-    onAfterInit?: (swiper: SwiperCore) => Promise<void>;
-    onSwiper?: (swiper: SwiperCore) => Promise<void>;
-    onUpdate?: (swiper: SwiperCore) => Promise<void>;
 }
 
 
@@ -181,11 +173,6 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
             return null;
         }
 
-
-        // TODO: remove
-        console.log("render", SwiperCore.prototype, Navigation, Pagination);
-
-
         return (
             <div className={this.className}>
 
@@ -194,14 +181,6 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
                         pagination={this.paginationOptions}
                         slidesPerView={this.slidesPerView}
                         spaceBetween={this.spaceBetweenSlides}
-
-
-                        // TODO: remove
-
-                        onInit={async (swiper: SwiperCore) => this.props.onInit && await this.props.onInit(swiper)}
-                        onAfterInit={async (swiper: SwiperCore) => this.props.onAfterInit && await this.props.onAfterInit(swiper)}
-                        onSwiper={async (swiper: SwiperCore) => this.props.onSwiper && await this.props.onSwiper(swiper)}
-                        onUpdate={async (swiper: SwiperCore) => this.props.onUpdate && await this.props.onUpdate(swiper)}
                 >
                     {
                         this.children.map((child) => {

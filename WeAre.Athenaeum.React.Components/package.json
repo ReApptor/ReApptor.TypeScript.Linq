@@ -43,7 +43,7 @@
     "@types/react-qr-reader": "^2.1.2",
     "@types/ts-nameof": "^4.2.1",
     "date-fns": "^2.17.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "react": "^16.8.2",
     "react-dependent-script": "^1.1.2",
     "react-dom": "^16.8.2",

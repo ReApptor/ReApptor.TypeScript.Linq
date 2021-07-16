@@ -8,6 +8,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import commonJs from '@rollup/plugin-commonjs';
 
 export default {
+    treeshake: false,
     input: "src/index.ts",
     external: [
         "swiper/react",
@@ -41,6 +42,7 @@ export default {
         image(),
         postcss({
             autoModules: true,
+            extract: false,
             modules: {
                 generateScopedName: function (name, filename) {
                     const path = require("path");
@@ -60,7 +62,6 @@ export default {
                     return `athenaeum-${kebabCaseClassName}-${name}`;
                 },
             },
-            extract: false
         }),
         typescript({
             typescript: ttypescript,
