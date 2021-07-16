@@ -5,7 +5,7 @@ import SwiperCore, {Navigation, Pagination} from "swiper";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
 
 
-// TODO: if rollup.js tree-shaking is enabled, the 'swiper/components'-styles will be missing from the bundle.
+// TODO: if rollup.js tree-shaking is enabled, the 'swiper/components/*'-styles will be missing from the bundle.
 
 
 import 'swiper/swiper.scss';
@@ -40,17 +40,9 @@ interface ICarouselProps {
     className?: string;
 
     /**
-     * Should the {@link Carousel} loop when it reaches start or end.
+     * Should the {@link Carousel} loop.
      */
     loop?: boolean;
-
-    /**
-     * How many pagination bullets can be displayed at the same time.
-     * Default is 10.
-     *
-     * TODO: Changing this won't cause the Carousel pagination to rerender.
-     */
-    maxPaginationBullets?: number;
 
     /**
      * Enable or disable navigation.
@@ -69,6 +61,8 @@ interface ICarouselProps {
 
     /**
      * How many pixels of space should be between slides.
+     *
+     * Do not manually add margins between the slides, as that will mess up the {@link Carousel}s snapping grid.
      */
     spaceBetweenSlides?: number;
 }
@@ -115,7 +109,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
 
     private get paginationOptions(): PaginationOptions | false {
         return (this.pagination)
-            ? {clickable: true, dynamicBullets: true, dynamicMainBullets: this.props.maxPaginationBullets || 10}
+            ? {clickable: true}
             : false;
     }
 
