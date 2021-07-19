@@ -358,13 +358,13 @@
     <value>Kamera</value>
   </data>
   <data name="ImageInput.Delete" xml:space="preserve">
-    <value>Poistaa</value>
+    <value>Poista</value>
   </data>
   <data name="ImageInput.Edit" xml:space="preserve">
     <value>Muokkaa</value>
   </data>
   <data name="ImageInput.Save" xml:space="preserve">
-    <value>Tallentaa</value>
+    <value>Tallenna</value>
   </data>
   <data name="ImageInput.RotateLeft" xml:space="preserve">
     <value>Kierrä vasemmalle</value>
