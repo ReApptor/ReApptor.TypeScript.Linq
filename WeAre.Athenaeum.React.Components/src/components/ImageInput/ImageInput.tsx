@@ -4,6 +4,7 @@ import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
+import Comparator from "../../helpers/Comparator";
 import ImageInputLocalizer from "./ImageInputLocalizer";
 
 import 'cropperjs/dist/cropper.css';
@@ -48,6 +49,14 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Getters
 
+    private get selectedPictureIndex(): number {
+        return Comparator.assertIsNumber(this.state.selectedPictureIndex);
+    }
+
+    private get hasSelectedPictureIndex(): boolean {
+        return Comparator.isNumber(this.state.selectedPictureIndex);
+    }
+
     private get multi(): boolean {
         return this.props.multi || false;
     }
@@ -65,15 +74,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get activePicture(): FileModel | null {
-        if (this.state.selectedPictureIndex === null) {
-            return null;
-        }
-
-        return this.pictures[this.state.selectedPictureIndex];
+        return (this.hasSelectedPictureIndex)
+            ? this.pictures[this.selectedPictureIndex]
+            : null;
     }
 
     private get cropperSource(): string {
-        if (this.state.selectedPictureIndex === null || !this.activePicture) {
+        if ((!this.hasSelectedPictureIndex) || (!this.activePicture)) {
             return "";
         }
 
@@ -117,51 +124,53 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get maxImageRequestSizeInBytes(): number {
-        return this.props.maxImageRequestSizeInBytes || AthenaeumComponentsConstants.maxImageRequestSizeInBytes;
+        return (this.props.maxImageRequestSizeInBytes) || (AthenaeumComponentsConstants.maxImageRequestSizeInBytes);
     }
 
     //  ViewIfStatements
 
     private get showEditButton(): boolean {
-        if (this.state.currentView !== ImageInputView.Preview && this.state.currentView !== ImageInputView.ListView) {
-            return false;
-        }
-        return this.state.selectedPictureIndex !== null && this.state.selectedPictureIndex !== undefined;
+        return (this.hasSelectedPictureIndex)
+            && ((this.state.currentView === ImageInputView.Preview)
+                || (this.state.currentView === ImageInputView.ListView));
     }
 
     private get showBackButton(): boolean {
-        if (this.multi) {
-            return this.state.currentView === ImageInputView.Preview || this.state.currentView === ImageInputView.Cropper
-        }
-
-        return this.state.currentView === ImageInputView.Cropper;
+        return (this.multi)
+            && (this.state.currentView === ImageInputView.Preview)
+            || (this.state.currentView === ImageInputView.Cropper);
     }
 
     private get showPreviewButton(): boolean {
-        if (this.state.currentView === ImageInputView.Preview || this.state.currentView === ImageInputView.Cropper || !this.activePicture) {
-            return false;
-        }
-        return this.state.selectedPictureIndex !== null;
+        return (this.hasSelectedPictureIndex)
+            && (this.state.currentView !== ImageInputView.Preview)
+            && (this.state.currentView !== ImageInputView.Cropper)
+            && (this.activePicture !== null);
     }
 
     private get showBrowseButton(): boolean {
-        return this.state.currentView !== ImageInputView.Cropper;
+        return (this.state.currentView !== ImageInputView.Cropper);
     }
 
     private get showCameraButton(): boolean {
-        return this.state.currentView !== ImageInputView.Cropper;
+        return (this.state.currentView !== ImageInputView.Cropper);
     }
 
     private get showDeleteButton(): boolean {
-        return this.state.selectedPictureIndex !== null;
+        return (this.hasSelectedPictureIndex);
     }
 
     private get showRotateButton(): boolean {
-        return this.state.currentView === ImageInputView.Cropper;
+        return (this.state.currentView === ImageInputView.Cropper);
     }
 
     private get showSaveButton(): boolean {
-        return this.state.currentView === ImageInputView.Cropper;
+        return (this.state.currentView === ImageInputView.Cropper);
+    }
+
+    private get showFullScreenButton(): boolean {
+        return (this.hasSelectedPictureIndex)
+            && (!this.showPreviewButton);
     }
 
     //  Control panel button Click Events
@@ -199,7 +208,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        if (!this.activePicture || this.state.selectedPictureIndex === null) {
+        if ((!this.hasSelectedPictureIndex) || (!this.activePicture)) {
             return;
         }
 
@@ -218,13 +227,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             }
         }
 
-        await this.updatePicture(newFileModel, this.state.selectedPictureIndex);
+        await this.updatePicture(newFileModel, this.selectedPictureIndex);
 
         this.setState({currentView: this.multi ? ImageInputView.ListView : ImageInputView.Preview});
     }
 
     private async onEditButtonClick(): Promise<void> {
-        if (this.state.selectedPictureIndex === null) {
+        if (!this.hasSelectedPictureIndex) {
             return;
         }
 
@@ -241,7 +250,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onPreviewButtonClick(): Promise<void> {
-        if (this.state.selectedPictureIndex === null) {
+        if (!this.hasSelectedPictureIndex) {
             return;
         }
 
@@ -249,15 +258,18 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onDeleteButtonClick(): Promise<void> {
-        if (this.state.selectedPictureIndex === null) {
+        if (!this.hasSelectedPictureIndex) {
             return;
         }
 
-        await this.removePicture(this.state.selectedPictureIndex)
+        await this.removePicture(this.selectedPictureIndex)
     }
 
     private async onRemoveButtonClick(): Promise<void> {
-        if (this.state.selectedPictureIndex === null) {
+
+        // TODO: use this method?
+
+        if (!this.hasSelectedPictureIndex) {
             return;
         }
     }
@@ -278,6 +290,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         this.cropperRef.current.cropper.rotate(90);
         this.setCropAreaToImageFullSize();
+    }
+
+    private async onFullScreenButtonClick(): Promise<void> {
+        console.log("full screen button click");
+
+        // TODO: full-screen preview and editor
     }
 
     //  DragAndDrop Functionality Events
@@ -338,10 +356,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Logic
 
     public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
-        if (this.state.selectedPictureIndex === null) {
+        if (!this.hasSelectedPictureIndex) {
             return;
         }
-        if (this.state.selectedPictureIndex >= nextProps.pictures.length) {
+
+        if (this.selectedPictureIndex >= nextProps.pictures.length) {
             this.setState({selectedPictureIndex: 0})
         }
         return await super.componentWillReceiveProps(nextProps);
@@ -394,10 +413,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        if (this.props.onChange && this.multi) {
+        if ((this.props.onChange) && (this.multi)) {
             await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
 
-            await this.setState({currentView: ImageInputView.ListView, selectedPictureIndex: this.state.selectedPictureIndex});
+            await this.setState({currentView: ImageInputView.ListView, selectedPictureIndex: (this.hasSelectedPictureIndex) ? this.selectedPictureIndex : 0});
 
             return;
         }
@@ -405,7 +424,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (this.props.onChange && !this.multi) {
             const selectedView = this.editOnAddInSingleMode ? ImageInputView.Cropper : ImageInputView.Preview
 
-            await this.props.onChange(this, fileModels.length > 0 ? fileModels.slice(0, 1) : []);
+            await this.props.onChange(this, (fileModels.length > 0) ? fileModels.slice(0, 1) : []);
 
             await this.setState({currentView: selectedView, selectedPictureIndex: 0});
 
@@ -424,7 +443,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
 
-            this.setState({currentView: this.multi ? ImageInputView.ListView : ImageInputView.Preview});
+            this.setState({currentView: (this.multi) ? ImageInputView.ListView : ImageInputView.Preview});
         }
     }
 
@@ -434,7 +453,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
-            await this.setState({currentView: this.multi ? ImageInputView.ListView : null, selectedPictureIndex: null});
+            await this.setState({currentView: (this.multi) ? ImageInputView.ListView : null, selectedPictureIndex: null});
         }
     }
 
@@ -447,6 +466,9 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onChangePicture(file: FileModel | null, index: number): Promise<void> {
+
+        // TODO: use this method?
+
         if (file != null) {
             if (index > this.pictures.length) {
                 //add new
@@ -481,7 +503,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private onListViewItemClick(index: number): void {
-        if (this.state.selectedPictureIndex === index) {
+        if ((this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)) {
             this.setState({selectedPictureIndex: null});
             return;
         }
@@ -494,6 +516,18 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
+
+                {
+                    (this.showFullScreenButton) &&
+                    (
+                        <Button small
+                                icon={{name: "expand"}}
+                                type={ButtonType.Light}
+                                label={"EN: Full screen"}
+                                onClick={async () => await this.onFullScreenButtonClick()}
+                        />
+                    )
+                }
 
                 {
                     (this.showRotateButton) &&
@@ -618,8 +652,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
-        const activeListViewItemStyle = this.state.selectedPictureIndex === index && styles.activeListViewItem;
-        const key = `${index}_${fileModel.id}_${fileModel.name}`;
+        const activeListViewItemStyle: string | false = (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index) && styles.activeListViewItem;
+        const key: string = `${index}_${fileModel.id}_${fileModel.name}`;
 
         return (
             <div key={key}
@@ -654,10 +688,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private renderPreviewPanel(): JSX.Element {
+        const index: number = (this.hasSelectedPictureIndex)
+            ? this.selectedPictureIndex
+            : 0;
+        const src: string | undefined = this.getPreviewSource(index);
+        const alt: string | undefined = this.getPreviewName(index)
+
         return (
             <div className={styles.preview}>
-                <img src={this.getPreviewSource(this.state.selectedPictureIndex || 0)}
-                     alt={this.getPreviewName(this.state.selectedPictureIndex || 0)}
+                <img src={src}
+                     alt={alt}
                 />
             </div>
         );
@@ -679,10 +719,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     public render(): JSX.Element {
-        const minimizeStyle = (this.minimizeOnEmpty)
-            ? (this.state.currentView === null)
-                ? styles.minimize
-                : null
+        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.state.currentView === null)
+            ? styles.minimize
             : null;
 
         return (
