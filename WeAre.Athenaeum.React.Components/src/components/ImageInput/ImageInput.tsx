@@ -24,15 +24,15 @@ interface IImageInputState {
 }
 
 interface IImageInputProps {
-    multi?: boolean;
     pictures: FileModel[];
-    minimizeOnEmpty?: boolean;
-    editOnAddInSingleMode?: boolean
     className?: string;
-    maxImageRequestSizeInBytes?: number;
-    onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
     convertImage?(file: FileModel): Promise<FileModel>;
+    editOnAddInSingleMode?: boolean
     imageUrl?(file: FileModel): string;
+    maxImageRequestSizeInBytes?: number;
+    minimizeOnEmpty?: boolean;
+    multi?: boolean;
+    onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
@@ -42,35 +42,53 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private cropperRef = React.createRef<ReactCropperElement>();
 
     public state: IImageInputState = {
-        currentView: this.multi ? ImageInputView.ListView : null,
+        currentView: (this.multi) ? ImageInputView.ListView : null,
         isDragOver: false,
         selectedPictureIndex: null
     };
 
     //  Getters
 
-    private get selectedPictureIndex(): number {
-        return Comparator.assertIsNumber(this.state.selectedPictureIndex);
-    }
-
     private get hasSelectedPictureIndex(): boolean {
         return Comparator.isNumber(this.state.selectedPictureIndex);
     }
 
+    private get selectedPictureIndex(): number {
+        return Comparator.assertIsNumber(this.state.selectedPictureIndex);
+    }
+
+    private get hasCurrentView(): boolean {
+        switch (this.state.currentView) {
+            case ImageInputView.Cropper:
+            case ImageInputView.ListView:
+            case ImageInputView.Preview:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private get currentView(): ImageInputView {
+        if (this.hasCurrentView) {
+            return this.state.currentView as ImageInputView;
+        }
+        throw new TypeError("currentView is not of type ImageInputView");
+    }
+
     private get multi(): boolean {
-        return this.props.multi || false;
+        return (this.props.multi === true);
     }
 
     private get minimizeOnEmpty(): boolean {
-        return this.props.minimizeOnEmpty || false;
+        return (this.props.minimizeOnEmpty === true);
     }
 
     private get editOnAddInSingleMode(): boolean {
-        return this.props.editOnAddInSingleMode || false;
+        return (this.props.editOnAddInSingleMode === true);
     }
 
     private get pictures(): FileModel[] {
-        return this.props.pictures;
+        return this.props.pictures || [];
     }
 
     private get activePicture(): FileModel | null {
@@ -131,29 +149,32 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get showEditButton(): boolean {
         return (this.hasSelectedPictureIndex)
-            && ((this.state.currentView === ImageInputView.Preview)
-                || (this.state.currentView === ImageInputView.ListView));
+            && (this.hasCurrentView)
+            && ((this.currentView === ImageInputView.Preview)
+                || (this.currentView === ImageInputView.ListView));
     }
 
     private get showBackButton(): boolean {
-        return (this.multi)
-            && (this.state.currentView === ImageInputView.Preview)
-            || (this.state.currentView === ImageInputView.Cropper);
+        return (this.hasCurrentView)
+            && ((this.multi)
+                && (this.currentView === ImageInputView.Preview)
+                || (this.currentView === ImageInputView.Cropper));
     }
 
     private get showPreviewButton(): boolean {
         return (this.hasSelectedPictureIndex)
-            && (this.state.currentView !== ImageInputView.Preview)
-            && (this.state.currentView !== ImageInputView.Cropper)
-            && (this.activePicture !== null);
+            && (this.activePicture !== null)
+            && (this.hasCurrentView)
+            && (this.currentView !== ImageInputView.Preview)
+            && (this.currentView !== ImageInputView.Cropper);
     }
 
     private get showBrowseButton(): boolean {
-        return (this.state.currentView !== ImageInputView.Cropper);
+        return (!this.hasCurrentView) || (this.currentView !== ImageInputView.Cropper);
     }
 
     private get showCameraButton(): boolean {
-        return (this.state.currentView !== ImageInputView.Cropper);
+        return (!this.hasCurrentView) || (this.currentView !== ImageInputView.Cropper);
     }
 
     private get showDeleteButton(): boolean {
@@ -161,16 +182,15 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get showRotateButton(): boolean {
-        return (this.state.currentView === ImageInputView.Cropper);
+        return (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper);
     }
 
     private get showSaveButton(): boolean {
-        return (this.state.currentView === ImageInputView.Cropper);
+        return (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper);
     }
 
     private get showFullScreenButton(): boolean {
-        return (this.hasSelectedPictureIndex)
-            && (!this.showPreviewButton);
+        return (this.hasSelectedPictureIndex) && (!this.showPreviewButton);
     }
 
     //  Control panel button Click Events
@@ -204,7 +224,9 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onSaveButtonClick(): Promise<void> {
-        if (this.state.currentView !== ImageInputView.Cropper || !this.cropperRef.current) {
+        if ((!this.cropperRef.current)
+            || ((this.hasCurrentView)
+                && (this.currentView !== ImageInputView.Cropper))) {
             return;
         }
 
@@ -229,7 +251,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         await this.updatePicture(newFileModel, this.selectedPictureIndex);
 
-        this.setState({currentView: this.multi ? ImageInputView.ListView : ImageInputView.Preview});
+        this.setState(
+            {
+                currentView: (this.multi)
+                    ? ImageInputView.ListView
+                    : ImageInputView.Preview
+            });
     }
 
     private async onEditButtonClick(): Promise<void> {
@@ -416,17 +443,34 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if ((this.props.onChange) && (this.multi)) {
             await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
 
-            await this.setState({currentView: ImageInputView.ListView, selectedPictureIndex: (this.hasSelectedPictureIndex) ? this.selectedPictureIndex : 0});
+            await this.setState(
+                {
+                    currentView: ImageInputView.ListView,
+                    selectedPictureIndex: (this.hasSelectedPictureIndex)
+                        ? this.selectedPictureIndex
+                        : 0
+                });
 
             return;
         }
 
         if (this.props.onChange && !this.multi) {
-            const selectedView = this.editOnAddInSingleMode ? ImageInputView.Cropper : ImageInputView.Preview
+            const selectedView = (this.editOnAddInSingleMode)
+                ? ImageInputView.Cropper
+                : ImageInputView.Preview
 
-            await this.props.onChange(this, (fileModels.length > 0) ? fileModels.slice(0, 1) : []);
+            await this.props.onChange(
+                this,
+                (fileModels.length > 0)
+                    ? fileModels.slice(0, 1)
+                    : []
+            );
 
-            await this.setState({currentView: selectedView, selectedPictureIndex: 0});
+            await this.setState(
+                {
+                    currentView: selectedView,
+                    selectedPictureIndex: 0
+                });
 
             return;
         }
@@ -443,7 +487,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
 
-            this.setState({currentView: (this.multi) ? ImageInputView.ListView : ImageInputView.Preview});
+            this.setState(
+                {
+                    currentView: (this.multi)
+                        ? ImageInputView.ListView
+                        : ImageInputView.Preview
+                });
         }
     }
 
@@ -453,7 +502,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
-            await this.setState({currentView: (this.multi) ? ImageInputView.ListView : null, selectedPictureIndex: null});
+            await this.setState(
+                {
+                    currentView: (this.multi)
+                        ? ImageInputView.ListView
+                        : null,
+                    selectedPictureIndex: null
+                });
         }
     }
 
@@ -503,12 +558,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private onListViewItemClick(index: number): void {
-        if ((this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)) {
-            this.setState({selectedPictureIndex: null});
-            return;
-        }
-
-        this.setState({selectedPictureIndex: index})
+        this.setState(
+            {
+                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
+                    ? null
+                    : index
+            });
     }
 
     //  Renders
@@ -719,7 +774,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     public render(): JSX.Element {
-        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.state.currentView === null)
+        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.hasCurrentView) && (this.currentView === null)
             ? styles.minimize
             : null;
 
@@ -763,21 +818,21 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     </div>
 
                     {
-                        (this.state.currentView === ImageInputView.Cropper) &&
+                        (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper) &&
                         (
                             this.renderCropperPanel()
                         )
                     }
 
                     {
-                        (this.state.currentView === ImageInputView.ListView) &&
+                        (this.hasCurrentView) && (this.currentView === ImageInputView.ListView) &&
                         (
                             this.renderListView()
                         )
                     }
 
                     {
-                        (this.state.currentView === ImageInputView.Preview) && (this.state.selectedPictureIndex !== null) &&
+                        (this.hasCurrentView) && (this.currentView === ImageInputView.Preview) && (this.hasSelectedPictureIndex) &&
                         (
                             this.renderPreviewPanel()
                         )
