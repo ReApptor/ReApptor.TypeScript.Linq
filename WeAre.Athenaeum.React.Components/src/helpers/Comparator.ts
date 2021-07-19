@@ -13,24 +13,24 @@ export default class Comparator {
         if (x.formattedAddress === y.formattedAddress) {
             return true;
         }
-        
+
         const xCoordinate: GeoCoordinate | null = AddressHelper.getCoordinate(x);
         const yCoordinate: GeoCoordinate | null = AddressHelper.getCoordinate(y);
-        
+
         if (xCoordinate && yCoordinate) {
             return this.isEqualGeoCoordinate(xCoordinate, yCoordinate);
         }
-        
+
         const xAddress: string = AddressHelper.removeLatLon(x.formattedAddress);
         const yAddress: string = AddressHelper.removeLatLon(y.formattedAddress);
-        
+
         return (xAddress === yAddress);
     }
 
     private static isEqualStatusListItem(x: StatusListItem, y: StatusListItem): boolean {
         return (x.completed === y.completed) && (x.lineThrough === y.lineThrough) && (x.value === y.value);
     }
-    
+
     public static isEqualPageRoute(x: PageRoute | null, y: PageRoute | null): boolean {
 
         if (x === y) {
@@ -51,12 +51,12 @@ export default class Comparator {
         if (x.id !== y.id) {
             return false;
         }
-        
+
         // TODO: compare parameters
-        
+
         return true;
     }
-    
+
     public static isEqual(x: any | string | null | undefined, y: any | string | null | undefined): boolean {
         if (x === y) {
             return true;
@@ -69,7 +69,7 @@ export default class Comparator {
         if ((x == null) || (y == null)) {
             return false;
         }
-        
+
         if (typeof x === "object") {
 
             if ((x instanceof StatusListItem) || (x.isStatusListItem)) {
@@ -79,7 +79,7 @@ export default class Comparator {
             if ((x instanceof SelectListItem) || (x.isSelectListItem)) {
                 return ((y instanceof SelectListItem) || (y.isSelectListItem)) && ((x as SelectListItem).value === (y as SelectListItem).value);
             }
-            
+
             if ((x instanceof PageRoute) || (x.isPageRoute)) {
                 return ((y instanceof PageRoute) || (y.isPageRoute)) && (this.isEqualPageRoute(x, y));
             }
@@ -98,26 +98,37 @@ export default class Comparator {
                 return (xDate.valueOf() === yDate.valueOf());
             }
         }
-        
+
         if ((typeof x === "string") && (typeof y === "object")) {
             return Comparator.isEqual(y as any, x as string);
         }
-        
+
         if ((Array.isArray(x)) && (Array.isArray(y))) {
-            
+
             if (x.length !== y.length) {
                 return false;
             }
-            
+
             for (let i: number = 0; i < x.length; i++) {
                 if (!Comparator.isEqual(x[i], y[i])) {
                     return false;
                 }
             }
-            
+
             return true;
         }
 
         return (x == y);
+    }
+
+    public static assertIsNumber(value: any): number {
+        if (this.isNumber(value)) {
+            return value as number;
+        }
+        throw new TypeError("value is not a number");
+    }
+
+    public static isNumber(value: any): boolean {
+        return (typeof value === "number");
     }
 }
