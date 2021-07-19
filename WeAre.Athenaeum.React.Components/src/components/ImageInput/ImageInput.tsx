@@ -5,6 +5,7 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import ImageInputLocalizer from "./ImageInputLocalizer";
+
 import 'cropperjs/dist/cropper.css';
 import './ReactCropperOverride.scss';
 import styles from './ImageInput.module.scss';
@@ -34,11 +35,12 @@ interface IImageInputProps {
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
-    fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    cropperRef = React.createRef<ReactCropperElement>();
 
-    state: IImageInputState = {
+    private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
+    private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
+    private cropperRef = React.createRef<ReactCropperElement>();
+
+    public state: IImageInputState = {
         currentView: this.multi ? ImageInputView.ListView : null,
         isDragOver: false,
         selectedPictureIndex: null
@@ -164,7 +166,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Control panel button Click Events
 
-    async onBrowseButtonClick(): Promise<void> {
+    private async onBrowseButtonClick(): Promise<void> {
         if (!this.fileInputRef) {
             return;
         }
@@ -178,7 +180,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         ref.current.click();
     }
 
-    async onCameraButtonClick(): Promise<void> {
+    private async onCameraButtonClick(): Promise<void> {
         if (!this.cameraFileInputRef) {
             return;
         }
@@ -192,7 +194,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         ref.current.click();
     }
 
-    async onSaveButtonClick(): Promise<void> {
+    private async onSaveButtonClick(): Promise<void> {
         if (this.state.currentView !== ImageInputView.Cropper || !this.cropperRef.current) {
             return;
         }
@@ -221,7 +223,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setState({currentView: this.multi ? ImageInputView.ListView : ImageInputView.Preview});
     }
 
-    async onEditButtonClick(): Promise<void> {
+    private async onEditButtonClick(): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
             return;
         }
@@ -229,7 +231,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setState({currentView: ImageInputView.Cropper});
     }
 
-    async onBackButtonClick(): Promise<void> {
+    private async onBackButtonClick(): Promise<void> {
         if (this.multi) {
             this.setState({currentView: ImageInputView.ListView});
             return;
@@ -238,7 +240,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setState({currentView: ImageInputView.Preview});
     }
 
-    async onPreviewButtonClick(): Promise<void> {
+    private async onPreviewButtonClick(): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
             return;
         }
@@ -246,7 +248,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setState({currentView: ImageInputView.Preview});
     }
 
-    async onDeleteButtonClick(): Promise<void> {
+    private async onDeleteButtonClick(): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
             return;
         }
@@ -254,13 +256,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.removePicture(this.state.selectedPictureIndex)
     }
 
-    async onRemoveButtonClick(): Promise<void> {
+    private async onRemoveButtonClick(): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
             return;
         }
     }
 
-    async onRotateLeftButtonClick(): Promise<void> {
+    private async onRotateLeftButtonClick(): Promise<void> {
         if (!this.cropperRef.current) {
             return;
         }
@@ -269,7 +271,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setCropAreaToImageFullSize();
     }
 
-    async onRotateRightButtonClick(): Promise<void> {
+    private async onRotateRightButtonClick(): Promise<void> {
         if (!this.cropperRef.current) {
             return;
         }
@@ -280,7 +282,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  DragAndDrop Functionality Events
 
-    async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (!this.state.isDragOver) {
@@ -288,7 +290,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (!this.state.isDragOver) {
@@ -296,11 +298,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    async onDropDownAreaDragOver(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragOver(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
     }
 
-    async onDropDownAreaDragLeave(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragLeave(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (this.state.isDragOver) {
@@ -308,7 +310,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    async onDropDownAreaDrop(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDrop(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
         event.persist();
 
@@ -323,7 +325,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.addFileList(event.dataTransfer.files)
     }
 
-    async onFileInputChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+    private async onFileInputChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
         event.preventDefault();
 
         if (!event.target.files) {
@@ -335,7 +337,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Logic
 
-    async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
+    public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
         if (this.state.selectedPictureIndex === null) {
             return;
         }
@@ -345,7 +347,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return await super.componentWillReceiveProps(nextProps);
     }
 
-    async addFileList(fileList: FileList): Promise<void> {
+    private async addFileList(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
 
         if (fileListAsArray.length === 0) {
@@ -387,7 +389,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.addPictures(fileModels)
     }
 
-    async addPictures(fileModels: FileModel[]): Promise<void> {
+    private async addPictures(fileModels: FileModel[]): Promise<void> {
         if (fileModels.length === 0) {
             return;
         }
@@ -411,7 +413,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    async updatePicture(fileModel: FileModel, index: number): Promise<void> {
+    private async updatePicture(fileModel: FileModel, index: number): Promise<void> {
         const pictures = this.pictures.map((picture: FileModel, i) => {
             if (index === i) {
                 return fileModel;
@@ -426,7 +428,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    async removePicture(index: number): Promise<void> {
+    private async removePicture(index: number): Promise<void> {
         const pictures = [...this.pictures];
         pictures.splice(index, 1);
 
@@ -438,13 +440,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Helpers
 
-    async invokeOnChange(): Promise<void> {
+    private async invokeOnChange(): Promise<void> {
         if (this.props.onChange) {
             await this.props.onChange(this, this.pictures);
         }
     }
 
-    async onChangePicture(file: FileModel | null, index: number): Promise<void> {
+    private async onChangePicture(file: FileModel | null, index: number): Promise<void> {
         if (file != null) {
             if (index > this.pictures.length) {
                 //add new
@@ -464,7 +466,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.reRenderAsync();
     }
 
-    setCropAreaToImageFullSize(): void {
+    private setCropAreaToImageFullSize(): void {
         if (!this.cropperRef.current) {
             return;
         }
@@ -478,7 +480,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         });
     }
 
-    onListViewItemClick(index: number): void {
+    private onListViewItemClick(index: number): void {
         if (this.state.selectedPictureIndex === index) {
             this.setState({selectedPictureIndex: null});
             return;
@@ -489,20 +491,19 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Renders
 
-    renderControlPanel(): JSX.Element {
+    private renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
 
                 {
                     (this.showRotateButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "undo"}}
-                            type={ButtonType.Light}
-                            label={ImageInputLocalizer.rotateLeft}
-                            onClick={() => this.onRotateLeftButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "undo"}}
+                                type={ButtonType.Light}
+                                label={ImageInputLocalizer.rotateLeft}
+                                onClick={async () => await this.onRotateLeftButtonClick()}
                         />
                     )
                 }
@@ -510,13 +511,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showRotateButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "redo"}}
-                            type={ButtonType.Light}
-                            label={ImageInputLocalizer.rotateRight}
-                            onClick={() => this.onRotateRightButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "redo"}}
+                                type={ButtonType.Light}
+                                label={ImageInputLocalizer.rotateRight}
+                                onClick={async () => await this.onRotateRightButtonClick()}
                         />
                     )
                 }
@@ -524,13 +524,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showEditButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "crop"}}
-                            type={ButtonType.Info}
-                            label={ImageInputLocalizer.edit}
-                            onClick={() => this.onEditButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "crop"}}
+                                type={ButtonType.Info}
+                                label={ImageInputLocalizer.edit}
+                                onClick={async () => await this.onEditButtonClick()}
                         />
                     )
                 }
@@ -538,13 +537,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showPreviewButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "eye"}}
-                            type={ButtonType.Info}
-                            label={ImageInputLocalizer.preview}
-                            onClick={() => this.onPreviewButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "eye"}}
+                                type={ButtonType.Info}
+                                label={ImageInputLocalizer.preview}
+                                onClick={async () => await this.onPreviewButtonClick()}
                         />
                     )
                 }
@@ -552,14 +550,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showBrowseButton) &&
                     (
-                        <Button
-                            small
-                            right
-                            className={styles.controlPanelButton}
-                            icon={{name: "file-import"}}
-                            type={ButtonType.Orange}
-                            label={ImageInputLocalizer.browse}
-                            onClick={() => this.onBrowseButtonClick()}
+                        <Button small right
+                                className={styles.controlPanelButton}
+                                icon={{name: "file-import"}}
+                                type={ButtonType.Orange}
+                                label={ImageInputLocalizer.browse}
+                                onClick={async () => await this.onBrowseButtonClick()}
                         />
                     )
 
@@ -568,14 +564,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showCameraButton) &&
                     (
-                        <Button
-                            small
-                            right
-                            className={styles.controlPanelButton}
-                            icon={{name: "camera"}}
-                            type={ButtonType.Orange}
-                            label={ImageInputLocalizer.camera}
-                            onClick={() => this.onCameraButtonClick()}
+                        <Button small right
+                                className={styles.controlPanelButton}
+                                icon={{name: "camera"}}
+                                type={ButtonType.Orange}
+                                label={ImageInputLocalizer.camera}
+                                onClick={async () => await this.onCameraButtonClick()}
                         />
                     )
 
@@ -584,14 +578,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showSaveButton) &&
                     (
-                        <Button
-                            small
-                            right
-                            className={styles.controlPanelButton}
-                            icon={{name: "save"}}
-                            type={ButtonType.Success}
-                            label={ImageInputLocalizer.save}
-                            onClick={() => this.onSaveButtonClick()}
+                        <Button small right
+                                className={styles.controlPanelButton}
+                                icon={{name: "save"}}
+                                type={ButtonType.Success}
+                                label={ImageInputLocalizer.save}
+                                onClick={async () => await this.onSaveButtonClick()}
                         />
                     )
                 }
@@ -599,13 +591,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showBackButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "arrow-left"}}
-                            type={ButtonType.Info}
-                            label={ImageInputLocalizer.back}
-                            onClick={() => this.onBackButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "arrow-left"}}
+                                type={ButtonType.Info}
+                                label={ImageInputLocalizer.back}
+                                onClick={async () => await this.onBackButtonClick()}
                         />
                     )
                 }
@@ -613,13 +604,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 {
                     (this.showDeleteButton) &&
                     (
-                        <Button
-                            small
-                            className={styles.controlPanelButton}
-                            icon={{name: "trash"}}
-                            type={ButtonType.Warning}
-                            label={ImageInputLocalizer.delete}
-                            onClick={() => this.onDeleteButtonClick()}
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "trash"}}
+                                type={ButtonType.Warning}
+                                label={ImageInputLocalizer.delete}
+                                onClick={async () => await this.onDeleteButtonClick()}
                         />
                     )
                 }
@@ -627,33 +617,34 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         );
     }
 
-    renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
+    private renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
         const activeListViewItemStyle = this.state.selectedPictureIndex === index && styles.activeListViewItem;
         const key = `${index}_${fileModel.id}_${fileModel.name}`;
 
         return (
-            <div
-                className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                key={key}
-                onClick={() => this.onListViewItemClick(index)}
+            <div key={key}
+                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
+                 onClick={() => this.onListViewItemClick(index)}
             >
+
                 <div className={styles.listViewItemThumbnail}>
                     <img
                         src={this.getPreviewSource(index)}
                         alt={this.getPreviewName(index)}
                     />
                 </div>
-                {this.getPreviewName(index)}
+
+                {
+                    this.getPreviewName(index)
+                }
+
             </div>
         );
     }
 
-    renderListView(): JSX.Element {
+    private renderListView(): JSX.Element {
         return (
-            <div
-                className={styles.listView}
-            >
-
+            <div className={styles.listView}>
                 {
                     this.pictures.map((picture, index) => this.renderListViewItem(picture, index))
                 }
@@ -662,95 +653,107 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         );
     }
 
-    renderPreviewPanel(): JSX.Element {
+    private renderPreviewPanel(): JSX.Element {
         return (
             <div className={styles.preview}>
-                <img src={this.getPreviewSource(this.state.selectedPictureIndex || 0)} alt={this.getPreviewName(this.state.selectedPictureIndex || 0)}/>
+                <img src={this.getPreviewSource(this.state.selectedPictureIndex || 0)}
+                     alt={this.getPreviewName(this.state.selectedPictureIndex || 0)}
+                />
             </div>
         );
     }
 
-    renderCropperPanel(): JSX.Element {
+    private renderCropperPanel(): JSX.Element {
         return (
-            <div
-                className={styles.cropper}
-            >
-                <Cropper
-                    ref={this.cropperRef}
-                    src={this.cropperSource}
-                    style={{height: "100%", width: "100%"}}
-                    className={styles.reactCropper}
-                    guides={false}
-                    ready={() => this.setCropAreaToImageFullSize()}
+            <div className={styles.cropper}>
+                <Cropper ref={this.cropperRef}
+                         className={styles.reactCropper}
+                         style={{height: "100%", width: "100%"}}
+                         src={this.cropperSource}
+                         viewMode={1} // cannot move box outside image borders
+                         guides={false}
+                         ready={() => this.setCropAreaToImageFullSize()}
                 />
             </div>
         )
     }
 
-    render(): JSX.Element {
-        const minimizeStyle = this.minimizeOnEmpty ? this.state.currentView === null ? styles.minimize : null : null;
+    public render(): JSX.Element {
+        const minimizeStyle = (this.minimizeOnEmpty)
+            ? (this.state.currentView === null)
+                ? styles.minimize
+                : null
+            : null;
+
         return (
-            <div
-                className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
-                onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
+            <div className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
+                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
             >
-                <input
-                    ref={this.fileInputRef}
-                    className={styles.fileInput}
-                    type="file"
-                    accept="image/*"
-                    multiple={this.multi}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChange(event)}
+
+                <input ref={this.fileInputRef}
+                       className={styles.fileInput}
+                       type="file"
+                       accept="image/*"
+                       multiple={this.multi}
+                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChange(event)}
                 />
 
-                <input
-                    ref={this.cameraFileInputRef}
-                    className={styles.fileInput}
-                    type="file"
-                    accept="image/*"
-                    capture="environment"
-                    multiple={this.multi}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChange(event)}
+                <input ref={this.cameraFileInputRef}
+                       className={styles.fileInput}
+                       type="file"
+                       accept="image/*"
+                       capture="environment"
+                       multiple={this.multi}
+                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChange(event)}
                 />
 
-                <div className={styles.controlPanel}> {this.renderControlPanel()} </div>
+                <div className={styles.controlPanel}>
+                    {this.renderControlPanel()}
+                </div>
 
                 <div className={styles.viewPanel}>
-                    <div
-                        className={this.css(styles.dragDropArea, this.state.isDragOver && styles.dragDropAreaActive)}
-                        onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDrop(event)}
-                        onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOver(event)}
-                        onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnter(event)}
-                        onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeave(event)}
+
+                    <div className={this.css(styles.dragDropArea, (this.state.isDragOver) && styles.dragDropAreaActive)}
+                         onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDrop(event)}
+                         onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOver(event)}
+                         onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnter(event)}
+                         onDragLeave={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragLeave(event)}
                     >
-                        <span className={styles.dragDropAreaOverlay}>{ImageInputLocalizer.dropIt}</span>
+                        <span className={styles.dragDropAreaOverlay}>
+                            {ImageInputLocalizer.dropIt}
+                        </span>
                     </div>
 
                     {
                         (this.state.currentView === ImageInputView.Cropper) &&
-                        (this.renderCropperPanel())
+                        (
+                            this.renderCropperPanel()
+                        )
                     }
 
                     {
                         (this.state.currentView === ImageInputView.ListView) &&
-                        (this.renderListView())
+                        (
+                            this.renderListView()
+                        )
                     }
 
                     {
+                        (this.state.currentView === ImageInputView.Preview) && (this.state.selectedPictureIndex !== null) &&
                         (
-                            this.state.currentView === ImageInputView.Preview &&
-                            this.state.selectedPictureIndex !== null
-                        ) &&
-                        (this.renderPreviewPanel())
+                            this.renderPreviewPanel()
+                        )
                     }
+
                 </div>
+
             </div>
         );
     }
 
     //  Statics
 
-    static async fileToFileModel(file: File): Promise<FileModel> {
+    private static async fileToFileModel(file: File): Promise<FileModel> {
         const fileData = await ImageInput.readFile(file);
         const fileModel = new FileModel(fileData);
         fileModel.type = file.type;
@@ -760,7 +763,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return fileModel;
     }
 
-    static readFile(file: File): Promise<string | null> {
+    private static readFile(file: File): Promise<string | null> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
