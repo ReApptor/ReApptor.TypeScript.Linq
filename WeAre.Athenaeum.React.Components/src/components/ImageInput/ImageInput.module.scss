@@ -14,7 +14,6 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     display: none;
   }
 
-
   .controlPanel {
     display: flex;
     gap: 0.5rem;
@@ -66,32 +65,21 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     .dragDropAreaActive {
       opacity: 1;
       pointer-events: fill;
-
     }
 
     .cropper {
       flex-grow: 1;
       overflow: hidden;
 
-      .reactCropper{
-        .cropper-container{
-          .cropper-crop-box{
-            .cropper-point {
-              width: 10px !important;
-              height: 10px !important;
-            }
-          }
-        }
-
+      .reactCropper .cropper-container .cropper-crop-box .cropper-point {
+        width: 10px !important;
+        height: 10px !important;
       }
-
-
     }
 
     .listView {
       flex-grow: 1;
       overflow-y: auto;
-
 
       .listViewItem {
         display: flex;
@@ -139,6 +127,24 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
       }
     }
   }
+
+  &.fullScreen {
+    background-color: darkgray;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 0 0.5rem 0;
+    width: 100%;
+    height: 100%;
+
+    .viewPanel .cropper .reactCropper .cropper-container {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .fillAbsolute {
@@ -152,5 +158,3 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
 .minimize {
   height: 200px;
 }
-
-

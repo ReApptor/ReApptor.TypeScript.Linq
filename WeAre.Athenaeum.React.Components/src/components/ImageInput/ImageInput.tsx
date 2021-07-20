@@ -12,14 +12,29 @@ import './ReactCropperOverride.scss';
 import styles from './ImageInput.module.scss';
 
 enum ImageInputView {
-    Cropper,
-    ListView,
-    Preview
+
+    /**
+     * If no uploaded files, display nothing.
+     * If single-input and uploaded picture, display small preview of the picture.
+     * If multi-input and uploaded picture(s), display list of pictures.
+     */
+    Default,
+
+    /**
+     * Display full-screen preview of the selected picture.
+     */
+    Preview,
+
+    /**
+     * Display full-screen editor of the selected picture.
+     */
+    Edit,
 }
 
 interface IImageInputState {
-    currentView: ImageInputView | null;
+    currentView: ImageInputView;
     isDragOver: boolean;
+    previousView: ImageInputView;
     selectedPictureIndex: number | null;
 }
 
@@ -42,8 +57,9 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private cropperRef = React.createRef<ReactCropperElement>();
 
     public state: IImageInputState = {
-        currentView: (this.multi) ? ImageInputView.ListView : null,
+        currentView: ImageInputView.Default,
         isDragOver: false,
+        previousView: ImageInputView.Default,
         selectedPictureIndex: null
     };
 
@@ -57,34 +73,33 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return Comparator.assertIsNumber(this.state.selectedPictureIndex);
     }
 
-    private get hasCurrentView(): boolean {
-        switch (this.state.currentView) {
-            case ImageInputView.Cropper:
-            case ImageInputView.ListView:
-            case ImageInputView.Preview:
-                return true;
-            default:
-                return false;
-        }
-    }
-
     private get currentView(): ImageInputView {
-        if (this.hasCurrentView) {
-            return this.state.currentView as ImageInputView;
-        }
-        throw new TypeError("currentView is not of type ImageInputView");
+        return ImageInput.assertIsImageInputView(this.state.currentView);
     }
 
-    private get multi(): boolean {
-        return (this.props.multi === true);
+    private get previousView(): ImageInputView {
+        return ImageInput.assertIsImageInputView(this.state.previousView);
+    }
+
+    private get isDragOver(): boolean {
+        // noinspection PointlessBooleanExpressionJS - there is no knowing what type the value will be in runtime.
+        return (this.state.isDragOver === true);
+    }
+
+    private get editOnAddInSingleMode(): boolean {
+        return (this.props.editOnAddInSingleMode === true);
+    }
+
+    private get isFullscreen(): boolean {
+        return (this.currentView === ImageInputView.Preview) || (this.currentView === ImageInputView.Edit);
     }
 
     private get minimizeOnEmpty(): boolean {
         return (this.props.minimizeOnEmpty === true);
     }
 
-    private get editOnAddInSingleMode(): boolean {
-        return (this.props.editOnAddInSingleMode === true);
+    private get multi(): boolean {
+        return (this.props.multi === true);
     }
 
     private get pictures(): FileModel[] {
@@ -149,32 +164,24 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get showEditButton(): boolean {
         return (this.hasSelectedPictureIndex)
-            && (this.hasCurrentView)
-            && ((this.currentView === ImageInputView.Preview)
-                || (this.currentView === ImageInputView.ListView));
+            && (this.currentView !== ImageInputView.Edit);
     }
 
     private get showBackButton(): boolean {
-        return (this.hasCurrentView)
-            && ((this.multi)
-                && (this.currentView === ImageInputView.Preview)
-                || (this.currentView === ImageInputView.Cropper));
+        return (this.isFullscreen);
     }
 
     private get showPreviewButton(): boolean {
         return (this.hasSelectedPictureIndex)
-            && (this.activePicture !== null)
-            && (this.hasCurrentView)
-            && (this.currentView !== ImageInputView.Preview)
-            && (this.currentView !== ImageInputView.Cropper);
+            && (!this.isFullscreen);
     }
 
     private get showBrowseButton(): boolean {
-        return (!this.hasCurrentView) || (this.currentView !== ImageInputView.Cropper);
+        return (this.currentView !== ImageInputView.Edit);
     }
 
     private get showCameraButton(): boolean {
-        return (!this.hasCurrentView) || (this.currentView !== ImageInputView.Cropper);
+        return (this.currentView !== ImageInputView.Edit);
     }
 
     private get showDeleteButton(): boolean {
@@ -182,11 +189,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get showRotateButton(): boolean {
-        return (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper);
+        return (this.currentView === ImageInputView.Edit);
     }
 
     private get showSaveButton(): boolean {
-        return (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper);
+        return (this.currentView === ImageInputView.Edit);
     }
 
     private get showFullScreenButton(): boolean {
@@ -225,8 +232,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private async onSaveButtonClick(): Promise<void> {
         if ((!this.cropperRef.current)
-            || ((this.hasCurrentView)
-                && (this.currentView !== ImageInputView.Cropper))) {
+            || (this.currentView !== ImageInputView.Edit)) {
             return;
         }
 
@@ -234,10 +240,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        const cropped: string = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
-
         let newFileModel: FileModel = {...this.activePicture};
-
+        const cropped: string = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
         newFileModel.src = cropped;
 
         if (this.props.convertImage) {
@@ -250,13 +254,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         await this.updatePicture(newFileModel, this.selectedPictureIndex);
+        await this.setCurrentView(this.previousView);
 
-        this.setState(
-            {
-                currentView: (this.multi)
-                    ? ImageInputView.ListView
-                    : ImageInputView.Preview
-            });
     }
 
     private async onEditButtonClick(): Promise<void> {
@@ -264,16 +263,15 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        this.setState({currentView: ImageInputView.Cropper});
+        await this.setCurrentView(ImageInputView.Edit);
     }
 
     private async onBackButtonClick(): Promise<void> {
-        if (this.multi) {
-            this.setState({currentView: ImageInputView.ListView});
-            return;
-        }
+        const newView: ImageInputView = (this.currentView === ImageInputView.Edit)
+            ? this.previousView
+            : ImageInputView.Default;
 
-        this.setState({currentView: ImageInputView.Preview});
+        await this.setCurrentView(newView);
     }
 
     private async onPreviewButtonClick(): Promise<void> {
@@ -281,7 +279,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        this.setState({currentView: ImageInputView.Preview});
+        await this.setCurrentView(ImageInputView.Preview);
     }
 
     private async onDeleteButtonClick(): Promise<void> {
@@ -307,7 +305,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         this.cropperRef.current.cropper.rotate(-90);
-        this.setCropAreaToImageFullSize();
+        //this.setCropAreaToImageFullSize();
     }
 
     private async onRotateRightButtonClick(): Promise<void> {
@@ -319,18 +317,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         this.setCropAreaToImageFullSize();
     }
 
-    private async onFullScreenButtonClick(): Promise<void> {
-        console.log("full screen button click");
-
-        // TODO: full-screen preview and editor
-    }
-
     //  DragAndDrop Functionality Events
 
     private async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (!this.state.isDragOver) {
+        if (!this.isDragOver) {
             await this.setState({ isDragOver: true });
         }
     }
@@ -338,7 +330,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (!this.state.isDragOver) {
+        if (!this.isDragOver) {
             await this.setState({ isDragOver: true });
         }
     }
@@ -350,7 +342,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onDropDownAreaDragLeave(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (this.state.isDragOver) {
+        if (this.isDragOver) {
             await this.setState({ isDragOver: false });
         }
     }
@@ -359,7 +351,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         event.preventDefault();
         event.persist();
 
-        if (this.state.isDragOver) {
+        if (this.isDragOver) {
             await this.setState({ isDragOver: false });
         }
 
@@ -391,6 +383,15 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             this.setState({selectedPictureIndex: 0})
         }
         return await super.componentWillReceiveProps(nextProps);
+    }
+
+    private async setCurrentView(currentView: ImageInputView): Promise<void> {
+        if (this.currentView !== ImageInput.assertIsImageInputView(currentView)) {
+            await this.setState({
+                previousView: this.currentView,
+                currentView
+            });
+        }
     }
 
     private async addFileList(fileList: FileList): Promise<void> {
@@ -440,39 +441,40 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        if ((this.props.onChange) && (this.multi)) {
-            await this.props.onChange(this, [...this.props.pictures, ...fileModels]);
+        if (this.props.onChange) {
+            if (this.multi) {
+                await this.props.onChange(
+                    this,
+                    [...this.props.pictures, ...fileModels]
+                );
 
-            await this.setState(
-                {
-                    currentView: ImageInputView.ListView,
-                    selectedPictureIndex: (this.hasSelectedPictureIndex)
-                        ? this.selectedPictureIndex
-                        : 0
-                });
+                await this.setState(
+                    {
+                        selectedPictureIndex: (this.hasSelectedPictureIndex)
+                            ? this.selectedPictureIndex
+                            : 0
+                    });
 
-            return;
-        }
+                await this.setCurrentView(ImageInputView.Default);
+            } else {
+                await this.props.onChange(
+                    this,
+                    (fileModels.length > 0)
+                        ? fileModels.slice(0, 1)
+                        : []
+                );
 
-        if (this.props.onChange && !this.multi) {
-            const selectedView = (this.editOnAddInSingleMode)
-                ? ImageInputView.Cropper
-                : ImageInputView.Preview
+                const selectedView = (this.editOnAddInSingleMode)
+                    ? ImageInputView.Edit
+                    : ImageInputView.Default
 
-            await this.props.onChange(
-                this,
-                (fileModels.length > 0)
-                    ? fileModels.slice(0, 1)
-                    : []
-            );
+                await this.setState(
+                    {
+                        selectedPictureIndex: 0
+                    });
 
-            await this.setState(
-                {
-                    currentView: selectedView,
-                    selectedPictureIndex: 0
-                });
-
-            return;
+                await this.setCurrentView(selectedView);
+            }
         }
     }
 
@@ -486,13 +488,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
-
-            this.setState(
-                {
-                    currentView: (this.multi)
-                        ? ImageInputView.ListView
-                        : ImageInputView.Preview
-                });
         }
     }
 
@@ -500,15 +495,14 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         const pictures = [...this.pictures];
         pictures.splice(index, 1);
 
+        await this.setState(
+            {
+                selectedPictureIndex: null
+            });
+        await this.setCurrentView(ImageInputView.Default);
+
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
-            await this.setState(
-                {
-                    currentView: (this.multi)
-                        ? ImageInputView.ListView
-                        : null,
-                    selectedPictureIndex: null
-                });
         }
     }
 
@@ -571,18 +565,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
-
-                {
-                    (this.showFullScreenButton) &&
-                    (
-                        <Button small
-                                icon={{name: "expand"}}
-                                type={ButtonType.Light}
-                                label={"EN: Full screen"}
-                                onClick={async () => await this.onFullScreenButtonClick()}
-                        />
-                    )
-                }
 
                 {
                     (this.showRotateButton) &&
@@ -774,12 +756,15 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     public render(): JSX.Element {
-        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.hasCurrentView) && (this.currentView === null)
+        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.pictures.length <= 0)
             ? styles.minimize
+            : null;
+        const fullScreenStyle: string | null = (this.isFullscreen)
+            ? styles.fullScreen
             : null;
 
         return (
-            <div className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
+            <div className={this.css(styles.ImageInput, minimizeStyle, fullScreenStyle, this.props.className)}
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
             >
 
@@ -801,12 +786,14 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 />
 
                 <div className={styles.controlPanel}>
-                    {this.renderControlPanel()}
+                    {
+                        this.renderControlPanel()
+                    }
                 </div>
 
                 <div className={styles.viewPanel}>
 
-                    <div className={this.css(styles.dragDropArea, (this.state.isDragOver) && styles.dragDropAreaActive)}
+                    <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
                          onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDrop(event)}
                          onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOver(event)}
                          onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnter(event)}
@@ -818,21 +805,21 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     </div>
 
                     {
-                        (this.hasCurrentView) && (this.currentView === ImageInputView.Cropper) &&
+                        (this.currentView === ImageInputView.Edit) &&
                         (
                             this.renderCropperPanel()
                         )
                     }
 
                     {
-                        (this.hasCurrentView) && (this.currentView === ImageInputView.ListView) &&
+                        (this.multi) && (this.currentView === ImageInputView.Default) &&
                         (
                             this.renderListView()
                         )
                     }
 
                     {
-                        (this.hasCurrentView) && (this.currentView === ImageInputView.Preview) && (this.hasSelectedPictureIndex) &&
+                        ((this.currentView === ImageInputView.Preview) || ((!this.multi) && (this.currentView === ImageInputView.Default) && (this.hasSelectedPictureIndex))) &&
                         (
                             this.renderPreviewPanel()
                         )
@@ -871,5 +858,18 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 resolve(null);
             };
         });
+    }
+
+    private static assertIsImageInputView(value: any): ImageInputView {
+        switch (value) {
+            case ImageInputView.Default:
+                return ImageInputView.Default;
+            case ImageInputView.Preview:
+                return ImageInputView.Preview;
+            case ImageInputView.Edit:
+                return ImageInputView.Edit;
+            default:
+                throw new TypeError("value is not of type ImageInputView");
+        }
     }
 }
