@@ -6,7 +6,6 @@ import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
 import Icon, {IconSize, IconStyle} from "../Icon/Icon";
 import TopNavLocalizer from "./TopNavLocalizer";
 
-import logo from "./renta-logo.png"
 import styles from "./TopNav.module.scss";
 
 export interface IMenuItem {
@@ -108,7 +107,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             <i className="fas fa-chevron-circle-left" />
                         </div>
 
-                        <img src={this.props.logo || logo} alt={this.props.logoText || "renta"} onClick={async () => await this.onLogoClick()} />
+                        {(this.props.logo) && (<img src={this.props.logo} alt={this.props.logoText || "renta"} onClick={async () => await this.onLogoClick()} />)}
                         
                     </div>
 
