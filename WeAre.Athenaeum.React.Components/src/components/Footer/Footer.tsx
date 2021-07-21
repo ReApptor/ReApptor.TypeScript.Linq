@@ -2,7 +2,6 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import FooterLocalizer from "./FooterLocalizer";
 
-import logo from "../TopNav/renta-logo.png";
 import styles from "./Footer.module.scss";
 
 export interface IFooterLink {
@@ -63,8 +62,8 @@ export default class Footer extends BaseComponent<IFooterProps> {
                 
                 <div className={styles.upperFooter}>
                     
-                    <img src={this.props.logo ?? logo} alt={this.name} />
-
+                    {(this.props.logo) && (<img src={this.props.logo} alt={this.name} />)} 
+                    
                     <div className={styles.footerLinks}>
                         
                         {
