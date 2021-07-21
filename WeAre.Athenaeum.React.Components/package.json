@@ -31,7 +31,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-image": "^2.0.6",
-    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "@types/bootstrap": "^4.3.1",
     "@types/googlemaps": "^3.43.3",
     "@types/jquery": "^3.2.1",
@@ -43,7 +43,7 @@
     "@types/react-qr-reader": "^2.1.2",
     "@types/ts-nameof": "^4.2.1",
     "date-fns": "^2.17.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "react": "^16.8.2",
     "react-dependent-script": "^1.1.2",
     "react-dom": "^16.8.2",
