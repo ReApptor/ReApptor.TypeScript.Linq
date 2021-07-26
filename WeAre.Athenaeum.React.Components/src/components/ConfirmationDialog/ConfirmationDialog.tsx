@@ -33,7 +33,7 @@ interface IConfirmationDialogState {
 export default class ConfirmationDialog extends BaseComponent<IConfirmationDialogProps, IConfirmationDialogState> implements IGlobalClick, IGlobalKeydown {
 
     private _model: IConfirmation | null = null;
-    
+
     state: IConfirmationDialogState = {
         isOpened: false,
         comment: "",
@@ -42,7 +42,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
     private readonly _commentRef: React.RefObject<TextAreaInput> = React.createRef();
     private _resolver: ((confirmed: boolean) => void) | null = null;
-    
+
     private toModel(title: string | IConfirmation | ConfirmationDialogTitleCallback | undefined): IConfirmation {
         let model = {} as IConfirmation;
 
@@ -63,7 +63,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         if (!model.title) {
             model.title = ConfirmationDialogLocalizer.areYouSure;
         }
-        
+
         return model;
     }
 
@@ -138,7 +138,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
         await this.setDialogAsync(false);
     }
-    
+
     public async toggleAsync(): Promise<void> {
         if (this.state.isOpened) {
             await this.invokeCloseAsync();
@@ -160,16 +160,16 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     }
 
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
-        
+
         this._model = this.toModel(title);
-        
+
         await this.openAsync();
-        
+
         return new Promise((resolve) => {
             this._resolver = resolve;
         });
     }
-    
+
     public async onGlobalClick(e: React.MouseEvent): Promise<void> {
         const targetNode = e.target as Node;
 
@@ -191,15 +191,15 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     }
 
     public async componentWillReceiveProps(nextProps: IConfirmationDialogProps): Promise<void> {
-        
+
         this._model = null;
-        
+
         await super.componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {
         return (
-            <div id={this.id} className={this.css(styles.confirmDialog, this.state.isOpened && styles.opened, this.processing && styles.processing)}>
+            <div id={"confirmation-dialog" + this.id} className={this.css(styles.confirmDialog, (this.state.isOpened) && styles.opened, (this.processing) && styles.processing)}>
 
                 <div className={styles.dialogOverlay} />
 
@@ -223,13 +223,15 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                     }
 
                     <Button block
+                            id={"confirmation-dialog-confirm" + this.id}
                             label={ConfirmationDialogLocalizer.confirmButton}
                             type={ButtonType.Orange}
                             disabled={this.processing || !this.canConfirm}
                             onClick={() => this.invokeCloseAsync(true)}
                     />
-                            
+
                     <Button block
+                            id={"confirmation-dialog-cancel" + this.id}
                             label={ConfirmationDialogLocalizer.closeButton}
                             type={ButtonType.Default}
                             disabled={this.processing}
@@ -241,7 +243,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
             </div>
         )
     }
-    
+
     public render(): React.ReactNode {
         return ReactDOM.createPortal(this.renderDialog(), document.body);
     }
