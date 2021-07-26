@@ -42,10 +42,10 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         processing: false
     };
 
+    private static _current: ConfirmationDialog | null = null;
+    private static _previous: ConfirmationDialog | null = null;
     private readonly _commentRef: React.RefObject<TextAreaInput> = React.createRef();
     private _resolver: ((confirmed: boolean) => void) | null = null;
-    private _current: ConfirmationDialog | null = null;
-    private _previous: ConfirmationDialog | null = null;
 
     private toModel(title: string | IConfirmation | ConfirmationDialogTitleCallback | undefined): IConfirmation {
         let model = {} as IConfirmation;
@@ -99,21 +99,24 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         await this.setState({ comment });
     }
 
-    private async setDialogAsync(isOpened: boolean): Promise<void> {
+    private async setDialogAsync(isOpened: boolean, nestedCheck: boolean = true): Promise<void> {
         if ((this.isMounted) && (this.state.isOpened != isOpened)) {
 
-            if ((isOpened) && (this._current)) {
-                this._previous = this._current;
-                await this._previous.setDialogAsync(false);
+            if (nestedCheck) {
+                if ((isOpened) && (ConfirmationDialog._current)) {
+                    await ConfirmationDialog._current.setDialogAsync(false, false);
+                    ConfirmationDialog._previous = ConfirmationDialog._current;
+                }
             }
 
             await this.setState({isOpened});
 
-            this._current = (isOpened) ? this : null;
-
-            if ((!isOpened) && (this._previous)) {
-                await this._previous.setDialogAsync(true);
-                this._previous = null;
+            if (nestedCheck) {
+                ConfirmationDialog._current = (isOpened) ? this : null;
+                if ((!isOpened) && (ConfirmationDialog._previous)) {
+                    await ConfirmationDialog._previous.setDialogAsync(true, false);
+                    ConfirmationDialog._previous = null;
+                }
             }
         }
     }
