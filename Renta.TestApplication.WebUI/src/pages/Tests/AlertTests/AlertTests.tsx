@@ -18,10 +18,10 @@ export default class AlertTests extends BaseComponent {
     private async doubleConfirmAsync(): Promise<void> {
         if (await ch.confirmAsync("Are you sure you want to confirm?")) {
 
-            await Utility.wait(3000);
+            await Utility.wait(1000);
 
             if (await ch.confirmAsync("Double check?")) {
-                await Utility.wait(3000);
+                await Utility.wait(1000);
 
                 await ch.alertMessageAsync("YES", this._autoClose);
             }
@@ -35,6 +35,20 @@ export default class AlertTests extends BaseComponent {
         if (delay) {
             await Utility.wait(5000);
         }
+        await ch.alertMessageAsync("YES");
+    }
+    
+    private async onConfirmSubmitAsync(delay: boolean): Promise<void> {
+        if (delay) {
+            await Utility.wait(2000);
+        }
+
+        const reopen: boolean = await ch.confirmAsync("Double check?");
+        
+        if (reopen) {
+            await Utility.wait(2000);
+        }
+
         await ch.alertMessageAsync("YES");
     }
 
@@ -63,6 +77,10 @@ export default class AlertTests extends BaseComponent {
 
                 <div className="p-2">
                     <Button label="Button with comment and delay" confirm={{ title: "Are you sure?", comment: true }} onClick={async () => this.onSubmitAsync(true)} />
+                </div>
+
+                <div className="p-2">
+                    <Button label="Button with double confirm and delay" confirm={{ title: "Are you sure?", comment: false }} onClick={async () => this.onConfirmSubmitAsync(true)} />
                 </div>
 
                 <div className="p-2">
