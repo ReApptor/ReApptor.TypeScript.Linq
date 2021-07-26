@@ -35,12 +35,6 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             
             return _client;
         }
-        
-        public OnePasswordCredentialService(ILogger<OnePasswordCredentialService> logger, OnePasswordCredentialServiceSettings settings)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
 
         public OnePasswordCredentialService(ILogger<OnePasswordCredentialService> logger, IOptions<OnePasswordCredentialServiceSettings> settings)
         {

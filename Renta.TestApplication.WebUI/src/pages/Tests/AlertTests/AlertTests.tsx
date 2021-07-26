@@ -14,6 +14,22 @@ export default class AlertTests extends BaseComponent {
             await ch.alertMessageAsync("NO", this._autoClose);
         }
     }
+
+    private async doubleConfirmAsync(): Promise<void> {
+        if (await ch.confirmAsync("Are you sure you want to confirm?")) {
+
+            await Utility.wait(3000);
+
+            if (await ch.confirmAsync("Double check?")) {
+                await Utility.wait(3000);
+
+                await ch.alertMessageAsync("YES", this._autoClose);
+            }
+            
+        } else {
+            await ch.alertMessageAsync("NO", this._autoClose);
+        }
+    }
     
     private async onSubmitAsync(delay: boolean): Promise<void> {
         if (delay) {
@@ -35,6 +51,10 @@ export default class AlertTests extends BaseComponent {
 
                 <div className="p-2">
                     <Button label="Programmatically" onClick={async () => await this.confirmAsync()} />
+                </div>
+
+                <div className="p-2">
+                    <Button label="Programmatically with inner processing" onClick={async () => await this.doubleConfirmAsync()} />
                 </div>
 
                 <div className="p-2">

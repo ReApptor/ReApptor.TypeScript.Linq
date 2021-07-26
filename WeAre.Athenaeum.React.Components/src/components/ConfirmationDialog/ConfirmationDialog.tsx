@@ -20,6 +20,8 @@ export interface IConfirmation {
 interface IConfirmationDialogProps {
     minLength?: number;
     title?: string | IConfirmation | ConfirmationDialogTitleCallback;
+    confirmButtonLabel?: string;
+    declineButtonLabel?: string;
     callback?(caller: ConfirmationDialog, data: string): Promise<void>;
     onDecline?(caller: ConfirmationDialog): Promise<void>;
 }
@@ -42,6 +44,8 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
     private readonly _commentRef: React.RefObject<TextAreaInput> = React.createRef();
     private _resolver: ((confirmed: boolean) => void) | null = null;
+    private _current: ConfirmationDialog | null = null;
+    private _previous: ConfirmationDialog | null = null;
 
     private toModel(title: string | IConfirmation | ConfirmationDialogTitleCallback | undefined): IConfirmation {
         let model = {} as IConfirmation;
@@ -96,8 +100,21 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     }
 
     private async setDialogAsync(isOpened: boolean): Promise<void> {
-        if (this.isMounted) {
-            await this.setState({ isOpened });
+        if ((this.isMounted) && (this.state.isOpened != isOpened)) {
+
+            if ((isOpened) && (this._current)) {
+                this._previous = this._current;
+                await this._previous.setDialogAsync(false);
+            }
+
+            await this.setState({isOpened});
+
+            this._current = (isOpened) ? this : null;
+
+            if ((!isOpened) && (this._previous)) {
+                await this._previous.setDialogAsync(true);
+                this._previous = null;
+            }
         }
     }
 
@@ -173,7 +190,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     public async onGlobalClick(e: React.MouseEvent): Promise<void> {
         const targetNode = e.target as Node;
 
-        const outside = Utility.clickedOutside(targetNode, `confirmationContent-${this.id}`);
+        const outside: boolean = Utility.clickedOutside(targetNode, `confirmationContent-${this.id}`);
 
         if (outside) {
             await this.invokeCloseAsync();
@@ -191,15 +208,17 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     }
 
     public async componentWillReceiveProps(nextProps: IConfirmationDialogProps): Promise<void> {
-
         this._model = null;
 
         await super.componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {
+        const openedStyle: any = (this.state.isOpened) && styles.opened;
+        const processingStyle: any = (this.processing) && styles.processing;
+        
         return (
-            <div id={"confirmation-dialog" + this.id} className={this.css(styles.confirmDialog, (this.state.isOpened) && styles.opened, (this.processing) && styles.processing)}>
+            <div id={"confirmation-dialog" + this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
 
                 <div className={styles.dialogOverlay} />
 
@@ -224,7 +243,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                     <Button block
                             id={"confirmation-dialog-confirm" + this.id}
-                            label={ConfirmationDialogLocalizer.confirmButton}
+                            label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButton}
                             type={ButtonType.Orange}
                             disabled={this.processing || !this.canConfirm}
                             onClick={() => this.invokeCloseAsync(true)}
@@ -232,7 +251,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                     <Button block
                             id={"confirmation-dialog-cancel" + this.id}
-                            label={ConfirmationDialogLocalizer.closeButton}
+                            label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButton}
                             type={ButtonType.Default}
                             disabled={this.processing}
                             onClick={() => this.invokeCloseAsync()}
