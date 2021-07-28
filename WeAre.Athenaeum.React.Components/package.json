@@ -15,8 +15,8 @@
   },
   "browserslist": [],
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.785",
-    "@weare/athenaeum-toolkit": "^1.0.785",
+    "@weare/athenaeum-react-common": "^1.0.893",
+    "@weare/athenaeum-toolkit": "^1.0.893",
     "bootstrap": "^4.3.1",
     "jquery": "^3.2.1",
     "query-string": "^6.14.0",

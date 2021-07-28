@@ -39,6 +39,8 @@
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
       <TypeScriptCompile Include="src\components\Link\Link.tsx" />
       <TypeScriptCompile Include="src\components\List\List.tsx" />
+      <TypeScriptCompile Include="src\components\MessageBox\MessageBox.tsx" />
+      <TypeScriptCompile Include="src\components\MessageBox\MessageBoxLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Modal\Modal.tsx" />
       <TypeScriptCompile Include="src\components\PageContainer\PageContainer.tsx" />
       <TypeScriptCompile Include="src\components\Pagination\Pagintation.tsx" />

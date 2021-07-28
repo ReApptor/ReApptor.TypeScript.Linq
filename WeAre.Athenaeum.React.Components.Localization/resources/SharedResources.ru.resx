@@ -378,4 +378,16 @@
   <data name="ImageInput.DropIt" xml:space="preserve">
     <value>RU: Drop it</value>
   </data>
+  <data name="MessageBox.Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="MessageBox.AreYouSure" xml:space="preserve">
+    <value>Вы уверены?</value>
+  </data>
+  <data name="MessageBox.Comment" xml:space="preserve">
+    <value>Пожалуйста, оставьте комментарий</value>
+  </data>
+  <data name="MessageBox.Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
 </root>
