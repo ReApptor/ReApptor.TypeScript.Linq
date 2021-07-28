@@ -38,13 +38,13 @@ export interface IBasePage extends IBaseComponent {
 
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
 
-    showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>;
+    messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>;
 
     documentPreviewAsync(model: DocumentPreviewModel): Promise<void>;
 
     descriptionAsync(containerId: string, model: DescriptionModel): Promise<void>;
 
-    canLeaveAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean>;
+    beforeRedirectAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean>;
 
     getLayout(): ILayoutPage;
 
@@ -58,12 +58,12 @@ export interface IBasePage extends IBaseComponent {
     
     readonly hasTopNav: boolean;
     readonly hasFooter: boolean;
-
-    routeName: string;
-    routeIndex: number | null;
-    routeId: string | null;
-    parameters: BasePageParameters | null;
-    route: PageRoute;
+    readonly alert: AlertModel | null;
+    readonly routeName: string;
+    readonly routeIndex: number | null;
+    readonly routeId: string | null;
+    readonly parameters: BasePageParameters | null;
+    readonly route: PageRoute;
 }
 
 export interface ILayoutPage extends IAsyncComponent {
@@ -113,7 +113,6 @@ export interface IIsLoading {
 
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
-    private _alert: AlertModel | null;
     private readonly _asIsLoading: IIsLoading | null;
 
     private asIsLoading(): IIsLoading | null {
@@ -130,7 +129,6 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         super(props || ({} as IBasePageProps<TParams>));
 
         this._asIsLoading = this.asIsLoading();
-        this._alert = null;
     }
 
     public async componentDidMount(): Promise<void> {
@@ -247,10 +245,10 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return (pageContainer != null) && (await pageContainer.confirmAsync(title));
     }
 
-    public async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+    public async messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null)
-            ? (await pageContainer.showAsync(titleOrModel, caption, buttons, icon))
+            ? await pageContainer.messageBoxAsync(titleOrModel, caption, buttons, icon)
             : DialogResult.None;
     }
 
@@ -272,7 +270,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return true;
     }
 
-    public async canLeaveAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean> {
+    public async beforeRedirectAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean> {
         return true;
     }
 
