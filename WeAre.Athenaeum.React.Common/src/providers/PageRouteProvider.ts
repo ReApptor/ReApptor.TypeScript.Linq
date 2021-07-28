@@ -9,6 +9,7 @@ import ApplicationContext from "../models/ApplicationContext";
 import ch from "./ComponentHelper";
 import IErrorPageParameters from "../models/IErrorPageParameters";
 import BasePageDefinitions, {IPageDefinitions} from "./BasePageDefinitions";
+import AlertModel from "../models/AlertModel";
 
 export default class PageRouteProvider {
     
@@ -79,17 +80,23 @@ export default class PageRouteProvider {
             
             if (current != null) {
                 
-                const canLeave: boolean = await current.canLeaveAsync(route, innerRedirect);
+                const currentAlert: AlertModel | null = current.alert;
                 
-                if (!canLeave) {
+                const canRedirect: boolean = await current.beforeRedirectAsync(route, innerRedirect);
+                
+                if (!canRedirect) {
                     const currentRoute: PageRoute = current.route;
 
                     window.history.pushState(currentRoute, currentRoute.name);
 
                     return current;
                 }
+
+                const newAlert: AlertModel | null = current.alert;
                 
-                await current!.hideAlertAsync();
+                if (AlertModel.isEqual(currentAlert, newAlert)) {
+                    await current.hideAlertAsync();
+                }
             }
 
             const page: IBasePage = await this.createPageAsync(route);

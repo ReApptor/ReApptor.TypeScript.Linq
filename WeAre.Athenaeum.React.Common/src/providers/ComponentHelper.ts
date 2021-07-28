@@ -157,9 +157,9 @@ export default class ch {
         return (this._page != null) && (await this._page.confirmAsync(title));
     }
 
-    public static async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+    public static async messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
         return (this._page != null)
-            ? (await this._page.showAsync(titleOrModel, caption, buttons, icon))
+            ? (await this._page.messageBoxAsync(titleOrModel, caption, buttons, icon))
             : DialogResult.None;
     }
 

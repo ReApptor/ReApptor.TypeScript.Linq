@@ -1,4 +1,5 @@
 import {AlertType} from "../Enums";
+import {Utility} from "@weare/athenaeum-toolkit";
 
 export default class AlertModel {
     
@@ -24,4 +25,8 @@ export default class AlertModel {
     public flyout: boolean = false;
 
     public isAlertModel: boolean = true;
+    
+    public static isEqual(x: AlertModel | null | undefined, y: AlertModel | null | undefined): boolean {
+        return Utility.getHashCode(x) === Utility.getHashCode(y);
+    }
 }

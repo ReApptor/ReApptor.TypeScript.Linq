@@ -10,7 +10,7 @@ export default interface IPageContainer {
     alertAsync(alert: AlertModel): Promise<void>;
     hideAlertAsync(): Promise<void>;
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
-    showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>
+    messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>
     documentPreviewAsync(model: DocumentPreviewModel): Promise<void>;
     descriptionAsync(containerId: string, model: DescriptionModel): Promise<void>;
 }
