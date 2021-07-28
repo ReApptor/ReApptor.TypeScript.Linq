@@ -7,8 +7,8 @@
   "module": "./lib/esm/index.js",
   "types": "./lib/types/src/index.d.ts",
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.895",
-    "@weare/athenaeum-toolkit": "^1.0.895"
+    "@weare/athenaeum-react-common": "^1.0.896",
+    "@weare/athenaeum-toolkit": "^1.0.896"
   },
   "peerDependencies": {},
   "devDependencies": {
