@@ -78,6 +78,17 @@ export default class PageRouteProvider {
             }
             
             if (current != null) {
+                
+                const canLeave: boolean = await current.canLeaveAsync(route, innerRedirect);
+                
+                if (!canLeave) {
+                    const currentRoute: PageRoute = current.route;
+
+                    window.history.pushState(currentRoute, currentRoute.name);
+
+                    return current;
+                }
+                
                 await current!.hideAlertAsync();
             }
 

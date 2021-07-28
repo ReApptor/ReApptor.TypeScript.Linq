@@ -41,6 +41,8 @@ export interface IBasePage extends IBaseComponent {
 
     descriptionAsync(containerId: string, model: DescriptionModel): Promise<void>;
 
+    canLeaveAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean>;
+
     getLayout(): ILayoutPage;
 
     getTitle(): string;
@@ -257,6 +259,10 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean> {
+        return true;
+    }
+
+    public async canLeaveAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean> {
         return true;
     }
 
