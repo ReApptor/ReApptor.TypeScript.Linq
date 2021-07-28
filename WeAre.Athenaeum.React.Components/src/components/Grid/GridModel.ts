@@ -1,7 +1,7 @@
 import React from "react";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import {HashCodeUtility, IPagedList, SortDirection, TFormat, Utility} from "@weare/athenaeum-toolkit";
-import {Align, ch, IAsyncComponent, IBaseComponent, IConfirmation, Justify, PageRoute, TextAlign, VerticalAlign, ArrayScope, ActionType} from "@weare/athenaeum-react-common";
+import {Align, ch, IAsyncComponent, IBaseComponent, IConfirmation, Justify, PageRoute, TextAlign, VerticalAlign, ArrayScope, ActionType, RenderCallback} from "@weare/athenaeum-react-common";
 import {IIconProps} from "../Icon/Icon";
 import Comparator from "../../helpers/Comparator";
 import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "../Dropdown/Dropdown";
@@ -599,6 +599,8 @@ export class ColumnSettingsDefinition {
 
     public requiredType?: DropdownRequiredType;
 
+    public addButton?: boolean | string | RenderCallback;
+
     public nothingSelectedText?: string;
     
     public autoCollapse?: boolean;
@@ -619,13 +621,13 @@ export class ColumnSettingsDefinition {
 
     public descriptionCallback?(cell: CellModel<any>, action: CellAction<any>): Promise<void>;
     
+    public addCallback?(cell: CellModel<any>): Promise<void>;
+    
     public fetchItems?<TDataItem>(cell: CellModel<any>): Promise<TDataItem[]>;
 
     public selectedTextTransform?(sender: Dropdown<any>): string;
 
     public infoTransform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
-
-
 }
 
 export class ColumnSettings<TItem = {}> {
@@ -681,9 +683,13 @@ export class ColumnSettings<TItem = {}> {
 
     public descriptionCallback?(cell: CellModel<TItem>, action: CellAction<TItem>): Promise<void>;
 
+    public addCallback?(cell: CellModel<TItem>): Promise<void>;
+
     public required: boolean = false;
 
     public requiredType: DropdownRequiredType = DropdownRequiredType.Manual;
+    
+    public addButton: boolean | string | RenderCallback = false;
     
     public nothingSelectedText: string | null = null;
     
@@ -836,7 +842,7 @@ export class ColumnDefinition {
     public maxHeight?: string | number;
     
     public noWrap?: boolean;
-    
+
     public wordBreak?: boolean;
 
     public stretch?: boolean;
@@ -1751,6 +1757,8 @@ export class GridTransformer {
         to.descriptionCallback = from.descriptionCallback;
         to.required = from.required || false;
         to.requiredType = from.requiredType || DropdownRequiredType.Manual;
+        to.addButton = from.addButton || false;
+        to.addCallback = from.addCallback;
         to.nothingSelectedText = from.nothingSelectedText || null;
         to.autoCollapse = from.autoCollapse || true;
         to.groupSelected = from.groupSelected || false;
