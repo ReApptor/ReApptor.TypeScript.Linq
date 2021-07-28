@@ -138,6 +138,11 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageInputBackLanguageItemName: string = `ImageInput.Back`;
     public readonly imageInputPreviewLanguageItemName: string = `ImageInput.Preview`;
     public readonly imageInputDropItLanguageItemName: string = `ImageInput.DropIt`;
+    public readonly messageBoxLanguageItemName: string = `MessageBox`;
+    public readonly messageBoxOkLanguageItemName: string = `MessageBox.Ok`;
+    public readonly messageBoxAreYouSureLanguageItemName: string = `MessageBox.AreYouSure`;
+    public readonly messageBoxCommentLanguageItemName: string = `MessageBox.Comment`;
+    public readonly messageBoxYesLanguageItemName: string = `MessageBox.Yes`;
 
     constructor() {
 
@@ -288,6 +293,11 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageInputBackLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
         this.set(this.imageInputPreviewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisa` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
         this.set(this.imageInputDropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `Släpp` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `Pudota` }, { language: `da`, value: `DA: Drop it` },);
+        this.set(this.messageBoxLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.messageBoxOkLanguageItemName, { language: `en`, value: `Ok` }, { language: `uk`, value: `Ok` }, { language: `sv`, value: `Ok` }, { language: `ru`, value: `Ok` }, { language: `pl`, value: `Ok` }, { language: `nb`, value: `Ok` }, { language: `fi`, value: `Ok` }, { language: `da`, value: `Ok` },);
+        this.set(this.messageBoxAreYouSureLanguageItemName, { language: `en`, value: `Are you sure?` }, { language: `uk`, value: `Ви впевнені?` }, { language: `sv`, value: `Är du säker?` }, { language: `ru`, value: `Вы уверены?` }, { language: `pl`, value: `Czy jesteś pewien?` }, { language: `nb`, value: `Er du sikker?` }, { language: `fi`, value: `Oletko varma?` }, { language: `da`, value: `Er du sikker?` },);
+        this.set(this.messageBoxCommentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `uk`, value: `Будьласка, залиште коментар` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `ru`, value: `Пожалуйста, оставьте комментарий` }, { language: `pl`, value: `Dodaj komentarz` }, { language: `nb`, value: `Vennligst legg igjen en kommentar` }, { language: `fi`, value: `Ole hyvä ja kommentoi` }, { language: `da`, value: `Efterlad en kommentar` },);
+        this.set(this.messageBoxYesLanguageItemName, { language: `en`, value: `Yes` }, { language: `uk`, value: `UK: Yes` }, { language: `sv`, value: `SV: Yes` }, { language: `ru`, value: `Да` }, { language: `pl`, value: `PL: Yes` }, { language: `nb`, value: `NB: Yes` }, { language: `fi`, value: `FI: Yes` }, { language: `da`, value: `DA: Yes` },);
     }
 
     /**
@@ -1219,6 +1229,41 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageInputDropIt() : string {
         return this.get(this.imageInputDropItLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox" ()
+    */
+    public get messageBox() : string {
+        return this.get(this.messageBoxLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Ok" (Ok)
+    */
+    public get messageBoxOk() : string {
+        return this.get(this.messageBoxOkLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.AreYouSure" (Are you sure?)
+    */
+    public get messageBoxAreYouSure() : string {
+        return this.get(this.messageBoxAreYouSureLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Comment" (Please leave a comment)
+    */
+    public get messageBoxComment() : string {
+        return this.get(this.messageBoxCommentLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Yes" (Yes)
+    */
+    public get messageBoxYes() : string {
+        return this.get(this.messageBoxYesLanguageItemName);
     }
 }
 

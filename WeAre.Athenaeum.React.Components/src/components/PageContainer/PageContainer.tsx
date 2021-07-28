@@ -1,6 +1,7 @@
 import React from "react";
 import {ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPreviewModel, IPageContainer, IBaseAsyncComponentState, BaseAsyncComponent, IContainer, IGlobalResize, IConfirmation, ConfirmationDialogTitleCallback} from "@weare/athenaeum-react-common";
+import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/athenaeum-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 import Alert from "../Alert/Alert";
@@ -8,6 +9,7 @@ import PageRow from "./PageRow/PageRow";
 import Modal from "../Modal/Modal";
 import DocumentPreviewModal from "../DocumentPreviewModal/DocumentPreviewModal";
 import Description from "../Popover/Description/Description";
+import MessageBox from "../MessageBox/MessageBox";
 import PageContainerLocalizer from "./PageContainerLocalizer";
 
 import styles from "./PageContainer.module.scss";
@@ -41,6 +43,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     private readonly _documentPreviewModalRef: React.RefObject<DocumentPreviewModal> = React.createRef();
     private readonly _descriptionRef: React.RefObject<Description> = React.createRef();
     private readonly _confirmationDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
+    private readonly _messageBoxRef: React.RefObject<MessageBox> = React.createRef();
     
     private _height: number = 0;
 
@@ -119,6 +122,10 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
         return this._confirmationDialogRef.current!.confirmAsync(title);
     }
 
+    public async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+        return this._messageBoxRef.current!.showAsync(titleOrModel, caption, buttons, icon);
+    }
+
     public async documentPreviewAsync(model: DocumentPreviewModel): Promise<void> {
         const documentPreviewModal: DocumentPreviewModal = this._documentPreviewModalRef.current!;
         await documentPreviewModal.openAsync(model);
@@ -178,6 +185,8 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 <Description ref={this._descriptionRef} />
                 
                 <ConfirmationDialog ref={this._confirmationDialogRef} />
+                
+                <MessageBox ref={this._messageBoxRef} />
                 
             </div>
         );

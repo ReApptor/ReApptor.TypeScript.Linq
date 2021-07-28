@@ -504,4 +504,16 @@
   <data name="ImageInput.DropIt" xml:space="preserve">
     <value>DA: Drop it</value>
   </data>
+  <data name="MessageBox.Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="MessageBox.AreYouSure" xml:space="preserve">
+    <value>Er du sikker?</value>
+  </data>
+  <data name="MessageBox.Comment" xml:space="preserve">
+    <value>Efterlad en kommentar</value>
+  </data>
+  <data name="MessageBox.Yes" xml:space="preserve">
+    <value>DA: Yes</value>
+  </data>
 </root>
