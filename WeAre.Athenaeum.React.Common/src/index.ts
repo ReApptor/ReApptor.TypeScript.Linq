@@ -1,5 +1,5 @@
 //Enums:
-import { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType } from "./Enums";
+import { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType, DialogResult, MessageBoxButtons, MessageBoxIcon } from "./Enums";
 //Models:
 import AlertModel from "./models/AlertModel";
 import BasePageParameters from "./models/BasePageParameters";
@@ -12,6 +12,7 @@ import ArrayScope from "./models/ArrayScope";
 //Interfaces:
 import IApplicationSettings from "./models/IApplicationSettings";
 import IConfirmation, { ConfirmationDialogTitleCallback } from "./models/IConfirmation";
+import IMessageBox, { IMessageBoxButtons, MessageBoxModelCallback } from "./models/IMessageBox";
 import IErrorPageParameters from "./models/IErrorPageParameters";
 import IPageContainer from "./models/IPageContainer";
 import IResponseContainer from "./models/IResponseContainer";
@@ -38,7 +39,7 @@ import DocumentEventsProvider, {DocumentEventType, DocumentEventCallback} from "
 import {LanguageCallback, ILanguageProps, ILanguageSetting, IComponentsLocalizer, IComponentLocalizer, BaseComponentsLocalizer, BaseComponentLocalizer} from "./localization/BaseComponentLocalizer";
 
 //Enums:
-export { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType };
+export { WebApplicationType, Align, Justify, TextAlign, VerticalAlign, AlertType, SwipeDirection, LinkTarget, BaseInputType, InputValidationRule, PasswordValidationRule, PasswordValidationError, ActionType, DialogResult, MessageBoxButtons, MessageBoxIcon };
 
 //Models:
 export {
@@ -52,6 +53,7 @@ export type { DocumentPreviewCallback };
 export type {
     IApplicationSettings,
     IConfirmation, ConfirmationDialogTitleCallback,
+    IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, 
     IErrorPageParameters, IPageContainer, IResponseContainer, IUser, IUserContext,
 };
 
