@@ -12,7 +12,7 @@ export interface IMessageBoxButtons {
     noButton?: string | boolean;
 }
 
-export interface IMessageBox extends IMessageBoxButtons {
+export default interface IMessageBox extends IMessageBoxButtons {
     title: string;
     caption?: string;
     icon?: MessageBoxIcon | string;
