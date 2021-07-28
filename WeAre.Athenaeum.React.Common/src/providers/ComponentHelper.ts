@@ -10,7 +10,7 @@ import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirm
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
 import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
-import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
+import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 /**
  * BaseComponent helper
