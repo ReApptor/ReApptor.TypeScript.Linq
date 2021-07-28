@@ -1,4 +1,3 @@
-import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
 import AlertModel from "../models/AlertModel";
@@ -8,13 +7,14 @@ import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
 import {DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
+import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
 import IPageContainer from "../models/IPageContainer";
 import IUser from "../models/IUser";
 import IUserContext from "../models/IUserContext";
+import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
-import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 export interface IManualProps {
     title?: string;
