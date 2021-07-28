@@ -2,7 +2,7 @@ import AlertModel from "./AlertModel";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "./IConfirmation";
 import DocumentPreviewModel from "./DocumentPreviewModel";
 import DescriptionModel from "./DescriptionModel";
-import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback} from "./IMessageBox";
+import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "./IMessageBox";
 import {DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
 
 export default interface IPageContainer {
