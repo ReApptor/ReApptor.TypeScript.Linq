@@ -1,6 +1,6 @@
 import React from "react";
 import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
+import {ch, ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
 import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
@@ -118,6 +118,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             init: (cell) => this.initCell(cell),
             settings: {
                 infoAccessor: "name",
+                addButton: "Add new",
+                addCallback: async (cell: CellModel<GridItem>) => this.addNewEnumAsync(cell),
                 infoTransform: (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
                 required: true,
                 requiredType: DropdownRequiredType.AutoSelect,
@@ -144,7 +146,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     title: "save",
                     type: ActionType.Blue,
                     actions: ["test1", "test2"],
-                    callback: (cell, action: any, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
+                    callback: (cell, action: any, selectedAction: string) => this.cellActionCallBack(cell, action, selectedAction),
                 },
                 {
                     name: "save",
@@ -152,7 +154,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     icon: "far save",
                     type: ActionType.Create,
                     actions: ["test11", "test22"],
-                    callback: (cell, action: string, selectedAction: string) => this.cellActioncallBack(cell, action, selectedAction),
+                    callback: (cell, action: string, selectedAction: string) => this.cellActionCallBack(cell, action, selectedAction),
                 }
             ]
 
@@ -186,7 +188,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             new SelectListItem(GridEnum.First.toString(), this.getEnumText(GridEnum.First)),
             new SelectListItem(GridEnum.Second.toString(), this.getEnumText(GridEnum.Second)),
             new SelectListItem(GridEnum.Third.toString(), this.getEnumText(GridEnum.Third)),
-            new SelectListItem(GridEnum.Forth.toString(), this.getEnumText(GridEnum.Forth)),
+            new SelectListItem(GridEnum.Forth.toString(), this.getEnumText(GridEnum.Forth))
         ];
     }
 
@@ -202,6 +204,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                 return "Forth";
         }
         return "GridEnum:" + value;
+    }
+    
+    private async addNewEnumAsync(cell: CellModel<GridItem>): Promise<void> {
+        await ch.flyoutMessageAsync("onAdd: " + cell.model.value);
     }
 
     private get items(): GridItem[] {
@@ -249,7 +255,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     }
 
     private initCell(cell: CellModel<any>): void {
-        cell.readonly = true;
+        cell.readonly = false;
     }
 
     private transformEnumToSomething2(value: any, b: boolean): string {
@@ -260,7 +266,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return value.toString() + " aaaaaa";
     }
 
-    private cellActioncallBack(cell: CellModel<any>, cellAction: string, selectedAction: string): void {
+    private cellActionCallBack(cell: CellModel<any>, cellAction: string, selectedAction: string): void {
         console.log(selectedAction)
     }
 

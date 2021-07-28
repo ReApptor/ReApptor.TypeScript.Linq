@@ -76,6 +76,12 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
         return [];
     }
 
+    protected async onAddAsync(): Promise<void> {
+        if (this.settings.addCallback) {
+            await this.settings.addCallback(this.model);
+        }
+    }
+
     protected getEndpoint(): string {
         return "";
     }
@@ -138,11 +144,13 @@ export default class DropdownCell<TItem = {}> extends BaseAsyncComponent<IDropdo
                           requiredType={this.settings.requiredType}
                           className={gridStyles.dropdown}
                           orderBy={DropdownOrderBy.None}
+                          addButton={this.settings.addButton}
                           items={this.items}
                           selectedItem={this.selectedItem || undefined}
                           selectedItems={this.selectedItems || undefined}
                           selectedTextTransform={this.selectedTextTransformLambda}
-                          onChange={async (sender: Dropdown<TItem>, item: TItem | null, userInteraction: boolean) => await this.onChangeAsync(sender, item, userInteraction) }
+                          onAdd={() => this.onAddAsync()}
+                          onChange={(sender: Dropdown<TItem>, item: TItem | null, userInteraction: boolean) => this.onChangeAsync(sender, item, userInteraction) }
                 />
                 
             </React.Fragment>
