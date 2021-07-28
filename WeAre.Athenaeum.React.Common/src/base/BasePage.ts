@@ -6,7 +6,7 @@ import ApplicationContext from "../models/ApplicationContext";
 import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
-import {SwipeDirection} from "../Enums";
+import {DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
@@ -14,6 +14,7 @@ import IPageContainer from "../models/IPageContainer";
 import IUser from "../models/IUser";
 import IUserContext from "../models/IUserContext";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
+import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 export interface IManualProps {
     title?: string;
@@ -36,6 +37,8 @@ export interface IBasePage extends IBaseComponent {
     hideAlertAsync(): Promise<void>;
 
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
+
+    showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>;
 
     documentPreviewAsync(model: DocumentPreviewModel): Promise<void>;
 
@@ -242,6 +245,13 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null) && (await pageContainer.confirmAsync(title));
+    }
+
+    public async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        return (pageContainer != null)
+            ? (await pageContainer.showAsync(titleOrModel, caption, buttons, icon))
+            : DialogResult.None;
     }
 
     public async documentPreviewAsync(model: DocumentPreviewModel): Promise<void> {

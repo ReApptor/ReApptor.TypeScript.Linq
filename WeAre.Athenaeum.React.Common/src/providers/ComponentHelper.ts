@@ -9,7 +9,8 @@ import IUserContext from "../models/IUserContext";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
-import {AlertType} from "../Enums";
+import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
+import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 /**
  * BaseComponent helper
@@ -154,6 +155,12 @@ export default class ch {
 
     public static async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
         return (this._page != null) && (await this._page.confirmAsync(title));
+    }
+
+    public static async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+        return (this._page != null)
+            ? (await this._page.showAsync(titleOrModel, caption, buttons, icon))
+            : DialogResult.None;
     }
 
     public static async documentPreviewAsync(endpoint: string, request: any, title: string | null = null, size: DocumentPreviewSize = DocumentPreviewSize.Large): Promise<void> {
