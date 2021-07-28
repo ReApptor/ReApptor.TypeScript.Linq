@@ -89,6 +89,8 @@ export default class PageRouteProvider {
 
                     window.history.pushState(currentRoute, currentRoute.name);
 
+                    await current.reRenderAsync();
+
                     return current;
                 }
 
