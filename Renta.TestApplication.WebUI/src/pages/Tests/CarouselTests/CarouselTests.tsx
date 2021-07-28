@@ -1,6 +1,6 @@
 import React, {ReactNode, Fragment, CSSProperties} from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, NumberInput, SelectListItem} from "@/@weare/athenaeum-react-components";
+import {Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, NumberInput, SelectListItem} from "@weare/athenaeum-react-components";
 
 interface ICarouselTestsState {
     background: boolean;
