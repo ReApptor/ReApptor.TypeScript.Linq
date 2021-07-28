@@ -122,7 +122,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
         return this._confirmationDialogRef.current!.confirmAsync(title);
     }
 
-    public async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+    public async messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
         return this._messageBoxRef.current!.showAsync(titleOrModel, caption, buttons, icon);
     }
 
