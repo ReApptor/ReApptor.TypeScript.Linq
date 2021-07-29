@@ -143,6 +143,11 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly messageBoxAreYouSureLanguageItemName: string = `MessageBox.AreYouSure`;
     public readonly messageBoxCommentLanguageItemName: string = `MessageBox.Comment`;
     public readonly messageBoxYesLanguageItemName: string = `MessageBox.Yes`;
+    public readonly messageBoxNoLanguageItemName: string = `MessageBox.No`;
+    public readonly messageBoxAbortLanguageItemName: string = `MessageBox.Abort`;
+    public readonly messageBoxRetryLanguageItemName: string = `MessageBox.Retry`;
+    public readonly messageBoxIgnoreLanguageItemName: string = `MessageBox.Ignore`;
+    public readonly messageBoxCancelLanguageItemName: string = `MessageBox.Cancel`;
 
     constructor() {
 
@@ -298,6 +303,11 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.messageBoxAreYouSureLanguageItemName, { language: `en`, value: `Are you sure?` }, { language: `uk`, value: `Ви впевнені?` }, { language: `sv`, value: `Är du säker?` }, { language: `ru`, value: `Вы уверены?` }, { language: `pl`, value: `Czy jesteś pewien?` }, { language: `nb`, value: `Er du sikker?` }, { language: `fi`, value: `Oletko varma?` }, { language: `da`, value: `Er du sikker?` },);
         this.set(this.messageBoxCommentLanguageItemName, { language: `en`, value: `Please leave a comment` }, { language: `uk`, value: `Будьласка, залиште коментар` }, { language: `sv`, value: `Var vänlig och lämna en kommentar` }, { language: `ru`, value: `Пожалуйста, оставьте комментарий` }, { language: `pl`, value: `Dodaj komentarz` }, { language: `nb`, value: `Vennligst legg igjen en kommentar` }, { language: `fi`, value: `Ole hyvä ja kommentoi` }, { language: `da`, value: `Efterlad en kommentar` },);
         this.set(this.messageBoxYesLanguageItemName, { language: `en`, value: `Yes` }, { language: `uk`, value: `UK: Yes` }, { language: `sv`, value: `SV: Yes` }, { language: `ru`, value: `Да` }, { language: `pl`, value: `PL: Yes` }, { language: `nb`, value: `NB: Yes` }, { language: `fi`, value: `FI: Yes` }, { language: `da`, value: `DA: Yes` },);
+        this.set(this.messageBoxNoLanguageItemName, { language: `en`, value: `No` }, { language: `uk`, value: `UK: No` }, { language: `sv`, value: `SV: No` }, { language: `ru`, value: `Нет` }, { language: `pl`, value: `PL: No` }, { language: `nb`, value: `NB: No` }, { language: `fi`, value: `FI: No` }, { language: `da`, value: `DA: No` },);
+        this.set(this.messageBoxAbortLanguageItemName, { language: `en`, value: `Abort` }, { language: `uk`, value: `UK: Abort` }, { language: `sv`, value: `SV: Abort` }, { language: `ru`, value: `Прервать` }, { language: `pl`, value: `PL: Abort` }, { language: `nb`, value: `NB: Abort` }, { language: `fi`, value: `FI: Abort` }, { language: `da`, value: `DA: Abort` },);
+        this.set(this.messageBoxRetryLanguageItemName, { language: `en`, value: `Retry` }, { language: `uk`, value: `UK: Retry` }, { language: `sv`, value: `SV: Retry` }, { language: `ru`, value: `Повторить` }, { language: `pl`, value: `PL: Retry` }, { language: `nb`, value: `NB: Retry` }, { language: `fi`, value: `FI: Retry` }, { language: `da`, value: `DA: Retry` },);
+        this.set(this.messageBoxIgnoreLanguageItemName, { language: `en`, value: `Ignore` }, { language: `uk`, value: `UK: Ignore` }, { language: `sv`, value: `SV: Ignore` }, { language: `ru`, value: `Отклонить` }, { language: `pl`, value: `PL: Ignore` }, { language: `nb`, value: `NB: Ignore` }, { language: `fi`, value: `FI: Ignore` }, { language: `da`, value: `DA: Ignore` },);
+        this.set(this.messageBoxCancelLanguageItemName, { language: `en`, value: `Cancel` }, { language: `uk`, value: `UK: Cancel` }, { language: `sv`, value: `SV: Cancel` }, { language: `ru`, value: `Отмена` }, { language: `pl`, value: `PL: Cancel` }, { language: `nb`, value: `NB: Cancel` }, { language: `fi`, value: `FI: Cancel` }, { language: `da`, value: `DA: Cancel` },);
     }
 
     /**
@@ -1264,6 +1274,41 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get messageBoxYes() : string {
         return this.get(this.messageBoxYesLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.No" (No)
+    */
+    public get messageBoxNo() : string {
+        return this.get(this.messageBoxNoLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Abort" (Abort)
+    */
+    public get messageBoxAbort() : string {
+        return this.get(this.messageBoxAbortLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Retry" (Retry)
+    */
+    public get messageBoxRetry() : string {
+        return this.get(this.messageBoxRetryLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Ignore" (Ignore)
+    */
+    public get messageBoxIgnore() : string {
+        return this.get(this.messageBoxIgnoreLanguageItemName);
+    }
+
+    /**
+    /* "MessageBox.Cancel" (Cancel)
+    */
+    public get messageBoxCancel() : string {
+        return this.get(this.messageBoxCancelLanguageItemName);
     }
 }
 
