@@ -4,6 +4,7 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick, IGlobalKeydown, IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/athenaeum-react-common";
 import Button, { ButtonType } from "../Button/Button";
 import TextAreaInput from "../TextAreaInput/TextAreaInput";
+import {Icon, IconSize} from "../../index";
 import MessageBoxLocalizer from "./MessageBoxLocalizer";
 
 import styles from "./MessageBox.module.scss";
@@ -80,6 +81,32 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     
     private getButtonLabel(button: string | boolean | undefined, defaultLabel: string): string {
         return ((button) && (typeof button === "string")) ? button : defaultLabel;
+    }
+    
+    private getIconName(icon: MessageBoxIcon | string | undefined): string | null {
+        if (icon) {
+            if (typeof icon === "string") {
+                return icon;
+            }
+            switch (icon) {
+                case MessageBoxIcon.Hand: return "far hand-paper";
+                case MessageBoxIcon.Stop: return "far stop-circle";
+                case MessageBoxIcon.Error: return "far times-circle";
+                case MessageBoxIcon.Question: return "question";
+                case MessageBoxIcon.Exclamation: return "exclamation";
+                case MessageBoxIcon.Warning: return "warning";
+                case MessageBoxIcon.Asterisk: return "asterisk";
+                case MessageBoxIcon.Information: return "information";
+            }
+        }
+        return null;
+    }
+
+    private getIconClassName(icon: MessageBoxIcon | string | undefined): string | null {
+        switch (icon) {
+            case MessageBoxIcon.Error: return styles.danger;
+        }
+        return null;
     }
 
     private get model(): IMessageBox {
@@ -251,6 +278,8 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     private renderDialog(): React.ReactNode {
         const openedStyle: any = (this.state.isOpened) && styles.opened;
         const processingStyle: any = (this.processing) && styles.processing;
+        const icon: string | null = this.getIconName(this.model.icon);
+        const iconStyle: string | null = this.getIconClassName(this.model.icon);
         
         return (
             <div id={"messageBox-" + this.id} className={this.css(styles.messageBox, openedStyle, processingStyle)}>
@@ -259,7 +288,13 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
 
                 <div className={styles.dialogContent} id={`messageBox-content-${this.id}`}>
                     
-                    <h5>{this.toMultiLines(this.model.title)}</h5>
+                    <div className={styles.caption}>
+                        
+                        {(icon) && <Icon name={icon} className={iconStyle || undefined} size={IconSize.X3} />}
+                        
+                        <h5>{this.toMultiLines(this.model.title)}</h5>
+                        
+                    </div>
 
                     {
                         (this.hasComment) &&

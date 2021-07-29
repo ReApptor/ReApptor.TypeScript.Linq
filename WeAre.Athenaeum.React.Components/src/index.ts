@@ -16,6 +16,9 @@ export {default as Carousel} from "./components/Carousel/Carousel";
 export * from "./components/ConfirmationDialog/ConfirmationDialog";
 export {default as ConfirmationDialog} from "./components/ConfirmationDialog/ConfirmationDialog";
 
+export * from "./components/MessageBox/MessageBox";
+export {default as MessageBox} from "./components/MessageBox/MessageBox";
+
 export * from "./components/DocumentPreview/DocumentPreview";
 export {default as DocumentPreview} from "./components/DocumentPreview/DocumentPreview";
 
