@@ -83,16 +83,16 @@ namespace Renta.TestApplication.Common.Configuration
         {
             get { return _apiUrl ??= GetEnvironmentVariable("API_URL"); }
         }
-        
+
         public OnePasswordCredentialServiceSettings AcmSettings
         {
             get
             {
                 return _acmSettings ??= new OnePasswordCredentialServiceSettings
                 {
-                    ApiUrl = GetEnvironmentVariable("ACM_API"),
-                    AccessToken = GetEnvironmentVariable("ACM_TOKEN"),
-                    Path = GetEnvironmentVariable("ACM_PATH"),
+                    ApiUrl = GetEnvironmentVariable("ACM_API", IsCloudEnvironment),
+                    AccessToken = GetEnvironmentVariable("ACM_TOKEN", IsCloudEnvironment),
+                    Path = GetEnvironmentVariable("ACM_PATH", IsCloudEnvironment),
                 };
             }
         }
