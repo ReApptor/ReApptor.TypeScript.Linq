@@ -1,15 +1,10 @@
 import React from "react";
-import {BaseComponent, DialogResult, MessageBoxButtons, ch} from "@weare/athenaeum-react-common";
+import {BaseComponent, DialogResult, MessageBoxButtons, IMessageBoxButtons, MessageBoxIcon, ch} from "@weare/athenaeum-react-common";
 import {
     Form, TextInput, ButtonType,
     TwoColumns,
     Dropdown,
-    DropdownAlign,
     DropdownOrderBy,
-    DropdownRequiredType,
-    DropdownSelectType,
-    DropdownSubtextType,
-    DropdownVerticalAlign,
     SelectListItem,
     Button
 } from "@weare/athenaeum-react-components";
@@ -20,6 +15,8 @@ export interface IMessageBoxTestsState {
     title: string,
     caption?: string,
     buttons?: MessageBoxButtons,
+    customButtons: IMessageBoxButtons,
+    icon?: MessageBoxIcon,
 }
 
 export default class MessageBoxTests extends BaseComponent<{}, IMessageBoxTestsState> {
@@ -28,15 +25,30 @@ export default class MessageBoxTests extends BaseComponent<{}, IMessageBoxTestsS
         title: "",
         caption: undefined,
         buttons: undefined,
+        customButtons: {},
+        icon: undefined,
     };
     
     private async messageBoxTestAsync(): Promise<void> {
-        const result: DialogResult = await ch.messageBoxAsync(this.state.title, this.state.caption, this.state.buttons);
-        
-        await ch.alertMessageAsync("Dialog result: \"" + result + "\"", true);
+        const buttons: MessageBoxButtons | IMessageBoxButtons | undefined = (this.state.buttons != MessageBoxButtons.Custom) ? this.state.buttons : this.state.customButtons;
+        const result: DialogResult = await ch.messageBoxAsync(this.state.title, this.state.caption, buttons, this.state.icon);
+        await ch.alertMessageAsync("Dialog result: \"" + this.getDilogResultName(result) + "\"", true);
     }
 
-    private getDropdownMessageBoxButtonsName(item: MessageBoxButtons): string {
+    private getDilogResultName(item: DialogResult): string {
+        switch (item) {
+            case DialogResult.None: return "None";
+            case DialogResult.OK: return "OK";
+            case DialogResult.Cancel: return "Cancel";
+            case DialogResult.Abort: return "Abort";
+            case DialogResult.Retry: return "Retry";
+            case DialogResult.Ignore: return "Ignore";
+            case DialogResult.Yes: return "Yes";
+            case DialogResult.No: return "No";
+        }
+    }
+
+    private getMessageBoxButtonsName(item: MessageBoxButtons): string {
         switch (item) {
             case MessageBoxButtons.OK: return "OK";
             case MessageBoxButtons.OKCancel: return "OK - Cancel";
@@ -45,6 +57,20 @@ export default class MessageBoxTests extends BaseComponent<{}, IMessageBoxTestsS
             case MessageBoxButtons.YesNo: return "Yes - No";
             case MessageBoxButtons.RetryCancel: return "Retry - Cancel";
             case MessageBoxButtons.Custom: return "Custom";
+        }
+    }
+
+    private getMessageBoxIconName(item: MessageBoxIcon): string {
+        switch (item) {
+            case MessageBoxIcon.None: return "None";
+            case MessageBoxIcon.Hand: return "Hand";
+            case MessageBoxIcon.Stop: return "Stop";
+            case MessageBoxIcon.Error: return "Error";
+            case MessageBoxIcon.Question: return "Question";
+            case MessageBoxIcon.Exclamation: return "Exclamation";
+            case MessageBoxIcon.Warning: return "Warning";
+            case MessageBoxIcon.Asterisk: return "Asterisk";
+            case MessageBoxIcon.Information: return "Information";
         }
     }
 
@@ -76,10 +102,18 @@ export default class MessageBoxTests extends BaseComponent<{}, IMessageBoxTestsS
                             
                             <Dropdown label="Select buttons" noValidate noWrap noFilter
                                       orderBy={DropdownOrderBy.None}
-                                      transform={(item) => new SelectListItem(item.toString(), this.getDropdownMessageBoxButtonsName(item), null, item)}
+                                      transform={(item) => new SelectListItem(item.toString(), this.getMessageBoxButtonsName(item), null, item)}
                                       items={[MessageBoxButtons.OK, MessageBoxButtons.OKCancel, MessageBoxButtons.AbortRetryIgnore, MessageBoxButtons.YesNoCancel, MessageBoxButtons.YesNo, MessageBoxButtons.RetryCancel, MessageBoxButtons.Custom]}
                                       selectedItem={this.state.buttons}
                                       onChange={async (sender, value) => await this.setState({ buttons: value || undefined })}
+                            />
+                            
+                            <Dropdown label="Select icon" noValidate noWrap noFilter
+                                      orderBy={DropdownOrderBy.None}
+                                      transform={(item) => new SelectListItem(item.toString(), this.getMessageBoxIconName(item), null, item)}
+                                      items={[MessageBoxIcon.None, MessageBoxIcon.Hand, MessageBoxIcon.Stop, MessageBoxIcon.Error, MessageBoxIcon.Question, MessageBoxIcon.Exclamation, MessageBoxIcon.Warning, MessageBoxIcon.Asterisk, MessageBoxIcon.Information]}
+                                      selectedItem={this.state.icon}
+                                      onChange={async (sender, value) => await this.setState({ icon: value || undefined })}
                             />
                             
                         </TwoColumns>

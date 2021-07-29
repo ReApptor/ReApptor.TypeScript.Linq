@@ -126,8 +126,9 @@ namespace WeAre.Athenaeum.Common.Configuration
             IsDevelopmentVS = (environment.EnvironmentName == "DevelopmentVS");
             IsDevelopment = (environment.IsDevelopment() || IsDevelopmentVS);
             IsPackageManagerConsole = (IsDevelopment) && (Assembly.GetEntryAssembly()?.GetName().Name == "ef");
+            IsLocalEnvironment = ((IsDevelopmentVS) || (IsPackageManagerConsole));
 
-            if ((IsDevelopmentVS) || (IsPackageManagerConsole))
+            if (IsLocalEnvironment)
             {
                 // Load configuration from file
                 string path = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "EnvironmentVariables.json");
@@ -139,9 +140,9 @@ namespace WeAre.Athenaeum.Common.Configuration
                     Environment.SetEnvironmentVariable(item.Key, item.Value);
                 }
             }
-
-            if (credentialService != null)
+            else if (credentialService != null)
             {
+                //TODO: Implement as a separate 
                 PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
                 if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
                 {
@@ -171,6 +172,10 @@ namespace WeAre.Athenaeum.Common.Configuration
         public bool IsDevelopmentVS { get; }
 
         public bool IsPackageManagerConsole { get; }
+
+        public bool IsLocalEnvironment { get; }
+
+        public bool IsCloudEnvironment => !IsLocalEnvironment;
 
         public virtual IHostEnvironment HostingEnvironment { get; }
 
