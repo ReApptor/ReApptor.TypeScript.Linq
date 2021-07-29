@@ -516,4 +516,19 @@
   <data name="MessageBox.Yes" xml:space="preserve">
     <value>NB: Yes</value>
   </data>
+  <data name="MessageBox.No" xml:space="preserve">
+    <value>NB: No</value>
+  </data>
+  <data name="MessageBox.Abort" xml:space="preserve">
+    <value>NB: Abort</value>
+  </data>
+  <data name="MessageBox.Retry" xml:space="preserve">
+    <value>NB: Retry</value>
+  </data>
+  <data name="MessageBox.Ignore" xml:space="preserve">
+    <value>NB: Ignore</value>
+  </data>
+  <data name="MessageBox.Cancel" xml:space="preserve">
+    <value>NB: Cancel</value>
+  </data>
 </root>

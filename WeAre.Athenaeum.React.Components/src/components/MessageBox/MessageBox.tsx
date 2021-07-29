@@ -78,8 +78,8 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
         return model;
     }
     
-    private getButtonLabel(button: string | boolean | undefined, def: string): string {
-        return ((button) && (typeof button === "string")) ? button : def;
+    private getButtonLabel(button: string | boolean | undefined, defaultLabel: string): string {
+        return ((button) && (typeof button === "string")) ? button : defaultLabel;
     }
 
     private get model(): IMessageBox {
@@ -130,7 +130,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
             : 0;
     }
 
-    private get canConfirm(): boolean {
+    private get canAccept(): boolean {
         return ((!this.hasComment) || (this.state.comment.length > this.minLength));
     }
 
@@ -225,7 +225,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     public async onGlobalClick(e: React.MouseEvent): Promise<void> {
         const targetNode = e.target as Node;
 
-        const outside: boolean = Utility.clickedOutside(targetNode, `messageBox-${this.id}`);
+        const outside: boolean = Utility.clickedOutside(targetNode, `messageBox-content-${this.id}`);
 
         if (outside) {
             await this.invokeCloseAsync(DialogResult.None);
@@ -253,11 +253,11 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
         const processingStyle: any = (this.processing) && styles.processing;
         
         return (
-            <div id={"confirmation-dialog" + this.id} className={this.css(styles.messageBox, openedStyle, processingStyle)}>
+            <div id={"messageBox-" + this.id} className={this.css(styles.messageBox, openedStyle, processingStyle)}>
 
                 <div className={styles.dialogOverlay} />
 
-                <div className={styles.dialogContent} id={`messageBox-${this.id}`}>
+                <div className={styles.dialogContent} id={`messageBox-content-${this.id}`}>
 
                     <h5>{this.toMultiLines(this.model.title)}</h5>
 
@@ -281,9 +281,9 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-ok" + this.id}
-                                    label={this.getButtonLabel(this.model.okButton, MessageBoxLocalizer.ok)}
+                                    label={this.getButtonLabel(this.model.okButton, MessageBoxLocalizer.okLanguageItemName)}
                                     type={ButtonType.Orange}
-                                    disabled={this.processing || !this.canConfirm}
+                                    disabled={this.processing || !this.canAccept}
                                     onClick={() => this.invokeCloseAsync(DialogResult.OK)}
                             />
                         )
@@ -294,9 +294,9 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-yes" + this.id}
-                                    label={this.getButtonLabel(this.model.yesButton, "EN: Yes")}
+                                    label={this.getButtonLabel(this.model.yesButton, MessageBoxLocalizer.yesLanguageItemName)}
                                     type={ButtonType.Orange}
-                                    disabled={this.processing || !this.canConfirm}
+                                    disabled={this.processing || !this.canAccept}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Yes)}
                             />
                         )
@@ -307,7 +307,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-abort" + this.id}
-                                    label={this.getButtonLabel(this.model.abortButton, "EN: Abort")}
+                                    label={this.getButtonLabel(this.model.abortButton, MessageBoxLocalizer.abortLanguageItemName)}
                                     type={ButtonType.Orange}
                                     disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Abort)}
@@ -320,9 +320,9 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-retry" + this.id}
-                                    label={this.getButtonLabel(this.model.retryButton, "EN: Retry")}
+                                    label={this.getButtonLabel(this.model.retryButton, MessageBoxLocalizer.retryLanguageItemName)}
                                     type={ButtonType.Orange}
-                                    disabled={this.processing || !this.canConfirm}
+                                    disabled={this.processing || !this.canAccept}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Retry)}
                             />
                         )
@@ -333,7 +333,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-ignore" + this.id}
-                                    label={this.getButtonLabel(this.model.ignoreButton, "EN: Ignore")}
+                                    label={this.getButtonLabel(this.model.ignoreButton, MessageBoxLocalizer.ignoreLanguageItemName)}
                                     type={ButtonType.Default}
                                     disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Ignore)}
@@ -346,9 +346,9 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (
                             <Button block
                                     id={"message-box-no" + this.id}
-                                    label={this.getButtonLabel(this.model.noButton, "EN: No")}
+                                    label={this.getButtonLabel(this.model.noButton, MessageBoxLocalizer.noLanguageItemName)}
                                     type={ButtonType.Default}
-                                    disabled={this.processing || !this.canConfirm}
+                                    disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.No)}
                             />
                         )
@@ -358,10 +358,10 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                         (this.hasCancelButton) &&
                         (
                             <Button block
-                                    id={"message-box-no" + this.id}
-                                    label={this.getButtonLabel(this.model.cancelButton, "EN: Cancel")}
+                                    id={"message-box-cancel" + this.id}
+                                    label={this.getButtonLabel(this.model.cancelButton, MessageBoxLocalizer.cancelLanguageItemName)}
                                     type={ButtonType.Default}
-                                    disabled={this.processing || !this.canConfirm}
+                                    disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Cancel)}
                             />
                         )
