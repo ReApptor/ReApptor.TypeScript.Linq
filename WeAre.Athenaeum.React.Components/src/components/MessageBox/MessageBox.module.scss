@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .messageBox {
     position: fixed;
     top: 0;
@@ -29,8 +31,24 @@
     
     .dialogContent {
         
-        > h5 {
-            white-space: normal;  
+        .caption {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            > i {
+                padding: $baseline;
+                
+                &.danger {
+                    color: $danger;
+                }
+            }
+
+            > h5 {
+                white-space: normal;
+            }
+
         }
         
         width: 300px;
