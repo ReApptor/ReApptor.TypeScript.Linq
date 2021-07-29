@@ -334,7 +334,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                             <Button block
                                     id={"message-box-ignore" + this.id}
                                     label={this.getButtonLabel(this.model.ignoreButton, MessageBoxLocalizer.ignoreLanguageItemName)}
-                                    type={ButtonType.Default}
+                                    type={ButtonType.Blue}
                                     disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.Ignore)}
                             />
@@ -347,7 +347,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                             <Button block
                                     id={"message-box-no" + this.id}
                                     label={this.getButtonLabel(this.model.noButton, MessageBoxLocalizer.noLanguageItemName)}
-                                    type={ButtonType.Default}
+                                    type={ButtonType.Blue}
                                     disabled={this.processing}
                                     onClick={() => this.invokeCloseAsync(DialogResult.No)}
                             />
