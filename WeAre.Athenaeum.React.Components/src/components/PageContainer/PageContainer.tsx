@@ -76,7 +76,12 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 this._alertContainerRef.current.minimize(AthenaeumComponentsConstants.alertAnimationDelay);
                 await Utility.wait(AthenaeumComponentsConstants.alertAnimationDelay);
             }
-            await this.setState({ alert: null });
+
+            if (this.isMounted) {
+                await this.setState({alert: null});
+            } else {
+                this.state.alert = null;
+            }
         }
     }
 

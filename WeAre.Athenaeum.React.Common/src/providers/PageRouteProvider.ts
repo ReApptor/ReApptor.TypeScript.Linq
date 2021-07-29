@@ -77,6 +77,8 @@ export default class PageRouteProvider {
                 await this.logoutAsync(layout);
                 return current;
             }
+
+            let newAlert: AlertModel | null = null;
             
             if (current != null) {
                 
@@ -93,12 +95,14 @@ export default class PageRouteProvider {
 
                     return current;
                 }
-
-                const newAlert: AlertModel | null = current.alert;
                 
-                if (AlertModel.isEqual(currentAlert, newAlert)) {
-                    await current.hideAlertAsync();
+                // New alert was triggered in method "beforeRedirectAsync";
+                if (!AlertModel.isEqual(currentAlert, current.alert)) {
+                    newAlert = current.alert;
                 }
+
+                // Hide current alert
+                await current.hideAlertAsync();
             }
 
             const page: IBasePage = await this.createPageAsync(route);
@@ -106,6 +110,11 @@ export default class PageRouteProvider {
             context.currentPage = route;
 
             await layout.setPageAsync(page);
+
+            // Show new alert
+            if (newAlert != null) {
+                await page.alertAsync(newAlert);
+            }
             
             // if (current != null) {
             //     await current!.hideAlertAsync();
