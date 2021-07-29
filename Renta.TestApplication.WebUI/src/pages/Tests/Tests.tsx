@@ -3,6 +3,7 @@ import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } 
 import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import ButtonTests from "@/pages/Tests/ButtonTests/ButtonTests";
 import AlertTests from "@/pages/Tests/AlertTests/AlertTests";
+import MessageBoxTests from "@/pages/Tests/MessageBoxTests/MessageBoxTests";
 import NumberInputTests from "@/pages/Tests/NumberInputTests/NumberInputTests";
 import NumberWidgetTests from "@/pages/Tests/NumberWidgetTests/NumberWidgetTests";
 import DropdownTests from "@/pages/Tests/DropdownTests/DropdownTests";
@@ -60,6 +61,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="alertTests" title="Alerts">
                             <AlertTests />
+                        </Tab>
+
+                        <Tab id="messageBoxTests" title="MessageBox">
+                            <MessageBoxTests />
                         </Tab>
 
                         <Tab id="gridTest" title="Grids">
