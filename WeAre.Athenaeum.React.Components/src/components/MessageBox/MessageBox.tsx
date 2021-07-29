@@ -258,7 +258,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                 <div className={styles.dialogOverlay} />
 
                 <div className={styles.dialogContent} id={`messageBox-content-${this.id}`}>
-
+                    
                     <h5>{this.toMultiLines(this.model.title)}</h5>
 
                     {
