@@ -388,21 +388,21 @@
     <value>Dodaj komentarz</value>
   </data>
   <data name="MessageBox.Yes" xml:space="preserve">
-    <value>PL: Yes</value>
+    <value>Tak</value>
   </data>
   <data name="MessageBox.No" xml:space="preserve">
-    <value>PL: No</value>
+    <value>Nie</value>
   </data>
   <data name="MessageBox.Abort" xml:space="preserve">
-    <value>PL: Abort</value>
+    <value>Anulować</value>
   </data>
   <data name="MessageBox.Retry" xml:space="preserve">
-    <value>PL: Retry</value>
+    <value>Spróbuj ponownie</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>PL: Ignore</value>
+    <value>Ignoruj</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
-    <value>PL: Cancel</value>
+    <value>Anuluj</value>
   </data>
 </root>

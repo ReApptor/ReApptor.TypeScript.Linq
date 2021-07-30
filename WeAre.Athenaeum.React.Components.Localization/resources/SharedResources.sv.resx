@@ -388,21 +388,21 @@
     <value>Var vänlig och lämna en kommentar</value>
   </data>
   <data name="MessageBox.Yes" xml:space="preserve">
-    <value>SV: Yes</value>
+    <value>Ja</value>
   </data>
   <data name="MessageBox.No" xml:space="preserve">
-    <value>SV: No</value>
+    <value>Nej</value>
   </data>
   <data name="MessageBox.Abort" xml:space="preserve">
-    <value>SV: Abort</value>
+    <value>Avbryt</value>
   </data>
   <data name="MessageBox.Retry" xml:space="preserve">
-    <value>SV: Retry</value>
+    <value>Försök igen</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>SV: Ignore</value>
+    <value>Ignorera</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
-    <value>SV: Cancel</value>
+    <value>Avbryt</value>
   </data>
 </root>

@@ -388,21 +388,21 @@
     <value>Ole hyvä ja kommentoi</value>
   </data>
   <data name="MessageBox.Yes" xml:space="preserve">
-    <value>FI: Yes</value>
+    <value>Kyllä</value>
   </data>
   <data name="MessageBox.No" xml:space="preserve">
-    <value>FI: No</value>
+    <value>Ei</value>
   </data>
   <data name="MessageBox.Abort" xml:space="preserve">
-    <value>FI: Abort</value>
+    <value>Keskeytä</value>
   </data>
   <data name="MessageBox.Retry" xml:space="preserve">
-    <value>FI: Retry</value>
+    <value>Yritä uudelleen</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>FI: Ignore</value>
+    <value>Ohita</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
-    <value>FI: Cancel</value>
+    <value>Peruuta</value>
   </data>
 </root>
