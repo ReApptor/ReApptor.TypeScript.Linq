@@ -514,21 +514,21 @@
     <value>Efterlad en kommentar</value>
   </data>
   <data name="MessageBox.Yes" xml:space="preserve">
-    <value>DA: Yes</value>
+    <value>Ja</value>
   </data>
   <data name="MessageBox.No" xml:space="preserve">
-    <value>DA: No</value>
+    <value>Nej</value>
   </data>
   <data name="MessageBox.Abort" xml:space="preserve">
-    <value>DA: Abort</value>
+    <value>Afbryd</value>
   </data>
   <data name="MessageBox.Retry" xml:space="preserve">
-    <value>DA: Retry</value>
+    <value>Prøv igen</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>DA: Ignore</value>
+    <value>Ignorer</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
-    <value>DA: Cancel</value>
+    <value>Annuller</value>
   </data>
 </root>
