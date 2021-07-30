@@ -19,6 +19,7 @@ interface IMessageBoxState {
     isOpened: boolean;
     comment: string;
     processing: boolean;
+    model: IMessageBox | null;
 }
 
 export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessageBoxState> implements IGlobalClick, IGlobalKeydown {
@@ -28,7 +29,8 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     state: IMessageBoxState = {
         isOpened: false,
         comment: "",
-        processing: false
+        processing: false,
+        model: null
     };
 
     private static _current: MessageBox | null = null;
@@ -37,6 +39,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     private _resolver: ((dialogResult: DialogResult) => void) | null = null;
 
     private toModel(titleOrModel: string | IMessageBox | MessageBoxModelCallback | undefined, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): IMessageBox {
+        
         let model = {} as IMessageBox;
 
         let data: string | IMessageBox | MessageBoxModelCallback | undefined = titleOrModel;
@@ -110,7 +113,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     }
 
     private get model(): IMessageBox {
-        return this._model || (this._model = this.toModel(this.props.title));
+        return this._model ?? (this._model = this.toModel(this.props.title));
     }
 
     private get buttons(): MessageBoxButtons {
@@ -270,7 +273,12 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     }
 
     public async componentWillReceiveProps(nextProps: IMessageBoxProps): Promise<void> {
-        this._model = null;
+        
+        const newProps: boolean = (this.props.title != nextProps.title) || (this.props.minLength != nextProps.minLength);
+        
+        if (newProps) {
+            this._model = null;
+        }
 
         await super.componentWillReceiveProps(nextProps);
     }
@@ -284,9 +292,9 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
         return (
             <div id={"messageBox-" + this.id} className={this.css(styles.messageBox, openedStyle, processingStyle)}>
 
-                <div className={styles.dialogOverlay} />
+                <div className={styles.overlay} />
 
-                <div className={styles.dialogContent} id={`messageBox-content-${this.id}`}>
+                <div className={styles.content} id={`messageBox-content-${this.id}`}>
                     
                     <div className={styles.caption}>
                         
