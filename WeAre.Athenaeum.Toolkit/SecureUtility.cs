@@ -408,7 +408,6 @@ namespace WeAre.Athenaeum.Toolkit
             var crypto = new AesCryptoServiceProvider
             {
                 KeySize = keySize,
-                BlockSize = keySize,
                 Mode = mode
             };
             crypto.GenerateKey();
