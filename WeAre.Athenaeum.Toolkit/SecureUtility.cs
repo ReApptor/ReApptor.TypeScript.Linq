@@ -403,6 +403,19 @@ namespace WeAre.Athenaeum.Toolkit
             return GeneratePassword(minLength, maxLength, characters, noDuplicates);
         }
 
+        public static string GenerateAesKey(int keySize = 256, CipherMode mode = CipherMode.CBC)
+        {
+            var crypto = new AesCryptoServiceProvider
+            {
+                KeySize = keySize,
+                BlockSize = keySize,
+                Mode = mode
+            };
+            crypto.GenerateKey();
+            byte[] keyGenerated = crypto.Key;
+            return System.Convert.ToBase64String(keyGenerated);
+        }
+
         #endregion
 
         #endregion
