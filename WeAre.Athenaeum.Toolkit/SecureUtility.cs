@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -348,6 +349,58 @@ namespace WeAre.Athenaeum.Toolkit
             //bool isValid = Utility.Equals(expectedSignature, signature);
 
             return isValid;
+        }
+
+        #endregion
+        
+        #region Generator
+
+        public static string GeneratePassword(int minLength, int maxLength, string[] characters, bool noDuplicates = false)
+        {
+            if (minLength >= maxLength)
+                throw new ArgumentOutOfRangeException(nameof(maxLength), $"Max length ({maxLength}) should be greater the min length ({minLength}).");
+            if (characters == null)
+                throw new ArgumentNullException(nameof(characters));
+            if ((characters.Length == 0) && (characters.All(string.IsNullOrEmpty)))
+                throw new ArgumentOutOfRangeException(nameof(characters), "At least one characters set should be specified.");
+
+            characters = characters.Where(set => !string.IsNullOrEmpty(set)).ToArray();
+            
+            int length = RandomNumberGenerator.GetInt32(minLength, maxLength + 1);
+
+            var password = new StringBuilder();
+
+            int j = 0;
+            for (int i = 0; i < length; i++)
+            {
+                string set = characters[j];
+                int index = RandomNumberGenerator.GetInt32(set.Length);
+                password.Append(set[index]);
+                if (!noDuplicates)
+                {
+                    characters[j] = set.Remove(index, 1);
+                }
+
+                j++;
+                if (j == characters.Length)
+                {
+                    j = 0;
+                }
+            }
+
+            return password.ToString();
+        }
+
+        public static string GeneratePassword(int minLength = 8, int maxLength = 12, bool noDuplicates = false)
+        {
+            string[] characters =
+            {
+                "abcdefghijklmnopqrstuvwxyz",
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                "0123456789",
+                "!@#$%ˆ&*()_+-/|.,:;",
+            };
+            return GeneratePassword(minLength, maxLength, characters, noDuplicates);
         }
 
         #endregion
