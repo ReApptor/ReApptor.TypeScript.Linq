@@ -1476,7 +1476,8 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                         (
                             <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
                                 
-                                <input ref={this._filterInputRef}
+                                <input id={"filter_input"} 
+                                       ref={this._filterInputRef}
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
