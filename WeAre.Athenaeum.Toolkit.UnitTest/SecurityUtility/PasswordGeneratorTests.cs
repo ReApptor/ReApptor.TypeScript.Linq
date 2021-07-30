@@ -33,5 +33,13 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.SecurityUtility
                 }
             }
         }
+
+        [Fact]
+        public void GenerateAesKeyTest()
+        {
+            string key = SecureUtility.GenerateAesKey();
+            
+            Assert.NotNull(key);
+        }
     }
 }
