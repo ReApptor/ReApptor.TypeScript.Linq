@@ -65,7 +65,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
         }
         
         [Fact]
-        public async Task ListVaultItemsAsynTest()
+        public async Task ListVaultItemsAsyncTest()
         {
             OnePasswordApiSettings settings = GetSettings();
 

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WeAre.Athenaeum.Common.Helpers;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Toolkit.Extensions;
@@ -40,6 +42,8 @@ namespace WeAre.Athenaeum.Common.Configuration
             Version version = assembly.GetName().Version;
             return version?.ToString() ?? "1.0";
         }
+
+        protected ILogger<BaseEnvironmentConfiguration<TConfiguration>> Logger { get; }
 
         protected string GetEnvironmentVariable(string key, bool throwExceptionIfNotFound = true)
         {
@@ -118,9 +122,10 @@ namespace WeAre.Athenaeum.Common.Configuration
             return ((value == "true") || (value == "1"));
         }
 
-        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ICredentialService credentialService = null)
+        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ILogger<BaseEnvironmentConfiguration<TConfiguration>> logger, ICredentialService credentialService = null)
         {
             HostingEnvironment = environment ?? throw new ArgumentNullException(nameof(environment));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             EnvironmentName = environment.EnvironmentName;
             IsDevelopmentVS = (environment.EnvironmentName == "DevelopmentVS");
@@ -146,6 +151,8 @@ namespace WeAre.Athenaeum.Common.Configuration
                 PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
                 if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
                 {
+                    Logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettings.ToLogString()}\".");
+                    
                     credentialService.Initialize(acmSettings);
                     IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
 

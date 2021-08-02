@@ -14,5 +14,13 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
         public string Path { get; set; }
 
         public int TimeoutInSeconds { get; set; }
+
+        public string ToLogString()
+        {
+            string accessTokenPostfix = (!string.IsNullOrWhiteSpace(AccessToken) && AccessToken.Length > 4) 
+                ? AccessToken.Substring(0, AccessToken.Length - 4) 
+                : "";
+            return $"ApiUrl=\"{ApiUrl}\". Path=\"{Path}\". TimeoutInSeconds=\"{TimeoutInSeconds}\". AccessToken=\"...{accessTokenPostfix}\".";
+        }
     }
 }
