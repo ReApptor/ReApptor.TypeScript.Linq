@@ -43,6 +43,8 @@ namespace WeAre.Athenaeum.Common.Configuration
             return version?.ToString() ?? "1.0";
         }
 
+        protected ILogger<BaseEnvironmentConfiguration<TConfiguration>> Logger { get; }
+
         protected string GetEnvironmentVariable(string key, bool throwExceptionIfNotFound = true)
         {
             string value = Environment.GetEnvironmentVariable(key);
@@ -120,9 +122,10 @@ namespace WeAre.Athenaeum.Common.Configuration
             return ((value == "true") || (value == "1"));
         }
 
-        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ILogger logger, ICredentialService credentialService = null)
+        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ILogger<BaseEnvironmentConfiguration<TConfiguration>> logger, ICredentialService credentialService = null)
         {
             HostingEnvironment = environment ?? throw new ArgumentNullException(nameof(environment));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             EnvironmentName = environment.EnvironmentName;
             IsDevelopmentVS = (environment.EnvironmentName == "DevelopmentVS");
@@ -149,7 +152,7 @@ namespace WeAre.Athenaeum.Common.Configuration
                 if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
                 {
                     string acmSettingsJson = JsonConvert.SerializeObject(acmSettings);
-                    logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettingsJson}\".");
+                    Logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettingsJson}\".");
                     
                     credentialService.Initialize(acmSettings);
                     IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
