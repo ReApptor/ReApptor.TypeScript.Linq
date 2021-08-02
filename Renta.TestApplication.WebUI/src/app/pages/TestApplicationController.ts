@@ -1,6 +1,6 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
-import PageDefinitions from "@/pages/PageDefinitions";
 import {IGoogleApiSettings, IMenuItem} from "@weare/athenaeum-react-components";
+import PageDefinitions from "./PageDefinitions";
 
 class TestApplicationController {
     private _applicationContext: ApplicationContext | null = null;
@@ -25,7 +25,7 @@ class TestApplicationController {
             await this.initializeAsync();
         }
     }
-    
+
     public async fetchApplicationContextAsync(timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext> {
         console.log("TestApplicationController.fetchApplicationContextAsync: timezoneOffset=", timezoneOffset, "applicationType=", applicationType);
         if (this._applicationContext == null) {
@@ -44,11 +44,11 @@ class TestApplicationController {
         this._applicationContext.timezoneOffset = timezoneOffset;
         return this._applicationContext;
     }
-    
+
     public async tokenLoginAsync(token: string): Promise<void> {
         console.log("TestApplicationController.tokenLoginAsync: token=", token);
     }
-    
+
     public async fetchTopNavItems(): Promise<IMenuItem[]> {
         return [
             { route: PageDefinitions.testsRoute, label: "Tests" }

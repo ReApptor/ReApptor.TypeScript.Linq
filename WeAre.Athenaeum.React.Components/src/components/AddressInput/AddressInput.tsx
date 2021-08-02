@@ -44,7 +44,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     private get locationPickerModal(): LocationPickerModal | null {
         return this._locationPickerModalRef.current;
     }
-    
+
     private get locationPickerIsOpen(): boolean {
         return !!this.locationPickerModal && this.locationPickerModal.isOpen;
     }
@@ -65,7 +65,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     private async invokeOnChangeAsync(): Promise<void> {
-        
+
         if (this.state.location) {
             await this.setEditAsync(false);
 
@@ -92,7 +92,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
             }
         }
     }
-    
+
     private async onLocationCloseAsync(): Promise<void> {
         await this.reRenderAsync();
     }
@@ -111,7 +111,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
             await this.invokeOnChangeAsync();
         }
     }
-    
+
     private get locationPickerId(): string {
         return `locationPicker_${this.id}`;
     }
@@ -162,7 +162,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
             this.state.inputValue = false;
 
             this.onValuePropsChanged();
-            
+
             await this.setState({location: nextLocation});
         }
 
@@ -185,8 +185,8 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         return null;
     }
 
-    public renderAppend(): React.ReactNode {
-        
+    public renderAppend(): React.ReactNode | undefined {
+
         if (this.props.locationPicker && this.state.edit) {
             return (
                 <div className={"input-group-append cursor-pointer"} onClick={() => this.openLocationPickerAsync()}>
@@ -196,10 +196,12 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                 </div>
             )
         }
-        
+
         if (this.state.edit) {
             return super.renderAppend();
         }
+
+        return;
 
     }
 
@@ -223,7 +225,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                 }
 
                 {this.renderLocationPicker()}
-                
+
             </React.Fragment>
         )
     }
