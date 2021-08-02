@@ -1,0 +1,229 @@
+{
+  "version": 2,
+  "projects": {
+    "Renta.TestApplication.WebUI": {
+      "root": "apps/Renta.TestApplication.WebUI",
+      "sourceRoot": "apps/Renta.TestApplication.WebUI/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/Renta.TestApplication.WebUI",
+            "index": "apps/Renta.TestApplication.WebUI/src/index.html",
+            "main": "apps/Renta.TestApplication.WebUI/src/main.tsx",
+            "polyfills": "apps/Renta.TestApplication.WebUI/src/polyfills.ts",
+            "tsConfig": "apps/Renta.TestApplication.WebUI/tsconfig.app.json",
+            "assets": [
+              "apps/Renta.TestApplication.WebUI/src/favicon.ico",
+              "apps/Renta.TestApplication.WebUI/src/assets"
+            ],
+            "styles": ["apps/Renta.TestApplication.WebUI/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/Renta.TestApplication.WebUI/src/environments/environment.ts",
+                  "with": "apps/Renta.TestApplication.WebUI/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "Renta.TestApplication.WebUI:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "Renta.TestApplication.WebUI:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/Renta.TestApplication.WebUI/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/Renta.TestApplication.WebUI"],
+          "options": {
+            "jestConfig": "apps/Renta.TestApplication.WebUI/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "WeAre.Athenaeum.React.Common": {
+      "root": "libs/WeAre.Athenaeum.React.Common",
+      "sourceRoot": "libs/WeAre.Athenaeum.React.Common/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/WeAre.Athenaeum.React.Common",
+            "tsConfig": "libs/WeAre.Athenaeum.React.Common/tsconfig.lib.json",
+            "project": "libs/WeAre.Athenaeum.React.Common/package.json",
+            "entryFile": "libs/WeAre.Athenaeum.React.Common/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "libs/WeAre.Athenaeum.React.Common/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/WeAre.Athenaeum.React.Common/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/WeAre.Athenaeum.React.Common"],
+          "options": {
+            "jestConfig": "libs/WeAre.Athenaeum.React.Common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "WeAre.Athenaeum.React.Components": {
+      "root": "libs/WeAre.Athenaeum.React.Components",
+      "sourceRoot": "libs/WeAre.Athenaeum.React.Components/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/WeAre.Athenaeum.React.Components",
+            "tsConfig": "libs/WeAre.Athenaeum.React.Components/tsconfig.lib.json",
+            "project": "libs/WeAre.Athenaeum.React.Components/package.json",
+            "entryFile": "libs/WeAre.Athenaeum.React.Components/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "libs/WeAre.Athenaeum.React.Components/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/WeAre.Athenaeum.React.Components/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/WeAre.Athenaeum.React.Components"],
+          "options": {
+            "jestConfig": "libs/WeAre.Athenaeum.React.Components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "WeAre.Athenaeum.React.Toolkit": {
+      "root": "libs/WeAre.Athenaeum.React.Toolkit",
+      "sourceRoot": "libs/WeAre.Athenaeum.React.Toolkit/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/WeAre.Athenaeum.React.Toolkit",
+            "tsConfig": "libs/WeAre.Athenaeum.React.Toolkit/tsconfig.lib.json",
+            "project": "libs/WeAre.Athenaeum.React.Toolkit/package.json",
+            "entryFile": "libs/WeAre.Athenaeum.React.Toolkit/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "libs/WeAre.Athenaeum.React.Toolkit/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/WeAre.Athenaeum.React.Toolkit/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/WeAre.Athenaeum.React.Toolkit"],
+          "options": {
+            "jestConfig": "libs/WeAre.Athenaeum.React.Toolkit/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "Renta.TestApplication.WebUI"
+}
