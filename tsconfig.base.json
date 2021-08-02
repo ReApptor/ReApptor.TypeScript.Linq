@@ -16,13 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@weare/athenaeum-react-common": [
-        "libs/WeAre.Athenaeum.React.Common/src/index.ts"
+        "WeAre.Athenaeum.React.Common/src/index.ts"
       ],
       "@weare/athenaeum-react-components": [
-        "libs/WeAre.Athenaeum.React.Components/src/index.ts"
+        "WeAre.Athenaeum.React.Components/src/index.ts"
       ],
       "@weare/athenaeum-toolkit": [
-        "libs/WeAre.Athenaeum.React.Toolkit/src/index.ts"
+        "WeAre.Athenaeum.React.Toolkit/src/index.ts"
       ]
     }
   },
