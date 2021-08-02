@@ -41,10 +41,6 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Remove="src\lib\**" />
-        <Content Include="package.json" />
-        <Content Include="tsconfig.json" />
-        <Content Include="tsconfig.paths.json" />
-        <Content Include="tslint.json" />
         <Content Remove="build\**" />
         <Content Remove="src\@weare\**" />
     </ItemGroup>
