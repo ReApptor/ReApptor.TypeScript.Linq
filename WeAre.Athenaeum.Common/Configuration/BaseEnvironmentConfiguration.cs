@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WeAre.Athenaeum.Common.Helpers;
 using WeAre.Athenaeum.Common.Interfaces.ACM;
 using WeAre.Athenaeum.Toolkit.Extensions;
@@ -118,7 +120,7 @@ namespace WeAre.Athenaeum.Common.Configuration
             return ((value == "true") || (value == "1"));
         }
 
-        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ICredentialService credentialService = null)
+        protected BaseEnvironmentConfiguration(IHostEnvironment environment, ILogger logger, ICredentialService credentialService = null)
         {
             HostingEnvironment = environment ?? throw new ArgumentNullException(nameof(environment));
 
@@ -146,6 +148,9 @@ namespace WeAre.Athenaeum.Common.Configuration
                 PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
                 if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
                 {
+                    string acmSettingsJson = JsonConvert.SerializeObject(acmSettings);
+                    logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettingsJson}\".");
+                    
                     credentialService.Initialize(acmSettings);
                     IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
 

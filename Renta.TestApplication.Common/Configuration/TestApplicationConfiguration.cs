@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Configuration;
@@ -28,8 +29,8 @@ namespace Renta.TestApplication.Common.Configuration
         private RedisSettings _redisSettings;
         private TokenSettings _tokenSettings;
 
-        public TestApplicationConfiguration(IHostEnvironment environment, ICredentialService credentialService = null)
-            : base(environment, credentialService)
+        public TestApplicationConfiguration(IHostEnvironment environment, ILogger<TestApplicationConfiguration> logger, ICredentialService credentialService = null)
+            : base(environment, logger, credentialService)
         {
         }
 
