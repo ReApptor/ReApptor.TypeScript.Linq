@@ -1,9 +1,9 @@
 import React from "react";
-import AnonymousPage from "@/pages/AnonymousPage/AnonymousPage";
 import {ServerError, BasePageParameters} from "@weare/athenaeum-react-common";
-
-import styles from "./Error.module.scss";
 import { PageContainer, PageHeader, PageRow } from "@weare/athenaeum-react-components";
+
+import AnonymousPage from "../AnonymousPage/AnonymousPage";
+import styles from "./Error.module.scss";
 
 export interface IErrorPageParameters extends BasePageParameters {
     error: ServerError | null;
@@ -38,7 +38,7 @@ export default class ErrorPage extends AnonymousPage<IErrorPageParameters> {
                                             <p className={styles.debugDetails}>{this.error!.debugDetails}</p>
                                         )
                                     }
-                                    
+
                                 </React.Fragment>
                             )
                         }

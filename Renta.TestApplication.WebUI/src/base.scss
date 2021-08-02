@@ -21,22 +21,22 @@ html {
 
   @media (orientation: landscape) {
     //1800x1350
-    background-image: url(/images/background/Desktop-Landscape-1800x1350.jpg);
+    background-image: url("./images/background/Desktop-Landscape-1800x1350.jpg");
   }
 
   @media (orientation: portrait) {
     //1350x1800
-    background-image: url(/images/background/Desktop-Portal-1350x1800.jpg);
+    background-image: url("./images/background/Desktop-Portal-1350x1800.jpg");
   }
 
   @media only screen and (max-width: 768px) and (orientation: landscape) {
     //786x590
-    background-image: url(/images/background/Mobile-Landscape-786x590.jpg);
+    background-image: url("./images/background/Mobile-Landscape-786x590.jpg");
   }
 
   @media only screen and (max-width: 768px) and (orientation: portrait) {
     //590x786
-    background-image: url(/images/background/Mobile-Portal-590x786.jpg);
+    background-image: url("./images/background/Mobile-Portal-590x786.jpg");
   }
 }
 
@@ -292,7 +292,7 @@ mark {
 
 .modal-open:not(.mobile) {
   padding-right: 0 !important;
-  
+
   > div {
     > div {
       nav, main, footer {

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './main.css';
+import App from './app/App';
 
 /* FA (Font Awesome Pro) */
 import "./lib/fa/fa.ts";
 /* Bootstrap 4 */
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
 /* JQuery required by bootstrap */
 import "jquery";
