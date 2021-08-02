@@ -18,7 +18,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
         private OnePasswordApiProvider _client;
         private readonly OnePasswordCredentialServiceSettings _settings;
         private readonly ILogger<OnePasswordCredentialService> _logger;
-        
+
         private OnePasswordApiProvider GetClient()
         {
             if (_client == null)
@@ -32,7 +32,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
 
                 _client = new OnePasswordApiProvider(settings);
             }
-            
+
             return _client;
         }
 
@@ -89,6 +89,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             return credential;
         }
 
+        //vault/list/credential
         public async Task<IEnumerable<ICredential>> ListCredentialsAsync(string path = "")
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -103,14 +104,14 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             var credentials = new List<ICredential>();
             foreach (VaultReference vault in vaults)
             {
-                if ((string.IsNullOrWhiteSpace(path)) || (vault.Id == path) || (vault.Name == path))
+                VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
+
+                foreach (VaultItemReference vaultItemReference in vaultItemsReferences)
                 {
-                    VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
+                    VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
 
-                    foreach (VaultItemReference vaultItemReference in vaultItemsReferences)
+                    if ((string.IsNullOrWhiteSpace(path)) || (vaultItem.Id == path) || (vaultItem.Title == path))
                     {
-                        VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
-
                         credentials.AddRange(vaultItem.Transform());
                     }
                 }
@@ -125,7 +126,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             foreach (ICredentialKey key in keys)
             {
                 ICredential credential = await GetCredentialAsync(key);
-                
+
                 credentials.Add(credential);
             }
 
