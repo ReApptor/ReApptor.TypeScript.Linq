@@ -151,8 +151,7 @@ namespace WeAre.Athenaeum.Common.Configuration
                 PropertyInfo acmSettingsProperty = typeof(TConfiguration).GetAllProperties(typeof(ICredentialServiceSettings)).FirstOrDefault();
                 if (acmSettingsProperty?.QuickGetValue(this) is ICredentialServiceSettings acmSettings)
                 {
-                    string acmSettingsJson = JsonConvert.SerializeObject(acmSettings);
-                    Logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettingsJson}\".");
+                    Logger.LogInformation($"BaseEnvironmentConfiguration. Initialize ACM. Settings =\"{acmSettings.ToLogString()}\".");
                     
                     credentialService.Initialize(acmSettings);
                     IEnumerable<ICredential> credentials = credentialService.ListCredentialsAsync().GetAwaiter().GetResult();
