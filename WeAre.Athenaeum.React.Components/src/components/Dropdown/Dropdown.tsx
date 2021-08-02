@@ -61,23 +61,23 @@ export enum DropdownAlign {
 
 export enum DropdownVerticalAlign {
     Bottom = 0,
-    
+
     Top = 1,
-    
+
     Auto = 2
 }
 
 export enum DropdownSelectType {
     Background,
-    
+
     Checkbox
 }
 
 export enum DropdownSubtextType {
     Row,
-    
+
     Inline,
-    
+
     Hidden
 }
 
@@ -203,7 +203,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             this._filterInputRef.current!.focus();
         }
     }
-    
+
     private dynamicTransform(item: TItem): SelectListItem {
 
         if (typeof item === "string") {
@@ -218,9 +218,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             selectListItem.ref = item;
             return selectListItem;
         }
-        
+
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
-        
+
         if (provider != null) {
             const selectListItem = provider.toSelectListItem(item) as SelectListItem;
             selectListItem.ref = item;
@@ -228,7 +228,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const anyItem = item as any;
-        const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(anyItem, nameof<ISelectListItem>()) ?? 
+        const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(anyItem, nameof<ISelectListItem>()) ??
                                                                   TypeConverter.getConverter(anyItem, SelectListItem);
 
         if (converter != null) {
@@ -246,7 +246,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
         const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
         const deleted: any | null = Utility.findValueByAccessor(item, ["delete", "isDeleted"]);
-        
+
         const selectListItem = (deleted == true)
             ? new StatusListItem(true, true)
             : new SelectListItem();
@@ -264,7 +264,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         selectListItem.favorite = favorite;
         selectListItem.group = (groupName) ? SelectListGroup.create(groupName) : null;
         selectListItem.ref = item;
-        
+
         return selectListItem;
     }
 
@@ -318,7 +318,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         return items;
     }
-    
+
     private processMaxHeightProp(): void {
         this._maxHeight = null;
         if ((this._itemsListRef.current) && (typeof this.props.maxHeight === "function")) {
@@ -330,11 +330,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
         }
     }
-    
+
     private getMaxHeightValue(): number | string | undefined {
         const filterHeight: number = 42;
         const defaultMaxHeight: number = 316;
-        
+
         let maxHeight: number | string | undefined;
         const maxHeightProp: string | number | DropdownMaxWidthCallback | undefined = this.props.maxHeight;
         if (maxHeightProp) {
@@ -354,9 +354,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private order(items: SelectListItem[]): SelectListItem[] {
-        
+
         const groupSelected: boolean = (!!this.props.groupSelected);
-        
+
         switch (this.orderBy) {
             case DropdownOrderBy.Name:
                 items = items.sort((x, y) => SelectListItem.CompareByName(x, y, groupSelected));
@@ -365,14 +365,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             case DropdownOrderBy.Value:
                 items = items.sort((x, y) => SelectListItem.CompareByValue(x, y, groupSelected));
                 break;
-                
+
             case DropdownOrderBy.None:
                 if (this.grouping) {
                     items = items.sort((x, y) => SelectListItem.CompareByGroup(x, y, groupSelected));
                 }
                 break;
         }
-        
+
         return items;
     }
 
@@ -392,7 +392,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         if (align !== DropdownVerticalAlign.Auto) {
             return align;
         }
-        
+
         const dropdownNode: JQuery = this.getNode();
 
         if (!dropdownNode.length) {
@@ -401,7 +401,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const viewPortHeight: number = window.innerHeight;
-        
+
         const pageYOffset: number = window.pageYOffset;
 
         const dropdownNodeTop: number = (dropdownNode.offset()!.top - pageYOffset) + dropdownNode.height()! * 2;
@@ -426,7 +426,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         return align;
     }
-    
+
     private getFilteredItems(): SelectListItem[] {
         return (this.props.groupSelected)
             ? this.order(this.state.filteredItems)
@@ -478,12 +478,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
         return false;
     }
-    
+
     private async invokeOnAddAsync(): Promise<void> {
         if (this.props.onAdd) {
             await this.props.onAdd(this);
         }
-        
+
         await this.toggleAsync();
     }
 
@@ -492,24 +492,24 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             await this.props.onItemsChange(this);
         }
     }
-    
+
     private getItem(item: SelectListItem): TItem {
         return (item.selected)
             ? (item.ref != null)
                 ? item.ref
                 : item
             : null;
-    } 
-    
+    }
+
     private async invokeOnChangeAsync(item: SelectListItem, userInteraction: boolean): Promise<void> {
         if (this.props.onChange) {
 
             const selectedItem: TItem = this.getItem(item);
- 
+
             await this.props.onChange(this, selectedItem, userInteraction);
         }
     }
-    
+
     private async invokeOnItemClickAsync(item: SelectListItem): Promise<void> {
         if (this.props.onItemClick) {
 
@@ -560,9 +560,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
 
             if (this.isMounted) {
-                
+
                 const filteredItems: SelectListItem[] = this.getFilteredItems();
-                
+
                 await this.setState({items: this.state.items, filteredItems, expanded, model: this.state.model});
 
                 await this.invokeOnChangeAsync(item, true);
@@ -573,7 +573,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             const unselectable: boolean = (this.requiredType == DropdownRequiredType.Manual);
 
             if (!item.selected) {
-                
+
                 this.selectedListItems.map(item => item.selected = false);
 
                 item.selected = true;
@@ -633,7 +633,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 if (autoCollapse) {
                     await this.collapseAsync();
                 }
-                
+
             }
         }
 
@@ -646,15 +646,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private async initializeItemsAsync(items: TItem[], selectedItem: TItem | string | number | null | undefined, selectedItems: TItem[] | string[] | number[] | null | undefined): Promise<void> {
-        
+
         const prevSelectedItem: SelectListItem | null = this.selectedListItem;
-        
+
         const selectItems: SelectListItem[] = items.map(item => this.transform(item));
 
         let filteredItems: SelectListItem[] = this.filter(selectItems);
 
         filteredItems = this.order(filteredItems);
-        
+
         await this.setState({items: selectItems, filteredItems: filteredItems});
 
         if ((this.multiple) && (selectedItems != null)) {
@@ -676,24 +676,24 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 await this.invokeOnChangeAsync(newSelectedItem, false);
             }
         }
-        
+
         await this.invokeOnItemsChangeAsync();
     }
 
     private async invokeSelectListItemsAsync(items: SelectListItem[] | string[] | number[] | null, callback: boolean): Promise<void> {
-        
+
         if ((this.multiple) && (items != null)) {
 
             const itemValues = new Set<string>();
             for (let i: number = 0; i < items.length; i++) {
                 const item: SelectListItem | string | number = items[i];
-                
+
                 const value: string = (typeof item === "string")
                     ? item
                     : (typeof item === "number")
                         ? item.toString()
                         : item.value;
-                
+
                 if (!itemValues.has(value)) {
                     itemValues.add(value);
                 }
@@ -717,13 +717,13 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             if (updated) {
 
                 this.updateModelValue();
-                
+
                 if (callback) {
                     for (let i: number = 0; i < updated.length; i++) {
                         await this.invokeOnChangeAsync(updated[i], false);
                     }
                 }
-                
+
                 if (this.isMounted) {
                     const filteredItems: SelectListItem[] = this.getFilteredItems();
 
@@ -750,7 +750,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 await this.invokeSelectListItemsAsync(listItems, callback);
 
             } else {
-                
+
                 const listItem: SelectListItem | null = this.find(itemOrItems);
                 await this.invokeSelectListItemAsync(listItem, callback);
 
@@ -766,7 +766,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 : (typeof item === "number")
                     ? item.toString()
                     : item.value;
-            
+
             const listItem: SelectListItem | null = this.find(itemValue);
 
             if ((listItem != null) && (!listItem.selected)) {
@@ -834,37 +834,37 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         await this.setState({filteredItems});
     }
-    
+
     private get expandVerticalAlignAuto(): DropdownVerticalAlign.Top | DropdownVerticalAlign.Bottom {
         const dropdownNode: JQuery = this.getNode();
-        
+
         if (dropdownNode.length) {
             const viewPortHeight: number = window.innerHeight;
             const pageYOffset: number = window.pageYOffset;
-            
+
             const dropdownNodeTop: number = (dropdownNode.offset()!.top - pageYOffset) + dropdownNode.height()! * 2;
-            
+
             const listContainer: HTMLDivElement | null = this._listContainerRef.current;
-            
+
             const listContainerHeight: number = listContainer ? listContainer.clientHeight : 0;
-            
+
             const availableBottomHeight: number = viewPortHeight - dropdownNodeTop;
 
             const fitBottom: boolean = availableBottomHeight > listContainerHeight;
-            
+
             const fitTop: boolean = dropdownNodeTop > listContainerHeight + EXPAND_TOP_PADDING;
 
             if (fitBottom) {
                 return DropdownVerticalAlign.Bottom;
             }
-            
+
             if (fitTop) {
                 return DropdownVerticalAlign.Top;
             }
 
             return DropdownVerticalAlign.Bottom;
         }
-        
+
         return DropdownVerticalAlign.Bottom;
     }
 
@@ -962,7 +962,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 return (selectedItems as TItem[]).map(item => this.transform(item));
             }
         }
-        
+
         return items;
     }
 
@@ -970,9 +970,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         if (this.multiple) {
             return null;
         }
-        
+
         const items: SelectListItem[] = this.selectedListItems;
-        
+
         if (items.length >= 1) {
             return items[0];
         }
@@ -983,10 +983,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             if ((selectedItem != null) && (typeof selectedItem === "object")) {
                 return this.transform(selectedItem);
             }
-            
+
             return null;
         }
-        
+
         return null;
     }
 
@@ -1023,27 +1023,27 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     public get filterMaxLength(): number {
         return this.props.filterMaxLength || FILTER_MAX_LENGTH;
     }
-    
+
     public get hasFilter(): boolean {
         return (!this.props.noFilter) && (this.listItems.length >= this.filterMinLength);
     }
-    
+
     public get hasAddButton(): boolean {
         return (!!this.props.addButton);
     }
-    
+
     public get disabled(): boolean {
         return this.readonly;
     }
-    
+
     public get selectType(): DropdownSelectType {
         return this.props.selectType || DropdownSelectType.Background;
     }
-    
+
     public get subtextType(): DropdownSubtextType {
         return this.props.subtextType || DropdownSubtextType.Row;
     }
-    
+
     public get selectedTextFormat(): number | null {
         return (this.props.selectedTextFormat)
             ? (typeof this.props.selectedTextFormat === "number")
@@ -1051,7 +1051,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 : SELECTED_TEXT_FORMAT
             : null;
     }
-    
+
     public get noSubtext(): boolean {
         return (this.props.noSubtext === true);
     }
@@ -1090,7 +1090,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     public async initializeAsync(): Promise<void> {
         await this.initializeItemsAsync(this.props.items, this.props.selectedItem, this.props.selectedItems);
     }
-    
+
     public async componentWillReceiveProps(nextProps: IDropdownProps<TItem>): Promise<void> {
 
         const props: IDropdownProps<TItem> = this.props;
@@ -1129,7 +1129,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     public async toggleAsync(): Promise<void> {
-        
+
         const expanded: boolean = !this.state.expanded;
 
         if (this.props.onToggle) {
@@ -1140,12 +1140,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             await this.setState({expanded});
 
             if (expanded) {
-                
+
                 if (this._autoScroll) {
                     this._autoScroll = false;
                     await this.scrollToSelected(false);
                 }
-                
+
                 this.onFilterInputClick();
             }
         }
@@ -1172,7 +1172,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         // noinspection JSIgnoredPromiseFromCall
         this.reRenderAsync();
     }
-    
+
     public find(item: TItem | string | number | null): SelectListItem | null {
         if ((item != null) && (this.listItems)) {
 
@@ -1187,7 +1187,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
 
         }
-        
+
         return null;
     }
 
@@ -1233,10 +1233,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             }
         }
     }
-    
+
     private renderToggleIcon(className?: string): React.ReactNode {
         let iconProps: IIconProps = { name: "fa-caret-down", style: IconStyle.Solid }
-        
+
         if (this.styleSchema === DropdownSchema.Widget) {
             iconProps.name = "fa-bars";
             iconProps.size = IconSize.ExtraSmall;
@@ -1247,15 +1247,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 iconProps = this.props.toggleIcon;
             }
         }
-        
+
         return (
             <Icon {...iconProps} size={IconSize.Normal} className={this.css(className)} />
         );
     }
-    
+
     private renderAddButton(): React.ReactNode {
         const addButton: boolean | string | RenderCallback = this.props.addButton!;
-        
+
         let text: string;
         if (typeof addButton === "function") {
             const render: React.ReactNode | string = addButton(this);
@@ -1268,7 +1268,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         } else {
             text = DropdownLocalizer.add
         }
-        
+
         return (
             <div className={styles.addButton} onClick={() => this.invokeOnAddAsync()}>
                 <Button type={ButtonType.Orange}
@@ -1288,14 +1288,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             inlineStyles.textAlign = StylesUtility.textAlign(this.props.textAlign);
             inlineStyles.width = "100%";
         }
-        
+
         const noSubtext: boolean = this.noSubtext;
         const selectedListItem: SelectListItem | null = this.selectedListItem;
 
         const title: string = (selectedListItem !== null) && (noSubtext)
             ? DropdownLocalizer.get(selectedListItem.subtext)
             : "";
-        
+
         let text: string = (this.props.selectedTextTransform)
             ? this.props.selectedTextTransform(this)
             : "";
@@ -1317,18 +1317,18 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                         ? DropdownLocalizer.get(this.props.nothingSelectedText)
                         : DropdownLocalizer.nothingSelected;
         }
-        
+
         return (
             <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, "selected-item")}
                  title={title}
                  onClick={async () => await this.toggleAsync()}>
-                
+
                 <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
-                
+
                 {
                     this.renderToggleIcon(transparentStyle)
                 }
-                
+
             </div>
         );
     }
@@ -1347,7 +1347,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         return (
             <React.Fragment key={index}>
-                
+
                 {
                     (needGroupSeparator) &&
                     (
@@ -1420,9 +1420,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     public renderInput(): React.ReactNode {
-        
+
         const hasItems: boolean = (this.listItems.length > 0);
-        
+
         const alignStyle = (this.align === DropdownAlign.Left) && styles.alignLeft;
         const verticalAlignStyle = (this.getVerticalAlign() === DropdownVerticalAlign.Top) ? `${styles.alignTop} alignTop` : styles.alignBottom;
         const toggleStyle = (this.state.expanded) ? this.css(styles.itemsContainer, styles.opened, alignStyle, verticalAlignStyle) : styles.itemsContainer;
@@ -1440,11 +1440,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const longListPlaceholder: string = (this.isLongList())
             ? DropdownLocalizer.getResults
             : DropdownLocalizer.filterResults;
-        
+
         const noDataText: string = (this.props.noDataText)
             ? DropdownLocalizer.get(this.props.noDataText)
             : DropdownLocalizer.noData;
-        
+
         const maxHeight: string | number | undefined = this.getMaxHeightValue();
 
         const scrollableContainerInlineStyles: React.CSSProperties = {
@@ -1457,60 +1457,60 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         return (
             <div className={this.css(dropdownStyle, dropdownWidgetStyle, transparentStyle, smallStyle, this.disabled && styles.disabled, "dropdown-container")} style={inlineStyles}>
-                
+
                 {
                     (this.isDropdownType && this.styleSchema !== DropdownSchema.Widget) && this.renderSelectedItem()
                 }
 
                 <div className={toggleStyle}  ref={this._listContainerRef} onClick={(e: React.MouseEvent) => this.onListContainerClickAsync(e)}>
-                    
+
                     {
                         (this.hasAddButton) &&
                         (
                             this.renderAddButton()
                         )
                     }
-                    
+
                     {
                         (this.hasFilter) &&
                         (
                             <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
-                                
-                                <input id={"filter_input"} 
+
+                                <input id={"filter_input" + this.id}
                                        ref={this._filterInputRef}
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
                                        onKeyUp={async () => await this.filterHandlerAsync()}
                                 />
-                                       
+
                                 { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={async () => await this.cleanFilterAsync()} /> }
-                                
+
                             </div>
                         )
                     }
-                    
+
                     <div className={styles.scrollableContainer} ref={this._scrollableContainerRef} style={scrollableContainerInlineStyles}>
-                        
+
                         {
                             (
                                 <div ref={this._itemsListRef} className={styles.itemsList} style={itemsListInlineStyles}>
-    
+
                                     {
                                         (hasItems)
                                             ?
                                             (
                                                 <React.Fragment>
-    
+
                                                     {this.filteredItems.map((item, index) => this.renderSelectListItem(item, index))}
-    
+
                                                     {
                                                         (this.noItemsFound()) &&
                                                         (
                                                             <div className={this.css(styles.noResults, noWrapStyle)}><span>{DropdownLocalizer.noItems}</span></div>
                                                         )
                                                     }
-    
+
                                                 </React.Fragment>
                                             )
                                             :
@@ -1518,15 +1518,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                                 <div className={this.css(styles.noResults, noWrapStyle)}><span>{noDataText}</span></div>
                                             )
                                     }
-    
+
                                 </div>
                             )
                         }
-                    
+
                     </div>
-                    
+
                 </div>
-                
+
             </div>
         );
     }
