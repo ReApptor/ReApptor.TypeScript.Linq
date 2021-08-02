@@ -30,7 +30,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword
 
         public Task<VaultReference[]> ListVaultsAsync()
         {
-            return InvokeAsync<VaultReference[]>("/vaults/", throwNotFound: false);
+            return InvokeAsync<VaultReference[]>("/vaults/", throwNotFound: true);
         }
 
         public Task<VaultItemReference[]> ListVaultItemsAsync(string vaultId)
