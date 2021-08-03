@@ -17,9 +17,12 @@ build/
 lib/
 !Renta.TestApplication.WebUI/src/lib/
 bld/
+dist/
+temp/
 packages/
 TestResults/
-
+tsdoc-metadata.json
+WeAre.Athenaeum.React.Components/etc/
 # Package managers
 node_modules/
 package-lock.json

@@ -42,33 +42,43 @@
       <TypeScriptCompile Include="src\providers\TypeConverter.ts" />
       <TypeScriptCompile Include="src\providers\TypeResolver.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />
-      <TypeScriptCompile Include="src\tests\ArrayUtility.skip.test.ts" />
-      <TypeScriptCompile Include="src\tests\ArrayUtility.take.test.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.test.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.test.ts" />
-      <TypeScriptCompile Include="src\tests\TypeConverter.toTitle.test.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getService.test.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.test.ts" />
-      <TypeScriptCompile Include="src\tests\StringConverter.toString.test.ts" />
-      <TypeScriptCompile Include="src\tests\TypeResolver.resove.test.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.copyTo.test.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.format.test.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.test.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getService.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.spec.ts" />
+      <TypeScriptCompile Include="src\tests\StringConverter.toString.spec.ts" />
+      <TypeScriptCompile Include="src\tests\TypeConverter.toTitle.spec.ts" />
+      <TypeScriptCompile Include="src\tests\TypeResolver.resove.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.copyTo.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Remove="lib\**" />
+      <Compile Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
+      <EmbeddedResource Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="package-lock.json" />
+      <None Remove=".babelrc" />
+      <None Remove=".eslintrc.json" />
+      <None Remove="tsconfig.json" />
+      <None Remove="tsconfig.lib.json" />
+      <None Remove="tsconfig.spec.json" />
+      <None Remove="dist\**" />
+      <None Remove="api-extractor.json" />
+      <None Remove="jest.config.js" />
     </ItemGroup>
 
 </Project>
