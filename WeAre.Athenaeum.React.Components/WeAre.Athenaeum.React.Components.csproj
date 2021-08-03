@@ -94,12 +94,13 @@
       <None Remove=".babelrc" />
       <None Remove=".eslintrc.json" />
       <None Remove="jest.config.js" />
-      <None Remove="package.json" />
       <None Remove="tsconfig.json" />
       <None Remove="tsconfig.lib.json" />
       <None Remove="tsconfig.spec.json" />
       <None Remove="etc\**" />
       <None Remove="temp\**" />
+      <None Remove="tsdoc-metadata.json" />
+      <None Remove="api-extractor.json" />
     </ItemGroup>
 
 </Project>
