@@ -14,7 +14,8 @@
     "Test:WeAre.Athenaeum.React.Toolkit": "nx test WeAre.Athenaeum.React.Toolkit",
     "Build:All": "npm run Build:WeAre.Athenaeum.React.Toolkit && npm run Build:WeAre.Athenaeum.React.Common && npm run Build:WeAre.Athenaeum.React.Components && npm run Build:Renta.TestApplication.WebUI",
     "Test:All": "npm run Test:WeAre.Athenaeum.React.Toolkit && npm run Test:WeAre.Athenaeum.React.Common && npm run Test:WeAre.Athenaeum.React.Components && npm run Test:Renta.TestApplication.WebUI",
-    "postinstall": "node post-install.js"
+    "postinstall": "node post-install.js",
+    "dep-graph": "nx dep-graph"
   },
   "private": true,
   "dependencies": {
