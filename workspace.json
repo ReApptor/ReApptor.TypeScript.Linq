@@ -96,7 +96,7 @@
             "project": "WeAre.Athenaeum.React.Common/package.json",
             "entryFile": "WeAre.Athenaeum.React.Common/src/index.ts",
             "external": ["react/jsx-runtime"],
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "rollupConfig": "./rollup-extra",
             "assets": [
               {
                 "glob": "WeAre.Athenaeum.React.Common/README.md",
@@ -138,7 +138,7 @@
             "project": "WeAre.Athenaeum.React.Components/package.json",
             "entryFile": "WeAre.Athenaeum.React.Components/src/index.ts",
             "external": ["react/jsx-runtime"],
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "rollupConfig": "./rollup-extra",
             "assets": [
               {
                 "glob": "WeAre.Athenaeum.React.Components/README.md",
@@ -180,7 +180,7 @@
             "project": "WeAre.Athenaeum.React.Toolkit/package.json",
             "entryFile": "WeAre.Athenaeum.React.Toolkit/src/index.ts",
             "external": ["react/jsx-runtime"],
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "rollupConfig": "./rollup-extra",
             "assets": [
               {
                 "glob": "WeAre.Athenaeum.React.Toolkit/README.md",
