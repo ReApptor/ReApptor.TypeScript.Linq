@@ -17,6 +17,7 @@ build/
 lib/
 !Renta.TestApplication.WebUI/src/lib/
 bld/
+dist/
 packages/
 TestResults/
 
