@@ -57,11 +57,15 @@
     <ItemGroup>
       <Compile Remove="lib\**" />
       <Compile Remove="dist\**" />
+      <Compile Remove="temp\**" />
+      <Compile Remove="etc\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
       <EmbeddedResource Remove="dist\**" />
+      <EmbeddedResource Remove="temp\**" />
+      <EmbeddedResource Remove="etc\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -76,6 +80,8 @@
       <None Remove="tsconfig.json" />
       <None Remove="tsconfig.spec.json" />
       <None Remove="api-extractor.json" />
+      <None Remove="temp\**" />
+      <None Remove="etc\**" />
     </ItemGroup>
 
 </Project>
