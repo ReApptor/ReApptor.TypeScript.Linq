@@ -24,7 +24,7 @@ pipelines:
                 # Dependencies for documentation create
                 - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
-                # - npm test
+                - npm run test
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Run build
@@ -61,7 +61,7 @@ pipelines:
                  # Dependencies for documentation create
                 - npm install -g @microsoft/api-extractor@7.12.1
                 # Run tests
-                # - npm test
+                - npm run test
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Change toolkit version number
@@ -137,7 +137,7 @@ pipelines:
                 #- npm install -g @microsoft/api-extractor@7.12.1
                 #- npm install -g @microsoft/api-documenter
                 ## Run tests
-                # - npm test
+                - npm run test
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Change toolkit version number
