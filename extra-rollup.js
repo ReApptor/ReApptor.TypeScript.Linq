@@ -6,7 +6,6 @@ const postcss = require("rollup-plugin-postcss");
 
 function getRollupOptions(options) {
   let originalProcessed = original(options);
-  console.log(originalProcessed);
 
   const postcssPlugin = postcss({
     autoModules: true,
@@ -36,26 +35,6 @@ function getRollupOptions(options) {
 
   originalProcessed.plugins[postcssPluginOldIndex] = postcssPlugin;
 
-  console.log(originalProcessed);
-
   return originalProcessed;
-
-  // const extraGlobals = {
-  //     react: 'React',
-  //     'react-dom': 'ReactDOM',
-  //     'styled-components': 'styled',
-  //     '@emotion/react': 'emotionReact',
-  //     '@emotion/styled': 'emotionStyled',
-  // };
-  // if (Array.isArray(options.output)) {
-  //     options.output.forEach((o) => {
-  //         o.globals = Object.assign(Object.assign({}, o.globals), extraGlobals);
-  //     });
-  // }
-  // else {
-  //     options.output = Object.assign(Object.assign({}, options.output), { globals: Object.assign(Object.assign({}, options.output.globals), extraGlobals) });
-  // }
-  // return options;
 }
 module.exports = getRollupOptions;
-//# sourceMappingURL=bundle-rollup.js.map
