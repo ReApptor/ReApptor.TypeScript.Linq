@@ -1,45 +1,8 @@
 {
   "name": "@weare/athenaeum-toolkit",
-  "private": false,
-  "version": "1.0.0",
-  "type": "commonjs",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/types/src/index.d.ts",
-  "dependencies": {
-    "typescript-collections": "^1.3.2"
-  },
-  "peerDependencies": {},
-  "devDependencies": {
-    "@types/jest": "^26.0.14",
-    "@types/node": "11.9.4",
-    "@types/ts-nameof": "^4.2.1",
-    "jest": "^26.4.2",
-    "rollup": "^2.39.0",
-    "rollup-plugin-typescript2": "^0.27.3",
-    "ts-jest": "^26.4.0",
-    "ts-nameof": "^5.0.0",
-    "ttypescript": "^1.5.12",
-    "typescript": "3.8",
-    "typescript-transform-paths": "^1.1.15"
-  },
+  "version": "0.0.1",
   "scripts": {
-    "build": "rollup -c",
-    "build:toolkit:watch": "rollup -c -w",
-    "test": "jest",
-    "coverage": "jest --coverage"
-  },
-  "files": [
-    "lib"
-  ],
-  "browserslist": [],
-  "keywords": [
-    "weare",
-    "athenaeum",
-    "toolkit",
-    "utility",
-    "extensions",
-    "typescript",
-    "npm"
-  ]
+    "build": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix ..",
+    "test": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix .."
+  }
 }

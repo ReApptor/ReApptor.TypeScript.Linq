@@ -1,0 +1,43 @@
+{
+  "npmScope": "renta-components",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "projects": {
+    "Renta.TestApplication.WebUI": {
+      "tags": []
+    },
+    "WeAre.Athenaeum.React.Common": {
+      "tags": []
+    },
+    "WeAre.Athenaeum.React.Components": {
+      "tags": []
+    },
+    "WeAre.Athenaeum.React.Toolkit": {
+      "tags": []
+    }
+  }
+}
