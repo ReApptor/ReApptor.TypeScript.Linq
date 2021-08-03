@@ -2,6 +2,7 @@
   "name": "@weare/athenaeum-toolkit",
   "version": "0.0.1",
   "scripts": {
-    "build": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix .."
+    "build": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix ..",
+    "test": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix .."
   }
 }
