@@ -98,6 +98,8 @@
       <None Remove=".gitignore" />
       <None Remove=".browserslistrc" />
       <None Remove="dist\**" />
+      <None Include="package.json" />
+      <None Remove="jest.config.js" />
     </ItemGroup>
 
     <ItemGroup>

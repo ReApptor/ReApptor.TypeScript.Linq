@@ -1,0 +1,9 @@
+{
+  "name": "@weare/renta-test-application",
+  "license": "UNLICENSED",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "npm run Build:WeAre.Athenaeum.React.Components --prefix ..",
+    "build": "npm run Build:WeAre.Athenaeum.React.Components --prefix .."
+  }
+}
