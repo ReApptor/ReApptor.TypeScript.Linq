@@ -52,8 +52,8 @@
         
         .icon {
             &.hasText {
-                margin-left: -$baseline/2;
-                margin-right: $baseline/2;
+                margin-left: -$baseline*0.5;
+                margin-right: $baseline*0.5;
             }
         }
         
