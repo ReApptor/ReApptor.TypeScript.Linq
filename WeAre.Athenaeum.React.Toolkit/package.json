@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "scripts": {
     "build": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix ..",
-    "test": "npm run Build:WeAre.Athenaeum.React.Toolkit --prefix .."
+    "test": "npm run Test:WeAre.Athenaeum.React.Toolkit --prefix .."
   }
 }
