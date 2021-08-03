@@ -1,5 +1,6 @@
 {
   "name": "@weare/athenaeum-react-components",
+  "license": "UNLICENSED",
   "version": "0.0.1",
   "scripts": {
     "build": "npm run Build:WeAre.Athenaeum.React.Components --prefix .."

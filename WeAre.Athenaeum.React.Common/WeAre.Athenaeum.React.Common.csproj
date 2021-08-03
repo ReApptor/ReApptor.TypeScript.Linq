@@ -67,9 +67,15 @@
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="package-lock.json" />
-      <None Remove="api-extractor.json" />
       <None Remove="jsdoc.json" />
       <None Remove="dist\**" />
+      <None Remove="jest.config.js" />
+      <None Remove=".eslintrc.json" />
+      <None Remove=".babelrc" />
+      <None Remove="tsconfig.lib.json" />
+      <None Remove="tsconfig.json" />
+      <None Remove="tsconfig.spec.json" />
+      <None Remove="api-extractor.json" />
     </ItemGroup>
 
 </Project>
