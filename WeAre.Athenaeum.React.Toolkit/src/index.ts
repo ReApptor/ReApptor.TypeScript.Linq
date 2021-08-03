@@ -36,8 +36,8 @@ export {default as FileModel} from "./models/FileModel";
 export {default as GeoCoordinate} from "./models/GeoCoordinate";
 export {default as GeoLocation} from "./models/GeoLocation";
 export {default as TimeSpan} from "./models/TimeSpan";
-export type {default as IPagedList} from "./models/IPagedList";
-export type {default as ISelectListItem}  from "./models/ISelectListItem";
+export {default as IPagedList} from "./models/IPagedList";
+export {default as ISelectListItem}  from "./models/ISelectListItem";
 //Utilities:
 export {default as ArrayUtility} from "./ArrayUtility";
 export {default as NumberUtility} from "./NumberUtility";
