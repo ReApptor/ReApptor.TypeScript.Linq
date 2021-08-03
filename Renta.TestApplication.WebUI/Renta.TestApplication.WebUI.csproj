@@ -95,7 +95,6 @@
       <None Remove="build\**" />
       <None Remove="src\@weare\**" />
       <None Remove=".babelrc" />
-      <None Remove="jest.config.js" />
       <None Remove=".gitignore" />
       <None Remove=".browserslistrc" />
       <None Remove="dist\**" />

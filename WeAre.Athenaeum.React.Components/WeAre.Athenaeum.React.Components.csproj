@@ -74,12 +74,16 @@
       <Compile Remove="lib\**" />
       <Compile Remove="coverage\**" />
       <Compile Remove="dist\**" />
+      <Compile Remove="etc\**" />
+      <Compile Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
       <EmbeddedResource Remove="coverage\**" />
       <EmbeddedResource Remove="dist\**" />
+      <EmbeddedResource Remove="etc\**" />
+      <EmbeddedResource Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -94,6 +98,8 @@
       <None Remove="tsconfig.json" />
       <None Remove="tsconfig.lib.json" />
       <None Remove="tsconfig.spec.json" />
+      <None Remove="etc\**" />
+      <None Remove="temp\**" />
     </ItemGroup>
 
 </Project>
