@@ -3,6 +3,7 @@
   "license": "UNLICENSED",
   "version": "0.0.1",
   "scripts": {
-    "build": "npm run Build:WeAre.Athenaeum.React.Common --prefix .."
+    "start": "npm run Start:Renta.TestApplication.WebUI --prefix ..",
+    "build": "npm run Build:Renta.TestApplication.WebUI --prefix .."
   }
 }
