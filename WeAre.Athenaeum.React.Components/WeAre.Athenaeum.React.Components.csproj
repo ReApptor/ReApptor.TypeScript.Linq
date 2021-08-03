@@ -73,17 +73,27 @@
     <ItemGroup>
       <Compile Remove="lib\**" />
       <Compile Remove="coverage\**" />
+      <Compile Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
       <EmbeddedResource Remove="coverage\**" />
+      <EmbeddedResource Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="coverage\**" />
       <None Remove="package-lock.json" />
+      <None Remove="dist\**" />
+      <None Remove=".babelrc" />
+      <None Remove=".eslintrc.json" />
+      <None Remove="jest.config.js" />
+      <None Remove="package.json" />
+      <None Remove="tsconfig.json" />
+      <None Remove="tsconfig.lib.json" />
+      <None Remove="tsconfig.spec.json" />
     </ItemGroup>
 
 </Project>

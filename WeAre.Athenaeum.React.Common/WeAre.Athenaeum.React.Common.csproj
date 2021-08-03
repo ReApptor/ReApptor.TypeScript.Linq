@@ -56,15 +56,20 @@
 
     <ItemGroup>
       <Compile Remove="lib\**" />
+      <Compile Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="lib\**" />
+      <EmbeddedResource Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="package-lock.json" />
+      <None Remove="api-extractor.json" />
+      <None Remove="jsdoc.json" />
+      <None Remove="dist\**" />
     </ItemGroup>
 
 </Project>

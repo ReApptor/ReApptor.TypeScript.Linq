@@ -40,19 +40,44 @@
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Remove="src\lib\**" />
         <Content Remove="build\**" />
         <Content Remove="src\@weare\**" />
+        <Content Include="src\lib\.DS_Store" />
+        <Content Include="src\lib\dinpro\.DS_Store" />
+        <Content Include="src\lib\dinpro\webfonts\DINPro-Bold.ttf" />
+        <Content Include="src\lib\dinpro\webfonts\DINPro-Medium.ttf" />
+        <Content Include="src\lib\fa\css\all.min.css" />
+        <Content Include="src\lib\fa\webfonts\fa-brands-400.eot" />
+        <Content Include="src\lib\fa\webfonts\fa-brands-400.svg" />
+        <Content Include="src\lib\fa\webfonts\fa-brands-400.ttf" />
+        <Content Include="src\lib\fa\webfonts\fa-brands-400.woff" />
+        <Content Include="src\lib\fa\webfonts\fa-brands-400.woff2" />
+        <Content Include="src\lib\fa\webfonts\fa-light-300.eot" />
+        <Content Include="src\lib\fa\webfonts\fa-light-300.svg" />
+        <Content Include="src\lib\fa\webfonts\fa-light-300.ttf" />
+        <Content Include="src\lib\fa\webfonts\fa-light-300.woff" />
+        <Content Include="src\lib\fa\webfonts\fa-light-300.woff2" />
+        <Content Include="src\lib\fa\webfonts\fa-regular-400.eot" />
+        <Content Include="src\lib\fa\webfonts\fa-regular-400.svg" />
+        <Content Include="src\lib\fa\webfonts\fa-regular-400.ttf" />
+        <Content Include="src\lib\fa\webfonts\fa-regular-400.woff" />
+        <Content Include="src\lib\fa\webfonts\fa-regular-400.woff2" />
+        <Content Include="src\lib\fa\webfonts\fa-solid-900.eot" />
+        <Content Include="src\lib\fa\webfonts\fa-solid-900.svg" />
+        <Content Include="src\lib\fa\webfonts\fa-solid-900.ttf" />
+        <Content Include="src\lib\fa\webfonts\fa-solid-900.woff" />
+        <Content Include="src\lib\fa\webfonts\fa-solid-900.woff2" />
         <Content Include="src\manifest.json" />
+        <Content Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="obj\**" />
         <Compile Remove="bin\**" />
         <Compile Remove="src\localization\**" />
-        <Compile Remove="src\lib\**" />
         <Compile Remove="build\**" />
         <Compile Remove="src\@weare\**" />
+        <Compile Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,15 +86,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="src\lib\**" />
       <EmbeddedResource Remove="build\**" />
       <EmbeddedResource Remove="src\@weare\**" />
+      <EmbeddedResource Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="src\lib\**" />
       <None Remove="build\**" />
       <None Remove="src\@weare\**" />
+      <None Remove=".babelrc" />
+      <None Remove="jest.config.js" />
+      <None Remove=".gitignore" />
+      <None Remove=".browserslistrc" />
+      <None Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -82,12 +111,14 @@
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\samplePdf.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\Tests.tsx" />
       <TypeScriptCompile Include="src\app\providers\TransformProvider.ts" />
+      <TypeScriptCompile Include="src\lib\fa\fa.ts" />
       <TypeScriptCompile Include="src\module.d.ts" />
       <TypeScriptCompile Include="src\polyfills.ts" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="build\manifest.json" />
+      <_ContentIncludedByDefault Remove="dist\manifest.json" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
