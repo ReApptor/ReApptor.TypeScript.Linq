@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+
 const original = require('@nrwl/react/plugins/webpack.js');
 
 function getWebpackConfig(config) {

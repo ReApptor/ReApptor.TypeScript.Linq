@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import BaseTransformProvider, {TFormat} from "../providers/BaseTransformProvider";
 import Utility from "../Utility";
 import ISelectListItem from "../models/ISelectListItem";
@@ -19,7 +21,11 @@ describe("StringConverter", function() {
         }
     }
 
-    @ToString(TestClassWithFunctionConverter.toString)
+    const toString = (item: TestClassWithFunctionConverter | null): string =>{
+        return itemToString(item);
+    }
+
+    @ToString(toString)
     // @ts-ignore
     class TestClassWithFunctionConverter {
         public value: string = "";
