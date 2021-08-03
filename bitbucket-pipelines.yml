@@ -319,7 +319,8 @@ pipelines:
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
-    node: node_modules
+    node: ./node_modules
+    lock: ./package-lock.json
   services:
     docker:
       memory: 2048
