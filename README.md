@@ -8,15 +8,15 @@ Run `npm run Start:Renta.TestApplication.WebUI` for a dev server.
 
 ## Generate an application
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+Run `npx nx g @nrwl/react:app my-app` to generate an application.
+
+## Generate a library publishable npm package
+
+Run `nx g @nrwl/react:lib my-lib --publishable --importPath @weare/package-name` to generate a library.
 
 ## Generate a library
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-## Generate a library package
-
-Run `nx g @nrwl/react:lib my-lib --publishable --importPath @weare/package-name` to generate a library.
+Run `npx nx g @nrwl/react:lib my-lib` to generate a library.
 
 
 ## Code scaffolding
@@ -74,3 +74,51 @@ Please refer to [`CHANGELOG.md`](CHANGELOG.md) to see the complete list of chang
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
+
+## What has been customized: 
+
+1. applications and libraries generated with nx command will be inside `./apps` and `./libs` but we moved them to the root of solution. things need to be updated: 
+
+* project's jest.config.js
+* project's tsconfig.json
+* project's tsconfig.lib.json
+* project's tsconfig.spec.json
+* workspaces workspace.json (all paths related to this project should be updated)
+
+
+2. we removed `types` key from all `tsconfig` files, just to allow to use all of installed packages.
+
+* project's tsconfig.json
+* project's tsconfig.lib.json
+* project's tsconfig.spec.json
+
+
+3. we added `post-install.js` to add `ts-nameof` to rollup configuration generator. It will run automatically after `npm install` 
+
+
+4. we added `extra-webpack.js` to add support of fonts to React applications. currently only for `Renta.TestApplication.WebUI`. 
+we just push a plugin to the nx original webpack setting `@nrwl/react/plugins/webpack.js`   
+To enable it  we need to add this to 
+
+```
+{
+  "projects": {
+    "PROJECT_NAME": {
+      "targets": {
+        "build": {
+          "options": {
+            "webpackConfig": "./extra-webpack"  <--
+```
+
+5. We added `extra-rollup.js` to modify our css class name for module components,we replace the postcss plugin with our own.
+   To enable it  we need to add this to 
+
+```
+{
+  "projects": {
+    "PROJECT_NAME": {
+      "targets": {
+        "build": {
+          "options": {
+            "rollupConfig": "./extra-rollup" <--
+```
