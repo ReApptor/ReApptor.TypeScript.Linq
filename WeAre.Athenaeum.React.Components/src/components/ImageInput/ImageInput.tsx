@@ -48,6 +48,8 @@ interface IImageInputProps {
     minimizeOnEmpty?: boolean;
     multi?: boolean;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
+    rotateLeftAsync?(picture: FileModel): Promise<FileModel>;
+    rotateRightAsync?(picture: FileModel): Promise<FileModel>;
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
@@ -196,8 +198,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return (this.currentView === ImageInputView.Edit);
     }
 
-    private get showFullScreenButton(): boolean {
-        return (this.hasSelectedPictureIndex) && (!this.showPreviewButton);
+    private get showMiniRotateButton(): boolean {
+        return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default) && (!!this.props.rotateLeftAsync) && (!!this.props.rotateRightAsync);
     }
 
     //  Control panel button Click Events
@@ -241,8 +243,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         let newFileModel: FileModel = {...this.activePicture};
-        const cropped: string = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
-        newFileModel.src = cropped;
+
+        newFileModel.src = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
 
         if (this.props.convertImage) {
             newFileModel = await this.props.convertImage(newFileModel);
@@ -297,6 +299,30 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (!this.hasSelectedPictureIndex) {
             return;
         }
+    }
+
+    private async onRotateLeftMiniButtonClick(): Promise<void> {
+        if (!this.props.rotateLeftAsync) {
+            return;
+        }
+
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        const rotated = await this.props.rotateLeftAsync(selectedPicture);
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
+    }
+
+    private async onRotateRightMiniButtonClick(): Promise<void> {
+        if (!this.props.rotateRightAsync) {
+            return;
+        }
+
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        const rotated = await this.props.rotateRightAsync(selectedPicture);
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
     }
 
     private async onRotateLeftButtonClick(): Promise<void> {
@@ -508,35 +534,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Helpers
 
-    private async invokeOnChange(): Promise<void> {
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.pictures);
-        }
-    }
-
-    private async onChangePicture(file: FileModel | null, index: number): Promise<void> {
-
-        // TODO: use this method?
-
-        if (file != null) {
-            if (index > this.pictures.length) {
-                //add new
-                this.pictures.push(file);
-            } else {
-                //update existing
-                this.pictures[index] = file;
-            }
-        } else {
-            //delete existing
-            this.pictures.splice(index, 1);
-        }
-
-        await this.invokeOnChange();
-
-        //rerender page
-        await this.reRenderAsync();
-    }
-
     private setCropAreaToImageFullSize(): void {
         if (!this.cropperRef.current) {
             return;
@@ -565,6 +562,28 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
+
+                {
+                    (this.showMiniRotateButton) &&
+                    (
+                        <div className={styles.controlPanelMiniButtonWrap}>
+
+                            <Button small
+                                    icon={{name: "undo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => await this.onRotateLeftMiniButtonClick()}
+                            />
+
+
+                            <Button small
+                                    icon={{name: "redo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => await this.onRotateRightMiniButtonClick()}
+                            />
+                        </div>
+                    )
+                }
+
 
                 {
                     (this.showRotateButton) &&
