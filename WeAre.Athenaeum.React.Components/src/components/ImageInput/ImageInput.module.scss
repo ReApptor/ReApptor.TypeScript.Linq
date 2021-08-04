@@ -21,6 +21,26 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     justify-content: center;
 
 
+    .controlPanelMiniButtonWrap {
+      flex: 1;
+      min-width: 120px;
+      max-width: 150px;
+      display: flex;
+      justify-content: center;
+
+      button:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        flex: 1;
+      }
+
+      button:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        flex: 1;
+      }
+    }
+
     .controlPanelButton {
       flex: 1;
       min-width: 120px;
