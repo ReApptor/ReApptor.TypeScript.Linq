@@ -321,7 +321,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onRotateLeftMiniButtonClick(): Promise<void> {
         const selectedPicture = this.pictures[this.selectedPictureIndex];
 
-        const rotated = await ReactCropperHelpers.rotate(selectedPicture, -90, this.getPreviewSource(this.selectedPictureIndex));
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, -90, this.getPreviewSource(this.selectedPictureIndex));
+
+        if (this.props.convertImage) {
+            rotated = await this.props.convertImage(rotated);
+
+            if (rotated === null || rotated === undefined) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+        }
 
         await this.updatePicture(rotated, this.selectedPictureIndex);
     }
@@ -330,7 +339,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         const selectedPicture = this.pictures[this.selectedPictureIndex];
 
-        const rotated = await ReactCropperHelpers.rotate(selectedPicture, 90, this.getPreviewSource(this.selectedPictureIndex));
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, 90, this.getPreviewSource(this.selectedPictureIndex));
+
+        if (this.props.convertImage) {
+            rotated = await this.props.convertImage(rotated);
+
+            if (rotated === null || rotated === undefined) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+        }
 
         await this.updatePicture(rotated, this.selectedPictureIndex);
     }
