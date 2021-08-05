@@ -1,11 +1,13 @@
 import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
+import CropperJs from 'cropperjs';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import ImageInputLocalizer from "./ImageInputLocalizer";
+import {ReactCropperHelpers} from "./ReactCropperHelpers";
 
 import 'cropperjs/dist/cropper.css';
 import './ReactCropperOverride.scss';
@@ -48,8 +50,6 @@ interface IImageInputProps {
     minimizeOnEmpty?: boolean;
     multi?: boolean;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
-    rotateLeftAsync?(picture: FileModel): Promise<FileModel>;
-    rotateRightAsync?(picture: FileModel): Promise<FileModel>;
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
@@ -57,6 +57,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cropperRef = React.createRef<ReactCropperElement>();
+    private cropperHelper = new ReactCropperHelpers(this.cropperRef);
 
     public state: IImageInputState = {
         currentView: ImageInputView.Default,
@@ -199,7 +200,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get showMiniRotateButton(): boolean {
-        return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default) && (!!this.props.rotateLeftAsync) && (!!this.props.rotateRightAsync);
+        return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default);
     }
 
     //  Control panel button Click Events
@@ -301,37 +302,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async onRotateLeftMiniButtonClick(): Promise<void> {
-        if (!this.props.rotateLeftAsync) {
-            return;
-        }
-
-        const selectedPicture = this.pictures[this.selectedPictureIndex];
-
-        const rotated = await this.props.rotateLeftAsync(selectedPicture);
-
-        await this.updatePicture(rotated, this.selectedPictureIndex);
-    }
-
-    private async onRotateRightMiniButtonClick(): Promise<void> {
-        if (!this.props.rotateRightAsync) {
-            return;
-        }
-
-        const selectedPicture = this.pictures[this.selectedPictureIndex];
-
-        const rotated = await this.props.rotateRightAsync(selectedPicture);
-
-        await this.updatePicture(rotated, this.selectedPictureIndex);
-    }
-
     private async onRotateLeftButtonClick(): Promise<void> {
         if (!this.cropperRef.current) {
             return;
         }
 
-        this.cropperRef.current.cropper.rotate(-90);
-        //this.setCropAreaToImageFullSize();
+        this.cropperHelper.rotateAndFitToScreen(-90);
     }
 
     private async onRotateRightButtonClick(): Promise<void> {
@@ -339,8 +315,33 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        this.cropperRef.current.cropper.rotate(90);
-        this.setCropAreaToImageFullSize();
+        this.cropperHelper.rotateAndFitToScreen(90);
+    }
+
+    private async onRotateLeftMiniButtonClick(): Promise<void> {
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        const rotated = await ReactCropperHelpers.rotate(selectedPicture, -90, this.getPreviewSource(this.selectedPictureIndex));
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
+    }
+
+    private async onRotateRightMiniButtonClick(): Promise<void> {
+
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        const rotated = await ReactCropperHelpers.rotate(selectedPicture, 90, this.getPreviewSource(this.selectedPictureIndex));
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
+    }
+
+    private onListViewItemClick(index: number): void {
+        this.setState(
+            {
+                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
+                    ? null
+                    : index
+            });
     }
 
     //  DragAndDrop Functionality Events
@@ -530,31 +531,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
         }
-    }
-
-    //  Helpers
-
-    private setCropAreaToImageFullSize(): void {
-        if (!this.cropperRef.current) {
-            return;
-        }
-
-        const canvasData = this.cropperRef.current.cropper.getCanvasData();
-        this.cropperRef.current.cropper.setCropBoxData({
-            left: canvasData.left,
-            top: canvasData.top,
-            width: canvasData.width,
-            height: canvasData.height
-        });
-    }
-
-    private onListViewItemClick(index: number): void {
-        this.setState(
-            {
-                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
-                    ? null
-                    : index
-            });
     }
 
     //  Renders
@@ -768,7 +744,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                          src={this.cropperSource}
                          viewMode={1} // cannot move box outside image borders
                          guides={false}
-                         ready={() => this.setCropAreaToImageFullSize()}
+                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
                 />
             </div>
         )
