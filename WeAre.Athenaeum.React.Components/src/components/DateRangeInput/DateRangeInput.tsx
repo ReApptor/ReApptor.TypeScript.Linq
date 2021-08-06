@@ -46,7 +46,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private activeMonthView: Date = this.defaultActiveMonthView;
-    private dayGridValues: DayGridValue[] = this.defaultDayGridValues;
     private lastHoveredDayGrid: DayGridValue | null = null;
     private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
     private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
@@ -59,10 +58,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         }
 
         return new Date();
-    }
-
-    private get defaultDayGridValues(): DayGridValue[] {
-        return this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
     }
 
     private get defaultClickedDayGridValues(): [DayGridValue | null, DayGridValue | null] {
@@ -83,7 +78,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return [start, end];
     }
 
-    private getGridDays(year: number, month: number): DayGridValue[] {
+    private get gridDays(): DayGridValue[] {
+        const year = this.activeMonthView.getFullYear();
+        const month = this.activeMonthView.getMonth();
+
         const firstDayOfNextMonth: number = 1;
         const previousMonth: number = month - 1;
         const nextMonth: number = month + 1;
@@ -211,13 +209,11 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
     private async onNextMonthClick(): Promise<void> {
         this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() + 1));
-        this.dayGridValues = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
         await this.reRenderAsync();
     }
 
     private async onPreviousMonthClick(): Promise<void> {
         this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() - 1));
-        this.dayGridValues = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
         await this.reRenderAsync();
     }
 
@@ -384,7 +380,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
                 {this.renderWeekDays()}
 
-                {this.dayGridValues.map(gridDay => this.renderDayGrid(gridDay))}
+                {this.gridDays.map(gridDay => this.renderDayGrid(gridDay))}
             </div>
         );
     }
