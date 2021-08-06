@@ -188,7 +188,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         this.setState({
             showDatePicker: false
         });
-        await this.reRenderAsync();
     }
 
     private async onDayGridClick(dayGridValue: DayGridValue): Promise<void> {
@@ -196,11 +195,34 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
+        const isBothSelected = !!this.state.firstClickedDayGrid && !!this.state.lastClickedDayGrid;
+        const isOneSelected = !!this.state.firstClickedDayGrid || !!this.state.lastClickedDayGrid;
+
+        /**
+         * check if both selected then reset end and set to end and close the picker
+         *
+         * check if start is selected and set to end close the picker
+         *
+         * check if end is selected and compare and set to first and
+         */
+
+        // if (isBothSelected) {
+        //     this.setState({
+        //         firstClickedDayGrid: dayGridValue,
+        //         lastClickedDayGrid: null
+        //     });
+        //     return;
+        // }
+        //
+        // if (isOneSelected) {
+        //
+        // }
+
         if (this.state.firstClickedDayGrid === dayGridValue && !this.state.lastClickedDayGrid && this.props.sameDay) {
             this.setState({
                 lastClickedDayGrid: dayGridValue
             });
-            await this.reRenderAsync();
+
             await this.emitOutput();
             return;
         }
@@ -210,7 +232,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 firstClickedDayGrid: null,
                 lastClickedDayGrid: null
             });
-            await this.reRenderAsync();
+
             await this.emitOutput();
             return;
         }
@@ -220,7 +242,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 firstClickedDayGrid: null,
                 lastClickedDayGrid: null
             });
-            await this.reRenderAsync();
+
             await this.emitOutput();
             return;
         }
@@ -230,7 +252,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 firstClickedDayGrid: dayGridValue,
                 lastClickedDayGrid: null
             });
-            await this.reRenderAsync();
+
             await this.emitOutput();
             return;
         }
@@ -239,7 +261,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             this.setState({
                 lastClickedDayGrid: dayGridValue
             });
-            await this.reRenderAsync();
+            await this.reRenderAsync(); //TODO BUG HERE
             await this.emitOutput();
             return;
         }
@@ -275,12 +297,11 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const [start, end] = this.output;
 
         if ((start) && (end)) {
+            console.log('emitOutput closing datePicker')
             this.setState({
                 showDatePicker: false
             });
         }
-
-        await this.reRenderAsync();
 
         if (this.props.onChange) {
             await this.props.onChange([start, end]);
@@ -479,5 +500,23 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private static todayInUnixTime(): number {
         const now = new Date();
         return DateRangeInput.getStartOfDay(now).getTime();
+    }
+
+
+    private static sortDates(date1: Date | null = null, date2: Date | null = null): DateRangeInputValue {
+        if (date1 && date2) {
+            const sorter = (a: Date, b: Date) => a.getTime() - b.getTime();
+            return [date1, date2].sort(sorter) as DateRangeInputValue;
+        }
+
+        if (date1) {
+            return [date1, null];
+        }
+
+        if (date2) {
+            return [date2, null];
+        }
+
+        return [null, null];
     }
 }
