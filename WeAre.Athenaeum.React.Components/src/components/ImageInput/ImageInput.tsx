@@ -1,6 +1,5 @@
 import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
-import CropperJs from 'cropperjs';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";

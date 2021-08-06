@@ -68,40 +68,46 @@ export class ReactCropperHelpers {
         return this.containerHeight > this.canvasHeight
     }
 
-    setCroppingAreaToCenterOfContainerAndMinimize() {
-        //  this will try to set the cropping area to center of container but if image is not covering the center it will be set to the closest corner to the center
-
+    /**
+     * @description this will try to set the cropping area to center
+     * of container but if image is not covering the center it
+     * will be set to the closest corner to the center
+     */
+    setCroppingAreaToCenterOfContainerAndMinimize(): void {
         this.cropper.setCropBoxData({left: this.containerWidth / 2, top: this.containerHeight / 2, width: 0, height: 0});
-
     }
 
-    setImageToCenterOfContainer() {
-        //  It will set the location of image based on container.
-        //  Will not effect in viewMode 1 if cropping area is blocking it.
-        //  When viewMode is on 1 it will set the location of image based on cropping area.
-        //  height and width dont effect
+    /**
+     * @description It will set the location of image based on container.
+     * Will not effect in viewMode 1 if cropping area is blocking it.
+     * When viewMode is on 1 it will set the location of image based on cropping area.
+     * height and width dont effect
+     */
+    setImageToCenterOfContainer(): void {
+
         const left = (this.containerWidth / 2) - (this.canvasWidth / 2);
         const top = (this.containerHeight / 2) - (this.canvasHeight / 2);
 
         this.cropper.setCanvasData({left, top});
     }
 
-    setZoomToFit(): boolean {
-        //  when viewMode is on 1  and cropping area is covering the image it will be blocked
-
+    /**
+     * @description When viewMode is on 1  and cropping area is covering the image it will be blocked
+     */
+    setZoomToFit(): void {
         if (this.isImageLandscape) {
             if (this.isImageHorizontallyOverflowed) {
                 const ratio = (this.containerWidth / this.canvasImageWidth);
                 console.log('Zooming out: ', ratio);
                 this.cropper.zoomTo(ratio);
-                return false;
 
             } else if (this.isImageHorizontallySmaller) {
                 const ratio = (this.canvasImageWidth / this.containerWidth);
                 console.log('Zooming in: ', ratio);
                 this.cropper.zoomTo(ratio);
-                return false;
             }
+
+            return;
         }
 
         if (this.isImageVerticallyOverflowed) {
@@ -109,16 +115,14 @@ export class ReactCropperHelpers {
             console.log(ratio);
             console.log('Zooming out: ', ratio);
             this.cropper.zoomTo(ratio);
-            return false;
 
         } else if (this.isImageVerticallySmaller) {
             const ratio = (this.canvasImageHeight / this.containerHeight);
             console.log('Zooming in: ', ratio);
             this.cropper.zoomTo(ratio);
-            return false;
         }
 
-        return true;
+        return;
     }
 
     setCropAreaToImageFullSize(): void {
@@ -137,18 +141,22 @@ export class ReactCropperHelpers {
     }
 
     rotateAndFitToScreen(degree: number) {
-        let isNotFit = true
-
         this.cropper.rotate(degree);
-
-        while (isNotFit) {
-            this.setCroppingAreaToCenterOfContainerAndMinimize();
-            this.setImageToCenterOfContainer();
-            isNotFit = this.setZoomToFit();
-            this.setCropAreaToImageFullSize()
-        }
+        this.setZoomToFit();
+        this.setCroppingAreaToCenterOfContainerAndMinimize();
+        this.setImageToCenterOfContainer();
+        this.setZoomToFit();
+        this.setCropAreaToImageFullSize()
     }
 
+    /**
+     * @description this is for situations where image rotation is needed without opening the editor
+     * it will create a cropperjs instance and attach it to root element (hidden) and after rotation will return the data
+     *
+     * @param image image to rotate. Checks for src and if it doesnt exists uses cropperSource param
+     * @param degree rotation degree
+     * @param cropperSource url for the image, convert the image.id to url and pass it here
+     */
     static async rotate(image: FileModel, degree: number, cropperSource: string = ''): Promise<FileModel> {
         return new Promise<FileModel>(resolve => {
             const instaCropperWrapper: HTMLDivElement = document.createElement('div');
