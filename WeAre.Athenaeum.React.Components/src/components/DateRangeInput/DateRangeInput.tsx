@@ -30,6 +30,7 @@ interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
     activeMonthView: Date;
     lastHoveredDayGrid: DayGridValue | null;
+    firstClickedDayGrid: DayGridValue | null;
 }
 
 interface DayGridValue {
@@ -51,7 +52,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 value: this.props.value ?? [null, null]
             },
         activeMonthView: this.defaultActiveMonthView,
-        lastHoveredDayGrid: null
+        lastHoveredDayGrid: null,
+        firstClickedDayGrid: this.defaultClickedDayGridValues[0]
     }
 
     private readonly absolutePositionPadding: string = '5px';
@@ -60,8 +62,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    // private lastHoveredDayGrid: DayGridValue | null = null;
-    private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
     private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
     private showDatePicker: boolean = false;
 
@@ -149,10 +149,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private get output(): [Date | null, Date | null] {
-        if (!this.firstClickedDayGrid || !this.lastClickedDayGrid) {
+        if (!this.state.firstClickedDayGrid || !this.lastClickedDayGrid) {
             return [
-                (this.firstClickedDayGrid)
-                    ? new Date(this.firstClickedDayGrid.unixTime)
+                (this.state.firstClickedDayGrid)
+                    ? new Date(this.state.firstClickedDayGrid.unixTime)
                     : null,
                 (this.lastClickedDayGrid)
                     ? new Date(this.lastClickedDayGrid.unixTime)
@@ -160,7 +160,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             ];
         }
 
-        const start: Date = new Date(this.firstClickedDayGrid.unixTime);
+        const start: Date = new Date(this.state.firstClickedDayGrid.unixTime);
         const end: Date = new Date(this.lastClickedDayGrid.unixTime);
 
         if (start.getTime() > end.getTime()) {
@@ -193,16 +193,17 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        if (this.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
+        if (this.state.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
             this.lastClickedDayGrid = dayGridValue;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        if (this.firstClickedDayGrid === dayGridValue) {
-
-            this.firstClickedDayGrid = null;
+        if (this.state.firstClickedDayGrid === dayGridValue) {
+            this.setState({
+                firstClickedDayGrid: null
+            });
             this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
@@ -210,29 +211,36 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         }
 
         if (this.lastClickedDayGrid === dayGridValue) {
-            this.firstClickedDayGrid = null;
+            this.setState({
+                firstClickedDayGrid: null
+            });
             this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        if (!this.firstClickedDayGrid) {
-            this.firstClickedDayGrid = dayGridValue;
+        if (!this.state.firstClickedDayGrid) {
+            this.setState({
+                firstClickedDayGrid: dayGridValue
+            });
             this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        if (this.firstClickedDayGrid && !this.lastClickedDayGrid) {
+        if (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) {
             this.lastClickedDayGrid = dayGridValue;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        this.firstClickedDayGrid = dayGridValue;
+        this.setState({
+            firstClickedDayGrid: dayGridValue
+        });
+
         this.lastClickedDayGrid = null;
         await this.reRenderAsync();
         await this.emitOutput();
@@ -271,7 +279,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
-        return (dayGridValue.unixTime === this.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.lastClickedDayGrid?.unixTime);
+        return (dayGridValue.unixTime === this.state.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.lastClickedDayGrid?.unixTime);
     }
 
     private isDayGridInRange(dayGridValue: DayGridValue): boolean {
@@ -282,18 +290,18 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const isSmallerThanHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime < this.state.lastHoveredDayGrid.unixTime : false;
         const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime > this.state.lastHoveredDayGrid.unixTime : false;
 
-        const isBiggerThanFirstClickedGrid = this.firstClickedDayGrid ? dayGridValue.unixTime > this.firstClickedDayGrid.unixTime : false;
+        const isBiggerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime > this.state.firstClickedDayGrid.unixTime : false;
         const isBiggerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime > this.lastClickedDayGrid.unixTime : false;
 
-        const isSmallerThanFirstClickedGrid = this.firstClickedDayGrid ? dayGridValue.unixTime < this.firstClickedDayGrid.unixTime : false;
+        const isSmallerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime < this.state.firstClickedDayGrid.unixTime : false;
 
         const isSmallerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime < this.lastClickedDayGrid.unixTime : false;
 
-        if (this.firstClickedDayGrid && this.lastClickedDayGrid) {
+        if (this.state.firstClickedDayGrid && this.lastClickedDayGrid) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
 
-        if (this.firstClickedDayGrid && !this.lastClickedDayGrid) {
+        if (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
 
@@ -353,9 +361,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
 
-        const isInRangeAndSelectedStyle = (this.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
+        const isInRangeAndSelectedStyle = (this.state.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
 
-        const isInRangeAndNotSelectedStyle = (this.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
+        const isInRangeAndNotSelectedStyle = (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
 
         const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle, isOutOfRangeStyle);
 
