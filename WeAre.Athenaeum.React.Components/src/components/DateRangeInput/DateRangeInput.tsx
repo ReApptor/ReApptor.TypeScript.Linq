@@ -29,6 +29,7 @@ interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
 
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
     activeMonthView: Date;
+    lastHoveredDayGrid: DayGridValue | null;
 }
 
 interface DayGridValue {
@@ -49,7 +50,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             {
                 value: this.props.value ?? [null, null]
             },
-        activeMonthView: this.defaultActiveMonthView
+        activeMonthView: this.defaultActiveMonthView,
+        lastHoveredDayGrid: null
     }
 
     private readonly absolutePositionPadding: string = '5px';
@@ -58,7 +60,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    private lastHoveredDayGrid: DayGridValue | null = null;
+    // private lastHoveredDayGrid: DayGridValue | null = null;
     private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
     private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
     private showDatePicker: boolean = false;
@@ -146,6 +148,28 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
     }
 
+    private get output(): [Date | null, Date | null] {
+        if (!this.firstClickedDayGrid || !this.lastClickedDayGrid) {
+            return [
+                (this.firstClickedDayGrid)
+                    ? new Date(this.firstClickedDayGrid.unixTime)
+                    : null,
+                (this.lastClickedDayGrid)
+                    ? new Date(this.lastClickedDayGrid.unixTime)
+                    : null,
+            ];
+        }
+
+        const start: Date = new Date(this.firstClickedDayGrid.unixTime);
+        const end: Date = new Date(this.lastClickedDayGrid.unixTime);
+
+        if (start.getTime() > end.getTime()) {
+            return [end, start]
+        }
+
+        return [start, end];
+    }
+
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
         const target: Node = e.target as Node;
 
@@ -215,8 +239,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private async onDayGridMouseEnter(dayGridValue: DayGridValue): Promise<void> {
-        this.lastHoveredDayGrid = dayGridValue;
-        await this.reRenderAsync();
+        this.setState({
+            lastHoveredDayGrid: dayGridValue
+        });
     }
 
     private async onNextMonthClick(): Promise<void> {
@@ -229,28 +254,6 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         this.setState({
             activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() - 1))
         });
-    }
-
-    private get output(): [Date | null, Date | null] {
-        if (!this.firstClickedDayGrid || !this.lastClickedDayGrid) {
-            return [
-                (this.firstClickedDayGrid)
-                    ? new Date(this.firstClickedDayGrid.unixTime)
-                    : null,
-                (this.lastClickedDayGrid)
-                    ? new Date(this.lastClickedDayGrid.unixTime)
-                    : null,
-            ];
-        }
-
-        const start: Date = new Date(this.firstClickedDayGrid.unixTime);
-        const end: Date = new Date(this.lastClickedDayGrid.unixTime);
-
-        if (start.getTime() > end.getTime()) {
-            return [end, start]
-        }
-
-        return [start, end];
     }
 
     private async emitOutput(): Promise<void> {
@@ -276,8 +279,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return false;
         }
 
-        const isSmallerThanHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime < this.lastHoveredDayGrid.unixTime : false;
-        const isBiggerThanLastHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime > this.lastHoveredDayGrid.unixTime : false;
+        const isSmallerThanHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime < this.state.lastHoveredDayGrid.unixTime : false;
+        const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime > this.state.lastHoveredDayGrid.unixTime : false;
 
         const isBiggerThanFirstClickedGrid = this.firstClickedDayGrid ? dayGridValue.unixTime > this.firstClickedDayGrid.unixTime : false;
         const isBiggerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime > this.lastClickedDayGrid.unixTime : false;
