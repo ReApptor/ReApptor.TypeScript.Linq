@@ -27,7 +27,9 @@ interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
     maxDate?: Date;
 }
 
-interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {}
+interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
+    activeMonthView: Date;
+}
 
 interface DayGridValue {
     id?: string;
@@ -39,13 +41,23 @@ const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
 export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
+    state: IDateRangeInputState = {
+        readonly: false,
+        edit: true,
+        validationError: null,
+        model: this.props.model ??
+            {
+                value: this.props.value ?? [null, null]
+            },
+        activeMonthView: this.defaultActiveMonthView
+    }
+
     private readonly absolutePositionPadding: string = '5px';
     private absolutePositionTop: string = '';
 
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    private activeMonthView: Date = this.defaultActiveMonthView;
     private lastHoveredDayGrid: DayGridValue | null = null;
     private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
     private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
@@ -79,8 +91,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private get gridDays(): DayGridValue[] {
-        const year = this.activeMonthView.getFullYear();
-        const month = this.activeMonthView.getMonth();
+        const year = this.state.activeMonthView.getFullYear();
+        const month = this.state.activeMonthView.getMonth();
 
         const firstDayOfNextMonth: number = 1;
         const previousMonth: number = month - 1;
@@ -88,7 +100,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const currentMonthDayCount: number = DateRangeInput.daysInMonth(year, month);
 
-        const firstDay: Date = new Date(this.activeMonthView.setDate(1));
+        const firstDay: Date = new Date(this.state.activeMonthView.setDate(1));
 
         const firstDayWeekDay: WeekDaysEnum = firstDay.getDay();
 
@@ -208,13 +220,15 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private async onNextMonthClick(): Promise<void> {
-        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() + 1));
-        await this.reRenderAsync();
+        this.setState({
+            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() + 1))
+        });
     }
 
     private async onPreviousMonthClick(): Promise<void> {
-        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() - 1));
-        await this.reRenderAsync();
+        this.setState({
+            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() - 1))
+        });
     }
 
     private get output(): [Date | null, Date | null] {
@@ -363,8 +377,8 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
     public renderDateRangePicker(): React.ReactNode {
         const style = this.props.expanded ? {top: this.absolutePositionTop} : {};
-        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
-        const year: number = this.activeMonthView.getFullYear();
+        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.state.activeMonthView);
+        const year: number = this.state.activeMonthView.getFullYear();
         const expandedStyle = this.props.expanded ? "" : styles.dateRangeInputExpanded;
 
         return (
