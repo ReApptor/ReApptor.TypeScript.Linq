@@ -36,10 +36,7 @@ interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
     absolutePositionTop: number
 }
 
-interface DayGridValue {
-    id?: string;
-    unixTime: number
-}
+type DayGridValue = Date;
 
 export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
     private readonly _absolutePositionPaddingPx: number = 20;
@@ -55,15 +52,14 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         edit: true,
         validationError: null,
         absolutePositionTop: 0,
-        model: this.props.model ??
-            {
-                value: this.props.value ?? [null, null]
-            },
         activeMonthView: this.defaultActiveMonthView,
         lastHoveredDayGrid: null,
         firstClickedDayGrid: this.defaultClickedDayGridValues[0],
         lastClickedDayGrid: this.defaultClickedDayGridValues[1],
         showDatePicker: false,
+        model: this.props.model ?? {
+            value: DateRangeInput.sortDates(this.props.value)
+        },
     }
 
 
@@ -84,10 +80,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const endDate: Date | null = this.props.value[1];
 
         const start: DayGridValue | null = (startDate)
-            ? {unixTime: DateRangeInput.getStartOfDay(startDate).getTime()}
+            ? DateRangeInput.getStartOfDay(startDate)
             : null;
         const end: DayGridValue | null = (endDate)
-            ? {unixTime: DateRangeInput.getStartOfDay(endDate).getTime()}
+            ? DateRangeInput.getStartOfDay(endDate)
             : null;
 
         return [start, end];
@@ -118,32 +114,18 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
 
         const currentMonthGridDays: DayGridValue[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_intro_${index}`;
             const day = index + 1;
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, month, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, month, day));
         });
 
         const introMonthGridDays: DayGridValue[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_${index}`;
             const day = lastDayOfPreviousMonth - index;
-
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, previousMonth, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, previousMonth, day));
         }).reverse();
 
         const outroMonthGridDays: DayGridValue[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_outro_${index}`;
             const day = firstDayOfNextMonth + index;
-
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, nextMonth, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, nextMonth, day));
         });
 
         return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
@@ -153,22 +135,51 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         if (!this.state.firstClickedDayGrid || !this.state.lastClickedDayGrid) {
             return [
                 (this.state.firstClickedDayGrid)
-                    ? new Date(this.state.firstClickedDayGrid.unixTime)
+                    ? this.state.firstClickedDayGrid
                     : null,
                 (this.state.lastClickedDayGrid)
-                    ? new Date(this.state.lastClickedDayGrid.unixTime)
+                    ? this.state.lastClickedDayGrid
                     : null,
             ];
         }
 
-        const start: Date = new Date(this.state.firstClickedDayGrid.unixTime);
-        const end: Date = new Date(this.state.lastClickedDayGrid.unixTime);
+        const start: Date = this.state.firstClickedDayGrid;
+        const end: Date = this.state.lastClickedDayGrid;
 
         if (start.getTime() > end.getTime()) {
             return [end, start]
         }
 
         return [start, end];
+    }
+
+    private get minDate(): Date | null {
+        if (!this.props.minDate) return null;
+
+        return DateRangeInput.getStartOfDay(this.props.minDate);
+    }
+
+    private get maxDate(): Date | null {
+        if (!this.props.maxDate) return null;
+
+        return DateRangeInput.getStartOfDay(this.props.maxDate);
+    }
+
+    public set value(dateRangeInputValue: DateRangeInputValue) {
+        if (!DateRangeInput.isValidDateRangeInputValue(dateRangeInputValue)) {
+            return;
+        }
+
+        const sortedValue = DateRangeInput.sortDates(dateRangeInputValue);
+
+        const showDatePicker = !(DateRangeInput.isStartAndEndDatesSelected(dateRangeInputValue));
+
+        this.setState({
+            model: {
+                value: sortedValue
+            },
+            showDatePicker
+        });
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
@@ -309,7 +320,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
-        return (dayGridValue.unixTime === this.state.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.state.lastClickedDayGrid?.unixTime);
+        return DateRangeInput.isSameDate(dayGridValue, this.state.firstClickedDayGrid) || DateRangeInput.isSameDate(dayGridValue, this.state.lastClickedDayGrid);
     }
 
     private isDayGridInRange(dayGridValue: DayGridValue): boolean {
@@ -317,15 +328,15 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return false;
         }
 
-        const isSmallerThanHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime < this.state.lastHoveredDayGrid.unixTime : false;
-        const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime > this.state.lastHoveredDayGrid.unixTime : false;
+        const isSmallerThanHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.getTime() < this.state.lastHoveredDayGrid.getTime() : false;
+        const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.getTime() > this.state.lastHoveredDayGrid.getTime() : false;
 
-        const isBiggerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime > this.state.firstClickedDayGrid.unixTime : false;
-        const isBiggerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.unixTime > this.state.lastClickedDayGrid.unixTime : false;
+        const isBiggerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.getTime() > this.state.firstClickedDayGrid.getTime() : false;
+        const isBiggerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.getTime() > this.state.lastClickedDayGrid.getTime() : false;
 
-        const isSmallerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime < this.state.firstClickedDayGrid.unixTime : false;
+        const isSmallerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.getTime() < this.state.firstClickedDayGrid.getTime() : false;
 
-        const isSmallerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.unixTime < this.state.lastClickedDayGrid.unixTime : false;
+        const isSmallerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.getTime() < this.state.lastClickedDayGrid.getTime() : false;
 
         if (this.state.firstClickedDayGrid && this.state.lastClickedDayGrid) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
@@ -335,18 +346,25 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
 
-        return  false
+        return false;
     }
 
     private isOutOfRange (dayGridValue: DayGridValue): boolean {
-        const minDateUnixTime: number | null = this.props.minDate ? DateRangeInput.getStartOfDay(this.props.minDate).getTime() : null;
-        const maxDateUnixTime: number | null = this.props.maxDate ? DateRangeInput.getStartOfDay(this.props.maxDate).getTime() : null;
+        const minDateUnixTime: number | null = this.minDate ? this.minDate.getTime() : null;
+        const maxDateUnixTime: number | null = this.maxDate ? this.maxDate.getTime() : null;
 
         if (minDateUnixTime && maxDateUnixTime) {
-            return minDateUnixTime > dayGridValue.unixTime || maxDateUnixTime < dayGridValue.unixTime;
+            return (minDateUnixTime > dayGridValue.getTime()) || (maxDateUnixTime < dayGridValue.getTime());
         }
-        if (minDateUnixTime) return minDateUnixTime > dayGridValue.unixTime;
-        if (maxDateUnixTime) return maxDateUnixTime < dayGridValue.unixTime;
+
+        if (minDateUnixTime) {
+            return minDateUnixTime > dayGridValue.getTime();
+        }
+
+        if (maxDateUnixTime) {
+            return maxDateUnixTime < dayGridValue.getTime();
+        }
+
         return false;
     }
 
@@ -390,7 +408,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const isSelectedStyle = this.isDayGridSelected(gridDay) && styles.isSelected || "";
 
-        const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
+        const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.getTime() ? styles.isToday : "";
 
         const isInRangeAndSelectedStyle = (this.state.firstClickedDayGrid && this.state.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
 
@@ -405,12 +423,12 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return (
             <div
                 className={className}
-                key={String(gridDay.unixTime)}
+                key={String(gridDay.getTime())}
                 onMouseEnter={onMouseEnter}
                 onClick={onClick}>
                     <span>
                         {
-                            DateRangeInput.getDayOfMonth(gridDay.unixTime)
+                            DateRangeInput.getDayOfMonth(gridDay.getTime())
                         }
                     </span>
             </div>
@@ -503,7 +521,13 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
 
-    private static sortDates(date1: Date | null = null, date2: Date | null = null): DateRangeInputValue {
+    private static sortDates(value: DateRangeInputValue | undefined): DateRangeInputValue {
+        if (!value) {
+            return [null, null];
+        }
+
+        const [date1, date2] = value;
+
         if (date1 && date2) {
             const sorter = (a: Date, b: Date) => a.getTime() - b.getTime();
             return [date1, date2].sort(sorter) as DateRangeInputValue;
@@ -518,5 +542,25 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         }
 
         return [null, null];
+    }
+
+    private static isSameDate(d1: Date | null, d2: Date | null): boolean {
+        if(!d1 || !d2) return false;
+
+        return d1.getTime() === d2.getTime();
+    }
+
+    private static isStartAndEndDatesSelected(value: DateRangeInputValue): value is [Date, Date] {
+        if (!DateRangeInput.isValidDateRangeInputValue(value)) {
+            return false;
+        }
+
+        const [d1, d2] = value;
+
+        if (!d1 || !d2) {
+            return false;
+        }
+
+        return true;
     }
 }
