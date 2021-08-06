@@ -31,6 +31,9 @@ interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
     activeMonthView: Date;
     lastHoveredDayGrid: DayGridValue | null;
     firstClickedDayGrid: DayGridValue | null;
+    lastClickedDayGrid: DayGridValue | null;
+    showDatePicker: boolean;
+    absolutePositionTop: number
 }
 
 interface DayGridValue {
@@ -38,32 +41,30 @@ interface DayGridValue {
     unixTime: number
 }
 
-const WEEK_LENGTH = 7;
-const MONTH_GRID = 35;
-const LONG_MONTH_GRID = 42;
-
 export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
+    private readonly _absolutePositionPaddingPx: number = 20;
+    private readonly _monthGridLongCount: number = 42;
+    private readonly _monthGridCount: number = 35;
+    private readonly _weekDaysCount: number = 7;
+
+    private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
+    private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
+
     state: IDateRangeInputState = {
         readonly: false,
         edit: true,
         validationError: null,
+        absolutePositionTop: 0,
         model: this.props.model ??
             {
                 value: this.props.value ?? [null, null]
             },
         activeMonthView: this.defaultActiveMonthView,
         lastHoveredDayGrid: null,
-        firstClickedDayGrid: this.defaultClickedDayGridValues[0]
+        firstClickedDayGrid: this.defaultClickedDayGridValues[0],
+        lastClickedDayGrid: this.defaultClickedDayGridValues[1],
+        showDatePicker: false,
     }
-
-    private readonly absolutePositionPadding: string = '5px';
-    private absolutePositionTop: string = '';
-
-    private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
-    private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
-
-    private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
-    private showDatePicker: boolean = false;
 
 
     private get defaultActiveMonthView(): Date {
@@ -106,11 +107,11 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const firstDayWeekDay: WeekDaysEnum = firstDay.getDay();
 
-        const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? WEEK_LENGTH - 1 : firstDayWeekDay - 1;
+        const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? this._weekDaysCount - 1 : firstDayWeekDay - 1;
 
-        const isLongMonth: boolean = (introDaysCount + currentMonthDayCount) > MONTH_GRID;
+        const isLongMonth: boolean = (introDaysCount + currentMonthDayCount) > this._monthGridCount;
 
-        const gridCount: number = isLongMonth ? LONG_MONTH_GRID : MONTH_GRID;
+        const gridCount: number = isLongMonth ? this._monthGridLongCount : this._monthGridCount;
 
         const outroDaysCount: number = gridCount - introDaysCount - currentMonthDayCount;
 
@@ -149,19 +150,19 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private get output(): [Date | null, Date | null] {
-        if (!this.state.firstClickedDayGrid || !this.lastClickedDayGrid) {
+        if (!this.state.firstClickedDayGrid || !this.state.lastClickedDayGrid) {
             return [
                 (this.state.firstClickedDayGrid)
                     ? new Date(this.state.firstClickedDayGrid.unixTime)
                     : null,
-                (this.lastClickedDayGrid)
-                    ? new Date(this.lastClickedDayGrid.unixTime)
+                (this.state.lastClickedDayGrid)
+                    ? new Date(this.state.lastClickedDayGrid.unixTime)
                     : null,
             ];
         }
 
         const start: Date = new Date(this.state.firstClickedDayGrid.unixTime);
-        const end: Date = new Date(this.lastClickedDayGrid.unixTime);
+        const end: Date = new Date(this.state.lastClickedDayGrid.unixTime);
 
         if (start.getTime() > end.getTime()) {
             return [end, start]
@@ -184,7 +185,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        this.showDatePicker = false;
+        this.setState({
+            showDatePicker: false
+        });
         await this.reRenderAsync();
     }
 
@@ -193,8 +196,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        if (this.state.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
-            this.lastClickedDayGrid = dayGridValue;
+        if (this.state.firstClickedDayGrid === dayGridValue && !this.state.lastClickedDayGrid && this.props.sameDay) {
+            this.setState({
+                lastClickedDayGrid: dayGridValue
+            });
             await this.reRenderAsync();
             await this.emitOutput();
             return;
@@ -202,19 +207,19 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         if (this.state.firstClickedDayGrid === dayGridValue) {
             this.setState({
-                firstClickedDayGrid: null
+                firstClickedDayGrid: null,
+                lastClickedDayGrid: null
             });
-            this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        if (this.lastClickedDayGrid === dayGridValue) {
+        if (this.state.lastClickedDayGrid === dayGridValue) {
             this.setState({
-                firstClickedDayGrid: null
+                firstClickedDayGrid: null,
+                lastClickedDayGrid: null
             });
-            this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
@@ -222,26 +227,28 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         if (!this.state.firstClickedDayGrid) {
             this.setState({
-                firstClickedDayGrid: dayGridValue
+                firstClickedDayGrid: dayGridValue,
+                lastClickedDayGrid: null
             });
-            this.lastClickedDayGrid = null;
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
-        if (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) {
-            this.lastClickedDayGrid = dayGridValue;
+        if (this.state.firstClickedDayGrid && !this.state.lastClickedDayGrid) {
+            this.setState({
+                lastClickedDayGrid: dayGridValue
+            });
             await this.reRenderAsync();
             await this.emitOutput();
             return;
         }
 
         this.setState({
-            firstClickedDayGrid: dayGridValue
+            firstClickedDayGrid: dayGridValue,
+            lastClickedDayGrid: null
         });
 
-        this.lastClickedDayGrid = null;
         await this.reRenderAsync();
         await this.emitOutput();
     }
@@ -268,7 +275,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const [start, end] = this.output;
 
         if ((start) && (end)) {
-            this.showDatePicker = false;
+            this.setState({
+                showDatePicker: false
+            });
         }
 
         await this.reRenderAsync();
@@ -279,7 +288,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
-        return (dayGridValue.unixTime === this.state.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.lastClickedDayGrid?.unixTime);
+        return (dayGridValue.unixTime === this.state.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.state.lastClickedDayGrid?.unixTime);
     }
 
     private isDayGridInRange(dayGridValue: DayGridValue): boolean {
@@ -291,17 +300,17 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.unixTime > this.state.lastHoveredDayGrid.unixTime : false;
 
         const isBiggerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime > this.state.firstClickedDayGrid.unixTime : false;
-        const isBiggerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime > this.lastClickedDayGrid.unixTime : false;
+        const isBiggerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.unixTime > this.state.lastClickedDayGrid.unixTime : false;
 
         const isSmallerThanFirstClickedGrid = this.state.firstClickedDayGrid ? dayGridValue.unixTime < this.state.firstClickedDayGrid.unixTime : false;
 
-        const isSmallerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime < this.lastClickedDayGrid.unixTime : false;
+        const isSmallerThanLastClickedGrid = this.state.lastClickedDayGrid ? dayGridValue.unixTime < this.state.lastClickedDayGrid.unixTime : false;
 
-        if (this.state.firstClickedDayGrid && this.lastClickedDayGrid) {
+        if (this.state.firstClickedDayGrid && this.state.lastClickedDayGrid) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
 
-        if (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) {
+        if (this.state.firstClickedDayGrid && !this.state.lastClickedDayGrid) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
 
@@ -325,9 +334,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        this.showDatePicker = !this.showDatePicker;
-
-        this.absolutePositionTop = `calc(${this._inputRef.current.getBoundingClientRect().height}px + ${this.absolutePositionPadding})`
+        this.setState({
+            showDatePicker: !this.state.showDatePicker,
+            absolutePositionTop: this._inputRef.current.getBoundingClientRect().height + this._absolutePositionPaddingPx
+        });
 
         await this.reRenderAsync();
     }
@@ -361,9 +371,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
 
-        const isInRangeAndSelectedStyle = (this.state.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
+        const isInRangeAndSelectedStyle = (this.state.firstClickedDayGrid && this.state.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
 
-        const isInRangeAndNotSelectedStyle = (this.state.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
+        const isInRangeAndNotSelectedStyle = (this.state.firstClickedDayGrid && !this.state.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
 
         const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle, isOutOfRangeStyle);
 
@@ -387,7 +397,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     }
 
     public renderDateRangePicker(): React.ReactNode {
-        const style = this.props.expanded ? {top: this.absolutePositionTop} : {};
+        const style = this.props.expanded ? {top: `${this.state.absolutePositionTop}px`} : {};
         const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.state.activeMonthView);
         const year: number = this.state.activeMonthView.getFullYear();
         const expandedStyle = this.props.expanded ? "" : styles.dateRangeInputExpanded;
@@ -437,7 +447,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 </div>
 
                 {
-                    (this.showDatePicker) &&
+                    (this.state.showDatePicker) &&
                     (
                         this.renderDateRangePicker()
                     )
