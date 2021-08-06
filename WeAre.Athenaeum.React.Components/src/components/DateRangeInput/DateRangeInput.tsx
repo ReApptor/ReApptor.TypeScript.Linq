@@ -38,7 +38,7 @@ const WEEK_LENGTH = 7;
 const MONTH_GRID = 35;
 const LONG_MONTH_GRID = 42;
 
-export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick{
+export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
     private readonly absolutePositionPadding: string = '5px';
     private absolutePositionTop: string = '';
 
@@ -353,7 +353,9 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 onMouseEnter={onMouseEnter}
                 onClick={onClick}>
                     <span>
-                        {DateRangeInput.getDayOfMonth(gridDay.unixTime)}
+                        {
+                            DateRangeInput.getDayOfMonth(gridDay.unixTime)
+                        }
                     </span>
             </div>
         );
