@@ -260,7 +260,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                     {(this.description) && <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>}
                 </div>
                 {
-                    this.minimized && this.renderContent(true)
+                    (this.minimized) && this.renderContent(true)
                 }
             </div>
         );
@@ -291,7 +291,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
         await super.componentWillReceiveProps(nextProps);
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <div id={this.id} className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}>
                 

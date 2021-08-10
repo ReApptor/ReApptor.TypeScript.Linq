@@ -32,7 +32,7 @@ export default class TextInputWidget extends BaseInputWidget<ITextInputWidgetPro
         return this.refObject._inputRef.current!;
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         let fontSize: object = {fontSize: "2em"};
 
         if (this.value.length > 17) {
@@ -80,7 +80,7 @@ export default class TextInputWidget extends BaseInputWidget<ITextInputWidgetPro
                         :
                         (
                             <div onClick={async () => await this.showInputAsync()}>
-                                {this.value ? <div className={styles.valueContainer}><span style={fontSize}>{this.value}</span></div> : super.renderContent()}
+                                {this.value ? <div className={styles.valueContainer}><span style={fontSize}>{this.value}</span></div> : super.renderContent(renderHidden)}
                             </div>
                         )
                 }

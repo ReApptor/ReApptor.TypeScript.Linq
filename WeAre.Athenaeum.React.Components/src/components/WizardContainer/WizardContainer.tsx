@@ -45,7 +45,7 @@ export default class WizardContainer extends BaseWidgetContainer<IWizardContaine
         return super.getPage() as IWizardPage;
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
 

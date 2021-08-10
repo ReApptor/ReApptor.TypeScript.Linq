@@ -296,7 +296,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
         }
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <div id={`number-widget-body_${this.id}`} className={this.css(styles.numberWidget, this.edit && styles.edit, this.readonly && styles.readonly)}>
 
@@ -320,7 +320,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
                         :
                         (
                             <div onClick={async () => await this.startEditAsync()}>
-                                {super.renderContent()}
+                                {super.renderContent(renderHidden)}
                             </div>
                         )
                 }
