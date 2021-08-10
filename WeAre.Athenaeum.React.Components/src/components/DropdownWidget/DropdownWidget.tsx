@@ -293,7 +293,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         }
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         
         const dropdownType: DropdownType = (this.mobile) ? DropdownType.List : DropdownType.Dropdown;
         
@@ -302,7 +302,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         return (
             <div className={styles.dropdownWidget}>
                 {
-                    super.renderContent()
+                    super.renderContent(renderHidden)
                 }
                 {
                     (this.state.data) &&

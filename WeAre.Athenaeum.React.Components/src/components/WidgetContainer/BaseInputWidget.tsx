@@ -145,8 +145,4 @@ export default abstract class BaseInputWidget<TProps extends IBaseInputWidgetPro
 
         return icon;
     }
-
-    protected renderContent(): React.ReactNode {
-        return super.renderContent();
-    }
 };

@@ -61,7 +61,7 @@ export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWid
         )
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
                 {
