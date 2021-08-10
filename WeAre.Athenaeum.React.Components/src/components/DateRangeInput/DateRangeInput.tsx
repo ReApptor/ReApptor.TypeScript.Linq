@@ -1,11 +1,11 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
+import {IGlobalClick} from "@weare/athenaeum-react-common";
 
 import Icon, {IconSize} from "../Icon/Icon";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
 import styles from "./DateRangeInput.module.scss";
-import {IGlobalClick} from "@weare/athenaeum-react-common";
 
 enum WeekDaysEnum {
     Sunday,
@@ -36,7 +36,7 @@ interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
 
 type DayGridValue = Date;
 
-export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
+export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
     private readonly _absolutePositionPaddingPx: number = 20;
     private readonly _monthGridLongCount: number = 42;
     private readonly _monthGridCount: number = 35;
