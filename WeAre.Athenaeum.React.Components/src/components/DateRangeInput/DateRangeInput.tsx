@@ -19,12 +19,13 @@ enum WeekDaysEnum {
 
 export type DateRangeInputValue = [Date | null, Date | null]; // [StartDate, EndDate]
 
-interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
+interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue> {
     expanded?: boolean;
     sameDay?: boolean;
     onChange?: (value: DateRangeInputValue) => Promise<void>
     minDate?: Date;
     maxDate?: Date;
+    model: {value: DateRangeInputValue}
 }
 
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
@@ -57,11 +58,31 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     }
 
     private get startDate(): Date | null {
-        return Array.isArray(this.state.model.value) ? this.state.model.value[0] : null;
+        const value = this.state.model.value;
+
+        if (value === null || value === undefined) return null;
+
+        if (!(Array.isArray(value))) return null;
+
+        if (value.length !== 2) return null;
+
+        if (value[0] === null) return null;
+
+        return DateRangeInput.getStartOfDay(value[0]);
     }
 
     private get endDate(): Date | null {
-        return Array.isArray(this.state.model.value) ? this.state.model.value[1] : null;
+        const value = this.state.model.value;
+
+        if (value === null || value === undefined) return null;
+
+        if (!(Array.isArray(value))) return null;
+
+        if (value.length !== 2) return null;
+
+        if (value[1] === null) return null;
+
+        return DateRangeInput.getStartOfDay(value[1]);
     }
 
     private get sameDayAllowed(): boolean {
@@ -70,7 +91,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
     private defaultActiveMonthView(): Date {
         if (DateRangeInput.isValidDateRangeInputValue(this.props.value)) {
-            return this.startDate ?? new Date();
+            return this.startDate ?? DateRangeInput.getStartOfDay(new Date());
         }
 
         return new Date();
@@ -474,15 +495,15 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
         if (date1 && date2) {
             const sorter = (a: Date, b: Date) => a.getTime() - b.getTime();
-            return [date1, date2].sort(sorter) as DateRangeInputValue;
+            return [date1, date2].sort(sorter).map(date => DateRangeInput.getStartOfDay(date)) as DateRangeInputValue;
         }
 
         if (date1) {
-            return [date1, null];
+            return [DateRangeInput.getStartOfDay(date1), null];
         }
 
         if (date2) {
-            return [date2, null];
+            return [DateRangeInput.getStartOfDay(date2), null];
         }
 
         return [null, null];
@@ -491,20 +512,6 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     private static isSameDate(d1: Date | null, d2: Date | null): boolean {
         if(!d1 || !d2) return false;
 
-        return d1.getTime() === d2.getTime();
-    }
-
-    private static isStartAndEndDatesSelected(value: DateRangeInputValue): value is [Date, Date] {
-        if (!DateRangeInput.isValidDateRangeInputValue(value)) {
-            return false;
-        }
-
-        const [d1, d2] = value;
-
-        if (!d1 || !d2) {
-            return false;
-        }
-
-        return true;
+        return DateRangeInput.getStartOfDay(d1).getTime() === DateRangeInput.getStartOfDay(d2).getTime();
     }
 }
