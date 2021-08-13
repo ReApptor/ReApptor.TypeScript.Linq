@@ -6,7 +6,7 @@ import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";
 
-interface IAccordionClassNames extends IBaseClassNames {
+export interface IAccordionClassNames extends IBaseClassNames {
     readonly accordion?: string;
     readonly headerContainer?: string;
     readonly header?: string;
