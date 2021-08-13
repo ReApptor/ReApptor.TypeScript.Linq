@@ -90,9 +90,8 @@ class UserInteractionDataStorage {
         return to;
     }
 
-    public clear(id: string, type: DataStorageType = DataStorageType.Page): void {
-        const key: string = this.getKey(type, id);
-        this.data.remove(key);
+    public clear(): void {
+        this.data.clear();
     }
 
     public async onAuthorize(): Promise<void> {
