@@ -6,6 +6,7 @@ import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import ImageInputLocalizer from "./ImageInputLocalizer";
+import {ReactCropperHelpers} from "./ReactCropperHelpers";
 
 import 'cropperjs/dist/cropper.css';
 import './ReactCropperOverride.scss';
@@ -55,6 +56,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cropperRef = React.createRef<ReactCropperElement>();
+    private cropperHelper = new ReactCropperHelpers(this.cropperRef);
 
     public state: IImageInputState = {
         currentView: ImageInputView.Default,
@@ -196,8 +198,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return (this.currentView === ImageInputView.Edit);
     }
 
-    private get showFullScreenButton(): boolean {
-        return (this.hasSelectedPictureIndex) && (!this.showPreviewButton);
+    private get showMiniRotateButton(): boolean {
+        return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default);
     }
 
     //  Control panel button Click Events
@@ -241,8 +243,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         let newFileModel: FileModel = {...this.activePicture};
-        const cropped: string = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
-        newFileModel.src = cropped;
+
+        newFileModel.src = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
 
         if (this.props.convertImage) {
             newFileModel = await this.props.convertImage(newFileModel);
@@ -304,8 +306,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        this.cropperRef.current.cropper.rotate(-90);
-        //this.setCropAreaToImageFullSize();
+        this.cropperHelper.rotateAndFitToScreen(-90);
     }
 
     private async onRotateRightButtonClick(): Promise<void> {
@@ -313,8 +314,51 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        this.cropperRef.current.cropper.rotate(90);
-        this.setCropAreaToImageFullSize();
+        this.cropperHelper.rotateAndFitToScreen(90);
+    }
+
+    private async onRotateLeftMiniButtonClick(): Promise<void> {
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, -90, this.getPreviewSource(this.selectedPictureIndex));
+
+        if (this.props.convertImage) {
+            rotated = await this.props.convertImage(rotated);
+
+            if (rotated === null || rotated === undefined) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+        }
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
+    }
+
+    private async onRotateRightMiniButtonClick(): Promise<void> {
+
+        const selectedPicture = this.pictures[this.selectedPictureIndex];
+
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, 90, this.getPreviewSource(this.selectedPictureIndex));
+
+        if (this.props.convertImage) {
+            rotated = await this.props.convertImage(rotated);
+
+            if (rotated === null || rotated === undefined) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+        }
+
+        await this.updatePicture(rotated, this.selectedPictureIndex);
+    }
+
+    private onListViewItemClick(index: number): void {
+        this.setState(
+            {
+                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
+                    ? null
+                    : index
+            });
     }
 
     //  DragAndDrop Functionality Events
@@ -506,65 +550,33 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    //  Helpers
-
-    private async invokeOnChange(): Promise<void> {
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.pictures);
-        }
-    }
-
-    private async onChangePicture(file: FileModel | null, index: number): Promise<void> {
-
-        // TODO: use this method?
-
-        if (file != null) {
-            if (index > this.pictures.length) {
-                //add new
-                this.pictures.push(file);
-            } else {
-                //update existing
-                this.pictures[index] = file;
-            }
-        } else {
-            //delete existing
-            this.pictures.splice(index, 1);
-        }
-
-        await this.invokeOnChange();
-
-        //rerender page
-        await this.reRenderAsync();
-    }
-
-    private setCropAreaToImageFullSize(): void {
-        if (!this.cropperRef.current) {
-            return;
-        }
-
-        const canvasData = this.cropperRef.current.cropper.getCanvasData();
-        this.cropperRef.current.cropper.setCropBoxData({
-            left: canvasData.left,
-            top: canvasData.top,
-            width: canvasData.width,
-            height: canvasData.height
-        });
-    }
-
-    private onListViewItemClick(index: number): void {
-        this.setState(
-            {
-                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
-                    ? null
-                    : index
-            });
-    }
-
     //  Renders
 
     private renderControlPanel(): JSX.Element {
         return (
             <React.Fragment>
+
+                {
+                    (this.showMiniRotateButton) &&
+                    (
+                        <div className={styles.controlPanelMiniButtonWrap}>
+
+                            <Button small
+                                    icon={{name: "undo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => await this.onRotateLeftMiniButtonClick()}
+                            />
+
+
+                            <Button small
+                                    icon={{name: "redo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => await this.onRotateRightMiniButtonClick()}
+                            />
+                        </div>
+                    )
+                }
+
 
                 {
                     (this.showRotateButton) &&
@@ -749,7 +761,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                          src={this.cropperSource}
                          viewMode={1} // cannot move box outside image borders
                          guides={false}
-                         ready={() => this.setCropAreaToImageFullSize()}
+                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
                 />
             </div>
         )

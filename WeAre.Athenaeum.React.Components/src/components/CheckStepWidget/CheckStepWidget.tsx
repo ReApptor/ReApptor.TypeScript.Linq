@@ -45,7 +45,7 @@ export default class CheckStepWidget extends BaseCheckboxWidget<ICheckStepWidget
         return styles.checkStepContainer;
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <div className={styles.checkStep}>
                 

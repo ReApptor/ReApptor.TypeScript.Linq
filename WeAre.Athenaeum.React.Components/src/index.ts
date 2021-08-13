@@ -88,9 +88,6 @@ export {default as CheckboxNullable} from "./components/CheckboxNullable/Checkbo
 export * from "./components/DateInput/DateInput";
 export {default as DateInput} from "./components/DateInput/DateInput";
 
-export * from "./components/DateRangeInput/DateRangeInput";
-export {default as DateRangeInput} from "./components/DateRangeInput/DateRangeInput";
-
 export * from "./components/Dropdown/Dropdown";
 export {default as Dropdown} from "./components/Dropdown/Dropdown";
 
@@ -292,6 +289,7 @@ export {default as Accordion} from "./components/Accordion/Accordion";
 export {default as FooterLocalizer} from './components/Footer/FooterLocalizer';
 export {default as AthenaeumComponentsConstants} from "./AthenaeumComponentsConstants";
 
+export * from "./components/DateRangeInput/DateRangeInput";
 export * from "./components/ImageInput/ImageInput";
 export * from "./components/TabContainer/TabModel";
 export * from "./components/Dropdown/SelectListItem";

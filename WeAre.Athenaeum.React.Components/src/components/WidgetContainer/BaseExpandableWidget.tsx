@@ -56,7 +56,7 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
     
     protected abstract renderExpanded(): React.ReactNode;
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
                 {
@@ -65,7 +65,7 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
                         <div className={styles.expandableContent}>
                             {this.renderExpanded()}
                         </div>
-                        : super.renderContent()
+                        : super.renderContent(renderHidden)
                 }
             </React.Fragment>
         );
