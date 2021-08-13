@@ -92,6 +92,7 @@ class UserInteractionDataStorage {
 
     public clear(): void {
         this.data.clear();
+        this.save();
     }
 
     public async onAuthorize(): Promise<void> {
