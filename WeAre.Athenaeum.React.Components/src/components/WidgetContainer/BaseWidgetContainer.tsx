@@ -128,7 +128,7 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
         return (!!this.props.controller) && (this.props.async === true);
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
                 {this.widgets}

@@ -1,9 +1,10 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import {ImageInput} from "@weare/athenaeum-react-components";
+import {FileModel} from "@weare/athenaeum-toolkit";
 
 export default class ImageInputTests extends BaseComponent {
-    state = {
+    state: {picture: FileModel[], pictures: FileModel[]} = {
         picture: [],
         pictures: []
     }
@@ -18,7 +19,8 @@ export default class ImageInputTests extends BaseComponent {
                     onChange={async (sender, picture) => {
                         this.setState({picture})
                         await this.reRenderAsync();
-                    }}/>
+                    }}
+                />
 
                 <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
@@ -29,7 +31,8 @@ export default class ImageInputTests extends BaseComponent {
                     onChange={async (sender, pictures) => {
                         this.setState({pictures: pictures});
                         await this.reRenderAsync();
-                    }}/>
+                    }}
+                />
             </React.Fragment>
         );
     }

@@ -12,7 +12,7 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
     //     return this.mobile || this.state.minimized;
     // }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         let fontSize: object = { fontSize: "2em" };
 
         if(this.value.length > 17) {
@@ -39,7 +39,7 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
 
                     ) : (
                         <div onClick={async () => await this.showInputAsync()}>
-                            { this.value ? <div className={styles.valueContainer}><span style={fontSize}>{this.value}</span></div> : super.renderContent() }
+                            { this.value ? <div className={styles.valueContainer}><span style={fontSize}>{this.value}</span></div> : super.renderContent(renderHidden) }
                         </div>
                     )
                 }

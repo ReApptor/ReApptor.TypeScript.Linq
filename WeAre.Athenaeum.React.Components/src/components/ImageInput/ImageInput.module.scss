@@ -21,6 +21,26 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     justify-content: center;
 
 
+    .controlPanelMiniButtonWrap {
+      flex: 1;
+      min-width: 120px;
+      max-width: 150px;
+      display: flex;
+      justify-content: center;
+
+      button:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        flex: 1;
+      }
+
+      button:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        flex: 1;
+      }
+    }
+
     .controlPanelButton {
       flex: 1;
       min-width: 120px;
@@ -132,12 +152,12 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     background-color: darkgray;
     z-index: 999;
     position: fixed;
-    top: 0;
+    top: 45px;
     left: 0;
     margin: 0;
     padding: 0 0 0.5rem 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 45px);
 
     .viewPanel .cropper .reactCropper .cropper-container {
       margin: 0;

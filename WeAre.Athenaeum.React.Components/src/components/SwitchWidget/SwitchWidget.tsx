@@ -18,7 +18,7 @@ export default class SwitchWidget extends BaseCheckboxWidget<ISwitchWidgetProps>
         }
     }
 
-    protected renderContent(): React.ReactNode {
+    protected renderContent(renderHidden: boolean = false): React.ReactNode {
         const toggleStyles = (this.checked) ? styles.checked : styles.switch;
         const toggleExternalStyles = (this.checked) ? this.props.checkedClassName : "";
 

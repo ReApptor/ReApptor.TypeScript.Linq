@@ -1,11 +1,11 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
+import {IGlobalClick} from "@weare/athenaeum-react-common";
 
 import Icon, {IconSize} from "../Icon/Icon";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
 import styles from "./DateRangeInput.module.scss";
-import {IGlobalClick} from "@weare/athenaeum-react-common";
 
 enum WeekDaysEnum {
     Sunday,
@@ -17,123 +17,148 @@ enum WeekDaysEnum {
     Saturday
 }
 
-type DateRangeInputValue = [Date | null, Date | null]; // [StartDate, EndDate]
+export type DateRangeInputValue = [Date | null, Date | null]; // [StartDate, EndDate]
 
-interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue>{
+interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue> {
     expanded?: boolean;
     sameDay?: boolean;
     onChange?: (value: DateRangeInputValue) => Promise<void>
     minDate?: Date;
     maxDate?: Date;
+    model: {value: DateRangeInputValue}
 }
 
-interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {}
-
-interface DayGridValue {
-    id?: string;
-    unixTime: number
+interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
+    activeMonthView: Date;
+    lastHoveredDayGrid: DayGridValue | null;
+    showDatePicker: boolean;
+    absolutePositionTop: number,
 }
 
-const WEEK_LENGTH = 7;
-const MONTH_GRID = 35;
-const LONG_MONTH_GRID = 42;
+type DayGridValue = Date;
 
-export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick{
-    private readonly absolutePositionPadding: string = '5px';
-    private absolutePositionTop: string = '';
+export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInputProps, IDateRangeInputState> implements IGlobalClick {
+    private readonly _absolutePositionPaddingPx: number = 20;
+    private readonly _monthGridLongCount: number = 42;
+    private readonly _monthGridCount: number = 35;
+    private readonly _weekDaysCount: number = 7;
 
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    private activeMonthView: Date = this.defaultActiveMonthView;
-    private dayGridValues: DayGridValue[] = this.defaultDayGridValues;
-    private lastHoveredDayGrid: DayGridValue | null = null;
-    private firstClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[0];
-    private lastClickedDayGrid: DayGridValue | null = this.defaultClickedDayGridValues[1];
-    private showDatePicker: boolean = false;
+    state: IDateRangeInputState = {
+        ...super.state,
+        edit: true,
+        model: {value: [null, null]},
+        absolutePositionTop: 0,
+        activeMonthView: this.defaultActiveMonthView(),
+        lastHoveredDayGrid: null,
+        showDatePicker: false
 
+    }
 
-    private get defaultActiveMonthView(): Date {
+    private get startDate(): Date | null {
+        const value = this.state.model.value;
+
+        if (value === null || value === undefined) return null;
+
+        if (!(Array.isArray(value))) return null;
+
+        if (value.length !== 2) return null;
+
+        if (value[0] === null) return null;
+
+        return DateRangeInput.getStartOfDay(value[0]);
+    }
+
+    private get endDate(): Date | null {
+        const value = this.state.model.value;
+
+        if (value === null || value === undefined) return null;
+
+        if (!(Array.isArray(value))) return null;
+
+        if (value.length !== 2) return null;
+
+        if (value[1] === null) return null;
+
+        return DateRangeInput.getStartOfDay(value[1]);
+    }
+
+    private get sameDayAllowed(): boolean {
+        return this.props.sameDay ?? false
+    }
+
+    private defaultActiveMonthView(): Date {
         if (DateRangeInput.isValidDateRangeInputValue(this.props.value)) {
-            return this.props.value[0] ?? new Date();
+            return this.startDate ?? DateRangeInput.getStartOfDay(new Date());
         }
 
         return new Date();
     }
 
-    private get defaultDayGridValues(): DayGridValue[] {
-        return this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
-    }
+    private get gridDays(): DayGridValue[] {
+        const year = this.state.activeMonthView.getFullYear();
+        const month = this.state.activeMonthView.getMonth();
 
-    private get defaultClickedDayGridValues(): [DayGridValue | null, DayGridValue | null] {
-        if (!DateRangeInput.isValidDateRangeInputValue(this.props.value)) {
-            return [null, null]
-        }
-
-        const startDate: Date | null = this.props.value[0];
-        const endDate: Date | null = this.props.value[1];
-
-        const start: DayGridValue | null = (startDate)
-            ? {unixTime: DateRangeInput.getStartOfDay(startDate).getTime()}
-            : null;
-        const end: DayGridValue | null = (endDate)
-            ? {unixTime: DateRangeInput.getStartOfDay(endDate).getTime()}
-            : null;
-
-        return [start, end];
-    }
-
-    private getGridDays(year: number, month: number): DayGridValue[] {
         const firstDayOfNextMonth: number = 1;
         const previousMonth: number = month - 1;
         const nextMonth: number = month + 1;
 
         const currentMonthDayCount: number = DateRangeInput.daysInMonth(year, month);
 
-        const firstDay: Date = new Date(this.activeMonthView.setDate(1));
+        const firstDay: Date = new Date(this.state.activeMonthView.setDate(1));
 
         const firstDayWeekDay: WeekDaysEnum = firstDay.getDay();
 
-        const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? WEEK_LENGTH - 1 : firstDayWeekDay - 1;
+        const introDaysCount: number = firstDayWeekDay === WeekDaysEnum.Sunday ? this._weekDaysCount - 1 : firstDayWeekDay - 1;
 
-        const isLongMonth: boolean = (introDaysCount + currentMonthDayCount) > MONTH_GRID;
+        const isLongMonth: boolean = (introDaysCount + currentMonthDayCount) > this._monthGridCount;
 
-        const gridCount: number = isLongMonth ? LONG_MONTH_GRID : MONTH_GRID;
+        const gridCount: number = isLongMonth ? this._monthGridLongCount : this._monthGridCount;
 
         const outroDaysCount: number = gridCount - introDaysCount - currentMonthDayCount;
 
         const lastDayOfPreviousMonth: number = DateRangeInput.lastDayInMonth(year, previousMonth);
 
         const currentMonthGridDays: DayGridValue[] = new Array(currentMonthDayCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_intro_${index}`;
             const day = index + 1;
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, month, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, month, day));
         });
 
         const introMonthGridDays: DayGridValue[] = new Array(introDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_${index}`;
             const day = lastDayOfPreviousMonth - index;
-
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, previousMonth, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, previousMonth, day));
         }).reverse();
 
         const outroMonthGridDays: DayGridValue[] = new Array(outroDaysCount).fill(0).map((val: 0, index: number): DayGridValue => {
-            const id = `${this.id}_day_outro_${index}`;
             const day = firstDayOfNextMonth + index;
-
-            return  {
-                unixTime: DateRangeInput.getStartOfDay(new Date(year, nextMonth, day)).getTime(),
-                id
-            }
+            return DateRangeInput.getStartOfDay(new Date(year, nextMonth, day));
         });
 
         return [...introMonthGridDays, ...currentMonthGridDays, ...outroMonthGridDays];
+    }
+
+    private get minDate(): Date | null {
+        if (!this.props.minDate) return null;
+
+        return DateRangeInput.getStartOfDay(this.props.minDate);
+    }
+
+    private get maxDate(): Date | null {
+        if (!this.props.maxDate) return null;
+
+        return DateRangeInput.getStartOfDay(this.props.maxDate);
+    }
+
+    private async setValueAsync(dateRangeInputValue: DateRangeInputValue) {
+        if (!DateRangeInput.isValidDateRangeInputValue(dateRangeInputValue)) {
+            return;
+        }
+
+        const sortedValue = DateRangeInput.sortDates(dateRangeInputValue);
+
+        await this.updateValueAsync(sortedValue, false);
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
@@ -150,115 +175,106 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        this.showDatePicker = false;
-        await this.reRenderAsync();
+        this.setState({
+            showDatePicker: false
+        });
     }
 
-    private async onDayGridClick(dayGridValue: DayGridValue): Promise<void> {
-        if (this.isOutOfRange(dayGridValue)) {
+    private async onDayGridClick(clickedDate: DayGridValue): Promise<void> {
+        if (this.isOutOfRange(clickedDate)) {
             return;
         }
 
-        if (this.firstClickedDayGrid === dayGridValue && !this.lastClickedDayGrid && this.props.sameDay) {
-            this.lastClickedDayGrid = dayGridValue;
-            await this.reRenderAsync();
-            await this.emitOutput();
+        //  No date is selected. set it to start
+
+        if (!this.startDate && !this.endDate) {
+
+            await this.setValueAsync([clickedDate, null]);
+
+            await this.emitOnChange();
+
             return;
         }
 
-        if (this.firstClickedDayGrid === dayGridValue) {
+        //  both are selected. reset end and set to start
 
-            this.firstClickedDayGrid = null;
-            this.lastClickedDayGrid = null;
-            await this.reRenderAsync();
-            await this.emitOutput();
+        if (this.startDate && this.endDate) {
+
+            await this.setValueAsync([clickedDate, null]);
+
+            await this.emitOnChange();
+
             return;
         }
 
-        if (this.lastClickedDayGrid === dayGridValue) {
-            this.firstClickedDayGrid = null;
-            this.lastClickedDayGrid = null;
-            await this.reRenderAsync();
-            await this.emitOutput();
+        //  only start is selected.
+
+        if (this.startDate && !this.endDate) {
+
+            //  sameDayAllowed is enabled and selected is same as start then do It!.
+
+            if (this.sameDayAllowed && DateRangeInput.isSameDate(this.startDate, clickedDate)) {
+
+                await this.setValueAsync([this.startDate, clickedDate]);
+
+                await this.setState((state) => ({showDatePicker: false}));
+
+                return;
+            }
+
+            //  sameDayAllowed is disabled and selected is same as start then reset both.
+
+            if (DateRangeInput.isSameDate(this.startDate, clickedDate)) {
+
+                await this.setValueAsync([null, null]);
+
+                return;
+            }
+
+            //  sameDayAllowed is disabled. clicked date is different than start then set to end
+
+            await this.setValueAsync([this.startDate, clickedDate]);
+
+            await this.emitOnChange();
+
+            await this.setState((state) => ({showDatePicker: false}));
+
             return;
         }
 
-        if (!this.firstClickedDayGrid) {
-            this.firstClickedDayGrid = dayGridValue;
-            this.lastClickedDayGrid = null;
-            await this.reRenderAsync();
-            await this.emitOutput();
-            return;
-        }
+        //  end is selected. set to start. this path should not happen usually.
 
-        if (this.firstClickedDayGrid && !this.lastClickedDayGrid) {
-            this.lastClickedDayGrid = dayGridValue;
-            await this.reRenderAsync();
-            await this.emitOutput();
-            return;
-        }
+        await this.setValueAsync([clickedDate, this.endDate]);
 
-        this.firstClickedDayGrid = dayGridValue;
-        this.lastClickedDayGrid = null;
-        await this.reRenderAsync();
-        await this.emitOutput();
+        await this.emitOnChange();
     }
 
     private async onDayGridMouseEnter(dayGridValue: DayGridValue): Promise<void> {
-        this.lastHoveredDayGrid = dayGridValue;
-        await this.reRenderAsync();
+        this.setState({
+            lastHoveredDayGrid: dayGridValue
+        });
     }
 
     private async onNextMonthClick(): Promise<void> {
-        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() + 1));
-        this.dayGridValues = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
-        await this.reRenderAsync();
+        this.setState({
+            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() + 1))
+        });
     }
 
     private async onPreviousMonthClick(): Promise<void> {
-        this.activeMonthView = new Date(this.activeMonthView.setMonth(this.activeMonthView.getMonth() - 1));
-        this.dayGridValues = this.getGridDays(this.activeMonthView.getFullYear(), this.activeMonthView.getMonth());
-        await this.reRenderAsync();
+        this.setState({
+            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() - 1))
+        });
     }
 
-    private get output(): [Date | null, Date | null] {
-        if (!this.firstClickedDayGrid || !this.lastClickedDayGrid) {
-            return [
-                (this.firstClickedDayGrid)
-                    ? new Date(this.firstClickedDayGrid.unixTime)
-                    : null,
-                (this.lastClickedDayGrid)
-                    ? new Date(this.lastClickedDayGrid.unixTime)
-                    : null,
-            ];
-        }
+    private async emitOnChange(): Promise<void> {
+        if (!this.props.onChange) return;
 
-        const start: Date = new Date(this.firstClickedDayGrid.unixTime);
-        const end: Date = new Date(this.lastClickedDayGrid.unixTime);
-
-        if (start.getTime() > end.getTime()) {
-            return [end, start]
-        }
-
-        return [start, end];
-    }
-
-    private async emitOutput(): Promise<void> {
-        const [start, end] = this.output;
-
-        if ((start) && (end)) {
-            this.showDatePicker = false;
-        }
-
-        await this.reRenderAsync();
-
-        if (this.props.onChange) {
-            await this.props.onChange([start, end]);
-        }
+        await this.props.onChange(this.value);
     }
 
     private isDayGridSelected(dayGridValue: DayGridValue): boolean {
-        return (dayGridValue.unixTime === this.firstClickedDayGrid?.unixTime) || (dayGridValue.unixTime === this.lastClickedDayGrid?.unixTime);
+        return DateRangeInput.isSameDate(dayGridValue, this.startDate) || DateRangeInput.isSameDate(dayGridValue, this.endDate);
     }
 
     private isDayGridInRange(dayGridValue: DayGridValue): boolean {
@@ -266,36 +282,56 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return false;
         }
 
-        const isSmallerThanHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime < this.lastHoveredDayGrid.unixTime : false;
-        const isBiggerThanLastHoveredGrid = this.lastHoveredDayGrid ? dayGridValue.unixTime > this.lastHoveredDayGrid.unixTime : false;
+        const isSmallerThanHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.getTime() < this.state.lastHoveredDayGrid.getTime() : false;
 
-        const isBiggerThanFirstClickedGrid = this.firstClickedDayGrid ? dayGridValue.unixTime > this.firstClickedDayGrid.unixTime : false;
-        const isBiggerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime > this.lastClickedDayGrid.unixTime : false;
+        const isBiggerThanLastHoveredGrid = this.state.lastHoveredDayGrid ? dayGridValue.getTime() > this.state.lastHoveredDayGrid.getTime() : false;
 
-        const isSmallerThanFirstClickedGrid = this.firstClickedDayGrid ? dayGridValue.unixTime < this.firstClickedDayGrid.unixTime : false;
+        const isBiggerThanFirstClickedGrid = this.startDate ? dayGridValue.getTime() > this.startDate.getTime() : false;
 
-        const isSmallerThanLastClickedGrid = this.lastClickedDayGrid ? dayGridValue.unixTime < this.lastClickedDayGrid.unixTime : false;
+        const isBiggerThanLastClickedGrid = this.endDate ? dayGridValue.getTime() > this.endDate.getTime() : false;
 
-        if (this.firstClickedDayGrid && this.lastClickedDayGrid) {
+        const isSmallerThanFirstClickedGrid = this.startDate ? dayGridValue.getTime() < this.startDate.getTime() : false;
+
+        const isSmallerThanLastClickedGrid = this.endDate ? dayGridValue.getTime() < this.endDate.getTime() : false;
+
+        if (this.startDate && this.endDate) {
             return (isBiggerThanFirstClickedGrid && isSmallerThanLastClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastClickedGrid)
         }
 
-        if (this.firstClickedDayGrid && !this.lastClickedDayGrid) {
+        if (this.startDate && !this.endDate) {
             return (isSmallerThanHoveredGrid && isBiggerThanFirstClickedGrid) || (isSmallerThanFirstClickedGrid && isBiggerThanLastHoveredGrid);
         }
 
-        return  false
+        return false;
     }
 
     private isOutOfRange (dayGridValue: DayGridValue): boolean {
-        const minDateUnixTime: number | null = this.props.minDate ? DateRangeInput.getStartOfDay(this.props.minDate).getTime() : null;
-        const maxDateUnixTime: number | null = this.props.maxDate ? DateRangeInput.getStartOfDay(this.props.maxDate).getTime() : null;
-
-        if (minDateUnixTime && maxDateUnixTime) {
-            return minDateUnixTime > dayGridValue.unixTime || maxDateUnixTime < dayGridValue.unixTime;
+        if (!this.minDate && !this.maxDate) {
+            return false;
         }
-        if (minDateUnixTime) return minDateUnixTime > dayGridValue.unixTime;
-        if (maxDateUnixTime) return maxDateUnixTime < dayGridValue.unixTime;
+
+        if (this.minDate && this.maxDate) {
+            const minDateUnixTime: number = this.minDate.getTime();
+            const maxDateUnixTime: number = this.maxDate.getTime();
+            const gridValueUnixTime: number = dayGridValue.getTime();
+
+            return (minDateUnixTime > gridValueUnixTime) || (maxDateUnixTime < gridValueUnixTime);
+        }
+
+        if (this.minDate) {
+            const minDateUnixTime: number = this.minDate.getTime();
+            const gridValueUnixTime: number = dayGridValue.getTime();
+
+            return minDateUnixTime > gridValueUnixTime;
+        }
+
+        if (this.maxDate) {
+            const maxDateUnixTime: number = this.maxDate.getTime();
+            const gridValueUnixTime: number = dayGridValue.getTime();
+
+            return maxDateUnixTime > gridValueUnixTime;
+        }
+
         return false;
     }
 
@@ -304,9 +340,10 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
             return;
         }
 
-        this.showDatePicker = !this.showDatePicker;
-
-        this.absolutePositionTop = `calc(${this._inputRef.current.getBoundingClientRect().height}px + ${this.absolutePositionPadding})`
+        this.setState({
+            showDatePicker: !this.state.showDatePicker,
+            absolutePositionTop: this._inputRef.current.getBoundingClientRect().height + this._absolutePositionPaddingPx
+        });
 
         await this.reRenderAsync();
     }
@@ -338,11 +375,11 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
         const isSelectedStyle = this.isDayGridSelected(gridDay) && styles.isSelected || "";
 
-        const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.unixTime ? styles.isToday : "";
+        const isTodayStyle = DateRangeInput.todayInUnixTime() === gridDay.getTime() ? styles.isToday : "";
 
-        const isInRangeAndSelectedStyle = (this.firstClickedDayGrid && this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
+        const isInRangeAndSelectedStyle = (this.startDate && this.endDate) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndSelected : "";
 
-        const isInRangeAndNotSelectedStyle = (this.firstClickedDayGrid && !this.lastClickedDayGrid) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
+        const isInRangeAndNotSelectedStyle = (this.startDate && !this.endDate) && this.isDayGridInRange(gridDay) ? styles.isInRangeAndNotSelected : "";
 
         const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle, isOutOfRangeStyle);
 
@@ -353,20 +390,22 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return (
             <div
                 className={className}
-                key={String(gridDay.unixTime)}
+                key={String(gridDay.getTime())}
                 onMouseEnter={onMouseEnter}
                 onClick={onClick}>
                     <span>
-                        {DateRangeInput.getDayOfMonth(gridDay.unixTime)}
+                        {
+                            DateRangeInput.getDayOfMonth(gridDay.getTime())
+                        }
                     </span>
             </div>
         );
     }
 
     public renderDateRangePicker(): React.ReactNode {
-        const style = this.props.expanded ? {top: this.absolutePositionTop} : {};
-        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.activeMonthView);
-        const year: number = this.activeMonthView.getFullYear();
+        const style = this.props.expanded ? {top: `${this.state.absolutePositionTop}px`} : {};
+        const monthName: string = new Intl.DateTimeFormat(DateRangeInputLocalizer.language, {month: "long"}).format(this.state.activeMonthView);
+        const year: number = this.state.activeMonthView.getFullYear();
         const expandedStyle = this.props.expanded ? "" : styles.dateRangeInputExpanded;
 
         return (
@@ -384,14 +423,12 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
 
                 {this.renderWeekDays()}
 
-                {this.dayGridValues.map(gridDay => this.renderDayGrid(gridDay))}
+                {this.gridDays.map(gridDay => this.renderDayGrid(gridDay))}
             </div>
         );
     }
 
     public renderInput(): React.ReactNode {
-        const [start, end] = this.output;
-
         return (
             <React.Fragment>
                 <div ref={this._inputRef}
@@ -400,7 +437,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                 >
 
                     <span>
-                        {start?.toISODateString() || "-"}
+                        {this.startDate?.toISODateString() || "-"}
                     </span>
 
                     <span className={styles.dateSeparator}>
@@ -408,13 +445,13 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
                     </span>
 
                     <span>
-                        {end?.toISODateString() || "-"}
+                        {this.endDate?.toISODateString() || "-"}
                     </span>
 
                 </div>
 
                 {
-                    (this.showDatePicker) &&
+                    (this.state.showDatePicker) &&
                     (
                         this.renderDateRangePicker()
                     )
@@ -431,7 +468,7 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
         return new Date(year, month + 1, 0).getDate();
     }
 
-    private static getStartOfDay(date: Date): Date {
+    public static getStartOfDay(date: Date): Date {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
     }
 
@@ -446,5 +483,35 @@ export default class DateRangeInput extends BaseInput<DateRangeInputValue,IDateR
     private static todayInUnixTime(): number {
         const now = new Date();
         return DateRangeInput.getStartOfDay(now).getTime();
+    }
+
+
+    private static sortDates(value: DateRangeInputValue | undefined): DateRangeInputValue {
+        if (!value) {
+            return [null, null];
+        }
+
+        const [date1, date2] = value;
+
+        if (date1 && date2) {
+            const sorter = (a: Date, b: Date) => a.getTime() - b.getTime();
+            return [date1, date2].sort(sorter).map(date => DateRangeInput.getStartOfDay(date)) as DateRangeInputValue;
+        }
+
+        if (date1) {
+            return [DateRangeInput.getStartOfDay(date1), null];
+        }
+
+        if (date2) {
+            return [DateRangeInput.getStartOfDay(date2), null];
+        }
+
+        return [null, null];
+    }
+
+    private static isSameDate(d1: Date | null, d2: Date | null): boolean {
+        if(!d1 || !d2) return false;
+
+        return DateRangeInput.getStartOfDay(d1).getTime() === DateRangeInput.getStartOfDay(d2).getTime();
     }
 }

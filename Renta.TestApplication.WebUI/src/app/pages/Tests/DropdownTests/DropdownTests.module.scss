@@ -3,8 +3,8 @@
 .dropdownTests {
 
   hr {
-    margin-top: $baseline / 2;
-    margin-bottom: $baseline / 2;
+    margin-top: $baseline * 0.5;
+    margin-bottom: $baseline * 0.5;
   }
 
   .auto {
