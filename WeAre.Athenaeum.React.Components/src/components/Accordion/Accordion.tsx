@@ -164,19 +164,19 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                             {this.getToggler()}
                         </div>
                     )}
-                
+
                 </div>
 
-                <div className={this.css(this.classNames.contentContainer, styles.contentContainer, this.collapsed && styles.collapsed, this.collapsed && this.classNames.collapsed)} style={contentMaxHeightStyle}>
-                    
-                    <hr className={this.css(styles.separator)} />
-                    
-                    <div ref={this._contentRef} className={this.css(this.classNames.content, styles.content)}>
-                        
+                <div className={this.css(styles.contentContainer, this.classNames.contentContainer, this.collapsed && styles.collapsed, this.collapsed && this.classNames.collapsed)} style={contentMaxHeightStyle}>
+
+                    <hr className={this.css(styles.separator, this.classNames.separator)}/>
+
+                    <div ref={this._contentRef} className={this.css(styles.content, this.classNames.content)}>
+
                         {this.props.children}
-                        
+
                     </div>
-                    
+
                 </div>
 
                 {
@@ -187,7 +187,7 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                         </div>
                     )
                 }
-                
+
             </div>
         );
     }
