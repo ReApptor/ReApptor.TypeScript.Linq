@@ -219,6 +219,8 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
                 await this.setState((state) => ({showDatePicker: false}));
 
+                await this.emitOnChange();
+
                 return;
             }
 
