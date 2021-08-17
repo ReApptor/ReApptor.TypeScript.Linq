@@ -159,11 +159,14 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
                         {this.getHeader()}
                     </div>
 
-                    {(this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) && (
-                        <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
-                            {this.getToggler()}
-                        </div>
-                    )}
+                    {
+                        (this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) &&
+                        (
+                            <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
+                                {this.getToggler()}
+                            </div>
+                        )
+                    }
 
                 </div>
 

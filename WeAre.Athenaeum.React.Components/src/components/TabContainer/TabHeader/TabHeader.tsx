@@ -1,14 +1,23 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
 import Icon from "../../Icon/Icon";
 import {ITabHeader, TabModel} from "../TabModel";
 
 import styles from "../TabContainer.module.scss";
 import TabContainerLocalizer from "../TabContainerLocalizer";
 
+export interface ITabHeaderClassNames extends IBaseClassNames {
+    readonly headerTab?: string;
+    readonly headerLink?: string;
+    readonly headerIcon?: string;
+    readonly headerClose?: string;
+}
+
+
 interface ITabHeaderProps {
     model: TabModel;
     id: string;
+    classNames?: ITabHeaderClassNames
 }
 
 interface ITabHeaderState {
@@ -30,7 +39,15 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
     public get model(): TabModel {
         return this.props.model;
     }
-    
+
+    private get classNames(): ITabHeaderClassNames {
+        const classNamesCopy: ITabHeaderClassNames = {...this.props.classNames} ?? {};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
+    }
+
     public render(): React.ReactNode {
         
         const model: TabModel = this.model;
@@ -42,14 +59,14 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         const iconStyle: string = (!!model.title) && (styles.hasText) || "";
         
         return (
-            <li id={this.props.id} className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle)} title={TabContainerLocalizer.get(model.tooltip)}>
+            <li id={this.props.id} className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle, this.classNames.headerTab)} title={TabContainerLocalizer.get(model.tooltip)}>
 
-                <a className={this.css("nav-link", activeStyle)} onClick={async () => await this.onClickAsync()}>
+                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink)} onClick={async () => await this.onClickAsync()}>
                     
                     {
                         (model.icon) &&
                         (
-                            <Icon className={this.css(styles.icon, iconStyle)} {...model.icon} />
+                            <Icon className={this.css(styles.icon, iconStyle, this.classNames.headerIcon)} {...model.icon} />
                         )
                     }
 
@@ -58,7 +75,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                     {
                         (model.onClose) &&
                         (
-                            <Icon className={styles.close} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
+                            <Icon className={this.css(styles.close, this.classNames.headerClose)} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
                         )
                     }
 
