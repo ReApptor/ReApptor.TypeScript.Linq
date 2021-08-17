@@ -1,12 +1,21 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
 import {ITab, ITabContainer, ITabContainerDefinition, TabContainerModel, TabModel, TabTransformer} from "./TabModel";
-import TabHeader from "./TabHeader/TabHeader";
+import TabHeader, {ITabHeaderClassNames} from "./TabHeader/TabHeader";
 
 import "./BootstrapOverride.scss";
 import styles from "./TabContainer.module.scss";
 
+export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClassNames {
+    readonly tabContainer?: string;
+    readonly navigationContainer?: string;
+    readonly scrollableContainer?: string;
+    readonly navTabs?: string;
+    readonly tabContent?: string;
+}
+
 interface ITabContainerProps extends ITabContainerDefinition {
+    classNames?: ITabContainerClassNames;
 }
 
 interface ITabContainerState {
@@ -73,25 +82,33 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
         return model;
     }
 
+    private get classNames(): ITabContainerClassNames {
+        const classNamesCopy: ITabContainerClassNames = {...this.props.classNames} ?? {};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
+    }
+
     render(): React.ReactNode {
 
         const model: TabContainerModel = this.model;
         model.instance = this;
         
         return (
-            <div id={this.id} className={this.css(styles.tabContainer, "tabContainer", this.props.className)}>
+            <div id={this.id} className={this.css(styles.tabContainer, "tabContainer", this.props.className, this.classNames.tabContainer)}>
                 
                 {/* Nav tabs */}
-                <div className={this.css(styles.navigationContainer)}>
+                <div className={this.css(styles.navigationContainer, this.classNames.navigationContainer)}>
 
                     {/*<Icon name="fa fa-chevron-left" className={this.css(styles.navigationIcon, styles.left)} onClick={async () => await this.scrollLeftAsync()} />*/}
 
-                    <div className={styles.scrollableContainer}>
-                        <ul className={this.css("nav nav-tabs", styles.navTabs)}>
+                    <div className={this.css(styles.scrollableContainer, this.classNames.scrollableContainer)}>
+                        <ul className={this.css("nav nav-tabs", styles.navTabs, this.classNames.navTabs)}>
                             {
                                 model.tabs.map((tab: TabModel) =>
                                     (
-                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} />
+                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} classNames={this.classNames} />
                                     )
                                 )
                             }
@@ -103,7 +120,7 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
                 </div>
 
                 {/* Tab content */}
-                <div className="tab-content">
+                <div className={this.css("tab-content", this.classNames.tabContent)}>
                     
                     {this.children}            
                     
