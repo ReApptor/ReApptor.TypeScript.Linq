@@ -207,7 +207,7 @@ pipelines:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - cd WeAre.Athenaeum.React.Toolkit
                 - node -v && npm -v
-                - npm install
+                - npm install --prefix ..
                 - npm test
           - step:
               name: WeAre Athenaeum Common Build
