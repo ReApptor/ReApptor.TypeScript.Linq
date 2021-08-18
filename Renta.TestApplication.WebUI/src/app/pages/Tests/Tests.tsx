@@ -28,6 +28,7 @@ import LocationPickerTests from "./LocationPickerTests/LocationPickerTests";
 import SliderTests from "./SliderTests/SliderTests";
 import GridTests from "./GridTests/GridTests";
 import DateInputTests from "./DateInputTests/DateInputTests";
+import PaginationTests from "./PaginationTests/PaginationTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -70,6 +71,11 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="gridTest" title="Grids">
                             <GridTests />
+                        </Tab>
+
+
+                        <Tab id="paginationTests" title="Pagination">
+                            <PaginationTests />
                         </Tab>
 
                         <Tab id="formTests" title="Form">
