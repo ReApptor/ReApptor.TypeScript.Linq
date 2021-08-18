@@ -49,6 +49,7 @@
       <TypeScriptCompile Include="src\components\PasswordForm\PasswordForm.tsx" />
       <TypeScriptCompile Include="src\components\PasswordForm\PasswordFormLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Popover\Popover.tsx" />
+      <TypeScriptCompile Include="src\components\QrWidget\BarcodeReader.d.ts" />
       <TypeScriptCompile Include="src\components\Spinner\Spinner.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabContainer.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabHeader\TabHeader.tsx" />

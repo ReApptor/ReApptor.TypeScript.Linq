@@ -32,6 +32,7 @@
     "react-dom": "^16.8.2",
     "react-google-autocomplete": "^1.1.2",
     "react-qr-reader": "^2.2.1",
+    "react-barcode-reader": "^0.0.2",
     "react-signature-canvas": "^1.0.1",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
