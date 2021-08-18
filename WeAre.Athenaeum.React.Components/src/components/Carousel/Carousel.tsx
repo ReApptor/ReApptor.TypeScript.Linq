@@ -8,9 +8,7 @@ import {NavigationOptions, PaginationOptions} from "swiper/types";
 // TODO: if rollup.js tree-shaking is enabled, the 'swiper/components/*'-styles will be missing from the bundle.
 
 
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import "./SwiperStyles.scss";
 import styles from "./Carousel.module.scss";
 
 // Swiper modules need to be explicitly loaded
