@@ -9,14 +9,14 @@ export interface IBaseExpandableWidgetProps extends IBaseWidgetProps {
 }
 
 export default abstract class BaseExpandableWidget<TProps extends IBaseExpandableWidgetProps = {}, TWidgetData = {}> extends BaseWidget<TProps, TWidgetData> implements IGlobalClick {
-    
+
     private _contentVisible: boolean = false;
 
     protected async setContentAsync(visible: boolean): Promise<void> {
         if (this._contentVisible !== visible) {
             this._contentVisible = visible;
             const minimized: boolean = (this.props.minimized == true) ? (!visible) : false;
-            await this.setState({ minimized: minimized });
+            await this.setState({minimized: minimized});
         }
     }
 
@@ -42,7 +42,9 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
         return this._contentVisible;
     }
 
-    public isAsync(): boolean { return false; }
+    public isAsync(): boolean {
+        return false;
+    }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
         if (!this.isSpinning()) {
@@ -53,7 +55,7 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
             }
         }
     }
-    
+
     protected abstract renderExpanded(): React.ReactNode;
 
     protected renderContent(renderHidden: boolean = false): React.ReactNode {
@@ -61,7 +63,7 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
             <React.Fragment>
                 {
                     (this.contentVisible)
-                        ? 
+                        ?
                         <div className={styles.expandableContent}>
                             {this.renderExpanded()}
                         </div>
