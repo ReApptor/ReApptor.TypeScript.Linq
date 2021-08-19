@@ -15,15 +15,15 @@ export enum QrWidgetType {
 
 export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     type?: QrWidgetType;
-    onQr?(qr: string): Promise<void>;
+    onQr?(code: string): Promise<void>;
 }
 
 export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
-    private async onScanAsync(qr: string | null): Promise<void> {
-        if (qr) {
+    private async onScanAsync(code: string | null): Promise<void> {
+        if (code) {
             if (this.props.onQr) {
-                await this.props.onQr(qr);
+                await this.props.onQr(code);
             }
 
             await super.hideContentAsync();
@@ -55,7 +55,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         return (
             <div className={styles.qr}>
                 {
-                    (this.type)
+                    (this.type == QrWidgetType.QrCode)
                         ?
                         (
                             <QrReader delay={300}
