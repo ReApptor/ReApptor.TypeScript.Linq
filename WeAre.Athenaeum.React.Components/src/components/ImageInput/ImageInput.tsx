@@ -5,12 +5,13 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
-import ImageInputLocalizer from "./ImageInputLocalizer";
 import {ReactCropperHelpers} from "./ReactCropperHelpers";
+import ImageInputLocalizer from "./ImageInputLocalizer";
 
-import 'cropperjs/dist/cropper.css';
-import './ReactCropperOverride.scss';
-import styles from './ImageInput.module.scss';
+import "cropperjs/dist/cropper.css";
+import "./ReactCropperOverride.scss";
+
+import styles from "./ImageInput.module.scss";
 
 enum ImageInputView {
 
@@ -37,17 +38,18 @@ interface IImageInputState {
     isDragOver: boolean;
     previousView: ImageInputView;
     selectedPictureIndex: number | null;
+    pictures: FileModel[];
 }
 
 interface IImageInputProps {
-    pictures: FileModel[];
+    pictures: FileModel[] | string;
     className?: string;
-    convertImage?(file: FileModel): Promise<FileModel>;
     editOnAddInSingleMode?: boolean
-    imageUrl?(file: FileModel): string;
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
     multi?: boolean;
+    imageUrl?(file: FileModel): string;
+    convertImage?(file: FileModel): Promise<FileModel>;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
@@ -62,7 +64,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         currentView: ImageInputView.Default,
         isDragOver: false,
         previousView: ImageInputView.Default,
-        selectedPictureIndex: null
+        selectedPictureIndex: null,
+        pictures: []
     };
 
     //  Getters
@@ -105,7 +108,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get pictures(): FileModel[] {
-        return this.props.pictures || [];
+        return this.state.pictures;
     }
 
     private get activePicture(): FileModel | null {
@@ -415,18 +418,38 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         await this.addFileList(event.target.files)
     }
+    
+    private async initializePicturesAsync(): Promise<void> {
+        const pictures: FileModel[] = (this.props.pictures != null)
+            ? Array.isArray(this.props.pictures)
+                ? this.props.pictures
+                : [new FileModel(this.props.pictures)]
+            : [];
+        await this.setState({ pictures });
+    }
 
     //  Logic
 
     public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
-        if (!this.hasSelectedPictureIndex) {
-            return;
-        }
+        // if (!this.hasSelectedPictureIndex) {
+        //     return;
+        // }
 
-        if (this.selectedPictureIndex >= nextProps.pictures.length) {
-            this.setState({selectedPictureIndex: 0})
+        const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
+
+        // if (this.selectedPictureIndex >= nextProps.pictures.length) {
+        //     this.setState({selectedPictureIndex: 0})
+        // }
+        
+        await super.componentWillReceiveProps(nextProps);
+        
+        if (newPictures) {
+            await this.initializePicturesAsync();
         }
-        return await super.componentWillReceiveProps(nextProps);
+    }
+
+    public async initializeAsync(): Promise<void> {
+        await this.initializePicturesAsync();
     }
 
     private async setCurrentView(currentView: ImageInputView): Promise<void> {
@@ -489,7 +512,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             if (this.multi) {
                 await this.props.onChange(
                     this,
-                    [...this.props.pictures, ...fileModels]
+                    [...this.state.pictures, ...fileModels]
                 );
 
                 await this.setState(
