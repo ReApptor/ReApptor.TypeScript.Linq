@@ -259,8 +259,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         await this.updatePicture(newFileModel, this.selectedPictureIndex);
+        
         await this.setCurrentView(this.previousView);
-
     }
 
     private async onEditButtonClick(): Promise<void> {
@@ -425,7 +425,14 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 ? this.props.pictures
                 : [new FileModel(this.props.pictures)]
             : [];
-        await this.setState({ pictures });
+
+        const selectedPictureIndex: number | null = (pictures.length > 0)
+            ? ((this.state.selectedPictureIndex != null) && (this.state.selectedPictureIndex >= 0) && (this.state.selectedPictureIndex < pictures.length))
+                ? this.state.selectedPictureIndex
+                : 0
+            : null;
+
+        await this.setState({pictures, selectedPictureIndex});
     }
 
     //  Logic
