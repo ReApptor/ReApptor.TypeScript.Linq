@@ -29,6 +29,8 @@ import SliderTests from "./SliderTests/SliderTests";
 import GridTests from "./GridTests/GridTests";
 import DateInputTests from "./DateInputTests/DateInputTests";
 import PaginationTests from "./PaginationTests/PaginationTests";
+import SignatureWidgetTests from "./SignatureWidgetTests/SignatureWidgetTests";
+import QrWidgetTests from "./QrWidgetTests/QrWidgetTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -152,6 +154,14 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="SliderTests" title="Slider">
                             <SliderTests/>
+                        </Tab>
+
+                        <Tab id="SignatureWidgetTests" title="Signature Widget">
+                            <SignatureWidgetTests />
+                        </Tab>
+
+                        <Tab id="QrWidgetTest" title="Qr Widget">
+                            <QrWidgetTests />
                         </Tab>
 
                     </TabContainer>
