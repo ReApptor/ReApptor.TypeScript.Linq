@@ -65,10 +65,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                         )
                         :
                         (
-                            <BarcodeReader delay={300}
-                                           onScan={async (data) => await this.onScanAsync(data)}
-                                           onError={async (error) => await this.onScanErrorAsync(error)}
-                                           style={qrStyle}/>
+                            <div>NOT SUPPORTED</div>
+                            // <BarcodeReader delay={300}
+                            //                onScan={async (data) => await this.onScanAsync(data)}
+                            //                onError={async (error) => await this.onScanErrorAsync(error)}
+                            //                style={qrStyle}/>
                         )
                 }
             </div>
