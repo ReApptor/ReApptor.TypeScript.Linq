@@ -46,7 +46,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    state: IDateRangeInputState = {
+    public state: IDateRangeInputState = {
         ...super.state,
         edit: true,
         model: {value: [null, null]},
