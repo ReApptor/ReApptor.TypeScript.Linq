@@ -5,6 +5,7 @@ import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetConta
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateInputWidget.scss";
+
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {
@@ -16,47 +17,46 @@ interface IDatepickerWidgetProps extends IBaseExpandableWidgetProps {
 
 export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWidgetProps> {
     private async handleChange(date: Date): Promise<void> {
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             await this.props.onChange(date);
         }
-        
+
         await this.hideContentAsync();
     }
-    
+
     protected async onClickAsync(e: React.MouseEvent): Promise<void> {
         const target: Element = e.target as Element;
 
-        if(target.parentElement) {
-            if(target.parentElement.className.startsWith("react-datepicker") ) {
+        if (target.parentElement) {
+            if (target.parentElement.className.startsWith("react-datepicker")) {
                 return;
             }
         }
-        
+
         await super.toggleContentAsync();
     }
 
     public async initializeAsync(): Promise<void> {
-        this.state.icon = { name: "far calendar-day" };
+        this.state.icon = {name: "far calendar-day"};
         await super.initializeAsync();
     }
 
     public async componentWillReceiveProps(nextProps: Readonly<IDatepickerWidgetProps>): Promise<void> {
-        this.state.icon = { name: "far calendar-day" };
+        this.state.icon = {name: "far calendar-day"};
         await super.componentWillReceiveProps(nextProps);
     }
 
     protected renderExpanded(): React.ReactNode {
         return (
             <div className="dateInputContainer">
-                <DatePicker
-                        selected={this.props.value || new Date()}
-                        minDate={this.props.minDate}
-                        onChange={(date: Date) => this.handleChange(date)}
-                        className="form-control"
-                        calendarClassName="datepicker dateInputWidget"
-                        inline
-                        todayButton={this.props.todayButton}
-                    />
+                <DatePicker selected={this.props.value || new Date()}
+                            minDate={this.props.minDate}
+                            onChange={(date: Date) => this.handleChange(date)}
+                            className="form-control"
+                            calendarClassName="datepicker dateInputWidget"
+                            inline
+                            todayButton={this.props.todayButton}
+                />
             </div>
         )
     }
@@ -75,7 +75,7 @@ export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWid
             </React.Fragment>
         );
     }
-    
+
     private renderDate(date: Date): React.ReactNode {
         return <span className={styles.date}>{Utility.toDateString(date)}</span>
     }
