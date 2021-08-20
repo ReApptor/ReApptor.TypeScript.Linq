@@ -244,7 +244,7 @@ export enum InputValidationRule {
      * Value must be a proper email form
      */
 
-    Email = ".+@.+\..+",
+    Email = "^.+@.+\\..+$",
 
     /**
      * Value must contain at least 1 lowercase, 1 uppercase character and 1 special character
