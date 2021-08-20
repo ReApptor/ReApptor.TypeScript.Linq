@@ -137,7 +137,10 @@
             "tsConfig": "WeAre.Athenaeum.React.Components/tsconfig.lib.json",
             "project": "WeAre.Athenaeum.React.Components/package.json",
             "entryFile": "WeAre.Athenaeum.React.Components/src/index.ts",
-            "external": ["react/jsx-runtime"],
+            "external": [
+              "react/jsx-runtime",
+              "swiper/react"
+            ],
             "rollupConfig": "./extra-rollup",
             "assets": [
               {
