@@ -461,10 +461,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private async setCurrentView(currentView: ImageInputView): Promise<void> {
         if (this.currentView !== ImageInput.assertIsImageInputView(currentView)) {
-            await this.setState({
-                previousView: this.currentView,
-                currentView
-            });
+            await this.setState({previousView: this.currentView, currentView});
         }
     }
 
@@ -569,10 +566,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         const pictures = [...this.pictures];
         pictures.splice(index, 1);
 
-        await this.setState(
-            {
-                selectedPictureIndex: null
-            });
+        await this.setState({selectedPictureIndex: null});
+        
         await this.setCurrentView(ImageInputView.Default);
 
         if (this.props.onChange) {

@@ -80,6 +80,10 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
         return "0";
     }
     
+    protected get dateFormat(): TFormat {
+        return "D";
+    }
+    
     protected getDescription(): string | null {
         return this.state.description;
     }
@@ -89,9 +93,11 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
     
     protected getNumber(): string {
-        return (this.state.number != null)
-            ? Utility.formatValue(this.state.number, this.numberFormat)
-            : "";
+        return (this.state.date != null)
+            ? Utility.formatValue(this.state.date, this.dateFormat)
+            : (this.state.number != null)
+                ? Utility.formatValue(this.state.number, this.numberFormat)
+                : "";
     }
 
     public isAsync(): boolean {
@@ -108,8 +114,10 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
 
     protected async processDataAsync(state: IBaseWidgetState<TWidgetData>, data: TWidgetData | null): Promise<void> {
+        const date: Date | null = (Utility.isDateType(data)) ? new Date(data as any) : null;
         const number: number | null = data as (number | null);
         state.number = (number != null) ? number : null;
+        state.date = date;
         state.spinnerVisible = false;
     }
 
@@ -153,7 +161,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
 
     protected getActionEndpoint(action: string) {
-        let controller: string = ((BaseWidgetContainer.mountedInstance) && (BaseWidgetContainer.mountedInstance.controller))
+        const controller: string = ((BaseWidgetContainer.mountedInstance) && (BaseWidgetContainer.mountedInstance.controller))
             ? BaseWidgetContainer.mountedInstance.controller
             : "Dashboard";
         return `api/${controller}/${action}`;
