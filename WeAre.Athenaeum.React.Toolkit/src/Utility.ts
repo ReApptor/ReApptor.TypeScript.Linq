@@ -1,3 +1,4 @@
+import AthenaeumConstants from "./AthenaeumConstants";
 import GeoCoordinate from "./models/GeoCoordinate";
 import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
@@ -853,7 +854,10 @@ export default class Utility {
     }
 
     public static isDateType(date: any): boolean {
-        return ((date != null) && (typeof date === "object") && (date.constructor === Date));// && (typeof date.getDay === "function"));
+        return ((date != null) && (
+            ((typeof date === "object") && (date.constructor === Date)) ||
+            ((typeof date === "string") && (!!date.match(AthenaeumConstants.dateRegex)))
+        ));
     }
 
     public static restoreDate(model: any, path: string = ""): any {
@@ -873,11 +877,8 @@ export default class Utility {
                                 // "2019-09-24T00:00:00Z"
                                 // "2019-10-14T21:00:00.000Z"
                                 // "2019-10-16T00:00:00+03:00"
-                                const dateRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(:([0-5][0-9]))?(Z)?$/;
-                                const zeroTimeRegex = /T00:00:00((.?0+)?)$/;
-
                                 let dateStr: string = value as string;
-                                isDateStr = (!!dateStr.match(dateRegex));
+                                isDateStr = (!!dateStr.match(AthenaeumConstants.dateRegex));
                                 if (isDateStr) {
                                     const markedAsUtc: boolean = dateStr.endsWith("Z");
                                     const includesTimezoneOffset: boolean = (!markedAsUtc) && (dateStr.includes("+"));
@@ -888,7 +889,7 @@ export default class Utility {
                                         }
                                         const includesTime: boolean = dateStr.includes("T");
                                         if (includesTime) {
-                                            const dateWithoutTime: boolean = (!!dateStr.match(zeroTimeRegex));
+                                            const dateWithoutTime: boolean = (!!dateStr.match(AthenaeumConstants.zeroTimeRegex));
                                             if (!dateWithoutTime) {
                                                 // Time from server always in UTC!
                                                 dateStr += "Z";
