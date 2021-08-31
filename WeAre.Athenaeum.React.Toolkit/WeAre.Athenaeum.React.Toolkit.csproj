@@ -73,12 +73,7 @@
       <None Remove="package-lock.json" />
       <None Remove=".babelrc" />
       <None Remove=".eslintrc.json" />
-      <None Remove="tsconfig.json" />
-      <None Remove="tsconfig.lib.json" />
-      <None Remove="tsconfig.spec.json" />
       <None Remove="dist\**" />
-      <None Remove="api-extractor.json" />
-      <None Remove="jest.config.js" />
     </ItemGroup>
 
 </Project>
