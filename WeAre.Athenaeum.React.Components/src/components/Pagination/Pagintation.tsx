@@ -1,9 +1,19 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
 
 import "./BootstrapOverride.scss";
 import styles from "./Pagination.module.scss";
 import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
+
+export interface IPaginationClassNames {
+    readonly pagination?: string;
+    readonly buttonActive?: string;
+    readonly buttonDisabled?: string;
+    readonly pageItem?: string;
+    readonly pageLink?: string;
+    readonly pageDropdownWrap?: string;
+    readonly total?: string;
+}
 
 class PaginationButton {
 
@@ -20,6 +30,7 @@ class PaginationButton {
 
 interface IPaginationProps {
     className?: string;
+    classNames?: IPaginationClassNames;
     pageSize: number;
     itemCount: number;
     totalItemCount: number;
@@ -114,6 +125,14 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
         return this._dataPerPageVariants;
     }
 
+    private get classNames(): IPaginationClassNames {
+        const classNamesCopy: IBaseClassNames = {...this.props.classNames};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
+    }
+
     public get pageNumber(): number {
         return this.state.pageNumber;
     }
@@ -131,15 +150,15 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
     }
 
     private renderPaginationButton(button: PaginationButton, index: number): React.ReactNode {
-        
-        const activeStyle: any = (button.current) && "active";
-        const disabledStyle: any = (button.disabled) && "disabled";
+
+        const activeStyle: any = (button.current) && this.css("active", this.classNames.buttonActive);
+        const disabledStyle: any = (button.disabled) && this.css("disabled", this.classNames.buttonDisabled);
 
         return (
             (button.visible) &&
             (
-                <li key={index} className={this.css("page-item", activeStyle, disabledStyle)}>
-                    <a href="#" className="page-link shadow-none" onClick={async (e) => await this.onChangePageNumber(e, button)}>
+                <li key={index} className={this.css("page-item", this.classNames.pageItem, activeStyle, disabledStyle)}>
+                    <a href="#" className={this.css("page-link shadow-none", this.classNames.pageLink)} onClick={async (e) => await this.onChangePageNumber(e, button)}>
                         {button.label}
                     </a>
                 </li>
@@ -163,13 +182,13 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
         return (
             <nav className={this.css(styles.pagination, "d-flex align-items-center", this.props.className)}>
                 
-                <ul className="pagination mb-0">
+                <ul className={this.css("pagination mb-0", this.classNames.pagination)}>
                     {
                         this.paginationButtons.map((button, index) => (this.renderPaginationButton(button, index)))
                     }
                 </ul>
                 
-                <div className={this.css(styles.size, "ml-3 d-flex align-items-center justify-content-between")}>
+                <div className={this.css(styles.pageDropdownWrap, "ml-3 d-flex align-items-center justify-content-between", this.classNames.pageDropdownWrap)}>
 
                     <Dropdown inline small required noFilter
                               items={this.dataPerPageVariants}
@@ -181,7 +200,7 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
                     {
                         (this.totalItemCount > 0) &&
                         (
-                            <span className={styles.total}>
+                            <span className={this.css(styles.total, this.classNames.total)}>
                                 {this.itemCount} / {this.totalItemCount}
                             </span>
                         )

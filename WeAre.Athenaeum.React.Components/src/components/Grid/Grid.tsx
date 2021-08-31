@@ -1,18 +1,23 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, IGlobalResize} from "@weare/athenaeum-react-common";
 import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
 import GridSpinner from "./GridSpinner/GridSpinner";
 import TotalRow from "./TotalRow/TotalRow";
 import CheckHeaderCell from "./Cell/CheckHeaderCell";
-import Pagination from "../Pagination/Pagintation";
+import Pagination, {IPaginationClassNames} from "../Pagination/Pagintation";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
 
+export interface IGridClassNames {
+    readonly pagination?: IPaginationClassNames;
+}
+
 interface IGridProps<TItem = {}> extends IGridDefinition {
+    classNames?: IGridClassNames;
     data?: TItem[] | null;
     fetchData?(sender: Grid<TItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<TGridData<TItem>>;
 }
@@ -332,6 +337,16 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             : this.model.columns.length;
     }
 
+    private get classNames(): Omit<IGridClassNames, 'pagination'> {
+        const {pagination, ...gridClassNames} = this.props.classNames || {};
+
+        const classNamesCopy: IBaseClassNames = {...gridClassNames};
+
+        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+
+        return classNamesCopy;
+    }
+
     public async clearAsync(): Promise<void> {
         await this.setDataAsync([]);
     }
@@ -496,6 +511,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                 (model.pagination) &&
                                 (
                                     <Pagination className={styles.pagination}
+                                                classNames={this.props.classNames?.pagination}
                                                 pageSize={this.pageSize}
                                                 pageNumber={this.pageNumber}
                                                 itemCount={this.itemCount}
