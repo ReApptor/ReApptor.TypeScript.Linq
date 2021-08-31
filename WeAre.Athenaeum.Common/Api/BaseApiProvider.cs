@@ -63,7 +63,7 @@ namespace WeAre.Athenaeum.Common.Api
                 {
                     if (!string.IsNullOrWhiteSpace(key))
                     {
-                        string[] subKeys = key.Split(new[] {"/"}, StringSplitOptions.RemoveEmptyEntries);
+                        string[] subKeys = key.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                         foreach (string subKey in subKeys)
                         {
                             if (!string.IsNullOrWhiteSpace(subKey))
@@ -116,7 +116,7 @@ namespace WeAre.Athenaeum.Common.Api
                     }
                 }
             }
-            
+
             bool addSlash = (!url.EndsWith("/")) && ((@params == null) || (@params.Length == 0)) && (keys?.LastOrDefault()?.EndsWith("/") == true);
 
             if (addSlash)
@@ -183,7 +183,7 @@ namespace WeAre.Athenaeum.Common.Api
             return client;
         }
 
-        protected async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, StringContent content = null)
+        protected async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
         {
             using HttpClient tkHttpClient = await GetHttpClientAsync();
 
@@ -218,37 +218,13 @@ namespace WeAre.Athenaeum.Common.Api
                 ? await tkHttpClient.PostAsync(url, content)
                 : await tkHttpClient.GetAsync(url);
         }
-        
-        #region Invoks
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string customContentType = null)
-            where TRequest : class
+        #region Invokes
+
+        private async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, HttpContent content, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
             where TResponse : class
         {
             string url = GetUrl(action, keys, @params);
-
-            StringContent content = null;
-
-            if (request != null)
-            {
-                if (request is string stringRequest)
-                {
-                    content = new StringContent(stringRequest, Encoding.UTF8, AthenaeumConstants.Http.TextMimeType);
-                }
-                else
-                {
-                    string requestJson = JsonConvert.SerializeObject(request);
-
-                    //Custom content type provided as parameter to support vendor specific content types. For example: "application/vnd.api+json".
-                    content = new StringContent(requestJson, Encoding.UTF8, customContentType ?? AthenaeumConstants.Http.ApiContextType);
-
-                    //Custom content type doesn't work with a CharSet being set.
-                    if (!string.IsNullOrWhiteSpace(customContentType) && AthenaeumConstants.Http.CustomMimeTypesDoNotWorkWithCharset.Contains(customContentType))
-                    {
-                        content.Headers.ContentType.CharSet = string.Empty;
-                    }
-                }
-            }
 
             HttpResponseMessage httpResponse = await Utility.InvokeAsync(() => SendAsync(url, method, content), 3);
 
@@ -280,6 +256,41 @@ namespace WeAre.Athenaeum.Common.Api
             return response;
         }
 
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string customContentType = null)
+            where TRequest : class
+            where TResponse : class
+        {
+            StringContent content = null;
+
+            string defaultMimeType = customContentType ?? AthenaeumConstants.Http.ApiContextType;
+            
+            Encoding defaultEncoding = AthenaeumConstants.Http.CustomMimeTypesWithoutEncoding.Contains(defaultMimeType) ? null : Encoding.UTF8;
+            
+            if (request != null)
+            {
+                if (request is string stringRequest)
+                {
+                    content = new StringContent(stringRequest, defaultEncoding, AthenaeumConstants.Http.TextMimeType);
+                }
+                else
+                {
+                    string requestJson = JsonConvert.SerializeObject(request);
+
+                    content = new StringContent(requestJson, defaultEncoding, defaultMimeType);
+                }
+            }
+
+            return await InvokeAsync<TResponse>(method, action, content, keys, @params, throwNotFound);
+        }
+
+        protected async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+            where TResponse : class
+        {
+            using var content = new FormUrlEncodedContent(form);
+
+            return await InvokeAsync<TResponse>(method, action, content, keys, @params, throwNotFound);
+        }
+
         protected Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
             where TRequest : class
             where TResponse : class
@@ -303,7 +314,7 @@ namespace WeAre.Athenaeum.Common.Api
         {
             return InvokeAsync<object, object>(method, action, keys, @params, throwNotFound: throwNotFound);
         }
-        
+
         #endregion
 
         protected virtual string Name => GetType().Name;
