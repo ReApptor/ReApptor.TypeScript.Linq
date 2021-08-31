@@ -69,6 +69,9 @@
         <Content Include="src\lib\fa\webfonts\fa-solid-900.woff2" />
         <Content Include="src\manifest.json" />
         <Content Remove="dist\**" />
+        <Content Include="tsconfig.app.json" />
+        <Content Include="tsconfig.json" />
+        <Content Include="tsconfig.spec.json" />
     </ItemGroup>
 
     <ItemGroup>
@@ -99,7 +102,6 @@
       <None Remove=".browserslistrc" />
       <None Remove="dist\**" />
       <None Include="package.json" />
-      <None Remove="jest.config.js" />
     </ItemGroup>
 
     <ItemGroup>
