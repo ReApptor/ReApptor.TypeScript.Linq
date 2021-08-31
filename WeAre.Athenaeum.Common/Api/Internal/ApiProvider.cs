@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -39,6 +40,12 @@ namespace WeAre.Athenaeum.Common.Api.Internal
             where TResponse : class
         {
             return base.InvokeAsync<TResponse>(method, action, keys, @params, throwNotFound);
+        }
+        
+        public new Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+            where TResponse : class
+        {
+            return base.InvokeAsync<TResponse>(method, action, form, keys, @params, throwNotFound);
         }
 
         public new Task<TResponse> InvokeAsync<TResponse>(string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)

@@ -100,7 +100,7 @@ namespace WeAre.Athenaeum.Common
             /// <summary>
             /// An array of custom mime types that has to be set in content type without a charset
             /// </summary>
-            public static readonly string[] CustomMimeTypesDoNotWorkWithCharset = {TerraformVendorMimeType};
+            public static readonly string[] CustomMimeTypesWithoutEncoding = {TerraformVendorMimeType};
         }
     }
 }
