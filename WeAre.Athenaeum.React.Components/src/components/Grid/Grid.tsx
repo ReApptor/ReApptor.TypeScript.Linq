@@ -337,14 +337,8 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             : this.model.columns.length;
     }
 
-    private get classNames(): Omit<IGridClassNames, 'pagination'> {
-        const {pagination, ...gridClassNames} = this.props.classNames || {};
-
-        const classNamesCopy: IBaseClassNames = {...gridClassNames};
-
-        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
-
-        return classNamesCopy;
+    private get classNames(): IGridClassNames {
+        return this.props.classNames || {};
     }
 
     public async clearAsync(): Promise<void> {
@@ -511,7 +505,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                 (model.pagination) &&
                                 (
                                     <Pagination className={styles.pagination}
-                                                classNames={this.props.classNames?.pagination}
+                                                classNames={this.classNames.pagination}
                                                 pageSize={this.pageSize}
                                                 pageNumber={this.pageNumber}
                                                 itemCount={this.itemCount}

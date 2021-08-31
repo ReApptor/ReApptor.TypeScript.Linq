@@ -126,11 +126,7 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
     }
 
     private get classNames(): IPaginationClassNames {
-        const classNamesCopy: IBaseClassNames = {...this.props.classNames};
-
-        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
-
-        return classNamesCopy;
+        return this.props.classNames || {};
     }
 
     public get pageNumber(): number {
