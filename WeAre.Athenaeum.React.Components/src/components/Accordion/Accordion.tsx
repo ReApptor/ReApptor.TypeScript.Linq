@@ -43,19 +43,27 @@ export interface IAccordionProps {
 
 interface IAccordionState {
     expanded: boolean;
+    maxHeight: number | "fit-content";
 }
 
 export default class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implements IGlobalClick {
 
     public state: IAccordionState = {
-        expanded: !!this.props.expanded
+        expanded: (!!this.props.expanded),
+        maxHeight: 0,
     };
 
     private readonly _contentRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private async setExpanded(expanded: boolean): Promise<void> {
         if (expanded !== this.expanded) {
-            await this.setState({ expanded })
+
+            const maxHeight = this.contentMaxHeight;
+
+            this.setState({
+                expanded,
+                maxHeight,
+            });
 
             if (this.props.onToggle) {
                 await this.props.onToggle(this, expanded);
@@ -179,10 +187,6 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     public render(): React.ReactNode {
-        const contentMaxHeightStyle: CSSProperties = {
-            maxHeight: this.contentMaxHeight
-        };
-
         return (
             <div id={this.id}
                  className={this.css(this.classNames.accordion, this.props.className)}
@@ -215,7 +219,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
                 </div>
 
                 <div className={this.css(this.classNames.contentContainer, (this.collapsed) && this.classNames.collapsed)}
-                     style={contentMaxHeightStyle}
+                     style={{maxHeight: this.state.maxHeight}}
                 >
 
                     <hr className={this.css(this.classNames.separator)}/>

@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Accordion, Button, Checkbox, Dropdown, DropdownOrderBy, DropdownRequiredType, FourColumns, SelectListItem, TogglerPosition, TwoColumns} from "@weare/athenaeum-react-components";
 
 export interface IAccordionTestsState {
@@ -20,7 +20,7 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
 
     private static createContent(): React.ReactNode {
         return (
-            <div>
+            <div key={ch.getId()}>
                 Content
             </div>
         );
@@ -28,15 +28,16 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
 
     private static getAccordionTogglerPositionName(item: TogglerPosition | null): string {
         switch (item) {
-            case TogglerPosition.Header: return "Header";
-            case TogglerPosition.Bottom: return "Bottom";
-            default: return "Default (undefined)";
+            case TogglerPosition.Header:
+                return "Header";
+            case TogglerPosition.Bottom:
+                return "Bottom";
+            default:
+                return "Default (undefined)";
         }
     }
 
     public render(): React.ReactNode {
-        console.log(this.state);
-
         return (
             <div style={{margin: "1rem 0"}}>
                 <div className="mb-3">
@@ -56,11 +57,11 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
                         />
 
                         <Button label="Add content"
-                                onClick={async () => {this.state.content.push(AccordionTests.createContent())}}
+                                onClick={async () => {this.state.content.push(AccordionTests.createContent()); this.reRender();}}
                         />
 
                         <Button label="Remove content"
-                                onClick={async () => {this.state.content.pop()}}
+                                onClick={async () => {this.state.content.pop(); this.reRender();}}
                         />
 
                     </FourColumns>
