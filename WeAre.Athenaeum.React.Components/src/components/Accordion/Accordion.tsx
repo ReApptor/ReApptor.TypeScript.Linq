@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/athenaeum-react-common";
 import { Utility } from "@weare/athenaeum-toolkit";
 import Icon, {IconSize} from "../Icon/Icon";
@@ -89,7 +89,11 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     private get classNames(): IAccordionClassNames {
         const classNamesCopy: IBaseClassNames = {...this.props.classNames};
 
-        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
+        Object
+            .keys(styles)
+            .forEach((key: string) => (!classNamesCopy[key])
+                ? classNamesCopy[key] = styles[key]
+                : classNamesCopy[key]);
 
         return classNamesCopy;
     }
@@ -175,43 +179,66 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     public render(): React.ReactNode {
-        const contentMaxHeightStyle: any = {maxHeight: this.contentMaxHeight};
+        const contentMaxHeightStyle: CSSProperties = {
+            maxHeight: this.contentMaxHeight
+        };
 
         return (
-            <div id={this.id} className={this.css(this.classNames.accordion, styles.accordion, this.props.className)}>
-                <div className={this.css(this.classNames.headerContainer, styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
-                    <div className={this.css(this.classNames.header, styles.header)}>
-                        {this.getHeader()}
+            <div id={this.id}
+                 className={this.css(this.classNames.accordion, this.props.className)}
+            >
+                <div className={this.css(this.classNames.headerContainer, (!this.hasToggle) && "cursor-pointer")}
+                     onClick={(!this.hasToggle)
+                         ? async () => await this.toggleAsync()
+                         : undefined}
+                >
+
+                    <div className={this.css(this.classNames.header)}>
+                        {
+                            this.getHeader()
+                        }
                     </div>
 
                     {
                         (this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) &&
                         (
-                            <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
-                                {this.getToggler()}
+                            <div className={this.css(this.classNames.toggler)}
+                                 onClick={async () => this.toggleAsync()}
+                            >
+                                {
+                                    this.getToggler()
+                                }
                             </div>
                         )
                     }
 
                 </div>
 
-                <div className={this.css(styles.contentContainer, this.classNames.contentContainer, this.collapsed && styles.collapsed, this.collapsed && this.classNames.collapsed)} style={contentMaxHeightStyle}>
+                <div className={this.css(this.classNames.contentContainer, (this.collapsed) && this.classNames.collapsed)}
+                     style={contentMaxHeightStyle}
+                >
 
-                    <hr className={this.css(styles.separator, this.classNames.separator)}/>
+                    <hr className={this.css(this.classNames.separator)}/>
 
-                    <div ref={this._contentRef} className={this.css(styles.content, this.classNames.content)}>
-
-                        {this.props.children}
-
+                    <div ref={this._contentRef}
+                         className={this.css(this.classNames.content)}
+                    >
+                        {
+                            this.props.children
+                        }
                     </div>
 
                 </div>
 
                 {
-                    this.togglerPosition === TogglerPosition.Bottom && this.hasToggle &&
+                    (this.togglerPosition === TogglerPosition.Bottom) && (this.hasToggle) &&
                     (
-                        <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
-                            {this.getToggler()}
+                        <div className={this.css(this.classNames.toggler)}
+                             onClick={async () => this.toggleAsync()}
+                        >
+                            {
+                                this.getToggler()
+                            }
                         </div>
                     )
                 }
