@@ -43,7 +43,7 @@ export interface IAccordionProps {
 
 interface IAccordionState {
     expanded: boolean;
-    maxHeight: number | "fit-content";
+    maxHeight: number;
 }
 
 export default class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implements IGlobalClick {
@@ -58,11 +58,10 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     private async setExpanded(expanded: boolean): Promise<void> {
         if (expanded !== this.expanded) {
 
-            const maxHeight = this.contentMaxHeight;
+            await this.recalculateContentHeight();
 
             this.setState({
-                expanded,
-                maxHeight,
+                expanded
             });
 
             if (this.props.onToggle) {
@@ -82,16 +81,6 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
 
     private get contentNode(): React.ReactNode | null {
         return this._contentRef.current;
-    }
-
-    private get contentMaxHeight(): number {
-        const node: any = this.contentNode;
-
-        if(node) {
-            return node.getBoundingClientRect().height;
-        }
-
-        return 0;
     }
 
     private get classNames(): IAccordionClassNames {
@@ -183,6 +172,18 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
             if(outside) {
                 await this.collapseAsync();
             }
+        }
+    }
+
+    public async recalculateContentHeight(): Promise<void> {
+        const contentNode: any = this.contentNode;
+
+        if(contentNode) {
+            const maxHeight: number = contentNode.getBoundingClientRect().height;
+
+            this.setState({
+                maxHeight
+            });
         }
     }
 

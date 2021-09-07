@@ -18,6 +18,8 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
         togglerPosition: TogglerPosition.Header
     }
 
+    private readonly _accordionRef: React.RefObject<Accordion> = React.createRef();
+
     private static createContent(): React.ReactNode {
         return (
             <div key={ch.getId()}>
@@ -45,12 +47,6 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
                     <FourColumns>
 
                         <Checkbox inline
-                                  label="Toggler"
-                                  value={this.state.toggler}
-                                  onChange={async (sender, value) => {this.setState({toggler: value})}}
-                        />
-
-                        <Checkbox inline
                                   label="Auto-collapse"
                                   value={this.state.autoCollapse}
                                   onChange={async (sender, value) => {this.setState({autoCollapse: value})}}
@@ -64,18 +60,39 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
                                 onClick={async () => {this.state.content.pop(); this.reRender();}}
                         />
 
+                        <Button label="Recalculate height"
+                                onClick={async () => await this._accordionRef.current?.recalculateContentHeight()}
+                        />
+
                     </FourColumns>
 
-                    <Dropdown inline required noValidate noWrap noFilter
-                              label="Toggler position"
-                              items={[TogglerPosition.Header, TogglerPosition.Bottom]}
-                              selectedItem={this.state.togglerPosition}
-                              transform={(item) => new SelectListItem(item.toString(), AccordionTests.getAccordionTogglerPositionName(item), null, item)}
-                              onChange={async (sender, value) => {this.setState({ togglerPosition: value! })}}
-                    />
+                    <FourColumns>
+
+                        <Checkbox inline
+                                  label="Toggler"
+                                  value={this.state.toggler}
+                                  onChange={async (sender, value) => {this.setState({toggler: value})}}
+                        />
+
+                        {
+                            (this.state.toggler) &&
+                            (
+                                <Dropdown inline required noValidate noWrap noFilter
+                                          label="Toggler position"
+                                          items={[TogglerPosition.Header, TogglerPosition.Bottom]}
+                                          selectedItem={this.state.togglerPosition}
+                                          transform={(item) => new SelectListItem(item.toString(), AccordionTests.getAccordionTogglerPositionName(item), null, item)}
+                                          onChange={async (sender, value) => {this.setState({ togglerPosition: value! })}}
+                                />
+                            )
+                        }
+
+                    </FourColumns>
+
                 </div>
 
-                <Accordion header="Header"
+                <Accordion ref={this._accordionRef}
+                           header="Header"
                            toggler={this.state.toggler}
                            togglerPosition={this.state.togglerPosition}
                            autoCollapse={this.state.autoCollapse}
