@@ -71,6 +71,18 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
             
             return null;
         }
+
+        private static string EscapePathSeparator(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                path = path.Replace("\\", "\\\\");
+
+                return path;
+            }
+
+            return null;
+        }
         
         private Settings ProcessSettings(string path)
         {
@@ -187,13 +199,21 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
         {
             //List of IDE variables: https://docs.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties?view=msvc-160
             //Exec command description: https://docs.microsoft.com/en-us/visualstudio/msbuild/exec-task?view=vs-2019
-            data = data.Replace("$(ProjectDir)", ProjectDir);
-            data = data.Replace(ProjectDirectoryEnvironmentVariable, ProjectDir);
-            data = data.Replace("$(SolutionDir)", SolutionDir);
+            if (Debug)
+            {
+                Console.WriteLine($"{Name}. ProcessEnvVariables. $(ProjectDir)=\"{ProjectDir}\"");
+                Console.WriteLine($"{Name}. ProcessEnvVariables. $(SolutionDir)=\"{SolutionDir}\"");
+                Console.WriteLine($"{Name}. ProcessEnvVariables. $(TargetPath)=\"{TargetPath}\"");
+            }
+            
+            data = data.Replace("$(ProjectDir)", EscapePathSeparator(ProjectDir));
+            data = data.Replace(ProjectDirectoryEnvironmentVariable, EscapePathSeparator(ProjectDir));
+            data = data.Replace("$(SolutionDir)", EscapePathSeparator(SolutionDir));
             if (!string.IsNullOrWhiteSpace(TargetPath))
             {
-                data = data.Replace("$(TargetPath)", TargetPath);
+                data = data.Replace("$(TargetPath)", EscapePathSeparator(TargetPath));
             }
+            
             IDictionary variables = Environment.GetEnvironmentVariables();
             foreach (DictionaryEntry keyValue in variables)
             {
