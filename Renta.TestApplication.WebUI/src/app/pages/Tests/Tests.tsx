@@ -45,14 +45,20 @@ export default class Tests extends AnonymousPage {
 
                 <PageRow>
 
-                    <TabContainer id="TestsTabs" renderType={TabRenderType.ActiveOnly}>
+                    <TabContainer id="TestsTabs"
+                                  renderType={TabRenderType.ActiveOnly}
+                    >
+
+                        <Tab id="AccordionTests" title="Accordion">
+                            <AccordionTests />
+                        </Tab>
+
+                        <Tab id="alertTests" title="Alerts">
+                            <AlertTests />
+                        </Tab>
 
                         <Tab id="buttonTests" title="Button">
                             <ButtonTests />
-                        </Tab>
-
-                        <Tab id="checkboxTests" title="Checkbox">
-                            <CheckboxTests />
                         </Tab>
 
                         <Tab id="buttonActionTests" title="Button Action">
@@ -63,45 +69,20 @@ export default class Tests extends AnonymousPage {
                             <ButtonContainerTests />
                         </Tab>
 
-                        <Tab id="alertTests" title="Alerts">
-                            <AlertTests />
+                        <Tab id="CarouselTests" title="Carousel">
+                            <CarouselTests/>
                         </Tab>
 
-                        <Tab id="messageBoxTests" title="MessageBox">
-                            <MessageBoxTests />
-                        </Tab>
-
-                        <Tab id="gridTest" title="Grids">
-                            <GridTests />
-                        </Tab>
-
-
-                        <Tab id="paginationTests" title="Pagination">
-                            <PaginationTests />
-                        </Tab>
-
-                        <Tab id="formTests" title="Form">
-                            <FormTests />
-                        </Tab>
-
-                        <Tab id="dateRangeInputTests" title="DateRange Input">
-                            <DateRangeInputTests />
+                        <Tab id="checkboxTests" title="Checkbox">
+                            <CheckboxTests />
                         </Tab>
 
                         <Tab id="dateInputTests" title="Date Input">
                             <DateInputTests />
                         </Tab>
 
-                        <Tab id="numberInputTests" title="Number Input">
-                            <NumberInputTests />
-                        </Tab>
-
-                        <Tab id="numberWidgetTests" title="Number Widget">
-                            <NumberWidgetTests />
-                        </Tab>
-
-                        <Tab id="linkWidgetTests" title="Link Widget">
-                            <LinkWidgetTests />
+                        <Tab id="dateRangeInputTests" title="DateRange Input">
+                            <DateRangeInputTests />
                         </Tab>
 
                         <Tab id="dropdownTests" title="Dropdown">
@@ -120,44 +101,64 @@ export default class Tests extends AnonymousPage {
                             <DropdownWidgetTests />
                         </Tab>
 
-                        <Tab id="listTests" title="List">
-                            <ListTests />
+                        <Tab id="FileInputTests" title="FileInput">
+                            <FileInputTests/>
                         </Tab>
 
-                        <Tab id="nullableSwitchTests" title="Nullable switch">
-                            <NullableSwitchTests />
+                        <Tab id="formTests" title="Form">
+                            <FormTests />
                         </Tab>
 
-                        <Tab id="modalTests" title="Modal">
-                            <ModalTests />
-                        </Tab>
-
-                        <Tab id="locationPickerTests" title="Location picker">
-                            <LocationPickerTests />
-                        </Tab>
-
-                        <Tab id="AccordionTests" title="Accordion">
-                            <AccordionTests />
+                        <Tab id="gridTest" title="Grids">
+                            <GridTests />
                         </Tab>
 
                         <Tab id="ImageInputTests" title="ImageInput">
                             <ImageInputTests />
                         </Tab>
 
-                        <Tab id="FileInputTests" title="FileInput">
-                            <FileInputTests/>
+                        <Tab id="linkWidgetTests" title="Link Widget">
+                            <LinkWidgetTests />
                         </Tab>
 
-                        <Tab id="CarouselTests" title="Carousel">
-                            <CarouselTests/>
+                        <Tab id="listTests" title="List">
+                            <ListTests />
                         </Tab>
 
-                        <Tab id="SliderTests" title="Slider">
-                            <SliderTests/>
+                        <Tab id="locationPickerTests" title="Location picker">
+                            <LocationPickerTests />
+                        </Tab>
+
+                        <Tab id="messageBoxTests" title="MessageBox">
+                            <MessageBoxTests />
+                        </Tab>
+
+                        <Tab id="modalTests" title="Modal">
+                            <ModalTests />
+                        </Tab>
+
+                        <Tab id="nullableSwitchTests" title="Nullable switch">
+                            <NullableSwitchTests />
+                        </Tab>
+
+                        <Tab id="numberInputTests" title="Number Input">
+                            <NumberInputTests />
+                        </Tab>
+
+                        <Tab id="numberWidgetTests" title="Number Widget">
+                            <NumberWidgetTests />
+                        </Tab>
+
+                        <Tab id="paginationTests" title="Pagination">
+                            <PaginationTests />
                         </Tab>
 
                         <Tab id="SignatureWidgetTests" title="Signature Widget">
                             <SignatureWidgetTests />
+                        </Tab>
+
+                        <Tab id="SliderTests" title="Slider">
+                            <SliderTests/>
                         </Tab>
 
                         <Tab id="QrWidgetTest" title="Qr Widget">

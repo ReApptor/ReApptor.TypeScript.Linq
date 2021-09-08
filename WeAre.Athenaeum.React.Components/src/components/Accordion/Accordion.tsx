@@ -1,10 +1,10 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/athenaeum-react-common";
 import { Utility } from "@weare/athenaeum-toolkit";
-
 import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";
+
 
 export interface IAccordionClassNames extends IBaseClassNames {
     readonly accordion?: string;
@@ -19,7 +19,6 @@ export interface IAccordionClassNames extends IBaseClassNames {
 
 export enum TogglerPosition {
     Header,
-
     Bottom
 }
 
@@ -28,86 +27,119 @@ export interface IAccordionProps {
     readonly classNames?: IAccordionClassNames;
     children: React.ReactNode;
     header: string | React.ReactNode;
+
+    /**
+     * Should the {@link Accordion} collapse when a click happens outside of it.
+     * True by default.
+     */
+    autoCollapse?: boolean;
     toggler?: boolean | React.ReactNode;
     togglerIcon?: string | null;
     togglerSize?: IconSize | null;
     togglerPosition?: TogglerPosition | TogglerPosition.Header;
     expanded?: boolean;
-    onToggle?(sender: Accordion, expanded: boolean): Promise<void>; 
+    onToggle?(sender: Accordion, expanded: boolean): Promise<void>;
 }
 
 interface IAccordionState {
     expanded: boolean;
+    maxHeight: number;
 }
 
-class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implements IGlobalClick {
-    state: IAccordionState = {
-        expanded: !!this.props.expanded
+export default class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implements IGlobalClick {
+
+    public state: IAccordionState = {
+        expanded: (!!this.props.expanded),
+        maxHeight: 0,
     };
-    
+
     private readonly _contentRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private async setExpanded(expanded: boolean): Promise<void> {
         if (expanded !== this.expanded) {
-            await this.setState({ expanded })
-            
+
+            await this.recalculateContentHeight();
+
+            this.setState({
+                expanded
+            });
+
             if (this.props.onToggle) {
                 await this.props.onToggle(this, expanded);
             }
         }
     }
-    
+
+    private get autoCollapse(): boolean {
+        switch (this.props.autoCollapse) {
+            case false:
+                return false;
+            default:
+                return true;
+        }
+    }
+
     private get contentNode(): React.ReactNode | null {
         return this._contentRef.current;
     }
-    
-    private get contentMaxHeight(): number {
-        const node: any = this.contentNode;
-        
-        if(node) {
-            return node.getBoundingClientRect().height;
-        }
-        
-        return 0;
+
+    private get classNames(): IAccordionClassNames {
+        const classNamesCopy: IBaseClassNames = {...this.props.classNames};
+
+        Object
+            .keys(styles)
+            .forEach((key: string) => (!classNamesCopy[key])
+                ? classNamesCopy[key] = styles[key]
+                : classNamesCopy[key]);
+
+        return classNamesCopy;
     }
 
     public get expanded(): boolean {
-        return this.state.expanded;
+        // noinspection PointlessBooleanExpressionJS - let's not assume the runtime value will be a boolean.
+        return (this.state.expanded === true);
     }
 
     public get collapsed(): boolean {
-        return !this.state.expanded;
+        return (!this.expanded);
     }
-    
+
     public get hasToggle(): boolean {
-        return !!this.props.toggler;
+        return (!!this.props.toggler);
     }
-    
+
     public getHeader(): React.ReactNode {
-        const isComponent: boolean = React.isValidElement(this.props.header);
-        
-        if (isComponent) {
+        const headerIsComponent: boolean = (React.isValidElement(this.props.header));
+
+        if (headerIsComponent) {
             return this.props.header;
         }
-        
-        return <h3>{this.props.header}</h3>;
+
+        return (
+            <h3>
+                {
+                    this.props.header
+                }
+            </h3>
+        );
     }
-    
+
     public getToggler(): React.ReactNode | null {
         if (this.hasToggle) {
-            const isComponent: boolean = React.isValidElement(this.props.toggler);
+            const togglerIsComponent: boolean = (React.isValidElement(this.props.toggler));
 
-            if (isComponent) {
+            if (togglerIsComponent) {
                 return this.props.toggler;
             }
 
-            // return  <Icon className={this.css(styles.icon, this.expanded && styles.expanded)} name={"caret-down"} size={IconSize.X2} />
-            return  <Icon className={this.css(styles.icon, this.expanded && styles.expanded)}
-                          name={this.props.togglerIcon ?? "caret-down"} 
-                          size={this.props.togglerSize ?? IconSize.X2}
-            />
+            return (
+                <Icon className={this.css(styles.icon, (this.expanded) && styles.expanded)}
+                      name={this.props.togglerIcon ?? "caret-down"}
+                      size={this.props.togglerSize ?? IconSize.X2}
+                />
+            );
         }
-        
+
         return null;
     }
 
@@ -117,14 +149,6 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
             : TogglerPosition.Header;
     }
 
-    private get classNames(): IAccordionClassNames {
-        const classNamesCopy: IBaseClassNames = {...this.props.classNames};
-
-        Object.keys(styles).forEach((key: string) => !classNamesCopy[key] ? classNamesCopy[key] = styles[key] : classNamesCopy[key]);
-
-        return classNamesCopy;
-    }
-    
     public async expandAsync(): Promise<void> {
         await this.setExpanded(true);
     }
@@ -132,13 +156,15 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
     public async collapseAsync(): Promise<void> {
         await this.setExpanded(false);
     }
-    
+
     public async toggleAsync(): Promise<void> {
-        return (this.expanded) ? await this.collapseAsync() : await this.expandAsync();
+        return (this.expanded)
+            ? await this.collapseAsync()
+            : await this.expandAsync();
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
-        if (this.expanded) {
+        if ((this.expanded) && (this.autoCollapse)) {
             const target = e.target as Node;
 
             const outside: boolean = Utility.clickedOutside(target, this.id);
@@ -149,44 +175,75 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
         }
     }
 
-    public render(): React.ReactNode {
-        const contentMaxHeightStyle: any = {maxHeight: this.contentMaxHeight};
+    public async recalculateContentHeight(): Promise<void> {
+        const contentNode: any = this.contentNode;
 
+        if(contentNode) {
+            const maxHeight: number = contentNode.getBoundingClientRect().height;
+
+            this.setState({
+                maxHeight
+            });
+        }
+    }
+
+    public render(): React.ReactNode {
         return (
-            <div id={this.id} className={this.css(this.classNames.accordion, styles.accordion, this.props.className)}>
-                <div className={this.css(this.classNames.headerContainer, styles.headerContainer, !this.hasToggle && "cursor-pointer")} onClick={(!this.hasToggle) ? (async () => await this.toggleAsync()) : undefined}>
-                    <div className={this.css(this.classNames.header, styles.header)}>
-                        {this.getHeader()}
+            <div id={this.id}
+                 className={this.css(this.classNames.accordion, this.props.className)}
+            >
+                <div className={this.css(this.classNames.headerContainer, (!this.hasToggle) && "cursor-pointer")}
+                     onClick={(!this.hasToggle)
+                         ? async () => await this.toggleAsync()
+                         : undefined}
+                >
+
+                    <div className={this.css(this.classNames.header)}>
+                        {
+                            this.getHeader()
+                        }
                     </div>
 
                     {
                         (this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) &&
                         (
-                            <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
-                                {this.getToggler()}
+                            <div className={this.css(this.classNames.toggler)}
+                                 onClick={async () => this.toggleAsync()}
+                            >
+                                {
+                                    this.getToggler()
+                                }
                             </div>
                         )
                     }
 
                 </div>
 
-                <div className={this.css(styles.contentContainer, this.classNames.contentContainer, this.collapsed && styles.collapsed, this.collapsed && this.classNames.collapsed)} style={contentMaxHeightStyle}>
+                <div className={this.css(this.classNames.contentContainer, (this.collapsed) && this.classNames.collapsed)}
+                     style={{maxHeight: this.state.maxHeight}}
+                >
 
-                    <hr className={this.css(styles.separator, this.classNames.separator)}/>
+                    <hr className={this.css(this.classNames.separator)}/>
 
-                    <div ref={this._contentRef} className={this.css(styles.content, this.classNames.content)}>
-
-                        {this.props.children}
-
+                    <div ref={this._contentRef}
+                         className={this.css(this.classNames.content)}
+                    >
+                        {
+                            this.props.children
+                        }
                     </div>
 
                 </div>
 
                 {
-                    this.togglerPosition === TogglerPosition.Bottom && this.hasToggle &&
+                    (this.togglerPosition === TogglerPosition.Bottom) && (this.hasToggle) &&
                     (
-                        <div className={this.css(this.classNames.toggler, styles.toggler)} onClick={async () => this.toggleAsync()}>
-                            {this.getToggler()}
+                        <div className={this.css(this.classNames.toggler)}
+                             onClick={async () => this.toggleAsync()}
+                        >
+                            {
+                                this.getToggler()
+                            }
                         </div>
                     )
                 }
@@ -195,5 +252,3 @@ class Accordion extends BaseComponent<IAccordionProps, IAccordionState> implemen
         );
     }
 }
-
-export default Accordion;
