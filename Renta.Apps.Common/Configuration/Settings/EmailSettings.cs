@@ -12,7 +12,7 @@ namespace Renta.Apps.Common.Configuration.Settings
 
         public string EmailSender { get; set; }
 
-        public string EmailSupport { get; set; }
+        public string SupportEmail { get; set; }
         
         public string WhiteListedDomains { get; set; }
     }
