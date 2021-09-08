@@ -56,6 +56,8 @@ namespace WeAre.Athenaeum.Tools.CodeGenerator
                     path += Path.DirectorySeparatorChar;
                 }
 
+                path = path.Replace("\\", "\\\\");
+
                 while (path.Contains("\\\\"))
                 {
                     path = path.Replace("\\\\", "\\");
