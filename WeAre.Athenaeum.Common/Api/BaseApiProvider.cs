@@ -256,27 +256,32 @@ namespace WeAre.Athenaeum.Common.Api
             return response;
         }
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string customContentType = null)
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string contentType = null)
             where TRequest : class
             where TResponse : class
         {
             StringContent content = null;
 
-            string defaultMimeType = customContentType ?? AthenaeumConstants.Http.ApiContextType;
-            
-            Encoding defaultEncoding = AthenaeumConstants.Http.CustomMimeTypesWithoutEncoding.Contains(defaultMimeType) ? null : Encoding.UTF8;
-            
             if (request != null)
             {
+                contentType ??= AthenaeumConstants.Http.ApiContextType;
+                
                 if (request is string stringRequest)
                 {
-                    content = new StringContent(stringRequest, defaultEncoding, AthenaeumConstants.Http.TextMimeType);
+                    content = new StringContent(stringRequest, Encoding.UTF8, AthenaeumConstants.Http.TextMimeType);
                 }
                 else
                 {
                     string requestJson = JsonConvert.SerializeObject(request);
 
-                    content = new StringContent(requestJson, defaultEncoding, defaultMimeType);
+                    content = new StringContent(requestJson, Encoding.UTF8, contentType);
+                }
+                
+                bool emptyEncoding = AthenaeumConstants.Http.CustomMimeTypesWithoutEncoding.Contains(contentType);
+
+                if (emptyEncoding)
+                {
+                    content.Headers.ContentType.CharSet = "";
                 }
             }
 
