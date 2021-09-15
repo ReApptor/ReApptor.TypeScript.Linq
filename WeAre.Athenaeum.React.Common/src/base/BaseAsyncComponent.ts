@@ -1,5 +1,6 @@
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import PageRouteProvider from "../providers/PageRouteProvider";
+import ch from "../providers/ComponentHelper";
 
 export interface IAsyncComponent extends IBaseComponent {
     isAsync(): boolean;
@@ -92,12 +93,13 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
     protected abstract getEndpoint(): string;
 
     protected constructor(props: TProps) {
-
-        const isAsync: boolean = ((props) ? ((props as any).isAsync as boolean | null) : null) || true;
-
         super(props);
 
-        this._isAsync = isAsync;
+        if (ch.debug) {
+            console.log("BaseAsyncComponent.constructor: ", this);
+        }
+
+        this._isAsync = ((props) ? ((props as any).isAsync as boolean | null) : null) || true;
     }
 
     public async componentDidMount(): Promise<void> {

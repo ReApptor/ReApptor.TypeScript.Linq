@@ -62,6 +62,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
 
+    public constructor(props: ILayoutProps) {
+        super(props);
+
+        if (ch.debug) {
+            console.log("Layout.constructor: ", this);
+        }
+    }
+
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
         this._startTouch = e.touches[0];
