@@ -2,8 +2,8 @@ import {IBaseAsserter} from "./IBaseAsserter";
 import {IBooleanAsserter} from "./IBooleanAsserter";
 import {IBigIntAsserter} from "./IBigIntAsserter";
 import {IMaybeNullObjectAsserter} from "./IMaybeNullObjectAsserter";
-import {IStringAsserter} from "./IStringAsserter";
 import {INumberAsserter} from "./INumberAsserter";
+import {IMaybeEmptyStringAsserter} from "./IMaybeEmptyStringAsserter";
 
 export interface IUnknownAsserter extends IBaseAsserter<unknown> {
 
@@ -30,12 +30,12 @@ export interface IUnknownAsserter extends IBaseAsserter<unknown> {
     /**
      * Assert that the value is a {@link string}.
      */
-    isString: IStringAsserter;
+    isString: IMaybeEmptyStringAsserter;
 
     /**
      * Assert that the value is a {@link Symbol}.
      */
-    isSymbol: IBaseAsserter<symbol>;
+    isSymbol: IBaseAsserter<Symbol>;
 
     /**
      * Assert that the value is undefined.
