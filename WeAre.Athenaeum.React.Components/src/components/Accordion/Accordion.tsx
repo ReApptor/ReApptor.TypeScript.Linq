@@ -18,7 +18,7 @@ export interface IAccordionClassNames extends IBaseClassNames {
 
 export enum TogglerPosition {
     Header,
-    
+
     Bottom
 }
 
@@ -111,9 +111,6 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     private get maxHeightOffset(): number {
-
-        console.log(this.props.maxHeightOffset);
-
         return (assert(this.props.maxHeightOffset).isNumber.getIsSuccess)
             ? this.props.maxHeightOffset!
             : 0;

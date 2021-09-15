@@ -1,6 +1,6 @@
-import {IBaseAsserter} from "./IBaseAsserter";
+import {ICommonNumberAsserter} from "./ICommonNumberAsserter";
 
-export interface IBigIntAsserter extends IBaseAsserter<bigint> {
+export interface IBigIntAsserter extends ICommonNumberAsserter<bigint> {
 
     // TODO: implement BigInt-specific assertions if needed.
 

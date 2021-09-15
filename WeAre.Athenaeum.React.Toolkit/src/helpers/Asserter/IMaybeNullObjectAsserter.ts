@@ -1,4 +1,5 @@
 import {IBaseAsserter} from "./IBaseAsserter";
+import {IObjectAsserter} from "./IObjectAsserter";
 
 export interface IMaybeNullObjectAsserter extends IBaseAsserter<object | null> {
 
@@ -10,5 +11,5 @@ export interface IMaybeNullObjectAsserter extends IBaseAsserter<object | null> {
     /**
      * Assert that the {@link Object} is not null.
      */
-    isNotNull: IBaseAsserter<object>;
+    isNotNull: IObjectAsserter<object>;
 }
