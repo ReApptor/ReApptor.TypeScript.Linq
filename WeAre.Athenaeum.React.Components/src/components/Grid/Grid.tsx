@@ -33,7 +33,7 @@ interface IGridOverflowData {
     gridFullWidth: number;
 }
 
-export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TItem>, IGridState<TItem>,TGridData<TItem>> implements IGrid, IGlobalResize {
+export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TItem>, IGridState<TItem>,TGridData<TItem>> implements IGrid, IGloonGlobalResizebalResize {
 
     state: IGridState<TItem> = {
         isLoading: false,
