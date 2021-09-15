@@ -1,10 +1,9 @@
-import React, {CSSProperties} from "react";
+import React from "react";
 import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/athenaeum-react-common";
-import { Utility } from "@weare/athenaeum-toolkit";
+import { Utility, assert } from "@weare/athenaeum-toolkit";
 import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";
-import assert from 'WeAre.Athenaeum.React.Toolkit/src/helpers/Asserter/Assert';
 
 
 export interface IAccordionClassNames extends IBaseClassNames {
