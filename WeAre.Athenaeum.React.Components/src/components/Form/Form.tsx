@@ -131,7 +131,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
         await super.componentWillReceiveProps(nextProps);
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         
         const inlineStyle: any = (this.props.inline) && (styles.inline);
         

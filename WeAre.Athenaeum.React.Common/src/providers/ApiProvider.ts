@@ -89,6 +89,10 @@ export default class ApiProvider {
 
             return dataResponse;
         } catch (e) {
+            
+            if (ch.debug) {
+                console.log("ApiProvider.fetchAsync.exception:", e)
+            }
 
             if (this.offline) {
                 await PageRouteProvider.offline();
@@ -164,6 +168,9 @@ export default class ApiProvider {
                 requestId: "",
                 debugDetails: `Requested api action not found (404): "${endpoint}".\nServer response:\n${textResponse.trim()}`
             };
+            if (ch.debug) {
+                console.log("ApiProvider.fetchAsync.serverError:", serverError)
+            }
             await PageRouteProvider.error(serverError);            
             throw new Error(AthenaeumConstants.apiError);
         }
