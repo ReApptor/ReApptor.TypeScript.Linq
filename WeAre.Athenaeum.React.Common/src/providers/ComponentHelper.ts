@@ -49,10 +49,6 @@ export default class ch {
      */
     public static register(component: IBaseComponent): void {
         
-        if (ch.debug) {
-            console.log("ch.register: ", component);
-        }
-        
         const layout = component as (ILayoutPage | null);
         if ((layout) && (layout.isLayout) && (layout.isLayout())) {
             this._layout = layout;
