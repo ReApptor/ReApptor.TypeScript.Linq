@@ -310,10 +310,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     protected constructor(props: TProps) {
         super(props);
-
-        if (ch.debug) {
-            console.log("BaseComponent.constructor: ", this);
-        }
         
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();

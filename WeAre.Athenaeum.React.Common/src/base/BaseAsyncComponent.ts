@@ -95,11 +95,7 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
     protected constructor(props: TProps) {
         super(props);
 
-        if (ch.debug) {
-            console.log("BaseAsyncComponent.constructor: ", this);
-        }
-
-        this._isAsync = ((props) ? ((props as any).isAsync as boolean | null) : null) || true;
+        this._isAsync = ((props) ? ((props as any).isAsync as boolean | null) : null) ?? true;
     }
 
     public async componentDidMount(): Promise<void> {

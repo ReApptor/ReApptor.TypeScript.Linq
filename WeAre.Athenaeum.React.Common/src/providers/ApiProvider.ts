@@ -89,10 +89,6 @@ export default class ApiProvider {
 
             return dataResponse;
         } catch (e) {
-            
-            if (ch.debug) {
-                console.log("ApiProvider.fetchAsync.exception:", e)
-            }
 
             if (this.offline) {
                 await PageRouteProvider.offline();
@@ -168,9 +164,6 @@ export default class ApiProvider {
                 requestId: "",
                 debugDetails: `Requested api action not found (404): "${endpoint}".\nServer response:\n${textResponse.trim()}`
             };
-            if (ch.debug) {
-                console.log("ApiProvider.fetchAsync.serverError:", serverError)
-            }
             await PageRouteProvider.error(serverError);            
             throw new Error(AthenaeumConstants.apiError);
         }
@@ -178,7 +171,7 @@ export default class ApiProvider {
         const hasResponse = (textResponse.length > 0);
         const isHtml = (hasResponse) && ((textResponse.startsWith("<!DOCTYPE html>") || (textResponse.startsWith("<!doctype html>"))));
         if (isHtml) {
-            const isMaintenanceOrBlocked: boolean = (textResponse.indexOf("Renta Task Support") > 0) || (textResponse.indexOf("Site Maintenance") > 0);
+            const isMaintenanceOrBlocked: boolean = (textResponse.indexOf("Support") > 0) || (textResponse.indexOf("Site Maintenance") > 0);
             if (isMaintenanceOrBlocked) {
                 ch.refresh();
             } else if (!this.offline) {
