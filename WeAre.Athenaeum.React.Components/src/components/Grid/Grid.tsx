@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, IGlobalResize} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
 import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";

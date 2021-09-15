@@ -5,7 +5,6 @@ import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";
 
-
 export interface IAccordionClassNames extends IBaseClassNames {
     readonly accordion?: string;
     readonly headerContainer?: string;
@@ -19,6 +18,7 @@ export interface IAccordionClassNames extends IBaseClassNames {
 
 export enum TogglerPosition {
     Header,
+    
     Bottom
 }
 
