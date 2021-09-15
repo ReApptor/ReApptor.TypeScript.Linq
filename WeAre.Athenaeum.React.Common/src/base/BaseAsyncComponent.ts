@@ -1,6 +1,5 @@
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import PageRouteProvider from "../providers/PageRouteProvider";
-import ch from "../providers/ComponentHelper";
 
 export interface IAsyncComponent extends IBaseComponent {
     isAsync(): boolean;
