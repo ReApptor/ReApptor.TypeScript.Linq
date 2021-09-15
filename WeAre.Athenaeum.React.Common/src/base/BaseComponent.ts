@@ -309,10 +309,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     protected constructor(props: TProps) {
-        
-        const id: string | null = (props) ? (props as any).id : ch.getComponentId();
-
         super(props);
+
+        if (ch.debug) {
+            console.log("BaseComponent.constructor: ", this);
+        }
         
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
@@ -321,7 +322,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._childComponentRefs = [];
         this._isMounted = false;
         this._isSpinning = false;
-        
+
+        const id: string | null = (props) ? (props as any).id : ch.getComponentId();
+
         this.id = (id != null) ? id : ch.getComponentId();
         this.typeName = this.constructor.name;
 
