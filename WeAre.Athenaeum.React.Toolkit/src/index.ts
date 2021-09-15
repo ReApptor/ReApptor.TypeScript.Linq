@@ -27,6 +27,7 @@ export * from "./providers/TypeConverter";
 export * from "./providers/StringConverter";
 //Helpers:
 export * from "./helpers/PwaHelper";
+export {default} from "./helpers/Asserter/Assert"
 //Other:
 export * from "./localization/BaseLocalizer";
 export *  from "./AthenaeumConstants";
