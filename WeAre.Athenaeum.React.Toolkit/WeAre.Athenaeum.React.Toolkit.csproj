@@ -29,7 +29,6 @@
       <TypeScriptCompile Include="src\helpers\Asserter\IBaseAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\Asserter\IBigIntAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\Asserter\IBooleanAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\ICommonNumberAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyArrayAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyStringAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\Asserter\IUnknownAsserter.ts" />
