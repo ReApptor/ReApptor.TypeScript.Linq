@@ -9,6 +9,7 @@ export interface IAccordionTestsState {
     recalculateOnAddContent: boolean;
     toggler: boolean;
     togglerPosition: TogglerPosition;
+    useClassNames: boolean;
 }
 
 export default class AccordionTests extends BaseComponent<{}, IAccordionTestsState> {
@@ -19,7 +20,8 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
         maxHeightOffset: 0,
         recalculateOnAddContent: false,
         toggler: false,
-        togglerPosition: TogglerPosition.Header
+        togglerPosition: TogglerPosition.Header,
+        useClassNames: true,
     }
 
     private readonly _accordionRef: React.RefObject<Accordion> = React.createRef();
@@ -123,6 +125,16 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
 
                     </FourColumns>
 
+                    <FourColumns>
+
+                        <Checkbox inline
+                                  label="Use prop 'classNames'"
+                                  value={this.state.useClassNames}
+                                  onChange={async (sender, value) => {this.setState({useClassNames: value})}}
+                        />
+
+                    </FourColumns>
+
                 </div>
 
                 <Accordion ref={this._accordionRef}
@@ -131,6 +143,18 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
                            togglerPosition={this.state.togglerPosition}
                            autoCollapse={this.state.autoCollapse}
                            maxHeightOffset={this.state.maxHeightOffset}
+                           classNames={(this.state.useClassNames)
+                               ? {
+                               accordion: "a",
+                               collapsed: "a",
+                               contentContainer: "a",
+                               content: "a",
+                               header: "a",
+                               headerContainer: "a",
+                               separator: "a",
+                               toggler: "a",
+                               }
+                               : undefined}
                 >
                     {
                         this.state.content

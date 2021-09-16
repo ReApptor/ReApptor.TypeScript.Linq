@@ -215,15 +215,15 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     public render(): React.ReactNode {
         return (
             <div id={this.id}
-                 className={this.css(this.classNames.accordion, this.props.className)}
+                 className={this.css(this.classNames.accordion, styles.accordion, this.props.className)}
             >
-                <div className={this.css(this.classNames.headerContainer, (!this.hasToggle) && "cursor-pointer")}
+                <div className={this.css(this.classNames.headerContainer, styles.headerContainer, (!this.hasToggle) && "cursor-pointer")}
                      onClick={(!this.hasToggle)
                          ? async () => await this.toggleAsync()
                          : undefined}
                 >
 
-                    <div className={this.css(this.classNames.header)}>
+                    <div className={this.css(this.classNames.header, styles.header)}>
                         {
                             this.getHeader()
                         }
@@ -246,7 +246,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
                     {
                         (this.hasToggle) && (this.togglerPosition === TogglerPosition.Header) &&
                         (
-                            <div className={this.css(this.classNames.toggler)}
+                            <div className={this.css(this.classNames.toggler, styles.toggler)}
                                  onClick={async () => this.toggleAsync()}
                             >
                                 {
@@ -258,14 +258,14 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
 
                 </div>
 
-                <div className={this.css(this.classNames.contentContainer, (this.collapsed) && this.classNames.collapsed)}
+                <div className={this.css(this.classNames.contentContainer, styles.contentContainer, (this.collapsed) && this.css(this.classNames.collapsed, styles.collapsed))}
                      style={{maxHeight: this.state.maxHeight + this.maxHeightOffset}}
                 >
 
-                    <hr className={this.css(this.classNames.separator)}/>
+                    <hr className={this.css(this.classNames.separator, styles.separator)}/>
 
                     <div ref={this._contentRef}
-                         className={this.css(this.classNames.content)}
+                         className={this.css(this.classNames.content, styles.content)}
                     >
                         {
                             this.props.children
@@ -277,7 +277,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
                 {
                     (this.togglerPosition === TogglerPosition.Bottom) && (this.hasToggle) &&
                     (
-                        <div className={this.css(this.classNames.toggler)}
+                        <div className={this.css(this.classNames.toggler, styles.toggler)}
                              onClick={async () => this.toggleAsync()}
                         >
                             {
