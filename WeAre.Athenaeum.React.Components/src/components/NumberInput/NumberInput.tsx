@@ -19,6 +19,7 @@ export enum NumberInputBehaviour {
 export interface INumberInputProps extends IBaseInputProps<number> {
     behaviour?: NumberInputBehaviour;
     title?: string;
+    placeholder?: string;
     readonly?: boolean;
     min?: number;
     max?: number;
@@ -282,17 +283,17 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public renderInput(): React.ReactNode {
         return (
             <div className={styles.numberInput}>
-                <input
-                    id={this.getInputId()}
-                    ref={this.ref}
-                    type={this.getType()}
-                    value={this.getStr()}
-                    readOnly={this.readonly}
-                    onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
-                    onBlur={async () => await this.valueBlurHandlerAsync()}
-                    onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
-                    className="form-control"
-                    title={this.props.title}
+                <input id={this.getInputId()} 
+                       ref={this.ref} 
+                       type={this.getType()}
+                       value={this.getStr()}
+                       readOnly={this.readonly}
+                       className="form-control"
+                       title={this.props.title}
+                       placeholder={this.props.placeholder}
+                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
+                       onBlur={async () => await this.valueBlurHandlerAsync()}
+                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
                 />
 
                 {
