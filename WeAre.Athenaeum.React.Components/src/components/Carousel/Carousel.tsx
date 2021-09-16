@@ -86,6 +86,11 @@ export interface ICarouselProps {
      * @param newActiveIndex Index of the new active slide.
      */
     onSlideChange?(newActiveIndex: number): Promise<void>
+
+    /**
+     * Called when the Carousel is clicked.
+     */
+    onClick?(event: React.MouseEvent): Promise<void>
 }
 
 interface ICarouselState {
@@ -245,7 +250,9 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
 
     public render(): React.ReactNode {
         return (
-            <div className={this.className}>
+            <div className={this.className}
+                 onClick={async (event) => await this.props.onClick?.(event)}
+            >
 
                 <Swiper loop={this.loop}
                         speed={this.speed}
