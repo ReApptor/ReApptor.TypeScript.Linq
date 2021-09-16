@@ -1,15 +1,17 @@
-import React, {CSSProperties, Fragment, ReactNode} from "react";
+import React, {CSSProperties, Fragment, ReactElement, ReactNode} from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, InlineType, NumberInput, SelectListItem, ThreeColumns} from "@weare/athenaeum-react-components";
+import {Button, Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, FourColumns, InlineType, NumberInput, SelectListItem, ThreeColumns} from "@weare/athenaeum-react-components";
 import { assert } from '@weare/athenaeum-toolkit';
 
 interface ICarouselTestsState {
     background: boolean;
-    slideToIndex: number;
-    slideToSpeed: number;
+    initiallyActiveSlide: number;
     loop: boolean;
     navigation: CarouselNavigation;
     pagination: CarouselPagination;
+    renderCarousel: boolean;
+    slideToIndex: number;
+    slideToSpeed: number;
     slideCount: number;
     slideHeigth: number | "random" | "auto";
     slideWidth: number | "random" | "auto";
@@ -21,14 +23,16 @@ export default class CarouselTests extends BaseComponent {
 
     public state: ICarouselTestsState = {
         background: false,
-        slideToIndex: 0,
-        slideToSpeed: 300,
+        initiallyActiveSlide: 3,
         loop: false,
         navigation: CarouselNavigation.None,
         pagination: CarouselPagination.None,
+        renderCarousel: true,
+        slideToIndex: 0,
+        slideToSpeed: 300,
         slideHeigth: "auto",
         slideWidth: "auto",
-        slideCount: 1,
+        slideCount: 5,
         slidesPerView: "auto",
         spaceBetweenSlides: 0,
     }
@@ -57,8 +61,8 @@ export default class CarouselTests extends BaseComponent {
         }
     }
 
-    private get slides(): ReactNode[] {
-        const slides: ReactNode[] = [];
+    private get slides(): ReactElement[] {
+        const slides: ReactElement[] = [];
         for (let i = 0; i < this.state.slideCount; i++) {
             const style: CSSProperties = {
                 backgroundColor: (i % 2 === 0)
@@ -102,7 +106,15 @@ export default class CarouselTests extends BaseComponent {
                         Test helpers
                     </h3>
 
-                    <ThreeColumns>
+                    <FourColumns>
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  className="pt-1 pb-1"
+                                  label="Render"
+                                  value={this.state.renderCarousel}
+                                  onChange={async (_, renderCarousel) => {await this.setState({renderCarousel})}}
+                        />
 
                         <Checkbox inline
                                   inlineType={InlineType.Right}
@@ -119,7 +131,14 @@ export default class CarouselTests extends BaseComponent {
                                      onChange={async (_, slideCount) => {await this.setState({slideCount})}}
                         />
 
-                    </ThreeColumns>
+                        <NumberInput inline required noValidate
+                                     className="w-25 pt-1 pb-1"
+                                     label="Initially active slide"
+                                     value={this.state.initiallyActiveSlide}
+                                     onChange={async (_, initiallyActiveSlide) => {await this.setState({initiallyActiveSlide})}}
+                        />
+
+                    </FourColumns>
 
 
                     <ThreeColumns>
@@ -272,27 +291,33 @@ export default class CarouselTests extends BaseComponent {
                         />
 
                         <Button label={"Slide to"}
-                                onClick={async () => this.carousel.slideTo(this.state.slideToIndex, this.state.slideToSpeed)}
+                                onClick={async () => this.carousel.slideToAsync(this.state.slideToIndex, this.state.slideToSpeed)}
                         />
 
                     </ThreeColumns>
 
                     <hr/>
 
-                    <div style={{backgroundColor: (this.state.background) ? "pink" : "initial"}}>
-                        <Carousel ref={this._carouselRef}
-                                  loop={this.state.loop}
-                                  navigation={this.state.navigation}
-                                  pagination={this.state.pagination}
-                                  slidesPerView={this.state.slidesPerView}
-                                  spaceBetweenSlides={this.state.spaceBetweenSlides}
-                                  onSlideChange={(activeIndex) => console.log("onSlideChange", activeIndex)}
-                        >
-                            {
-                                this.slides
-                            }
-                        </Carousel>
-                    </div>
+                    {
+                        (this.state.renderCarousel) &&
+                        (
+                            <div style={{backgroundColor: (this.state.background) ? "pink" : "initial"}}>
+                                <Carousel ref={this._carouselRef}
+                                          loop={this.state.loop}
+                                          navigation={this.state.navigation}
+                                          pagination={this.state.pagination}
+                                          slidesPerView={this.state.slidesPerView}
+                                          spaceBetweenSlides={this.state.spaceBetweenSlides}
+                                          initialSlideIndex={this.state.initiallyActiveSlide}
+                                          onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                                >
+                                    {
+                                        this.slides
+                                    }
+                                </Carousel>
+                            </div>
+                        )
+                    }
 
                 </Form>
 
