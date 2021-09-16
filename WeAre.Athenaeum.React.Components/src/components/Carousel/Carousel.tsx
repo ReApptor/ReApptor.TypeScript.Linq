@@ -31,7 +31,12 @@ export enum CarouselPagination {
 
 export interface ICarouselProps {
 
-    children: React.ReactNode[];
+    children: React.ReactElement[];
+
+    /**
+     * Index of the slide initially displayed by the {@link Carousel}.
+     */
+    initialSlideIndex?: number;
 
     /**
      * Appended to the {@link Carousel}s containers classname.
@@ -80,7 +85,7 @@ export interface ICarouselProps {
      * Called when the currently active slide changes.
      * @param newActiveIndex Index of the new active slide.
      */
-    onSlideChange?(newActiveIndex: number): void
+    onSlideChange?(newActiveIndex: number): Promise<void>
 }
 
 interface ICarouselState {
@@ -97,8 +102,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     }
 
     public get children(): React.ReactElement[] {
-        // BaseComponents "children" clones the children, which messes up updates.
-        return (this.props as any)?.children ?? [];
+        return this.props.children;
     }
 
     // Getters
@@ -115,8 +119,10 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
         return this.css(this.props.className, styles.carousel, navigationClass, paginationClass);
     }
 
-    private get hasChildren(): boolean {
-        return (this.children?.length > 0);
+    private get initialSlideIndex(): number {
+        return (typeof this.props.initialSlideIndex === "number")
+            ? this.props.initialSlideIndex
+            : 0;
     }
 
     private get loop(): boolean {
@@ -154,42 +160,37 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     }
 
     private get spaceBetweenSlides(): number {
-        const assertion: IBaseAsserter<number> = assert(this.props.spaceBetweenSlides).isNumber;
-
-        return (assertion.getIsSuccess)
-            ? assertion.getValue
+        return (typeof this.props.spaceBetweenSlides === "number")
+            ? this.props.spaceBetweenSlides
             : 0;
     }
 
     private get speed(): number {
-        const assertion: IBaseAsserter<number> = assert(this.props.speed).isNumber;
-
-        return (assertion.getIsSuccess)
-            ? assertion.getValue
+        return (typeof this.props.speed === "number")
+            ? this.props.speed
             : 300;
     }
 
-    // Getter-Setter pairs
-
     private get swiper(): SwiperCore {
-        return assert(this.state.swiper, "swiper").isObject.isNotNull.getValue as SwiperCore;
+        return this.state.swiper!;
     }
 
-    private set swiper(newSwiper: SwiperCore) {
-        this.setState({
-            swiper: assert(newSwiper, "newSwiper").isObject.isNotNull.getValue as SwiperCore,
-        });
-    }
-
-    // Synchronous methods
+    // Sync-methods
 
     private getSwiperSlideStyle(child: ReactElement): CSSProperties {
         // If slidesPerView has first been set to a number and then to "auto", the swiper-slide elements widths remain unchanged, and must be reset manually.
         return (this.slidesPerView === "auto")
-            ? (child?.props?.style?.width)
+            ? (child.props?.style?.width)
                 ? {width: child.props.style.width}
                 : {width: "auto"}
             : {};
+    }
+
+    // Async-methods
+
+    private async onSwiperInitAsync(swiper: SwiperCore): Promise<void> {
+        await this.setState({swiper});
+        swiper.slideTo(this.initialSlideIndex, 0);
     }
 
     // Public
@@ -197,7 +198,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     /**
      * Index of the currently active slide.
      */
-    public get activeIndex(): number {
+    public get currentSlideIndex(): number {
         return assert(this.swiper.realIndex, "activeIndex").isNumber.getValue;
     }
 
@@ -206,7 +207,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
      * @param index Index of the slide to slide to.
      * @param speed Speed to slide with. Default is 300.
      */
-    public slideTo(index: number, speed: number = 300) {
+    public async slideToAsync(index: number, speed: number = 300): Promise<void> {
         this.swiper.slideTo(
             assert(index, "index").isNumber.getValue,
             assert(speed, "speed").isNumber.getValue);
@@ -243,10 +244,6 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     // Renders
 
     public render(): React.ReactNode {
-        if (!this.hasChildren) {
-            return null;
-        }
-
         return (
             <div className={this.className}>
 
@@ -256,13 +253,13 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                         pagination={this.paginationOptions}
                         slidesPerView={this.slidesPerView}
                         spaceBetween={this.spaceBetweenSlides}
-                        onInit={(swiper: SwiperCore) => {this.swiper = swiper}}
-                        onRealIndexChange={(swiper: SwiperCore) => this.props.onSlideChange?.(swiper.realIndex)}
+                        onInit={async (swiper: SwiperCore) => await this.onSwiperInitAsync(swiper)}
+                        onRealIndexChange={async (swiper: SwiperCore) => {await this.props.onSlideChange?.(swiper.realIndex)}}
                 >
                     {
-                        this.children.map((child) => {
+                        this.children.map((child, index) => {
                             return (
-                                <SwiperSlide key={child.key}
+                                <SwiperSlide key={(child.key?.toString?.() ?? "") + index}
                                              style={this.getSwiperSlideStyle(child)}
                                 >
                                     {
