@@ -301,6 +301,42 @@ export default class CarouselTests extends BaseComponent {
                         )
                     }
 
+                    <hr/>
+
+                    <h3>
+                        Duplicates
+                    </h3>
+
+                    <Carousel loop={this.state.loop}
+                              navigation={this.state.navigation}
+                              pagination={this.state.pagination}
+                              slidesPerView={this.state.slidesPerView}
+                              spaceBetweenSlides={this.state.spaceBetweenSlides}
+                              initialSlideIndex={this.state.initiallyActiveSlide}
+                              onClick={async (event) => console.log("onClick", event)}
+                              onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                    >
+                        {
+                            this.slides
+                        }
+                    </Carousel>
+
+                    <br/>
+
+                    <Carousel loop={this.state.loop}
+                              navigation={this.state.navigation}
+                              pagination={this.state.pagination}
+                              slidesPerView={this.state.slidesPerView}
+                              spaceBetweenSlides={this.state.spaceBetweenSlides}
+                              initialSlideIndex={this.state.initiallyActiveSlide}
+                              onClick={async (event) => console.log("onClick", event)}
+                              onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                    >
+                        {
+                            this.slides
+                        }
+                    </Carousel>
+
                 </Form>
 
             </Fragment>

@@ -1,5 +1,5 @@
 import React, {CSSProperties, ReactElement} from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
 import {assert, IBaseAsserter} from "@weare/athenaeum-toolkit";
@@ -110,6 +110,11 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
         return this.props.children;
     }
 
+    // Fields
+
+    private readonly _navigationNextId: string = "carousel_next" + ch.getId().toString();
+    private readonly _navigationPreviousId: string = "carousel_previous" + ch.getId().toString();
+
     // Getters
 
     private get className(): string {
@@ -141,8 +146,8 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     private get navigationOptions(): NavigationOptions | false {
          return (this.navigation)
              ? {
-                 nextEl: `.${styles.next}`,
-                 prevEl: `.${styles.previous}`
+                 nextEl: `#${this._navigationNextId}`,
+                 prevEl: `#${this._navigationPreviousId}`,
              }
              : false;
     }
@@ -282,8 +287,15 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                     (this.navigationOptions) &&
                     (
                         <React.Fragment>
-                            <i className={this.css("fa fa-angle-left fa-3x", styles.navigation, styles.previous)}/>
-                            <i className={this.css("fa fa-angle-right fa-3x", styles.navigation, styles.next)}/>
+
+                            <i id={this._navigationPreviousId}
+                               className={this.css("fa fa-angle-left fa-3x", styles.navigation, styles.previous)}
+                            />
+
+                            <i id={this._navigationNextId}
+                               className={this.css("fa fa-angle-right fa-3x", styles.navigation, styles.next)}
+                            />
+
                         </React.Fragment>
                     )
                 }
