@@ -525,6 +525,10 @@ export class GridModel<TItem = {}> {
         }
     }
 
+    public async saveAsync(): Promise<void> {
+        this.rows.forEach(row => row.saveAsync());
+    }
+
     public delete(modelOrIndex: TItem | number): void {
         const rows: RowModel<TItem>[] = this.rows;
         
