@@ -8,10 +8,10 @@ import GridSpinner from "./GridSpinner/GridSpinner";
 import TotalRow from "./TotalRow/TotalRow";
 import CheckHeaderCell from "./Cell/CheckHeaderCell";
 import Pagination, {IPaginationClassNames} from "../Pagination/Pagintation";
+import Comparator from "../../helpers/Comparator";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
-import Comparator from "../../helpers/Comparator";
 
 export interface IGridClassNames {
     readonly pagination?: IPaginationClassNames;
