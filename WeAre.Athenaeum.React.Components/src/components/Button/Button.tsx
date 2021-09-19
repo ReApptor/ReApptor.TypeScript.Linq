@@ -40,8 +40,9 @@ export enum ButtonType {
 
 export interface IButtonProps {
     id?: string;
-    minWidth?: number | string;
     type?: ButtonType;
+    className?: string;
+    minWidth?: number | string;
     label?: string;
     title?: string;
     icon?: IIconProps;
@@ -51,7 +52,6 @@ export interface IButtonProps {
     dataModal?: string;
     toggleModal?: boolean;
     dismissModal?: boolean;
-    className?: string;
     route?: PageRoute;
     small?: boolean;
     disabled?: boolean;
