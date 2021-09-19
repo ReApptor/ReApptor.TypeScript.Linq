@@ -1,11 +1,10 @@
 import React from "react";
-import {BaseComponent, PageRoute} from "@weare/athenaeum-react-common";
-
-import styles from "./ToolbarButton.module.scss";
-import {IIconProps} from "../../Icon/Icon";
-import Button, {ButtonType, IButtonProps} from "../../Button/Button";
+import {BaseComponent} from "@weare/athenaeum-react-common";
+import Button, {IButtonProps} from "../../Button/Button";
 import Inline from "../../Layout.Inline/Inline";
 import ToolbarContainerLocalizer from "../ToolbarContainerLocalizer";
+
+import styles from "./ToolbarButton.module.scss";
 
 export interface IToolbarButtonProps extends IButtonProps {
 }
