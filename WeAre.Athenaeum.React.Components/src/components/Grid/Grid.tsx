@@ -11,6 +11,7 @@ import Pagination, {IPaginationClassNames} from "../Pagination/Pagintation";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
+import Comparator from "../../helpers/Comparator";
 
 export interface IGridClassNames {
     readonly pagination?: IPaginationClassNames;
@@ -359,7 +360,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
     public async componentWillReceiveProps(nextProps: IGridProps<TItem>): Promise<void> {
 
-        const newData: boolean = (this.props.data !== nextProps.data);
+        const newData: boolean = (!Comparator.isEqual(this.props.data, nextProps.data));
         if (newData) {
             const data: TItem[] = nextProps.data || [];
             await this.setDataAsync(data);
