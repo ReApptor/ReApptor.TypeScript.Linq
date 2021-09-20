@@ -140,7 +140,7 @@ export default class CarouselTests extends BaseComponent {
 
                             <NumberInput inline required noValidate
                                          label="Slide width"
-                                         step={10}
+                                         step={100}
                                          value={(typeof this.state.slideWidth === "number") ? this.state.slideWidth : 0}
                                          onChange={async (_, slideWidth) => {await this.setState({slideWidth})}}
                             />
@@ -165,7 +165,7 @@ export default class CarouselTests extends BaseComponent {
 
                             <NumberInput inline required noValidate
                                          label="Slide heigth"
-                                         step={10}
+                                         step={100}
                                          value={(typeof this.state.slideHeigth === "number") ? this.state.slideHeigth : 0}
                                          onChange={async (_, slideHeigth) => {await this.setState({slideHeigth})}}
                             />
@@ -221,6 +221,7 @@ export default class CarouselTests extends BaseComponent {
 
                         <NumberInput inline required noValidate
                                      label="Space between slides"
+                                     step={10}
                                      value={this.state.spaceBetweenSlides}
                                      onChange={async (_, spaceBetweenSlides) => {await this.setState({spaceBetweenSlides})}}
                         />
