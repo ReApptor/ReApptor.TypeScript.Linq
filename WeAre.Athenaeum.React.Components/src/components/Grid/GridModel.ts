@@ -24,45 +24,45 @@ export type GridConfirmationDialogTitleCallback<TItem = {}> = (cell: CellModel<T
 
 export enum ColumnType {
     Custom,
-    
+
     Text,
-    
+
     Number,
-    
+
     Date,
-    
+
     Enum,
-    
+
     Boolean,
-    
+
     Dropdown,
-    
+
     Address,
-    
+
     Icon
 }
 
 export enum ColumnActionType {
     Details = "_details",
-    
+
     Preview = "_preview",
-    
+
     Download = "_download"
 }
 
 export enum GridHoveringType {
     Row,
-    
+
     Cell,
-    
+
     EditableCell,
-    
+
     None
 }
 
 export enum GridOddType {
     Row,
-    
+
     None
 }
 
@@ -70,13 +70,13 @@ export enum CellPaddingType {
     Large,
 
     Medium,
-    
+
     Small
 }
 
 export enum BorderType {
     Default,
-    
+
     DarkSeparators
 }
 
@@ -89,23 +89,23 @@ export interface IGridDefinition {
      * The class name for inner responsive collapsible columns (it applies only if responsive is enable and there are collapsed columns)
      */
     responsiveRowClassName?: string;
-    
+
     columns: ColumnDefinition[];
-    
+
     headerMinHeight?: number;
 
     noDataNoHeader?: boolean;
 
     minWidth?: string | number;
-    
+
     cellPadding?: CellPaddingType;
-    
+
     noDataText?: string;
-    
+
     detailsColStart?: number;
 
     detailsColEnd?: number;
-    
+
     autoToggle?: boolean;
 
     hovering?: GridHoveringType;
@@ -113,13 +113,13 @@ export interface IGridDefinition {
     odd?: GridOddType;
 
     responsive?: boolean;
-    
+
     pagination?: boolean | number;
-    
+
     checkable?: boolean;
-    
+
     readonly?: boolean;
-    
+
     borderType?: BorderType;
 
     optimization?: boolean;
@@ -127,7 +127,7 @@ export interface IGridDefinition {
     initRow?(row: RowModel<any>): void;
 
     renderDetails?(row: RowModel<any>): React.ReactNode;
-    
+
     onCheck?(sender: GridModel<any>): Promise<void>;
 }
 
@@ -152,9 +152,9 @@ export interface ICellAction extends IBaseComponent {
 }
 
 export class ColumnModel<TItem = {}> {
-    
+
     private _lastOuterWidth: number = 0;
-    
+
     public name: string | null = null;
 
     public index: number = 0;
@@ -212,7 +212,7 @@ export class ColumnModel<TItem = {}> {
     public actions: ColumnAction<TItem>[] = [];
 
     public headerCellInstance: IHeaderCell = {} as IHeaderCell;
-    
+
     public collapsed: boolean = false;
 
     public init?(cell: CellModel<any>): void;
@@ -256,17 +256,17 @@ export class ColumnModel<TItem = {}> {
 
 export class GridModel<TItem = {}> {
     public id: string = "";
-    
+
     public className: string | null = null;
 
     public responsiveRowClassName: string | null = null;
-    
+
     public rows: RowModel<TItem>[] = [];
 
     public columns: ColumnModel<TItem>[] = [];
-    
+
     public headerMinHeight: number | null = null;
-    
+
     public noDataNoHeader: boolean = false;
 
     public minWidth: string | number | null = null;
@@ -284,51 +284,51 @@ export class GridModel<TItem = {}> {
     public hovering: GridHoveringType = GridHoveringType.Row;
 
     public odd: GridOddType = GridOddType.Row;
-    
+
     public responsive: boolean = false;
-    
+
     public pagination: boolean | number = false;
-    
+
     public checkable: boolean = false;
-    
+
     public readonly: boolean = false;
-    
+
     public borderType: BorderType = BorderType.DarkSeparators;
-    
+
     public optimization: boolean = true;
-    
+
     public checked: boolean | undefined = false;
 
     public instance: IGrid = {} as IGrid;
-    
+
     public checkHeaderInstance: IBaseComponent = {} as IBaseComponent;
-    
+
     public data: TItem[] = [];
 
     public pageNumber: number = 1;
 
     public pageSize: number = DEFAULT_PAGE_SIZE;
-    
+
     public sortColumn: ColumnModel<TItem> | null = null;
-    
+
     public sortDirection: SortDirection | null = null;
 
     public totalItemCount: number = 0;
-    
+
     public generation: number = 0;
 
     public onCheck?(sender: GridModel<any>): Promise<void>;
 
     public renderDetails?(row: RowModel<TItem>): React.ReactNode;
-    
+
     public get key(): string {
         return `grid_${this.id}`;
     }
-    
+
     public get modified(): boolean {
         return this.rows.some(item => item.modified);
     }
-    
+
     public get total(): boolean {
         return this.columns.some(item => item.total);
     }
@@ -338,7 +338,7 @@ export class GridModel<TItem = {}> {
             ? this.rows.filter(row => row.checked)
             : [];
     }
-    
+
     public get items(): TItem[] {
         return this.rows.map(row => row.model);
     }
@@ -346,7 +346,7 @@ export class GridModel<TItem = {}> {
     public get checkedItems(): TItem[] {
         return this.checkedRows.map(row => row.model);
     }
-    
+
     public get firstRow(): RowModel<TItem> {
         return this.rows[0];
     }
@@ -362,11 +362,11 @@ export class GridModel<TItem = {}> {
     public get desktop(): boolean {
         return (!this.mobile);
     }
-    
+
     public fullWidth(visible: boolean = true): number {
         return this.columns.sum(column => column.outerWidth(visible));
     }
-    
+
     public collapsedWidth(): number {
         return this
             .columns
@@ -380,7 +380,7 @@ export class GridModel<TItem = {}> {
         this.rows.filter(row => row.modified).forEach(row => row.cells.filter(cell => cell.modified).forEach(cell => dump.setValue(cell.initialKey, cell.value)));
         return dump;
     }
-    
+
     public setDump(dump: Dictionary<string, any>): boolean {
         let modified: boolean = false;
 
@@ -395,7 +395,7 @@ export class GridModel<TItem = {}> {
                 }
             }));
         }
-        
+
         return modified;
     }
 
@@ -406,7 +406,7 @@ export class GridModel<TItem = {}> {
         }
         return modified;
     }
-    
+
     public async reloadComponentsAsync(): Promise<void> {
         const components: IAsyncComponent[] = this.rows.selectMany(row => row.cells.where(cell => (cell.asyncContentInstance != null)).map(cell => cell.asyncContentInstance!));
         if (components) {
@@ -419,7 +419,7 @@ export class GridModel<TItem = {}> {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadComponentsAsync();
     }
-    
+
     public async reRenderInputsAsync(): Promise<void> {
         const inputs: IInput[] = this.rows.selectMany(row => row.cells.where(cell => (cell.inputContentInstance != null)).map(cell => cell.inputContentInstance!));
         if (inputs) {
@@ -432,7 +432,7 @@ export class GridModel<TItem = {}> {
         // noinspection JSIgnoredPromiseFromCall
         this.reRenderInputsAsync();
     }
-    
+
     public async reloadAsync(keepState: boolean = false): Promise<void> {
         if ((this.instance) && (this.instance.reloadAsync)) {
             if (keepState) {
@@ -450,7 +450,7 @@ export class GridModel<TItem = {}> {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadAsync(keepState);
     }
-    
+
     public async clearAsync(): Promise<void> {
         if ((this.instance) && (this.instance.clearAsync)) {
             await this.instance.clearAsync();
@@ -462,7 +462,7 @@ export class GridModel<TItem = {}> {
         // noinspection JSIgnoredPromiseFromCall
         this.clearAsync();
     }
-    
+
     public find(model: TItem, equals?: (x: TItem, y: TItem) => boolean): RowModel<TItem> | null {
         equals = equals ?? Comparator.isEqual;
         return this.rows.find(row => equals!(row.model, model)) || null;
@@ -470,21 +470,21 @@ export class GridModel<TItem = {}> {
 
     public get(model: TItem, equals?: (x: TItem, y: TItem) => boolean): RowModel<TItem> {
         const row: RowModel<TItem> | null = this.find(model, equals);
-        
+
         if (row == null)
             throw Error("Row cannot be found, unknown model.");
-        
+
         return row;
     }
 
     public async getAsync<TResponse>(endpoint: string): Promise<TResponse> {
         return await this.instance.getAsync(endpoint);
     }
-    
+
     public async postAsync<TResponse>(endpoint: string, request: any | null): Promise<TResponse> {
         return await this.instance.postAsync(endpoint, request);
     }
-    
+
     public async insertAsync(index: number, ...items: TItem[]): Promise<RowModel<TItem>[]> {
         const rows: RowModel<TItem>[] = this.rows;
 
@@ -502,7 +502,7 @@ export class GridModel<TItem = {}> {
         }
 
         await this.instance.reRenderAsync();
-        
+
         return newRows;
     }
 
@@ -531,9 +531,9 @@ export class GridModel<TItem = {}> {
 
     public delete(modelOrIndex: TItem | number): void {
         const rows: RowModel<TItem>[] = this.rows;
-        
+
         let index: number = 0;
-        
+
         if (typeof modelOrIndex === "number") {
             index = modelOrIndex;
 
@@ -572,29 +572,29 @@ export class ColumnSettingsDefinition {
     public max?: number | Date;
 
     public step?: number;
-    
+
     public maxLength?: number;
-    
+
     public hideZero?: boolean;
 
     public infoAccessor?: string | GridAccessorCallback<any>;
-    
+
     public infoHideZero?: boolean;
 
     public infoHideEqual?: boolean;
 
     public infoTitle?: string;
-    
+
     public infoBold?: boolean;
-    
+
     public infoBoldNotEqual?: boolean;
 
     public infoFormat?: TFormat;
 
     public descriptionAccessor?: string | GridDescriptionAccessorCallback<any>;
-    
+
     public descriptionTitle?: string;
-    
+
     public descriptionJustify?: Justify;
 
     public descriptionAlight?: Align;
@@ -606,27 +606,27 @@ export class ColumnSettingsDefinition {
     public addButton?: boolean | string | RenderCallback;
 
     public nothingSelectedText?: string;
-    
+
     public autoCollapse?: boolean;
-    
+
     public groupSelected?: boolean;
-    
+
     public multiple?: boolean;
-    
+
     public noFilter?: boolean;
-    
+
     public align?: DropdownAlign;
-    
+
     public verticalAlign?: DropdownVerticalAlign;
-    
+
     public arrows?: boolean;
-    
+
     public locationPicker?: boolean;
 
     public descriptionCallback?(cell: CellModel<any>, action: CellAction<any>): Promise<void>;
-    
+
     public addCallback?(cell: CellModel<any>): Promise<void>;
-    
+
     public fetchItems?<TDataItem>(cell: CellModel<any>): Promise<TDataItem[]>;
 
     public selectedTextTransform?(sender: Dropdown<any>): string;
@@ -646,7 +646,7 @@ export class ColumnSettings<TItem = {}> {
     public hideZero: boolean = false;
 
     /**
-     * Show additional info line below main text. 
+     * Show additional info line below main text.
      */
     public infoAccessor: string | GridAccessorCallback<any> | null = null;
 
@@ -654,14 +654,14 @@ export class ColumnSettings<TItem = {}> {
      * If number is used for infoAccessor: Option to hide value if 0
      */
     public infoHideZero: boolean = false;
-    
+
     /**
      * If infoAccessor value equals to main text: Option to hide if equal
      */
     public infoHideEqual: boolean = false;
 
     /**
-     * Title for infoAccessor. 
+     * Title for infoAccessor.
      */
     public infoTitle: string | null = null;
 
@@ -678,7 +678,7 @@ export class ColumnSettings<TItem = {}> {
     public infoFormat: TFormat | null = null;
 
     public descriptionAccessor: string | GridDescriptionAccessorCallback<TItem> | null = null;
-    
+
     public descriptionTitle: string | null = null;
 
     public descriptionJustify: Justify = Justify.Left;
@@ -692,23 +692,23 @@ export class ColumnSettings<TItem = {}> {
     public required: boolean = false;
 
     public requiredType: DropdownRequiredType = DropdownRequiredType.Manual;
-    
+
     public addButton: boolean | string | RenderCallback = false;
-    
+
     public nothingSelectedText: string | null = null;
-    
+
     public multiple: boolean = false;
 
     public noFilter: boolean = false;
-    
+
     public autoCollapse: boolean = true;
-    
+
     public groupSelected: boolean = false;
-    
+
     public align: DropdownAlign = DropdownAlign.Right;
-    
+
     public verticalAlign: DropdownVerticalAlign = DropdownVerticalAlign.Auto;
-    
+
     public arrows: boolean = false;
 
     public locationPicker: boolean = false;
@@ -735,14 +735,14 @@ export class ColumnActionDefinition {
     public icon?: IIconProps | string;
 
     public type?: ActionType | ColumnActionType;
-    
+
     public right?: boolean;
-    
+
     /*
      * If true - ignores "grid.readonly" prop when hides actions;
      */
     public alwaysAvailable?: boolean;
-    
+
     public toggleModal?: string;
 
     /**
@@ -752,7 +752,7 @@ export class ColumnActionDefinition {
     public actions?: string[];
 
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
-    
+
     public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
@@ -770,9 +770,9 @@ export class ColumnAction<TItem = {}> {
     public right: boolean = false;
 
     public toggleModal: string | null = null;
-    
+
     public alwaysAvailable: boolean = false;
-    
+
     public actions?: string[] | null = null;
 
     public confirm: string | IConfirmation | GridConfirmationDialogTitleCallback<TItem> | null = null;
@@ -795,76 +795,76 @@ export class CellAction<TItem = {}> {
 }
 
 export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
-    
+
     public readonly: boolean | null = null;
 
     public justify: Justify = Justify.Left;
 
     public alight: Align = Align.Bottom;
-    
+
     public isDescription: boolean = true;
 }
 
 export class ColumnDefinition {
     public name?: string;
-    
+
     public header?: string;
-    
+
     public title?: string;
 
     public accessor?: string | GridAccessorCallback<any>;
 
     public visible?: boolean;
-    
+
     public responsivePriority?: number | boolean = 0;
-    
+
     public group?: string;
 
     public textAlign?: TextAlign;
 
     public verticalAlign?: VerticalAlign;
-    
+
     public type?: ColumnType;
 
     public editable?: boolean;
-    
+
     public removable?: boolean;
 
     /**
      * Re-render row when cell value is modified, for example, if cell affects row (model) validity
      */
     public reRenderRow?: boolean;
-    
+
     public rotate?: boolean;
-    
+
     public format?: TFormat;
-    
+
     public minWidth?: string | number;
-    
+
     public maxWidth?: string | number;
-    
+
     public maxHeight?: string | number;
-    
+
     public noWrap?: boolean;
 
     public wordBreak?: boolean;
 
     public stretch?: boolean;
-    
+
     public total?: boolean;
 
     public className?: string;
-    
+
     public settings?: ColumnSettingsDefinition;
 
     public sorting?: boolean | SortDirection;
 
     public actions?: ColumnActionDefinition[];
-    
+
     public route?: PageRoute | GridRouteCallback<any>;
 
     public init?(cell: CellModel<any>): void;
-    
+
     public transform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
 
     public render?(cell: CellModel<any>): React.ReactNode;
@@ -877,7 +877,7 @@ export class RowModel<TItem = {}> {
     private _initialKey: string | null = null;
     private _key: string | null = null;
     private _model: TItem = {} as TItem;
-    
+
     private initializeKeys(): void {
         if (this._key == null) {
             this._key = (this.grid.optimization)
@@ -888,37 +888,37 @@ export class RowModel<TItem = {}> {
             }
         }
     }
-    
+
     public id: number = 0;
-    
+
     public index: number = 0;
-    
+
     public grid: GridModel<TItem> = new GridModel<TItem>();
 
     public cells: CellModel<TItem>[] = [];
-    
+
     public className: string | null = null;
-    
+
     public expanded: boolean = false;
 
     public deleted: boolean = false;
-    
+
     public hasDetails: boolean = false;
-    
+
     public instance: IRow = {} as IRow;
-    
+
     public checkable: boolean = false;
 
     public readonly: boolean = false;
-    
+
     public checked: boolean = false;
-    
+
     public responsiveContainerExpanded: boolean = false;
-    
+
     public get model(): TItem {
         return this._model;
     }
-    
+
     public set model(value: TItem) {
         if (this._model !== value) {
             this._model = value;
@@ -939,11 +939,11 @@ export class RowModel<TItem = {}> {
         this.initializeKeys();
         return this._key!;
     }
-    
+
     public get isReadonly(): boolean {
         return this.readonly || this.grid.readonly;
     }
-    
+
     public get isFirst(): boolean {
         return (this.index === 0);
     }
@@ -951,7 +951,7 @@ export class RowModel<TItem = {}> {
     public get isLast(): boolean {
         return (this.index === this.grid.rows.length - 1);
     }
-    
+
     public get modified(): boolean {
         return this.cells.some(item => item.modified);
     }
@@ -959,7 +959,7 @@ export class RowModel<TItem = {}> {
     public get valid(): boolean {
         return this.cells.every(item => item.valid);
     }
-    
+
     public get hasDeleted(): boolean {
         return (this.cells.some(item => item.deleted));
     }
@@ -980,7 +980,7 @@ export class RowModel<TItem = {}> {
         const detailsColStart: number = this.grid.detailsColStart || 0;
         return (this.grid.checkable) ? detailsColStart + 1 : detailsColStart;
     }
-    
+
     public get detailsColEnd(): number {
         if (this.grid.detailsColEnd != null) {
             const detailsColEnd = (this.grid.detailsColEnd < 0)
@@ -1027,7 +1027,7 @@ export class RowModel<TItem = {}> {
 
         return cell;
     }
-    
+
     public getIndex(columnName: string): number {
         let index: number = this.cells.findIndex(item => item.column.name === columnName);
         if (index === -1) {
@@ -1059,18 +1059,18 @@ export class RowModel<TItem = {}> {
             }
             lastIndex = index;
         }
-        
+
         const scope: ArrayScope = new ArrayScope();
         scope.firstIndex = firstIndex;
         scope.lastIndex = lastIndex;
 
         return scope;
     }
-    
+
     public async toggleAsync(): Promise<void> {
-        
+
         this.expanded = !this.expanded;
-        
+
         if ((this.expanded) && (this.grid.autoToggle)) {
             const expandedRow: RowModel<TItem> | null = this.grid.rows.find(row => (row !== this) && (row.expanded)) || null;
             if (expandedRow) {
@@ -1080,7 +1080,7 @@ export class RowModel<TItem = {}> {
 
         await this.reRenderAsync();
         //await this.instance.updateStateAsync();
-        
+
         await Utility.forEachAsync(this.spannedRows, async (row) => await row.reRenderAsync());
     }
 
@@ -1094,7 +1094,7 @@ export class RowModel<TItem = {}> {
             await this.reRenderAsync();
         }
     }
-    
+
     public setModel(model: TItem): boolean {
         let modified: boolean = false;
         const cells: CellModel<TItem>[] = this.cells;
@@ -1121,7 +1121,7 @@ export class RowModel<TItem = {}> {
         }
         return modified;
     }
-    
+
     public async saveAsync(): Promise<void> {
         if (this.modified) {
             this.cells.forEach(cell => cell.save());
@@ -1143,7 +1143,7 @@ export class RowModel<TItem = {}> {
 
         await this.instance.reRenderAsync();
     }
-    
+
     public async setDeletedAsync(deleted: boolean): Promise<void> {
         if (this.deleted !== deleted) {
             this.deleted = deleted;
@@ -1160,41 +1160,41 @@ export class CellModel<TItem = {}> {
     private _spannedRow: RowModel<TItem> | null = null;
     private _descriptionAction: DescriptionCellAction<TItem> | null = null;
     private _description: string | null = null;
-    
+
     public id: number = 0;
-    
+
     public actions: CellAction<TItem>[] = [];
-    
+
     public row: RowModel<TItem> = new RowModel<TItem>();
-    
+
     public column: ColumnModel<TItem> = new ColumnModel<TItem>();
 
     public grid: GridModel<TItem> = new GridModel<TItem>();
-    
+
     public className: string | null = null;
 
     public visible: boolean = true;
-    
+
     public readonly: boolean = false;
 
     public valid: boolean = true;
 
     public deleted: boolean = false;
-    
+
     public title: string = "";
 
     public type: ColumnType = ColumnType.Custom;
-    
+
     public editable: boolean = false;
-    
+
     public accessor: string | GridAccessorCallback<TItem> | null = null;
-    
+
     public route: PageRoute | null = null;
-    
+
     public instance: ICell = {} as ICell;
-    
+
     public asyncContentInstance: IAsyncComponent | null = null;
-    
+
     public inputContentInstance: IInput | null = null;
 
     public get key(): string {
@@ -1204,7 +1204,7 @@ export class CellModel<TItem = {}> {
     public get initialKey(): string {
         return `${this.row.initialKey}_cell_${this.columnIndex}`;
     }
-    
+
     public get isFirstColumn(): boolean {
         return this.column.isFirst;
     }
@@ -1220,7 +1220,7 @@ export class CellModel<TItem = {}> {
     public get isLastRow(): boolean {
         return this.row.isLast;
     }
-    
+
     public get isSpanned(): boolean {
         return this.spanned || this.rowSpan > 1;
     }
@@ -1236,7 +1236,7 @@ export class CellModel<TItem = {}> {
     public get isVisible(): boolean {
         return this.visible && this.column.isVisible;
     }
-    
+
     public get rowSpan(): number {
         return this._rowSpan;
     }
@@ -1261,11 +1261,11 @@ export class CellModel<TItem = {}> {
             this._rowSpan = value;
         }
     }
-    
+
     public get descriptionAction(): DescriptionCellAction<TItem> | null {
         return this._descriptionAction || (this._descriptionAction = this.actions.find(action => action instanceof DescriptionCellAction) as DescriptionCellAction<TItem> | null);
     }
-    
+
     public get description(): string {
         if (this._description === null) {
             const accessor: string | GridDescriptionAccessorCallback<TItem> | null = this.column.settings.descriptionAccessor;
@@ -1277,7 +1277,7 @@ export class CellModel<TItem = {}> {
         }
         return this._description || (this._description = "");
     }
-    
+
     public set description(value: string) {
         const accessor: string | GridDescriptionAccessorCallback<TItem> | null = this.column.settings.descriptionAccessor;
         if ((accessor) && (typeof accessor === "string")) {
@@ -1285,7 +1285,7 @@ export class CellModel<TItem = {}> {
             this._description = null;
         }
     }
-    
+
     public get descriptionReadonly(): boolean {
         return ((this.descriptionAction) && (this.descriptionAction.readonly != null))
             ? this.descriptionAction.readonly
@@ -1297,15 +1297,15 @@ export class CellModel<TItem = {}> {
             this.descriptionAction.readonly = value;
         }
     }
-    
+
     public get spanned(): boolean {
         return (this._spannedRow != null);
     }
-    
+
     public get spannedRow(): RowModel<TItem> | null {
         return this._spannedRow;
     }
-    
+
     public get spannedRows(): RowModel<TItem>[] {
         const spannedRows: RowModel<TItem>[] = [];
         if (!this.spanned) {
@@ -1340,11 +1340,11 @@ export class CellModel<TItem = {}> {
             }
         }
     }
-    
+
     public get modifiable(): boolean {
         return (this._valueInitialized) && (this.type != ColumnType.Icon) && ((this.type != ColumnType.Custom) || (this.editable));
     }
-    
+
     public get modified(): boolean {
         if (this.modifiable) {
             const hideZero: boolean = this.column.settings.hideZero;
@@ -1369,7 +1369,7 @@ export class CellModel<TItem = {}> {
     public get model(): TItem {
         return this.row.model;
     }
-    
+
     public get next(): CellModel<TItem> {
         return (this.columnIndex < this.grid.columns.length - 1)
             ? this.row.cells[this.columnIndex + 1]
@@ -1389,7 +1389,7 @@ export class CellModel<TItem = {}> {
     public get prevRow(): RowModel<TItem> {
         return this.row.prevRow;
     }
-    
+
     public get removable(): boolean {
         return this.column.removable;
     }
@@ -1427,13 +1427,13 @@ export class CellModel<TItem = {}> {
         }
         return null;
     }
-    
+
     public equalRowSpan(cell: CellModel<TItem>): boolean {
         let equal: boolean = (cell.rowIndex == this.rowIndex);
         equal = equal && (cell.spanned === this.spanned) && (cell.rowSpan === this.rowSpan);
         return equal;
     }
-    
+
     public prevRows(callback: (item: TItem) => boolean): RowModel<TItem>[] {
         const result: RowModel<TItem>[] = [];
         if (this.rowIndex > 0) {
@@ -1443,7 +1443,7 @@ export class CellModel<TItem = {}> {
                 if (!callback(item)) {
                     break;
                 }
-                result.push(row);                
+                result.push(row);
             }
         }
         return result;
@@ -1521,7 +1521,7 @@ export class CellModel<TItem = {}> {
             await this.reRenderAsync();
         }
     }
-    
+
     public setValue(value: any): boolean {
         if (this.accessor) {
             if (this.value !== value) {
@@ -1531,7 +1531,7 @@ export class CellModel<TItem = {}> {
                 return (this.modified !== modified);
             }
         }
-        
+
         return false;
     }
 
@@ -1544,7 +1544,7 @@ export class CellModel<TItem = {}> {
         }
         return modified;
     }
-    
+
     public bind(): boolean {
         if (this.accessor) {
             const value: any = (typeof this.accessor === "string")
@@ -1608,21 +1608,21 @@ export class CellModel<TItem = {}> {
             await this.inputContentInstance.showEditAsync(select);
         }
     }
-    
+
     public async reRenderAsync(): Promise<void> {
         if (this.isVisible) {
             await this.instance.reRenderAsync();
         }
     }
-    
+
     public reRender(): void {
         // reload without await
         // noinspection JSIgnoredPromiseFromCall
         this.reRenderAsync();
     }
-    
+
     public async reloadAsync(): Promise<void> {
-        if (this.asyncContentInstance) {            
+        if (this.asyncContentInstance) {
             await this.asyncContentInstance.reloadAsync();
         }
     }
@@ -1708,7 +1708,7 @@ export class GridTransformer {
         to.actions = (from.actions || []).map((action) => this.toAction<TItem>(to, action));
         return to;
     }
-    
+
     public static toRows<TItem = {}>(grid: GridModel<TItem>, items: TItem[]): RowModel<TItem>[] {
         return items.map((item, rowIndex) => this.toRow(grid, item, rowIndex));
     }
@@ -1723,7 +1723,7 @@ export class GridTransformer {
         to.cells = grid.columns.map((column) => this.toCell<TItem>(grid, to, column));
         return to;
     }
-    
+
     public static toCell<TItem = {}>(grid: GridModel<TItem>, row: RowModel<TItem>, column: ColumnModel<TItem>): CellModel<TItem> {
         const to = new CellModel<TItem>();
         to.id = ch.getId();
@@ -1789,11 +1789,11 @@ export class GridTransformer {
         to.render = from.render;
         to.right = from.right || false;
         to.actions = from.actions;
-        
+
         to.alwaysAvailable = from.alwaysAvailable || false;
         to.name = from.name || null;
         to.icon = this.toIcon(from.icon);
-        
+
         if (from.type != null) {
             switch (from.type) {
                 case ColumnActionType.Details:
@@ -1802,26 +1802,26 @@ export class GridTransformer {
                     to.type = ActionType.Secondary;
                     to.icon = this.toIcon(from.icon || "far info-square");
                     break;
-                    
+
                 case ColumnActionType.Download:
                     to.alwaysAvailable = (from.alwaysAvailable !== false);
                     to.name = from.name || "download";
                     to.type = ActionType.Create;
                     to.icon = this.toIcon(from.icon || "far download");
                     break;
-                    
+
                 case ColumnActionType.Preview:
                     to.alwaysAvailable = (from.alwaysAvailable !== false);
                     to.name = from.name || "preview";
                     to.type = ActionType.Blue;
                     to.icon = this.toIcon(from.icon || "far search");
                     break;
-                    
+
                 default:
                     to.type = from.type || null;
             }
         }
-        
+
         return to;
     }
 
