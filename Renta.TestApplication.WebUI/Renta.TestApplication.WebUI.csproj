@@ -112,6 +112,7 @@
       <TypeScriptCompile Include="src\app\pages\Tests\FileInputTests\FileInputTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\sampleImage.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\samplePdf.ts" />
+      <TypeScriptCompile Include="src\app\pages\Tests\RouteWidgetTests\RouteWidgetTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\Tests.tsx" />
       <TypeScriptCompile Include="src\app\providers\TransformProvider.ts" />
       <TypeScriptCompile Include="src\lib\fa\fa.ts" />
