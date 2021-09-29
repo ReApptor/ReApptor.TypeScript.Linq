@@ -1,7 +1,7 @@
 import React from "react";
-import {Utility, TFormat} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, LinkTarget, ReactUtility, IBaseClassNames} from "@weare/athenaeum-react-common";
-import Icon, { IconSize, IIconProps } from "../Icon/Icon";
+import {TFormat, Utility} from "@weare/athenaeum-toolkit";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, LinkTarget, ReactUtility} from "@weare/athenaeum-react-common";
+import Icon, {IconSize, IIconProps} from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import BaseWidgetContainer from "./BaseWidgetContainer";
 import WidgetContainerLocalizer from "./WidgetContainerLocalizer";
@@ -34,6 +34,7 @@ export interface IBaseWidgetProps {
     label?: string;
     description?: string;
     icon?: IIconProps;
+    text?: string;
     async?: boolean;
     minimized?: boolean;
     transparent?: boolean;
@@ -57,7 +58,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     private readonly _spinnerRef: React.RefObject<Spinner> = React.createRef();
 
     state: IBaseWidgetState<TWidgetData> = {
-        text: "",
+        text: (this.props.text as string | null),
         number: null,
         date: null,
         label: (this.props.label as string | null),
@@ -97,7 +98,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             ? Utility.formatValue(this.state.date, this.dateFormat)
             : (this.state.number != null)
                 ? Utility.formatValue(this.state.number, this.numberFormat)
-                : "";
+                : this.state.text || "";
     }
 
     public isAsync(): boolean {
@@ -115,7 +116,8 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
 
     protected async processDataAsync(state: IBaseWidgetState<TWidgetData>, data: TWidgetData | null): Promise<void> {
         const date: Date | null = (Utility.isDateType(data)) ? new Date(data as any) : null;
-        const number: number | null = data as (number | null);
+        const number: number | null = ((data != null) && (typeof data === "number")) ? data as number : null;
+        state.text = data as (string | null);
         state.number = (number != null) ? number : null;
         state.date = date;
         state.spinnerVisible = false;
@@ -243,8 +245,22 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <React.Fragment>
-                {this.icon && <div className={this.css(styles.icon, (this.state.spinnerVisible && styles.icon_hidden), (renderHidden && styles.icon_hidden))}><Icon {...this.icon} /></div>}
-                {(!this.icon && this.number) && (<div className={this.css(styles.number, (this.containsTagSmall) && styles.smallNumbers)}><span>{ReactUtility.toSmalls(this.number)}</span></div>)}
+                {
+                    (this.icon) &&
+                    (
+                        <div className={this.css(styles.icon, (this.state.spinnerVisible && styles.icon_hidden), (renderHidden && styles.icon_hidden))}>
+                            <Icon {...this.icon} />
+                        </div>
+                    )
+                }
+                {
+                    ((!this.icon) && (this.number)) &&
+                    (
+                        <div className={this.css(styles.number, (this.containsTagSmall) && styles.smallNumbers)}>
+                            <span>{ReactUtility.toSmalls(this.number)}</span>
+                        </div>
+                    )
+                }
             </React.Fragment>
         );
     }
@@ -290,6 +306,11 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
         if (this.props.icon !== nextProps.icon) {
             newState = newState || {};
             newState.icon = nextProps.icon;
+        }
+
+        if (this.props.text !== nextProps.text) {
+            newState = newState || {};
+            newState.text = nextProps.text;
         }
         
         if (newState != null) {
