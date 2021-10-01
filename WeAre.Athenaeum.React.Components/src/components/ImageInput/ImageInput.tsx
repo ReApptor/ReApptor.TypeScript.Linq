@@ -643,9 +643,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         if (this.props.onChange) {
             await this.props.onChange(this, this.pictures);
         }
-        else {
-            await this.reRenderAsync();
-        }
+
+        await this.setState({
+            selectedPictureIndex: newIndex,
+        });
     }
 
     private async removePictureAsync(index: number): Promise<void> {
