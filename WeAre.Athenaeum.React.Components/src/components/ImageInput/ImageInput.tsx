@@ -1,7 +1,7 @@
 import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {assert, FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
@@ -33,6 +33,59 @@ enum ImageInputView {
     Edit,
 }
 
+export interface IIMageInputToolbar {
+
+    /**
+     * Should an "Upload file"-button be shown.
+     */
+    uploadButton?: boolean;
+
+    /**
+     * Should a "Take a picture"-button be shown.
+     */
+    takePictureButton?: boolean;
+
+    /**
+     * Should a "Remove"-button be shown.
+     */
+    deleteButton?: boolean;
+
+    /**
+     * Should a "Preview"-button be shown.
+     */
+    previewButton?: boolean;
+
+    /**
+     * Should an "Edit"-button be shown.
+     */
+    editButton?: boolean;
+
+    /**
+     * Should a "Rotate left"-button be shown.
+     */
+    rotateLeftButton?: boolean;
+
+    /**
+     * Should a "Rotate right"-button be shown.
+     */
+    rotateRightButton?: boolean;
+
+    /**
+     * Should a "Move up"-button be shown.
+     */
+    moveUpButton?: boolean;
+
+    /**
+     * Should a "Move down"-button be shown.
+     */
+    moveDownButton?: boolean;
+
+    /**
+     * Should a "Move to top"-button be shown.
+     */
+    moveToTopButton?: boolean;
+}
+
 interface IImageInputState {
     currentView: ImageInputView;
     isDragOver: boolean;
@@ -42,12 +95,43 @@ interface IImageInputState {
 }
 
 interface IImageInputProps {
-    pictures: FileModel[] | string;
+    pictures: FileModel[] | string | null;
     className?: string;
+
+    /**
+     * Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true.
+     */
     editOnAddInSingleMode?: boolean
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
+
+    /**
+     * Does the {@link ImageInput} accept multiple images.
+     * @default false
+     */
     multi?: boolean;
+
+    /**
+     * Displayed when {@link pictures} is empty or when no image is selected.
+     */
+    noSelectionToolbar?: IIMageInputToolbar;
+
+    /**
+     * Displayed when an image has been selected.
+     * @default {@link IIMageInputToolbar.rotateLeftButton} {@link IIMageInputToolbar.rotateRightButton} {@link IIMageInputToolbar.editButton} {@link IIMageInputToolbar.previewButton} {@link IIMageInputToolbar.uploadButton} {@link IIMageInputToolbar.takePictureButton} {@link IIMageInputToolbar.deleteButton}
+     */
+    selectionToolbar?: IIMageInputToolbar;
+
+    /**
+     * Displayed when an image is being previewed in full-screen.
+     */
+    previewToolbar?: IIMageInputToolbar;
+
+    /**
+     * Displayed when an image is being edited.
+     */
+    editToolbar?: IIMageInputToolbar;
+
     imageUrl?(file: FileModel): string;
     convertImage?(file: FileModel): Promise<FileModel>;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
@@ -74,8 +158,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return Comparator.isNumber(this.state.selectedPictureIndex);
     }
 
-    private get selectedPictureIndex(): number {
-        return Comparator.assertIsNumber(this.state.selectedPictureIndex);
+    private get selectedPictureIndex(): number | null {
+        return this.state.selectedPictureIndex;
     }
 
     private get currentView(): ImageInputView {
@@ -87,8 +171,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get isDragOver(): boolean {
-        // noinspection PointlessBooleanExpressionJS - there is no knowing what type the value will be in runtime.
-        return (this.state.isDragOver === true);
+        return this.state.isDragOver;
     }
 
     private get editOnAddInSingleMode(): boolean {
@@ -113,7 +196,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get activePicture(): FileModel | null {
         return (this.hasSelectedPictureIndex)
-            ? this.pictures[this.selectedPictureIndex]
+            ? this.pictures[this.selectedPictureIndex!]
             : null;
     }
 
@@ -167,47 +250,39 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  ViewIfStatements
 
-    private get showEditButton(): boolean {
-        return (this.hasSelectedPictureIndex)
-            && (this.currentView !== ImageInputView.Edit);
+    private get toolbar(): IIMageInputToolbar {
+        switch (this.currentView){
+            case ImageInputView.Default:
+                return (this.hasSelectedPictureIndex)
+                    ? this.props.selectionToolbar ?? ImageInput.defaultSelectionToolbar
+                    : this.props.noSelectionToolbar ?? ImageInput.defaultNoSelectionToolbar;
+            case ImageInputView.Preview:
+                return this.props.previewToolbar ?? ImageInput.defaultPreviewToolbar;
+            case ImageInputView.Edit:
+                return this.props.editToolbar ?? ImageInput.defaultEditToolbar;
+            default:
+                throw new TypeError(`Non-existing enum value '${this.currentView}'`);
+        }
     }
 
     private get showBackButton(): boolean {
         return (this.isFullscreen);
     }
 
-    private get showPreviewButton(): boolean {
-        return (this.hasSelectedPictureIndex)
-            && (!this.isFullscreen);
-    }
-
-    private get showBrowseButton(): boolean {
-        return (this.currentView !== ImageInputView.Edit);
-    }
-
-    private get showCameraButton(): boolean {
-        return (this.currentView !== ImageInputView.Edit);
-    }
-
-    private get showDeleteButton(): boolean {
-        return (this.hasSelectedPictureIndex);
-    }
-
-    private get showRotateButton(): boolean {
-        return (this.currentView === ImageInputView.Edit);
-    }
-
     private get showSaveButton(): boolean {
         return (this.currentView === ImageInputView.Edit);
     }
 
-    private get showMiniRotateButton(): boolean {
+    private get miniRotateButtons(): boolean {
+
+        // TODO: get from props?
+
         return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default);
     }
 
     //  Control panel button Click Events
 
-    private async onBrowseButtonClick(): Promise<void> {
+    private async onBrowseButtonClickAsync(): Promise<void> {
         if (!this.fileInputRef) {
             return;
         }
@@ -235,7 +310,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         ref.current.click();
     }
 
-    private async onSaveButtonClick(): Promise<void> {
+    private async onSaveButtonClickAsync(): Promise<void> {
         if ((!this.cropperRef.current)
             || (this.currentView !== ImageInputView.Edit)) {
             return;
@@ -258,72 +333,55 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             }
         }
 
-        await this.updatePicture(newFileModel, this.selectedPictureIndex);
-        
-        await this.setCurrentView(this.previousView);
+        await this.updatePictureAsync(newFileModel, this.selectedPictureIndex!);
+
+        await this.setCurrentViewAsync(this.previousView);
     }
 
-    private async onEditButtonClick(): Promise<void> {
+    private async onEditButtonClickAsync(): Promise<void> {
         if (!this.hasSelectedPictureIndex) {
             return;
         }
 
-        await this.setCurrentView(ImageInputView.Edit);
+        await this.setCurrentViewAsync(ImageInputView.Edit);
     }
 
-    private async onBackButtonClick(): Promise<void> {
+    private async onBackButtonClickAsync(): Promise<void> {
         const newView: ImageInputView = (this.currentView === ImageInputView.Edit)
             ? this.previousView
             : ImageInputView.Default;
 
-        await this.setCurrentView(newView);
+        await this.setCurrentViewAsync(newView);
     }
 
-    private async onPreviewButtonClick(): Promise<void> {
+    private async onPreviewButtonClickAsync(): Promise<void> {
         if (!this.hasSelectedPictureIndex) {
             return;
         }
 
-        await this.setCurrentView(ImageInputView.Preview);
+        await this.setCurrentViewAsync(ImageInputView.Preview);
     }
 
-    private async onDeleteButtonClick(): Promise<void> {
+    private async onDeleteButtonClickAsync(): Promise<void> {
         if (!this.hasSelectedPictureIndex) {
             return;
         }
 
-        await this.removePicture(this.selectedPictureIndex)
+        await this.removePictureAsync(this.selectedPictureIndex!);
     }
 
-    private async onRemoveButtonClick(): Promise<void> {
-
-        // TODO: use this method?
-
-        if (!this.hasSelectedPictureIndex) {
-            return;
-        }
-    }
-
-    private async onRotateLeftButtonClick(): Promise<void> {
+    private async onRotateButtonClickAsync(degrees: number): Promise<void> {
         if (!this.cropperRef.current) {
             return;
         }
 
-        this.cropperHelper.rotateAndFitToScreen(-90);
+        this.cropperHelper.rotateAndFitToScreen(degrees);
     }
 
-    private async onRotateRightButtonClick(): Promise<void> {
-        if (!this.cropperRef.current) {
-            return;
-        }
+    private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
+        const selectedPicture = this.pictures[this.selectedPictureIndex!];
 
-        this.cropperHelper.rotateAndFitToScreen(90);
-    }
-
-    private async onRotateLeftMiniButtonClick(): Promise<void> {
-        const selectedPicture = this.pictures[this.selectedPictureIndex];
-
-        let rotated = await ReactCropperHelpers.rotate(selectedPicture, -90, this.getPreviewSource(this.selectedPictureIndex));
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(this.selectedPictureIndex!));
 
         if (this.props.convertImage) {
             rotated = await this.props.convertImage(rotated);
@@ -334,25 +392,31 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             }
         }
 
-        await this.updatePicture(rotated, this.selectedPictureIndex);
+        await this.updatePictureAsync(rotated, this.selectedPictureIndex!);
     }
 
-    private async onRotateRightMiniButtonClick(): Promise<void> {
-
-        const selectedPicture = this.pictures[this.selectedPictureIndex];
-
-        let rotated = await ReactCropperHelpers.rotate(selectedPicture, 90, this.getPreviewSource(this.selectedPictureIndex));
-
-        if (this.props.convertImage) {
-            rotated = await this.props.convertImage(rotated);
-
-            if (rotated === null || rotated === undefined) {
-                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
-                return;
-            }
+    private async onMoveToTopButtonClickAsync(): Promise<void> {
+        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
+            return;
         }
 
-        await this.updatePicture(rotated, this.selectedPictureIndex);
+        await this.changeSelectedImagesIndexAsync(0);
+    }
+
+    private async onMoveUpButtonClickAsync(): Promise<void> {
+        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
+            return;
+        }
+
+        await this.changeSelectedImagesIndexAsync(this.selectedPictureIndex! - 1);
+    }
+
+    private async onMoveDownButtonClickAsync(): Promise<void> {
+        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! >= this.pictures.length)) {
+            return;
+        }
+
+        await this.changeSelectedImagesIndexAsync(this.selectedPictureIndex! + 1);
     }
 
     private onListViewItemClick(index: number): void {
@@ -366,7 +430,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  DragAndDrop Functionality Events
 
-    private async onImageInputDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onImageInputDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (!this.isDragOver) {
@@ -374,7 +438,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async onDropDownAreaDragEnter(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (!this.isDragOver) {
@@ -382,11 +446,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async onDropDownAreaDragOver(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragOverAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
     }
 
-    private async onDropDownAreaDragLeave(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDragLeaveAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
         if (this.isDragOver) {
@@ -394,7 +458,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async onDropDownAreaDrop(event: DragEvent<HTMLDivElement>): Promise<void> {
+    private async onDropDownAreaDropAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
         event.persist();
 
@@ -406,50 +470,53 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        await this.addFileList(event.dataTransfer.files)
+        await this.addFileListAsync(event.dataTransfer.files)
     }
 
-    private async onFileInputChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+    private async onFileInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
         event.preventDefault();
 
         if (!event.target.files) {
             return;
         }
 
-        await this.addFileList(event.target.files)
+        await this.addFileListAsync(event.target.files)
     }
-    
+
     private async initializePicturesAsync(): Promise<void> {
-        const pictures: FileModel[] = (this.props.pictures != null)
-            ? Array.isArray(this.props.pictures)
-                ? this.props.pictures
-                : [new FileModel(this.props.pictures)]
-            : [];
 
-        const selectedPictureIndex: number | null = (pictures.length > 0)
-            ? ((this.state.selectedPictureIndex != null) && (this.state.selectedPictureIndex >= 0) && (this.state.selectedPictureIndex < pictures.length))
-                ? this.state.selectedPictureIndex
-                : 0
-            : null;
+        let pictures: FileModel[];
+        let selectedPictureIndex: number | null;
 
-        await this.setState({pictures, selectedPictureIndex});
+        if ((Array.isArray(this.props.pictures)) && (this.props.pictures.length > 0)) {
+            pictures = this.props.pictures;
+            selectedPictureIndex = (typeof this.selectedPictureIndex === "number")
+                ? this.selectedPictureIndex
+                : 0;
+        }
+        else if (assert(this.props.pictures).isString.isNotEmpty.isNotWhitespace.getIsSuccess) {
+            pictures = [new FileModel(this.props.pictures as string)];
+            selectedPictureIndex = 0;
+        }
+        else {
+            pictures = [];
+            selectedPictureIndex = null;
+        }
+
+        await this.setState({
+            pictures,
+            selectedPictureIndex
+        });
     }
 
     //  Logic
 
     public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
-        // if (!this.hasSelectedPictureIndex) {
-        //     return;
-        // }
 
         const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
 
-        // if (this.selectedPictureIndex >= nextProps.pictures.length) {
-        //     this.setState({selectedPictureIndex: 0})
-        // }
-        
         await super.componentWillReceiveProps(nextProps);
-        
+
         if (newPictures) {
             await this.initializePicturesAsync();
         }
@@ -459,20 +526,23 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.initializePicturesAsync();
     }
 
-    private async setCurrentView(currentView: ImageInputView): Promise<void> {
+    private async setCurrentViewAsync(currentView: ImageInputView): Promise<void> {
         if (this.currentView !== ImageInput.assertIsImageInputView(currentView)) {
-            await this.setState({previousView: this.currentView, currentView});
+            await this.setState({
+                previousView: this.currentView,
+                currentView
+            });
         }
     }
 
-    private async addFileList(fileList: FileList): Promise<void> {
+    private async addFileListAsync(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
 
         if (fileListAsArray.length === 0) {
             return;
         }
 
-        if (!this.multi && fileListAsArray.length > 1) {
+        if ((!this.multi) && (fileListAsArray.length > 1)) {
             fileListAsArray = [fileListAsArray[0]];
         }
 
@@ -504,10 +574,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return converted;
         }));
 
-        await this.addPictures(fileModels)
+        await this.addPicturesAsync(fileModels)
     }
 
-    private async addPictures(fileModels: FileModel[]): Promise<void> {
+    private async addPicturesAsync(fileModels: FileModel[]): Promise<void> {
         if (fileModels.length === 0) {
             return;
         }
@@ -521,35 +591,33 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
                 await this.setState(
                     {
-                        selectedPictureIndex: (this.hasSelectedPictureIndex)
-                            ? this.selectedPictureIndex
-                            : 0
+                        selectedPictureIndex: this.selectedPictureIndex ?? 0
                     });
 
-                await this.setCurrentView(ImageInputView.Default);
-            } else {
+                await this.setCurrentViewAsync(ImageInputView.Default);
+            }
+            else
+            {
                 await this.props.onChange(
                     this,
-                    (fileModels.length > 0)
-                        ? fileModels.slice(0, 1)
-                        : []
+                    fileModels.slice(0, 1)
                 );
-
-                const selectedView = (this.editOnAddInSingleMode)
-                    ? ImageInputView.Edit
-                    : ImageInputView.Default
 
                 await this.setState(
                     {
                         selectedPictureIndex: 0
                     });
 
-                await this.setCurrentView(selectedView);
+                const selectedView = (this.editOnAddInSingleMode)
+                    ? ImageInputView.Edit
+                    : ImageInputView.Default
+
+                await this.setCurrentViewAsync(selectedView);
             }
         }
     }
 
-    private async updatePicture(fileModel: FileModel, index: number): Promise<void> {
+    private async updatePictureAsync(fileModel: FileModel, index: number): Promise<void> {
         const pictures = this.pictures.map((picture: FileModel, i) => {
             if (index === i) {
                 return fileModel;
@@ -562,13 +630,37 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async removePicture(index: number): Promise<void> {
+    private async changeSelectedImagesIndexAsync(newIndex: number): Promise<void> {
+        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex === newIndex) || (newIndex < 0) || (newIndex >= this.pictures.length)) {
+            return;
+        }
+
+        const oldImage: FileModel = this.pictures[newIndex];
+
+        this.pictures[newIndex] = this.pictures[this.selectedPictureIndex!];
+        this.pictures[this.selectedPictureIndex!] = oldImage;
+
+        if (this.props.onChange) {
+            await this.props.onChange(this, this.pictures);
+        }
+        else {
+            await this.reRenderAsync();
+        }
+    }
+
+    private async removePictureAsync(index: number): Promise<void> {
         const pictures = [...this.pictures];
         pictures.splice(index, 1);
 
-        await this.setState({selectedPictureIndex: null});
-        
-        await this.setCurrentView(ImageInputView.Default);
+        const newIndex: number | null = (pictures.length <= 0)
+            ? null
+            : (index <= 0)
+                ? 0
+                : index - 1;
+
+        await this.setState({selectedPictureIndex: newIndex});
+
+        await this.setCurrentViewAsync(ImageInputView.Default);
 
         if (this.props.onChange) {
             await this.props.onChange(this, pictures);
@@ -582,95 +674,151 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             <React.Fragment>
 
                 {
-                    (this.showMiniRotateButton) &&
+                    ((this.toolbar.rotateLeftButton) || (this.toolbar.rotateRightButton)) &&
                     (
-                        <div className={styles.controlPanelMiniButtonWrap}>
+                        (this.miniRotateButtons)
+                            ?
+                            (
+                                <div className={styles.controlPanelMiniButtonWrap}>
 
-                            <Button small
-                                    icon={{name: "undo"}}
-                                    type={ButtonType.Info}
-                                    onClick={async () => await this.onRotateLeftMiniButtonClick()}
-                            />
+                                    {
+                                        (this.toolbar.rotateLeftButton) &&
+                                        (
+                                            <Button small
+                                                    icon={{name: "undo"}}
+                                                    type={ButtonType.Info}
+                                                    onClick={async () => await this.onRotateMiniButtonClickAsync(-90)}
+                                            />
+                                        )
+                                    }
 
+                                    {
+                                        (this.toolbar.rotateRightButton) &&
+                                        (
+                                            <Button small
+                                                    icon={{name: "redo"}}
+                                                    type={ButtonType.Info}
+                                                    onClick={async () => await this.onRotateMiniButtonClickAsync(90)}
+                                            />
+                                        )
+                                    }
 
-                            <Button small
-                                    icon={{name: "redo"}}
-                                    type={ButtonType.Info}
-                                    onClick={async () => await this.onRotateRightMiniButtonClick()}
-                            />
-                        </div>
+                                </div>
+                            )
+                            :
+                            (
+                                <>
+                                    {
+                                        (this.toolbar.rotateLeftButton) &&
+                                        (
+                                            <Button small
+                                                    className={styles.controlPanelButton}
+                                                    icon={{name: "undo"}}
+                                                    type={ButtonType.Light}
+                                                    label={ImageInputLocalizer.rotateLeft}
+                                                    onClick={async () => await this.onRotateButtonClickAsync(-90)}
+                                            />
+                                        )
+                                    }
+
+                                    {
+                                        (this.toolbar.rotateRightButton) &&
+                                        (
+                                            <Button small
+                                                    className={styles.controlPanelButton}
+                                                    icon={{name: "redo"}}
+                                                    type={ButtonType.Light}
+                                                    label={ImageInputLocalizer.rotateRight}
+                                                    onClick={async () => await this.onRotateButtonClickAsync(90)}
+                                            />
+                                        )
+                                    }
+                                </>
+                            )
                     )
                 }
 
-
                 {
-                    (this.showRotateButton) &&
+                    (this.toolbar.moveToTopButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
-                                icon={{name: "undo"}}
-                                type={ButtonType.Light}
-                                label={ImageInputLocalizer.rotateLeft}
-                                onClick={async () => await this.onRotateLeftButtonClick()}
+                                icon={{name: "level-up"}}
+                                type={ButtonType.Info}
+                                label={"EN: Move to top"}
+                                onClick={async () => await this.onMoveToTopButtonClickAsync()}
                         />
                     )
                 }
 
                 {
-                    (this.showRotateButton) &&
+                    (this.toolbar.moveUpButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
-                                icon={{name: "redo"}}
-                                type={ButtonType.Light}
-                                label={ImageInputLocalizer.rotateRight}
-                                onClick={async () => await this.onRotateRightButtonClick()}
+                                icon={{name: "arrow-up"}}
+                                type={ButtonType.Info}
+                                label={"EN: Move up"}
+                                onClick={async () => await this.onMoveUpButtonClickAsync()}
                         />
                     )
                 }
 
                 {
-                    (this.showEditButton) &&
+                    (this.toolbar.moveDownButton) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "arrow-down"}}
+                                type={ButtonType.Info}
+                                label={"EN: Move down"}
+                                onClick={async () => await this.onMoveDownButtonClickAsync()}
+                        />
+                    )
+                }
+
+                {
+                    (this.toolbar.editButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
                                 icon={{name: "crop"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.edit}
-                                onClick={async () => await this.onEditButtonClick()}
+                                onClick={async () => await this.onEditButtonClickAsync()}
                         />
                     )
                 }
 
                 {
-                    (this.showPreviewButton) &&
+                    (this.toolbar.previewButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
                                 icon={{name: "eye"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.preview}
-                                onClick={async () => await this.onPreviewButtonClick()}
+                                onClick={async () => await this.onPreviewButtonClickAsync()}
                         />
                     )
                 }
 
                 {
-                    (this.showBrowseButton) &&
+                    (this.toolbar.uploadButton) &&
                     (
                         <Button small right
                                 className={styles.controlPanelButton}
                                 icon={{name: "file-import"}}
                                 type={ButtonType.Orange}
                                 label={ImageInputLocalizer.browse}
-                                onClick={async () => await this.onBrowseButtonClick()}
+                                onClick={async () => await this.onBrowseButtonClickAsync()}
                         />
                     )
 
                 }
 
                 {
-                    (this.showCameraButton) &&
+                    (this.toolbar.takePictureButton) &&
                     (
                         <Button small right
                                 className={styles.controlPanelButton}
@@ -691,7 +839,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 icon={{name: "save"}}
                                 type={ButtonType.Success}
                                 label={ImageInputLocalizer.save}
-                                onClick={async () => await this.onSaveButtonClick()}
+                                onClick={async () => await this.onSaveButtonClickAsync()}
                         />
                     )
                 }
@@ -704,20 +852,20 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 icon={{name: "arrow-left"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.back}
-                                onClick={async () => await this.onBackButtonClick()}
+                                onClick={async () => await this.onBackButtonClickAsync()}
                         />
                     )
                 }
 
                 {
-                    (this.showDeleteButton) &&
+                    (this.toolbar.deleteButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
                                 icon={{name: "trash"}}
                                 type={ButtonType.Warning}
                                 label={ImageInputLocalizer.delete}
-                                onClick={async () => await this.onDeleteButtonClick()}
+                                onClick={async () => await this.onDeleteButtonClickAsync()}
                         />
                     )
                 }
@@ -762,9 +910,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private renderPreviewPanel(): JSX.Element {
-        const index: number = (this.hasSelectedPictureIndex)
-            ? this.selectedPictureIndex
-            : 0;
+        const index: number = this.selectedPictureIndex ?? 0;
         const src: string | undefined = this.getPreviewSource(index);
         const alt: string | undefined = this.getPreviewName(index)
 
@@ -802,7 +948,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         return (
             <div className={this.css(styles.ImageInput, minimizeStyle, fullScreenStyle, this.props.className)}
-                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnter(event)}
+                 onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
 
                 <input ref={this.fileInputRef}
@@ -810,7 +956,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                        type="file"
                        accept="image/*"
                        multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChange(event)}
+                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
                 />
 
                 <input ref={this.cameraFileInputRef}
@@ -819,7 +965,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                        accept="image/*"
                        capture="environment"
                        multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChange(event)}
+                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
                 />
 
                 <div className={styles.controlPanel}>
@@ -831,10 +977,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <div className={styles.viewPanel}>
 
                     <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
-                         onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDrop(event)}
-                         onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOver(event)}
-                         onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnter(event)}
-                         onDragLeave={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragLeave(event)}
+                         onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDropAsync(event)}
+                         onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOverAsync(event)}
+                         onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnterAsync(event)}
+                         onDragLeave={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragLeaveAsync(event)}
                     >
                         <span className={styles.dragDropAreaOverlay}>
                             {ImageInputLocalizer.dropIt}
@@ -869,6 +1015,74 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     //  Statics
+
+    /**
+     * Following functionality is enabled:
+     * {@link IIMageInputToolbar.uploadButton}
+     * {@link IIMageInputToolbar.takePictureButton}
+     */
+    public static get defaultNoSelectionToolbar(): IIMageInputToolbar {
+        return {
+            takePictureButton: true,
+            uploadButton: true,
+        };
+    }
+
+    /**
+     * Following functionality is enabled:
+     * {@link IIMageInputToolbar.rotateLeftButton}
+     * {@link IIMageInputToolbar.rotateRightButton}
+     * {@link IIMageInputToolbar.editButton}
+     * {@link IIMageInputToolbar.previewButton}
+     * {@link IIMageInputToolbar.uploadButton}
+     * {@link IIMageInputToolbar.takePictureButton}
+     * {@link IIMageInputToolbar.deleteButton}
+     */
+    public static get defaultSelectionToolbar(): IIMageInputToolbar {
+        return {
+            deleteButton: true,
+            editButton: true,
+            previewButton: true,
+            rotateLeftButton: true,
+            rotateRightButton: true,
+            takePictureButton: true,
+            uploadButton: true,
+        }
+    }
+
+    /**
+     * Following functionality is enabled:
+     * {@link IIMageInputToolbar.editButton}
+     * {@link IIMageInputToolbar.uploadButton}
+     * {@link IIMageInputToolbar.takePictureButton}
+     * {@link IIMageInputToolbar.deleteButton}.
+     *
+     * A "Back"-button which returns the user back to the previous view is also displayed.
+     */
+    public static get defaultPreviewToolbar(): IIMageInputToolbar {
+        return {
+            deleteButton: true,
+            editButton: true,
+            uploadButton: true,
+            takePictureButton: true,
+        };
+    }
+
+    /**
+     * Following functionality is enabled:
+     * {@link IIMageInputToolbar.rotateLeftButton}
+     * {@link IIMageInputToolbar.rotateRightButton}
+     * {@link IIMageInputToolbar.deleteButton}.
+     *
+     * A "Save"-button which saves the changes and a "Back"-button which returns the user back to the previous view are also displayed.
+     */
+    public static get defaultEditToolbar(): IIMageInputToolbar {
+        return {
+            rotateLeftButton: true,
+            rotateRightButton: true,
+            deleteButton: true,
+        };
+    }
 
     private static async fileToFileModel(file: File): Promise<FileModel> {
         const fileData = await ImageInput.readFile(file);
