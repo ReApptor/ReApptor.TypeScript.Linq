@@ -400,7 +400,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        await this.changeSelectedImagesIndexAsync(0);
+        await this.moveSelectedImageToTopAsync()
     }
 
     private async onMoveUpButtonClickAsync(): Promise<void> {
@@ -408,7 +408,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        await this.changeSelectedImagesIndexAsync(this.selectedPictureIndex! - 1);
+        await this.moveSelectedImageUpDownAsync(true);
     }
 
     private async onMoveDownButtonClickAsync(): Promise<void> {
@@ -416,7 +416,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        await this.changeSelectedImagesIndexAsync(this.selectedPictureIndex! + 1);
+        await this.moveSelectedImageUpDownAsync(false);
     }
 
     private onListViewItemClick(index: number): void {
@@ -630,15 +630,41 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async changeSelectedImagesIndexAsync(newIndex: number): Promise<void> {
-        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex === newIndex) || (newIndex < 0) || (newIndex >= this.pictures.length)) {
+    private async moveSelectedImageToTopAsync(): Promise<void> {
+        if ((!this.hasSelectedPictureIndex)
+            || (this.selectedPictureIndex === 0)) {
             return;
         }
 
-        const oldImage: FileModel = this.pictures[newIndex];
+        const oldImage: FileModel = this.pictures[this.selectedPictureIndex!];
+        const imagesAfter: FileModel[] = this.pictures.slice();
+        imagesAfter.remove(oldImage);
 
-        this.pictures[newIndex] = this.pictures[this.selectedPictureIndex!];
-        this.pictures[this.selectedPictureIndex!] = oldImage;
+        await this.setState({
+            pictures: [oldImage, ...imagesAfter],
+            selectedPictureIndex: 0,
+        });
+
+        if (this.props.onChange) {
+            await this.props.onChange(this, this.pictures);
+        }
+    }
+
+    private async moveSelectedImageUpDownAsync(up: boolean): Promise<void> {
+        if ((!this.hasSelectedPictureIndex)
+            || ((up) && (this.selectedPictureIndex === 0))
+            || ((!up) && (this.selectedPictureIndex === this.pictures.length - 1))) {
+            return;
+        }
+
+        const oldIndex: number = this.selectedPictureIndex!;
+        const oldImage: FileModel = this.pictures[oldIndex];
+        let newIndex: number = (up)
+            ? oldIndex - 1
+            : oldIndex + 1;
+
+        this.pictures[oldIndex] = this.pictures[newIndex];
+        this.pictures[newIndex] = oldImage;
 
         if (this.props.onChange) {
             await this.props.onChange(this, this.pictures);
