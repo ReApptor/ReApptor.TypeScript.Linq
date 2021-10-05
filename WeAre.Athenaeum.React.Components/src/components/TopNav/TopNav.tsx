@@ -14,6 +14,8 @@ export interface IMenuItem {
 }
 
 export interface ITopNavProps {
+    className?: string;
+    languageClassName?: string;
     logo?: any;
     logoText?: string;
     applicationName?: string;
@@ -98,7 +100,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
     public render(): React.ReactNode {
         return (
-            <nav className={styles.navigation}>
+            <nav className={this.css(styles.navigation, this.props.className)}>
                 <React.Fragment>
                     
                     <div className={styles.left}>
@@ -139,7 +141,11 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             )
                         }
                         
-                        <LanguageDropdown languages={TopNavLocalizer.supportedLanguages} currentLanguage={TopNavLocalizer.language} changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)} />
+                        <LanguageDropdown className={this.props.languageClassName}
+                                          languages={TopNavLocalizer.supportedLanguages}
+                                          currentLanguage={TopNavLocalizer.language}
+                                          changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
+                        />
                     
                     </div>
 

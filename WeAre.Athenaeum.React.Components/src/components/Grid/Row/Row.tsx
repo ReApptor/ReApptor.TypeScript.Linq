@@ -12,6 +12,12 @@ interface IRowProps<TItem = {}> {
     row: RowModel<TItem>;
     init?(row: RowModel<TItem>): void;
     onCheck?(row: RowModel<TItem>): Promise<void>;
+
+    /**
+     * Called when the {@link Row} is expanded or collapsed.
+     * @param row {@link Row} which was expanded or collapsed.
+     */
+    onToggle?(row: RowModel<TItem>): Promise<void>;
 }
 
 export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> implements IRow {
@@ -21,17 +27,15 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
             this.model.checked = !this.model.checked;
 
             await this.reRenderAsync();
-
-            if (this.props.onCheck) {
-                await this.props.onCheck(this.model);
-            }
+            await this.props.onCheck?.(this.model);
         }
     }
-    
+
     private async onToggleAsync(row: RowModel<TItem>): Promise<void> {
         row.responsiveContainerExpanded = !row.responsiveContainerExpanded;
 
         await this.reRenderAsync();
+        await this.props.onToggle?.(this.model);
     }
 
     public get grid(): GridModel<TItem> {
@@ -74,11 +78,11 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const borderStyle: any = (this.grid.borderType === BorderType.DarkSeparators) && styles.darkSeparators;
 
         const cells: CellModel<TItem>[] = row.cells.where(item => item.column.isVisible);
-        
+
         const collapsedCells: CellModel<TItem>[] = (grid.responsive)
             ? row.cells.where(item => ((item.column.collapsed) && (item.column.responsivePriority >= 0)))
             : [];
-        
+
         const responsive: boolean = (collapsedCells.length > 0);
         const responsiveContainerExpanded: boolean = (responsive) && (row.responsiveContainerExpanded);
         const responsiveIconName: string = (responsiveContainerExpanded) ? "fas minus-circle" : "fas plus-circle";
@@ -86,42 +90,65 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
 
         return (
             <React.Fragment>
+
                 <tr className={this.css(styles.gridRow, rowHoveringStyle, styles.data, row.className, oddStyle, borderStyle)}>
                     {
                         (responsive) &&
                         (
-                            <td className={this.css(styles.responsive)} onClick={() => this.onToggleAsync(row)}>
-                                <Icon className={this.css(styles.responsiveIcon, responsiveExpandedStyle)} name={responsiveIconName} size={IconSize.Large} />
+                            <td className={this.css(styles.responsive)}
+                                onClick={() => this.onToggleAsync(row)}
+                            >
+                                <Icon className={this.css(styles.responsiveIcon, responsiveExpandedStyle)}
+                                      name={responsiveIconName}
+                                      size={IconSize.Large}
+                                />
                             </td>
                         )
                     }
                     {
                         (grid.checkable) &&
                         (
-                            <td className={this.css(gridStyles.check, checkDisabledStyle)} rowSpan={checkRowSpan} onClick={async () => this.onCheckAsync()}>
-                                <input type="checkbox" checked={row.checked} disabled={!this.model.checkable} onChange={() => {}} />
+                            <td className={this.css(gridStyles.check, checkDisabledStyle)}
+                                rowSpan={checkRowSpan}
+                                onClick={async () => this.onCheckAsync()}
+                            >
+                                <input type="checkbox"
+                                       checked={row.checked}
+                                       disabled={!this.model.checkable}
+                                       onChange={() => {}}
+                                />
                             </td>
                         )
                     }
                     {
                         cells.map((cell: CellModel<TItem>) => (
-                            <Cell key={cell.key} cell={cell}/>
+                            <Cell key={cell.key}
+                                  cell={cell}
+                            />
                         ))
                     }
                 </tr>
+
                 <tr className={this.css(styles.gridRow, styles.details, detailsVisibleStyle, oddStyle)}>
                     <td colSpan={colSpan}>
                         {
                             (renderDetails) &&
                             (
                                 <React.Fragment>
-                                    {row.grid.renderDetails!(row)}
+                                    {
+                                        row.grid.renderDetails!(row)
+                                    }
                                 </React.Fragment>
                             )
                         }
                     </td>
                 </tr>
-                <CollapsedRow grid={grid} row={row} cells={cells} />
+
+                <CollapsedRow grid={grid}
+                              row={row}
+                              cells={cells}
+                />
+
             </React.Fragment>
         );
     }

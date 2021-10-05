@@ -20,9 +20,7 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     placeholder?: string;
     
     onClickAsync?(sender: FileInput, value: FileModel): Promise<void>;
-    
     onChangeAsync?(sender: FileInput, value: FileModel | FileModel[]): Promise<void>;
-    
     onRemoveAsync?(value?: FileModel): Promise<void>;
 }
 

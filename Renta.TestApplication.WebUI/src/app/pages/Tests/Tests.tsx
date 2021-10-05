@@ -31,6 +31,7 @@ import DateInputTests from "./DateInputTests/DateInputTests";
 import PaginationTests from "./PaginationTests/PaginationTests";
 import SignatureWidgetTests from "./SignatureWidgetTests/SignatureWidgetTests";
 import QrWidgetTests from "./QrWidgetTests/QrWidgetTests";
+import RouteWidgetTests from "./RouteWidgetTests/RouteWidgetTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -163,6 +164,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="QrWidgetTest" title="Qr Widget">
                             <QrWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="routeWidgetTests" title="RouteWidget">
+                            <RouteWidgetTests />
                         </Tab>
 
                     </TabContainer>
