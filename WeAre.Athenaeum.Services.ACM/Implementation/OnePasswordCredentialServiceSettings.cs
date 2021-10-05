@@ -17,8 +17,8 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
 
         public string ToLogString()
         {
-            string accessTokenPostfix = (!string.IsNullOrWhiteSpace(AccessToken) && AccessToken.Length > 4) 
-                ? AccessToken.Substring(0, AccessToken.Length - 4) 
+            string accessTokenPostfix = (!string.IsNullOrWhiteSpace(AccessToken) && (AccessToken.Length > 4)) 
+                ? AccessToken.Substring(AccessToken.Length - 4)
                 : "";
             return $"ApiUrl=\"{ApiUrl}\". Path=\"{Path}\". TimeoutInSeconds=\"{TimeoutInSeconds}\". AccessToken=\"...{accessTokenPostfix}\".";
         }
