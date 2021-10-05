@@ -1,11 +1,9 @@
 import React, {CSSProperties, ReactElement} from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
+import {assert, IBaseAsserter} from "@weare/athenaeum-toolkit";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
-
-
-// TODO: if rollup.js tree-shaking is enabled, the 'swiper/components/*'-styles will be missing from the bundle.
 
 
 import "./SwiperStyles.scss";
@@ -31,7 +29,15 @@ export enum CarouselPagination {
     BottomOutside = 2,
 }
 
-interface ICarouselProps {
+export interface ICarouselProps {
+
+    children: React.ReactElement[];
+
+    /**
+     * Index of the slide initially displayed by the {@link Carousel}.
+     */
+    initialSlideIndex?: number;
+
     /**
      * Appended to the {@link Carousel}s containers classname.
      */
@@ -39,21 +45,25 @@ interface ICarouselProps {
 
     /**
      * Should the {@link Carousel} loop.
+     * @default false
      */
     loop?: boolean;
 
     /**
      * Enable or disable navigation.
+     * @default {@link CarouselNavigation.None}
      */
     navigation?: CarouselNavigation;
 
     /**
      * Enable or disable pagination.
+     * @default {@link CarouselPagination.None}
      */
     pagination?: CarouselPagination;
 
     /**
      * How many slides should be visible at the same time.
+     * @default 1
      */
     slidesPerView?: "auto" | number;
 
@@ -61,16 +71,51 @@ interface ICarouselProps {
      * How many pixels of space should be between slides.
      *
      * Do not manually add margins between the slides, as that will mess up the {@link Carousel}s snapping grid.
+     * @default 0
      */
     spaceBetweenSlides?: number;
+
+    /**
+     * Transition between slide-changes in milliseconds.
+     * @default 300
+     */
+    speed?: number;
+
+    /**
+     * Called when the currently active slide changes.
+     * @param newActiveIndex Index of the new active slide.
+     */
+    onSlideChange?(newActiveIndex: number): Promise<void>
+
+    /**
+     * Called when the Carousel is clicked.
+     */
+    onClick?(event: React.MouseEvent): Promise<void>
+}
+
+interface ICarouselState {
+    swiper: SwiperCore | null;
 }
 
 
-export default class Carousel extends BaseComponent<ICarouselProps, {}> {
+export default class Carousel extends BaseComponent<ICarouselProps, ICarouselState> {
 
-    private get hasChildren(): boolean {
-        return (this.children?.length > 0);
+    // Inherited
+
+    public state: ICarouselState = {
+        swiper: null,
     }
+
+    public get children(): React.ReactElement[] {
+        return this.props.children;
+    }
+
+    // Fields
+
+    private readonly _navigationNextId: string = "carousel_next" + ch.getId().toString();
+    private readonly _navigationPreviousId: string = "carousel_previous" + ch.getId().toString();
+
+    // Getters
 
     private get className(): string {
         const navigationClass: string | null = (this.navigation === CarouselNavigation.Outside)
@@ -84,25 +129,31 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
         return this.css(this.props.className, styles.carousel, navigationClass, paginationClass);
     }
 
+    private get initialSlideIndex(): number {
+        return (typeof this.props.initialSlideIndex === "number")
+            ? this.props.initialSlideIndex
+            : 0;
+    }
+
     private get loop(): boolean {
         return (this.props.loop === true);
     }
 
     private get navigation(): CarouselNavigation {
-        return Carousel.getNavigation(this.props.navigation);
+        return Carousel.toNavigation(this.props.navigation);
     }
 
     private get navigationOptions(): NavigationOptions | false {
          return (this.navigation)
              ? {
-                 nextEl: `.${styles.next}`,
-                 prevEl: `.${styles.previous}`
+                 nextEl: `#${this._navigationNextId}`,
+                 prevEl: `#${this._navigationPreviousId}`,
              }
              : false;
     }
 
     private get pagination(): CarouselPagination {
-        return Carousel.getPagination(this.props.pagination);
+        return Carousel.toPagination(this.props.pagination);
     }
 
     private get paginationOptions(): PaginationOptions | false {
@@ -119,27 +170,64 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
     }
 
     private get spaceBetweenSlides(): number {
-        return (this.props.spaceBetweenSlides)
+        return (typeof this.props.spaceBetweenSlides === "number")
             ? this.props.spaceBetweenSlides
             : 0;
     }
 
+    private get speed(): number {
+        return (typeof this.props.speed === "number")
+            ? this.props.speed
+            : 300;
+    }
+
+    private get swiper(): SwiperCore {
+        return this.state.swiper!;
+    }
+
+    // Sync-methods
+
     private getSwiperSlideStyle(child: ReactElement): CSSProperties {
         // If slidesPerView has first been set to a number and then to "auto", the swiper-slide elements widths remain unchanged, and must be reset manually.
         return (this.slidesPerView === "auto")
-            ? (child?.props?.style?.width)
+            ? (child.props?.style?.width)
                 ? {width: child.props.style.width}
                 : {width: "auto"}
             : {};
     }
 
-    public get children(): React.ReactElement[] {
-        // BaseComponents "children" clones the children, which messes up updates.
-        return (this.props as any)?.children ?? [];
+    // Async-methods
+
+    private async onSwiperInitAsync(swiper: SwiperCore): Promise<void> {
+        await this.setState({swiper});
+        swiper.slideTo(this.initialSlideIndex, 0);
     }
 
-    public static getNavigation(navigation: any): CarouselNavigation {
-        switch (navigation) {
+    // Public
+
+    /**
+     * Index of the currently active slide.
+     */
+    public get currentSlideIndex(): number {
+        return assert(this.swiper.realIndex, "activeIndex").isNumber.getValue;
+    }
+
+    /**
+     * Slide to a slide in the given index with the given speed.
+     * @param index Index of the slide to slide to.
+     * @param speed Speed to slide with. Default is 300.
+     */
+    public async slideToAsync(index: number, speed: number = 300): Promise<void> {
+        this.swiper.slideTo(
+            assert(index, "index").isNumber.getValue,
+            assert(speed, "speed").isNumber.getValue);
+    }
+
+    /**
+     * Convert a value to a {@link CarouselNavigation} value.
+     */
+    public static toNavigation(value: unknown): CarouselNavigation {
+        switch (value) {
             case CarouselNavigation.Inside:
                 return CarouselNavigation.Inside;
             case CarouselNavigation.Outside:
@@ -149,8 +237,11 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
         }
     }
 
-    public static getPagination(pagination: any): CarouselPagination {
-        switch (pagination) {
+    /**
+     * Convert a value to a {@link CarouselPagination} value.
+     */
+    public static toPagination(value: unknown): CarouselPagination {
+        switch (value) {
             case CarouselPagination.BottomInside:
                 return CarouselPagination.BottomInside;
             case CarouselPagination.BottomOutside:
@@ -160,27 +251,32 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
         }
     }
 
-    public render(): React.ReactNode {
-        if (!this.hasChildren) {
-            return null;
-        }
+    // Renders
 
+    public render(): React.ReactNode {
         return (
-            <div className={this.className}>
+            <div className={this.className}
+                 onClick={async (event) => await this.props.onClick?.(event)}
+            >
 
                 <Swiper loop={this.loop}
+                        speed={this.speed}
                         navigation={this.navigationOptions}
                         pagination={this.paginationOptions}
                         slidesPerView={this.slidesPerView}
                         spaceBetween={this.spaceBetweenSlides}
+                        onInit={async (swiper: SwiperCore) => await this.onSwiperInitAsync(swiper)}
+                        onRealIndexChange={async (swiper: SwiperCore) => {await this.props.onSlideChange?.(swiper.realIndex)}}
                 >
                     {
-                        this.children.map((child) => {
+                        this.children.map((child, index) => {
                             return (
-                                <SwiperSlide key={child.key}
+                                <SwiperSlide key={(child.key?.toString?.() ?? "") + index}
                                              style={this.getSwiperSlideStyle(child)}
                                 >
-                                    {child}
+                                    {
+                                        child
+                                    }
                                 </SwiperSlide>
                             );
                         })
@@ -191,8 +287,15 @@ export default class Carousel extends BaseComponent<ICarouselProps, {}> {
                     (this.navigationOptions) &&
                     (
                         <React.Fragment>
-                            <i className={this.css("fa fa-angle-left fa-3x", styles.navigation, styles.previous)}/>
-                            <i className={this.css("fa fa-angle-right fa-3x", styles.navigation, styles.next)}/>
+
+                            <i id={this._navigationPreviousId}
+                               className={this.css("fa fa-angle-left fa-3x", styles.navigation, styles.previous)}
+                            />
+
+                            <i id={this._navigationNextId}
+                               className={this.css("fa fa-angle-right fa-3x", styles.navigation, styles.next)}
+                            />
+
                         </React.Fragment>
                     )
                 }

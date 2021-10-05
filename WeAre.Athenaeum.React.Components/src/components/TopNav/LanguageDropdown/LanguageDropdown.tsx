@@ -22,6 +22,7 @@ const flags: any = {
 };
 
 interface ILanguageDropdownProps {
+    className?: string;
     languages: readonly ILanguage[];
     currentLanguage: string;
     changeLanguageCallback?(language: string): void;
@@ -72,7 +73,7 @@ class LanguageDropdown extends BaseComponent<ILanguageDropdownProps, ILanguageDr
         const className: string = (this.state.isOpen) ? styles.dropdown_open : styles.languages;
         
         return(
-            <div className={styles.dropdown}>
+            <div className={this.css(styles.dropdown, this.props.className)}>
                 <div className={styles.flag} onClick={async () => await this.dropdownToggleAsync()}>
                     <img src={flags[this.state.currentLanguage.code]} alt={this.state.currentLanguage.label}/>
                 </div>

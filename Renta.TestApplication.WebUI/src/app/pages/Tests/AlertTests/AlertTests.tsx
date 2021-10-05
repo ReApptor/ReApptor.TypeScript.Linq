@@ -72,7 +72,7 @@ export default class AlertTests extends BaseComponent {
                 </div>
 
                 <div className="p-2">
-                    <Button label="Button" confirm={"Are you sure?"} onClick={async () => await ch.alertMessageAsync("YES")} />
+                    <Button label="Alert" confirm={"Are you sure?"} onClick={async () => await ch.alertMessageAsync("YES")} />
                 </div>
 
                 <div className="p-2">

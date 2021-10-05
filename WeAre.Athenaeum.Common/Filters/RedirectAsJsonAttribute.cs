@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
-namespace Renta.Tools.Common.Filters
+namespace WeAre.Athenaeum.Common.Filters
 {
     /// <summary>
     /// Convert redirect response (302) to success response (200) with location JSON string ("Location" header)

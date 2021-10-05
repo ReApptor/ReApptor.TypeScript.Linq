@@ -301,7 +301,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public outerHeight(includeMargin: boolean = true): number {
         const node: JQuery = this.getNode();
         return node.outerHeight(includeMargin) || 0;
-    }    
+    }
     
     public outerWidth(includeMargin: boolean = true): number {
         const node: JQuery = this.getNode();
@@ -309,9 +309,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     }
 
     protected constructor(props: TProps) {
-        
-        const id: string | null = (props) ? (props as any).id : ch.getComponentId();
-
         super(props);
         
         this._asGlobalClick = this.asGlobalClick();
@@ -321,7 +318,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this._childComponentRefs = [];
         this._isMounted = false;
         this._isSpinning = false;
-        
+
+        const id: string | null = (props) ? (props as any).id : ch.getComponentId();
+
         this.id = (id != null) ? id : ch.getComponentId();
         this.typeName = this.constructor.name;
 

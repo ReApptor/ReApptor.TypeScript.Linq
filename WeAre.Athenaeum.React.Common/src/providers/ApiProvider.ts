@@ -171,7 +171,7 @@ export default class ApiProvider {
         const hasResponse = (textResponse.length > 0);
         const isHtml = (hasResponse) && ((textResponse.startsWith("<!DOCTYPE html>") || (textResponse.startsWith("<!doctype html>"))));
         if (isHtml) {
-            const isMaintenanceOrBlocked: boolean = (textResponse.indexOf("Renta Task Support") > 0) || (textResponse.indexOf("Site Maintenance") > 0);
+            const isMaintenanceOrBlocked: boolean = (textResponse.indexOf("Support") > 0) || (textResponse.indexOf("Site Maintenance") > 0);
             if (isMaintenanceOrBlocked) {
                 ch.refresh();
             } else if (!this.offline) {

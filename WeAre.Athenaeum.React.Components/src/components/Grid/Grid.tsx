@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, IGlobalResize} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/athenaeum-react-common";
 import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
@@ -8,6 +8,7 @@ import GridSpinner from "./GridSpinner/GridSpinner";
 import TotalRow from "./TotalRow/TotalRow";
 import CheckHeaderCell from "./Cell/CheckHeaderCell";
 import Pagination, {IPaginationClassNames} from "../Pagination/Pagintation";
+import Comparator from "../../helpers/Comparator";
 import GridLocalizer from "./GridLocalizer";
 
 import styles from "./Grid.module.scss";
@@ -20,6 +21,12 @@ interface IGridProps<TItem = {}> extends IGridDefinition {
     classNames?: IGridClassNames;
     data?: TItem[] | null;
     fetchData?(sender: Grid<TItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<TGridData<TItem>>;
+
+    /**
+     * Called when a {@link Grid}'s {@link Row} is expanded or collapsed.
+     * @param row {@link Row} which was expanded or collapsed.
+     */
+    onRowToggle?(row: RowModel<TItem>): Promise<void>;
 }
 
 interface IGridState<TItem = {}> extends IBaseAsyncComponentState<TGridData<TItem>> {
@@ -27,9 +34,9 @@ interface IGridState<TItem = {}> extends IBaseAsyncComponentState<TGridData<TIte
 
 interface IGridOverflowData {
     containerWidth: number;
-    
+
     gridWidth: number;
-    
+
     gridFullWidth: number;
 }
 
@@ -98,7 +105,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             ? width + 1
             : 0;
     }
-    
+
     public getNode(): JQuery {
         return this.JQuery(`#table_${this.id}`);
     }
@@ -139,7 +146,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                 let widthToCompensate: number = (overflowData.gridWidth - overflowData.containerWidth);
 
                 const gridCollapsed: boolean = this.model.columns.some(row => row.collapsed);
-                
+
                 if (gridCollapsed) {
                     // Expand/Collapse TD width (hardcoded in styles)
                     widthToCompensate -= 40;
@@ -193,7 +200,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             }
         }
     }
-    
+
     protected sort(items: TItem[], sortColumn: ColumnModel<TItem> | null, sortDirection: SortDirection | null): TItem[] {
         if ((sortColumn) && (sortColumn.accessor) && (items) && (sortDirection != null)) {
 
@@ -217,19 +224,19 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                             : -1
             });
         }
-        
+
         return items;
     }
-    
+
     protected async processDataAsync(state: IGridState<TItem>, data: TGridData<TItem> | null): Promise<void> {
         const model: GridModel<TItem> = this.model;
-        
+
         let items: TItem[] = [];
         let totalItemCount: number = 0;
         let pageNumber: number = model.pageNumber;
         const sortColumn: ColumnModel<TItem> | null = model.sortColumn;
         const sortDirection: SortDirection | null = model.sortDirection;
-        
+
         if (data != null) {
             let pagedData = data as IPagedList<TItem>;
             if (pagedData.items != null) {
@@ -250,7 +257,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                 }
             }
         }
-        
+
         model.data = items;
         model.checked = false;
         model.pageNumber = pageNumber;
@@ -258,7 +265,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         model.sortColumn = sortColumn;
         model.sortDirection = sortDirection;
         model.generation++;
-        
+
         this._rows = null;
     }
 
@@ -267,7 +274,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             const model: GridModel<TItem> = this.model;
             const pageNumber: number = model.pageNumber;
             const pageSize: number = model.pageSize;
-            
+
             const sortColumn: ColumnModel<TItem> | null = model.sortColumn;
             const sortColumnName: string | null = (sortColumn != null)
                 ? (sortColumn.name)
@@ -279,7 +286,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             const sortDirection: SortDirection | null = (sortColumnName)
                 ? model.sortDirection || SortDirection.Asc
                 : null;
-            
+
             return await this.props.fetchData(this, pageNumber, pageSize, sortColumnName, sortDirection);
         }
         return [];
@@ -296,13 +303,13 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public hasSpinner(): boolean {
         return true;
     }
-    
+
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
         if (this._spinnerRef.current) {
             await this._spinnerRef.current.setSpinnerAsync(isSpinning);
         }
     }
-    
+
     public get columns(): ColumnModel<TItem>[] {
         return this.model.columns;
     }
@@ -330,10 +337,10 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public get totalItemCount(): number {
         return this.model.totalItemCount;
     }
-    
+
     public get colSpan(): number {
         return (this.model.checkable)
-            ? this.model.columns.length + 1 
+            ? this.model.columns.length + 1
             : this.model.columns.length;
     }
 
@@ -344,14 +351,14 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public async clearAsync(): Promise<void> {
         await this.setDataAsync([]);
     }
-    
+
     public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
         await this.processResponsiveAsync();
     }
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
-        
+
         if (this.props.data != null) {
             await this.setDataAsync(this.props.data);
         }
@@ -359,12 +366,12 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
     public async componentWillReceiveProps(nextProps: IGridProps<TItem>): Promise<void> {
 
-        const newData: boolean = (this.props.data !== nextProps.data);
+        const newData: boolean = (!Comparator.isEqual(this.props.data, nextProps.data));
         if (newData) {
             const data: TItem[] = nextProps.data || [];
             await this.setDataAsync(data);
         }
-        
+
         const newReadonly: boolean = (this.props.readonly !== nextProps.readonly);
         const newResponsive: boolean = (this.props.responsive !== nextProps.responsive);
         const newLanguage: boolean = (this._language !== GridLocalizer.language);
@@ -397,10 +404,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                  row={row}
                  init={this.props.initRow}
                  onCheck={async () => await this.onCheckRowAsync()}
+                 onToggle={async (row) => await this.props.onRowToggle?.(row)}
             />
         )
     }
-    
+
     private renderEmptyRow(): React.ReactNode {
         return (
             <tr className={styles.emptyRow}>
@@ -414,19 +422,19 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public render(): React.ReactNode {
         const model: GridModel<TItem> = this.model;
         const rows: RowModel<TItem>[] = this.rows;
-        
+
         this.model.instance = this;
-        
+
         const visible: boolean = (this.hasData) || (!model.noDataNoHeader);
         const outerSpinner: boolean = (model.noDataNoHeader);
         const rowHoveringStyle: any = (model.hovering === GridHoveringType.Row) ? "table-hover" : styles.noRowHovering;
-        
+
         const inlineStyles: React.CSSProperties = {};
 
         if (model.minWidth) {
             inlineStyles.minWidth = model.minWidth;
         }
-        
+
         const columns: ColumnModel<TItem>[] = model.columns.where(item => item.isVisible);
 
         const collapsedColumns: ColumnModel<TItem>[] = (model.responsive)
@@ -437,17 +445,17 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
         return (
             <React.Fragment>
-                
+
                 {
                     (visible) &&
                     (
                         <React.Fragment>
-                            
+
                             <table id={"table_" + this.id}
                                    key={model.key}
                                    style={inlineStyles}
                                    className={this.css(styles.grid, "table table-bordered", rowHoveringStyle, this.props.className)}>
-                                
+
                                 {
                                     (columns.length > 0) &&
                                     (
@@ -472,7 +480,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                             </thead>
                                             <tbody>
                                             {
-                                                ((model.noDataText) && (rows.length === 0)) 
+                                                ((model.noDataText) && (rows.length === 0))
                                                     ? this.renderEmptyRow()
                                                     : rows.map((item, rowIndex) => this.renderDataRow(rows[rowIndex]))
                                             }
@@ -483,7 +491,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                         </React.Fragment>
                                     )
                                 }
-    
+
                                 {
                                     (!outerSpinner) &&
                                     (
@@ -498,9 +506,9 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                         </tbody>
                                     )
                                 }
-                                
+
                             </table>
-    
+
                             {
                                 (model.pagination) &&
                                 (
@@ -514,11 +522,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                     />
                                 )
                             }
-                        
+
                         </React.Fragment>
                     )
                 }
-                
+
                 {
                     ((outerSpinner) && (<GridSpinner ref={this._spinnerRef} />))
                 }

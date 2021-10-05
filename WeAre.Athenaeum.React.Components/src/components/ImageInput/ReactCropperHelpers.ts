@@ -98,12 +98,10 @@ export class ReactCropperHelpers {
         if (this.isImageLandscape) {
             if (this.isImageHorizontallyOverflowed) {
                 const ratio = (this.containerWidth / this.canvasImageWidth);
-                console.log('Zooming out: ', ratio);
                 this.cropper.zoomTo(ratio);
 
             } else if (this.isImageHorizontallySmaller) {
                 const ratio = (this.canvasImageWidth / this.containerWidth);
-                console.log('Zooming in: ', ratio);
                 this.cropper.zoomTo(ratio);
             }
 
@@ -112,13 +110,10 @@ export class ReactCropperHelpers {
 
         if (this.isImageVerticallyOverflowed) {
             const ratio = (this.containerHeight / this.canvasImageHeight);
-            console.log(ratio);
-            console.log('Zooming out: ', ratio);
             this.cropper.zoomTo(ratio);
 
         } else if (this.isImageVerticallySmaller) {
             const ratio = (this.canvasImageHeight / this.containerHeight);
-            console.log('Zooming in: ', ratio);
             this.cropper.zoomTo(ratio);
         }
 

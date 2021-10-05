@@ -94,7 +94,7 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
         const item: TSelectListItem | null = values.find(item => item.value === enumValue) || null;
 
         if (item == null)
-            throw Error(`EnumHelper. Localization item for enum "${enumName}" cannot be found.`);
+            throw Error(`Select list item with value \"${value}\" for enum "${enumName}" cannot be found at BaseEnumProvider.getEnumItem.`);
 
         return item;
     }

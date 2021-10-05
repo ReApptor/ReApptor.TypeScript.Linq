@@ -11,11 +11,11 @@ export interface IGridTestsState {
 
 enum GridEnum {
     First,
-    
+
     Second,
-    
+
     Third,
-    
+
     Forth
 }
 
@@ -27,15 +27,15 @@ class GridItem {
     public code: string = "";
 
     public float: number = 0;
-    
+
     public int: number = 0;
-    
+
     public date: Date = new Date();
-    
+
     public value: string = "";
-    
+
     public address: string = "";
-    
+
     public enum: GridEnum = GridEnum.Second;
 }
 
@@ -205,7 +205,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         }
         return "GridEnum:" + value;
     }
-    
+
     private async addNewEnumAsync(cell: CellModel<GridItem>): Promise<void> {
         await ch.flyoutMessageAsync("onAdd: " + cell.model.value);
     }
@@ -318,6 +318,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       odd={GridOddType.Row}
                       renderDetails={() => this.renderDetailsContent()}
                       fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(pageNumber, pageSize, sortColumnName, sortDirection)}
+                      onRowToggle={async (row) => console.log("onRowToggle", row)}
                 />
 
             </React.Fragment>

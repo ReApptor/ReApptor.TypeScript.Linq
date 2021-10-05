@@ -1,12 +1,17 @@
-import React, {ReactNode, Fragment, CSSProperties} from "react";
+import React, {CSSProperties, Fragment, ReactElement, ReactNode} from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, NumberInput, SelectListItem} from "@weare/athenaeum-react-components";
+import {Button, Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, FourColumns, InlineType, NumberInput, SelectListItem, ThreeColumns} from "@weare/athenaeum-react-components";
+import { assert } from '@weare/athenaeum-toolkit';
 
 interface ICarouselTestsState {
     background: boolean;
+    initiallyActiveSlide: number;
     loop: boolean;
     navigation: CarouselNavigation;
     pagination: CarouselPagination;
+    renderCarousel: boolean;
+    slideToIndex: number;
+    slideToSpeed: number;
     slideCount: number;
     slideHeigth: number | "random" | "auto";
     slideWidth: number | "random" | "auto";
@@ -18,15 +23,21 @@ export default class CarouselTests extends BaseComponent {
 
     public state: ICarouselTestsState = {
         background: false,
+        initiallyActiveSlide: 3,
         loop: false,
         navigation: CarouselNavigation.None,
         pagination: CarouselPagination.None,
+        renderCarousel: true,
+        slideToIndex: 0,
+        slideToSpeed: 300,
         slideHeigth: "auto",
         slideWidth: "auto",
-        slideCount: 1,
+        slideCount: 5,
         slidesPerView: "auto",
         spaceBetweenSlides: 0,
     }
+
+    private readonly _carouselRef: React.RefObject<Carousel> = React.createRef();
 
     private static getCarouselNavigationEnumName(navigation: CarouselNavigation): string {
         switch (navigation) {
@@ -50,8 +61,8 @@ export default class CarouselTests extends BaseComponent {
         }
     }
 
-    private get slides(): ReactNode[] {
-        const slides: ReactNode[] = [];
+    private get slides(): ReactElement[] {
+        const slides: ReactElement[] = [];
         for (let i = 0; i < this.state.slideCount; i++) {
             const style: CSSProperties = {
                 backgroundColor: (i % 2 === 0)
@@ -81,6 +92,10 @@ export default class CarouselTests extends BaseComponent {
         return slides;
     }
 
+    private get carousel(): Carousel {
+        return assert(this._carouselRef.current).isObject.isNotNull.getValue as Carousel;
+    }
+
     public render(): ReactNode {
         return (
             <Fragment>
@@ -91,83 +106,85 @@ export default class CarouselTests extends BaseComponent {
                         Test helpers
                     </h3>
 
-                    <Checkbox inline
-                              className="pt-1 pb-1"
-                              label="Background"
-                              value={this.state.background}
-                              onChange={async (_, background) => {await this.setState({background})}}
-                    />
+                    <FourColumns>
 
-                    <NumberInput inline required noValidate
-                                 className="w-25 pt-1 pb-1"
-                                 label="Slides"
-                                 value={this.state.slideCount}
-                                 onChange={async (_, slideCount) => {await this.setState({slideCount})}}
-                    />
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label="Render"
+                                  value={this.state.renderCarousel}
+                                  onChange={async (_, renderCarousel) => {await this.setState({renderCarousel})}}
+                        />
 
-                    <div className="row">
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label="Background"
+                                  value={this.state.background}
+                                  onChange={async (_, background) => {await this.setState({background})}}
+                        />
 
-                        <div className="col-2">
-                            <Checkbox inline
-                                      className="pt-1 pb-1"
-                                      label="Slide width Auto"
-                                      value={this.state.slideWidth === "auto"}
-                                      onChange={async () => {await this.setState({slideWidth: "auto"})}}
-                            />
-                        </div>
+                        <NumberInput inline required noValidate
+                                     label="Slides"
+                                     value={this.state.slideCount}
+                                     onChange={async (_, slideCount) => {await this.setState({slideCount})}}
+                        />
 
-                        <div className="col-3">
-                            <Checkbox inline
-                                      className="pt-1 pb-1"
-                                      label="Slide width Random"
-                                      value={this.state.slideWidth === "random"}
-                                      onChange={async () => {await this.setState({slideWidth: "random"})}}
-                            />
-                        </div>
+                        <NumberInput inline required noValidate
+                                     label="Initial slide index"
+                                     value={this.state.initiallyActiveSlide}
+                                     onChange={async (_, initiallyActiveSlide) => {await this.setState({initiallyActiveSlide})}}
+                        />
 
-                        <div className="col-2">
+                    </FourColumns>
+
+                    <FourColumns>
+
                             <NumberInput inline required noValidate
-                                         className="pt-1 pb-1"
                                          label="Slide width"
-                                         step={10}
+                                         step={100}
                                          value={(typeof this.state.slideWidth === "number") ? this.state.slideWidth : 0}
                                          onChange={async (_, slideWidth) => {await this.setState({slideWidth})}}
                             />
-                        </div>
 
-                    </div>
-
-                    <div className="row">
-
-                        <div className="col-2">
                             <Checkbox inline
-                                      className="pt-1 pb-1"
-                                      label="Slide heigth Auto"
-                                      value={this.state.slideHeigth === "auto"}
-                                      onChange={async () => {await this.setState({slideHeigth: "auto"})}}
+                                      inlineType={InlineType.Right}
+                                      label="Auto"
+                                      value={this.state.slideWidth === "auto"}
+                                      onChange={async () => {await this.setState({slideWidth: "auto"})}}
                             />
-                        </div>
 
-                        <div className="col-3">
                             <Checkbox inline
-                                      className="pt-1 pb-1"
-                                      label="Slide heigth Random"
-                                      value={this.state.slideHeigth === "random"}
-                                      onChange={async () => {await this.setState({slideHeigth: "random"})}}
+                                      inlineType={InlineType.Right}
+                                      label="Random"
+                                      value={this.state.slideWidth === "random"}
+                                      onChange={async () => {await this.setState({slideWidth: "random"})}}
                             />
-                        </div>
 
-                        <div className="col-2">
+                    </FourColumns>
+
+                    <FourColumns>
+
                             <NumberInput inline required noValidate
-                                         className="pt-1 pb-1"
                                          label="Slide heigth"
-                                         step={10}
+                                         step={100}
                                          value={(typeof this.state.slideHeigth === "number") ? this.state.slideHeigth : 0}
                                          onChange={async (_, slideHeigth) => {await this.setState({slideHeigth})}}
                             />
-                        </div>
 
-                    </div>
+                            <Checkbox inline
+                                      inlineType={InlineType.Right}
+                                      label="Auto"
+                                      value={this.state.slideHeigth === "auto"}
+                                      onChange={async () => {await this.setState({slideHeigth: "auto"})}}
+                            />
+
+                            <Checkbox inline
+                                      inlineType={InlineType.Right}
+                                      label="Random"
+                                      value={this.state.slideHeigth === "random"}
+                                      onChange={async () => {await this.setState({slideHeigth: "random"})}}
+                            />
+
+                    </FourColumns>
 
                     <hr/>
 
@@ -175,79 +192,151 @@ export default class CarouselTests extends BaseComponent {
                         Carousel props
                     </h3>
 
-                    <Checkbox inline
-                              className="pt-1 pb-1"
-                              label="Loop"
-                              value={this.state.loop}
-                              onChange={async (_, loop) => {await this.setState({loop})}}
-                    />
+                    <FourColumns>
 
-                    <Dropdown inline required noValidate noWrap noFilter
-                              orderBy={DropdownOrderBy.Value}
-                              className="pt-1 pb-1"
-                              label="Navigation"
-                              items={[CarouselNavigation.None, CarouselNavigation.Inside, CarouselNavigation.Outside]}
-                              transform={(navigation) => new SelectListItem(navigation.toString(), CarouselTests.getCarouselNavigationEnumName(navigation), null, navigation)}
-                              value={CarouselTests.getCarouselNavigationEnumName(this.state.navigation)}
-                              onChange={async (_, navigation) => {await this.setState({navigation})}}
-                    />
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label="Loop"
+                                  value={this.state.loop}
+                                  onChange={async (_, loop) => {await this.setState({loop})}}
+                        />
 
-                    <Dropdown inline required noValidate noWrap noFilter
-                              orderBy={DropdownOrderBy.Value}
-                              className="pt-1 pb-1"
-                              label="Pagination"
-                              items={[CarouselPagination.None, CarouselPagination.BottomInside, CarouselPagination.BottomOutside]}
-                              transform={(pagination) => new SelectListItem(pagination.toString(), CarouselTests.getCarouselPaginationEnumName(pagination), null, pagination)}
-                              value={CarouselTests.getCarouselPaginationEnumName(this.state.pagination)}
-                              onChange={async (_, pagination) => {await this.setState({pagination})}}
-                    />
+                        <Dropdown inline required noValidate noWrap noFilter
+                                  orderBy={DropdownOrderBy.Value}
+                                  label="Navigation"
+                                  items={[CarouselNavigation.None, CarouselNavigation.Inside, CarouselNavigation.Outside]}
+                                  transform={(navigation) => new SelectListItem(navigation.toString(), CarouselTests.getCarouselNavigationEnumName(navigation), null, navigation)}
+                                  value={CarouselTests.getCarouselNavigationEnumName(this.state.navigation)}
+                                  onChange={async (_, navigation) => {await this.setState({navigation})}}
+                        />
 
-                    <div className="row">
+                        <Dropdown inline required noValidate noWrap noFilter
+                                  orderBy={DropdownOrderBy.Value}
+                                  label="Pagination"
+                                  items={[CarouselPagination.None, CarouselPagination.BottomInside, CarouselPagination.BottomOutside]}
+                                  transform={(pagination) => new SelectListItem(pagination.toString(), CarouselTests.getCarouselPaginationEnumName(pagination), null, pagination)}
+                                  value={CarouselTests.getCarouselPaginationEnumName(this.state.pagination)}
+                                  onChange={async (_, pagination) => {await this.setState({pagination})}}
+                        />
 
-                        <div className="col-3">
-                            <Checkbox inline
-                                      className="pt-1 pb-1"
-                                      label="Slides per view Auto"
-                                      value={this.state.slidesPerView === "auto"}
-                                      onChange={async (_, auto) => {await this.setState({slidesPerView: (auto) ? "auto" : 1}); console.log(auto, this.state.slidesPerView)}}
-                            />
-                        </div>
+                        <NumberInput inline required noValidate
+                                     label="Space between slides"
+                                     step={10}
+                                     value={this.state.spaceBetweenSlides}
+                                     onChange={async (_, spaceBetweenSlides) => {await this.setState({spaceBetweenSlides})}}
+                        />
+
+                    </FourColumns>
+
+                    <FourColumns>
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label="Slides per view Auto"
+                                  value={this.state.slidesPerView === "auto"}
+                                  onChange={async (_, auto) => {await this.setState({slidesPerView: (auto) ? "auto" : 1}); console.log(auto, this.state.slidesPerView)}}
+                        />
 
                         {
                             (this.state.slidesPerView !== "auto") &&
                             (
-                                <div className="col-3">
-                                    <NumberInput inline required noValidate
-                                                 className="pt-1 pb-1"
-                                                 label="Slides per view"
-                                                 value={this.state.slidesPerView as number}
-                                                 onChange={async (_, slidesPerView) => {await this.setState({slidesPerView})}}
-                                    />
-                                </div>
+                                <NumberInput inline required noValidate
+                                             label="Slides per view"
+                                             value={this.state.slidesPerView as number}
+                                             onChange={async (_, slidesPerView) => {await this.setState({slidesPerView})}}
+                                />
                             )
                         }
 
-                    </div>
-
-                    <NumberInput inline required noValidate
-                                 className="pt-1 pb-1"
-                                 label="Space between slides"
-                                 value={this.state.spaceBetweenSlides}
-                                 onChange={async (_, spaceBetweenSlides) => {await this.setState({spaceBetweenSlides})}}
-                    />
+                    </FourColumns>
 
                     <hr/>
 
-                    <div style={{backgroundColor: (this.state.background) ? "pink" : "initial"}}>
-                        <Carousel loop={this.state.loop}
-                                  navigation={this.state.navigation}
-                                  pagination={this.state.pagination}
-                                  slidesPerView={this.state.slidesPerView}
-                                  spaceBetweenSlides={this.state.spaceBetweenSlides}
-                        >
-                            {this.slides}
-                        </Carousel>
-                    </div>
+                    <h3>
+                        Carousel methods
+                    </h3>
+
+                    <FourColumns>
+
+                        <NumberInput inline required noValidate
+                                     label="Slide to Index"
+                                     step={1}
+                                     value={this.state.slideToIndex}
+                                     onChange={async (_, slideToIndex) => {await this.setState({slideToIndex})}}
+                        />
+
+                        <NumberInput inline required noValidate
+                                     label="Slide to Speed"
+                                     step={50}
+                                     value={this.state.slideToSpeed}
+                                     onChange={async (_, slideToSpeed) => {await this.setState({slideToSpeed})}}
+                        />
+
+                        <Button label={"Slide to"}
+                                onClick={async () => this.carousel.slideToAsync(this.state.slideToIndex, this.state.slideToSpeed)}
+                        />
+
+                    </FourColumns>
+
+                    <hr/>
+
+                    {
+                        (this.state.renderCarousel) &&
+                        (
+                            <div style={{backgroundColor: (this.state.background) ? "pink" : "initial"}}>
+                                <Carousel ref={this._carouselRef}
+                                          loop={this.state.loop}
+                                          navigation={this.state.navigation}
+                                          pagination={this.state.pagination}
+                                          slidesPerView={this.state.slidesPerView}
+                                          spaceBetweenSlides={this.state.spaceBetweenSlides}
+                                          initialSlideIndex={this.state.initiallyActiveSlide}
+                                          onClick={async (event) => console.log("onClick", event)}
+                                          onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                                >
+                                    {
+                                        this.slides
+                                    }
+                                </Carousel>
+                            </div>
+                        )
+                    }
+
+                    <hr/>
+
+                    <h3>
+                        Duplicates
+                    </h3>
+
+                    <Carousel loop={this.state.loop}
+                              navigation={this.state.navigation}
+                              pagination={this.state.pagination}
+                              slidesPerView={this.state.slidesPerView}
+                              spaceBetweenSlides={this.state.spaceBetweenSlides}
+                              initialSlideIndex={this.state.initiallyActiveSlide}
+                              onClick={async (event) => console.log("onClick", event)}
+                              onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                    >
+                        {
+                            this.slides
+                        }
+                    </Carousel>
+
+                    <br/>
+
+                    <Carousel loop={this.state.loop}
+                              navigation={this.state.navigation}
+                              pagination={this.state.pagination}
+                              slidesPerView={this.state.slidesPerView}
+                              spaceBetweenSlides={this.state.spaceBetweenSlides}
+                              initialSlideIndex={this.state.initiallyActiveSlide}
+                              onClick={async (event) => console.log("onClick", event)}
+                              onSlideChange={async (activeIndex) => {console.log("onSlideChange", activeIndex)}}
+                    >
+                        {
+                            this.slides
+                        }
+                    </Carousel>
 
                 </Form>
 

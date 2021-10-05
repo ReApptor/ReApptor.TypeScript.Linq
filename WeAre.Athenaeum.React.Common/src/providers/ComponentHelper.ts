@@ -24,6 +24,7 @@ export default class ch {
     private static _layout: ILayoutPage | null = null;
     private static _page: IBasePage | null = null;
     private static _initialized: boolean = false;
+    private static _debug: boolean = false;
 
     private static async onOnSetLanguageAsync(language: string): Promise<void> {
         try {
@@ -47,6 +48,7 @@ export default class ch {
      * @param component - inherited from IBaseComponent
      */
     public static register(component: IBaseComponent): void {
+        
         const layout = component as (ILayoutPage | null);
         if ((layout) && (layout.isLayout) && (layout.isLayout())) {
             this._layout = layout;
@@ -400,5 +402,13 @@ export default class ch {
      */
     public static getComponentId(): string {
         return Utility.getComponentId();
+    }
+    
+    public static get debug(): boolean {
+        return this._debug;
+    }
+    
+    public static set debug(value: boolean) {
+        this._debug = value;
     }
 }

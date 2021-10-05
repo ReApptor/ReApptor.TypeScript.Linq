@@ -92,12 +92,9 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
     protected abstract getEndpoint(): string;
 
     protected constructor(props: TProps) {
-
-        const isAsync: boolean = ((props) ? ((props as any).isAsync as boolean | null) : null) || true;
-
         super(props);
 
-        this._isAsync = isAsync;
+        this._isAsync = ((props) ? ((props as any).isAsync as boolean | null) : null) ?? true;
     }
 
     public async componentDidMount(): Promise<void> {
