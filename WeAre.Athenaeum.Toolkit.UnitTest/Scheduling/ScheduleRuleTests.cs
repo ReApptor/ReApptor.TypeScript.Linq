@@ -1102,6 +1102,26 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
 
             AssertRuleMatch(rule, dates, start, end);
         }
+        
+        [Fact]
+        public void MiddleDayOfAnyMonthTest()
+        {
+            const string rule = "Middle day of month; Once At 05:25;";
+
+            var start = new DateTime(2021, 10, 01, 00, 00, 00);
+            var end = new DateTime(2022, 02, 28, 23, 59, 59);
+
+            DateTime[] dates =
+            {
+                new DateTime(2021, 10, 15, 05, 25, 00),
+                 new DateTime(2021, 11, 15, 05, 25, 00),
+                 new DateTime(2021, 12, 15, 05, 25, 00),
+                 new DateTime(2022, 01, 15, 05, 25, 00),
+                 new DateTime(2022, 02, 14, 05, 25, 00),
+            };
+
+            AssertRuleMatch(rule, dates, start, end);
+        }
 
         [Fact]
         public void FirstWorkingOfAnyMonthTest()
