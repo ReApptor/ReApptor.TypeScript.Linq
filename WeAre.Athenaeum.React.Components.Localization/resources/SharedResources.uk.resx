@@ -422,4 +422,13 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>UK: Cancel</value>
   </data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>UK: Move below</value>
+  </data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>UK: Move to top</value>
+  </data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>UK: Move up</value>
+  </data>
 </root>

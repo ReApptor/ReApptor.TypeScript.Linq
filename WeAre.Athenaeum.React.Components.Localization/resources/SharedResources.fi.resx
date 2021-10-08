@@ -405,4 +405,13 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Peruuta</value>
   </data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>Siirrä alas</value>
+  </data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>Siirrä huipulle</value>
+  </data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>Siirrä ylös</value>
+  </data>
 </root>

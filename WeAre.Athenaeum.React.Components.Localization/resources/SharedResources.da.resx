@@ -531,4 +531,13 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Annuller</value>
   </data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>DA: Move below</value>
+  </data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>DA: Move to top</value>
+  </data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>DA: Move up</value>
+  </data>
 </root>
