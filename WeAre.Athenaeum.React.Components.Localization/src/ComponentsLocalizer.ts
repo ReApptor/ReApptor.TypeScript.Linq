@@ -148,6 +148,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly messageBoxRetryLanguageItemName: string = `MessageBox.Retry`;
     public readonly messageBoxIgnoreLanguageItemName: string = `MessageBox.Ignore`;
     public readonly messageBoxCancelLanguageItemName: string = `MessageBox.Cancel`;
+    public readonly imageInputMoveToTopLanguageItemName: string = `ImageInput.MoveToTop`;
+    public readonly imageInputMoveUpLanguageItemName: string = `ImageInput.MoveUp`;
+    public readonly imageInputMoveDownLanguageItemName: string = `ImageInput.MoveDown`;
 
     constructor() {
 
@@ -308,6 +311,9 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.messageBoxRetryLanguageItemName, { language: `en`, value: `Retry` }, { language: `uk`, value: `UK: Retry` }, { language: `sv`, value: `Försök igen` }, { language: `ru`, value: `Повторить` }, { language: `pl`, value: `Spróbuj ponownie` }, { language: `nb`, value: `NB: Retry` }, { language: `fi`, value: `Yritä uudelleen` }, { language: `da`, value: `Prøv igen` },);
         this.set(this.messageBoxIgnoreLanguageItemName, { language: `en`, value: `Ignore` }, { language: `uk`, value: `UK: Ignore` }, { language: `sv`, value: `Ignorera` }, { language: `ru`, value: `Отклонить` }, { language: `pl`, value: `Ignoruj` }, { language: `nb`, value: `NB: Ignore` }, { language: `fi`, value: `Ohita` }, { language: `da`, value: `Ignorer` },);
         this.set(this.messageBoxCancelLanguageItemName, { language: `en`, value: `Cancel` }, { language: `uk`, value: `UK: Cancel` }, { language: `sv`, value: `Avbryt` }, { language: `ru`, value: `Отмена` }, { language: `pl`, value: `Anuluj` }, { language: `nb`, value: `NB: Cancel` }, { language: `fi`, value: `Peruuta` }, { language: `da`, value: `Annuller` },);
+        this.set(this.imageInputMoveToTopLanguageItemName, { language: `en`, value: `Move to top` }, { language: `uk`, value: `UK: Move to top` }, { language: `sv`, value: `SV: Move to top` }, { language: `ru`, value: `RU: Move to top` }, { language: `pl`, value: `PL: Move to top` }, { language: `nb`, value: `NB: Move to top` }, { language: `fi`, value: `Siirrä huipulle` }, { language: `da`, value: `DA: Move to top` },);
+        this.set(this.imageInputMoveUpLanguageItemName, { language: `en`, value: `Move up` }, { language: `uk`, value: `UK: Move up` }, { language: `sv`, value: `SV: Move up` }, { language: `ru`, value: `RU: Move up` }, { language: `pl`, value: `PL: Move up` }, { language: `nb`, value: `NB: Move up` }, { language: `fi`, value: `Siirrä ylös` }, { language: `da`, value: `DA: Move up` },);
+        this.set(this.imageInputMoveDownLanguageItemName, { language: `en`, value: `Move below` }, { language: `uk`, value: `UK: Move below` }, { language: `sv`, value: `SV: Move below` }, { language: `ru`, value: `RU: Move below` }, { language: `pl`, value: `PL: Move below` }, { language: `nb`, value: `NB: Move below` }, { language: `fi`, value: `Siirrä alas` }, { language: `da`, value: `DA: Move below` },);
     }
 
     /**
@@ -1309,6 +1315,27 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get messageBoxCancel() : string {
         return this.get(this.messageBoxCancelLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.MoveToTop" (Move to top)
+    */
+    public get imageInputMoveToTop() : string {
+        return this.get(this.imageInputMoveToTopLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.MoveUp" (Move up)
+    */
+    public get imageInputMoveUp() : string {
+        return this.get(this.imageInputMoveUpLanguageItemName);
+    }
+
+    /**
+    /* "ImageInput.MoveDown" (Move below)
+    */
+    public get imageInputMoveDown() : string {
+        return this.get(this.imageInputMoveDownLanguageItemName);
     }
 }
 

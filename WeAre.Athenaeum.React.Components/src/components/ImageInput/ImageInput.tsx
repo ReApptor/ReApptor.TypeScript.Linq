@@ -772,7 +772,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "level-up"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move to top"}
+                                label={ImageInputLocalizer.moveToTop}
                                 onClick={async () => await this.onMoveToTopButtonClickAsync()}
                         />
                     )
@@ -785,7 +785,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "arrow-up"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move up"}
+                                label={ImageInputLocalizer.moveUp}
                                 onClick={async () => await this.onMoveUpButtonClickAsync()}
                         />
                     )
@@ -798,7 +798,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "arrow-down"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move down"}
+                                label={ImageInputLocalizer.moveDown}
                                 onClick={async () => await this.onMoveDownButtonClickAsync()}
                         />
                     )

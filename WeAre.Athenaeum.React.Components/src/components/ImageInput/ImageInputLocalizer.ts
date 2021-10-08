@@ -17,6 +17,9 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     public readonly backLanguageItemName: string = `Back`;
     public readonly previewLanguageItemName: string = `Preview`;
     public readonly dropItLanguageItemName: string = `DropIt`;
+    public readonly moveToTopLanguageItemName: string = `MoveToTop`;
+    public readonly moveUpLanguageItemName: string = `MoveUp`;
+    public readonly moveDownLanguageItemName: string = `MoveDown`;
 
     constructor() {
 
@@ -46,6 +49,9 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
         this.set(this.backLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
         this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisa` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
         this.set(this.dropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `Släpp` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `Pudota` }, { language: `da`, value: `DA: Drop it` },);
+        this.set(this.moveToTopLanguageItemName, { language: `en`, value: `Move to top` }, { language: `uk`, value: `UK: Move to top` }, { language: `sv`, value: `SV: Move to top` }, { language: `ru`, value: `RU: Move to top` }, { language: `pl`, value: `PL: Move to top` }, { language: `nb`, value: `NB: Move to top` }, { language: `fi`, value: `Siirrä huipulle` }, { language: `da`, value: `DA: Move to top` },);
+        this.set(this.moveUpLanguageItemName, { language: `en`, value: `Move up` }, { language: `uk`, value: `UK: Move up` }, { language: `sv`, value: `SV: Move up` }, { language: `ru`, value: `RU: Move up` }, { language: `pl`, value: `PL: Move up` }, { language: `nb`, value: `NB: Move up` }, { language: `fi`, value: `Siirrä ylös` }, { language: `da`, value: `DA: Move up` },);
+        this.set(this.moveDownLanguageItemName, { language: `en`, value: `Move below` }, { language: `uk`, value: `UK: Move below` }, { language: `sv`, value: `SV: Move below` }, { language: `ru`, value: `RU: Move below` }, { language: `pl`, value: `PL: Move below` }, { language: `nb`, value: `NB: Move below` }, { language: `fi`, value: `Siirrä alas` }, { language: `da`, value: `DA: Move below` },);
     }
 
     /**
@@ -130,6 +136,27 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     */
     public get dropIt() : string {
         return this.get(this.dropItLanguageItemName);
+    }
+
+    /**
+    /* "MoveToTop" (Move to top)
+    */
+    public get moveToTop() : string {
+        return this.get(this.moveToTopLanguageItemName);
+    }
+
+    /**
+    /* "MoveUp" (Move up)
+    */
+    public get moveUp() : string {
+        return this.get(this.moveUpLanguageItemName);
+    }
+
+    /**
+    /* "MoveDown" (Move below)
+    */
+    public get moveDown() : string {
+        return this.get(this.moveDownLanguageItemName);
     }
 }
 

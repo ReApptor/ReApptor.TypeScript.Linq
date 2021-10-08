@@ -405,4 +405,13 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Avbryt</value>
   </data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>SV: Move below</value>
+  </data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>SV: Move to top</value>
+  </data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>SV: Move up</value>
+  </data>
 </root>
