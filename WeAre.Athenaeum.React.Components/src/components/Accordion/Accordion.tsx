@@ -203,12 +203,10 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     public async recalculateContentHeight(): Promise<void> {
         const contentNode: any = this.contentNode;
 
-        if(contentNode) {
+        if (contentNode) {
             const maxHeight: number = contentNode.getBoundingClientRect().height;
 
-            this.setState({
-                maxHeight
-            });
+            await this.setState({maxHeight});
         }
     }
 
