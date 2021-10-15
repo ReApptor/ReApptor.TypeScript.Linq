@@ -555,4 +555,7 @@
   <data name="ImageInput.MoveDown" xml:space="preserve">
     <value>Move below</value>
   </data>
+  <data name="UrlInput" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -151,6 +151,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageInputMoveToTopLanguageItemName: string = `ImageInput.MoveToTop`;
     public readonly imageInputMoveUpLanguageItemName: string = `ImageInput.MoveUp`;
     public readonly imageInputMoveDownLanguageItemName: string = `ImageInput.MoveDown`;
+    public readonly urlInputLanguageItemName: string = `UrlInput`;
 
     constructor() {
 
@@ -314,6 +315,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageInputMoveToTopLanguageItemName, { language: `en`, value: `Move to top` }, { language: `uk`, value: `UK: Move to top` }, { language: `sv`, value: `SV: Move to top` }, { language: `ru`, value: `RU: Move to top` }, { language: `pl`, value: `PL: Move to top` }, { language: `nb`, value: `NB: Move to top` }, { language: `fi`, value: `Siirrä huipulle` }, { language: `da`, value: `DA: Move to top` },);
         this.set(this.imageInputMoveUpLanguageItemName, { language: `en`, value: `Move up` }, { language: `uk`, value: `UK: Move up` }, { language: `sv`, value: `SV: Move up` }, { language: `ru`, value: `RU: Move up` }, { language: `pl`, value: `PL: Move up` }, { language: `nb`, value: `NB: Move up` }, { language: `fi`, value: `Siirrä ylös` }, { language: `da`, value: `DA: Move up` },);
         this.set(this.imageInputMoveDownLanguageItemName, { language: `en`, value: `Move below` }, { language: `uk`, value: `UK: Move below` }, { language: `sv`, value: `SV: Move below` }, { language: `ru`, value: `RU: Move below` }, { language: `pl`, value: `PL: Move below` }, { language: `nb`, value: `NB: Move below` }, { language: `fi`, value: `Siirrä alas` }, { language: `da`, value: `DA: Move below` },);
+        this.set(this.urlInputLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -1336,6 +1338,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get imageInputMoveDown() : string {
         return this.get(this.imageInputMoveDownLanguageItemName);
+    }
+
+    /**
+    /* "UrlInput" ()
+    */
+    public get urlInput() : string {
+        return this.get(this.urlInputLanguageItemName);
     }
 }
 

@@ -219,6 +219,8 @@ export enum BaseInputType {
 
     Email = "email",
 
+    Url = "url",
+
     Password = "password",
 
     Number = "number",
@@ -243,8 +245,12 @@ export enum InputValidationRule {
     /**
      * Value must be a proper email form
      */
-
     Email = "^.+@.+\\..+$",
+
+    /**
+     * Value must be a proper url form, no port number or localhost supported
+     */
+    Url = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})",
 
     /**
      * Value must contain at least 1 lowercase, 1 uppercase character and 1 special character
