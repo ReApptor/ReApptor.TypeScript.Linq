@@ -116,9 +116,10 @@ export abstract class BaseFileValidator implements IValidator {
 }
 
 export enum BaseRegexValidatorErrorMessage {
-    validatorsEmailLanguageItemName= "Validators.Email",
-    validatorsPasswordLanguageItemName= "Validators.Password",
-    validatorsPhoneLanguageItemName= "Validators.Phone"
+    validatorsEmailLanguageItemName = "Validators.Email",
+    validatorsUrlLanguageItemName = "Validators.Url",
+    validatorsPasswordLanguageItemName = "Validators.Password",
+    validatorsPhoneLanguageItemName = "Validators.Phone"
 }
 
 export abstract class BaseRegexValidator extends BaseValidator {
@@ -160,6 +161,16 @@ export class EmailValidator extends BaseRegexValidator {
     public static readonly instance: EmailValidator = new EmailValidator();
 
     public static readonly validator: ValidatorCallback<string> = (value: string | null) => EmailValidator.instance.validate(value);
+}
+
+export class UrlValidator extends BaseRegexValidator {
+    constructor() {
+        super(InputValidationRule.Url, BaseRegexValidatorErrorMessage.validatorsUrlLanguageItemName);
+    }
+
+    public static readonly instance: UrlValidator = new UrlValidator();
+
+    public static readonly validator: ValidatorCallback<string> = (value: string | null) => UrlValidator.instance.validate(value);
 }
 
 export class PasswordValidator extends BaseRegexValidator {

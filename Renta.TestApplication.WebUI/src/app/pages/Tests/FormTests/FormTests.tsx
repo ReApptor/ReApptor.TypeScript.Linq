@@ -1,7 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import { Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns } from "@weare/athenaeum-react-components";
-
+import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput} from "@weare/athenaeum-react-components";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
@@ -67,6 +66,14 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                         <DateInput label={"Date input #5"} showTime />
                         
                         <DateInput label={"Date input #6"} showTime showOnlyTime />
+                        
+                    </TwoColumns>
+
+                    <TwoColumns>
+
+                        <UrlInput label={"Url input #1"} />
+
+                        <UrlInput required label={"Url input #2"} value={"http://localhost:58080/"} />
                         
                     </TwoColumns>
 
