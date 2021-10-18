@@ -19,7 +19,7 @@
 
     thead {
 
-        th {
+        th.th {
             cursor: default;
 
             min-width: 66px;
@@ -36,23 +36,20 @@
                 justify-content: center;
             }
             
-            .sortable {
+            &.sortable {
                 cursor: pointer;
-            }
-
-            .asc {
-                > span {
-                    text-decoration: underline;
-                    //color: $dark-gray;
-                    //font-style: italic;
+                
+                &:hover {
+                    border-bottom-width: 2px;
+                    border-bottom-color: black;
                 }
-            }
-            
-            .desc {
-                > span {
-                    text-decoration: underline;
-                    //color: $dark-gray;
-                    //font-style: italic;
+
+                &.asc, &.desc {
+
+                    > div > span {
+                        text-decoration: underline;
+                    }
+                    
                 }
             }
             
