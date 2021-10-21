@@ -262,9 +262,9 @@ export enum InputValidationRule {
      * General phone number validation for Finland, Estonia and Sweden.
      * It will pass old and new format numbers.
      * Between numbers space or dash can be used ones.
-     * Number has to start +358 or 00358 or +372 or +41 or 0 are code can be 2 or 3 digit.
+     * Number has to start +358 or 00358 or +372 or +41 or +46 or 0 are code can be 2 or 3 digit.
      */
-    Phone = "^((([\\+][\\s]{0,1})|([0]{2}[\\s-]{0,1}))((358|372|41)[\\s-]{0,1})|([0]{1}))(([1-9]{1}[0-9]{0,1})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1}))([0-9]{0,3}){1}$"
+    Phone = "^((([\\+][\\s]{0,1})|([0]{2}[\\s-]{0,1}))((358|372|41|46)[\\s-]{0,1})|([0]{1}))(([1-9]{1}[0-9]{0,1})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1}))([0-9]{0,3}){1}$"
 }
 
 export enum PasswordValidationRule {
