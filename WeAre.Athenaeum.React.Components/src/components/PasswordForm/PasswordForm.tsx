@@ -52,21 +52,23 @@ export default class PasswordForm extends BaseComponent<IPasswordFormProps> {
 
     public render(): React.ReactNode {
 
+        const changePassword: boolean = (this.props.type == PasswordFormType.ChangePassword);
         return (
             <React.Fragment>
                 <Form id="form" ref={this._formRef} onSubmit={() => this.handleSubmitAsync()}>
 
                     {
-                        (this.props.type == PasswordFormType.ChangePassword) &&
+                        (changePassword) &&
                         (
-                            <PasswordInput required
+                            <PasswordInput required autoFocus
                                            label={PasswordFormLocalizer.changePasswordCurrentPassword}
                                            model={this.currentPassword}
                             />
                         )
                     }
 
-                    <PasswordInput autoFocus required
+                    <PasswordInput required
+                                   autoFocus={!changePassword}
                                    validLength={8}
                                    label={PasswordFormLocalizer.loginPagePasswordInput}
                                    model={this.password}

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {assert, FileModel} from "@weare/athenaeum-toolkit";
+import {FileModel} from "@weare/athenaeum-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
@@ -493,12 +493,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             selectedPictureIndex = (typeof this.selectedPictureIndex === "number")
                 ? this.selectedPictureIndex
                 : 0;
-        }
-        else if (assert(this.props.pictures).isString.isNotEmpty.isNotWhitespace.getIsSuccess) {
+        } else if (typeof this.props.pictures === "string") {
             pictures = [new FileModel(this.props.pictures as string)];
             selectedPictureIndex = 0;
-        }
-        else {
+        } else {
             pictures = [];
             selectedPictureIndex = null;
         }
@@ -772,7 +770,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "level-up"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move to top"}
+                                label={ImageInputLocalizer.moveToTop}
                                 onClick={async () => await this.onMoveToTopButtonClickAsync()}
                         />
                     )
@@ -785,7 +783,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "arrow-up"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move up"}
+                                label={ImageInputLocalizer.moveUp}
                                 onClick={async () => await this.onMoveUpButtonClickAsync()}
                         />
                     )
@@ -798,7 +796,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 className={styles.controlPanelButton}
                                 icon={{name: "arrow-down"}}
                                 type={ButtonType.Info}
-                                label={"EN: Move down"}
+                                label={ImageInputLocalizer.moveDown}
                                 onClick={async () => await this.onMoveDownButtonClickAsync()}
                         />
                     )

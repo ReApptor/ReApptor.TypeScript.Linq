@@ -10,7 +10,6 @@ import {IMaybeEmptyStringAsserter} from "./IMaybeEmptyStringAsserter";
 import {IArrayAsserter} from "./IArrayAsserter";
 import {IMaybeEmptyArrayAsserter} from "./IMaybeEmptyArrayAsserter";
 
-
 abstract class BaseAsserter<T> implements IBaseAsserter<T> {
     protected readonly _value: T;
     protected readonly _name: string;
