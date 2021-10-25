@@ -17,6 +17,9 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     public readonly backLanguageItemName: string = `Back`;
     public readonly previewLanguageItemName: string = `Preview`;
     public readonly dropItLanguageItemName: string = `DropIt`;
+    public readonly moveDownLanguageItemName: string = `MoveDown`;
+    public readonly moveToTopLanguageItemName: string = `MoveToTop`;
+    public readonly moveUpLanguageItemName: string = `MoveUp`;
 
     constructor() {
 
@@ -36,16 +39,19 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
         //Initializer
         this.set(this.documentTypeNotSupportedLanguageItemName, { language: `en`, value: `Document type is not supported, choose file with extension {0}` }, { language: `uk`, value: `UK: Document type is not supported, choose file with extension {0}` }, { language: `sv`, value: `Dokumenttyp stöds inte. Välj dokument som är {0}.` }, { language: `ru`, value: `RU: Document type is not supported, choose file with extension {0}` }, { language: `pl`, value: `Format dokumentu nieprawidłowy. Wybierz dokument {0}` }, { language: `nb`, value: `Dokumenttype støttes ikke. Velg fil med filtypen {0}` }, { language: `fi`, value: `Dokumentin tyyppi ei ole tuettu. Valitse tiedosto, joka on {0}` }, { language: `da`, value: `Dokumenttype understøttes ikke. Vælg fil med udvidelse {0}` },);
         this.set(this.documentTooBigLanguageItemName, { language: `en`, value: `Document file is too big` }, { language: `sv`, value: `Dokument filen är för stor` }, { language: `ru`, value: `RU: Document file is too big` }, { language: `pl`, value: `Dokument jest za duży` }, { language: `nb`, value: `Dokumentfilen er for stor` }, { language: `fi`, value: `Dokumentti tiedosto liian iso` }, { language: `da`, value: `Dokumentfilen er for stor` },);
-        this.set(this.saveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `PL: Save` }, { language: `nb`, value: `NB: Save` }, { language: `fi`, value: `Tallenna` }, { language: `da`, value: `DA: Save` },);
-        this.set(this.browseLanguageItemName, { language: `en`, value: `Browse` }, { language: `uk`, value: `UK: Browse` }, { language: `sv`, value: `Bläddra` }, { language: `ru`, value: `RU: Browse` }, { language: `pl`, value: `PL: Browse` }, { language: `nb`, value: `NB: Browse` }, { language: `fi`, value: `Selaa` }, { language: `da`, value: `DA: Browse` },);
-        this.set(this.rotateLeftLanguageItemName, { language: `en`, value: `Rotate left` }, { language: `uk`, value: `UK: RotateLeft` }, { language: `sv`, value: `Rotera vänster` }, { language: `ru`, value: `RU: RotateLeft` }, { language: `pl`, value: `PL: RotateLeft` }, { language: `nb`, value: `NB: RotateLeft` }, { language: `fi`, value: `Kierrä vasemmalle` }, { language: `da`, value: `DA: RotateLeft` },);
-        this.set(this.rotateRightLanguageItemName, { language: `en`, value: `Rotate right` }, { language: `uk`, value: `UK: RotateRight` }, { language: `sv`, value: `Rotera höger` }, { language: `ru`, value: `RU: RotateRight` }, { language: `pl`, value: `PL: RotateRight` }, { language: `nb`, value: `NB: RotateRight` }, { language: `fi`, value: `Kierrä oikealle` }, { language: `da`, value: `DA: RotateRight` },);
-        this.set(this.deleteLanguageItemName, { language: `en`, value: `Delete` }, { language: `uk`, value: `UK: Delete` }, { language: `sv`, value: `Radera` }, { language: `ru`, value: `RU: Delete` }, { language: `pl`, value: `PL: Delete` }, { language: `nb`, value: `Slett` }, { language: `fi`, value: `Poista` }, { language: `da`, value: `DA: Delete` },);
-        this.set(this.editLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `Redigera` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `PL: Edit` }, { language: `nb`, value: `NB: Edit` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `DA: Edit` },);
-        this.set(this.cameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `Kamera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `PL: Camera` }, { language: `nb`, value: `NB: Camera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `DA: Camera` },);
-        this.set(this.backLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `PL: Back` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `DA: Back` },);
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisa` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `PL: Preview` }, { language: `nb`, value: `NB: Preview` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `DA: Preview` },);
-        this.set(this.dropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `Släpp` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `PL: Drop it` }, { language: `nb`, value: `NB: Drop it` }, { language: `fi`, value: `Pudota` }, { language: `da`, value: `DA: Drop it` },);
+        this.set(this.saveLanguageItemName, { language: `en`, value: `Save` }, { language: `uk`, value: `UK: Save` }, { language: `sv`, value: `Spara` }, { language: `ru`, value: `RU: Save` }, { language: `pl`, value: `Zapisać` }, { language: `nb`, value: `Lagre` }, { language: `fi`, value: `Tallenna` }, { language: `da`, value: `Gemme` },);
+        this.set(this.browseLanguageItemName, { language: `en`, value: `Browse` }, { language: `uk`, value: `UK: Browse` }, { language: `sv`, value: `Bläddra` }, { language: `ru`, value: `RU: Browse` }, { language: `pl`, value: `Przeglądaj` }, { language: `nb`, value: `Bla gjennom` }, { language: `fi`, value: `Selaa` }, { language: `da`, value: `Gennemse` },);
+        this.set(this.rotateLeftLanguageItemName, { language: `en`, value: `Rotate left` }, { language: `uk`, value: `UK: RotateLeft` }, { language: `sv`, value: `Rotera vänster` }, { language: `ru`, value: `RU: RotateLeft` }, { language: `pl`, value: `Obrót w lewo` }, { language: `nb`, value: `Rotér mot venstre` }, { language: `fi`, value: `Kierrä vasemmalle` }, { language: `da`, value: `Rotere venstre` },);
+        this.set(this.rotateRightLanguageItemName, { language: `en`, value: `Rotate right` }, { language: `uk`, value: `UK: RotateRight` }, { language: `sv`, value: `Vrid höger` }, { language: `ru`, value: `RU: RotateRight` }, { language: `pl`, value: `Obróć w prawo` }, { language: `nb`, value: `Roter til høyre` }, { language: `fi`, value: `Kierrä oikealle` }, { language: `da`, value: `Drej til højre` },);
+        this.set(this.deleteLanguageItemName, { language: `en`, value: `Delete` }, { language: `uk`, value: `UK: Delete` }, { language: `sv`, value: `Radera` }, { language: `ru`, value: `RU: Delete` }, { language: `pl`, value: `Kasować` }, { language: `nb`, value: `Slett` }, { language: `fi`, value: `Poista` }, { language: `da`, value: `Delete` },);
+        this.set(this.editLanguageItemName, { language: `en`, value: `Edit` }, { language: `uk`, value: `UK: Edit` }, { language: `sv`, value: `Redigera` }, { language: `ru`, value: `RU: Edit` }, { language: `pl`, value: `Edytować` }, { language: `nb`, value: `Redigere` }, { language: `fi`, value: `Muokkaa` }, { language: `da`, value: `Redigere` },);
+        this.set(this.cameraLanguageItemName, { language: `en`, value: `Camera` }, { language: `uk`, value: `UK: Camera` }, { language: `sv`, value: `Kamera` }, { language: `ru`, value: `RU: Camera` }, { language: `pl`, value: `Kamera` }, { language: `nb`, value: `Kamera` }, { language: `fi`, value: `Kamera` }, { language: `da`, value: `Kamera` },);
+        this.set(this.backLanguageItemName, { language: `en`, value: `Back` }, { language: `uk`, value: `UK: Back` }, { language: `sv`, value: `Tillbaka` }, { language: `ru`, value: `RU: Back` }, { language: `pl`, value: `Plecy` }, { language: `nb`, value: `Tilbake` }, { language: `fi`, value: `Takaisin` }, { language: `da`, value: `Tilbage` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `UK: Preview` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `Zapowiedź` }, { language: `nb`, value: `Forhåndsvisning` }, { language: `fi`, value: `Esikatsele` }, { language: `da`, value: `Preview` },);
+        this.set(this.dropItLanguageItemName, { language: `en`, value: `Drop it` }, { language: `uk`, value: `UK: Drop it` }, { language: `sv`, value: `Släppa` }, { language: `ru`, value: `RU: Drop it` }, { language: `pl`, value: `Upuszczać` }, { language: `nb`, value: `Miste` }, { language: `fi`, value: `Pudota` }, { language: `da`, value: `Dråbe` },);
+        this.set(this.moveDownLanguageItemName, { language: `sv`, value: `Flytta ner` }, { language: `pl`, value: `Padnij` }, { language: `nb`, value: `Flytte ned` }, { language: `da`, value: `Flyt ned` },);
+        this.set(this.moveToTopLanguageItemName, { language: `sv`, value: `Flytta upp` }, { language: `pl`, value: `Podnieść` }, { language: `nb`, value: `Flytte opp` }, { language: `da`, value: `Flytte op` },);
+        this.set(this.moveUpLanguageItemName, { language: `sv`, value: `Flytta till toppen` }, { language: `pl`, value: `Przejdź do góry` }, { language: `nb`, value: `Flytt til toppen` }, { language: `da`, value: `Flyt til toppen` },);
     }
 
     /**
@@ -130,6 +136,27 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     */
     public get dropIt() : string {
         return this.get(this.dropItLanguageItemName);
+    }
+
+    /**
+    /* "MoveDown" (Flytta ner)
+    */
+    public get moveDown() : string {
+        return this.get(this.moveDownLanguageItemName);
+    }
+
+    /**
+    /* "MoveToTop" (Flytta upp)
+    */
+    public get moveToTop() : string {
+        return this.get(this.moveToTopLanguageItemName);
+    }
+
+    /**
+    /* "MoveUp" (Flytta till toppen)
+    */
+    public get moveUp() : string {
+        return this.get(this.moveUpLanguageItemName);
     }
 }
 

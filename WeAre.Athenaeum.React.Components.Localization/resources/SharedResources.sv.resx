@@ -350,34 +350,43 @@
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
     <value>Tillbaka</value>
-  </data>
+</data>
   <data name="ImageInput.Browse" xml:space="preserve">
     <value>Bläddra</value>
-  </data>
+</data>
   <data name="ImageInput.Camera" xml:space="preserve">
     <value>Kamera</value>
-  </data>
+</data>
   <data name="ImageInput.Delete" xml:space="preserve">
     <value>Radera</value>
-  </data>
+</data>
+  <data name="ImageInput.DropIt" xml:space="preserve">
+    <value>Släppa</value>
+</data>
   <data name="ImageInput.Edit" xml:space="preserve">
     <value>Redigera</value>
-  </data>
-  <data name="ImageInput.Save" xml:space="preserve">
-    <value>Spara</value>
-  </data>
+</data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>Flytta ner</value>
+</data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>Flytta upp</value>
+</data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>Flytta till toppen</value>
+</data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>Förhandsvisning</value>
+</data>
   <data name="ImageInput.RotateLeft" xml:space="preserve">
     <value>Rotera vänster</value>
-  </data>
+</data>
   <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>Rotera höger</value>
-  </data>
-  <data name="ImageInput.Preview" xml:space="preserve">
-    <value>Förhandsvisa</value>
-  </data>
-  <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>Släpp</value>
-  </data>
+    <value>Vrid höger</value>
+</data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>Spara</value>
+</data>
   <data name="MessageBox.Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
