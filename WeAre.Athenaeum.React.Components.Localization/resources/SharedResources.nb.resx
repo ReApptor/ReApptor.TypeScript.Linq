@@ -476,34 +476,43 @@
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
     <value>Tilbake</value>
-  </data>
+</data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>NB: Browse</value>
-  </data>
+    <value>Bla gjennom</value>
+</data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>NB: Camera</value>
-  </data>
+    <value>Kamera</value>
+</data>
   <data name="ImageInput.Delete" xml:space="preserve">
     <value>Slett</value>
-  </data>
-  <data name="ImageInput.Edit" xml:space="preserve">
-    <value>NB: Edit</value>
-  </data>
-  <data name="ImageInput.Save" xml:space="preserve">
-    <value>NB: Save</value>
-  </data>
-  <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>NB: RotateLeft</value>
-  </data>
-  <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>NB: RotateRight</value>
-  </data>
-  <data name="ImageInput.Preview" xml:space="preserve">
-    <value>NB: Preview</value>
-  </data>
+</data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>NB: Drop it</value>
-  </data>
+    <value>Miste</value>
+</data>
+  <data name="ImageInput.Edit" xml:space="preserve">
+    <value>Redigere</value>
+</data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>Flytte ned</value>
+</data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>Flytte opp</value>
+</data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>Flytt til toppen</value>
+</data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>Forhåndsvisning</value>
+</data>
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
+    <value>Rotér mot venstre</value>
+</data>
+  <data name="ImageInput.RotateRight" xml:space="preserve">
+    <value>Roter til høyre</value>
+</data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>Lagre</value>
+</data>
   <data name="MessageBox.Ok" xml:space="preserve">
     <value>Ok</value>
   </data>

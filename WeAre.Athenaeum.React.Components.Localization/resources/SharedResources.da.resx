@@ -475,35 +475,44 @@
     <value>September</value>
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
-    <value>DA: Back</value>
-  </data>
+    <value>Tilbage</value>
+</data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>DA: Browse</value>
-  </data>
+    <value>Gennemse</value>
+</data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>DA: Camera</value>
-  </data>
+    <value>Kamera</value>
+</data>
   <data name="ImageInput.Delete" xml:space="preserve">
-    <value>DA: Delete</value>
-  </data>
-  <data name="ImageInput.Edit" xml:space="preserve">
-    <value>DA: Edit</value>
-  </data>
-  <data name="ImageInput.Save" xml:space="preserve">
-    <value>DA: Save</value>
-  </data>
-  <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>DA: RotateLeft</value>
-  </data>
-  <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>DA: RotateRight</value>
-  </data>
-  <data name="ImageInput.Preview" xml:space="preserve">
-    <value>DA: Preview</value>
-  </data>
+    <value>Delete</value>
+</data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>DA: Drop it</value>
-  </data>
+    <value>Dråbe</value>
+</data>
+  <data name="ImageInput.Edit" xml:space="preserve">
+    <value>Redigere</value>
+</data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>Flyt ned</value>
+</data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>Flytte op</value>
+</data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>Flyt til toppen</value>
+</data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>Preview</value>
+</data>
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
+    <value>Rotere venstre</value>
+</data>
+  <data name="ImageInput.RotateRight" xml:space="preserve">
+    <value>Drej til højre</value>
+</data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>Gemme</value>
+</data>
   <data name="MessageBox.Ok" xml:space="preserve">
     <value>Ok</value>
   </data>

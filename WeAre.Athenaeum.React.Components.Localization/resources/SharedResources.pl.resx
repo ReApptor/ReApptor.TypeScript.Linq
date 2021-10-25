@@ -349,35 +349,44 @@
     <value>Wrzesień</value>
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
-    <value>PL: Back</value>
-  </data>
+    <value>Plecy</value>
+</data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>PL: Browse</value>
-  </data>
+    <value>Przeglądaj</value>
+</data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>PL: Camera</value>
-  </data>
+    <value>Kamera</value>
+</data>
   <data name="ImageInput.Delete" xml:space="preserve">
-    <value>PL: Delete</value>
-  </data>
-  <data name="ImageInput.Edit" xml:space="preserve">
-    <value>PL: Edit</value>
-  </data>
-  <data name="ImageInput.Save" xml:space="preserve">
-    <value>PL: Save</value>
-  </data>
-  <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>PL: RotateLeft</value>
-  </data>
-  <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>PL: RotateRight</value>
-  </data>
-  <data name="ImageInput.Preview" xml:space="preserve">
-    <value>PL: Preview</value>
-  </data>
+    <value>Kasować</value>
+</data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>PL: Drop it</value>
-  </data>
+    <value>Upuszczać</value>
+</data>
+  <data name="ImageInput.Edit" xml:space="preserve">
+    <value>Edytować</value>
+</data>
+  <data name="ImageInput.MoveDown" xml:space="preserve">
+    <value>Padnij</value>
+</data>
+  <data name="ImageInput.MoveToTop" xml:space="preserve">
+    <value>Podnieść</value>
+</data>
+  <data name="ImageInput.MoveUp" xml:space="preserve">
+    <value>Przejdź do góry</value>
+</data>
+  <data name="ImageInput.Preview" xml:space="preserve">
+    <value>Zapowiedź</value>
+</data>
+  <data name="ImageInput.RotateLeft" xml:space="preserve">
+    <value>Obrót w lewo</value>
+</data>
+  <data name="ImageInput.RotateRight" xml:space="preserve">
+    <value>Obróć w prawo</value>
+</data>
+  <data name="ImageInput.Save" xml:space="preserve">
+    <value>Zapisać</value>
+</data>
   <data name="MessageBox.Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
