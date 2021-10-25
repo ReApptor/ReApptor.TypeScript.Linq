@@ -731,7 +731,6 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 }
             }
         }
-
     }
 
     private async invokeSelectAsync(itemOrItems: TItem | string | number | TItem[] | string[] | number[] | null, callback: boolean): Promise<void> {
@@ -1185,7 +1184,6 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             if (itemValue) {
                 return this.listItems.find(item => item.value === itemValue) || null;
             }
-
         }
 
         return null;

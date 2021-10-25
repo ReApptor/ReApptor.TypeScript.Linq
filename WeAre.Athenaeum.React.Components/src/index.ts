@@ -97,6 +97,9 @@ export {default as DropdownListItem} from "./components/Dropdown/DropdownListIte
 export * from "./components/EmailInput/EmailInput";
 export {default as EmailInput} from "./components/EmailInput/EmailInput";
 
+export * from "./components/UrlInput/UrlInput";
+export {default as UrlInput} from "./components/UrlInput/UrlInput";
+
 export * from "./components/FileInput/FileInput";
 export {default as FileInput} from "./components/FileInput/FileInput";
 

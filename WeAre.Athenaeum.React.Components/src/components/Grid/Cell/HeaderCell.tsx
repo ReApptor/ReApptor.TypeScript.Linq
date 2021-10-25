@@ -121,9 +121,12 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                 <th id={this.id}
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
-                    colSpan={colSpan || undefined}>
+                    colSpan={colSpan || undefined}
+                    className={this.css(styles.th, sortableClassName, sortDirectionClassName)}
+                    onClick={() => (sortable) && this.sortAsync(column)}
+                >
 
-                    <div className={this.css(rotateClassName, sortableClassName, sortDirectionClassName)} onClick={() => (sortable) && this.sortAsync(column)}>
+                    <div className={this.css(rotateClassName)}>
 
                         {
                             (icon)

@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/athenaeum-react-common";
-import { Utility, assert } from "@weare/athenaeum-toolkit";
+import { Utility } from "@weare/athenaeum-toolkit";
 import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";
@@ -103,7 +103,8 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     public get expanded(): boolean {
-        return assert(this.state.expanded).isBoolean.isTrue.getIsSuccess;
+        ///return assert(this.state.expanded).isBoolean.isTrue.getIsSuccess;
+        return this.state.expanded;
     }
 
     public get hasToggle(): boolean {
@@ -111,9 +112,10 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     private get maxHeightOffset(): number {
-        return (assert(this.props.maxHeightOffset).isNumber.getIsSuccess)
-            ? this.props.maxHeightOffset!
-            : 0;
+        // return (assert(this.props.maxHeightOffset).isNumber.getIsSuccess)
+        //     ? this.props.maxHeightOffset!
+        //     : 0;
+        return this.props.maxHeightOffset ?? 0;
     }
 
     // Async-methods
@@ -123,9 +125,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
 
             await this.recalculateContentHeight();
 
-            this.setState({
-                expanded
-            });
+            await this.setState({expanded});
 
             if (this.props.onToggle) {
                 await this.props.onToggle(this, expanded);
@@ -203,24 +203,22 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     public async recalculateContentHeight(): Promise<void> {
         const contentNode: any = this.contentNode;
 
-        if(contentNode) {
+        if (contentNode) {
             const maxHeight: number = contentNode.getBoundingClientRect().height;
 
-            this.setState({
-                maxHeight
-            });
+            await this.setState({maxHeight});
         }
     }
 
     public render(): React.ReactNode {
+        const expandedStyles = this.expanded && styles.expanded;
+        
         return (
             <div id={this.id}
-                 className={this.css(this.classNames.accordion, styles.accordion, this.props.className)}
+                 className={this.css(this.classNames.accordion, this.props.className, styles.accordion, expandedStyles)}
             >
                 <div className={this.css(this.classNames.headerContainer, styles.headerContainer, (!this.hasToggle) && "cursor-pointer")}
-                     onClick={(!this.hasToggle)
-                         ? async () => await this.toggleAsync()
-                         : undefined}
+                     onClick={(!this.hasToggle) ? async () => await this.toggleAsync() : undefined}
                 >
 
                     <div className={this.css(this.classNames.header, styles.header)}>

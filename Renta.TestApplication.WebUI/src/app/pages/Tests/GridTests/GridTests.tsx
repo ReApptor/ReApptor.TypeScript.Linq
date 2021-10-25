@@ -112,6 +112,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             accessor: "enum",
             type: ColumnType.Dropdown,
             sorting: true,
+            rotate: true,
             noWrap: true,
             minWidth: "5rem",
             transform: (cell, value) => (value) ? this.transformEnumToSomething(value, true) : "",

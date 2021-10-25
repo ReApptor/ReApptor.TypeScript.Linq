@@ -17,9 +17,9 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     public readonly backLanguageItemName: string = `Back`;
     public readonly previewLanguageItemName: string = `Preview`;
     public readonly dropItLanguageItemName: string = `DropIt`;
-    public readonly moveDownLanguageItemName: string = `MoveDown`;
     public readonly moveToTopLanguageItemName: string = `MoveToTop`;
     public readonly moveUpLanguageItemName: string = `MoveUp`;
+    public readonly moveDownLanguageItemName: string = `MoveDown`;
 
     constructor() {
 
@@ -139,24 +139,24 @@ class ImageInputLocalizer extends BaseComponentLocalizer {
     }
 
     /**
-    /* "MoveDown" (Flytta ner)
-    */
-    public get moveDown() : string {
-        return this.get(this.moveDownLanguageItemName);
-    }
-
-    /**
-    /* "MoveToTop" (Flytta upp)
+    /* "MoveToTop" (Move to top)
     */
     public get moveToTop() : string {
         return this.get(this.moveToTopLanguageItemName);
     }
 
     /**
-    /* "MoveUp" (Flytta till toppen)
+    /* "MoveUp" (Move up)
     */
     public get moveUp() : string {
         return this.get(this.moveUpLanguageItemName);
+    }
+
+    /**
+    /* "MoveDown" (Move below)
+    */
+    public get moveDown() : string {
+        return this.get(this.moveDownLanguageItemName);
     }
 }
 
