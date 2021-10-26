@@ -64,6 +64,12 @@ export default class Utility {
         return (params) ? params.filter(param => param).join(" ").replace(",", " ").trim() : "";
     }
 
+    /**
+     * huehue
+     * @param text the thing to format
+     * @param params format used for formatting 
+     * "D" = dd.MM.yyyy
+     */
     public static format(text: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined | any)[]): string {
         let result: string = text || "";
 

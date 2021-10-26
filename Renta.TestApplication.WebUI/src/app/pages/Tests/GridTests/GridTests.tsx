@@ -79,6 +79,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             accessor: "float",
             format: "0.00",
             sorting: true,
+            isDefaultSortColumn: true,
             minWidth: 90,
             noWrap: true,
             textAlign: TextAlign.Center
