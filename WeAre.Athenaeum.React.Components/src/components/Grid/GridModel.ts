@@ -4,8 +4,8 @@ import {HashCodeUtility, IPagedList, SortDirection, TFormat, Utility} from "@wea
 import {Align, ch, IAsyncComponent, IBaseComponent, IConfirmation, Justify, PageRoute, TextAlign, VerticalAlign, ArrayScope, ActionType, RenderCallback} from "@weare/athenaeum-react-common";
 import {IIconProps} from "../Icon/Icon";
 import Comparator from "../../helpers/Comparator";
-import Dropdown, { DropdownAlign, DropdownRequiredType, DropdownVerticalAlign } from "../Dropdown/Dropdown";
-import { IInput } from "../BaseInput/BaseInput";
+import Dropdown, {DropdownAlign, DropdownRequiredType, DropdownVerticalAlign} from "../Dropdown/Dropdown";
+import {IInput} from "../BaseInput/BaseInput";
 
 const DEFAULT_PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 20;
@@ -208,6 +208,8 @@ export class ColumnModel<TItem = {}> {
     public settings: ColumnSettings<TItem> = new ColumnSettings<TItem>();
 
     public sorting: boolean | SortDirection | null = null;
+    
+    public isDefaultSortColumn: boolean = false;
 
     public actions: ColumnAction<TItem>[] = [];
 
@@ -410,7 +412,7 @@ export class GridModel<TItem = {}> {
     public async reloadComponentsAsync(): Promise<void> {
         const components: IAsyncComponent[] = this.rows.selectMany(row => row.cells.where(cell => (cell.asyncContentInstance != null)).map(cell => cell.asyncContentInstance!));
         if (components) {
-            await Utility.forEachAsync(components,async component => await component.reloadAsync());
+            await Utility.forEachAsync(components, async component => await component.reloadAsync());
         }
     }
 
@@ -423,7 +425,7 @@ export class GridModel<TItem = {}> {
     public async reRenderInputsAsync(): Promise<void> {
         const inputs: IInput[] = this.rows.selectMany(row => row.cells.where(cell => (cell.inputContentInstance != null)).map(cell => cell.inputContentInstance!));
         if (inputs) {
-            await Utility.forEachAsync(inputs,async input => await input.reRenderAsync());
+            await Utility.forEachAsync(inputs, async input => await input.reRenderAsync());
         }
     }
 
@@ -837,6 +839,9 @@ export class ColumnDefinition {
 
     public rotate?: boolean;
 
+    /**
+     * See {@link Utility.format}
+     */
     public format?: TFormat;
 
     public minWidth?: string | number;
@@ -858,6 +863,13 @@ export class ColumnDefinition {
     public settings?: ColumnSettingsDefinition;
 
     public sorting?: boolean | SortDirection;
+
+    /**
+     * If {@link sorting} is set for multiple columns the {@link isDefaultSortColumn} can be used to override default sort column.
+     * By default grid orders by first column that has {@link sorting} true
+     * @default false
+     */
+    public isDefaultSortColumn?: boolean;
 
     public actions?: ColumnActionDefinition[];
 
@@ -994,7 +1006,7 @@ export class RowModel<TItem = {}> {
                 return (this.grid.checkable) ? columnIndex + 1 : columnIndex;
             }
         }
-        const detailsColEnd =  (this.cells.length - 1);
+        const detailsColEnd = (this.cells.length - 1);
         return (this.grid.checkable) ? detailsColEnd + 1 : detailsColEnd;
     }
 
@@ -1587,7 +1599,7 @@ export class CellModel<TItem = {}> {
     }
 
     public setRowDeleted(deleted: boolean): void {
-        this.row.cells.forEach( (cell) => {
+        this.row.cells.forEach((cell) => {
             if ((cell != this) && ((!cell.isSpanned))) {
                 cell.deleted = deleted;
             }
@@ -1595,7 +1607,7 @@ export class CellModel<TItem = {}> {
     }
 
     public async setRowDeletedAsync(deleted: boolean): Promise<void> {
-        await Utility.forEachAsync(this.row.cells,async (cell) => {
+        await Utility.forEachAsync(this.row.cells, async (cell) => {
             if ((cell != this) && ((!cell.isSpanned))) {
                 await cell.setDeletedAsync(deleted);
             }
@@ -1662,7 +1674,8 @@ export class GridTransformer {
                 ? from.pagination
                 : DEFAULT_PAGE_SIZE
             : MAX_PAGE_SIZE;
-        to.sortColumn = to.columns.find(item => (item.sorting != null) && (item.sorting != false)) || null;
+        to.sortColumn = to.columns.find(item => ((item.sorting != null) && (item.sorting != false) && (item.isDefaultSortColumn)))
+            || (to.columns.find(item => (item.sorting != null) && (item.sorting != false)) || null);
         to.sortDirection = (to.sortColumn != null)
             ? (to.sortColumn.sorting == SortDirection.Desc)
                 ? SortDirection.Desc
@@ -1704,6 +1717,7 @@ export class GridTransformer {
         to.render = from.render;
         to.callback = from.callback;
         to.sorting = from.sorting || null;
+        to.isDefaultSortColumn = from.isDefaultSortColumn || false;
         to.settings = this.toSettings(from.settings || new ColumnSettingsDefinition());
         to.actions = (from.actions || []).map((action) => this.toAction<TItem>(to, action));
         return to;
