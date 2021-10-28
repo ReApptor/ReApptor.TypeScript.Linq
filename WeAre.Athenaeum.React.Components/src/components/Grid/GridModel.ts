@@ -66,6 +66,12 @@ export enum GridOddType {
     None
 }
 
+export enum GridSelectableType {
+    Single,
+
+    Multiple
+}
+
 export enum CellPaddingType {
     Large,
 
@@ -118,6 +124,8 @@ export interface IGridDefinition {
 
     checkable?: boolean;
 
+    selectable?: boolean | GridSelectableType;
+
     readonly?: boolean;
 
     borderType?: BorderType;
@@ -129,6 +137,8 @@ export interface IGridDefinition {
     renderDetails?(row: RowModel<any>): React.ReactNode;
 
     onCheck?(sender: GridModel<any>): Promise<void>;
+
+    onSelect?(sender: GridModel<any>, row: RowModel<any>): Promise<void>;
 }
 
 export interface IGrid extends IAsyncComponent {
@@ -293,6 +303,8 @@ export class GridModel<TItem = {}> {
 
     public checkable: boolean = false;
 
+    public selectableType: GridSelectableType | null = null;
+
     public readonly: boolean = false;
 
     public borderType: BorderType = BorderType.DarkSeparators;
@@ -321,6 +333,8 @@ export class GridModel<TItem = {}> {
 
     public onCheck?(sender: GridModel<any>): Promise<void>;
 
+    public onSelect?(sender: GridModel<any>, row: RowModel<any>): Promise<void>;
+
     public renderDetails?(row: RowModel<TItem>): React.ReactNode;
 
     public get key(): string {
@@ -341,12 +355,32 @@ export class GridModel<TItem = {}> {
             : [];
     }
 
+    public get selectedRows(): RowModel<TItem>[] {
+        return (this.selectable)
+            ? this.rows.filter(row => row.selected)
+            : [];
+    }
+
+    public get selectedRow(): RowModel<TItem> | null {
+        const selectedRows: RowModel<TItem>[] = this.selectedRows;
+        return (selectedRows.length > 0) ? selectedRows[0] : null;
+    }
+
     public get items(): TItem[] {
         return this.rows.map(row => row.model);
     }
 
     public get checkedItems(): TItem[] {
         return this.checkedRows.map(row => row.model);
+    }
+
+    public get selectedItems(): TItem[] {
+        return this.selectedRows.map(row => row.model);
+    }
+
+    public get selectedItem(): TItem | null {
+        const selectedItems: TItem[] = this.selectedItems;
+        return (selectedItems.length > 0) ? selectedItems[0] : null;
     }
 
     public get firstRow(): RowModel<TItem> {
@@ -363,6 +397,10 @@ export class GridModel<TItem = {}> {
 
     public get desktop(): boolean {
         return (!this.mobile);
+    }
+
+    public get selectable(): boolean {
+        return (this.selectableType != null);
     }
 
     public fullWidth(visible: boolean = true): number {
@@ -921,9 +959,13 @@ export class RowModel<TItem = {}> {
 
     public checkable: boolean = false;
 
+    public selectable: boolean = false;
+
     public readonly: boolean = false;
 
     public checked: boolean = false;
+    
+    public selected: boolean = false;
 
     public responsiveContainerExpanded: boolean = false;
 
@@ -1021,7 +1063,7 @@ export class RowModel<TItem = {}> {
             ? this.grid.rows[this.index - 1]
             : this.grid.rows[this.grid.rows.length - 1];
     }
-
+    
     public resetKey(resetInitialKey: boolean = false): void {
         this._key = null;
         if (resetInitialKey) {
@@ -1247,6 +1289,10 @@ export class CellModel<TItem = {}> {
 
     public get isVisible(): boolean {
         return this.visible && this.column.isVisible;
+    }
+
+    public get isSelectable(): boolean {
+        return (this.isVisible) && (!this.isDeleted) && ((this.isReadonly) || (this.type == ColumnType.Custom) || (this.type == ColumnType.Icon)) && (this.actions.length == 0);
     }
 
     public get rowSpan(): number {
@@ -1659,11 +1705,17 @@ export class GridTransformer {
         to.responsive = from.responsive || false;
         to.pagination = from.pagination || false;
         to.checkable = from.checkable || false;
+        to.selectableType = ((from.selectable == null) || (from.selectable === false))
+            ? null
+            : (from.selectable === true)
+                ? GridSelectableType.Single
+                : from.selectable;
         to.readonly = from.readonly || false;
         to.borderType = from.borderType || BorderType.DarkSeparators;
         to.optimization = (from.optimization !== false);
         to.autoToggle = from.autoToggle || false;
         to.onCheck = from.onCheck;
+        to.onSelect = from.onSelect;
         to.renderDetails = from.renderDetails;
         to.columns = (from.columns || []).map((item, index) => this.toColumn(to, item, index));
         to.rows = [];
@@ -1734,6 +1786,7 @@ export class GridTransformer {
         to.index = rowIndex;
         to.model = model;
         to.checkable = grid.checkable;
+        to.selectable = grid.selectable;
         to.cells = grid.columns.map((column) => this.toCell<TItem>(grid, to, column));
         return to;
     }

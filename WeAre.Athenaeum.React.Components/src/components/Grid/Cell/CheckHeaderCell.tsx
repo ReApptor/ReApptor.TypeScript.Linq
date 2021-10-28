@@ -50,7 +50,7 @@ export default class CheckHeaderCell<TItem = {}> extends BaseComponent<ICheckHea
 
         return (
             <th rowSpan={rowSpan} colSpan={colSpan}
-                className={this.css(gridStyles.check, partiallyStyle)}
+                className={this.css(gridStyles.th, gridStyles.check, partiallyStyle)}
                 onClick={async () => this.onCheckAsync()}>
                 
                 <input type="checkbox" checked={checked} onChange={() => {}} />
