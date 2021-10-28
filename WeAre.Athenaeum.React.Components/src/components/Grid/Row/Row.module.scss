@@ -3,7 +3,6 @@
 .gridRow {
     
     &.data {
-        
         &.darkSeparators {
             td {
                 border-bottom-color: #7f8484;
@@ -15,9 +14,17 @@
         }
 
         &.odd {
-            &.rowHovering:not(:hover),
-            &:not(.rowHovering) {
+            &.rowHovering:not(:hover), &:not(.rowHovering) {
                 background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+        
+        &.selected {
+            background-color: $blue !important;
+            color: white;
+            
+            &:hover {
+                background-color: $transparent-blue !important;
             }
         }
     }
