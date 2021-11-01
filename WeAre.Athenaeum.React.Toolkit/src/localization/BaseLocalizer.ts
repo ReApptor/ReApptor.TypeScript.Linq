@@ -67,6 +67,9 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         params.map((item) => this.setItem(name, item.language, item.value));
     }
 
+    public initialize(): void {
+    }
+
     public getType(): ServiceType {
         return nameof<ILocalizer>();
     }
