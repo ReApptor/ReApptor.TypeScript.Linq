@@ -1,7 +1,7 @@
 import React from "react";
 import {GeoLocation, IEnumProvider, ServiceProvider, TFormat, Utility} from "@weare/athenaeum-toolkit";
 import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility} from "@weare/athenaeum-react-common";
-import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell} from "../GridModel";
+import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell, RowModel} from "../GridModel";
 import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
 import Comparator from "../../../helpers/Comparator";
@@ -20,6 +20,7 @@ import gridStyles from "../Grid.module.scss";
 interface ICellProps<TItem = {}> {
     cell: CellModel<TItem>;
     colSpan?: number;
+    onClick?(cell: CellModel<TItem>): Promise<void>;
 }
 
 export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> implements ICell {
@@ -457,9 +458,10 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         this.props.cell.inputContentInstance = this._inputRef.current;
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
 
         const cell: CellModel<TItem> = this.props.cell;
+        const row: RowModel<TItem> = cell.row;
         const column: ColumnModel<TItem> = cell.column;
         const settings: ColumnSettings<TItem> = column.settings;
 
@@ -581,6 +583,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         : Utility.formatValue(cellValue, format);
 
                 cellContent = this.renderDefaultCellContent(cell, settings, cellValue);
+                
                 cellStyle = gridStyles.defaultCell;
             }
         }
@@ -607,6 +610,8 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const noActionsStyle: any = ((!deleted) && (cell.actions.filter(action => action.visible).length === 0)) && (gridStyles.noActions);
         const notValidStyle: any = (editable && !readonly && !cell.valid) && (gridStyles.notValid);
         const cellHoveringStyle: any = ((cell.grid.hovering === GridHoveringType.Cell) || ((cell.grid.hovering === GridHoveringType.EditableCell) && (editable && visible && !readonly && !deleted))) && (gridStyles.cellHovering);
+        const checkedStyle: any = (row.checked) && gridStyles.checked;
+        const selectedStyle: any = (row.selected) && gridStyles.selected;
         const deletedStyle: any = (deleted) && (gridStyles.deleted);
         const deletedFirstCellStyle: string = ((deleted) && ((cell.isFirstColumn) || (!cell.prev.isDeleted) || (!cell.prev.equalRowSpan(cell)))) && (gridStyles.firstColumn) || "";
         const deletedLastCellStyle: string = ((deleted) && ((cell.isLastColumn) || (!cell.next.isDeleted) || (!cell.next.equalRowSpan(cell)))) && (gridStyles.lastColumn) || "";
@@ -615,10 +620,11 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
             (!cell.spanned) &&
             (
                 <td id={this.id}
-                    className={this.css(rowSpanStyle, column.className, cell.className, cellHoveringStyle, notValidStyle, deletedStyle, deletedFirstCellStyle, deletedLastCellStyle, this.cellPaddingClassName, noWrapClass, wordBreakClass)}
+                    className={this.css(rowSpanStyle, column.className, cell.className, cellHoveringStyle, notValidStyle, deletedStyle, deletedFirstCellStyle, deletedLastCellStyle, this.cellPaddingClassName, noWrapClass, wordBreakClass, checkedStyle, selectedStyle)}
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
                     colSpan={this.props.colSpan}
+                    onClick={() => this.props.onClick?.(cell)}
                 >
 
                     {
@@ -635,7 +641,6 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                                 }
 
                             </div>
-
                         )
                     }
 

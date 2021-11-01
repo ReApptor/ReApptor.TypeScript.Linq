@@ -1,11 +1,30 @@
 import React from "react";
-import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {ch, ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType} from "@weare/athenaeum-react-components";
+import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/athenaeum-toolkit";
+import {ActionType, BaseComponent, ch, TextAlign} from "@weare/athenaeum-react-common";
+import {
+    CellModel,
+    Checkbox,
+    ColumnActionDefinition,
+    ColumnActionType,
+    ColumnDefinition,
+    ColumnType,
+    Dropdown,
+    DropdownOrderBy,
+    DropdownRequiredType,
+    Form,
+    Grid,
+    GridHoveringType,
+    GridOddType,
+    GridSelectableType,
+    SelectListItem
+} from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean;
     responsive: boolean;
+    selectable: boolean;
+    selectableType: GridSelectableType;
+    checkable: boolean;
     headerGroups: boolean;
 }
 
@@ -44,6 +63,9 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     state: IGridTestsState = {
         bePagination: false,
         responsive: false,
+        selectable: false,
+        selectableType: GridSelectableType.Single,
+        checkable: false,
         headerGroups: true,
     };
 
@@ -272,6 +294,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         console.log(selectedAction)
     }
 
+    private getGridSelectableTypeName(item: GridSelectableType): string {
+        switch (item) {
+            case GridSelectableType.Single: return "Single";
+            case GridSelectableType.Multiple: return "Multiple";
+        }
+    }
+
     public renderDetailsContent() {
         return (
             <div>
@@ -304,6 +333,31 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               onChange={async (sender, value) => await this.setState({responsive: value})}
                     />
 
+                    <Checkbox inline
+                              label="Selectable"
+                              value={this.state.selectable}
+                              onChange={async (sender, value) => await this.setState({selectable: value})}
+                    />
+
+                    {
+                        (this.state.selectable) &&
+                        (
+                            <Dropdown label="Selectable Type" inline required noValidate noWrap noFilter
+                                      orderBy={DropdownOrderBy.None}
+                                      transform={(item) => new SelectListItem(item.toString(), this.getGridSelectableTypeName(item), null, item)}
+                                      items={[GridSelectableType.Single, GridSelectableType.Multiple]}
+                                      selectedItem={this.state.selectableType}
+                                      onChange={async (sender, value) => await this.setState({ selectableType: value! })}
+                            />
+                        )
+                    }
+
+                    <Checkbox inline
+                              label="Checkable"
+                              value={this.state.checkable}
+                              onChange={async (sender, value) => await this.setState({checkable: value})}
+                    />
+
                     {/*<Checkbox inline*/}
                     {/*          label="Header groups"*/}
                     {/*          value={this.state.headerGroups}*/}
@@ -314,6 +368,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
                 <Grid ref={this._gridRef}
                       responsive={this.state.responsive}
+                      selectable={this.state.selectable ? this.state.selectableType : undefined}
+                      checkable={this.state.checkable}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}

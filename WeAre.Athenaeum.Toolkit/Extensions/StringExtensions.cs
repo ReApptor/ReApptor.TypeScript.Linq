@@ -150,7 +150,7 @@ namespace WeAre.Athenaeum.Toolkit.Extensions
             return Utility.ToDecimal(value);
         }
 
-        public static bool TryTToDecimal(string value, out decimal result)
+        public static bool TryToDecimal(string value, out decimal result)
         {
             return Utility.TryToDecimal(value, out result);
         }

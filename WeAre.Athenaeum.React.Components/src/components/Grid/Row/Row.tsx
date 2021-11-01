@@ -2,7 +2,7 @@ import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
 import Cell from "../Cell/Cell";
 import CollapsedRow from "../CollapsedRow/CollapsedRow";
-import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, IRow, RowModel} from "../GridModel";
+import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, GridSelectableType, IRow, RowModel} from "../GridModel";
 import Icon, {IconSize} from "../../Icon/Icon";
 
 import gridStyles from "../Grid.module.scss";
@@ -12,6 +12,7 @@ interface IRowProps<TItem = {}> {
     row: RowModel<TItem>;
     init?(row: RowModel<TItem>): void;
     onCheck?(row: RowModel<TItem>): Promise<void>;
+    onSelect?(row: RowModel<TItem>): Promise<void>;
 
     /**
      * Called when the {@link Row} is expanded or collapsed.
@@ -21,20 +22,55 @@ interface IRowProps<TItem = {}> {
 }
 
 export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> implements IRow {
+    
+    private async onSelectAsync(cell: CellModel<TItem>): Promise<void> {
+        if ((this.model.selectable) && (cell.isSelectable)) {
+            
+            if (this.grid.selectableType == GridSelectableType.Single) {
+                
+                if (!this.model.selected) {
+                    const selectedRow: RowModel<TItem> | null = this.grid.selectedRow;
 
-    private async onCheckAsync(): Promise<void> {
+                    this.model.selected = true;
+                    
+                    if (selectedRow != null) {
+                        selectedRow.selected = false;
+
+                        await selectedRow.reRenderAsync();
+                    }
+
+                    await this.reRenderAsync();
+
+                    await this.props.onSelect?.(this.model);
+                }
+                
+            } else {
+                this.model.selected = !this.model.selected;
+
+                await this.reRenderAsync();
+
+                await this.props.onSelect?.(this.model);
+            }
+        }
+    }
+
+    private async onCheckAsync(e: React.MouseEvent<HTMLTableDataCellElement>): Promise<void> {
         if (this.model.checkable) {
             this.model.checked = !this.model.checked;
 
             await this.reRenderAsync();
+            
             await this.props.onCheck?.(this.model);
         }
+
+        e.preventDefault();
     }
 
     private async onToggleAsync(row: RowModel<TItem>): Promise<void> {
         row.responsiveContainerExpanded = !row.responsiveContainerExpanded;
 
         await this.reRenderAsync();
+        
         await this.props.onToggle?.(this.model);
     }
 
@@ -70,6 +106,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
 
         const oddStyle: any = ((grid.odd === GridOddType.Row) && (row.index % 2 === 0)) && styles.odd;
         const rowHoveringStyle: any = (grid.hovering === GridHoveringType.Row) && styles.rowHovering;
+        const selectedStyle: any = (row.selected) && styles.selected;
         const detailsVisibleStyle: any = (row.expanded) && (styles.visible);
         const colSpan: number = (row.detailsColEnd - row.detailsColStart + 1);
         const checkRowSpan = (row.expanded) ? 2 : 1;
@@ -91,7 +128,8 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         return (
             <React.Fragment>
 
-                <tr className={this.css(styles.gridRow, rowHoveringStyle, styles.data, row.className, oddStyle, borderStyle)}>
+                <tr className={this.css(styles.gridRow, rowHoveringStyle, selectedStyle, styles.data, row.className, oddStyle, borderStyle)}>
+                    
                     {
                         (responsive) &&
                         (
@@ -105,12 +143,13 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                             </td>
                         )
                     }
+                    
                     {
                         (grid.checkable) &&
                         (
                             <td className={this.css(gridStyles.check, checkDisabledStyle)}
                                 rowSpan={checkRowSpan}
-                                onClick={async () => this.onCheckAsync()}
+                                onClick={(e) => this.onCheckAsync(e)}
                             >
                                 <input type="checkbox"
                                        checked={row.checked}
@@ -120,13 +159,16 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                             </td>
                         )
                     }
+                    
                     {
                         cells.map((cell: CellModel<TItem>) => (
                             <Cell key={cell.key}
                                   cell={cell}
+                                  onClick={(cell: CellModel<TItem>) => this.onSelectAsync(cell)}
                             />
                         ))
                     }
+                    
                 </tr>
 
                 <tr className={this.css(styles.gridRow, styles.details, detailsVisibleStyle, oddStyle)}>
