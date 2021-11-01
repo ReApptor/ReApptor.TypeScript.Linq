@@ -1,31 +1,33 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import { Checkbox, Form, TwoColumns, List } from "@weare/athenaeum-react-components";
+import {Checkbox, Dropdown, DropdownOrderBy, DropdownSubtextType, Form, List, SelectListItem, TwoColumns} from "@weare/athenaeum-react-components";
 
 export interface IListTestsState {
     multiSelect: boolean,
     search: boolean,
     required: boolean,
+    subtextType: DropdownSubtextType,
     disabled: boolean
 }
 
-export default class ListTests extends BaseComponent<{},IListTestsState> {
+export default class ListTests extends BaseComponent<{}, IListTestsState> {
 
     state: IListTestsState = {
         multiSelect: false,
         search: false,
         required: false,
+        subtextType: DropdownSubtextType.Row,
         disabled: false
     };
 
     private readonly _listRef: React.RefObject<List> = React.createRef();
 
     private items: any[] = [
-        {name: "1st item", group: "1"},
-        {name: "2nd item", group: "1"},
-        {name: "3d item", group: "2"},
-        {name: "4th item", group: "2"},
-        {name: "5th item", group: "3"}
+        {name: "1st item", group: "1", subtext: "subText 1"},
+        {name: "2nd item", group: "1", subtext: "subText 2"},
+        {name: "3d item", group: "2", subtext: "subText 3"},
+        {name: "4th item", group: "2", subtext: "subText 4"},
+        {name: "5th item", group: "3", subtext: "subText 5"}
     ];
 
     private itemsList: any[] = [
@@ -44,8 +46,7 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
     private async fetchListItemsAsync(): Promise<any[]> {
         if (this.state.search) {
             return this.itemsList;
-        }
-        else {
+        } else {
             return this.items;
         }
     }
@@ -54,6 +55,14 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
         await this.setState({search});
         if (this._listRef.current) {
             await this._listRef.current.reloadAsync();
+        }
+    }
+
+    private getDropdownSubtextTypeName(item: DropdownSubtextType): string {
+        switch (item) {
+            case DropdownSubtextType.Row: return "Row";
+            case DropdownSubtextType.Inline: return "Inline";
+            case DropdownSubtextType.Hidden: return "Hidden";
         }
     }
 
@@ -69,7 +78,7 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
                         <Checkbox label="MultiSelect"
                                   inline
                                   value={this.state.multiSelect}
-                                  onChange={async (sender, value) => await this.setState({multiSelect:value})}
+                                  onChange={async (sender, value) => await this.setState({multiSelect: value})}
                         />
 
                         <Checkbox label="Search (Uses list of 10 items)"
@@ -81,13 +90,21 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
                         <Checkbox label="Required"
                                   inline
                                   value={this.state.required}
-                                  onChange={async (sender, value) => await this.setState({required:value})}
+                                  onChange={async (sender, value) => await this.setState({required: value})}
                         />
 
                         <Checkbox label="Disabled"
                                   inline
                                   value={this.state.disabled}
-                                  onChange={async (sender, value) => await this.setState({disabled:value})}
+                                  onChange={async (sender, value) => await this.setState({disabled: value})}
+                        />
+
+                        <Dropdown label="Subtext Type" inline required noValidate noWrap noFilter
+                                  orderBy={DropdownOrderBy.None}
+                                  transform={(item) => new SelectListItem(item.toString(), this.getDropdownSubtextTypeName(item), null, item)}
+                                  items={[DropdownSubtextType.Row, DropdownSubtextType.Inline, DropdownSubtextType.Hidden]}
+                                  selectedItem={this.state.subtextType}
+                                  onChange={async (sender, value) => await this.setState({ subtextType: value! })}
                         />
 
                     </Form>
@@ -97,6 +114,7 @@ export default class ListTests extends BaseComponent<{},IListTestsState> {
                           multiple={this.state.multiSelect}
                           required={this.state.required}
                           disabled={this.state.disabled}
+                          subtextType={this.state.subtextType}
                     />
 
                 </TwoColumns>
