@@ -208,8 +208,8 @@ export class ColumnModel<TItem = {}> {
     public settings: ColumnSettings<TItem> = new ColumnSettings<TItem>();
 
     public sorting: boolean | SortDirection | null = null;
-    
-    public isDefaultSortColumn: boolean = false;
+
+    public isDefaultSorting: boolean = false;
 
     public actions: ColumnAction<TItem>[] = [];
 
@@ -865,11 +865,11 @@ export class ColumnDefinition {
     public sorting?: boolean | SortDirection;
 
     /**
-     * If {@link sorting} is set for multiple columns the {@link isDefaultSortColumn} can be used to override default sort column.
+     * If {@link sorting} is set for multiple columns the {@link isDefaultSorting} can be used to override default sort column.
      * By default grid orders by first column that has {@link sorting} true
      * @default false
      */
-    public isDefaultSortColumn?: boolean;
+    public isDefaultSorting?: boolean;
 
     public actions?: ColumnActionDefinition[];
 
@@ -1674,13 +1674,15 @@ export class GridTransformer {
                 ? from.pagination
                 : DEFAULT_PAGE_SIZE
             : MAX_PAGE_SIZE;
-        to.sortColumn = to.columns.find(item => ((item.sorting != null) && (item.sorting != false) && (item.isDefaultSortColumn)))
-            || (to.columns.find(item => (item.sorting != null) && (item.sorting != false)) || null);
+        to.sortColumn = to.columns.find(item =>
+            ((item.sorting != null) && (item.sorting != false) && (item.isDefaultSorting))) ||
+            (to.columns.find(item => (item.sorting != null) && (item.sorting != false)) || null);
         to.sortDirection = (to.sortColumn != null)
             ? (to.sortColumn.sorting == SortDirection.Desc)
                 ? SortDirection.Desc
                 : SortDirection.Asc
             : null;
+        //add check for multiple isSortColumn
         return to;
     }
 
@@ -1717,7 +1719,7 @@ export class GridTransformer {
         to.render = from.render;
         to.callback = from.callback;
         to.sorting = from.sorting || null;
-        to.isDefaultSortColumn = from.isDefaultSortColumn || false;
+        to.isDefaultSorting = from.isDefaultSorting || false;
         to.settings = this.toSettings(from.settings || new ColumnSettingsDefinition());
         to.actions = (from.actions || []).map((action) => this.toAction<TItem>(to, action));
         return to;

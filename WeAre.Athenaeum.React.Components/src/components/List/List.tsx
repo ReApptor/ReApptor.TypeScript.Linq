@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
 import { SelectListItem } from "../Dropdown/SelectListItem";
-import Dropdown, { DropdownOrderBy, DropdownType, IDropdown } from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import ListLocalizer from "./ListLocalizer";
 
 import styles from "./List.module.scss";
@@ -12,6 +12,7 @@ interface IListProps<TItem = {}> {
     className?: string;
     items?: TItem[];
     orderBy?: DropdownOrderBy;
+    subtextType?: DropdownSubtextType;
     selectedItem?: TItem | string | number;
     selectedItems?: TItem[] | string[] | number[];
     required?: boolean;
@@ -165,6 +166,7 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           required={this.props.required}
                           className={this.css(styles.list, this.props.className)}
                           orderBy={this.props.orderBy}
+                          subtextType={this.props.subtextType}
                           items={this.items}
                           selectedItem={this.props.selectedItem}
                           selectedItems={this.props.selectedItems}
