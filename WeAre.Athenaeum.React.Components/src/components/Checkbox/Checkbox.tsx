@@ -13,6 +13,7 @@ export enum InlineType {
 
 export interface ICheckboxProps extends IBaseInputProps<boolean> {
     readonly?: boolean;
+    radio?: boolean;
     inlineType?: InlineType;
     onChange?(sender: Checkbox, checked: boolean): Promise<void>;
 }
@@ -53,6 +54,10 @@ export default class Checkbox<TProps extends ICheckboxProps = ICheckboxProps> ex
         return this.value;
     }
 
+    public get radio(): boolean {
+        return (this.props.radio === true);
+    }
+
     public getValidators(): ValidatorCallback<boolean>[] {
         return [];
     }
@@ -89,8 +94,12 @@ export default class Checkbox<TProps extends ICheckboxProps = ICheckboxProps> ex
                 <div onClick={async (event) => await this.toggleAsync(event)}>
                     {
                         (this.checked)
-                            ? (<Icon name="fas check-square" size={IconSize.X2} />)
-                            : (<Icon name="far square" size={IconSize.X2} />)
+                            ? (this.radio)
+                                ? (<Icon name="fas check-circle" size={IconSize.X2} />)
+                                : (<Icon name="fas check-square" size={IconSize.X2} />)
+                            : (this.radio)
+                                ? (<Icon name="far circle" size={IconSize.X2} />)
+                                : (<Icon name="far square" size={IconSize.X2} />)
                     }
                 </div>
             </div>
