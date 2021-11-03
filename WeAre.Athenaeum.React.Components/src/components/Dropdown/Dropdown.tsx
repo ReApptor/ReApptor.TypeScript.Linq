@@ -1342,7 +1342,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const listItemStyle: any = ((this.isListType) && (this.props.styleSchema !== DropdownSchema.Widget)) && styles.listItem;
         const inlineSubtextStyle: any = (this.subtextType == DropdownSubtextType.Inline) && styles.inlineSubtext;
         const selectedStyle: any = ((selected) && (!checkbox)) && styles.selectedItem;
-    console.log("subtextType:"+this.subtextType)
+        
         return (
             <React.Fragment key={index}>
 
