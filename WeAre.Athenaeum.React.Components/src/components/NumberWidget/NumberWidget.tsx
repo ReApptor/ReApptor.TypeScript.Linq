@@ -11,6 +11,7 @@ export interface INumberWidgetProps extends IBaseWidgetProps {
     max?: number;
     step?: number;
     value?: number;
+    strict?: boolean;
     format?: TFormat;
     canMinimize?: boolean;
     readonly?: boolean;
@@ -136,7 +137,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
     }
 
     public get edit(): boolean {
-        return (!this.readonly) && (this.state.data != null) && (this.state.data!.edit);
+        return (!this.readonly) && (this.props.strict !== true) && (this.state.data != null) && (this.state.data!.edit);
     }
 
     public async setEditAsync(edit: boolean): Promise<void> {
