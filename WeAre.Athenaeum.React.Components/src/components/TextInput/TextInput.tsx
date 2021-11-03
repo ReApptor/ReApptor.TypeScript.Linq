@@ -7,6 +7,7 @@ import TextInputLocalizer from "./TextInputLocalizer";
 import styles from "./TextInput.module.scss";
 
 export interface ITextInputProps extends IBaseInputProps<string> {
+    minLength?: number;
     maxLength?: number;
     size?: number;
     title?: string;
@@ -127,6 +128,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        className={this.css(styles.textInput, "form-control", smallStyle, autoSuggestStyle)}
                        style={inlineStyles}
                        size={this.props.size || 10}
+                       minLength={this.props.minLength || 0}
                        maxLength={this.props.maxLength || 255}
                        placeholder={TextInputLocalizer.get(this.props.placeholder)}
                        autoFocus={this.props.autoFocus}
