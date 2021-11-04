@@ -268,6 +268,9 @@ export {default as BaseExpandableWidget} from "./components/WidgetContainer/Base
 export * from "./components/WidgetContainer/BaseWidget";
 export {default as BaseWidget} from "./components/WidgetContainer/BaseWidget";
 
+export * from "./components/WidgetContainer/BaseRouteWidget";
+export {default as BaseRouteWidget} from "./components/WidgetContainer/BaseRouteWidget";
+
 export * from "./components/PasswordForm/PasswordForm";
 export {default as PasswordForm} from "./components/PasswordForm/PasswordForm";
 
