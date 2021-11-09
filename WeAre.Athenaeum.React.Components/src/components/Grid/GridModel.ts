@@ -637,6 +637,12 @@ export class ColumnSettingsDefinition {
 
     public descriptionJustify?: Justify;
 
+    /**
+     * Max length for the description text. If no value is specified defaults to 250
+     * See {@link Description}
+     */
+    public descriptionMaxLength?: number;
+
     public descriptionAlight?: Align;
 
     public required?: boolean;
@@ -720,6 +726,8 @@ export class ColumnSettings<TItem = {}> {
     public descriptionAccessor: string | GridDescriptionAccessorCallback<TItem> | null = null;
 
     public descriptionTitle: string | null = null;
+
+    public descriptionMaxLength: number | null = null;
 
     public descriptionJustify: Justify = Justify.Left;
 
@@ -841,6 +849,8 @@ export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
     public justify: Justify = Justify.Left;
 
     public alight: Align = Align.Bottom;
+    
+    public maxLength: number | null = null;
 
     public isDescription: boolean = true;
 }
@@ -1826,6 +1836,7 @@ export class GridTransformer {
         to.infoFormat = from.infoFormat || null;
         to.descriptionAccessor = from.descriptionAccessor || null;
         to.descriptionJustify = from.descriptionJustify || Justify.Left;
+        to.descriptionMaxLength = from.descriptionMaxLength || null;
         to.descriptionAlight = from.descriptionAlight || Align.Bottom;
         to.descriptionCallback = from.descriptionCallback;
         to.required = from.required || false;
@@ -1907,6 +1918,7 @@ export class GridTransformer {
         to.action.title = column.settings.descriptionTitle;
         to.action.callback = column.settings.descriptionCallback;
         to.justify = column.settings.descriptionJustify;
+        to.maxLength = column.settings.descriptionMaxLength;
         to.alight = column.settings.descriptionAlight;
         return to;
     }
