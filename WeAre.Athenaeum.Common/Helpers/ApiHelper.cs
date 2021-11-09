@@ -6,8 +6,7 @@ namespace WeAre.Athenaeum.Common.Helpers
 {
     public static class ApiHelper
     {
-        public static Task<TResponse> InvokeAsync<TRequest, TResponse>(string url, HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = 
-        true)
+        public static Task<TResponse> InvokeAsync<TRequest, TResponse>(string url, HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, string contentType = null, bool throwNotFound = true)
             where TRequest : class
             where TResponse : class
         {
