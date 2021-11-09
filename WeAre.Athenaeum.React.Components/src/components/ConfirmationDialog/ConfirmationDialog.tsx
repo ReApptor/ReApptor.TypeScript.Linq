@@ -227,7 +227,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                 <div className={styles.dialogContent} id={`confirmationContent-${this.id}`}>
 
-                    <h5>{this.toMultiLines(this.model.title)}</h5>
+                    <h5>{this.toMultiLines(ConfirmationDialogLocalizer.get(this.model.title))}</h5>
 
                     {
                         (this.hasComment) &&

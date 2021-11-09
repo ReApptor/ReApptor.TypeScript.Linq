@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models;
 
 namespace Renta.TestApplication.WebUI.Server.Models
 {
@@ -12,7 +11,7 @@ namespace Renta.TestApplication.WebUI.Server.Models
         
         public string Id { get; set; }
         
-        public BasePageParameters Parameters { get; set; }
+        public object Parameters { get; set; }
         
         public bool IsPageRoute => true;
 
@@ -20,7 +19,7 @@ namespace Renta.TestApplication.WebUI.Server.Models
         {
         }
 
-        public PageRoute(string name, int? index = null, string id = null, BasePageParameters parameters = null)
+        public PageRoute(string name, int? index = null, string id = null, object parameters = null)
         {
             Name = name;
             Index = index;

@@ -834,39 +834,6 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.setState({filteredItems});
     }
 
-    private get expandVerticalAlignAuto(): DropdownVerticalAlign.Top | DropdownVerticalAlign.Bottom {
-        const dropdownNode: JQuery = this.getNode();
-
-        if (dropdownNode.length) {
-            const viewPortHeight: number = window.innerHeight;
-            const pageYOffset: number = window.pageYOffset;
-
-            const dropdownNodeTop: number = (dropdownNode.offset()!.top - pageYOffset) + dropdownNode.height()! * 2;
-
-            const listContainer: HTMLDivElement | null = this._listContainerRef.current;
-
-            const listContainerHeight: number = listContainer ? listContainer.clientHeight : 0;
-
-            const availableBottomHeight: number = viewPortHeight - dropdownNodeTop;
-
-            const fitBottom: boolean = availableBottomHeight > listContainerHeight;
-
-            const fitTop: boolean = dropdownNodeTop > listContainerHeight + EXPAND_TOP_PADDING;
-
-            if (fitBottom) {
-                return DropdownVerticalAlign.Bottom;
-            }
-
-            if (fitTop) {
-                return DropdownVerticalAlign.Top;
-            }
-
-            return DropdownVerticalAlign.Bottom;
-        }
-
-        return DropdownVerticalAlign.Bottom;
-    }
-
     protected get filterValue(): string {
         return (this._filterInputRef.current != null) ? this._filterInputRef.current.value : "";
     }
@@ -1257,6 +1224,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         let text: string;
         if (typeof addButton === "function") {
             const render: React.ReactNode | string = addButton(this);
+            // noinspection SuspiciousTypeOfGuard
             if (typeof render !== "string") {
                 return render;
             }
