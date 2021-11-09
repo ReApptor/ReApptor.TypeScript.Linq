@@ -33,6 +33,7 @@ import SignatureWidgetTests from "./SignatureWidgetTests/SignatureWidgetTests";
 import QrWidgetTests from "./QrWidgetTests/QrWidgetTests";
 import RouteWidgetTests from "./RouteWidgetTests/RouteWidgetTests";
 import PhoneInputTests from "./PhoneInputTests/PhoneInputTests";
+import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -175,6 +176,10 @@ export default class Tests extends AnonymousPage {
                             <PhoneInputTests />
                         </Tab>
 
+
+                        <Tab id="textAreaWidgetTests" title="TextAreaWidget">
+                            <TextAreaWidgetTests />
+                        </Tab>
                     </TabContainer>
 
                 </PageRow>
