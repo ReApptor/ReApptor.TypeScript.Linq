@@ -1,6 +1,6 @@
 import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/athenaeum-toolkit";
-import {ActionType, BaseComponent, ch, TextAlign} from "@weare/athenaeum-react-common";
+import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/athenaeum-react-common";
 import {
     CellModel,
     Checkbox,
@@ -54,6 +54,8 @@ class GridItem {
     public value: string = "";
 
     public address: string = "";
+
+    public description: string = "";
 
     public enum: GridEnum = GridEnum.Second;
 }
@@ -160,8 +162,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             minWidth: "10rem",
             //responsivePriority: -1,
             settings: {
-                locationPicker: true
-            }
+                locationPicker: true,
+                descriptionAccessor: nameof<GridItem>(o => o.description),
+                descriptionTitle: "description",
+                descriptionJustify: Justify.Right,
+                descriptionMaxLength: 10
+            },
         } as ColumnDefinition,
         {
             actions: [
@@ -248,7 +254,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     date: new Date(),
                     value: Math.round(100 * Math.random()).toString(),
                     enum: Math.round(3 * Math.random()),
-                    address: ""
+                    address: "",
+                    description: ""
                 };
                 this._items.push(item);
             }

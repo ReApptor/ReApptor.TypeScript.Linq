@@ -68,6 +68,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
         model.description = cell.description;
         model.align = action.alight;
         model.justify = action.justify;
+        model.maxLength = action.maxLength;
         model.readonly = cell.descriptionReadonly;
         model.onChange = async (value) => this.updateDescriptionAsync(cell, action, value);
         await ch.descriptionAsync(cell.instance.id, model);
