@@ -1,5 +1,5 @@
 import React from "react";
-import TextInputWidget, { IBaseInputWidgetProps, IInputRefType } from "../WidgetContainer/BaseInputWidget";
+import TextInputWidget, {IBaseInputWidgetProps, IInputRefType} from "../WidgetContainer/BaseInputWidget";
 
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
@@ -13,15 +13,15 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
     // }
 
     protected renderContent(renderHidden: boolean = false): React.ReactNode {
-        let fontSize: object = { fontSize: "2em" };
+        let fontSize: object = {fontSize: "2em"};
 
-        if(this.value.length > 17) {
-            fontSize = { fontSize: "1.5em" };
+        if (this.value.length > 17) {
+            fontSize = {fontSize: "1.5em"};
         }
-        if(this.value.length > 44) {
-            fontSize = { fontSize: "1em" };
+        if (this.value.length > 44) {
+            fontSize = {fontSize: "1em"};
         }
-        
+
         return (
             <div className={styles.textInput}>
                 {
@@ -31,6 +31,7 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
                                 id={this.inputId}
                                 ref={this.refObject._inputRef}
                                 value={this.value}
+                                maxLength={this.props.maxLength}
                                 onChange={async (e: React.FormEvent<HTMLTextAreaElement>) => await this.onInputChangeHandlerAsync(e)}
                                 onKeyUp={async (e: React.KeyboardEvent<HTMLTextAreaElement>) => await this.onInputKeyUpHandlerAsync(e)}
                                 className="form-control"
@@ -39,7 +40,20 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
 
                     ) : (
                         <div onClick={async () => await this.showInputAsync()}>
-                            { this.value ? <div className={styles.valueContainer}><span style={fontSize}>{this.value}</span></div> : super.renderContent(renderHidden) }
+                            {
+                                (this.value) ?
+                                    (
+                                        <div className={styles.valueContainer}>
+                                        <span style={fontSize}>
+                                            {this.value}
+                                        </span>
+                                        </div>
+                                    )
+                                    :
+                                    (
+                                        super.renderContent(renderHidden)
+                                    )
+                            }
                         </div>
                     )
                 }

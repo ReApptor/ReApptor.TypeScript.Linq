@@ -13,6 +13,7 @@ export interface IInputRefType<T> {
 export interface IBaseInputWidgetProps extends IBaseWidgetProps {
     value?: string;
     rows?: number;
+    maxLength?: number;
     onChange?(sender: BaseInputWidget, value: string): Promise<void>;
 }
 
