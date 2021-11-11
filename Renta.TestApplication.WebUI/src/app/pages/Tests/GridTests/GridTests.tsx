@@ -16,7 +16,7 @@ import {
     GridHoveringType,
     GridOddType,
     GridSelectableType,
-    SelectListItem
+    SelectListItem, TextInput
 } from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
@@ -26,6 +26,7 @@ export interface IGridTestsState {
     selectableType: GridSelectableType;
     checkable: boolean;
     headerGroups: boolean;
+    search: string | null;
 }
 
 enum GridEnum {
@@ -64,11 +65,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     state: IGridTestsState = {
         bePagination: false,
-        responsive: false,
+        responsive: true,
         selectable: false,
         selectableType: GridSelectableType.Single,
         checkable: false,
         headerGroups: true,
+        search: null,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -264,17 +266,19 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     }
 
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
-        let ret: GridItem[] | IPagedList<GridItem>;
-        if (this.state.bePagination) {
-            const items: GridItem[] = (sortColumnName)
-                ? this.items.sort(ArrayUtility.sortByProperty(sortColumnName, sortDirection))
-                : this.items;
 
-            ret = Utility.toPagedList(items, pageNumber, pageSize);
+        let items: GridItem[] = (sortColumnName)
+            ? this.items.sort(ArrayUtility.sortByProperty(sortColumnName, sortDirection))
+            : this.items;
+
+        if (this.state.search) {
+            items = items.filter(item => item.name.includes(this.state.search!));
+            console.log(this.state.search);
         }
-        else {
-            ret = this.items;
-        }
+
+        const ret: GridItem[] | IPagedList<GridItem> = (this.state.bePagination)
+            ? Utility.toPagedList(items, pageNumber, pageSize)
+            : items;
 
         console.log(ret);
 
@@ -302,6 +306,11 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             case GridSelectableType.Single: return "Single";
             case GridSelectableType.Multiple: return "Multiple";
         }
+    }
+
+    private async searchAsync(search: string | null): Promise<void> {
+        await this.setState({search});
+        await this._gridRef.current!.reloadAsync();
     }
 
     public renderDetailsContent() {
@@ -359,6 +368,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               label="Checkable"
                               value={this.state.checkable}
                               onChange={async (sender, value) => {await this.setState({checkable: value})}}
+                    />
+
+                    <TextInput inline
+                               label="Search"
+                               value={this.state.search ?? ""}
+                               onChange={async (_, value) => await this.searchAsync(value)}
                     />
 
                 </Form>
