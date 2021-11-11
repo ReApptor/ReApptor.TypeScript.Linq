@@ -26,18 +26,18 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
     static defaultProps: IFormProps = {
         submitOnEnter: true
     };
-    
+
     state: IFormState = {
         validationErrors: []
     };
-    
+
     private async handleKeydownAsync(event: React.KeyboardEvent): Promise<void> {
         const target: Element = event.target as Element;
-        
+
         const preventSubmit: boolean = (event.keyCode === 13)
             && (!this.props.submitOnEnter)
             && (target.tagName != 'TEXTAREA');
-        
+
         if (preventSubmit) {
             event.preventDefault();
         }
@@ -48,18 +48,18 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
 
         const inputs: IInput[] = this.inputs;
         let isValid: boolean = true;
-        
+
         const data = new Dictionary<string, any>();
         await Utility.forEachAsync(inputs, async (input) => {
             await input.validateAsync();
             isValid = isValid && input.isValid();
             data.setValue(input.getName(), input.getValue());
         });
-        
+
         if (this.props.noValidate) {
             if (this.props.onSubmit) {
                 await this.props.onSubmit(this, data);
-                
+
                 return false;
             }
         }
@@ -70,7 +70,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
 
         return false;
     }
-    
+
     private async setReadonlyAsync(value: boolean): Promise<void> {
         const inputs: IInput[] = this.inputs;
         inputs.forEach(input => input.setReadonlyAsync(value));
@@ -95,26 +95,26 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
     private get inputs(): IInput[] {
         return this.getInputs(this);
     }
-    
+
     public async validateAsync(): Promise<boolean> {
         let isValid: boolean = true;
-        
+
         await Utility.forEachAsync(this.inputs, async (input) => {
             await input.validateAsync();
             isValid = isValid && input.isValid();
         });
-        
+
         return isValid;
     }
-    
+
     public async setValidationErrorsAsync(...validationErrors: string[]): Promise<void> {
         await this.setState({validationErrors: validationErrors});
     }
-    
+
     public async initializeAsync(): Promise<void> {
-        
+
         await super.initializeAsync();
-        
+
         if (this.props.readonly) {
             await this.setReadonlyAsync(true);
         }
@@ -128,20 +128,20 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
             await this.setReadonlyAsync(readonly);
         }
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public render(): React.ReactNode {
-        
+
         const inlineStyle: any = (this.props.inline) && (styles.inline);
-        
+
         return (
             <form className={this.css(styles.form, inlineStyle, this.props.className)}
                   onKeyDown={async (e: React.KeyboardEvent) => await this.handleKeydownAsync(e)}
                   onSubmit={async (e: React.FormEvent<HTMLFormElement>) => await this.handleSubmitAsync(e)}
             >
-                
-                {this.state.validationErrors.length > 0 && 
+
+                {this.state.validationErrors.length > 0 &&
                     <ul className={styles.errorList}>
                         {this.state.validationErrors.map((error, index) => (
                             <li key={index}>
@@ -150,13 +150,13 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
                         ))}
                     </ul>
                 }
-                
+
                 {
                     (this.props.inline)
                         ? <Inline>{this.children}</Inline>
                         : <React.Fragment>{this.children}</React.Fragment>
                 }
-                
+
             </form>
         );
     }

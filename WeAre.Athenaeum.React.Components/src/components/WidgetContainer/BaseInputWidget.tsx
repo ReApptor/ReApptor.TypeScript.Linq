@@ -21,7 +21,7 @@ interface IBaseInputWidgetData {
     visible: boolean;
 }
 
-export default abstract class BaseInputWidget<TProps extends IBaseInputWidgetProps = {}> 
+export default abstract class BaseInputWidget<TProps extends IBaseInputWidgetProps = {}>
     extends BaseWidget<TProps, IBaseInputWidgetData> implements IGlobalClick {
 
     protected abstract refObject: IInputRefType<any> = {
@@ -34,9 +34,9 @@ export default abstract class BaseInputWidget<TProps extends IBaseInputWidgetPro
         const caretPosition: number = Number(e.currentTarget.selectionEnd);
 
         await this.setAsync(value);
-        
+
         let input = this.refObject._inputRef.current;
-        
+
         if (input) {
             const prefix = value.substr(0, caretPosition);
 

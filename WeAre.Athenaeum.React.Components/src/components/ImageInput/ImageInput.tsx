@@ -513,7 +513,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
 
         if (newPictures) {
             await this.initializePicturesAsync();
