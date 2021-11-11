@@ -64,7 +64,7 @@ class GridItem {
 export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     state: IGridTestsState = {
-        bePagination: false,
+        bePagination: true,
         responsive: true,
         selectable: false,
         selectableType: GridSelectableType.Single,
@@ -98,7 +98,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             accessor: "name",
             sorting: true,
             minWidth: 90,
-            noWrap: true
+            noWrap: false,
         } as ColumnDefinition,
         {
             header: "Float",
@@ -246,7 +246,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         if (!this._items) {
             this._items = [];
             for (let i: number = 1; i < 100; i++) {
-                const name: string = Array(i).fill("a", 0, i).reduce((previous: string, current: string) => previous + current);
+                const name: string = Array(i).fill("a ", 0, i).reduce((previous: string, current: string) => previous + current);
                 const item: GridItem = {
                     index: i,
                     name: name,

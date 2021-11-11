@@ -849,86 +849,176 @@ export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
     public justify: Justify = Justify.Left;
 
     public alight: Align = Align.Bottom;
-    
+
     public maxLength: number | null = null;
 
     public isDescription: boolean = true;
 }
 
 export class ColumnDefinition {
+
+    /**
+     * @default null
+     */
     public name?: string;
 
+    /**
+     * @default ""
+     */
     public header?: string;
 
+    /**
+     * @default ""
+     */
     public title?: string;
 
+    /**
+     * @default null
+     */
     public accessor?: string | GridAccessorCallback<any>;
 
+    /**
+     * @default true
+     */
     public visible?: boolean;
 
+    /**
+     * @default 0
+     */
     public responsivePriority?: number | boolean = 0;
 
+    /**
+     * @default null
+     */
     public group?: string;
 
+    /**
+     * @default null
+     */
     public textAlign?: TextAlign;
 
+    /**
+     * @default null
+     */
     public verticalAlign?: VerticalAlign;
 
+    /**
+     * @default {@link ColumnType.Custom}
+     */
     public type?: ColumnType;
 
+    /**
+     * @default false
+     */
     public editable?: boolean;
 
+    /**
+     * @default ???
+     */
     public removable?: boolean;
 
     /**
-     * Re-render row when cell value is modified, for example, if cell affects row (model) validity
+     * Re-render row when cell value is modified, for example, if cell affects row (model) validity.
+     * @default false
      */
     public reRenderRow?: boolean;
 
+    /**
+     * @default false
+     */
     public rotate?: boolean;
 
     /**
-     * See {@link Utility.format}
+     * See {@link Utility.format}.
+     * @default null
      */
     public format?: TFormat;
 
+    /**
+     * @default null
+     */
     public minWidth?: string | number;
 
+    /**
+     * @default null
+     */
     public maxWidth?: string | number;
 
+    /**
+     * @default null
+     */
     public maxHeight?: string | number;
 
+    /**
+     * @default false
+     */
     public noWrap?: boolean;
 
+    /**
+     * @default false
+     */
     public wordBreak?: boolean;
 
+    /**
+     * @default false
+     */
     public stretch?: boolean;
 
+    /**
+     * @default false
+     */
     public total?: boolean;
 
+    /**
+     * @default null
+     */
     public className?: string;
 
+    /**
+     * @default ???
+     */
     public settings?: ColumnSettingsDefinition;
 
+    /**
+     * @default null
+     */
     public sorting?: boolean | SortDirection;
 
     /**
      * If {@link sorting} is set for multiple columns the {@link isDefaultSorting} can be used to override default sort column.
-     * By default grid orders by first column that has {@link sorting} true
+     * By default grid orders by first column that has {@link sorting} true.
      * @default false
      */
     public isDefaultSorting?: boolean;
 
+    /**
+     * @default []
+     */
     public actions?: ColumnActionDefinition[];
 
+    /**
+     * @default null
+     */
     public route?: PageRoute | GridRouteCallback<any>;
 
+    /**
+     * @default undefined
+     */
     public init?(cell: CellModel<any>): void;
 
+    /**
+     * @default undefined
+     */
     public transform?(cell: CellModel<any>, cellValue: any, format: TFormat | null): string;
 
+    /**
+     * @default undefined
+     */
     public render?(cell: CellModel<any>): React.ReactNode;
 
+    /**
+     * @default undefined
+     */
     public callback?(cell: CellModel<any>, action: CellAction<any> | null): Promise<void>;
 }
 
@@ -974,7 +1064,7 @@ export class RowModel<TItem = {}> {
     public readonly: boolean = false;
 
     public checked: boolean = false;
-    
+
     public selected: boolean = false;
 
     public responsiveContainerExpanded: boolean = false;
@@ -1073,7 +1163,7 @@ export class RowModel<TItem = {}> {
             ? this.grid.rows[this.index - 1]
             : this.grid.rows[this.grid.rows.length - 1];
     }
-    
+
     public resetKey(resetInitialKey: boolean = false): void {
         this._key = null;
         if (resetInitialKey) {
