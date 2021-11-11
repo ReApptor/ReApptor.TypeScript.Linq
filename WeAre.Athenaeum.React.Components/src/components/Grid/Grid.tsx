@@ -58,7 +58,6 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             this.model.pageNumber = pageNumber;
             this.model.pageSize = pageSize;
             await this.reloadAsync();
-            await this.processResponsiveAsync();
         }
     }
 
@@ -311,6 +310,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         }
     }
 
+    public async reloadAsync(): Promise<void> {
+        await super.reloadAsync();
+        await this.processResponsiveAsync();
+    }
+
     public get columns(): ColumnModel<TItem>[] {
         return this.model.columns;
     }
@@ -389,9 +393,8 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     }
 
     public async componentDidMount(): Promise<void> {
-
         await super.componentDidMount();
-
+        await this.processResponsiveAsync();
         await this.processResponsiveAsync();
     }
 
