@@ -58,6 +58,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             this.model.pageNumber = pageNumber;
             this.model.pageSize = pageSize;
             await this.reloadAsync();
+            await this.processResponsiveAsync();
         }
     }
 
@@ -237,9 +238,9 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const sortColumn: ColumnModel<TItem> | null = model.sortColumn;
         const sortDirection: SortDirection | null = model.sortDirection;
 
-        if (data != null) {
-            let pagedData = data as IPagedList<TItem>;
-            if (pagedData.items != null) {
+        if (data) {
+            let pagedData: IPagedList<TItem> = data as IPagedList<TItem>;
+            if (pagedData.items) {
                 items = pagedData.items;
                 totalItemCount = pagedData.totalItemCount;
                 pageNumber = pagedData.pageNumber;
@@ -378,7 +379,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const newCheckable: boolean = (this.props.checkable !== nextProps.checkable);
         const newSelectable: boolean = (this.props.selectable !== nextProps.selectable);
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
 
         if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable)) {
             await this.buildModelAsync();

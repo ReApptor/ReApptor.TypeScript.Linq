@@ -24,7 +24,7 @@ interface IBaseInputWidgetData {
 export default abstract class BaseInputWidget<TProps extends IBaseInputWidgetProps = {}>
     extends BaseWidget<TProps, IBaseInputWidgetData> implements IGlobalClick {
 
-    protected abstract refObject: IInputRefType<any> = {
+    protected refObject: IInputRefType<any> = {
         _inputRef: React.createRef()
     };
 
