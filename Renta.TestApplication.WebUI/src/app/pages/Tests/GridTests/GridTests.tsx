@@ -86,7 +86,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             actions: [
                 {
                     type: ColumnActionType.Details,
-                    callback: async (cell) => await this.toggleDetailsAsync(cell)
+                    callback: async (cell) => await GridTests.toggleDetailsAsync(cell)
                 } as ColumnActionDefinition
             ]
         } as ColumnDefinition,
@@ -140,17 +140,17 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             rotate: true,
             noWrap: true,
             minWidth: "5rem",
-            transform: (cell, value) => (value) ? this.transformEnumToSomething(value, true) : "",
-            init: (cell) => this.initCell(cell),
+            transform: (cell, value) => (value) ? GridTests.transformEnumToSomething(value) : "",
+            init: (cell) => GridTests.initCell(cell),
             settings: {
                 infoAccessor: "name",
                 addButton: "Add new",
-                addCallback: async (cell: CellModel<GridItem>) => this.addNewEnumAsync(cell),
-                infoTransform: (cell, value) => (value) ? this.transformEnumToSomething2(value, true) : "",
+                addCallback: async (cell: CellModel<GridItem>) => GridTests.addNewEnumAsync(cell),
+                infoTransform: (cell, value) => (value) ? GridTests.transformEnumToSomething(value) : "",
                 required: true,
                 requiredType: DropdownRequiredType.AutoSelect,
                 nothingSelectedText: "-",
-                fetchItems: async () => this.getEnumItems()
+                fetchItems: async () => GridTests.getEnumItems()
             }
         } as ColumnDefinition,
         {
@@ -176,7 +176,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     title: "save",
                     type: ActionType.Blue,
                     actions: ["test1", "test2"],
-                    callback: (cell, action: any, selectedAction: string) => this.cellActionCallBack(cell, action, selectedAction),
+                    callback: (cell, action: any, selectedAction: string) => GridTests.cellActionCallBack(selectedAction),
                 },
                 {
                     name: "save",
@@ -184,7 +184,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     icon: "far save",
                     type: ActionType.Create,
                     actions: ["test11", "test22"],
-                    callback: (cell, action: string, selectedAction: string) => this.cellActionCallBack(cell, action, selectedAction),
+                    callback: (cell, action: string, selectedAction: string) => GridTests.cellActionCallBack(selectedAction),
                 }
             ]
 
@@ -209,20 +209,20 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         } as ColumnDefinition
     ];
 
-    private async toggleDetailsAsync(cell: CellModel<GridItem>): Promise<void> {
+    private static async toggleDetailsAsync(cell: CellModel<GridItem>): Promise<void> {
         await cell.row.toggleAsync();
     }
 
-    private getEnumItems(): SelectListItem[] {
+    private static getEnumItems(): SelectListItem[] {
         return [
-            new SelectListItem(GridEnum.First.toString(), this.getEnumText(GridEnum.First)),
-            new SelectListItem(GridEnum.Second.toString(), this.getEnumText(GridEnum.Second)),
-            new SelectListItem(GridEnum.Third.toString(), this.getEnumText(GridEnum.Third)),
-            new SelectListItem(GridEnum.Forth.toString(), this.getEnumText(GridEnum.Forth))
+            new SelectListItem(GridEnum.First.toString(), GridTests.getEnumText(GridEnum.First)),
+            new SelectListItem(GridEnum.Second.toString(), GridTests.getEnumText(GridEnum.Second)),
+            new SelectListItem(GridEnum.Third.toString(), GridTests.getEnumText(GridEnum.Third)),
+            new SelectListItem(GridEnum.Forth.toString(), GridTests.getEnumText(GridEnum.Forth))
         ];
     }
 
-    private getEnumText(value: GridEnum): string {
+    private static getEnumText(value: GridEnum): string {
         switch (value) {
             case GridEnum.First:
                 return "First";
@@ -236,18 +236,18 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return "GridEnum:" + value;
     }
 
-    private async addNewEnumAsync(cell: CellModel<GridItem>): Promise<void> {
+    private static async addNewEnumAsync(cell: CellModel<GridItem>): Promise<void> {
         await ch.flyoutMessageAsync("onAdd: " + cell.model.value);
     }
 
     private get items(): GridItem[] {
-        if (this._items == null) {
+        if (!this._items) {
             this._items = [];
-            const count: number = 100;
-            for (let i: number = 0; i < count; i++) {
+            for (let i: number = 1; i < 100; i++) {
+                const name: string = Array(i).fill("a", 0, i).reduce((previous: string, current: string) => previous + current);
                 const item: GridItem = {
                     index: i,
-                    name: `Item #${i + 1}`,
+                    name: name,
                     code: "#" + i,
                     float: Math.random(),
                     int: Math.round(100 * Math.random()),
@@ -263,45 +263,41 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this._items!;
     }
 
-    private get grid(): Grid<GridItem> {
-        return this._gridRef.current!;
-    }
-
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
+        let ret: GridItem[] | IPagedList<GridItem>;
         if (this.state.bePagination) {
-
             const items: GridItem[] = (sortColumnName)
                 ? this.items.sort(ArrayUtility.sortByProperty(sortColumnName, sortDirection))
                 : this.items;
 
-            return Utility.toPagedList(items, pageNumber, pageSize);
-
+            ret = Utility.toPagedList(items, pageNumber, pageSize);
+        }
+        else {
+            ret = this.items;
         }
 
-        return this.items;
+        console.log(ret);
+
+        return ret;
     }
 
     private async fetchInnerDataAsync(): Promise<GridItem[]> {
         return this.items.take(10);
     }
 
-    private initCell(cell: CellModel<any>): void {
+    private static initCell(cell: CellModel<any>): void {
         cell.readonly = false;
     }
 
-    private transformEnumToSomething2(value: any, b: boolean): string {
-        return value.toString() + " bbbbb";
-    }
-
-    private transformEnumToSomething(value: any, b: boolean): string {
+    private static transformEnumToSomething(value: any): string {
         return value.toString() + " aaaaaa";
     }
 
-    private cellActionCallBack(cell: CellModel<any>, cellAction: string, selectedAction: string): void {
+    private static cellActionCallBack(selectedAction: string): void {
         console.log(selectedAction)
     }
 
-    private getGridSelectableTypeName(item: GridSelectableType): string {
+    private static getGridSelectableTypeName(item: GridSelectableType): string {
         switch (item) {
             case GridSelectableType.Single: return "Single";
             case GridSelectableType.Multiple: return "Multiple";
@@ -331,19 +327,19 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     <Checkbox inline
                               label="BE pagination"
                               value={this.state.bePagination}
-                              onChange={async (sender, value) => await this.setState({bePagination: value})}
+                              onChange={async (sender, value) => {await this.setState({bePagination: value})}}
                     />
 
                     <Checkbox inline
                               label="Responsive"
                               value={this.state.responsive}
-                              onChange={async (sender, value) => await this.setState({responsive: value})}
+                              onChange={async (sender, value) => {await this.setState({responsive: value})}}
                     />
 
                     <Checkbox inline
                               label="Selectable"
                               value={this.state.selectable}
-                              onChange={async (sender, value) => await this.setState({selectable: value})}
+                              onChange={async (sender, value) => {await this.setState({selectable: value})}}
                     />
 
                     {
@@ -351,10 +347,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                         (
                             <Dropdown label="Selectable Type" inline required noValidate noWrap noFilter
                                       orderBy={DropdownOrderBy.None}
-                                      transform={(item) => new SelectListItem(item.toString(), this.getGridSelectableTypeName(item), null, item)}
+                                      transform={(item) => new SelectListItem(item.toString(), GridTests.getGridSelectableTypeName(item), null, item)}
                                       items={[GridSelectableType.Single, GridSelectableType.Multiple]}
                                       selectedItem={this.state.selectableType}
-                                      onChange={async (sender, value) => await this.setState({ selectableType: value! })}
+                                      onChange={async (sender, value) => {await this.setState({ selectableType: value! })}}
                             />
                         )
                     }
@@ -362,14 +358,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     <Checkbox inline
                               label="Checkable"
                               value={this.state.checkable}
-                              onChange={async (sender, value) => await this.setState({checkable: value})}
+                              onChange={async (sender, value) => {await this.setState({checkable: value})}}
                     />
-
-                    {/*<Checkbox inline*/}
-                    {/*          label="Header groups"*/}
-                    {/*          value={this.state.headerGroups}*/}
-                    {/*          onChange={async (sender, value) => { await this.setState({ headerGroups: value }); }}*/}
-                    {/*/>*/}
 
                 </Form>
 
