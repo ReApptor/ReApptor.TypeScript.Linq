@@ -39,11 +39,11 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     private _resolver: ((dialogResult: DialogResult) => void) | null = null;
 
     private toModel(titleOrModel: string | IMessageBox | MessageBoxModelCallback | undefined, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): IMessageBox {
-        
+
         let model = {} as IMessageBox;
 
         let data: string | IMessageBox | MessageBoxModelCallback | undefined = titleOrModel;
-        
+
         if (data) {
 
             if (typeof (data) === "function") {
@@ -60,7 +60,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
         model.title = model.title || MessageBoxLocalizer.areYouSure;
         model.caption = caption || model.caption;
         model.icon = icon || model.icon;
-        
+
         if (buttons) {
             if (typeof buttons === "object") {
                 const initialized: boolean = !!buttons.okButton || !!buttons.cancelButton || !!buttons.abortButton || !!buttons.retryButton || !!buttons.ignoreButton || !!buttons.yesButton || !!buttons.noButton;
@@ -81,11 +81,11 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
 
         return model;
     }
-    
+
     private getButtonLabel(button: string | boolean | undefined, defaultLabel: string): string {
         return ((button) && (typeof button === "string")) ? button : defaultLabel;
     }
-    
+
     private getIconName(icon: MessageBoxIcon | string | undefined): string | null {
         if (icon) {
             if (typeof icon === "string") {
@@ -119,31 +119,31 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     private get buttons(): MessageBoxButtons {
         return this.model.buttons ?? MessageBoxButtons.OK;
     }
-    
+
     private get hasOkButton(): boolean {
         return (!!this.model.okButton) || (this.buttons == MessageBoxButtons.OK) || (this.buttons == MessageBoxButtons.OKCancel);
     }
-    
+
     private get hasCancelButton(): boolean {
         return (!!this.model.cancelButton) || (this.buttons == MessageBoxButtons.OKCancel) || (this.buttons == MessageBoxButtons.YesNoCancel) || (this.buttons == MessageBoxButtons.RetryCancel);
     }
-    
+
     private get hasYesButton(): boolean {
         return (!!this.model.yesButton) || (this.buttons == MessageBoxButtons.YesNo) || (this.buttons == MessageBoxButtons.YesNoCancel);
     }
-    
+
     private get hasNoButton(): boolean {
         return (!!this.model.noButton) || (this.buttons == MessageBoxButtons.YesNo) || (this.buttons == MessageBoxButtons.YesNoCancel);
     }
-    
+
     private get hasAbortButton(): boolean {
         return (!!this.model.abortButton) || (this.buttons == MessageBoxButtons.AbortRetryIgnore);
     }
-    
+
     private get hasRetryButton(): boolean {
         return (!!this.model.retryButton) || (this.buttons == MessageBoxButtons.AbortRetryIgnore) || (this.buttons == MessageBoxButtons.RetryCancel);
     }
-    
+
     private get hasIgnoreButton(): boolean {
         return (!!this.model.ignoreButton) || (this.buttons == MessageBoxButtons.AbortRetryIgnore);
     }
@@ -240,7 +240,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     public async closeAsync(): Promise<void> {
         await this.invokeCloseAsync(DialogResult.None);
     }
-    
+
     public async showAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
 
         this._model = this.toModel(titleOrModel, caption, buttons, icon);
@@ -273,14 +273,14 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
     }
 
     public async componentWillReceiveProps(nextProps: IMessageBoxProps): Promise<void> {
-        
+
         const newProps: boolean = (this.props.title != nextProps.title) || (this.props.minLength != nextProps.minLength);
-        
+
         if (newProps) {
             this._model = null;
         }
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {
@@ -288,20 +288,20 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
         const processingStyle: any = (this.processing) && styles.processing;
         const icon: string | null = this.getIconName(this.model.icon);
         const iconStyle: string | null = this.getIconClassName(this.model.icon);
-        
+
         return (
             <div id={"messageBox-" + this.id} className={this.css(styles.messageBox, openedStyle, processingStyle)}>
 
                 <div className={styles.overlay} />
 
                 <div className={styles.content} id={`messageBox-content-${this.id}`}>
-                    
+
                     <div className={styles.caption}>
-                        
+
                         {(icon) && <Icon name={icon} className={iconStyle || undefined} size={IconSize.X3} />}
-                        
+
                         <h5>{this.toMultiLines(this.model.title)}</h5>
-                        
+
                     </div>
 
                     {
@@ -318,7 +318,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
                             />
                         )
                     }
-                    
+
                     {
                         (this.hasOkButton) &&
                         (

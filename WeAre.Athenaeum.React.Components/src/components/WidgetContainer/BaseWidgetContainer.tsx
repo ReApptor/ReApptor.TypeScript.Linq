@@ -37,7 +37,7 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
         if (toggle) {
             this._widgetToggleStates.clear();
         }
-        
+
         if (this.mobile) {
             const widgets: IBaseWidget[] = this
                 .childComponents
@@ -78,7 +78,7 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
         let widgets: React.ReactElement[] = this.children;
 
         if (this.isAsync()) {
-            widgets = widgets.filter(item => 
+            widgets = widgets.filter(item =>
                 (!item.props.id) ||
                 (item.props.id.startsWith("_")) ||
                 ((this.widgetIds != null) && (this.widgetIds!.includes(item.props.id))));
@@ -86,11 +86,11 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
 
         return widgets;
     }
-    
+
     public get noToggle(): boolean {
         return this.props.noToggle === true;
     }
-    
+
     public get controller(): string | null {
         return this.props.controller as string | null;
     }
@@ -117,13 +117,13 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
         //reload data async if needed
         await this.invokeReloadDataAsync(reload);
         //call base class
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     protected getEndpoint(): string {
         return `api/${this.props.controller}/getWidgets`;
     }
-    
+
     public isAsync(): boolean {
         return (!!this.props.controller) && (this.props.async === true);
     }

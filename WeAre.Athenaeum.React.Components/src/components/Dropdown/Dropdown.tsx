@@ -1069,7 +1069,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
 
         if (newExpanded) {
             const expanded: boolean = nextProps.expanded || false;
@@ -1310,7 +1310,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const listItemStyle: any = ((this.isListType) && (this.props.styleSchema !== DropdownSchema.Widget)) && styles.listItem;
         const inlineSubtextStyle: any = (this.subtextType == DropdownSubtextType.Inline) && styles.inlineSubtext;
         const selectedStyle: any = ((selected) && (!checkbox)) && styles.selectedItem;
-        
+
         return (
             <React.Fragment key={index}>
 

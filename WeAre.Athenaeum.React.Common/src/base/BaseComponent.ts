@@ -82,7 +82,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
     private _isSpinning: boolean;
-    
+
     private asGlobalClick(): IGlobalClick | null {
         const instance = (this as any) as (IGlobalClick | null);
         if ((instance != null) && (typeof instance.onGlobalClick === "function")) {
@@ -125,18 +125,18 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         }
         return element;
     }
-    
+
     // virtual or children overrides;
     // noinspection JSUnusedLocalSymbols
     protected extendChildProps(element: React.ReactElement): any | null {
         return null;
     }
-    
+
     public readonly id: string;
     public readonly typeName: string;
 
     public static isComponent(element: any | null): boolean {
-        
+
         if (element != null) {
             if ((element.isComponent !== undefined) && (typeof element.isComponent === "function") && (element.isComponent())) {
                 return true;
@@ -149,10 +149,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 prototype = Object.getPrototypeOf(prototype);
             }
         }
-        
+
         return false;
     }
-    
+
     protected get JQuery(): JQueryStatic {
         return JQueryUtility.$;
     }
@@ -160,7 +160,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     protected getNode(): JQuery {
         return this.JQuery(`#${this.id}`);
     }
-    
+
     public get children(): React.ReactElement[] {
         this._childComponentRefs = [];
 
@@ -187,10 +187,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 .filter(ref => BaseComponent.isComponent(ref.current))
                 .map(ref => ref.current!)
         );
-        
+
         return childComponent;
     }
-    
+
     public get isMounted(): boolean {
         return this._isMounted;
     }
@@ -218,11 +218,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public async postFileAsync<TResponse>(endpoint: string, file: any | null = null): Promise<TResponse> {
         return await ApiProvider.postFileAsync<TResponse>(endpoint, file, this);
     }
-    
+
     public async postAsync<TResponse>(endpoint: string, request: any | null = null): Promise<TResponse> {
         return await ApiProvider.postAsync<TResponse>(endpoint, request, this);
     }
-    
+
     public async postCacheAsync<TResponse>(endpoint: string, ttl: number = 0): Promise<TResponse> {
         return await PageCacheProvider.getAsync(endpoint, async () => await this.postAsync(endpoint), ttl);
     }
@@ -238,7 +238,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         // noinspection JSIgnoredPromiseFromCall
         this.reRenderAsync();
     }
-    
+
     public hasSpinner(): boolean {
         return false;
     }
@@ -253,7 +253,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             await this.reRenderAsync();
         }
     }
-    
+
     public getPage(): IBasePage {
         return ch.getPage();
     }
@@ -261,20 +261,20 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public findComponent(id: string): IBaseComponent | null {
         return this.childComponents.find(item => item.id === id) as IBaseComponent | null;
     }
-    
+
     public isComponent(): boolean { return true; }
 
     public copyTo(from: Dictionary<string, any> | any, ...to: any[]): void {
         Utility.copyTo(from, ...to);
     }
-    
+
     public css(...params: (readonly string[] | string | null | undefined | false)[]): string {
         return Utility.css(...params);
     }
-    
+
     public cssIf(className: string | null | undefined, add: boolean, css: string): string {
         const items: string[] = (className) ? className.split(" ") : [];
-        const index: number = items.indexOf(css); 
+        const index: number = items.indexOf(css);
         if (add) {
             if (index === -1) {
                 items.push(css);
@@ -286,7 +286,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
                 return items.join(" ");
             }
         }
-        
+
         return className || "";
     }
 
@@ -297,12 +297,12 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public toMultiLines(text: string | null | undefined): any[] {
         return ReactUtility.toMultiLines(text);
     }
-    
+
     public outerHeight(includeMargin: boolean = true): number {
         const node: JQuery = this.getNode();
         return node.outerHeight(includeMargin) || 0;
     }
-    
+
     public outerWidth(includeMargin: boolean = true): number {
         const node: JQuery = this.getNode();
         return node.outerWidth(includeMargin) || 0;
@@ -310,7 +310,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     protected constructor(props: TProps) {
         super(props);
-        
+
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
@@ -330,10 +330,17 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
     public async initializeAsync(): Promise<void> {
     }
 
+    /**
+     * @deprecated Use {@link UNSAFE_componentWillMount} instead.
+     */
     public async componentWillMount(): Promise<void> {
+        await this.UNSAFE_componentWillMount();
+    }
+
+    public async UNSAFE_componentWillMount(): Promise<void>{
         await this.initializeAsync();
     }
-    
+
     public async componentDidMount(): Promise<void> {
         this._isMounted = true;
 
@@ -367,6 +374,13 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         }
     }
 
+    /**
+     * @deprecated Use {@link UNSAFE_componentWillReceiveProps} instead.
+     */
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
+        await this.UNSAFE_componentWillReceiveProps(nextProps);
+    }
+
+    public async UNSAFE_componentWillReceiveProps(nextProps: TProps): Promise<void> {
     }
 }
