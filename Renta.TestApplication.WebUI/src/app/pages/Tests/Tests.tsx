@@ -33,6 +33,7 @@ import SignatureWidgetTests from "./SignatureWidgetTests/SignatureWidgetTests";
 import QrWidgetTests from "./QrWidgetTests/QrWidgetTests";
 import RouteWidgetTests from "./RouteWidgetTests/RouteWidgetTests";
 import PhoneInputTests from "./PhoneInputTests/PhoneInputTests";
+import PasswordFormTests from "./PasswordFormTests/PasswordFormTests";
 import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 
 export default class Tests extends AnonymousPage {
@@ -154,6 +155,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="paginationTests" title="Pagination">
                             <PaginationTests />
+                        </Tab>
+
+                        <Tab id="passwordFormTests" title="PassWordForm">
+                            <PasswordFormTests />
                         </Tab>
 
                         <Tab id="SignatureWidgetTests" title="Signature Widget">
