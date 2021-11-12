@@ -13,10 +13,9 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
     };
 
     public render(): React.ReactNode {
-
         return (
             <React.Fragment>
-                <GoogleMap height={500}
+                <GoogleMap height={"50vh"}
                            initialCenter={{lat: 50, lng: 50}}
                            initialZoom={5}
                 />
