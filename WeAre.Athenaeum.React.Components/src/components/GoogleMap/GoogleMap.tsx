@@ -54,24 +54,45 @@ export interface IGoogleMapProps {
 }
 
 interface IGoogleMapState {
-    eventListener: google.maps.MapsEventListener | null;
     googleMap: google.maps.Map | null;
-
 }
 
+/**
+ * A generic Google Maps component.
+ */
 export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMapState> {
 
-    private markerClusterer: MarkerClusterer = new MarkerClusterer({});
+    // Fields
+
+    private readonly _googleMapDiv: React.RefObject<HTMLDivElement> = React.createRef();
+    private readonly _markerClusterer: MarkerClusterer = new MarkerClusterer({});
+    private _eventListener: google.maps.MapsEventListener | null = null;
+    private _markers: google.maps.Marker[] = [];
 
     public state: IGoogleMapState = {
-        eventListener: null,
-        googleMap: null
+        googleMap: null,
     };
+
+    // Properties
+
+    private get clusterMarkers(): boolean {
+        return (!!this.props.clusterMarkers);
+    }
+
+    private get googleMap(): google.maps.Map {
+        return this.state.googleMap!;
+    }
+
+    private get infoWindows(): google.maps.InfoWindow[] {
+        return this.props.infoWindows ?? [];
+    }
+
+    // Methods
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
 
-        const googleMap: google.maps.Map = new google.maps.Map(this.googleMapDiv, {
+        const googleMap: google.maps.Map = new google.maps.Map(this._googleMapDiv.current!, {
             center: this.props.initialCenter,
             zoom: this.props.initialZoom,
         });
@@ -80,65 +101,37 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
             googleMap
         });
 
-        if (this.props.clusterMarkers) {
-            this.markerClusterer.setMap(this.googleMap);
-        }
         await this.handlePropsAsync();
     }
 
-    public async componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
-        await super.componentWillReceiveProps(nextProps);
-
+    public async UNSAFE_componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
         await this.handlePropsAsync();
     }
 
-    // Fields
-
-    private readonly _googleMapDiv: React.RefObject<HTMLDivElement> = React.createRef();
-
-    // Getters
-
-    private get eventListener(): google.maps.MapsEventListener | null {
-        return this.state.eventListener;
-    }
-
-    private get markers(): google.maps.Marker[] {
-        return this.props.markers ?? [];
-    }
-
-    private get infoWindows(): google.maps.InfoWindow[] {
-        return this.props.infoWindows ?? [];
-    }
-
-    private get googleMapDiv(): HTMLDivElement {
-        return this._googleMapDiv.current!;
-    }
-
-    private get googleMap(): google.maps.Map {
-        return this.state.googleMap!;
-    }
-
-    // Async-methods
     private async handlePropsAsync(): Promise<void> {
-        if (this.props.clusterMarkers) {
-            this.markerClusterer.clearMarkers();
-            this.markerClusterer.addMarkers(this.markers);
+        this._markers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        this._markerClusterer.clearMarkers();
+
+        // need to disassociate the internal markers array from the prop markers array.
+        this._markers = [...(this.props.markers ?? [])];
+
+        if (this.clusterMarkers) {
+            this._markerClusterer.setMap(this.googleMap);
+            this._markerClusterer.addMarkers(this._markers);
         }
         else {
-            this.markers.forEach(marker => marker.setMap(this.googleMap));
+            this._markerClusterer.setMap(null);
+            this._markers.forEach(marker => marker.setMap(this.googleMap));
         }
+
         this.infoWindows.forEach(infoWindow => infoWindow.open(this.googleMap));
-        await this.setEventListenerAsync(this.googleMap.addListener("click", async () => await this.props.onClick?.()));
-    }
 
-    private async setEventListenerAsync(newEventListener: google.maps.MapsEventListener | null): Promise<void> {
-        this.eventListener?.remove();
-        await this.setState({
-            eventListener: newEventListener,
-        });
+        this._eventListener?.remove();
+        this._eventListener = this.googleMap.addListener("click", async () => await this.props.onClick?.());
     }
-
-    // Renders
 
     public render() {
         return (
