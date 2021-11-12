@@ -1,9 +1,9 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/athenaeum-react-common";
+import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
 
 import "./BootstrapOverride.scss";
 import styles from "./Pagination.module.scss";
-import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
 
 export interface IPaginationClassNames {
     readonly pagination?: string;
