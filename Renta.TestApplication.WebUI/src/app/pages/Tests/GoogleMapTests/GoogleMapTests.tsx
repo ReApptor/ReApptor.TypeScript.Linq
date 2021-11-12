@@ -1,9 +1,11 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Checkbox, FourColumns, GoogleMap, NumberInput} from "@weare/athenaeum-react-components";
+import {Button, Checkbox, GoogleMap, NumberInput, PageRow, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
 
 interface IModalTestsState {
     clusterMarkers: boolean;
+    lat: number;
+    lon: number;
     markers: google.maps.Marker[];
 }
 
@@ -11,8 +13,12 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
 
     public state: IModalTestsState = {
         clusterMarkers: false,
+        lat: 0,
+        lon: 0,
         markers: [],
     };
+
+    private readonly _mapRef: React.RefObject<GoogleMap> = React.createRef();
 
     private async setMarkersAsync(count: number): Promise<void> {
         while (this.state.markers.length <= count) {
@@ -32,20 +38,43 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
     public render(): React.ReactNode {
         return (
             <React.Fragment>
-                <FourColumns>
-                    <NumberInput inline
-                                 label="Markers"
-                                 onChange={async (_, markers) => await this.setMarkersAsync(markers)}
-                    />
+                <PageRow>
+                    <TwoColumns>
+                        <NumberInput inline
+                                     label="Markers"
+                                     onChange={async (_, markers) => await this.setMarkersAsync(markers)}
+                        />
 
-                    <Checkbox inline
-                              label="Cluster markers"
-                              value={this.state.clusterMarkers}
-                              onChange={async (_, clusterMarkers) => {await this.setState({clusterMarkers})}}
-                    />
-                </FourColumns>
+                        <Checkbox inline
+                                  label="Cluster markers"
+                                  value={this.state.clusterMarkers}
+                                  onChange={async (_, clusterMarkers) => {await this.setState({clusterMarkers})}}
+                        />
+                    </TwoColumns>
+                </PageRow>
 
-                <GoogleMap height={"50vh"}
+                <PageRow>
+                    <ThreeColumns>
+                        <NumberInput inline
+                                     label="Latitude"
+                                     value={this.state.lat}
+                                     onChange={async (_, lat) => {await this.setState({lat})}}
+                        />
+
+                        <NumberInput inline
+                                     label="Longitude"
+                                     value={this.state.lon}
+                                     onChange={async (_, lon) => {await this.setState({lon})}}
+                        />
+
+                        <Button label="Set new center coodinates"
+                                onClick={async () => await this._mapRef.current!.setCenterAsync({lat: this.state.lat, lng: this.state.lon})}
+                        />
+                    </ThreeColumns>
+                </PageRow>
+
+                <GoogleMap ref={this._mapRef}
+                           height={"50vh"}
                            initialCenter={{lat: 50, lng: 50}}
                            initialZoom={1}
                            clusterMarkers={this.state.clusterMarkers}

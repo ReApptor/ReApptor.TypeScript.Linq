@@ -89,26 +89,6 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
     // Methods
 
-    public async initializeAsync(): Promise<void> {
-        await super.initializeAsync();
-
-        const googleMap: google.maps.Map = new google.maps.Map(this._googleMapDiv.current!, {
-            center: this.props.initialCenter,
-            zoom: this.props.initialZoom,
-        });
-
-        await this.setState({
-            googleMap
-        });
-
-        await this.handlePropsAsync();
-    }
-
-    public async UNSAFE_componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
-        await this.handlePropsAsync();
-    }
-
     private async handlePropsAsync(): Promise<void> {
         this._markers.forEach((marker) => {
             marker.setMap(null);
@@ -131,6 +111,34 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
         this._eventListener?.remove();
         this._eventListener = this.googleMap.addListener("click", async () => await this.props.onClick?.());
+    }
+
+    public async initializeAsync(): Promise<void> {
+        await super.initializeAsync();
+
+        const googleMap: google.maps.Map = new google.maps.Map(this._googleMapDiv.current!, {
+            center: this.props.initialCenter,
+            zoom: this.props.initialZoom,
+        });
+
+        await this.setState({
+            googleMap
+        });
+
+        await this.handlePropsAsync();
+    }
+
+    public async UNSAFE_componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await this.handlePropsAsync();
+    }
+
+    /**
+     * Center the map on the given coordinates.
+     * @param center New center coordinates of the map.
+     */
+    public async setCenterAsync(center: google.maps.LatLngLiteral): Promise<void> {
+        this.googleMap.setCenter(center);
     }
 
     public render() {
