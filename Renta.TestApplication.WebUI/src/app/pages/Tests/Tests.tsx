@@ -36,6 +36,7 @@ import PhoneInputTests from "./PhoneInputTests/PhoneInputTests";
 import PasswordFormTests from "./PasswordFormTests/PasswordFormTests";
 import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
+import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -189,6 +190,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="textAreaWidgetTests" title="TextAreaWidget">
                             <TextAreaWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="addressDividerTests" title="AddressDivider">
+                            <AddressDividerTests />
                         </Tab>
                     </TabContainer>
 
