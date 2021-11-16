@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {Accordion, Button, Checkbox, Dropdown, DropdownOrderBy, DropdownRequiredType, FourColumns, NumberInput, SelectListItem, TogglerPosition, TwoColumns} from "@weare/athenaeum-react-components";
+import {Accordion, Button, Checkbox, Dropdown, FourColumns, NumberInput, SelectListItem, TogglerPosition} from "@weare/athenaeum-react-components";
 
 export interface IAccordionTestsState {
     autoCollapse: boolean;
