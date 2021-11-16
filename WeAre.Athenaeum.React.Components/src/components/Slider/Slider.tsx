@@ -28,9 +28,9 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
         maximumAllowed: 100,
         minimumAllowed: 0
     };
-    
+
     private _sliderWithTooltip: new () => React.Component<WithTooltipProps & SliderProps>;
-    
+
     state: ISliderState = {
         defaultValue: this.props.defaultValue || 0,
         value: this.props.defaultValue || 0
@@ -56,11 +56,11 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
             await this.props.onChange(this);
         }
     }
-    
+
     public get sliderId(): string {
         return this.props.id || this.id;
     }
-    
+
     public async callbackAsync(): Promise<void> {
         // if(this.props.onChange) {
         //     await this.props.onChange(this);
@@ -78,10 +78,10 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
     public get step(): number {
         return (this.props.step || 1);
     }
-    
+
     public async componentWillReceiveProps(nextProps: ISliderProps): Promise<void> {
-        await super.componentWillReceiveProps(nextProps);
-        
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
+
         if(nextProps.defaultValue !== undefined && this.state.defaultValue !== nextProps.defaultValue) {
             this.setState({ defaultValue: nextProps.defaultValue, value: nextProps.defaultValue });
         }
@@ -90,9 +90,9 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
     render(): React.ReactNode {
         return (
             <div className={styles.slider} id={this.sliderId}>
-                <this._sliderWithTooltip 
-                    min={this.min} 
-                    max={this.max} 
+                <this._sliderWithTooltip
+                    min={this.min}
+                    max={this.max}
                     step={this.step}
                     onChange={(values: any) => this.handleChangeAsync(values)}
                     trackStyle={[{backgroundColor: "#fe5000"}]}

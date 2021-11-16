@@ -7,12 +7,12 @@ import styles from "./NumberInput.module.scss";
 
 export enum NumberInputBehaviour {
     /*
-    * Validate on input change,   
-    */    
+    * Validate on input change,
+    */
     ValidationOnChange,
-    
+
     ValidationOnSave,
-    
+
     Restricted
 }
 
@@ -36,21 +36,21 @@ export interface INumberInputState extends IBaseInputState<number> {
 }
 
 export default class NumberInput extends BaseInput<number, INumberInputProps, INumberInputState> {
-    
+
     private _ref: React.RefObject<HTMLInputElement> | null = null;
     private _acceptableStr: string | null = null;
-    
+
     private async onChangeAsync(e: React.FormEvent<HTMLInputElement>): Promise<void> {
         const str: string = e.currentTarget.value;
         const caretPosition: number = (e.currentTarget.selectionEnd !== null)
             ? e.currentTarget.selectionEnd
             : -1;
-        
+
         const parsingResult: NumberParsingResult = NumberUtility.parse(str, this.allowFloat);
 
         const acceptableStr: string | null = (parsingResult.acceptableStr !== null) ? parsingResult.acceptableStr : this._acceptableStr;
         const needToRender: boolean = (acceptableStr !== this._acceptableStr);
-        
+
         const isNewStr: boolean = (parsingResult.parsed) && (acceptableStr !== this.getStr());
 
         this._acceptableStr = acceptableStr;
@@ -63,8 +63,8 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
         if (this.ref.current) {
             const newStr: string = this.getStr();
-            
-            
+
+
             let index: number;
             if (isNewStr) {
                 const prefix = str.substr(0, caretPosition);
@@ -80,7 +80,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                     ? caretPosition
                     : caretPosition - 1;
             }
-            
+
             if (index !== -1) {
                 this.ref.current.selectionStart = index;
                 this.ref.current.selectionEnd = index;
@@ -91,7 +91,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<any>): Promise<void> {
         const enter: boolean = (e.keyCode === 13);
         const esc: boolean = (e.keyCode === 27);
-        
+
         if (this.props.clickToEdit) {
             if ((enter) || (esc)) {
                 e.preventDefault();
@@ -104,13 +104,13 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
             }
         }
     }
-    
+
     private async invokeOnChange(value: number, userInteraction: boolean, done: boolean): Promise<void> {
         if (this.props.onChange) {
             await this.props.onChange(this, value, userInteraction, done);
         }
     }
-    
+
     private async saveChangesAsync(clearAcceptableStr: boolean = true): Promise<void> {
 
         if (this._acceptableStr !== null) {
@@ -121,7 +121,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
             }
 
             let updated: boolean = false;
-            
+
             if (parsingResult.parsed) {
                 updated = await this.invokeSetAsync(parsingResult.value, true);
             }
@@ -142,7 +142,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -151,7 +151,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
             ? this._acceptableStr
             : this.str;
     }
-    
+
     private get ref(): React.RefObject<HTMLInputElement> {
         return this._ref || (this._ref = this.props.forwardedRef || React.createRef());
     }
@@ -167,13 +167,13 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
     protected async onShowEditAsync(): Promise<void> {
         this._acceptableStr = null;
-        
+
         if (this.ref.current) {
             this.ref.current.focus();
             this.ref.current.select();
         }
     }
-    
+
     protected async onHideEditAsync(): Promise<void> {
         await this.saveChangesAsync();
     }
@@ -189,7 +189,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
             ? [NumberRangeValidator.validator(this.min, this.max)]
             : [];
     }
-    
+
     public get behaviour(): NumberInputBehaviour {
         return (this.props.clickToEdit)
             ? NumberInputBehaviour.Restricted
@@ -220,17 +220,17 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public get canIncrease(): boolean {
         return this.canSet(this.value + this.step);
     }
-    
+
     public get increaseIconProps(): IIconProps {
         const increaseIconProp = this.props.increaseIcon || "arrow-up";
-        
+
         if (typeof increaseIconProp === "string") {
             return  {
                 name: increaseIconProp,
                 size: IconSize.ExtraSmall
             };
         }
-        
+
         return increaseIconProp;
     }
 
@@ -277,14 +277,14 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public async componentWillReceiveProps(nextProps: Readonly<INumberInputProps>): Promise<void> {
         this._acceptableStr = null;
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public renderInput(): React.ReactNode {
         return (
             <div className={styles.numberInput}>
-                <input id={this.getInputId()} 
-                       ref={this.ref} 
+                <input id={this.getInputId()}
+                       ref={this.ref}
                        type={this.getType()}
                        value={this.getStr()}
                        readOnly={this.readonly}
