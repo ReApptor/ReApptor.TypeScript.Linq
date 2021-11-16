@@ -11,5 +11,5 @@ export default class CountryInfo {
     
     public aliases: string[] = [];
 
-    public isCountryInfo: boolean = true;
+    public isCountryInfo: true = true;
 }
