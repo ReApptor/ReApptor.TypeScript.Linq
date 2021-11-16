@@ -125,7 +125,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
             this.state.number = (nextProps.value != null) ? nextProps.value : this.min;
         }
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public async initializeAsync(): Promise<void> {
@@ -304,7 +304,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
                 <div onClick={this.getIconOnClick(1)} className={this.getIconStyle(1)}>
                     <Icon name={this.getIconName(1)} size={IconSize.X2} style={IconStyle.Regular}/>
                 </div>
-                
+
                 {
                     (this.edit)
                         ?
@@ -325,11 +325,11 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
                             </div>
                         )
                 }
-                
+
                 <div onClick={this.getIconOnClick(2)} className={this.getIconStyle(2)}>
                     <Icon name={this.getIconName(2)} size={IconSize.X2} style={IconStyle.Regular}/>
                 </div>
-                
+
             </div>
         );
     }

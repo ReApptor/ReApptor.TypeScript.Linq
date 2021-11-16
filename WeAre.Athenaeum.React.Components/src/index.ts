@@ -295,6 +295,9 @@ export {default as Accordion} from "./components/Accordion/Accordion";
 export {default as FooterLocalizer} from './components/Footer/FooterLocalizer';
 export {default as AthenaeumComponentsConstants} from "./AthenaeumComponentsConstants";
 
+export * from "./components/GoogleMap/GoogleMap";
+export {default as GoogleMap} from "./components/GoogleMap/GoogleMap";
+
 export * from "./components/DateRangeInput/DateRangeInput";
 export * from "./components/ImageInput/ImageInput";
 export * from "./components/TabContainer/TabModel";
