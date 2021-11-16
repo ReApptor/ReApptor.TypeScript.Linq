@@ -765,6 +765,28 @@ namespace WeAre.Athenaeum.Toolkit.UnitTest.Scheduling
         }
 
         [Fact]
+        public void SchedulerFridayOnceAt10Test()
+        {
+            const string rule = "13, 20 November 2015;Once At 22:*;Friday;";
+            DateTime[] dates =
+            {
+                new DateTime(2015, 11, 13, 22, 00, 00),
+                new DateTime(2015, 11, 20, 22, 00, 00)
+            };
+
+            AssertRuleMatch(rule, dates);
+
+            var scheduler = new Scheduler(rule);
+            bool isMatch = scheduler.Match(new DateTime(2015, 11, 13, 22, 05, 00));
+            
+            Assert.True(isMatch);
+            
+            isMatch = scheduler.Match(new DateTime(2015, 11, 20, 22, 15, 00), new DateTime(2015, 11, 13, 22, 05, 00));
+            
+            Assert.True(isMatch);
+        }
+
+        [Fact]
         public void SchedulerIntervalPer30SecondsTest()
         {
             const string rule = "01 February 2015;With interval 00:30 From 12:00 To 13:00;";
