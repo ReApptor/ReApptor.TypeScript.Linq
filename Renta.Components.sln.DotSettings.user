@@ -7,6 +7,8 @@
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.SecurityUtility.PasswordGeneratorTests.GeneratePasswordTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.SecurityUtility.PasswordGeneratorTests.GenerateAesKeyTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.Scheduling.ScheduleRuleTests.MiddleDayOfAnyMonthTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.Scheduling.ScheduleRuleTests.SchedulerHourOnceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0C6D3115-A7C7-4852-B8B4-397D05E8660E::.NETCoreApp,Version=v3.1::WeAre.Athenaeum.Toolkit.UnitTest.Scheduling.ScheduleRuleTests.SchedulerOnceTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	
