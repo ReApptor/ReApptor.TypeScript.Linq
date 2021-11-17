@@ -1,6 +1,8 @@
 //Enums:
 export * from "./Enums";
+
 //Models:
+export {default as CountryInfo} from "./models/CountryInfo";
 export {default as AlertModel} from "./models/AlertModel";
 export {default as BasePageParameters} from "./models/BasePageParameters";
 export {default as ApplicationContext} from "./models/ApplicationContext";

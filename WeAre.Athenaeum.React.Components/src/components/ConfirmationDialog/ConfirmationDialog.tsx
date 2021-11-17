@@ -213,13 +213,13 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     public async componentWillReceiveProps(nextProps: IConfirmationDialogProps): Promise<void> {
         this._model = null;
 
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {
         const openedStyle: any = (this.state.isOpened) && styles.opened;
         const processingStyle: any = (this.processing) && styles.processing;
-        
+
         return (
             <div id={"confirmation-dialog" + this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
 
@@ -227,7 +227,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                 <div className={styles.dialogContent} id={`confirmationContent-${this.id}`}>
 
-                    <h5>{this.toMultiLines(this.model.title)}</h5>
+                    <h5>{this.toMultiLines(ConfirmationDialogLocalizer.get(this.model.title))}</h5>
 
                     {
                         (this.hasComment) &&

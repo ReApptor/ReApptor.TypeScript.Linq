@@ -33,7 +33,10 @@ import SignatureWidgetTests from "./SignatureWidgetTests/SignatureWidgetTests";
 import QrWidgetTests from "./QrWidgetTests/QrWidgetTests";
 import RouteWidgetTests from "./RouteWidgetTests/RouteWidgetTests";
 import PhoneInputTests from "./PhoneInputTests/PhoneInputTests";
+import PasswordFormTests from "./PasswordFormTests/PasswordFormTests";
 import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
+import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
+import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 
 export default class Tests extends AnonymousPage {
 
@@ -112,6 +115,10 @@ export default class Tests extends AnonymousPage {
                             <FormTests />
                         </Tab>
 
+                        <Tab id="googleMapTests" title="Google map">
+                            <GoogleMapTests />
+                        </Tab>
+
                         <Tab id="gridTest" title="Grids">
                             <GridTests />
                         </Tab>
@@ -156,6 +163,10 @@ export default class Tests extends AnonymousPage {
                             <PaginationTests />
                         </Tab>
 
+                        <Tab id="passwordFormTests" title="PassWordForm">
+                            <PasswordFormTests />
+                        </Tab>
+
                         <Tab id="SignatureWidgetTests" title="Signature Widget">
                             <SignatureWidgetTests />
                         </Tab>
@@ -167,11 +178,11 @@ export default class Tests extends AnonymousPage {
                         <Tab id="QrWidgetTest" title="Qr Widget">
                             <QrWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="routeWidgetTests" title="RouteWidget">
                             <RouteWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="phoneInputTests" title="PhoneInput">
                             <PhoneInputTests />
                         </Tab>
@@ -179,6 +190,10 @@ export default class Tests extends AnonymousPage {
 
                         <Tab id="textAreaWidgetTests" title="TextAreaWidget">
                             <TextAreaWidgetTests />
+                        </Tab>
+                        
+                        <Tab id="addressDividerTests" title="AddressDivider">
+                            <AddressDividerTests />
                         </Tab>
                     </TabContainer>
 

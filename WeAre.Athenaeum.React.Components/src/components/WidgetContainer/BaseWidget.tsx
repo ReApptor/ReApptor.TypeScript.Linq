@@ -76,23 +76,23 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             await this.setState({ spinnerVisible: true });
         }
     }
-    
+
     protected get numberFormat(): TFormat {
         return "0";
     }
-    
+
     protected get dateFormat(): TFormat {
         return "D";
     }
-    
+
     protected getDescription(): string | null {
         return this.state.description;
     }
-    
+
     protected getLabel(): string | null {
         return this.state.label;
     }
-    
+
     protected getNumber(): string {
         return (this.state.date != null)
             ? Utility.formatValue(this.state.date, this.dateFormat)
@@ -149,7 +149,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     protected get wide(): boolean {
         return (this.props.wide === true);
     }
-    
+
     protected get contentFlexStyle(): object {
         return {flexGrow: `${this.props.stretchContent ? 1 : 0}`};
     }
@@ -157,7 +157,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     protected get descriptionFlexStyle(): object {
         return {flexGrow: `${!this.props.stretchContent ? 1 : 0}`};
     }
-    
+
     protected hasDescription(): boolean {
         return !!this.description;
     }
@@ -215,7 +215,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     public get containsTagSmall(): boolean {
         return this.number.includes("<small>");
     }
-    
+
     public async toggleMinimized(): Promise<void> {
         if(this.minimized) {
             await this.maximizeAsync();
@@ -235,7 +235,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             await this.setState({ minimized: false });
         }
     }
-    
+
     protected renderLabel(): React.ReactNode {
         return (
             <div className={this.css(styles.label, this.classNames.label)}><span>{this.toMultiLines(this.label)}</span></div>
@@ -264,7 +264,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             </React.Fragment>
         );
     }
-    
+
     protected renderDescription(): React.ReactNode {
         return (
             <div className={this.css(styles.description, this.classNames.description)} style={this.descriptionFlexStyle}>
@@ -272,7 +272,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             </div>
         );
     }
-    
+
     protected renderMinimized(): React.ReactNode {
         return (
             <div className={this.css(styles.compactContainer, this.classNames.compactContainer)}>
@@ -289,10 +289,10 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             </div>
         );
     }
-    
+
     public async componentWillReceiveProps(nextProps: Readonly<TProps>): Promise<void> {
         let newState: any | null = null;
-        
+
         if (this.props.description !== nextProps.description) {
             newState = newState || {};
             newState.description = nextProps.description;
@@ -312,24 +312,24 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             newState = newState || {};
             newState.text = nextProps.text;
         }
-        
+
         if (newState != null) {
             await this.setState(newState);
         }
-        
-        await super.componentWillReceiveProps(nextProps);
+
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public render(): React.ReactNode {
         return (
             <div id={this.id} className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}>
-                
-                <a href={this.getHref()} 
-                   rel="noreferrer" 
-                   title={this.toSingleLine(this.description || this.label)} 
+
+                <a href={this.getHref()}
+                   rel="noreferrer"
+                   title={this.toSingleLine(this.description || this.label)}
                    onClick={async (e: React.MouseEvent) => await this.onClickAsync(e)}
                    target={this.getTarget()}
-                   className={this.css(this.minimized && styles.compact, this.transparent && styles.transparent)} 
+                   className={this.css(this.minimized && styles.compact, this.transparent && styles.transparent)}
                    onMouseDown={async (e: React.MouseEvent) => await this.onMouseDownAsync(e)}
                    draggable={false} // Future note -> change this if drag'n'drop functionality for Widgets are going to be implemented
                 >
@@ -339,15 +339,15 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                     <div className={this.css(styles.contentContainer, this.classNames.contentContainer)} style={this.contentFlexStyle}>
                         { (!this.minimized) && this.renderContent() }
                     </div>
-                    
+
                     { this.hasDescription() && this.renderDescription() }
 
                     { this.renderMinimized() }
-                    
+
                 </a>
-                
+
                 {(this.isSpinning()) && <Spinner ref={this._spinnerRef} noShading onDelay={async () => this.onSpinnerDelayHandlerAsync()} /> }
-                
+
             </div>
         );
     }
