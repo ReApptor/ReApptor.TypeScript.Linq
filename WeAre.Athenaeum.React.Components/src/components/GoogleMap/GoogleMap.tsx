@@ -129,7 +129,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     }
 
     public async UNSAFE_componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
         await this.handlePropsAsync();
     }
 

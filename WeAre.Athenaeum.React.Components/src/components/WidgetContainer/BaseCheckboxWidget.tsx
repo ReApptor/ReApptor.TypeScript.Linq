@@ -43,7 +43,7 @@ export default abstract class BaseCheckboxWidget<TProps extends IBaseCheckboxWid
             this.state.data = (nextProps.checked === true)
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public async initializeAsync(): Promise<void> {

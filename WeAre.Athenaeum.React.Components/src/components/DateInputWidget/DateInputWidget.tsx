@@ -43,7 +43,8 @@ export default class DateInputWidget extends BaseExpandableWidget<IDatepickerWid
 
     public async componentWillReceiveProps(nextProps: Readonly<IDatepickerWidgetProps>): Promise<void> {
         this.state.icon = {name: "far calendar-day"};
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        
+        await super.componentWillReceiveProps(nextProps);
     }
 
     protected renderExpanded(): React.ReactNode {

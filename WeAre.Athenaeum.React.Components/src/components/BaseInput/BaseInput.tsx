@@ -534,7 +534,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const varProps = this.props as any;
         const varNewProps = nextProps as any;
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
         if (this.isMounted) {
             const model: IInputModel<TInputValue> = this.state.model;

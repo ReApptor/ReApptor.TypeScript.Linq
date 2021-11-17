@@ -24,19 +24,9 @@ export interface IReactComponent {
 
     componentWillUnmount?(): Promise<void>;
 
-    /**
-     * @deprecated Use {@link UNSAFE_componentWillMount} instead.
-     */
     componentWillMount?(): Promise<void>;
 
-    UNSAFE_componentWillMount?(): Promise<void>;
-
-    /**
-     * @deprecated Use {@link UNSAFE_componentWillReceiveProps} instead.
-     */
     componentWillReceiveProps?(props: any): Promise<void>;
-
-    UNSAFE_componentWillReceiveProps?(props: any): Promise<void>;
 }
 
 export interface ISpinner {
@@ -372,25 +362,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Resize);
         }
     }
-
-    /**
-     * @deprecated Use {@link UNSAFE_componentWillMount} instead.
-     */
+    
     public async componentWillMount(): Promise<void> {
-        await this.UNSAFE_componentWillMount();
-    }
-
-    public async UNSAFE_componentWillMount(): Promise<void>{
         await this.initializeAsync();
     }
-
-    /**
-     * @deprecated Use {@link UNSAFE_componentWillReceiveProps} instead.
-     */
+    
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
-        await this.UNSAFE_componentWillReceiveProps(nextProps);
-    }
-
-    public async UNSAFE_componentWillReceiveProps(nextProps: TProps): Promise<void> {
     }
 }

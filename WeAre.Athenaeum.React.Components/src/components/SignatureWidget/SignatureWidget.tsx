@@ -98,7 +98,7 @@ export default class SignatureWidget extends BaseExpandableWidget<ISignatureWidg
     }
 
     public async componentWillReceiveProps(nextProps: Readonly<ISignatureWidgetProps>): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
         await this.setState({icon: { name: "far file-contract" }});
     }
 
