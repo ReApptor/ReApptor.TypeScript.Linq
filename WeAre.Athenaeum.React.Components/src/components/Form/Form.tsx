@@ -128,7 +128,7 @@ export default class Form extends BaseComponent<IFormProps, IFormState> {
             await this.setReadonlyAsync(readonly);
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public render(): React.ReactNode {

@@ -277,7 +277,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public async componentWillReceiveProps(nextProps: Readonly<INumberInputProps>): Promise<void> {
         this._acceptableStr = null;
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public renderInput(): React.ReactNode {

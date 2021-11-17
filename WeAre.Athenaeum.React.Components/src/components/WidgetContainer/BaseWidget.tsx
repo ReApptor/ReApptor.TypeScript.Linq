@@ -317,7 +317,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             await this.setState(newState);
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public render(): React.ReactNode {

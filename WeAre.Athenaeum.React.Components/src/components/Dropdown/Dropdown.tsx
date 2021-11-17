@@ -1070,7 +1070,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
         if ((newExpanded) || (newDisabled)) {
             this.state.expanded = nextProps.expanded || false;

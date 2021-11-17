@@ -213,7 +213,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
     public async componentWillReceiveProps(nextProps: IConfirmationDialogProps): Promise<void> {
         this._model = null;
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {
