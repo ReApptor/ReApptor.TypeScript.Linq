@@ -1,9 +1,9 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/athenaeum-react-common";
+import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
 
 import "./BootstrapOverride.scss";
 import styles from "./Pagination.module.scss";
-import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
 
 export interface IPaginationClassNames {
     readonly pagination?: string;
@@ -45,14 +45,14 @@ interface IPaginationState {
 }
 
 export default class Pagination extends BaseComponent<IPaginationProps, IPaginationState> {
-    
+
     state: IPaginationState = {
         pageSize: this.props.pageSize,
         pageNumber: this.props.pageNumber
     };
-    
+
     private _dataPerPageVariants: number[] | null = null;
-    
+
     private async processAsync(): Promise<void> {
         if (this.props.onChange) {
             await this.props.onChange(this, this.pageNumber, this.pageSize);
@@ -69,13 +69,13 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
             }
         }
     }
-    
+
     private async onChangePageSizeAsync(pageSize: number, userInteraction: boolean): Promise<void> {
         if ((userInteraction) && (this.pageSize != pageSize)) {
 
             const currentFirstRowIndex: number = (this.pageNumber - 1) * this.pageSize;
             const pageNumber: number = (Math.trunc(currentFirstRowIndex / pageSize)) + 1;
-                
+
             await this.setState({ pageSize, pageNumber });
             await this.processAsync();
         }
@@ -163,36 +163,36 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
     }
 
     public async componentWillReceiveProps(nextProps: IPaginationProps): Promise<void> {
-        await super.componentWillReceiveProps(nextProps);
-        
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
+
         const newProps: boolean = (nextProps.pageNumber != this.pageNumber) ||
                                   (nextProps.pageSize != this.pageSize);
-        
+
         if (newProps) {
-            await this.setState({ pageNumber: nextProps.pageNumber, pageSize: nextProps.pageSize }); 
+            await this.setState({ pageNumber: nextProps.pageNumber, pageSize: nextProps.pageSize });
         }
     }
 
     public render(): React.ReactNode {
-        
+
         return (
             <nav className={this.css(styles.pagination, "d-flex align-items-center", this.props.className)}>
-                
+
                 <ul className={this.css("pagination mb-0", this.classNames.pagination)}>
                     {
                         this.paginationButtons.map((button, index) => (this.renderPaginationButton(button, index)))
                     }
                 </ul>
-                
+
                 <div className={this.css(styles.pageDropdownWrap, "ml-3 d-flex align-items-center justify-content-between", this.classNames.pageDropdownWrap)}>
 
                     <Dropdown inline small required noFilter
                               items={this.dataPerPageVariants}
                               selectedItem={this.props.pageSize}
                               orderBy={DropdownOrderBy.None}
-                              onChange={async (sender, item, userInteraction) => await this.onChangePageSizeAsync(item!, userInteraction)} 
+                              onChange={async (sender, item, userInteraction) => await this.onChangePageSizeAsync(item!, userInteraction)}
                     />
-                    
+
                     {
                         (this.totalItemCount > 0) &&
                         (
@@ -201,9 +201,9 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
                             </span>
                         )
                     }
-           
+
                 </div>
-                
+
             </nav>
         )
     }

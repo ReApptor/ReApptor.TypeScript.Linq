@@ -22,18 +22,18 @@ export default class CollapsedRow<TItem = {}> extends BaseComponent<ICollapsedRo
     public get row(): RowModel<TItem> {
         return this.props.row;
     }
-    
+
     public get cells(): CellModel<TItem>[] {
         return this.props.cells;
     }
-    
+
     public renderCell(cell: CellModel<TItem>): React.ReactNode {
 
         const column: ColumnModel<TItem> = cell.column;
         const hasHeader: boolean = !!column.group || !!column.header;
 
         return (
-            <tr>
+            <tr key={cell.key}>
                 {
                     (hasHeader) &&
                     (

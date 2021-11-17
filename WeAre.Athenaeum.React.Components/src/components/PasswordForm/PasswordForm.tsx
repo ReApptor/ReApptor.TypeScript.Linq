@@ -25,15 +25,14 @@ export default class PasswordForm extends BaseComponent<IPasswordFormProps> {
     public passwordConfirmation: IStringInputModel = {value: ""};
 
     private readonly _formRef: React.RefObject<any> = React.createRef();
-
-    private get validationRows(): ValidationRow[] {
-        return [
-            new ValidationRow(PasswordValidationRule.UpperCaseCharacter, PasswordFormLocalizer.helpTextUpperCase),
-            new ValidationRow(PasswordValidationRule.LowerCaseCharacter, PasswordFormLocalizer.helpTextLowerCase),
-            new ValidationRow(PasswordValidationRule.NumberCharacter, PasswordFormLocalizer.helpTextNumber),
-            new ValidationRow(PasswordValidationRule.SpecialCharacter, PasswordFormLocalizer.helpTextSpecialCharacter)
-        ];
-    }
+   
+    private readonly validationRows = [ 
+        new ValidationRow(PasswordValidationRule.UpperCaseCharacter, PasswordFormLocalizer.helpTextUpperCase),
+        new ValidationRow(PasswordValidationRule.LowerCaseCharacter, PasswordFormLocalizer.helpTextLowerCase),
+        new ValidationRow(PasswordValidationRule.NumberCharacter, PasswordFormLocalizer.helpTextNumber),
+        new ValidationRow(PasswordValidationRule.SpecialCharacter, PasswordFormLocalizer.helpTextSpecialCharacter)
+    ];
+ 
 
     public async handleSubmitAsync(): Promise<void> {
         if (this.password.value != this.passwordConfirmation.value) {

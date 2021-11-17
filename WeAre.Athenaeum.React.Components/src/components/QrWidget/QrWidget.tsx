@@ -9,7 +9,7 @@ import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
 export enum QrWidgetType {
     QrCode,
-    
+
     BarCode
 }
 
@@ -41,7 +41,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     public async componentWillReceiveProps(nextProps: Readonly<IQrWidgetProps>): Promise<void> {
-        await super.componentWillReceiveProps(nextProps);
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
         this.setState({icon: {name: "far camera"}});
     }
 

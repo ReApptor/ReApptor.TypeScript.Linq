@@ -62,7 +62,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
                 availableHeight = pageContainerHeight - widgetContainerOuterHeight + dropdownOuterHeight;
             }
         }
-        
+
         if ((this.props.minHeight) && (availableHeight < this.props.minHeight)) {
             return this.props.minHeight;
         }
@@ -71,7 +71,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
             ? availableHeight
             : undefined;
     }
-    
+
     private async updateDescriptionAsync(): Promise<void> {
         if (this.isMounted) {
             const description: string | null = await this.getDescription();
@@ -83,7 +83,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
     protected getDescription(): string | null {
         const showSubtext = !this.props.noSubtext;
-        
+
         if (this.props.noDescription) {
             return "";
         }
@@ -109,12 +109,12 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
     protected async onClickAsync(e: React.MouseEvent): Promise<void> {
         e.stopPropagation();
-        
+
         if ((this.isMounted) && (this.dropdown)) {
             await this.dropdown.toggleAsync();
         }
     }
-    
+
     protected async onFavoriteChangeAsync(sender: Dropdown<TItem>, item: TItem | null, favorite: boolean): Promise<void> {
         if (this.props.onFavoriteChange) {
             await this.props.onFavoriteChange(this, item, favorite);
@@ -164,9 +164,9 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
     protected async fetchDataAsync(): Promise<TItem[]> {
         if (this.props.fetchDataAsync) {
-            return await this.props.fetchDataAsync(this, this.getEndpoint()); 
+            return await this.props.fetchDataAsync(this, this.getEndpoint());
         }
-        
+
         return await super.fetchDataAsync();
     }
 
@@ -181,7 +181,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
             }
         }
     }
-    
+
     public async collapseAsync(): Promise<void> {
         if (this.dropdown) {
             await this.dropdown.collapseAsync();
@@ -189,12 +189,12 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
     }
 
     public async initializeAsync(): Promise<void> {
-        
+
         await super.initializeAsync();
 
         if (this.props.items) {
             this.state.data = this.props.items;
-            
+
             await this.reRenderAsync();
         }
     }
@@ -207,8 +207,8 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
                 this.state.data = nextProps.items || [];
             }
         }
-        
-        await super.componentWillReceiveProps(nextProps);
+
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public isAsync(): boolean {
@@ -294,9 +294,9 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
     }
 
     protected renderContent(renderHidden: boolean = false): React.ReactNode {
-        
+
         const dropdownType: DropdownType = (this.mobile) ? DropdownType.List : DropdownType.Dropdown;
-        
+
         const dropdownStyles: any = !this.description && styles.noDescription;
 
         return (

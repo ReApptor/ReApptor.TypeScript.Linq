@@ -12,8 +12,10 @@ export interface IBaseAsyncComponentState<TData> {
     data: TData | null;
 }
 
-export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsyncComponentState<TData>, TData = {}>
-    extends BaseComponent<TProps, TState> implements IAsyncComponent {
+export default abstract class BaseAsyncComponent<TProps, TState
+    extends IBaseAsyncComponentState<TData>, TData = {}>
+    extends BaseComponent<TProps, TState>
+    implements IAsyncComponent {
 
     private readonly _isAsync: boolean;
 
@@ -31,9 +33,9 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
     }
 
     public isAsync(): boolean {
-        return (this._isAsync) && (this.getEndpoint().length > 0);        
+        return (this._isAsync) && (this.getEndpoint().length > 0);
     }
-    
+
     public get hasData(): boolean {
         return (this.state.data != null);
     }
@@ -51,7 +53,7 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
         // noinspection JSIgnoredPromiseFromCall
         this.invokeReloadDataAsync(true);
     }
-    
+
     protected async invokeReloadDataAsync(reload: boolean = false): Promise<void> {
         if ((this.isMounted) && (this.isAsync()) && (!this.isLoading) && (this.canReload())) {
             try {
@@ -71,8 +73,8 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
                     await this.processDataAsync(state, data);
 
                     state.isLoading = false;
-                    
-                    if (this.isMounted) {                        
+
+                    if (this.isMounted) {
                         await this.setState(state);
                     }
                 }
@@ -80,7 +82,7 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
                 if (this.isMounted) {
                     await this.setState({isLoading: false});
                 }
-                
+
                 await PageRouteProvider.exception(e);
             }
         }
@@ -88,7 +90,7 @@ export default abstract class BaseAsyncComponent<TProps, TState extends IBaseAsy
 
     protected async processDataAsync(state: TState, data: TData | null): Promise<void> {
     }
-    
+
     protected abstract getEndpoint(): string;
 
     protected constructor(props: TProps) {

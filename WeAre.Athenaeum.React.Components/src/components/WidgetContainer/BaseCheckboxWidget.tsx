@@ -13,7 +13,7 @@ export default abstract class BaseCheckboxWidget<TProps extends IBaseCheckboxWid
     }
 
     protected async onClickAsync(e: React.MouseEvent): Promise<void> {
-        
+
         if (this.enabled) {
             let checked: boolean = !this.checked;
 
@@ -42,8 +42,8 @@ export default abstract class BaseCheckboxWidget<TProps extends IBaseCheckboxWid
         if (nextProps.checked !== this.props.checked) {
             this.state.data = (nextProps.checked === true)
         }
-        
-        await super.componentWillReceiveProps(nextProps);
+
+        await super.UNSAFE_componentWillReceiveProps(nextProps);
     }
 
     public async initializeAsync(): Promise<void> {
