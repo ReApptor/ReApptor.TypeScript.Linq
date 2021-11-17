@@ -156,7 +156,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             if (this.props.tokenLogin) {
                 await this.props.tokenLogin(this, token);
             } else {
-                await this.postAsync("api/Application/TokenLogin", token);
+                await this.postAsync("/api/Application/TokenLogin", token);
             }
 
             await PageRouteProvider.changeUrlWithoutReload();
@@ -210,7 +210,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     protected getEndpoint(): string {
         const timezoneOffset: number = Utility.timezoneOffset;
         const applicationType: WebApplicationType = this.getApplicationType(); 
-        return "api/Application/GetContext?timezoneOffset=" + timezoneOffset + "&applicationType=" + applicationType;
+        return "/api/Application/GetContext?timezoneOffset=" + timezoneOffset + "&applicationType=" + applicationType;
     }
 
     public isLayout(): boolean { return true; }

@@ -29,7 +29,7 @@ export default class PageRouteProvider {
     }
 
     private static async logoutAsync(layout: ILayoutPage): Promise<void> {
-        await layout.postAsync("api/Application/Logout", null);
+        await layout.postAsync("/api/Application/Logout", null);
     }
 
     private static async onRedirectAsync(route: PageRoute): Promise<void> {
@@ -37,7 +37,7 @@ export default class PageRouteProvider {
             if (!this.sendParametersOnRedirect) {
                 route.parameters = null;
             }
-            await ApiProvider.postAsync("api/Application/OnRedirect", route);
+            await ApiProvider.postAsync("/api/Application/OnRedirect", route);
         } catch (e) {
             //no additional action needed, not critical
         }
@@ -45,7 +45,7 @@ export default class PageRouteProvider {
 
     private static async onJsErrorAsync(serverError: ServerError): Promise<void> {
         try {
-            await ApiProvider.postAsync("api/Application/OnJsError", serverError);
+            await ApiProvider.postAsync("/api/Application/OnJsError", serverError);
         } catch (e) {
             //no additional action needed, not critical
         }

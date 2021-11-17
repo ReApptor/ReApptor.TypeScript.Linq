@@ -84,7 +84,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     protected getEndpoint(): string {
-        return "api/Application/GetTopNavItems";
+        return "/api/Application/GetTopNavItems";
     }
 
     public get items(): IMenuItem[] {
