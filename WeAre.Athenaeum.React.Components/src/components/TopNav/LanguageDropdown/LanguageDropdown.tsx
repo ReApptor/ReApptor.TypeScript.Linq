@@ -3,6 +3,7 @@ import {ILanguage} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IGlobalClick} from "@weare/athenaeum-react-common";
 
 import styles from "./LanguageDropdown.module.scss";
+
 import daFlag from "./flags/da.png";
 import deFlag from "./flags/de.png";
 import enFlag from "./flags/en.png";
