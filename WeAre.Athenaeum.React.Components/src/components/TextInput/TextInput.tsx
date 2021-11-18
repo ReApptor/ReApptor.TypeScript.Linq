@@ -22,6 +22,7 @@ export interface ITextInputProps extends IBaseInputProps<string> {
     trim?: boolean;
     autoComplete?: boolean;
     onChange?(sender: TextInput, value: string, userInteraction: boolean, done: boolean): Promise<void>;
+    onBlur?(sender: TextInput): Promise<void>;
 }
 
 export interface ITextInputState extends IBaseInputState<string> {
@@ -82,6 +83,14 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
         }
     }
 
+    protected async valueBlurHandlerAsync(): Promise<void> {
+        await super.validateAsync();
+        
+        if (this.props.onBlur) {
+            await this.props.onBlur(this);
+        }
+    }
+
     public getValidators(): ValidatorCallback<string>[] {
         return [];
     }
@@ -122,9 +131,6 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        value={this.str}
                        title={this.props.title}
                        readOnly={this.readonly}
-                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
-                       onBlur={async () => await this.valueBlurHandlerAsync()}
-                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
                        className={this.css(styles.textInput, "form-control", smallStyle, autoSuggestStyle)}
                        style={inlineStyles}
                        size={this.props.size || 10}
@@ -133,6 +139,9 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        placeholder={TextInputLocalizer.get(this.props.placeholder)}
                        autoFocus={this.props.autoFocus}
                        autoComplete={(this.props.autoComplete === false) ? "off" : ""}
+                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
+                       onBlur={async () => await this.valueBlurHandlerAsync()}
+                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
                 />
 
                 {

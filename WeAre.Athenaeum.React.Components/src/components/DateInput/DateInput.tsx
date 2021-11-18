@@ -24,6 +24,7 @@ registerLocale("pl", pl);
 registerLocale("da", da);
 registerLocale("sv", sv);
 registerLocale("nb", nb);
+
 setDefaultLocale("fi");
 
 interface IDateInputProps extends IBaseInputProps<Date> {
@@ -44,39 +45,40 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     showTime?: boolean;
     showOnlyTime?: boolean;
     onChange?(date: Date): Promise<void>;
+    onBlur?(sender: DateInput): Promise<void>;
 }
 
 interface IDateInputState extends IBaseInputState<Date> {
 }
 
 export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInputState> {
-    
+
     private get todayButton(): string {
         return this.props.todayButton || "";
     }
-    
+
     private get calendarClassName(): string {
         const calendarStyle = this.props.rentaStyle ? "renta" : "";
-        
+
         return this.props.calendarClassName || calendarStyle;
     }
-    
+
     private async handleChangeAsync(date: Date): Promise<void> {
         await this.updateValueAsync(date);
 
         if (this.props.clickToEdit) {
             await super.hideEditAsync();
         }
-        
+
         if (this.props.onChange) {
             await this.props.onChange(this.state.model.value);
         }
     }
-    
+
     private async handleRawChange(e: React.ChangeEvent) {
         e.preventDefault();
     }
-    
+
     private get selected(): Date | null {
         return (this.state.model.value != null) ? new Date(this.state.model.value) : null;
     }
@@ -104,7 +106,15 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
 
         return this.props.format || format;
     }
-    
+
+    protected async valueBlurHandlerAsync(): Promise<void> {
+        await super.validateAsync();
+
+        if (this.props.onBlur) {
+            await this.props.onBlur(this);
+        }
+    }
+
     protected async onLabelClick(e: React.MouseEvent): Promise<void> {
         e.preventDefault()
     }
@@ -112,7 +122,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     public async clearAsync(): Promise<void> {
         const model = this.state.model as any;
         model.value = null;
-        await this.setState({ model });
+        await this.setState({model});
     }
 
     public clear(): void {
@@ -136,31 +146,31 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     public renderInput(): React.ReactNode {
         const smallStyle: any = (this.props.small) && styles.small;
         const readonlyStyle: any = (this.readonly) && styles.readonly;
-        
+
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
-                <DatePicker
-                    id={this.getInputId()}
-                    title={DateInputLocalizer.get(this.props.title)}
-                    dateFormat={this.format as string}
-                    minDate={this.props.minDate}
-                    maxDate={this.props.maxDate}
-                    selected={this.selected}
-                    onChange={async (date: Date) => await this.handleChangeAsync(date)}
-                    className="form-control"
-                    calendarClassName={this.css("datepicker", this.calendarClassName)}
-                    todayButton={this.todayButton}
-                    inline={this.props.expanded}
-                    withPortal={this.props.popup}
-                    showMonthDropdown={this.props.showMonthDropdown}
-                    showMonthYearPicker={this.props.showMonthYearPicker}
-                    onChangeRaw={(e) => this.handleRawChange(e)}
-                    ref={this.props.forwardedRef}
-                    locale={DateInputLocalizer.language}
-                    readOnly={this.readonly}
-                    customInput={this.renderCustomInput()}
-                    showTimeSelect={this.props.showTime}
-                    showTimeSelectOnly={this.props.showOnlyTime}
+                <DatePicker id={this.getInputId()}
+                            title={DateInputLocalizer.get(this.props.title)}
+                            dateFormat={this.format as string}
+                            minDate={this.props.minDate}
+                            maxDate={this.props.maxDate}
+                            selected={this.selected}
+                            className="form-control"
+                            calendarClassName={this.css("datepicker", this.calendarClassName)}
+                            todayButton={this.todayButton}
+                            inline={this.props.expanded}
+                            withPortal={this.props.popup}
+                            showMonthDropdown={this.props.showMonthDropdown}
+                            showMonthYearPicker={this.props.showMonthYearPicker}
+                            ref={this.props.forwardedRef}
+                            locale={DateInputLocalizer.language}
+                            readOnly={this.readonly}
+                            customInput={this.renderCustomInput()}
+                            showTimeSelect={this.props.showTime}
+                            showTimeSelectOnly={this.props.showOnlyTime}
+                            onChange={async (date: Date) => await this.handleChangeAsync(date)}
+                            onChangeRaw={(e) => this.handleRawChange(e)}
+                            onBlur={() => this.valueBlurHandlerAsync()}
                 />
             </div>
         );
