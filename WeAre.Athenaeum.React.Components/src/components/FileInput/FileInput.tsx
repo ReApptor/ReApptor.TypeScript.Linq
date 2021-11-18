@@ -15,6 +15,10 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     labelClassName?: string;
     maxSize?: number;
     maxTotalSize?: number;
+    
+    /**
+     * List of allowed file extensions.
+     */
     fileTypes?: string[];
     removeConfirmation?: string;
     placeholder?: string;
