@@ -1,4 +1,6 @@
-﻿namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models.Alert
+﻿using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models.Alert;
+
+namespace Renta.TestApplication.WebUI.Server.Models.Alert
 {
     public sealed class AlertModel
     {
@@ -10,7 +12,7 @@
 
         public bool Dismissible { get; set; } = true;
 
-        public bool AutoClose { get; set; } = false;
+        public bool AutoClose { get; set; }
 
         public int AutoCloseDelay { get; set; } = 5000;
 
