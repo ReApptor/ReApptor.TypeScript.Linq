@@ -1,3 +1,4 @@
+import _ from "lodash";
 
 export default class StringUtility {
 
@@ -10,5 +11,8 @@ export default class StringUtility {
         }
         return 0;
     }
-
+    
+    public static toPascalCase(value: string): string {
+       return  _.upperFirst(_.camelCase(value));
+    }
 }
