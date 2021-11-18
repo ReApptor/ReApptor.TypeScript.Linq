@@ -657,7 +657,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     public async validateAsync(): Promise<void> {
-        let error: string | null = this.state.validationError;
+        const error: string | null = this.state.validationError;
 
         this.validate();
 
