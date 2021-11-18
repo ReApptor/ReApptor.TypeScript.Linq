@@ -132,6 +132,10 @@ interface IImageInputProps {
      */
     editToolbar?: IIMageInputToolbar;
 
+    /**
+     * List of allowed file extensions.
+     */
+    fileTypes?: string[];
     imageUrl?(file: FileModel): string;
     convertImage?(file: FileModel): Promise<FileModel>;
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
@@ -246,6 +250,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get maxImageRequestSizeInBytes(): number {
         return (this.props.maxImageRequestSizeInBytes) || (AthenaeumComponentsConstants.maxImageRequestSizeInBytes);
+    }
+
+    private get acceptedTypes(): string {
+        return (this.props.fileTypes && this.props.fileTypes.length)
+            ? this.props.fileTypes.join(",")
+            : "image/*";
     }
 
     //  ViewIfStatements
@@ -979,7 +989,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <input ref={this.fileInputRef}
                        className={styles.fileInput}
                        type="file"
-                       accept="image/*"
+                       accept={this.acceptedTypes}
                        multiple={this.multi}
                        onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
                 />
@@ -987,7 +997,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <input ref={this.cameraFileInputRef}
                        className={styles.fileInput}
                        type="file"
-                       accept="image/*"
+                       accept={this.acceptedTypes}
                        capture="environment"
                        multiple={this.multi}
                        onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
