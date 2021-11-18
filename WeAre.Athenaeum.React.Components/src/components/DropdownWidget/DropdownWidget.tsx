@@ -208,7 +208,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
             }
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public isAsync(): boolean {

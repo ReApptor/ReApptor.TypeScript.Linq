@@ -25,7 +25,7 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
     }
 
     public async componentWillReceiveProps(nextProps: ITabProps): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
         const newClose: boolean = (nextProps.onClose !== this.model.onClose);
         const newIcon: boolean = (nextProps.icon !== this.model.icon);

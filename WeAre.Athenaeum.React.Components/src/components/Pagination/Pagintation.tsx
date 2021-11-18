@@ -163,7 +163,7 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
     }
 
     public async componentWillReceiveProps(nextProps: IPaginationProps): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
         const newProps: boolean = (nextProps.pageNumber != this.pageNumber) ||
                                   (nextProps.pageSize != this.pageSize);

@@ -280,7 +280,7 @@ export default class MessageBox extends BaseComponent<IMessageBoxProps, IMessage
             this._model = null;
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     private renderDialog(): React.ReactNode {

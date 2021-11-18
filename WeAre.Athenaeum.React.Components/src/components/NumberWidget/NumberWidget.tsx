@@ -125,7 +125,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
             this.state.number = (nextProps.value != null) ? nextProps.value : this.min;
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public async initializeAsync(): Promise<void> {

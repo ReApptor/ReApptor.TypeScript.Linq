@@ -30,6 +30,7 @@ export interface INumberInputProps extends IBaseInputProps<number> {
     increaseIcon?: string | IIconProps;
     decreaseIcon?: string | IIconProps;
     onChange?(sender: NumberInput, value: number, userInteraction: boolean, done: boolean): Promise<void>;
+    onBlur?(sender: NumberInput): Promise<void>;
 }
 
 export interface INumberInputState extends IBaseInputState<number> {
@@ -163,6 +164,12 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
     protected async valueBlurHandlerAsync(): Promise<void> {
         await this.saveChangesAsync();
+
+        await super.validateAsync();
+
+        if (this.props.onBlur) {
+            await this.props.onBlur(this);
+        }
     }
 
     protected async onShowEditAsync(): Promise<void> {
@@ -277,7 +284,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     public async componentWillReceiveProps(nextProps: Readonly<INumberInputProps>): Promise<void> {
         this._acceptableStr = null;
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     public renderInput(): React.ReactNode {

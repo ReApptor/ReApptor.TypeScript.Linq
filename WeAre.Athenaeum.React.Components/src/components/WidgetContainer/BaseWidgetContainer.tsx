@@ -117,7 +117,7 @@ export default abstract class BaseWidgetContainer<TProps extends IBaseWidgetCont
         //reload data async if needed
         await this.invokeReloadDataAsync(reload);
         //call base class
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     protected getEndpoint(): string {
