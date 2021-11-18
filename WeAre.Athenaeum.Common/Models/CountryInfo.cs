@@ -8,7 +8,7 @@ namespace WeAre.Athenaeum.Common.Models
     {
         public CountryInfo()
         {
-            Aliases = new string[0];
+            Aliases = Array.Empty<string>();
         }
 
         public CountryInfo(string code, string name, string englishName, string culture, params string[] aliases)
@@ -59,5 +59,7 @@ namespace WeAre.Athenaeum.Common.Models
         public string Culture { get; set; }
             
         public string[] Aliases { get; set; }
+
+        public bool IsCountryInfo => true;
     }
 }

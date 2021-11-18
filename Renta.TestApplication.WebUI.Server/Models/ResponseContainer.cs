@@ -1,4 +1,5 @@
 ﻿using Renta.TestApplication.WebUI.Server.Models;
+using Renta.TestApplication.WebUI.Server.Models.Alert;
 using WeAre.Athenaeum.TemplateApp.WebUI.Server.Models.Alert;
 
 namespace WeAre.Athenaeum.TemplateApp.WebUI.Server.Models

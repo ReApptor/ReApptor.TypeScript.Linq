@@ -80,9 +80,9 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderState> {
     }
 
     public async componentWillReceiveProps(nextProps: ISliderProps): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
-        if(nextProps.defaultValue !== undefined && this.state.defaultValue !== nextProps.defaultValue) {
+        if ((nextProps.defaultValue !== undefined) && (this.state.defaultValue !== nextProps.defaultValue)) {
             this.setState({ defaultValue: nextProps.defaultValue, value: nextProps.defaultValue });
         }
     }

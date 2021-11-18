@@ -166,7 +166,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
             await this.setState({location: nextLocation});
         }
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
     }
 
     private renderLocationPicker(): React.ReactNode | null {

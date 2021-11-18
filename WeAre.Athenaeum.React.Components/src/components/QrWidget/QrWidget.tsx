@@ -41,8 +41,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     public async componentWillReceiveProps(nextProps: Readonly<IQrWidgetProps>): Promise<void> {
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
-        this.setState({icon: {name: "far camera"}});
+        await super.componentWillReceiveProps(nextProps);
+        
+        await this.setState({icon: {name: "far camera"}});
     }
 
     public get type(): QrWidgetType {

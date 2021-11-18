@@ -383,7 +383,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const newCheckable: boolean = (this.props.checkable !== nextProps.checkable);
         const newSelectable: boolean = (this.props.selectable !== nextProps.selectable);
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
         if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable)) {
             await this.buildModelAsync();

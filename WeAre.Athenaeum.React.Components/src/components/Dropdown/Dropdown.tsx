@@ -1062,6 +1062,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const props: IDropdownProps<TItem> = this.props;
 
         const newExpanded: boolean = (props.expanded !== nextProps.expanded);
+        const newDisabled: boolean = (props.disabled !== nextProps.disabled);
         const newGroupSelected: boolean = (props.groupSelected !== nextProps.groupSelected);
         const newFavorite: boolean = (props.favorite !== nextProps.favorite);
         const newRequired: boolean = (props.required !== nextProps.required);
@@ -1069,13 +1070,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
 
-        await super.UNSAFE_componentWillReceiveProps(nextProps);
+        await super.componentWillReceiveProps(nextProps);
 
-        if (newExpanded) {
-            const expanded: boolean = nextProps.expanded || false;
-            await this.setState({expanded});
+        if ((newExpanded) || (newDisabled)) {
+            this.state.expanded = nextProps.expanded || false;
+            this.state.readonly = nextProps.disabled || false;
+
+            await this.setState(this.state);
         }
-
+        
         if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired)) {
 
             const selectedItem: TItem | string | number | null | undefined = (newSelectedListItem)

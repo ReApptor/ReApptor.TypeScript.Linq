@@ -14,6 +14,7 @@ export interface ITextAreaInputProps extends IBaseInputProps<string> {
     placeholder?: string;
     noRemaining?: boolean;
     onChange?(sender: TextAreaInput, value: string): Promise<void>;
+    onBlur?(sender: TextAreaInput): Promise<void>;
 }
 
 export interface ITextAreaInputState extends IBaseInputState<string> {
@@ -35,6 +36,14 @@ export default class TextAreaInput extends BaseInput<string, ITextAreaInputProps
         const maxLength: number = this.maxLength;
         const value: number = 100 - ((maxLength - length) / maxLength) * 100;
         return value + "%";
+    }
+
+    protected async valueBlurHandlerAsync(): Promise<void> {
+        await super.validateAsync();
+
+        if (this.props.onBlur) {
+            await this.props.onBlur(this);
+        }
     }
 
     protected async valueChangeHandlerAsync(event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): Promise<void> {

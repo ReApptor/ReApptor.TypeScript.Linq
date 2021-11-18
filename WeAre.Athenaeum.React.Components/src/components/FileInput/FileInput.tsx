@@ -26,7 +26,8 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     
     onClickAsync?(sender: FileInput, value: FileModel): Promise<void>;
     onChangeAsync?(sender: FileInput, value: FileModel | FileModel[]): Promise<void>;
-    onRemoveAsync?(value?: FileModel): Promise<void>;
+    onRemoveAsync?(value: FileModel): Promise<void>;
+    onBlur?(sender: FileInput): Promise<void>;
 }
 
 export interface IFileInputState extends IBaseInputState<FileModel | FileModel[] | null> {
@@ -63,6 +64,14 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
     
     protected getType(): BaseInputType {
         return BaseInputType.File;
+    }
+
+    protected async valueBlurHandlerAsync(): Promise<void> {
+        await super.validateAsync();
+
+        if (this.props.onBlur) {
+            await this.props.onBlur(this);
+        }
     }
 
     protected async valueChangeHandlerAsync(event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): Promise<void> {
@@ -123,18 +132,21 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
     }
     
     private async removeSelectedFileAsync(index: number | null = null): Promise<void> {
-        let value: FileModel | FileModel[] | null = null;
-        let removedValue: FileModel | null = null;
+        let value: FileModel | FileModel[] | null;
+        let removedValue: FileModel | null;
         
         if ((index !== null) && (this.value instanceof Array) && (this.value.length > 0)) {
             const copyValue = [...this.value] as FileModel[];
             removedValue = copyValue.splice(index, 1)[0];
             value = copyValue;
+        } else {
+            removedValue = this.value as FileModel;
+            value = null;
         }
 
         await this.updateValueAsync(value);
         
-        if ((this.props.onRemoveAsync) && (removedValue !== null)) {
+        if ((this.props.onRemoveAsync) && (removedValue != null)) {
             await this.props.onRemoveAsync(removedValue);
         }
     }
@@ -186,7 +198,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
     }
 
     private renderFile(): React.ReactNode {
-        if(this.value instanceof Array) {
+        if (this.value instanceof Array) {
             return (this.value.length > 0) && this.value.map((file: FileModel, index: number) =>
                 <div key={index} className={styles.selectedFile}>
                     <span className={this.css(this.props.onClickAsync && styles.clickable)} 
@@ -252,13 +264,13 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                 <input id={this.getInputId()} hidden
                        type={this.getType()}
                        multiple={this.props.multiple}
-                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.valueChangeHandlerAsync(e)}
-                       onBlur={async () => await this.valueBlurHandlerAsync()}
                        className="form-control-file"
                        ref={this.props.forwardedRef}
                        style={(this.props.dropZone) ? {display: "none"} : {}}
                        disabled={this.readonly}
                        accept={this.acceptedTypes}
+                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.valueChangeHandlerAsync(e)}
+                       onBlur={async () => await this.valueBlurHandlerAsync()}
                 />
                 
                 {

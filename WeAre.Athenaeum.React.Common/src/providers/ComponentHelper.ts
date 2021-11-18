@@ -28,7 +28,7 @@ export default class ch {
 
     private static async onOnSetLanguageAsync(language: string): Promise<void> {
         try {
-            await ApiProvider.postAsync("api/Application/OnSetLanguage", language, null);
+            await ApiProvider.postAsync("/api/Application/OnSetLanguage", language, null);
         } catch (e) {
             //no additional action needed, not critical
             console.error(e);
