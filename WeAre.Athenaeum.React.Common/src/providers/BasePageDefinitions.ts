@@ -12,6 +12,7 @@ export interface IPageDefinitions {
 
 export default abstract class BasePageDefinitions implements IPageDefinitions, IService {
 
+
     private static readonly _pages: Dictionary<string, IBasePageConstructor> = new Dictionary<string, IBasePageConstructor>();
     private static readonly _modules: Dictionary<string, any> = new Dictionary<string, any>();
     
@@ -41,9 +42,14 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
         return constructor;
     }
+    protected static pageRoutesDictionary: Map<string, PageRoute>;
 
-    protected constructor() {
+    protected constructor(pageRoutes?:  Map<string, PageRoute>) {
         ServiceProvider.addSingleton(this);
+        
+        if(pageRoutes){
+            BasePageDefinitions.pageRoutesDictionary = pageRoutes!;
+        }
     }
 
     public static initialize(): void {
@@ -52,6 +58,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public getType(): ServiceType {
         return "IPageDefinitions";
     }
+    
+    
     
     protected abstract require(pageContainer: string, pageName: string): Promise<any>;
 
@@ -70,7 +78,13 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public static readonly errorRouteName: string = "Error";
 
     public static readonly errorRoute: PageRoute = new PageRoute(BasePageDefinitions.errorRouteName);
+    
 
+    public  static getRoutes():  Map<string, PageRoute> {
+        return this.pageRoutesDictionary ?? new Map<string, PageRoute>();
+    };
+    
+    
     public async createPageAsync(route: PageRoute): Promise<IBasePage> {
         
         const pageName: string = route.name;

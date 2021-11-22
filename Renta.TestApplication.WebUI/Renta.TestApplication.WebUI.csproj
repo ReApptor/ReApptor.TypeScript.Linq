@@ -108,6 +108,7 @@
       <TypeScriptCompile Include="src\app\pages\AnonymousPage\AnonymousPage.ts" />
       <TypeScriptCompile Include="src\app\pages\Error\Error.tsx" />
       <TypeScriptCompile Include="src\app\pages\PageDefinitions.ts" />
+      <TypeScriptCompile Include="src\app\pages\Tests2\Tests2.tsx" />
       <TypeScriptCompile Include="src\app\pages\TestApplicationController.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\FileInputTests\FileInputTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\sampleImage.ts" />
