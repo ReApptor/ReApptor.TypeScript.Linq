@@ -12,10 +12,17 @@ class App extends BaseComponent {
                     fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
                     topNavLogo="images/logo.svg"
                     footerLogo="images/logo.svg"
+                    onShoppingCartClickAsync={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
+                    fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
             />
         );
     }
 
+    private renderShoppingCart(): React.ReactNode {
+        return (
+            <div></div>
+        )
+    }
 }
 
 //Register initialize events
