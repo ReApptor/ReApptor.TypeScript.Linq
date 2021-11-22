@@ -12,7 +12,7 @@ import BasePageDefinitions, {IPageDefinitions} from "./BasePageDefinitions";
 import AlertModel from "../models/AlertModel";
 
 export default class PageRouteProvider {
-    
+
     private static _initialized: boolean = false;
     private static _lastMessageHashCode: number = 0;
 
@@ -50,23 +50,23 @@ export default class PageRouteProvider {
             //no additional action needed, not critical
         }
     }
-    
+
     private static async invokeRedirectAsync(route: PageRoute, id: string | null = null, innerRedirect: boolean, replace: boolean = false, stopPropagation: boolean = false): Promise<IBasePage | null> {
-        
+
         this.initialize();
 
         const context: ApplicationContext = ch.getContext();
         const current: IBasePage | null = ch.findPage();
-        
+
         if (id) {
             route = {...route};
             route.id = id;
         }
 
         const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
-        
+
         if (newPage) {
-            
+
             if (route.name === BasePageDefinitions.dummyRouteName) {
                 return current;
             }
@@ -79,13 +79,13 @@ export default class PageRouteProvider {
             }
 
             let newAlert: AlertModel | null = null;
-            
+
             if (current != null) {
-                
+
                 const currentAlert: AlertModel | null = current.alert;
-                
+
                 const canRedirect: boolean = await current.beforeRedirectAsync(route, innerRedirect);
-                
+
                 if (!canRedirect) {
                     const currentRoute: PageRoute = current.route;
 
@@ -95,7 +95,7 @@ export default class PageRouteProvider {
 
                     return current;
                 }
-                
+
                 // New alert was triggered in method "beforeRedirectAsync";
                 if (!AlertModel.isEqual(currentAlert, current.alert)) {
                     newAlert = current.alert;
@@ -115,11 +115,11 @@ export default class PageRouteProvider {
             if (newAlert != null) {
                 await page.alertAsync(newAlert);
             }
-            
+
             // if (current != null) {
             //     await current!.hideAlertAsync();
             // }
-            
+
             if (!innerRedirect) {
                 if (replace) {
                     window.history.replaceState(route, route.name);
@@ -159,38 +159,38 @@ export default class PageRouteProvider {
         return await pageDefinitions.createPageAsync(route);
     }
 
-    public static async changeUrlWithoutReload(newPath?: string | null) : Promise<void> {
+    public static async changeUrlWithoutReload(newPath?: string | null): Promise<void> {
         if (newPath == null) {
             newPath = "/";
         }
         window.history.replaceState(null, "", newPath);
     }
-    
+
     public static stopPropagation(): void {
         throw new Error(AthenaeumConstants.apiError);
     }
-    
+
     public static async offline(): Promise<void> {
         await PageRouteProvider.redirectAsync(BasePageDefinitions.offlineRoute, true);
     }
-    
+
     public static async error(serverError: ServerError): Promise<void> {
         // redirect to error page
         const route = new PageRoute(BasePageDefinitions.errorRouteName);
-        route.parameters = { error: serverError } as IErrorPageParameters;
+        route.parameters = {error: serverError} as IErrorPageParameters;
         await PageRouteProvider.redirectAsync(route, true);
     }
 
     public static async exception(error: Error, reactInfo: ErrorInfo | null = null): Promise<boolean> {
-        
+
         if ((error) && (!ApiProvider.isApiError(error))) {
-            
+
             const page: IBasePage | null = ch.findPage();
             const pageRouteName: string = ((page) && (page.routeName)) ? page.routeName : ``;
             const componentStack: string = (reactInfo != null) ? reactInfo!.componentStack : "";
             const messageHashCode: number = `${pageRouteName}:${componentStack}:${error.stack}:${error.message}`.getHashCode();
             const stackOverflow: boolean = (this._lastMessageHashCode == messageHashCode);
-            
+
             if (stackOverflow) {
                 console.warn(error);
                 return false;
@@ -208,10 +208,23 @@ export default class PageRouteProvider {
             this.onJsErrorAsync(serverError);
             //redirect to error page
             await this.error(serverError);
-            
+
         }
-        
+
         return true;
+    }
+
+    public static async resolveRouteAndRedirect(route: string, parameter: string | null) {
+        let routes: Map<string, PageRoute> | null = BasePageDefinitions.getRoutes();
+
+        if (routes) {
+            if (routes.get(route)) {
+                let pageRoute: PageRoute = routes.get(route)!;
+
+                await this.invokeRedirectAsync(pageRoute, parameter, false);
+            }
+
+        }
     }
 
     public static back(): void {
@@ -221,7 +234,7 @@ export default class PageRouteProvider {
     public static forward(): void {
         window.history.forward();
     }
-    
+
     public static push(route: PageRoute, title: string | null = null): void {
         if (title) {
             document.title = title;
@@ -234,6 +247,6 @@ export default class PageRouteProvider {
 
         return pageDefinitions.render(page, ref);
     }
-    
+
     public static sendParametersOnRedirect: boolean = false;
 }

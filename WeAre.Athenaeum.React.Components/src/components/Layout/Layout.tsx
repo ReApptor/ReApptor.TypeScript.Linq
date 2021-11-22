@@ -14,7 +14,7 @@ import {
     BaseAsyncComponent,
     IAsyncComponent,
     IBaseComponent,
-    AlertModel, IPageContainer
+    AlertModel, IPageContainer, PageRoute
 } from "@weare/athenaeum-react-common";
 import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
@@ -148,6 +148,19 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 this._swiping = false;
             }
         }
+    }
+
+    private async processUrlRouteAsync(): Promise<void> {
+        let route: string = window.location.pathname;
+        
+        if (route != null && route !== "/" && route !== "") {
+            let parts: string[] = route.split("/");
+            let pageRoute: string = parts[1];
+            let parameter: string | null = parts.length > 2 ?  parts[2] : null;
+
+            await PageRouteProvider.resolveRouteAndRedirect(pageRoute, parameter);
+        }
+
     }
 
     private async processTokenAsync(): Promise<void> {
@@ -361,6 +374,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
 
         await this.processTokenAsync();
+
+        await this.processUrlRouteAsync()
     }
 
     public async componentDidUpdate(): Promise<void> {
