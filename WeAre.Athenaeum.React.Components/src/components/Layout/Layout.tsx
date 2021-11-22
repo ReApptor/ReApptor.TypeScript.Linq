@@ -31,13 +31,19 @@ export interface ILayoutProps {
     footerLinks?: () => IFooterLink[];
     noTopNav?: boolean;
     noFooter?: boolean;
+
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
+
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
+
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
+
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
 
     onLogoClick?(sender: IBaseComponent): Promise<void>;
+
     onShoppingCartClickAsync?(sender: TopNav): Promise<void>;
+
     fetchShoppingCartAsync?(sender: TopNav): Promise<IShoppingCart>;
 }
 
@@ -73,7 +79,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private async onTouchEndHandlerAsync(e: React.TouchEvent): Promise<void> {
         if ((this._startTouch != null) && (this._touch)) {
-            
+
             const x: number = this._startTouch.clientX;
             const y: number = this._startTouch.clientY;
 
@@ -145,7 +151,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private async processTokenAsync(): Promise<void> {
-        
+
         const parsed: ParsedQuery = queryString.parse(window.location.search);
 
         let token = parsed.token as string;
@@ -169,7 +175,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private isMobileApp(): boolean {
         const href: string = document.location.href.toLowerCase();
-        return href.endsWith("/mobile") || href.endsWith("/mobile/");
+        return (
+            (href.endsWith("/mobile") || href.endsWith("/mobile/")) ||
+            (href.endsWith("/mobilehome") || href.endsWith("/mobilehome/"))
+        );
     }
 
     private isPwaApp(): boolean {
@@ -193,14 +202,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     protected async fetchDataAsync(): Promise<ApplicationContext> {
-        
+
         if (this.props.fetchContext) {
             const timezoneOffset: number = Utility.timezoneOffset;
             const applicationType: WebApplicationType = this.getApplicationType();
             const context: ApplicationContext = await this.props.fetchContext(this, timezoneOffset, applicationType);
-            
+
             await ch.setContextAsync(context);
-            
+
             if (context.currentPage) {
                 await PageRouteProvider.redirectAsync(context.currentPage, true);
             }
@@ -213,16 +222,18 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     protected getEndpoint(): string {
         const timezoneOffset: number = Utility.timezoneOffset;
-        const applicationType: WebApplicationType = this.getApplicationType(); 
+        const applicationType: WebApplicationType = this.getApplicationType();
         return "/api/Application/GetContext?timezoneOffset=" + timezoneOffset + "&applicationType=" + applicationType;
     }
 
-    public isLayout(): boolean { return true; }
-    
+    public isLayout(): boolean {
+        return true;
+    }
+
     public get hasTopNav(): boolean {
         return ((this.props.noTopNav !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasTopNav));
     }
-    
+
     public get hasFooter(): boolean {
         return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
     }
@@ -233,7 +244,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             await this.reRenderAsync();
         }
     }
-    
+
     public async swipeLeftAsync(): Promise<void> {
         if (this.mobile) {
             this.removeTooltip();
@@ -250,7 +261,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
         if ((this.state.isSpinning !== isSpinning) && (this.isMounted)) {
-            await this.setState({ isSpinning: isSpinning });
+            await this.setState({isSpinning: isSpinning});
         }
     }
 
@@ -259,9 +270,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async setPageAsync(page: IBasePage): Promise<void> {
-        
-        await this.setState({ page: page });
-        
+
+        await this.setState({page: page});
+
         if (this.mobile) {
             this.removeTooltip();
             this.initializeTooltips();
@@ -299,7 +310,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return pageContainer?.alert ?? this._alert;
     }
-    
+
     public initializeTooltips(): void {
         const tooltip = this.JQuery('[data-toggle="tooltip"]');
 
@@ -317,38 +328,38 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public reinitializeTooltips(): void {
         this.JQuery('[data-toggle="tooltip"]').tooltip("dispose");
-        
+
         this.initializeTooltips();
     }
-    
+
     private removeTooltip(): void {
         this.JQuery('.tooltip').remove();
     }
-    
+
     //Do not delete - needs for REACT error handling
     // noinspection JSUnusedGlobalSymbols
     public static getDerivedStateFromError(): any {
-        return { error: true };
+        return {error: true};
     }
 
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
 
         // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
-        
+
         if ((processed) && (this.state.error)) {
             await this.setState({error: false});
         }
     }
 
     public async componentDidMount(): Promise<void> {
-        
+
         await super.componentDidMount();
 
         if (this.mobile) {
             this.initializeTooltips();
         }
-        
+
         await this.processTokenAsync();
     }
 
@@ -357,7 +368,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             await this.alertAsync(this._alert);
         }
     }
-    
+
     public get applicationName(): string {
         return (this.state.data != null) ? this.state.data.applicationName : "";
     }
@@ -376,7 +387,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                  onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}
                  onTouchEnd={async (e: React.TouchEvent) => await this.onTouchEndHandlerAsync(e)}
                  onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
-                
+
                 {
                     (this.hasTopNav) &&
                     (
@@ -396,7 +407,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                         ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && PageRouteProvider.render(this.state.page, this._pageRef)
                     }
                 </main>
-    
+
                 {
                     ((this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
                     (
@@ -409,14 +420,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
                 {
-                    ((this.state.error) || (this.state.isSpinning)) && 
+                    ((this.state.error) || (this.state.isSpinning)) &&
                     (
-                        <Spinner global />
+                        <Spinner global/>
                     )
                 }
 
-                <a ref={this._downloadLink} style={{display: "none"}} />
-                
+                <a ref={this._downloadLink} style={{display: "none"}}/>
+
             </div>
         );
     }
