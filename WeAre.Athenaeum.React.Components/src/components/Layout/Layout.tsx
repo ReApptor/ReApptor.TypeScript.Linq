@@ -16,7 +16,7 @@ import {
     IBaseComponent,
     AlertModel, IPageContainer
 } from "@weare/athenaeum-react-common";
-import TopNav, {IMenuItem} from "../TopNav/TopNav";
+import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 
@@ -34,7 +34,11 @@ export interface ILayoutProps {
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
     fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
+    fetchTopNavItems?(sender: IBaseComponent): Promise<IMenuItem[]>;
+
     onLogoClick?(sender: IBaseComponent): Promise<void>;
+    onShoppingCartClickAsync?(sender: TopNav): Promise<void>;
+    fetchShoppingCartAsync?(sender: TopNav): Promise<IShoppingCart>;
 }
 
 interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
@@ -379,6 +383,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                         <TopNav applicationName={this.applicationName}
                                 fetchItems={this.props.fetchTopNavItems}
                                 logo={this.props.topNavLogo}
+                                fetchShoppingCart={this.props.fetchShoppingCartAsync}
+                                onShoppingCartClickAsync={this.props.onShoppingCartClickAsync}
                                 logoText={this.props.topNavLogoText}
                                 onLogoClick={this.props.onLogoClick}
                         />

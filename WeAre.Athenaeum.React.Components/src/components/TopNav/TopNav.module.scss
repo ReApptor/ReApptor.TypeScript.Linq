@@ -107,6 +107,25 @@
         position: absolute;
         right: 0;
         
+        &_shoppingCart{
+            color: #ffffff;
+            cursor:pointer;
+        }
+        
+        &_shoppingCartCount{
+            font-size: 12px;
+            background: #000000;
+            color: #fff;
+            vertical-align: top;
+            margin-left: -10px;
+            margin-top: -15px;
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+        
         &_infoIcon {
             color: white;
             margin: 0 12px;

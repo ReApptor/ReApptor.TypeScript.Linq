@@ -13,18 +13,31 @@ export interface IMenuItem {
     label: string;
 }
 
+export interface IShoppingCart {
+    route: PageRoute;
+    classname?: string;
+    productsCount: number;
+}
+
 export interface ITopNavProps {
     className?: string;
     languageClassName?: string;
     logo?: any;
     logoText?: string;
     applicationName?: string;
+
+    onShoppingCartClickAsync?(sender: TopNav): Promise<void>;
+
+    fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
+
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
+
     onLogoClick?(sender: TopNav): Promise<void>;
 }
 
 interface ITopNavState extends IBaseAsyncComponentState<IMenuItem[]> {
     isHamburgerOpen: boolean,
+    shoppingCart: IShoppingCart | null
 }
 
 export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavState, IMenuItem[]> implements IGlobalClick {
@@ -32,19 +45,26 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         isHamburgerOpen: false,
         data: null,
         isLoading: false,
+        shoppingCart: null
     };
 
     private async backAsync(): Promise<void> {
         await PageRouteProvider.back();
     }
-    
+
+    private async onShoppingCartClickAsync(): Promise<void> {
+        if (this.props.onShoppingCartClickAsync) {
+            await this.props.onShoppingCartClickAsync(this)
+        }
+    }
+
     private async toggleHamburgerAsync(): Promise<void> {
         let isHamburgerOpen: boolean = !this.state.isHamburgerOpen;
-        await this.setState({ isHamburgerOpen });
+        await this.setState({isHamburgerOpen});
     }
 
     private async closeHamburgerAsync(): Promise<void> {
-        await this.setState({ isHamburgerOpen: false });
+        await this.setState({isHamburgerOpen: false});
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
@@ -71,15 +91,20 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         TopNav.mountedInstance = null;
         await super.componentWillUnmount();
     }
-    
+
     private async onLanguageChangeAsync(language: string): Promise<void> {
         await ch.setLanguageAsync(language);
     }
-    
+
     protected async fetchDataAsync(): Promise<IMenuItem[]> {
+        if (this.props.fetchShoppingCart) {
+            let shoppingCart: IShoppingCart = await this.props.fetchShoppingCart(this);
+            await this.setState({shoppingCart})
+        }
         if (this.props.fetchItems) {
             return await this.props.fetchItems(this);
         }
+
         return super.fetchDataAsync();
     }
 
@@ -90,7 +115,11 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     public get items(): IMenuItem[] {
         return this.state.data || [];
     }
-    
+
+    public get shoppingCart(): IShoppingCart | null {
+        return this.state.shoppingCart;
+    }
+
     private get manual(): IManualProps {
         const page: IBasePage | null = ch.findPage();
         return (page)
@@ -102,15 +131,22 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return (
             <nav className={this.css(styles.navigation, this.props.className)}>
                 <React.Fragment>
-                    
+
                     <div className={styles.left}>
-                        
+
                         <div className={styles.left_backIcon} onClick={async () => await this.backAsync()}>
-                            <i className="fas fa-chevron-circle-left" />
+                            <i className="fas fa-chevron-circle-left"/>
                         </div>
 
-                        {(this.props.logo) && (<img src={this.props.logo} alt={this.props.logoText || "renta"} onClick={async () => await this.onLogoClick()} />)}
-                        
+                        {
+                            (this.props.logo) && (
+                                <img src={this.props.logo}
+                                     alt={this.props.logoText || "renta"}
+                                     onClick={async () => await this.onLogoClick()
+                                     }/>
+                            )
+                        }
+
                     </div>
 
                     <div className={styles.middle}>
@@ -120,37 +156,57 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                     </div>
 
                     <div className={styles.right}>
-                        
+
                         {
-                            ((this.manual.manual) || (this.manual.onClick))  && 
+                            ((this.manual.manual) || (this.manual.onClick)) &&
                             (
                                 <Icon name={this.manual.icon || "question-circle"}
-                                className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
-                                style={IconStyle.Regular} size={IconSize.X2}
-                                toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
+                                      className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
+                                      style={IconStyle.Regular} size={IconSize.X2}
+                                      toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
                                 />
                             )
                         }
-                        
+
                         {
                             (this.items.length > 0) &&
                             (
-                                <div className={styles.right_hamburgerIcon} onClick={async () => await this.toggleHamburgerAsync()}>
-                                    <i className="fas fa-2x fa-bars" />
+                                <div className={styles.right_hamburgerIcon}
+                                     onClick={async () => await this.toggleHamburgerAsync()}>
+                                    <i className="fas fa-2x fa-bars"/>
                                 </div>
                             )
                         }
-                        
+
+                        {
+                            (this.shoppingCart) && (
+                                <>
+                                    <Icon name={"far shopping-cart"}
+                                          size={IconSize.X2}
+                                          className={this.props.className ?? styles.right_shoppingCart}
+                                          onClick={async () => await this.onShoppingCartClickAsync()}
+                                    />
+                                    {
+                                        this.shoppingCart.productsCount > 0 && (
+                                            <span className={styles.right_shoppingCartCount}>{this.shoppingCart.productsCount}</span>
+
+                                        )
+                                    }
+                                </>
+                            )
+                        }
+
+
                         <LanguageDropdown className={this.props.languageClassName}
                                           languages={TopNavLocalizer.supportedLanguages}
                                           currentLanguage={TopNavLocalizer.language}
                                           changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
                         />
-                    
+
                     </div>
 
-                    <Hamburger menuItems={this.items} open={this.state.isHamburgerOpen} />
-                    
+                    <Hamburger menuItems={this.items} open={this.state.isHamburgerOpen}/>
+
                 </React.Fragment>
             </nav>
         );

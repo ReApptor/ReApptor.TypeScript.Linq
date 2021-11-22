@@ -1,5 +1,5 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
-import {IGoogleApiSettings, IMenuItem} from "@weare/athenaeum-react-components";
+import {IGoogleApiSettings, IMenuItem, IShoppingCart} from "@weare/athenaeum-react-components";
 import PageDefinitions from "./PageDefinitions";
 
 class TestApplicationController {
@@ -51,8 +51,14 @@ class TestApplicationController {
 
     public async fetchTopNavItems(): Promise<IMenuItem[]> {
         return [
-            { route: PageDefinitions.testsRoute, label: "Tests" }
+            {route: PageDefinitions.testsRoute, label: "Tests"}
         ];
+    }
+    
+    public async fetchShoppingCartAsync(): Promise<IShoppingCart> {
+        return {
+            route: PageDefinitions.testsRoute, productsCount: 1
+        }
     }
 }
 
