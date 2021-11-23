@@ -1,5 +1,6 @@
 import Utility from "../Utility";
 import HashCodeUtility from "../HashCodeUtility";
+import StringUtility from "../StringUtility";
 
 declare global {
     interface String {
@@ -16,6 +17,8 @@ declare global {
          * @returns Number - A 32-bit signed integer hash code.
          */
         getHashCode(): number;
+
+        toPascalCase(): string;
     }
 }
 
@@ -33,6 +36,12 @@ export const StringExtensions = function () {
         };
     }
     
+    if (String.prototype.toPascalCase == null) {
+        String.prototype.toPascalCase = function (): string {
+            return StringUtility.toPascalCase(this as string);
+        };
+    }
+
 };
 
 StringExtensions();
