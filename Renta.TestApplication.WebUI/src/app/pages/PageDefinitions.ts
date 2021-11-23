@@ -2,6 +2,7 @@ import {BasePageDefinitions, PageRoute} from "@weare/athenaeum-react-common";
 import {Dictionary} from "typescript-collections";
 import Tests from "./Tests/Tests";
 import Tests2 from "./Tests2/Tests2";
+import Tests3 from "./Tests3/Tests3";
 
 export default class PageDefinitions extends BasePageDefinitions {
 
@@ -22,6 +23,8 @@ export default class PageDefinitions extends BasePageDefinitions {
         return pageRoutes;
     }
 
+    public static readonly testsRoute3: PageRoute = new PageRoute(nameof(Tests3));
+    
     public static readonly testsRoute2: PageRoute = new PageRoute(nameof(Tests2));
 
     public static readonly testsRoute: PageRoute = new PageRoute(nameof(Tests));
