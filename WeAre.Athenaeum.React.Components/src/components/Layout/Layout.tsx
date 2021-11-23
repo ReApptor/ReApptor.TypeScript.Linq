@@ -156,13 +156,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private async setPageUrlAsync(): Promise<void> {
 
         const page: IBasePage = this.getPage();
-        
+
         if (page == null || page.ignoreGeneratedUrl) {
             return;
         }
-        
-        let routeName: string  = page.routeName;
-        
+
+        let routeName: string = page.routeName;
+
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
         let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))

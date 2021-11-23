@@ -108,6 +108,8 @@ export interface IBasePageProps<TParams extends BasePageParameters> {
     routeIndex?: number;
     routeId?: string;
     parameters?: TParams;
+    ignoreGeneratedUrl?: boolean;
+
 }
 
 export interface IIsLoading {
@@ -185,6 +187,10 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     public get routeIndex(): number | null {
         return (this.props.routeIndex != null) ? this.props.routeIndex : null;
+    }
+
+    public get ignoreGeneratedUrl(): boolean  {
+        return !!this.props.ignoreGeneratedUrl;
     }
 
     public get routeId(): string | null {
