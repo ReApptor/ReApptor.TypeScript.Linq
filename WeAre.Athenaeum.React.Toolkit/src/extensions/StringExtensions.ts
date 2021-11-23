@@ -18,7 +18,7 @@ declare global {
          */
         getHashCode(): number;
 
-        toPascalCase(value: string): string;
+        toPascalCase(): string;
     }
 }
 
