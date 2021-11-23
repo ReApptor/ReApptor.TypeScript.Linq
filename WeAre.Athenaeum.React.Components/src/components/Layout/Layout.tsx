@@ -33,6 +33,7 @@ export interface ILayoutProps {
     footerLinks?: () => IFooterLink[];
     noTopNav?: boolean;
     noFooter?: boolean;
+    changeUrl?: boolean;
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
@@ -158,12 +159,15 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         if (routeName === null) {
             return;
         }
-        
+
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
         let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
             ? localizer.get(`PageRoutes.${routeName}`)
-            : null;
+            : (this.props.changeUrl)
+                ? routeName
+                : null;
+
 
         if (localizedRouteName) {
             await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
