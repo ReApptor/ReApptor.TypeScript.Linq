@@ -64,6 +64,9 @@ export interface IBasePage extends IBaseComponent {
     readonly routeId: string | null;
     readonly parameters: BasePageParameters | null;
     readonly route: PageRoute;
+
+    readonly ignoreGeneratedUrl?: boolean;
+
 }
 
 export interface ILayoutPage extends IAsyncComponent {
