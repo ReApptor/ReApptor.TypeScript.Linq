@@ -52,7 +52,9 @@ class TestApplicationController {
     public async fetchTopNavItems(): Promise<IMenuItem[]> {
         return [
             {route: PageDefinitions.testsRoute, label: "Tests"},
-            {route: PageDefinitions.testsRoute2, label: "Tests2"}
+            {route: PageDefinitions.testsRoute2, label: "Tests2"},
+            {route: PageDefinitions.testsRoute3, label: "Tests3"}
+
         ];
     }
     
