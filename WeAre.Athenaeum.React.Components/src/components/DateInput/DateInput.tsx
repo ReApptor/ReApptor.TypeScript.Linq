@@ -59,7 +59,6 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
 
     private get calendarClassName(): string {
         const calendarStyle = this.props.rentaStyle ? "renta" : "";
-
         return this.props.calendarClassName || calendarStyle;
     }
 
