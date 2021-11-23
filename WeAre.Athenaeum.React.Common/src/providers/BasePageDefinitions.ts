@@ -8,6 +8,7 @@ import BasePageParameters from "../models/BasePageParameters";
 export interface IPageDefinitions {
     createPageAsync(route: PageRoute): Promise<IBasePage>;
     render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement;
+    getRoutes?() : Dictionary<string, PageRoute>
 }
 
 export default abstract class BasePageDefinitions implements IPageDefinitions, IService {
@@ -45,12 +46,8 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     
     protected static pageRoutesDictionary: Map<string, PageRoute>;
 
-    protected constructor(pageRoutes?:  Map<string, PageRoute>) {
+    protected constructor() {
         ServiceProvider.addSingleton(this);
-        
-        if(pageRoutes){
-            BasePageDefinitions.pageRoutesDictionary = pageRoutes!;
-        }
     }
 
     public static initialize(): void {
@@ -59,8 +56,6 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public getType(): ServiceType {
         return "IPageDefinitions";
     }
-    
-    
     
     protected abstract require(pageContainer: string, pageName: string): Promise<any>;
 

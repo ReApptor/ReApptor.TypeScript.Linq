@@ -15,7 +15,7 @@ export interface IMenuItem {
 
 export interface IShoppingCart {
     route: PageRoute;
-    classname?: string;
+    className?: string;
     productsCount: number;
 }
 

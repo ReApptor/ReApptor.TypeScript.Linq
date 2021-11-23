@@ -10,7 +10,7 @@ import ch from "./ComponentHelper";
 import IErrorPageParameters from "../models/IErrorPageParameters";
 import BasePageDefinitions, {IPageDefinitions} from "./BasePageDefinitions";
 import AlertModel from "../models/AlertModel";
-import {ParsedQuery} from "query-string";
+import {Dictionary} from "typescript-collections";
 
 export default class PageRouteProvider {
 
@@ -215,40 +215,44 @@ export default class PageRouteProvider {
         return true;
     }
 
-    public static async resolveRouteAndRedirect(route: string, params: ParsedQuery) {
+    public static resolveRoute(route: string): PageRoute | null {
 
-        let routes: Map<string, PageRoute> | null = BasePageDefinitions.getRoutes();
-        
-        if (!routes) {
-            return;
+        const pageDefinitions: IPageDefinitions | null = ServiceProvider.getService(nameof<IPageDefinitions>());
+
+        if (!pageDefinitions?.getRoutes) {
+            return null;
         }
-        
+        let routes: Dictionary<string, PageRoute> | null = pageDefinitions.getRoutes();
+
+        if (!routes) {
+            return null;
+        }
+
         let parts: string[] = route.split("/");
 
         parts = parts.filter(route => route !== '');
 
         const firstUrlPart: string = parts[0];
 
-        const secondUrlPart: string | null = parts.length > 1 ?
-            parts[1] :
-            null;
+        const secondUrlPart: string | null = (parts.length > 1)
+            ? parts[1]
+            : null;
 
-        const longRoute: string | null = parts.length > 1 ?
-            `${firstUrlPart}/${secondUrlPart}` :
-            null;
+        const longRoute: string | null = (parts.length > 1)
+            ? `${firstUrlPart}/${secondUrlPart}`
+            : null;
 
-        if (longRoute && routes.get(longRoute)) {
-            let pageRoute: PageRoute = routes.get(longRoute)!;
-            pageRoute.parameters = params;
-            await this.invokeRedirectAsync(pageRoute, null, false);
+        if (longRoute && routes.containsKey(longRoute)) {
+            return routes.getValue(longRoute)!;
         }
 
-        if (routes.get(firstUrlPart)) {
-            let pageRoute: PageRoute = routes.get(firstUrlPart)!;
-            pageRoute.parameters = params;
-            await this.invokeRedirectAsync(pageRoute, secondUrlPart, false);
+        if (routes.containsKey(firstUrlPart)) {
+            let pageRoute: PageRoute = routes.getValue(firstUrlPart)!;
+            pageRoute.id = secondUrlPart;
+            return pageRoute;
         }
 
+        return null;
 
     }
 

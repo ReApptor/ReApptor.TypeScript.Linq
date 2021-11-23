@@ -1,20 +1,22 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {Utility, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {FileModel, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import {
-    ch,
-    WebApplicationType,
-    SwipeDirection,
-    PageRouteProvider,
-    IBasePage,
-    ILayoutPage,
+    AlertModel,
     ApplicationContext,
-    IGlobalResize,
-    IBaseAsyncComponentState,
     BaseAsyncComponent,
+    ch,
     IAsyncComponent,
+    IBaseAsyncComponentState,
     IBaseComponent,
-    AlertModel, IPageContainer, PageRoute
+    IBasePage,
+    IGlobalResize,
+    ILayoutPage,
+    IPageContainer,
+    PageRoute,
+    PageRouteProvider,
+    SwipeDirection,
+    WebApplicationType
 } from "@weare/athenaeum-react-common";
 import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
@@ -152,10 +154,15 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private async processUrlRouteAsync(): Promise<void> {
         const route: string = window.location.pathname;
-        const parsed: ParsedQuery = queryString.parse(window.location.search);
-        
+
         if (route !== null && route !== "/" && route !== "") {
-            await PageRouteProvider.resolveRouteAndRedirect(route, parsed);
+            
+            let pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
+            
+            if (pageRoute) {                
+                pageRoute.parameters = queryString.parse(window.location.search);
+                await PageRouteProvider.redirectAsync(pageRoute)
+            }
         }
 
     }
@@ -372,7 +379,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         await this.processTokenAsync();
 
-        await this.processUrlRouteAsync()
+        await this.processUrlRouteAsync();
     }
 
     public async componentDidUpdate(): Promise<void> {
