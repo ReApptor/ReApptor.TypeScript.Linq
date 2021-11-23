@@ -151,14 +151,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private async processUrlRouteAsync(): Promise<void> {
-        let route: string = window.location.pathname;
+        const route: string = window.location.pathname;
+        const parsed: ParsedQuery = queryString.parse(window.location.search);
         
-        if (route != null && route !== "/" && route !== "") {
-            let parts: string[] = route.split("/");
-            let pageRoute: string = parts[1];
-            let parameter: string | null = parts.length > 2 ?  parts[2] : null;
-
-            await PageRouteProvider.resolveRouteAndRedirect(pageRoute, parameter);
+        if (route !== null && route !== "/" && route !== "") {
+            await PageRouteProvider.resolveRouteAndRedirect(route, parsed);
         }
 
     }

@@ -42,6 +42,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
         return constructor;
     }
+    
     protected static pageRoutesDictionary: Map<string, PageRoute>;
 
     protected constructor(pageRoutes?:  Map<string, PageRoute>) {
