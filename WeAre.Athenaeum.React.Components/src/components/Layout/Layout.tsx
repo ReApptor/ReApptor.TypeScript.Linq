@@ -176,7 +176,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private async processUrlRouteAsync(): Promise<void> {
         const route: string = window.location.pathname;
-        console.log("processUrlRouteAsync, read url")
 
         if (route !== null && route !== "/" && route !== "") {
 
@@ -184,7 +183,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
             if (pageRoute) {
                 pageRoute.parameters = queryString.parse(window.location.search);
-                console.log("processUrlRouteAsync, redirect")
 
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
@@ -405,14 +403,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         await this.processTokenAsync();
 
         await this.processUrlRouteAsync();
-
-        await this.setPageUrlAsync();
     }
 
     public async componentDidUpdate(): Promise<void> {
         if (this._alert) {
             await this.alertAsync(this._alert);
         }
+
+        await this.setPageUrlAsync();
     }
 
     public get applicationName(): string {
@@ -472,7 +470,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     )
                 }
 
-                <a ref={this._downloadLink} style={{display: "none"}}/>
+                <a ref={this._downloadLink}
+                   style={{display: "none"}}
+                />
 
             </div>
         );
