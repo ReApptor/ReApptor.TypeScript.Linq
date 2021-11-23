@@ -154,12 +154,15 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private async setPageUrlAsync(): Promise<void> {
-        let routeName: string | null = this.getPage()?.routeName;
 
-        if (routeName === null) {
+        const page: IBasePage = this.getPage();
+        
+        if (page == null || page.ignoreGeneratedUrl) {
             return;
         }
-
+        
+        let routeName: string  = page.routeName;
+        
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
         let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
@@ -170,6 +173,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
 
         if (localizedRouteName) {
+            if (page.routeId) {
+                localizedRouteName = `${localizedRouteName}/${page.routeId}`
+            }
             await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
         }
     }
