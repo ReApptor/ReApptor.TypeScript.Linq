@@ -77,7 +77,6 @@
     <ItemGroup>
         <Compile Remove="obj\**" />
         <Compile Remove="bin\**" />
-        <Compile Remove="src\localization\**" />
         <Compile Remove="build\**" />
         <Compile Remove="src\@weare\**" />
         <Compile Remove="dist\**" />
@@ -124,6 +123,10 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="build\manifest.json" />
       <_ContentIncludedByDefault Remove="dist\manifest.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="src\localization" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

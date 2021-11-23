@@ -1,0 +1,13 @@
+{
+  "localizator": [{
+    "neutralResourcePath": "$(ProjectDir)/SharedResources.resx",
+    "destinationPath": "$(ProjectDir)../Renta.TestApplication.WebUI/src/localization/Localizer.ts",
+    "type": "0",
+    "neutralLanguage": "fi"
+  }, {
+    "neutralResourcePath": "$(ProjectDir)/SharedResources.resx",
+    "destinationPath": "$(ProjectDir)../Renta.TestApplication.WebUI.Resources/SharedResources.cs",
+    "type": "1",
+    "neutralLanguage": "fi"
+  }]
+}

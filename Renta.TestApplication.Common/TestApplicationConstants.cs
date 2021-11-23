@@ -43,6 +43,22 @@ namespace WeAre.Athenaeum.TemplateApp.Common
         
         public static readonly RequestCulture DefaultRequestCulture = new RequestCulture(DefaultCulture);
 
+                public static class Localization
+        {
+            public static readonly CultureInfo[] SupportedCultures =
+            {
+                new CultureInfo("fi-FI"),
+                new CultureInfo("sv-SE"),
+                //new CultureInfo("nb-NO"),
+                new CultureInfo("en-US"),
+                //new CultureInfo("pl-PL"),
+            };
+
+            public static readonly CultureInfo DefaultCulture = SupportedCultures.First();
+
+            public static readonly RequestCulture DefaultRequestCulture = new RequestCulture(DefaultCulture);
+        }
+        
         public static class Http
         {
             /// <summary>
