@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {FileModel, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import {
     AlertModel,
     ApplicationContext,
@@ -152,15 +152,36 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
+    private async setPageUrlAsync(): Promise<void> {
+        let routeName: string | null = this.getPage()?.routeName;
+
+        if (routeName === null) {
+            return;
+        }
+        
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+
+        let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
+            ? localizer.get(`PageRoutes.${routeName}`)
+            : null;
+
+        if (localizedRouteName) {
+            await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
+        }
+    }
+
     private async processUrlRouteAsync(): Promise<void> {
         const route: string = window.location.pathname;
+        console.log("processUrlRouteAsync, read url")
 
         if (route !== null && route !== "/" && route !== "") {
-            
+
             let pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
-            
-            if (pageRoute) {                
+
+            if (pageRoute) {
                 pageRoute.parameters = queryString.parse(window.location.search);
+                console.log("processUrlRouteAsync, redirect")
+
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
         }
@@ -380,6 +401,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         await this.processTokenAsync();
 
         await this.processUrlRouteAsync();
+
+        await this.setPageUrlAsync();
     }
 
     public async componentDidUpdate(): Promise<void> {
