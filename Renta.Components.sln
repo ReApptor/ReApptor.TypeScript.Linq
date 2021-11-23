@@ -72,6 +72,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Services.AC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeAre.Athenaeum.Services.UnitTest", "WeAre.Athenaeum.Services.UnitTest\WeAre.Athenaeum.Services.UnitTest.csproj", "{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renta.TestApplication.WebUI.Resources", "Renta.TestApplication.WebUI.Resources\Renta.TestApplication.WebUI.Resources.csproj", "{AFA1F75E-B67C-4F03-8B6D-F93488B6D523}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,7 @@ Global
 		{E83D51B1-5F11-474D-B2C4-F018CE88CD64} = {13C11342-8709-487B-A4DB-C6F3AB84B71E}
 		{7C2063B5-7901-44C9-A2D3-5275D7FB544E} = {BE20A18C-28AD-4834-9901-9EB3389202AD}
 		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A} = {F55C67D5-2FDD-4C70-8555-F65A80B07602}
+		{AFA1F75E-B67C-4F03-8B6D-F93488B6D523} = {87ACEE79-C917-4D67-B416-D6A1824F922A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DC3521FF-A412-4731-B064-9E3ABF02FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -186,5 +189,9 @@ Global
 		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{443AA3C3-53D8-4CDF-9D99-4A572E8C962A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFA1F75E-B67C-4F03-8B6D-F93488B6D523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA1F75E-B67C-4F03-8B6D-F93488B6D523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA1F75E-B67C-4F03-8B6D-F93488B6D523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA1F75E-B67C-4F03-8B6D-F93488B6D523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

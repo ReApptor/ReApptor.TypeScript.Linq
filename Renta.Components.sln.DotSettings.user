@@ -20,6 +20,7 @@
 &lt;/SessionState&gt;</s:String>
 	
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Frontend_002FReact_002FWeAre_002EAthenaeum_002EReact_002EComponents_002ELocalization_002Fresources_002FSharedResources/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=TestApplication_002FRenta_002ETestApplication_002EWebUI_002EResources_002FSharedResources/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/ResxEditorPersonal/DisabledLanguages/@EntryValue"></s:String>
 	
 	

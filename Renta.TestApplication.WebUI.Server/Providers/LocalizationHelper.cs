@@ -3,6 +3,10 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
+using Renta.TestApplication.WebUI.Resources;
+using WeAre.Athenaeum.Common.Helpers;
+using WeAre.Athenaeum.TemplateApp.Common;
+using WeAre.Athenaeum.Toolkit.Extensions;
 
 namespace Renta.TestApplication.WebUI.Server.Providers
 {
@@ -39,6 +43,12 @@ namespace Renta.TestApplication.WebUI.Server.Providers
             return FindCulture(value);
         }
 
+        public static CultureInfo FindCountryCulture(string country)
+        {
+            string countryCode = country.FindCountryInfo()?.Code;
+            return FindCulture(countryCode);
+        }
+
         public static CultureInfo FindHostCulture(this HttpContext context)
         {
             if (context == null)
@@ -56,18 +66,20 @@ namespace Renta.TestApplication.WebUI.Server.Providers
 
             CultureInfo culture = FindRequestCulture(context) ??
                                   FindCookieCulture(context) ??
-                                  FindHostCulture(context);
-                                  //?? SharedResources.DefaultCulture;
+                                  FindHostCulture(context) ??
+                                  SharedResources.DefaultCulture;
 
             return culture;
         }
 
-        public static CultureInfo RecognizeCountry(this HttpContext context)
+        public static CultureInfo RecognizeCountry(this HttpContext context, string country = null)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            CultureInfo culture = FindHostCulture(context);// ?? SharedResources.DefaultCulture;
+            CultureInfo culture = FindHostCulture(context) ?? 
+                                  FindCountryCulture(country) ?? 
+                                  SharedResources.DefaultCulture;
 
             return culture;
         }
@@ -99,15 +111,8 @@ namespace Renta.TestApplication.WebUI.Server.Providers
 
         public static CultureInfo FindCulture(string language)
         {
-            // CultureInfo culture = (!string.IsNullOrWhiteSpace(language))
-            //     ? SharedResources.SupportedCultures.FirstOrDefault(item => item.DisplayName.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
-            //                                                                item.Name.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
-            //                                                                item.TwoLetterISOLanguageName.Equals(language, StringComparison.InvariantCultureIgnoreCase) ||
-            //                                                                item.Name.EndsWith($"-{language}", StringComparison.InvariantCultureIgnoreCase))
-            //     : null;
-            //
-            // return culture;
-            return null;
+            return SharedResources.SupportedCultures.FindCulture(language) ??
+                   TestApplicationConstants.Localization.SupportedCultures.FindCulture(language);
         }
 
         public static bool SupportLanguage(string language)
