@@ -10,6 +10,7 @@ import ch from "./ComponentHelper";
 import IErrorPageParameters from "../models/IErrorPageParameters";
 import BasePageDefinitions, {IPageDefinitions} from "./BasePageDefinitions";
 import AlertModel from "../models/AlertModel";
+import {ParsedQuery} from "query-string";
 
 export default class PageRouteProvider {
 
@@ -214,17 +215,41 @@ export default class PageRouteProvider {
         return true;
     }
 
-    public static async resolveRouteAndRedirect(route: string, parameter: string | null) {
+    public static async resolveRouteAndRedirect(route: string, params: ParsedQuery) {
+
         let routes: Map<string, PageRoute> | null = BasePageDefinitions.getRoutes();
-
-        if (routes) {
-            if (routes.get(route)) {
-                let pageRoute: PageRoute = routes.get(route)!;
-
-                await this.invokeRedirectAsync(pageRoute, parameter, false);
-            }
-
+        
+        if (!routes) {
+            return;
         }
+        
+        let parts: string[] = route.split("/");
+
+        parts = parts.filter(route => route !== '');
+
+        const firstUrlPart: string = parts[0];
+
+        const secondUrlPart: string | null = parts.length > 1 ?
+            parts[1] :
+            null;
+
+        const longRoute: string | null = parts.length > 1 ?
+            `${firstUrlPart}/${secondUrlPart}` :
+            null;
+
+        if (longRoute && routes.get(longRoute)) {
+            let pageRoute: PageRoute = routes.get(longRoute)!;
+            pageRoute.parameters = params;
+            await this.invokeRedirectAsync(pageRoute, null, false);
+        }
+
+        if (routes.get(firstUrlPart)) {
+            let pageRoute: PageRoute = routes.get(firstUrlPart)!;
+            pageRoute.parameters = params;
+            await this.invokeRedirectAsync(pageRoute, secondUrlPart, false);
+        }
+
+
     }
 
     public static back(): void {
