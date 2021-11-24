@@ -6,4 +6,8 @@ export default abstract class AnonymousPage<TProps = {}, TState = {}>
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
     }
+    
+    public get automaticUrlChange(): boolean {
+        return true;
+    }
 }

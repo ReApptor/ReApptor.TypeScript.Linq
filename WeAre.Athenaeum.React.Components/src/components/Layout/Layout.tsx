@@ -152,43 +152,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             }
         }
     }
-
-    private async setPageUrlAsync(): Promise<void> {
-
-        const page: IBasePage = this.getPage();
-
-        if (page == null || page.ignoreGeneratedUrl) {
-            return;
-        }
-
-        let routeName: string = page.routeName;
-
-        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-
-        let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
-            ? localizer.get(`PageRoutes.${routeName}`)
-            : (this.props.changeUrl)
-                ? routeName
-                : null;
-
-
-        if (localizedRouteName) {
-            if (page.routeId) {
-                localizedRouteName = `${localizedRouteName}/${page.routeId}`
-            }
-            await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
-        }
-    }
-
-    private async processUrlRouteAsync(): Promise<void> {
-        const route: string = window.location.pathname;
+    
+    private async processUrlRouteAsync(route: string | null, parameters: ParsedQuery): Promise<void> {
 
         if (route !== null && route !== "/" && route !== "") {
 
             let pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
-
             if (pageRoute) {
-                pageRoute.parameters = queryString.parse(window.location.search);
+                pageRoute.parameters = parameters;
 
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
@@ -399,6 +370,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidMount(): Promise<void> {
+        const originalRoute: string = window.location.pathname;
+        const originalQueryParams: ParsedQuery = queryString.parse(window.location.search); 
 
         await super.componentDidMount();
 
@@ -408,15 +381,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         await this.processTokenAsync();
 
-        await this.processUrlRouteAsync();
+        await this.processUrlRouteAsync(originalRoute, originalQueryParams);
+
     }
 
     public async componentDidUpdate(): Promise<void> {
         if (this._alert) {
             await this.alertAsync(this._alert);
         }
-
-        await this.setPageUrlAsync();
     }
 
     public get applicationName(): string {

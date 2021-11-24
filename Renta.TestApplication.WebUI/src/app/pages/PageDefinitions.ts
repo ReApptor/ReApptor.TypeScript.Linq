@@ -19,6 +19,7 @@ export default class PageDefinitions extends BasePageDefinitions {
     public getRoutes(): Dictionary<string, PageRoute> {
         let pageRoutes: Dictionary<string, PageRoute> = new Dictionary<string, PageRoute>()
         pageRoutes.setValue("test2", PageDefinitions.testsRoute2)
+        pageRoutes.setValue("aaa", PageDefinitions.testsRoute3)
 
         return pageRoutes;
     }
