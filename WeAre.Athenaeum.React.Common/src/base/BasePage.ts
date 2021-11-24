@@ -15,6 +15,7 @@ import IUser from "../models/IUser";
 import IUserContext from "../models/IUserContext";
 import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
+import {PageRouteProvider} from "../index";
 
 export interface IManualProps {
     title?: string;
@@ -65,7 +66,7 @@ export interface IBasePage extends IBaseComponent {
     readonly parameters: BasePageParameters | null;
     readonly route: PageRoute;
 
-    readonly ignoreGeneratedUrl?: boolean;
+    readonly automaticUrlChange?: boolean;
 
 }
 
@@ -108,7 +109,7 @@ export interface IBasePageProps<TParams extends BasePageParameters> {
     routeIndex?: number;
     routeId?: string;
     parameters?: TParams;
-    ignoreGeneratedUrl?: boolean;
+    automaticUrlChange?: boolean;
 
 }
 
@@ -143,6 +144,36 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
         }
     }
+    
+    // private async setPageUrlAsync(): Promise<void> {
+    //     const page: IBasePage = this.getPage();
+    //
+    //     if (page == null || !page.automaticUrlChange) {
+    //         return;
+    //     }
+    //
+    //    
+    //     let routeName: string = page.routeName;
+    //     console.log("Basepage.setPageUrlAsync og page:")
+    //     console.log(page)
+    //
+    //
+    //     const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+    //
+    //     let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
+    //         ? localizer.get(`PageRoutes.${routeName}`)
+    //         :  routeName;
+    //
+    //     console.log("Basepage.setPageUrlAsync "+localizedRouteName)
+    //
+    //
+    //     if (localizedRouteName) {
+    //         if (page.routeId) {
+    //             localizedRouteName = `${localizedRouteName}/${page.routeId}`
+    //         }
+    //         await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
+    //     }
+    // }
 
     public async componentWillUnmount(): Promise<void> {
 
@@ -189,8 +220,8 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return (this.props.routeIndex != null) ? this.props.routeIndex : null;
     }
 
-    public get ignoreGeneratedUrl(): boolean  {
-        return !!this.props.ignoreGeneratedUrl;
+    public get automaticUrlChange(): boolean  {
+        return !!this.props.automaticUrlChange;
     }
 
     public get routeId(): string | null {
