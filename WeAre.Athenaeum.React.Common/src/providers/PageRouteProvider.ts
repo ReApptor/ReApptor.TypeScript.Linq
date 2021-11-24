@@ -173,7 +173,12 @@ export default class PageRouteProvider {
             newPath = "/";
         }
 
+        //Hack. Without this invokeRedirectAsync will replaceState before this function and it will mess up history
+        //Feel free to make better solution for this :)
+        await new Promise(r => setTimeout(r, 2));
+
         window.history.replaceState(pageRoute, "", newPath);
+
     }
 
     public static stopPropagation(): void {
