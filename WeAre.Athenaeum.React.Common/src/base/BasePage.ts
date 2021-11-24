@@ -173,7 +173,10 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             if (page.routeId) {
                 localizedRouteName = `${localizedRouteName}/${page.routeId}`
             }
-            await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
+            
+            document.title = page.getTitle();
+            
+            await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, localizedRouteName!);
         }
     }
 

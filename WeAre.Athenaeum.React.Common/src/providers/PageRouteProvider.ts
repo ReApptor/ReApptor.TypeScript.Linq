@@ -167,6 +167,15 @@ export default class PageRouteProvider {
         window.history.replaceState(null, "", newPath);
     }
 
+
+    public static async changeUrlWithoutReplaceWithRoute(pageRoute: any, newPath?: string | null): Promise<void> {
+        if (newPath == null) {
+            newPath = "/";
+        }
+
+        window.history.replaceState(pageRoute, "", newPath);
+    }
+
     public static stopPropagation(): void {
         throw new Error(AthenaeumConstants.apiError);
     }
