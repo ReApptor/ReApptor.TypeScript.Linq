@@ -21,6 +21,7 @@ export interface IManualProps {
     title?: string;
     manual?: string;
     icon?: string;
+
     onClick?(): Promise<void>;
 }
 
@@ -56,7 +57,7 @@ export interface IBasePage extends IBaseComponent {
     getManualProps(): IManualProps;
 
     isPage(): boolean;
-    
+
     readonly hasTopNav: boolean;
     readonly hasFooter: boolean;
     readonly alert: AlertModel | null;
@@ -129,7 +130,9 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return null;
     }
 
-    public isPage(): boolean { return true; }
+    public isPage(): boolean {
+        return true;
+    }
 
     protected constructor(props: IBasePageProps<TParams> | null = null) {
         super(props || ({} as IBasePageProps<TParams>));
@@ -143,37 +146,33 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         if (this._asIsLoading) {
             DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
         }
+
+        await this.setPageUrlAsync();
     }
-    
-    // private async setPageUrlAsync(): Promise<void> {
-    //     const page: IBasePage = this.getPage();
-    //
-    //     if (page == null || !page.automaticUrlChange) {
-    //         return;
-    //     }
-    //
-    //    
-    //     let routeName: string = page.routeName;
-    //     console.log("Basepage.setPageUrlAsync og page:")
-    //     console.log(page)
-    //
-    //
-    //     const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-    //
-    //     let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
-    //         ? localizer.get(`PageRoutes.${routeName}`)
-    //         :  routeName;
-    //
-    //     console.log("Basepage.setPageUrlAsync "+localizedRouteName)
-    //
-    //
-    //     if (localizedRouteName) {
-    //         if (page.routeId) {
-    //             localizedRouteName = `${localizedRouteName}/${page.routeId}`
-    //         }
-    //         await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
-    //     }
-    // }
+
+    private async setPageUrlAsync(): Promise<void> {
+        const page: IBasePage = this.getPage();
+
+        if (page == null || !page.automaticUrlChange) {
+            return;
+        }
+
+        let routeName: string = page.routeName;
+
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+
+        let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
+            ? localizer.get(`PageRoutes.${routeName}`)
+            : routeName;
+
+
+        if (localizedRouteName) {
+            if (page.routeId) {
+                localizedRouteName = `${localizedRouteName}/${page.routeId}`
+            }
+            await PageRouteProvider.changeUrlWithoutReload(localizedRouteName!);
+        }
+    }
 
     public async componentWillUnmount(): Promise<void> {
 
@@ -195,7 +194,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             ? localizer.get(titleLocalizationItem)
             : this.routeName;
     }
-           
+
     public getContext(): TContext {
         return ch.getContext() as TContext;
     }
@@ -220,7 +219,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return (this.props.routeIndex != null) ? this.props.routeIndex : null;
     }
 
-    public get automaticUrlChange(): boolean  {
+    public get automaticUrlChange(): boolean {
         return !!this.props.automaticUrlChange;
     }
 
@@ -235,11 +234,11 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     public get route(): PageRoute {
         return new PageRoute(this.routeName, this.routeIndex, this.routeId, this.parameters);
     }
-    
+
     public get hasTopNav(): boolean {
         return true;
     }
-    
+
     public get hasFooter(): boolean {
         return true;
     }
