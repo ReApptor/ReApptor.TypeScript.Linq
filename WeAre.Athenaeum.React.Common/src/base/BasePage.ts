@@ -167,6 +167,9 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
 
         if (localizedRouteName) {
+            if(!localizedRouteName.startsWith("/")){
+                localizedRouteName = `/${localizedRouteName}`
+            }
             if (page.routeId) {
                 localizedRouteName = `${localizedRouteName}/${page.routeId}`
             }

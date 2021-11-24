@@ -121,6 +121,6 @@
     <value>Frontpage</value>
   </data>
     <data name="PageRoutes.Tests2" xml:space="preserve">
-        <value>hellouworld</value>
+        <value>hellouworld/aaa</value>
     </data>
 </root>

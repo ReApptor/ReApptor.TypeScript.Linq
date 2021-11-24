@@ -21,7 +21,7 @@ namespace Renta.TestApplication.WebUI.Resources
         public const string TopNavFrontpage = @"TopNav.Frontpage";
 
         /// <summary>
-        /// "PageRoutes.Tests2" (hellouworld)
+        /// "PageRoutes.Tests2" (hellouworld/aaa)
         /// </summary>
         public const string PageRoutesTests2 = @"PageRoutes.Tests2";
     }

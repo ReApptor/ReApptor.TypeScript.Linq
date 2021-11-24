@@ -19,7 +19,7 @@ class Localizer extends BaseLocalizer {
         
         //Initializer
         this.set(this.topNavFrontpageLanguageItemName, { language: `fi`, value: `Etusivu` }, { language: `en`, value: `Frontpage` },);
-        this.set(this.pageRoutesTests2LanguageItemName, { language: `fi`, value: `helloworld` }, { language: `en`, value: `hellouworld` },);
+        this.set(this.pageRoutesTests2LanguageItemName, { language: `fi`, value: `helloworld` }, { language: `en`, value: `hellouworld/aaa` },);
     }
 
     /**
@@ -30,7 +30,7 @@ class Localizer extends BaseLocalizer {
     }
 
     /**
-    /* "PageRoutes.Tests2" (hellouworld)
+    /* "PageRoutes.Tests2" (hellouworld/aaa)
     */
     public get pageRoutesTests2() : string {
         return this.get(this.pageRoutesTests2LanguageItemName);
