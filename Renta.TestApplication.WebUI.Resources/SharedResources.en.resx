@@ -123,4 +123,25 @@
     <data name="PageRoutes.Tests2" xml:space="preserve">
         <value>hellouworld/aaa</value>
     </data>
+    <data name="DayOfWeek.Friday" xml:space="preserve">
+        <value>Friday</value>
+    </data>
+    <data name="DayOfWeek.Monday" xml:space="preserve">
+        <value>Monday</value>
+    </data>
+    <data name="DayOfWeek.Saturday" xml:space="preserve">
+        <value>Saturday</value>
+    </data>
+    <data name="DayOfWeek.Sunday" xml:space="preserve">
+        <value>Sunday</value>
+    </data>
+    <data name="DayOfWeek.Thursday" xml:space="preserve">
+        <value>Thursday</value>
+    </data>
+    <data name="DayOfWeek.Tuesday" xml:space="preserve">
+        <value>Tuesday</value>
+    </data>
+    <data name="DayOfWeek.Wednsday" xml:space="preserve">
+        <value>Wednsday</value>
+    </data>
 </root>
