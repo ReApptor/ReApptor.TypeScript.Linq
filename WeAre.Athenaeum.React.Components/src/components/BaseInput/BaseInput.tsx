@@ -435,8 +435,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         super(props);
 
         const varProps = props as any;
-        const defValue: TInputValue = (null as TInputValue);
-        const model: IInputModel<TInputValue> = (props.model || { value: defValue }) as IInputModel<TInputValue>;
+        const model: IInputModel<TInputValue> = (props.model ?? { value: (null as TInputValue) }) as IInputModel<TInputValue>;
 
         if (props.value != null) {
             model.value = props.value as TInputValue;
@@ -611,6 +610,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     protected validate(): void {
+
         if (this.noValidate) {
             return;
         }

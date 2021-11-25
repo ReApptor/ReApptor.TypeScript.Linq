@@ -305,7 +305,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         return false;
     }
 
-    private isOutOfRange (dayGridValue: DayGridValue): boolean {
+    private isOutOfRange(dayGridValue: DayGridValue): boolean {
         if (!this.minDate && !this.maxDate) {
             return false;
         }
@@ -483,7 +483,6 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         const now = new Date();
         return DateRangeInput.getStartOfDay(now).getTime();
     }
-
 
     private static sortDates(value: DateRangeInputValue | undefined): DateRangeInputValue {
         if (!value) {
