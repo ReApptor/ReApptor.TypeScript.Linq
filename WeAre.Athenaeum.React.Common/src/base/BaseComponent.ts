@@ -179,16 +179,16 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     public get childComponents(): IBaseComponent[] {
 
-        const childComponent: IBaseComponent[] = [];
+        const childComponents: IBaseComponent[] = [];
 
-        childComponent.push(...
+        childComponents.push(...
             this
                 ._childComponentRefs
                 .filter(ref => BaseComponent.isComponent(ref.current))
                 .map(ref => ref.current!)
         );
 
-        return childComponent;
+        return childComponents;
     }
 
     public get isMounted(): boolean {

@@ -1,6 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {Dictionary} from "typescript-collections";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {
+    Button,
+    ButtonType,
     Checkbox,
     Dropdown,
     DropdownAlign,
@@ -12,9 +15,12 @@ import {
     Form,
     IconSize,
     IconStyle,
-    IIconProps,
+    IIconProps, Inline,
     IStringInputModel,
-    TwoColumns, SelectListItem, TextInput, OneColumn
+    OneColumn,
+    SelectListItem,
+    TextInput,
+    TwoColumns
 } from "@weare/athenaeum-react-components";
 
 import styles from "./DropdownTests.module.scss";
@@ -71,11 +77,23 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         verticalAlign: DropdownVerticalAlign.Auto
     };
 
-    private readonly _ref: React.RefObject<Dropdown<any>> = React.createRef();
+    private readonly _refs: Dictionary<string, React.RefObject<Dropdown<any>>> = new Dictionary<string, React.RefObject<Dropdown<any>>>();
+    private readonly _formRef: React.RefObject<Form> = React.createRef();
 
     private _toggleIconNameModel: IStringInputModel = { value: "far grip-lines" };
     private _customToggleIcon: IIconProps = {name: "hamburger", size: IconSize.X10, style: IconStyle.Regular}
     private _items: any[] | null = null;
+    
+    private async validateAsync(): Promise<void> {
+        if (this._formRef.current) {
+            const valid: boolean = await this._formRef.current.validateAsync();
+            if (valid) {
+                await ch.alertMessageAsync("Form is valid.", true, true);
+            } else {
+                await ch.alertErrorAsync("Form is not valid.", true, true);
+            }
+        }
+    }
 
     private generateItem(index: number, group: number | null = null, description: boolean = false): any {
         return {
@@ -103,16 +121,21 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
     private get items(): any[] {
         return this._items || (this._items = this.generateItems(this.state.generateGroups));
     }
-
-    private reRenderDropdown(): void {
-        if (this._ref.current) {
-            this._ref.current.reRender();
+    
+    private getRef(id: string): React.RefObject<Dropdown<any>> {
+        if (!this._refs.containsKey(id)) {
+            this._refs.setValue(id, React.createRef());
         }
+        return this._refs.getValue(id)!;
+    }
+
+    private reRenderDropdowns(): void {
+        this._refs.values().map(ref => ref.current?.reRender());
     }
 
     private async addAsync(): Promise<void> {
         this.items.push(this.generateItem(this.items.length));
-        await this.reRenderDropdown();
+        await this.reRenderDropdowns();
     }
 
     private async setNoFilterAsync(noFilter: boolean): Promise<void> {
@@ -179,7 +202,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
     public render(): React.ReactNode {
         const DropdownTemplate = (id: string) => {
             return (
-                <Dropdown id={id} ref={this._ref} noWrap
+                <Dropdown key={id} id={id} ref={this.getRef(id)} noWrap
                           label="Dropdown"
                           className={this.state.width}
                           items={this.items}
@@ -218,16 +241,26 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                 </OneColumn>
                 
                 <TwoColumns>
+                    
+                    <div>
 
-                    <Form>
+                        <Inline>
 
-                        <Dropdown label="Width" inline required noValidate noWrap noFilter
-                                  orderBy={DropdownOrderBy.None}
-                                  transform={(item) => new SelectListItem(item, this.getWidthName(item), null, item)}
-                                  items={[styles.auto, styles.p25, styles.p50, styles.p100]}
-                                  selectedItem={this.state.width}
-                                  onChange={async (sender, value) => await this.setState({ width: value! })}
-                        />
+                            <Dropdown label="Width"inline required noValidate noWrap noFilter
+                                      orderBy={DropdownOrderBy.None}
+                                      transform={(item) => new SelectListItem(item, this.getWidthName(item), null, item)}
+                                      items={[styles.auto, styles.p25, styles.p50, styles.p100]}
+                                      selectedItem={this.state.width}
+                                      onChange={async (sender, value) => await this.setState({ width: value! })}
+                            />
+
+                            <Button icon={{name: "fas check"}}
+                                    label={"Validate"}
+                                    type={ButtonType.Primary}
+                                    onClick={() => this.validateAsync()}
+                            />
+
+                        </Inline>
 
                         <hr/>
 
@@ -354,14 +387,17 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                             }
 
                         </div>
+                    </div>
+
+                    <Form ref={this._formRef}>
+
+                        {DropdownTemplate("ddTestMiddle")}
 
                     </Form>
 
-                    {DropdownTemplate("ddTestMiddle")}
-
                 </TwoColumns>
                 
-                <OneColumn>
+                <OneColumn className={"mt-4"}>
                     {DropdownTemplate("ddTestBottom")}
                 </OneColumn>
 
