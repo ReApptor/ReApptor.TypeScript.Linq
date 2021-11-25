@@ -123,4 +123,25 @@
     <data name="PageRoutes.Tests2" xml:space="preserve">
         <value>helloworld</value>
     </data>
+    <data name="DayOfWeek.Monday" xml:space="preserve">
+        <value>maanantai</value>
+    </data>
+    <data name="DayOfWeek.Tuesday" xml:space="preserve">
+        <value>tiistai</value>
+    </data>
+    <data name="DayOfWeek.Wednsday" xml:space="preserve">
+        <value>keskiviikko</value>
+    </data>
+    <data name="DayOfWeek.Thursday" xml:space="preserve">
+        <value>torstai</value>
+    </data>
+    <data name="DayOfWeek.Friday" xml:space="preserve">
+        <value>perjantai</value>
+    </data>
+    <data name="DayOfWeek.Saturday" xml:space="preserve">
+        <value>lauantai</value>
+    </data>
+    <data name="DayOfWeek.Sunday" xml:space="preserve">
+        <value>sunnuntai</value>
+    </data>
 </root>

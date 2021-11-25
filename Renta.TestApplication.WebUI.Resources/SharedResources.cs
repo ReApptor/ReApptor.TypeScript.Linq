@@ -24,5 +24,40 @@ namespace Renta.TestApplication.WebUI.Resources
         /// "PageRoutes.Tests2" (hellouworld/aaa)
         /// </summary>
         public const string PageRoutesTests2 = @"PageRoutes.Tests2";
+
+        /// <summary>
+        /// "DayOfWeek.Monday" (Monday)
+        /// </summary>
+        public const string DayOfWeekMonday = @"DayOfWeek.Monday";
+
+        /// <summary>
+        /// "DayOfWeek.Tuesday" (Tuesday)
+        /// </summary>
+        public const string DayOfWeekTuesday = @"DayOfWeek.Tuesday";
+
+        /// <summary>
+        /// "DayOfWeek.Wednsday" (Wednsday)
+        /// </summary>
+        public const string DayOfWeekWednsday = @"DayOfWeek.Wednsday";
+
+        /// <summary>
+        /// "DayOfWeek.Thursday" (Thursday)
+        /// </summary>
+        public const string DayOfWeekThursday = @"DayOfWeek.Thursday";
+
+        /// <summary>
+        /// "DayOfWeek.Friday" (Friday)
+        /// </summary>
+        public const string DayOfWeekFriday = @"DayOfWeek.Friday";
+
+        /// <summary>
+        /// "DayOfWeek.Saturday" (Saturday)
+        /// </summary>
+        public const string DayOfWeekSaturday = @"DayOfWeek.Saturday";
+
+        /// <summary>
+        /// "DayOfWeek.Sunday" (Sunday)
+        /// </summary>
+        public const string DayOfWeekSunday = @"DayOfWeek.Sunday";
     }
 }
