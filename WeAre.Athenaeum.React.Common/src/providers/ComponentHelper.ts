@@ -51,6 +51,7 @@ export default class ch {
         
         const layout = component as (ILayoutPage | null);
         if ((layout) && (layout.isLayout) && (layout.isLayout())) {
+            console.log("register layout =", layout);
             this._layout = layout;
             return;
         }
