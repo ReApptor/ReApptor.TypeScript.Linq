@@ -180,7 +180,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         });
     }
 
-    private async onDayGridClick(clickedDate: DayGridValue): Promise<void> {
+    private async onDayGridClickAsync(clickedDate: DayGridValue): Promise<void> {
         if (this.isOutOfRange(clickedDate)) {
             return;
         }
@@ -251,26 +251,24 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         await this.emitOnChange();
     }
 
-    private async onDayGridMouseEnter(dayGridValue: DayGridValue): Promise<void> {
-        this.setState({
-            lastHoveredDayGrid: dayGridValue
-        });
+    private async onDayGridMouseEnterAsync(dayGridValue: DayGridValue): Promise<void> {
+        await this.setState({lastHoveredDayGrid: dayGridValue});
     }
 
-    private async onNextMonthClick(): Promise<void> {
-        this.setState({
-            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() + 1))
-        });
+    private async onNextMonthClickAsync(): Promise<void> {
+        const nextMonth: Date = this.state.activeMonthView.addMonths(1);
+        await this.setState({ activeMonthView: nextMonth });
     }
 
-    private async onPreviousMonthClick(): Promise<void> {
-        this.setState({
-            activeMonthView: new Date(this.state.activeMonthView.setMonth(this.state.activeMonthView.getMonth() - 1))
-        });
+    private async onPreviousMonthClickAsync(): Promise<void> {
+        const prevMonth: Date = this.state.activeMonthView.addMonths(-1);
+        await this.setState({ activeMonthView: prevMonth });
     }
 
     private async emitOnChange(): Promise<void> {
-        if (!this.props.onChange) return;
+        if (!this.props.onChange) {
+            return;
+        }
 
         await this.props.onChange(this.value);
     }
@@ -337,17 +335,15 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         return false;
     }
 
-    private async toggleDatePicker() {
+    private async toggleDatePickerAsync(): Promise<void> {
         if (!this._inputRef.current) {
             return;
         }
 
-        this.setState({
-            showDatePicker: !this.state.showDatePicker,
-            absolutePositionTop: this._inputRef.current.getBoundingClientRect().height + this._absolutePositionPaddingPx
-        });
+        const showDatePicker: boolean = !this.state.showDatePicker;
+        const absolutePositionTop: number = this._inputRef.current.getBoundingClientRect().height + this._absolutePositionPaddingPx;
 
-        await this.reRenderAsync();
+        await this.setState({showDatePicker, absolutePositionTop});
     }
 
     private renderWeekDays(): JSX.Element[] {
@@ -363,10 +359,11 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
         return weekDays.map(weekDay =>
             (
-                <div
-                    key={weekDay}
-                    className={styles.weekDayName}>
+                <div key={weekDay}
+                     className={styles.weekDayName}>
+
                     {Utility.getShortDayOfWeek(weekDay)}
+
                 </div>
             )
         );
@@ -385,16 +382,15 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
         const className: string = this.css(styles.monthViewGridDay, isInRangeAndSelectedStyle, isInRangeAndNotSelectedStyle, isSelectedStyle, isTodayStyle, isOutOfRangeStyle);
 
-        const onClick: () => void = async () => await this.onDayGridClick(gridDay);
+        const onClick: () => void = async () => await this.onDayGridClickAsync(gridDay);
 
-        const onMouseEnter: () => void = async () => await this.onDayGridMouseEnter(gridDay);
+        const onMouseEnter: () => void = async () => await this.onDayGridMouseEnterAsync(gridDay);
 
         return (
-            <div
-                className={className}
-                key={String(gridDay.getTime())}
-                onMouseEnter={onMouseEnter}
-                onClick={onClick}>
+            <div key={String(gridDay.getTime())}
+                 className={className}
+                 onMouseEnter={onMouseEnter}
+                 onClick={onClick}>
                     <span>
                         {
                             DateRangeInput.getDayOfMonth(gridDay.getTime())
@@ -415,11 +411,11 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
                 <span className={styles.monthName}>{monthName} {year}</span>
 
-                <div className={styles.monthAction} onClick={() => this.onPreviousMonthClick()}>
+                <div className={styles.monthAction} onClick={() => this.onPreviousMonthClickAsync()}>
                     <Icon name="chevron-up" size={IconSize.Normal}/>
                 </div>
 
-                <div className={styles.monthAction} onClick={() => this.onNextMonthClick()}>
+                <div className={styles.monthAction} onClick={() => this.onNextMonthClickAsync()}>
                     <Icon name="chevron-down" size={IconSize.Normal}/>
                 </div>
 
@@ -435,7 +431,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
             <React.Fragment>
                 <div ref={this._inputRef}
                      className={this.css("form-control", styles.input)}
-                     onClick={async () => await this.toggleDatePicker()}
+                     onClick={() => this.toggleDatePickerAsync()}
                 >
 
                     <span>
