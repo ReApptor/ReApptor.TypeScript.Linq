@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Dropdown.NothingSelected" xml:space="preserve">
-    <value>Nic nie jest zaznaczone</value>
+    <value>Wybierz</value>
   </data>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
     <value>{0} wybrane</value>
