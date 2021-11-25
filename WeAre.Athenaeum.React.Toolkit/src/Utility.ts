@@ -208,25 +208,50 @@ export default class Utility {
                 return this.getDayOfWeek(dayOfWeekOrDate);
 
             case "number":
-                const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+                let name: string;
                 switch (dayOfWeekOrDate) {
                     case 0:
-                        return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
+                        name = "Sunday";
+                        break;
                     case 1:
-                        return (localizer) ? localizer.get("DayOfWeek.Monday") : "Monday";
+                        name = "Monday";
+                        break;
                     case 2:
-                        return (localizer) ? localizer.get("DayOfWeek.Tuesday") : "Tuesday";
+                        name = "Tuesday";
+                        break;
                     case 3:
-                        return (localizer) ? localizer.get("DayOfWeek.Wednesday") : "Wednesday";
+                        name = "Wednesday";
+                        break;
                     case 4:
-                        return (localizer) ? localizer.get("DayOfWeek.Thursday") : "Thursday";
+                        name = "Thursday";
+                        break;
                     case 5:
-                        return (localizer) ? localizer.get("DayOfWeek.Friday") : "Friday";
+                        name = "Friday";
+                        break;
                     case 6:
-                        return (localizer) ? localizer.get("DayOfWeek.Saturday") : "Saturday";
+                        name = "Saturday";
+                        break;
+                    default:
+                        throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
                 }
 
-                throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
+                let localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+                
+                let language: string = navigator.language;
+                if (localizer) {
+                    const tag: string = `DayOfWeek.${name}`;
+                    if (localizer.contains(tag)) {
+                        return localizer.get(tag);
+                    }
+                    
+                    language = localizer.language;
+                }
+
+                const sunday: Date = new Date(Date.UTC(2017, 0, 1));
+                const dayOfWeek: Date = sunday.addDays(dayOfWeekOrDate);
+                name = dayOfWeek.toLocaleString(language, { weekday: "long" });
+                
+                return name;
 
             case "object":
                 if (typeof dayOfWeekOrDate.getDay === "function") {

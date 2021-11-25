@@ -31,7 +31,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.dayOfWeekTuesdayLanguageItemName, { language: `fi`, value: `tiistai` }, { language: `en`, value: `Tuesday` },);
         this.set(this.dayOfWeekWednsdayLanguageItemName, { language: `fi`, value: `keskiviikko` }, { language: `en`, value: `Wednsday` },);
         this.set(this.dayOfWeekThursdayLanguageItemName, { language: `fi`, value: `torstai` }, { language: `en`, value: `Thursday` },);
-        this.set(this.dayOfWeekFridayLanguageItemName, { language: `fi`, value: `perjanta` }, { language: `en`, value: `Friday` },);
+        this.set(this.dayOfWeekFridayLanguageItemName, { language: `fi`, value: `perjantai` }, { language: `en`, value: `Friday` },);
         this.set(this.dayOfWeekSaturdayLanguageItemName, { language: `fi`, value: `lauantai` }, { language: `en`, value: `Saturday` },);
         this.set(this.dayOfWeekSundayLanguageItemName, { language: `fi`, value: `sunnuntai` }, { language: `en`, value: `Sunday` },);
     }
