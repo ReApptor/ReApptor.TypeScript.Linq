@@ -253,7 +253,6 @@ export default class ApiProvider {
                 }
 
                 if (responseContainer.alert) {
-                    console.log(" alert=", responseContainer.alert);
                     await ch.alertAsync(responseContainer.alert);
                 }
 
