@@ -360,9 +360,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
-
-        console.log("Layout:componentDidCatch");
-
         // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
 
@@ -372,9 +369,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidMount(): Promise<void> {
-        
-        console.log("Layout:componentDidMount");
-        
         await super.componentDidMount();
 
         if (this.mobile) {

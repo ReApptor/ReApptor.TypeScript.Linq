@@ -42,7 +42,6 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     private readonly _monthGridLongCount: number = 42;
     private readonly _monthGridCount: number = 35;
     private readonly _weekDaysCount: number = 7;
-
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
@@ -459,6 +458,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
                         this.renderDateRangePicker()
                     )
                 }
+                
             </React.Fragment>
         );
     }
@@ -513,7 +513,9 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     }
 
     private static isSameDate(d1: Date | null, d2: Date | null): boolean {
-        if(!d1 || !d2) return false;
+        if (!d1 || !d2) {
+            return false;
+        }
 
         return DateRangeInput.getStartOfDay(d1).getTime() === DateRangeInput.getStartOfDay(d2).getTime();
     }
