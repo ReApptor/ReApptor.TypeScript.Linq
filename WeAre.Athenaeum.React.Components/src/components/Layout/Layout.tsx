@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {FileModel, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import {
     AlertModel,
     ApplicationContext,
@@ -361,6 +361,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
 
+        console.log("Layout:componentDidCatch");
+
         // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
 
@@ -370,9 +372,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async componentDidMount(): Promise<void> {
-        const originalRoute: string = window.location.pathname;
-        const originalQueryParams: ParsedQuery = queryString.parse(window.location.search); 
-
+        
+        console.log("Layout:componentDidMount");
+        
         await super.componentDidMount();
 
         if (this.mobile) {
@@ -381,8 +383,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         await this.processTokenAsync();
 
-        await this.processUrlRouteAsync(originalRoute, originalQueryParams);
+        const originalRoute: string = window.location.pathname;
+        const originalQueryParams: ParsedQuery = queryString.parse(originalRoute);
 
+        await this.processUrlRouteAsync(originalRoute, originalQueryParams);
     }
 
     public async componentDidUpdate(): Promise<void> {
