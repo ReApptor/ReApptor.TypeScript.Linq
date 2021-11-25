@@ -1,10 +1,10 @@
 import React from "react";
 import {Utility} from "@weare/athenaeum-toolkit";
 import {IGlobalClick} from "@weare/athenaeum-react-common";
-
 import Icon, {IconSize} from "../Icon/Icon";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import DateRangeInputLocalizer from "./DateRangeInputLocalizer";
+
 import styles from "./DateRangeInput.module.scss";
 
 enum WeekDaysEnum {
@@ -22,10 +22,10 @@ export type DateRangeInputValue = [Date | null, Date | null]; // [StartDate, End
 interface IDateRangeInputProps extends IBaseInputProps<DateRangeInputValue> {
     expanded?: boolean;
     sameDay?: boolean;
-    onChange?: (value: DateRangeInputValue) => Promise<void>
+    onChange?: (value: DateRangeInputValue) => Promise<void>;
     minDate?: Date;
     maxDate?: Date;
-    model: {value: DateRangeInputValue}
+    model: {value: DateRangeInputValue};
 }
 
 interface IDateRangeInputState extends IBaseInputState<DateRangeInputValue> {
@@ -42,20 +42,20 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     private readonly _monthGridLongCount: number = 42;
     private readonly _monthGridCount: number = 35;
     private readonly _weekDaysCount: number = 7;
-
     private readonly _inputRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _datePickerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    public state: IDateRangeInputState = {
-        ...super.state,
-        edit: true,
+    state: IDateRangeInputState = {
+        readonly: false,
         model: {value: [null, null]},
+        edit: true,
+        validationError: null,
+        //...super.state,
         absolutePositionTop: 0,
         activeMonthView: this.defaultActiveMonthView(),
         lastHoveredDayGrid: null,
         showDatePicker: false
-
-    }
+    };
 
     private get startDate(): Date | null {
         const value = this.state.model.value;
@@ -458,6 +458,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
                         this.renderDateRangePicker()
                     )
                 }
+                
             </React.Fragment>
         );
     }
@@ -512,7 +513,9 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
     }
 
     private static isSameDate(d1: Date | null, d2: Date | null): boolean {
-        if(!d1 || !d2) return false;
+        if (!d1 || !d2) {
+            return false;
+        }
 
         return DateRangeInput.getStartOfDay(d1).getTime() === DateRangeInput.getStartOfDay(d2).getTime();
     }
