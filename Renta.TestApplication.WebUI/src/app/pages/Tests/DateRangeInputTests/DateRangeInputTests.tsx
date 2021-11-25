@@ -52,21 +52,19 @@ export default class DateRangeInputTests extends BaseComponent<{}, IDateRangeInp
 
                     <OneColumn className="pt-4">
 
-                        <DateRangeInput
-                            minDate={this.state.minDate || undefined}
-                            maxDate={this.state.maxDate || undefined}
-                            sameDay={this.state.sameDay}
-                            expanded={this.state.expanded}
-                            model={{value: this.state.dateRange}}
-                            clickToEdit={this.state.clickToEdit}
-                            onChange={async (value: DateRangeInputValue | undefined) => {
-                                if (!value) {
-                                    this.setState({dateRange: [null, null]});
-                                    return;
-                                }
-
-                                this.setState({dateRange: value});
-                            }}
+                        <DateRangeInput minDate={this.state.minDate || undefined}
+                                        maxDate={this.state.maxDate || undefined}
+                                        sameDay={this.state.sameDay}
+                                        expanded={this.state.expanded}
+                                        model={{value: this.state.dateRange}}
+                                        clickToEdit={this.state.clickToEdit}
+                                        onChange={async (value: DateRangeInputValue | undefined) => {
+                                            if (!value) {
+                                                this.setState({dateRange: [null, null]});
+                                                return;
+                                            }
+                                            this.setState({dateRange: value});
+                                        }}
                         />
 
                     </OneColumn>

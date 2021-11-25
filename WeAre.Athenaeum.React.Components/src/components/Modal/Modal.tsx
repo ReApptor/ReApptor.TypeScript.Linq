@@ -322,7 +322,11 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        this.JQuery(this.modal).modal("show");
+        const modal = this.JQuery(this.modal);
+        
+        if (modal) {
+            modal.modal("show");
+        }
     }
 
     private hideBootstrapModal() {
@@ -330,7 +334,11 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        this.JQuery(this.modal).modal("hide");
+        const modal = this.JQuery(this.modal);
+        
+        if (modal) {
+            modal.modal("hide");
+        }
     }
 
     //  PropsMethodCallHelpers
