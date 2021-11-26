@@ -34,35 +34,41 @@ export interface ICarouselProps {
     children: React.ReactElement[];
 
     /**
-     * Index of the slide initially displayed by the {@link Carousel}.
+     * Index of the slide initially displayed/centered in the {@link Carousel}.
+     *
+     * @default 0
      */
     initialSlideIndex?: number;
 
     /**
-     * Appended to the {@link Carousel}s containers classname.
+     * Added to the {@link Carousel}'s containers classname.
      */
     className?: string;
 
     /**
      * Should the {@link Carousel} loop.
+     *
      * @default false
      */
     loop?: boolean;
 
     /**
      * Enable or disable navigation.
+     *
      * @default {@link CarouselNavigation.None}
      */
     navigation?: CarouselNavigation;
 
     /**
      * Enable or disable pagination.
+     *
      * @default {@link CarouselPagination.None}
      */
     pagination?: CarouselPagination;
 
     /**
      * How many slides should be visible at the same time.
+     *
      * @default 1
      */
     slidesPerView?: "auto" | number;
@@ -70,19 +76,22 @@ export interface ICarouselProps {
     /**
      * How many pixels of space should be between slides.
      *
-     * Do not manually add margins between the slides, as that will mess up the {@link Carousel}s snapping grid.
+     * WARNING: Manually adding margins between the slides will mess up the {@link Carousel}'s snapping grid.
+     *
      * @default 0
      */
     spaceBetweenSlides?: number;
 
     /**
-     * Transition between slide-changes in milliseconds.
+     * Amount of milliseconds the slide transitions take.
+     *
      * @default 300
      */
     speed?: number;
 
     /**
      * Called when the currently active slide changes.
+     *
      * @param newActiveIndex Index of the new active slide.
      */
     onSlideChange?(newActiveIndex: number): Promise<void>
@@ -96,7 +105,6 @@ export interface ICarouselProps {
 interface ICarouselState {
     swiper: SwiperCore | null;
 }
-
 
 export default class Carousel extends BaseComponent<ICarouselProps, ICarouselState> {
 
@@ -188,7 +196,9 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     // Sync-methods
 
     private getSwiperSlideStyle(child: ReactElement): CSSProperties {
+
         // If slidesPerView has first been set to a number and then to "auto", the swiper-slide elements widths remain unchanged, and must be reset manually.
+
         return (this.slidesPerView === "auto")
             ? (child.props?.style?.width)
                 ? {width: child.props.style.width}
@@ -209,22 +219,21 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
      * Index of the currently active slide.
      */
     public get currentSlideIndex(): number {
-        return assert(this.swiper.realIndex, "activeIndex").isNumber.getValue;
+        return this.swiper.realIndex;
     }
 
     /**
      * Slide to a slide in the given index with the given speed.
+     *
      * @param index Index of the slide to slide to.
      * @param speed Speed to slide with. Default is 300.
      */
     public async slideToAsync(index: number, speed: number = 300): Promise<void> {
-        this.swiper.slideTo(
-            assert(index, "index").isNumber.getValue,
-            assert(speed, "speed").isNumber.getValue);
+        this.swiper.slideTo(index, speed);
     }
 
     /**
-     * Convert a value to a {@link CarouselNavigation} value.
+     * Convert any value to a {@link CarouselNavigation} value.
      */
     public static toNavigation(value: unknown): CarouselNavigation {
         switch (value) {
@@ -238,7 +247,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     }
 
     /**
-     * Convert a value to a {@link CarouselPagination} value.
+     * Convert any value to a {@link CarouselPagination} value.
      */
     public static toPagination(value: unknown): CarouselPagination {
         switch (value) {
