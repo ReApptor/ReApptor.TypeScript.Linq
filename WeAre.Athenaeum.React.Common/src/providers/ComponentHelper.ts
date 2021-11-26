@@ -13,8 +13,8 @@ import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enu
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 /**
- * BaseComponent helper
- * Provides helper functions for component initialization
+ * BaseComponent helper.
+ * Provides helper functions for component initialization.
  */
 export default class ch {
 
@@ -48,7 +48,7 @@ export default class ch {
      * @param component - inherited from IBaseComponent
      */
     public static register(component: IBaseComponent): void {
-        
+
         const layout = component as (ILayoutPage | null);
         if ((layout) && (layout.isLayout) && (layout.isLayout())) {
             this._layout = layout;
@@ -78,7 +78,7 @@ export default class ch {
                 this._initialized = true;
                 await this.onInitializeAsync();
             }
-            
+
             if (authorize) {
                 await this.onAuthorizeAsync();
             }
@@ -100,24 +100,34 @@ export default class ch {
             }
         }
     }
-    
+
     public static async reloadTopNavAsync(): Promise<void> {
         if (this._layout != null) {
             await this._layout.reloadTopNavAsync();
         }
     }
-    
+
     public static reloadTopNav(): void {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadTopNavAsync();
     }
 
+    /**
+     * Display an alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     *
+     * @param alert
+     */
     public static async alertAsync(alert: AlertModel): Promise<void> {
         if (this._layout != null) {
             await this._layout.alertAsync(alert);
         }
     }
 
+    /**
+     * The alert being displayed in the current {@link ILayoutPage}.
+     */
     public static get alert(): AlertModel | null {
         return (this._layout != null) ? this._layout.alert : null;
     }
@@ -149,6 +159,9 @@ export default class ch {
         await this.alertWarningAsync(message, true, true);
     }
 
+    /**
+     * Hide the alert being displayed in the current {@link ILayoutPage}.
+     */
     public static async hideAlertAsync(): Promise<void> {
         if (this._layout != null) {
             await this._layout.hideAlertAsync();
@@ -213,10 +226,10 @@ export default class ch {
     public static getContext(): ApplicationContext {
         if (this._context == null)
             throw Error(`Component helper. Context is not defined.`);
-        
+
         return this._context;
     }
-    
+
     public static get country(): string {
         const context: ApplicationContext = this.getContext();
         return context.country;
@@ -269,7 +282,7 @@ export default class ch {
     public static getApplicationSessionId(): string {
         return (this._context) ? this._context.id : "";
     }
-    
+
     public static async setLanguageAsync(language: string): Promise<void> {
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
         if ((localizer) && (localizer.setLanguage(language))) {
@@ -281,7 +294,7 @@ export default class ch {
             //do not await, just notification event
             // noinspection ES6MissingAwait
             ch.onOnSetLanguageAsync(language);
-            
+
             //re-render layout
             const layout: ILayoutPage = this.getLayout();
             await layout.reRenderAsync();
@@ -387,7 +400,7 @@ export default class ch {
             this._layout.download(file);
         }
     }
-    
+
     /**
      * Gets unique id
      * @returns id - number
@@ -403,11 +416,11 @@ export default class ch {
     public static getComponentId(): string {
         return Utility.getComponentId();
     }
-    
+
     public static get debug(): boolean {
         return this._debug;
     }
-    
+
     public static set debug(value: boolean) {
         this._debug = value;
     }
