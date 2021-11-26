@@ -43,24 +43,51 @@ export interface IButtonProps {
     type?: ButtonType;
     className?: string;
     minWidth?: number | string;
+
+    /**
+     * Text displayed in the {@link Button}.
+     */
     label?: string;
+
     title?: string;
+
+    /**
+     * Props for an {@link Icon} displayed inside the {@link Button}.
+     */
     icon?: IIconProps;
+
     block?: boolean;
+
+    /**
+     * Should the {@link Button} trigger a submit-event in a containing {@link Form}.
+     */
     submit?: boolean;
+
     dataTarget?: string;
     dataModal?: string;
     toggleModal?: boolean;
     dismissModal?: boolean;
+
+    /**
+     * {@link PageRoute} to redirect to when the {@link Button} is clicked.
+     */
     route?: PageRoute;
+
     small?: boolean;
     disabled?: boolean;
+
+    /**
+     * Inline styles for the {@link Button}.
+     */
     style?: React.CSSProperties;
+
     confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
+
     /**
      * The button will aligned to the right in the ButtonContainer
      */
     right?: boolean;
+
     children?: React.ReactNode | React.ReactNode[];
 
     onClick?(sender: Button, data: string | null): Promise<void>;
@@ -80,7 +107,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private _forcedWidth: number | null = null;
     private _actionLoading: boolean = false;
     private _actionProps: IButtonActionProps | null = null;
-    
+
     public static get Action(): typeof ButtonAction {
         return ButtonAction;
     }
@@ -153,7 +180,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private get actionsId(): string {
         return `${this.id}_actions`;
     }
-    
+
     private get dataTarget(): string {
         return this.props.dataTarget || "";
     }
@@ -177,7 +204,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private get showCaret(): boolean {
         return this.hasActions && !this.rightSideIcon && !this._actionProps?.title;
     }
-    
+
     private get showActions(): boolean {
         return this.hasActions && this.state.isOpen;
     }
@@ -190,14 +217,14 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (this._actionProps && this._actionProps.title) {
             return null;
         }
-        
+
         if (this.props.icon) {
-            return this.props.icon; 
+            return this.props.icon;
         }
-        
+
         return null;
     }
-    
+
     private get rightSideIcon(): IIconProps | null {
         if (this._actionProps && this._actionProps.icon && this._actionProps.iconPosition === Justify.Right) {
             return this._actionProps.icon;
@@ -206,15 +233,15 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (this._actionProps && this._actionProps.icon) {
             return null;
         }
-        
+
         return null;
     }
 
     private get label(): string | undefined {
         return this._actionProps?.title || this.props.label;
     }
-    
-    // overriding children's onClick 
+
+    // overriding children's onClick
     protected extendChildProps(element: React.ReactElement): any | null {
         return {
             onClick: async () => {
@@ -222,7 +249,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             }
         }
     }
-    
+
     private async onActionClickAsync(actionProps: IButtonActionProps): Promise<void> {
         if (this._actionLoading) {
             return;
@@ -250,7 +277,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
             await this.closeActions();
         }
     }
-    
+
     async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
@@ -282,11 +309,11 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (this._forcedWidth) {
             inlineStyles.minWidth = this._forcedWidth;
         }
-        
+
         if (this.props.minWidth) {
             inlineStyles.minWidth = this.props.minWidth;
         }
- 
+
         return (
             <React.Fragment>
                 <button id={this.id}
@@ -301,7 +328,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         data-dismiss={this.dataDismissModal}
                         onClick={() => this.onClickAsync(false)}
                 >
-                    
+
                     {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
                     {<span>{this.label}</span>}
@@ -313,7 +340,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                     {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
 
                 </button>
-                
+
                 {
                     (this.props.confirm) &&
                     (
@@ -323,7 +350,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         />
                     )
                 }
-                
+
             </React.Fragment>
         );
     }
