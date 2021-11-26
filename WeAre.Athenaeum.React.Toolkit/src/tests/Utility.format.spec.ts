@@ -1,4 +1,5 @@
 import Utility from "../Utility";
+import {TimeSpan} from "@weare/athenaeum-toolkit";
 
 describe("format", function() {    
     
@@ -60,6 +61,17 @@ describe("format", function() {
         expect(result).toEqual(input);
         expect(formatValueResult).toEqual(input);
         expect(formatValueEmptyFormatResult).toEqual(input.toString());
+    });
+    
+    test("string.TimeSpan", function () {
+        let input: TimeSpan = TimeSpan.fromMilliseconds(3600000);
+        const expected: string = "00:01:00";
+        const result = Utility.format("{0:hh:mm:ss}", input);
+        const formatValueResult = Utility.formatValue(input);
+        const formatValueEmptyFormatResult = Utility.formatValue(input, "hh:mm:ss");
+        expect(result).toEqual(expected);
+        expect(formatValueResult).toEqual(expected);
+        expect(formatValueEmptyFormatResult).toEqual(expected);
     });
     
 });
