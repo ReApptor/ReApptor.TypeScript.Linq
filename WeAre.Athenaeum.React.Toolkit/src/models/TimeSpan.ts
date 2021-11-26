@@ -1,6 +1,6 @@
 ﻿import Utility from "../Utility";
 
-export default class TimeSpan {
+    export default class TimeSpan {
 
     public static readonly millisecondsPerSecond: number = 1000.0;
     public static readonly millisecondsPerMinute: number = 60000.0;
@@ -90,6 +90,8 @@ export default class TimeSpan {
     public get milliseconds(): number {
         return Math.trunc((this._totalMilliseconds - TimeSpan.millisecondsPerDay * this.days - TimeSpan.millisecondsPerHour * this.hours - TimeSpan.millisecondsPerMinute * this.minutes - TimeSpan.millisecondsPerSecond * this.seconds));
     }
+
+    public isTimeSpan: true = true;
 
     /**
      * Returns a new TimeSpan object whose value is the sum of the specified TimeSpan object and this instance.

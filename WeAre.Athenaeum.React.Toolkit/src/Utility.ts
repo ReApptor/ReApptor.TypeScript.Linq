@@ -83,10 +83,22 @@ export default class Utility {
                     const customFormat: boolean = (result[i + 2] === ":") && ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
 
                     if (customFormat) {
-                        if ((param != null) &&
-                            ((typeof param === "number") ||
+                        if 
+                        (
+                            (param != null) &&
+                            (
+                                (typeof param === "number") ||
                                 (typeof param === "string") ||
-                                ((typeof param === "object") && ((param as any).constructor.name === Date.name)))) {
+                                (
+                                    (typeof param === "object") &&
+                                    (
+                                        ((param as any).constructor.name === Date.name) ||
+                                        (param instanceof TimeSpan) || 
+                                        (param.isTimeSpan)
+                                    )
+                                )
+                            )
+                        ) {
 
                             let j: number = result.indexOf("}", i + 2);
 
@@ -98,8 +110,8 @@ export default class Utility {
 
                                 if (format) {
                                     let formattedParam: string | null = null;
-                                    
-                                    if ((typeof param === "number")) {
+
+                                    if (typeof param === "number") {
                                         const enumProvider: IEnumProvider | null = ServiceProvider.findEnumProvider();
                                         //number
                                         if ((format === "c") || (format === "C")) {
@@ -119,8 +131,7 @@ export default class Utility {
                                             formattedParam = param.toFixed(1) + "%";
                                         } else if (format === "0.00%") {
                                             formattedParam = param.toFixed(2) + "%";
-                                        }
-                                        else if ((enumProvider) && (enumProvider.isEnum(format))) {
+                                        } else if ((enumProvider) && (enumProvider.isEnum(format))) {
                                             formattedParam = enumProvider.getEnumText(format, param);
                                         }
                                     } else if ((typeof param === "string") || ((typeof param === "object") && ((param as any).constructor.name === Date.name))) {
@@ -161,6 +172,11 @@ export default class Utility {
                                             const date: Date = new Date(param);
                                             const year: string = date.getFullYear().toString().substr(2);
                                             formattedParam = `${Utility.pad(date.getDate())}.${Utility.pad(date.getMonth() + 1)}.${year}`;
+                                        }
+                                    } else if ((typeof param === "object") && ((param instanceof TimeSpan) || (param.isTimeSpan === true))) {
+                                        const value: TimeSpan = param as TimeSpan;
+                                        if (format === "hh:mm:ss") {
+                                            formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         }
                                     }
 
