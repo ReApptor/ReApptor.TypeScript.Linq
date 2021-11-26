@@ -177,6 +177,10 @@ export default class Utility {
                                         const value: TimeSpan = param as TimeSpan;
                                         if (format === "hh:mm:ss") {
                                             formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
+                                        } else if (format === "c") {
+                                            formattedParam = (value.days > 0)
+                                                ? `${value.days}.${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`
+                                                : `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         }
                                     }
 
