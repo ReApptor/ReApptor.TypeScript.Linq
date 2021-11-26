@@ -175,6 +175,7 @@ export default class Utility {
                                         }
                                     } else if ((typeof param === "object") && ((param instanceof TimeSpan) || (param.isTimeSpan === true))) {
                                         const value: TimeSpan = param as TimeSpan;
+                                        
                                         if (format === "hh:mm:ss") {
                                             formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         } else if (format === "c") {
