@@ -17,6 +17,7 @@ import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 import {PageRouteProvider} from "../index";
 
+
 export interface IManualProps {
     title?: string;
     manual?: string;
@@ -26,16 +27,40 @@ export interface IManualProps {
 }
 
 export interface IBasePage extends IBaseComponent {
+
     onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean>;
 
+    /**
+     * Display an alert on the page.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     alertAsync(alert: AlertModel): Promise<void>;
 
+    /**
+     * Display an error alert on the page.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     alertErrorAsync(message: string, autoClose: boolean): Promise<void>;
 
+    /**
+     * Display an error alert on the {page.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     alertErrorAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
+    /**
+     * Display a success alert on the page.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     alertMessageAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
+    /**
+     * Hide the alert currently being displayed in the page.
+     */
     hideAlertAsync(): Promise<void>;
 
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
@@ -60,7 +85,12 @@ export interface IBasePage extends IBaseComponent {
 
     readonly hasTopNav: boolean;
     readonly hasFooter: boolean;
+
+    /**
+     * The alert currently being displayed in the page.
+     */
     readonly alert: AlertModel | null;
+
     readonly routeName: string;
     readonly routeIndex: number | null;
     readonly routeId: string | null;
@@ -82,8 +112,16 @@ export interface ILayoutPage extends IAsyncComponent {
 
     swipeRightAsync(): Promise<void>;
 
+    /**
+     * Display an alert on the page.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     alertAsync(alert: AlertModel): Promise<void>;
 
+    /**
+     * Hide the alert currently being displayed in the page.
+     */
     hideAlertAsync(): Promise<void>;
 
     isSpinning(): boolean;
@@ -173,9 +211,9 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             if (page.routeId) {
                 localizedRouteName = `${localizedRouteName}/${page.routeId}`
             }
-            
+
             document.title = page.getTitle();
-            
+
             await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, localizedRouteName!);
         }
     }

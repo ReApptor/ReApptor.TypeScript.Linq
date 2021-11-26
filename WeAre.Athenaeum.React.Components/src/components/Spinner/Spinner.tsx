@@ -9,7 +9,12 @@ const SPINNER_BACKGROUND_DELAY: number = 1000;
 
 interface ISpinnerProps {
     noShading?: boolean;
+
+    /**
+     * Should the {@link Spinner} be rendered on top of all other components and cover the whole screen. Prevents user input while the spinner is active.
+     */
     global?: boolean;
+
     onDelay?(): Promise<void>;
 }
 
@@ -19,6 +24,7 @@ interface ISpinnerState {
 }
 
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState> {
+
     public state: ISpinnerState = {
         showCursor: false,
         showSpinner: false
@@ -31,7 +37,7 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
                 ? 0.30
                 : 0.15;
     }
-    
+
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
         await this.showSpinnerDelayAsync();
@@ -43,7 +49,7 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
         if (this.isMounted) {
             await this.setState({ showCursor: true });
         }
-        
+
         await Utility.wait(SPINNER_BACKGROUND_DELAY);
 
         if (this.isMounted) {
