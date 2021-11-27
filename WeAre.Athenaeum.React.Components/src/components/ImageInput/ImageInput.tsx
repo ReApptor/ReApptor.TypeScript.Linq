@@ -6,6 +6,7 @@ import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import {ReactCropperHelpers} from "./ReactCropperHelpers";
+import {ImageProvider} from "../ImageModal/ImageModal";
 import ImageInputLocalizer from "./ImageInputLocalizer";
 
 import "cropperjs/dist/cropper.css";
@@ -136,8 +137,10 @@ interface IImageInputProps {
      * List of allowed file extensions.
      */
     fileTypes?: string[];
+    
     imageUrl?(file: FileModel): string;
     convertImage?(file: FileModel): Promise<FileModel>;
+    
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
@@ -214,10 +217,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 return this.props.imageUrl(this.activePicture);
             }
 
-            return `/files/images/${this.activePicture.id}`
+            return this.getImageUrl(this.activePicture);
         }
 
         return this.activePicture.src;
+    }
+
+    private getImageUrl(image: FileModel): string {
+        return (this.props.imageUrl)
+            ? this.props.imageUrl(image)
+            : ImageProvider.getImageUrl(image);
     }
 
     private getPreviewName(index: number): string {
@@ -242,7 +251,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 return this.props.imageUrl(picture);
             }
 
-            return `/files/images/${picture.id}`
+            return this.getImageUrl(picture);
         }
 
         return picture.src;

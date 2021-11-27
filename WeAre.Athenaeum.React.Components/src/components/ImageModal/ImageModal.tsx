@@ -15,19 +15,26 @@ interface IImageModalProps {
     picture?: FileModel;
     size?: ModalSize;
     download?: boolean;
+    
+    imageUrl?(file: FileModel): string;
 }
 
 interface IImageModalState {
     picture: FileModel | null;
 }
 
-
 export class ImageProvider {
-    public static getImageStyle(image: FileModel): any {
-        const url: string = (image.src)
+    public static getImageUrl(image: FileModel): string {
+        return (image.src)
             ? image.src
             : `/files/images/${image.id}`;
-        return { background: `url(${url})` };
+    }
+
+    public static getImageStyle(image: FileModel | string): object {
+        const url: string = (typeof image === "string")
+            ? image
+            : ImageProvider.getImageUrl(image);
+        return {background: `url(${url})`};
     }
 }
 
@@ -38,6 +45,17 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
     };
     
     private readonly _modalRef: React.RefObject<Modal> = React.createRef();
+    
+    private getImageUrl(image: FileModel): string {
+        return (this.props.imageUrl)
+            ? this.props.imageUrl(image)
+            : ImageProvider.getImageUrl(image);
+    }
+    
+    private getImageStyle(image: FileModel): object {
+        const url: string = this.getImageUrl(image);
+        return ImageProvider.getImageStyle(url);
+    }
     
     private get picture(): FileModel | null {
         return this.state.picture;
@@ -100,7 +118,7 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
                     {
                         (this.picture && this.previewSupported) &&
                         (
-                            <div className={this.css(styles.image, mobileStyle, biggerStyle)} style={ImageProvider.getImageStyle(this.picture)} />
+                            <div className={this.css(styles.image, mobileStyle, biggerStyle)} style={this.getImageStyle(this.picture)} />
                         )
                     }
                     {
