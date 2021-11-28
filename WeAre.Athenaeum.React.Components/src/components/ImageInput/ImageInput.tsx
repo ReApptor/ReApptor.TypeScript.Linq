@@ -23,67 +23,43 @@ enum ImageInputView {
      */
     Default,
 
-    /**
-     * Display full-screen preview of the selected picture.
-     */
+    /** Display full-screen preview of the selected picture. */
     Preview,
 
-    /**
-     * Display full-screen editor of the selected picture.
-     */
+    /** Display full-screen editor of the selected picture. */
     Edit,
 }
 
 export interface IIMageInputToolbar {
 
-    /**
-     * Should an "Upload file"-button be shown.
-     */
+    /** Should an "Upload file"-button be shown. */
     uploadButton?: boolean;
 
-    /**
-     * Should a "Take a picture"-button be shown.
-     */
+    /** Should a "Take a picture"-button be shown. */
     takePictureButton?: boolean;
 
-    /**
-     * Should a "Remove"-button be shown.
-     */
+    /** Should a "Remove"-button be shown. */
     deleteButton?: boolean;
 
-    /**
-     * Should a "Preview"-button be shown.
-     */
+    /** Should a "Preview"-button be shown. */
     previewButton?: boolean;
 
-    /**
-     * Should an "Edit"-button be shown.
-     */
+    /** Should an "Edit"-button be shown. */
     editButton?: boolean;
 
-    /**
-     * Should a "Rotate left"-button be shown.
-     */
+    /** Should a "Rotate left"-button be shown. */
     rotateLeftButton?: boolean;
 
-    /**
-     * Should a "Rotate right"-button be shown.
-     */
+    /** Should a "Rotate right"-button be shown. */
     rotateRightButton?: boolean;
 
-    /**
-     * Should a "Move up"-button be shown.
-     */
+    /** Should a "Move up"-button be shown. */
     moveUpButton?: boolean;
 
-    /**
-     * Should a "Move down"-button be shown.
-     */
+    /** Should a "Move down"-button be shown. */
     moveDownButton?: boolean;
 
-    /**
-     * Should a "Move to top"-button be shown.
-     */
+    /** Should a "Move to top"-button be shown. */
     moveToTopButton?: boolean;
 }
 
@@ -99,9 +75,7 @@ interface IImageInputProps {
     pictures: FileModel[] | string | null;
     className?: string;
 
-    /**
-     * Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true.
-     */
+    /** Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true. */
     editOnAddInSingleMode?: boolean
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
@@ -123,19 +97,13 @@ interface IImageInputProps {
      */
     selectionToolbar?: IIMageInputToolbar;
 
-    /**
-     * Displayed when an image is being previewed in full-screen.
-     */
+    /** Displayed when an image is being previewed in full-screen. */
     previewToolbar?: IIMageInputToolbar;
 
-    /**
-     * Displayed when an image is being edited.
-     */
+    /** Displayed when an image is being edited. */
     editToolbar?: IIMageInputToolbar;
 
-    /**
-     * List of allowed file extensions.
-     */
+    /** List of allowed file extensions. */
     fileTypes?: string[];
     
     imageUrl?(file: FileModel): string;
@@ -146,8 +114,6 @@ interface IImageInputProps {
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
 
-    private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cropperRef = React.createRef<ReactCropperElement>();
     private cropperHelper = new ReactCropperHelpers(this.cropperRef);
 
@@ -300,34 +266,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     //  Control panel button Click Events
-
-    private async onBrowseButtonClickAsync(): Promise<void> {
-        if (!this.fileInputRef) {
-            return;
-        }
-
-        const ref: RefObject<HTMLInputElement> = this.fileInputRef as RefObject<HTMLInputElement>;
-
-        if (!ref.current) {
-            return
-        }
-
-        ref.current.click();
-    }
-
-    private async onCameraButtonClick(): Promise<void> {
-        if (!this.cameraFileInputRef) {
-            return;
-        }
-
-        const ref: RefObject<HTMLInputElement> = this.cameraFileInputRef as RefObject<HTMLInputElement>;
-
-        if (!ref.current) {
-            return
-        }
-
-        ref.current.click();
-    }
 
     private async onSaveButtonClickAsync(): Promise<void> {
         if ((!this.cropperRef.current)
@@ -492,14 +430,41 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.addFileListAsync(event.dataTransfer.files)
     }
 
-    private async onFileInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-        event.preventDefault();
+    /**
+     * @description It will get the files from input event and calls addFileListAsync method
+     * @link addFileListAsync
+     * @param captureMode if image needs to be taken from camera.
+     * @private
+     */
+    private async onBrowseForFileClick(captureMode: boolean = false): Promise<void> {
+        const input = document.createElement('input') as HTMLInputElement;
+        input.type = 'file';
+        input.style.display = "none";
 
-        if (!event.target.files) {
-            return;
+        if (captureMode) {
+            // @ts-ignore
+            input.capture = "environment";
         }
 
-        await this.addFileListAsync(event.target.files)
+        input.multiple = this.multi;
+
+        input.accept = this.acceptedTypes;
+
+        input.onchange = async (event: Event) => {
+            event.preventDefault();
+
+            if (!input.files) {
+                return;
+            }
+
+            const fileList: FileList = input.files;
+
+            await this.addFileListAsync(fileList)
+
+            input.remove();
+        }
+
+        input.click();
     }
 
     private async initializePicturesAsync(): Promise<void> {
@@ -855,7 +820,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 icon={{name: "file-import"}}
                                 type={ButtonType.Orange}
                                 label={ImageInputLocalizer.browse}
-                                onClick={async () => await this.onBrowseButtonClickAsync()}
+                                onClick={async () => await this.onBrowseForFileClick(false)}
                         />
                     )
 
@@ -869,7 +834,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 icon={{name: "camera"}}
                                 type={ButtonType.Orange}
                                 label={ImageInputLocalizer.camera}
-                                onClick={async () => await this.onCameraButtonClick()}
+                                onClick={async () => await this.onBrowseForFileClick(true)}
                         />
                     )
 
@@ -994,23 +959,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             <div className={this.css(styles.ImageInput, minimizeStyle, fullScreenStyle, this.props.className)}
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
-
-                <input ref={this.fileInputRef}
-                       className={styles.fileInput}
-                       type="file"
-                       accept={this.acceptedTypes}
-                       multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
-                />
-
-                <input ref={this.cameraFileInputRef}
-                       className={styles.fileInput}
-                       type="file"
-                       accept={this.acceptedTypes}
-                       capture="environment"
-                       multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
-                />
 
                 <div className={styles.controlPanel}>
                     {
