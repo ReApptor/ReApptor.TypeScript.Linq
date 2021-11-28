@@ -697,6 +697,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                        showSaveButton={this.showSaveButton}
                                        showBackButton={this.showBackButton}
                                        miniRotateButtons={this.miniRotateButtons}
+                                       hasSelectedPictureIndex={this.hasSelectedPictureIndex}
                                        editToolbar={this.props.editToolbar}
                                        previewToolbar={this.props.previewToolbar}
                                        selectionToolbar={this.props.selectionToolbar}
@@ -705,7 +706,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                        onEditButtonClickAsync={async () => await this.onEditButtonClickAsync()}
                                        onSaveButtonClickAsync={async () => await this.onSaveButtonClickAsync()}
                                        onBackButtonClickAsync={async () => await this.onBackButtonClickAsync()}
-                                       hasSelectedPictureIndex={this.hasSelectedPictureIndex}
                                        onMoveUpButtonClickAsync={async () => await this.onMoveUpButtonClickAsync()}
                                        onRotateButtonClickAsync={async (deg) => await this.onRotateButtonClickAsync(deg)}
                                        onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
