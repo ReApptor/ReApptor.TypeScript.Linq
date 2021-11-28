@@ -11,6 +11,7 @@ import styles from "./CropperModal.module.scss";
 export type ReadyEvent = CropperJs.ReadyEvent<HTMLImageElement>;
 
 export interface ICropperModalProps {
+    visibleOnDefault?: boolean;
     className?: string;
     aspectRatio?: number;
     cropperSource: string;
@@ -51,6 +52,9 @@ export class CropperModal extends BaseComponent<ICropperModalProps, ICropperModa
     }
 
     async componentDidMount(): Promise<void> {
+        if (this.props.visibleOnDefault) {
+            this.setState({visible: true});
+        }
         return super.componentDidMount();
     }
 
