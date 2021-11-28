@@ -13,6 +13,7 @@ import "./ReactCropperOverride.scss";
 
 import styles from "./ImageInput.module.scss";
 import {IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
+import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 
 export enum ImageInputView {
 
@@ -612,43 +613,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     //  Renders
-
-    private renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
-        const activeListViewItemStyle: string | false = (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index) && styles.activeListViewItem;
-        const key: string = `${index}_${fileModel.id}_${fileModel.name}`;
-
-        return (
-            <div key={key}
-                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                 onClick={() => this.onListViewItemClick(index)}
-            >
-
-                <div className={styles.listViewItemThumbnail}>
-                    <img
-                        src={this.getPreviewSource(index)}
-                        alt={this.getPreviewName(index)}
-                    />
-                </div>
-
-                {
-                    this.getPreviewName(index)
-                }
-
-            </div>
-        );
-    }
-
-    private renderListView(): JSX.Element {
-        return (
-            <div className={styles.listView}>
-                {
-                    this.pictures.map((picture, index) => this.renderListViewItem(picture, index))
-                }
-            </div>
-
-        );
-    }
-
     private renderPreviewPanel(): JSX.Element {
         const index: number = this.selectedPictureIndex ?? 0;
         const src: string | undefined = this.getPreviewSource(index);
@@ -740,7 +704,22 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     {
                         (this.multi) && (this.currentView === ImageInputView.Default) &&
                         (
-                            this.renderListView()
+                            <div className={styles.listView}>
+                                {
+                                    this.pictures.map((fileModel, index) =>
+                                        (
+                                            <ImageInputListItem onListViewItemClick={(index: number) => this.onListViewItemClick(index)}
+                                                                hasSelectedPictureIndex={this.hasSelectedPictureIndex}
+                                                                index={index}
+                                                                getPreviewName={(index: number) => this.getPreviewName(index)}
+                                                                getPreviewSource={(index: number) => this.getPreviewSource(index)}
+                                                                fileModel={fileModel}
+                                                                selectedPictureIndex={this.selectedPictureIndex}
+                                            />
+                                        )
+                                    )
+                                }
+                            </div>
                         )
                     }
 
