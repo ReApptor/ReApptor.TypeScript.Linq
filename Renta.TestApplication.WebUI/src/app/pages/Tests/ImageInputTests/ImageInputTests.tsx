@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, FourColumns, IIMageInputToolbar, ImageInput, InlineType} from "@weare/athenaeum-react-components";
+import {Button, Checkbox, FourColumns, ImageInput, InlineType, IIMageInputToolbar, ImageInputToolbar} from "@weare/athenaeum-react-components";
 import {FileModel} from "@weare/athenaeum-toolkit";
 
 interface IIMageInputTestsState {
@@ -17,10 +17,10 @@ export default class ImageInputTests extends BaseComponent {
     public state: IIMageInputTestsState = {
         picture: null,
         pictures: [],
-        noSelectionToolbar: ImageInput.defaultNoSelectionToolbar,
-        selectionToolbar: ImageInput.defaultSelectionToolbar,
-        editToolbar: ImageInput.defaultEditToolbar,
-        previewToolbar: ImageInput.defaultPreviewToolbar,
+        noSelectionToolbar: ImageInputToolbar.defaultNoSelectionToolbar,
+        selectionToolbar: ImageInputToolbar.defaultSelectionToolbar,
+        editToolbar: ImageInputToolbar.defaultEditToolbar,
+        previewToolbar: ImageInputToolbar.defaultPreviewToolbar,
     };
 
     private async initPictureAsync(): Promise<void> {
