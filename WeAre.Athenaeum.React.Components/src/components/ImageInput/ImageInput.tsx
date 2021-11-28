@@ -146,32 +146,29 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             : ImageProvider.getImageUrl(image);
     }
 
-    private getPreviewName(index: number): string {
-        const picture: FileModel | undefined = this.pictures[index];
-
-        if (!picture) {
+    private getPreviewName(fileModel: FileModel | null): string {
+        if (!fileModel) {
             return "";
         }
 
-        return picture.name
+        return fileModel.name
     }
 
-    private getPreviewSource(index: number): string {
-        const picture: FileModel | undefined = this.pictures[index];
+    private getPreviewSource(fileModel: FileModel | null): string {
 
-        if (!picture) {
+        if (!fileModel) {
             return "";
         }
 
-        if (picture.id) {
+        if (fileModel.id) {
             if (this.props.imageUrl) {
-                return this.props.imageUrl(picture);
+                return this.props.imageUrl(fileModel);
             }
 
-            return this.getImageUrl(picture);
+            return this.getImageUrl(fileModel);
         }
 
-        return picture.src;
+        return fileModel.src;
     }
 
     private get maxImageRequestSizeInBytes(): number {
@@ -274,7 +271,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
         const selectedPicture = this.pictures[this.selectedPictureIndex!];
 
-        let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(this.selectedPictureIndex!));
+        let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(selectedPicture));
 
         if (this.props.convertImage) {
             rotated = await this.props.convertImage(rotated);
@@ -615,8 +612,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Renders
     private renderPreviewPanel(): JSX.Element {
         const index: number = this.selectedPictureIndex ?? 0;
-        const src: string | undefined = this.getPreviewSource(index);
-        const alt: string | undefined = this.getPreviewName(index)
+        const src: string | undefined = this.getPreviewSource(this.pictures[index]);
+        const alt: string | undefined = this.getPreviewName(this.pictures[index])
 
         return (
             <div className={styles.preview}>
@@ -625,21 +622,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 />
             </div>
         );
-    }
-
-    private renderCropperPanel(): JSX.Element {
-        return (
-            <div className={styles.cropper}>
-                <Cropper ref={this.cropperRef}
-                         className={styles.reactCropper}
-                         style={{height: "100%", width: "100%"}}
-                         src={this.cropperSource}
-                         viewMode={1} // cannot move box outside image borders
-                         guides={false}
-                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
-                />
-            </div>
-        )
     }
 
     public render(): JSX.Element {
@@ -697,7 +679,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     {
                         (this.currentView === ImageInputView.Edit) &&
                         (
-                            this.renderCropperPanel()
+                            <div className={styles.cropper}>
+                                <Cropper ref={this.cropperRef}
+                                         className={styles.reactCropper}
+                                         style={{height: "100%", width: "100%"}}
+                                         src={this.cropperSource}
+                                         viewMode={1} // cannot move box outside image borders
+                                         guides={false}
+                                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
+                                />
+                            </div>
                         )
                     }
 
@@ -708,12 +699,12 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                 {
                                     this.pictures.map((fileModel, index) =>
                                         (
-                                            <ImageInputListItem onListViewItemClick={(index: number) => this.onListViewItemClick(index)}
-                                                                hasSelectedPictureIndex={this.hasSelectedPictureIndex}
-                                                                index={index}
-                                                                getPreviewName={(index: number) => this.getPreviewName(index)}
-                                                                getPreviewSource={(index: number) => this.getPreviewSource(index)}
+                                            <ImageInputListItem index={index}
                                                                 fileModel={fileModel}
+                                                                onListViewItemClick={(index: number) => this.onListViewItemClick(index)}
+                                                                hasSelectedPictureIndex={this.hasSelectedPictureIndex}
+                                                                getPreviewName={(index: number) => this.getPreviewName(fileModel)}
+                                                                getPreviewSource={(index: number) => this.getPreviewSource(fileModel)}
                                                                 selectedPictureIndex={this.selectedPictureIndex}
                                             />
                                         )
