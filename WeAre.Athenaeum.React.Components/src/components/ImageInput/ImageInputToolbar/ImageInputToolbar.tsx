@@ -11,34 +11,34 @@ import {ImageInputView} from "@weare/athenaeum-react-components";
 export interface IIMageInputToolbar {
 
     /** Should an "Upload file"-button be shown. */
-    uploadButton: boolean;
+    uploadButton?: boolean;
 
     /** Should a "Take a picture"-button be shown. */
-    takePictureButton: boolean;
+    takePictureButton?: boolean;
 
     /** Should a "Remove"-button be shown. */
-    deleteButton: boolean;
+    deleteButton?: boolean;
 
     /** Should a "Preview"-button be shown. */
-    previewButton: boolean;
+    previewButton?: boolean;
 
     /** Should an "Edit"-button be shown. */
-    editButton: boolean;
+    editButton?: boolean;
 
     /** Should a "Rotate left"-button be shown. */
-    rotateLeftButton: boolean;
+    rotateLeftButton?: boolean;
 
     /** Should a "Rotate right"-button be shown. */
-    rotateRightButton: boolean;
+    rotateRightButton?: boolean;
 
     /** Should a "Move up"-button be shown. */
-    moveUpButton: boolean;
+    moveUpButton?: boolean;
 
     /** Should a "Move down"-button be shown. */
-    moveDownButton: boolean;
+    moveDownButton?: boolean;
 
     /** Should a "Move to top"-button be shown. */
-    moveToTopButton: boolean;
+    moveToTopButton?: boolean;
 }
 
 
