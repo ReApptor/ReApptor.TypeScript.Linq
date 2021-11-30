@@ -106,9 +106,11 @@ namespace Renta.Apps.Common.Helpers
 
                 if (!string.IsNullOrWhiteSpace(settings.Value.Jwk))
                 {
+                    byte[] bytes = Convert.FromBase64String(settings.Value.Jwk);
+                    string json = Encoding.UTF8.GetString(bytes);
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        IssuerSigningKey = new JsonWebKey(settings.Value.Jwk)
+                        IssuerSigningKey = new JsonWebKey(json)
                     };
                 }
 
@@ -147,7 +149,7 @@ namespace Renta.Apps.Common.Helpers
         }
 
         public static IServiceCollection AddRentaSecurityProvider(IServiceCollection services, string authenticationType, string packageConsoleUser = RentaConstants.Db.PackageConsoleUser, string migrationConsoleUser = RentaConstants.Db
-        .MigrationConsoleUser)
+            .MigrationConsoleUser)
         {
             return services?.AddSecurityProvider(options =>
             {
