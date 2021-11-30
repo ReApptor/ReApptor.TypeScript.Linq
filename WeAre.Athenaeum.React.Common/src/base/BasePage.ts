@@ -26,6 +26,9 @@ export interface IManualProps {
     onClick?(): Promise<void>;
 }
 
+/**
+ * A page contained in an {@link ILayoutPage}.
+ */
 export interface IBasePage extends IBaseComponent {
 
     onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean>;
@@ -96,12 +99,17 @@ export interface IBasePage extends IBaseComponent {
     readonly routeId: string | null;
     readonly parameters: BasePageParameters | null;
     readonly route: PageRoute;
-
     readonly automaticUrlChange?: boolean;
-
 }
 
+/**
+ * A page containing an {@link IBasePage}.
+ */
 export interface ILayoutPage extends IAsyncComponent {
+
+    /**
+     * Set an {@link IBasePage} to the {@link ILayoutPage}.
+     */
     setPageAsync(page: IBasePage): Promise<void>;
 
     reloadTopNavAsync(): Promise<void>;
@@ -113,17 +121,20 @@ export interface ILayoutPage extends IAsyncComponent {
     swipeRightAsync(): Promise<void>;
 
     /**
-     * Display an alert on the page.
+     * Display an alert on the {@link ILayoutPage}.
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
     alertAsync(alert: AlertModel): Promise<void>;
 
     /**
-     * Hide the alert currently being displayed in the page.
+     * Hide the alert currently being displayed in the {@link ILayoutPage}.
      */
     hideAlertAsync(): Promise<void>;
 
+    /**
+     * Does the {@link ILayoutPage} have a spinner.
+     */
     isSpinning(): boolean;
 
     isLayout(): boolean;
@@ -156,6 +167,9 @@ export interface IIsLoading {
     onIsLoading(): Promise<void>;
 }
 
+/**
+ * Implementation of {@link IBasePage}.
+ */
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
     private readonly _asIsLoading: IIsLoading | null;

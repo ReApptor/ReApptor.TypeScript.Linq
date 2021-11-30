@@ -117,7 +117,7 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      *
-     * @param alert
+     * @param alert Alert to be displayed in the {@link ILayoutPage}.
      */
     public static async alertAsync(alert: AlertModel): Promise<void> {
         if (this._layout != null) {
@@ -301,6 +301,9 @@ export default class ch {
         }
     }
 
+    /**
+     * Reload the current page.
+     */
     public static refresh(): void {
         window.location.reload();
     }
@@ -321,7 +324,7 @@ export default class ch {
     }
 
     /**
-     * Gets layout (All pages are placed in Layout component)
+     * Gets current {@link ILayoutPage}. All {@link IBasePage}'s are placed inside this component.
      * @returns layout - inherited from ILayoutPage
      */
     public static getLayout(): ILayoutPage {
@@ -332,8 +335,9 @@ export default class ch {
     }
 
     /**
-     * Gets page
-     * @returns page - inherited from ILayoutPage
+     * @returns Current {@link IBasePage}.
+     *
+     * @throws Current page is not defined.
      */
     public static getPage(): IBasePage {
         if (this._page == null)
@@ -343,8 +347,7 @@ export default class ch {
     }
 
     /**
-     * Gets page
-     * @returns page - inherited from ILayoutPage
+     * @returns Current {@link IBasePage}, or null if current page is not defined.
      */
     public static findPage(): IBasePage | null {
         return this._page;

@@ -56,6 +56,9 @@ interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
     error: boolean;
 }
 
+/**
+ * Implementation of {@link ILayoutPage}.
+ */
 export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext> implements ILayoutPage, IGlobalResize {
 
     state: ILayoutState = {
@@ -152,7 +155,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             }
         }
     }
-    
+
     private async processUrlRouteAsync(route: string | null, parameters: ParsedQuery): Promise<void> {
 
         if (route !== null && route !== "/" && route !== "") {

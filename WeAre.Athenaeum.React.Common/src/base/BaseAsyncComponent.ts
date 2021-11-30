@@ -12,6 +12,9 @@ export interface IBaseAsyncComponentState<TData> {
     data: TData | null;
 }
 
+/**
+ * Implementation of {@link IAsyncComponent}.
+ */
 export default abstract class BaseAsyncComponent<TProps, TState
     extends IBaseAsyncComponentState<TData>, TData = {}>
     extends BaseComponent<TProps, TState>
