@@ -146,12 +146,14 @@ namespace Renta.Apps.Common.Helpers
             });
         }
 
-        public static IServiceCollection AddRentaSecurityProvider(IServiceCollection services, string authenticationType, string packageConsoleUser = RentaConstants.Db.PackageConsoleUser)
+        public static IServiceCollection AddRentaSecurityProvider(IServiceCollection services, string authenticationType, string packageConsoleUser = RentaConstants.Db.PackageConsoleUser, string migrationConsoleUser = RentaConstants.Db
+        .MigrationConsoleUser)
         {
             return services?.AddSecurityProvider(options =>
             {
                 options.AuthenticationType = authenticationType;
                 options.PackageConsoleUser = packageConsoleUser;
+                options.MigrationConsoleUser = packageConsoleUser;
             });
         }
     }
