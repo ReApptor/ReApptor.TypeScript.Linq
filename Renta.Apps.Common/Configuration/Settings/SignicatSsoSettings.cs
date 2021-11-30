@@ -7,6 +7,8 @@ namespace Renta.Apps.Common.Configuration.Settings
         SignicatSsoSettings IOptions<SignicatSsoSettings>.Value => this;
         
         public string Authority { get; set; }
+        
+        public string Jwk { get; set; }
 
         public string ClientId { get; set; }
         

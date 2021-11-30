@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Providers;
 
@@ -102,6 +103,14 @@ namespace Renta.Apps.Common.Helpers
                     {
                     }
                 };
+
+                if (!string.IsNullOrWhiteSpace(settings.Value.Jwk))
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        IssuerSigningKey = new JsonWebKey(settings.Value.Jwk)
+                    };
+                }
 
                 options.Authority = settings.Value.Authority;
                 options.CallbackPath = settings.Value.CallbackPath;
