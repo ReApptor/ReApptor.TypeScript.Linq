@@ -8,6 +8,8 @@ namespace WeAre.Athenaeum.Common.Providers
         public string AuthenticationType { get; set; } = AthenaeumConstants.AuthenticationType;
 
         public string PackageConsoleUser { get; set; }
+        
+        public string MigrationConsoleUser { get; set; }
 
         public Func<ClaimsIdentity, string> CallerUsername { get; set; }
     }
