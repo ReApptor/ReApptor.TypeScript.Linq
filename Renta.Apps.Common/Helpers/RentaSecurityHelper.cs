@@ -121,7 +121,11 @@ namespace Renta.Apps.Common.Helpers
                 {
                     OnRedirectToIdentityProvider = context =>
                     {
-                        context.ProtocolMessage.SetParameter("signicat_profile", settings.Value.GraphicalProfile);
+                        if (!string.IsNullOrWhiteSpace(settings.Value.GraphicalProfile))
+                        {
+                            context.ProtocolMessage.SetParameter("signicat_profile", settings.Value.GraphicalProfile);
+                        }
+
                         context.ProtocolMessage.SetParameter("acr_values", settings.Value.AcrValues);
                         return Task.FromResult(0);
                     },
