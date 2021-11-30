@@ -31,8 +31,7 @@ namespace Renta.Apps.Common.Helpers
         /// <summary>
         /// https://damienbod.com/2019/05/17/updating-microsoft-account-logins-in-asp-net-core-with-openid-connect-and-azure-active-directory/
         /// </summary>
-        public static AuthenticationBuilder AddRentaAuthenticationWithSso(AuthenticationBuilder builder, 
-            IServiceCollection services, 
+        public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services, 
             IOptions<AzureSsoSettings> settings, 
             string authenticationType,
             Func<HttpContext, Exception, string, Task> onFailure = null
