@@ -16,7 +16,7 @@ export enum ModalSize {
     Large,
 
     ExtraLarge,
-    
+
     /*
      * Modal will resize according to content size
      */
@@ -26,9 +26,22 @@ export enum ModalSize {
 interface IModalProps<TData = {}> {
     id?: string;
     size?: ModalSize;
+
+    /**
+     * Text displayed in the header of the {@link Modal}.
+     */
     title?: string;
+
+    /**
+     * Secondary text displayed in the header of the {@link Modal}.
+     */
     subtitle?: string;
+
+    /**
+     * Text displayed in the {@link Modal}'s body.
+     */
     content?: string;
+
     info?: boolean;
     className?: string;
     contentClassName?: string;
@@ -49,7 +62,7 @@ interface IModalState extends IBaseAsyncComponentState<any> {
 }
 
 export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TData>, IModalState> {
-    
+
     state: IModalState = {
         isOpen: false,
         data: null,
@@ -181,13 +194,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     private async onCloseHandlerAsync(): Promise<void> {
         this.togglePageScroll(false);
-        
+
         if (this.mobile) {
             this.JQuery("body").removeClass("mobile");
         }
-        
+
         await this.setModalToClose();
-        
+
         this.scrollBack();
     }
 
@@ -206,7 +219,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         return this.props.transform(data);
     }
-    
+
     public hasSpinner(): boolean {
         return true;
     }
@@ -322,7 +335,11 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        this.JQuery(this.modal).modal("show");
+        const modal = this.JQuery(this.modal);
+
+        if (modal) {
+            modal.modal("show");
+        }
     }
 
     private hideBootstrapModal() {
@@ -330,7 +347,11 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        this.JQuery(this.modal).modal("hide");
+        const modal = this.JQuery(this.modal);
+
+        if (modal) {
+            modal.modal("hide");
+        }
     }
 
     //  PropsMethodCallHelpers
@@ -468,7 +489,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             </div>
         );
     }
-    
+
     // This needs improvement in next version
     // Needed for correctly applying blur effect without moving modals outside of Layout manually
     public render(): React.ReactNode {

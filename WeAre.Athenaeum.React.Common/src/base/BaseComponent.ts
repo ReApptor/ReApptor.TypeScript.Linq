@@ -179,16 +179,16 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     public get childComponents(): IBaseComponent[] {
 
-        const childComponent: IBaseComponent[] = [];
+        const childComponents: IBaseComponent[] = [];
 
-        childComponent.push(...
+        childComponents.push(...
             this
                 ._childComponentRefs
                 .filter(ref => BaseComponent.isComponent(ref.current))
                 .map(ref => ref.current!)
         );
 
-        return childComponent;
+        return childComponents;
     }
 
     public get isMounted(): boolean {
@@ -239,14 +239,27 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this.reRenderAsync();
     }
 
+    /**
+     * Returns false. Must be overridden to return true in order to enable spinner-related functionalities {@link isSpinning} and {@link setSpinnerAsync}.
+     */
     public hasSpinner(): boolean {
         return false;
     }
 
+    /**
+     * Does the component have a spinner.
+     * Can return true only if {@link hasSpinner} is overridden to return true.
+     */
     public isSpinning(): boolean {
         return (this.hasSpinner()) && (this._isSpinning);
     }
 
+    /**
+     * Sets {@link isSpinning}.
+     * Works only if {@link hasSpinner} is overridden to return true.
+     *
+     * @param isSpinning Does the component have a spinner.
+     */
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
         if ((this.hasSpinner()) && (isSpinning !== this._isSpinning)) {
             this._isSpinning = isSpinning;
@@ -362,11 +375,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Resize);
         }
     }
-    
+
     public async componentWillMount(): Promise<void> {
         await this.initializeAsync();
     }
-    
+
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
     }
 }

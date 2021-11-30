@@ -1,0 +1,9 @@
+.cropper {
+  flex-grow: 1;
+  overflow: hidden;
+
+  .reactCropper .cropper-container .cropper-crop-box .cropper-point {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}

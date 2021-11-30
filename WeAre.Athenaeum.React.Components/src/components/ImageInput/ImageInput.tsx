@@ -1,19 +1,21 @@
-import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
+import React, {DragEvent} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
-import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import {ReactCropperHelpers} from "./ReactCropperHelpers";
+import {ImageProvider} from "../ImageModal/ImageModal";
 import ImageInputLocalizer from "./ImageInputLocalizer";
 
 import "cropperjs/dist/cropper.css";
 import "./ReactCropperOverride.scss";
 
 import styles from "./ImageInput.module.scss";
+import {IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
+import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 
-enum ImageInputView {
+export enum ImageInputView {
 
     /**
      * If no uploaded files, display nothing.
@@ -22,68 +24,11 @@ enum ImageInputView {
      */
     Default,
 
-    /**
-     * Display full-screen preview of the selected picture.
-     */
+    /** Display full-screen preview of the selected picture. */
     Preview,
 
-    /**
-     * Display full-screen editor of the selected picture.
-     */
+    /** Display full-screen editor of the selected picture. */
     Edit,
-}
-
-export interface IIMageInputToolbar {
-
-    /**
-     * Should an "Upload file"-button be shown.
-     */
-    uploadButton?: boolean;
-
-    /**
-     * Should a "Take a picture"-button be shown.
-     */
-    takePictureButton?: boolean;
-
-    /**
-     * Should a "Remove"-button be shown.
-     */
-    deleteButton?: boolean;
-
-    /**
-     * Should a "Preview"-button be shown.
-     */
-    previewButton?: boolean;
-
-    /**
-     * Should an "Edit"-button be shown.
-     */
-    editButton?: boolean;
-
-    /**
-     * Should a "Rotate left"-button be shown.
-     */
-    rotateLeftButton?: boolean;
-
-    /**
-     * Should a "Rotate right"-button be shown.
-     */
-    rotateRightButton?: boolean;
-
-    /**
-     * Should a "Move up"-button be shown.
-     */
-    moveUpButton?: boolean;
-
-    /**
-     * Should a "Move down"-button be shown.
-     */
-    moveDownButton?: boolean;
-
-    /**
-     * Should a "Move to top"-button be shown.
-     */
-    moveToTopButton?: boolean;
 }
 
 interface IImageInputState {
@@ -94,13 +39,11 @@ interface IImageInputState {
     pictures: FileModel[];
 }
 
-interface IImageInputProps {
+interface IImageInputProps extends IImageInputToolbarOverwriteProps {
     pictures: FileModel[] | string | null;
     className?: string;
 
-    /**
-     * Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true.
-     */
+    /** Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true. */
     editOnAddInSingleMode?: boolean
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
@@ -111,40 +54,17 @@ interface IImageInputProps {
      */
     multi?: boolean;
 
-    /**
-     * Displayed when {@link pictures} is empty or when no image is selected.
-     */
-    noSelectionToolbar?: IIMageInputToolbar;
-
-    /**
-     * Displayed when an image has been selected.
-     * @default {@link IIMageInputToolbar.rotateLeftButton} {@link IIMageInputToolbar.rotateRightButton} {@link IIMageInputToolbar.editButton} {@link IIMageInputToolbar.previewButton} {@link IIMageInputToolbar.uploadButton} {@link IIMageInputToolbar.takePictureButton} {@link IIMageInputToolbar.deleteButton}
-     */
-    selectionToolbar?: IIMageInputToolbar;
-
-    /**
-     * Displayed when an image is being previewed in full-screen.
-     */
-    previewToolbar?: IIMageInputToolbar;
-
-    /**
-     * Displayed when an image is being edited.
-     */
-    editToolbar?: IIMageInputToolbar;
-
-    /**
-     * List of allowed file extensions.
-     */
+    /** List of allowed file extensions. */
     fileTypes?: string[];
+    
     imageUrl?(file: FileModel): string;
     convertImage?(file: FileModel): Promise<FileModel>;
+    
     onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
 
-    private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
     private cropperRef = React.createRef<ReactCropperElement>();
     private cropperHelper = new ReactCropperHelpers(this.cropperRef);
 
@@ -214,10 +134,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 return this.props.imageUrl(this.activePicture);
             }
 
-            return `/files/images/${this.activePicture.id}`
+            return this.getImageUrl(this.activePicture);
         }
 
         return this.activePicture.src;
+    }
+
+    private getImageUrl(image: FileModel): string {
+        return (this.props.imageUrl)
+            ? this.props.imageUrl(image)
+            : ImageProvider.getImageUrl(image);
     }
 
     private getPreviewName(index: number): string {
@@ -242,7 +168,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 return this.props.imageUrl(picture);
             }
 
-            return `/files/images/${picture.id}`
+            return this.getImageUrl(picture);
         }
 
         return picture.src;
@@ -260,21 +186,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  ViewIfStatements
 
-    private get toolbar(): IIMageInputToolbar {
-        switch (this.currentView){
-            case ImageInputView.Default:
-                return (this.hasSelectedPictureIndex)
-                    ? this.props.selectionToolbar ?? ImageInput.defaultSelectionToolbar
-                    : this.props.noSelectionToolbar ?? ImageInput.defaultNoSelectionToolbar;
-            case ImageInputView.Preview:
-                return this.props.previewToolbar ?? ImageInput.defaultPreviewToolbar;
-            case ImageInputView.Edit:
-                return this.props.editToolbar ?? ImageInput.defaultEditToolbar;
-            default:
-                throw new TypeError(`Non-existing enum value '${this.currentView}'`);
-        }
-    }
-
     private get showBackButton(): boolean {
         return (this.isFullscreen);
     }
@@ -291,34 +202,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     //  Control panel button Click Events
-
-    private async onBrowseButtonClickAsync(): Promise<void> {
-        if (!this.fileInputRef) {
-            return;
-        }
-
-        const ref: RefObject<HTMLInputElement> = this.fileInputRef as RefObject<HTMLInputElement>;
-
-        if (!ref.current) {
-            return
-        }
-
-        ref.current.click();
-    }
-
-    private async onCameraButtonClick(): Promise<void> {
-        if (!this.cameraFileInputRef) {
-            return;
-        }
-
-        const ref: RefObject<HTMLInputElement> = this.cameraFileInputRef as RefObject<HTMLInputElement>;
-
-        if (!ref.current) {
-            return
-        }
-
-        ref.current.click();
-    }
 
     private async onSaveButtonClickAsync(): Promise<void> {
         if ((!this.cropperRef.current)
@@ -483,14 +366,41 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.addFileListAsync(event.dataTransfer.files)
     }
 
-    private async onFileInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-        event.preventDefault();
+    /**
+     * @description It will get the files from input event and calls addFileListAsync method
+     * @link addFileListAsync
+     * @param captureMode if image needs to be taken from camera.
+     * @private
+     */
+    private async onBrowseForFileClick(captureMode: boolean = false): Promise<void> {
+        const input = document.createElement('input') as HTMLInputElement;
+        input.type = 'file';
+        input.style.display = "none";
 
-        if (!event.target.files) {
-            return;
+        if (captureMode) {
+            // @ts-ignore
+            input.capture = "environment";
         }
 
-        await this.addFileListAsync(event.target.files)
+        input.multiple = this.multi;
+
+        input.accept = this.acceptedTypes;
+
+        input.onchange = async (event: Event) => {
+            event.preventDefault();
+
+            if (!input.files) {
+                return;
+            }
+
+            const fileList: FileList = input.files;
+
+            await this.addFileListAsync(fileList)
+
+            input.remove();
+        }
+
+        input.click();
     }
 
     private async initializePicturesAsync(): Promise<void> {
@@ -703,247 +613,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     //  Renders
-
-    private renderControlPanel(): JSX.Element {
-        return (
-            <React.Fragment>
-
-                {
-                    ((this.toolbar.rotateLeftButton) || (this.toolbar.rotateRightButton)) &&
-                    (
-                        (this.miniRotateButtons)
-                            ?
-                            (
-                                <div className={styles.controlPanelMiniButtonWrap}>
-
-                                    {
-                                        (this.toolbar.rotateLeftButton) &&
-                                        (
-                                            <Button small
-                                                    icon={{name: "undo"}}
-                                                    type={ButtonType.Info}
-                                                    onClick={async () => await this.onRotateMiniButtonClickAsync(-90)}
-                                            />
-                                        )
-                                    }
-
-                                    {
-                                        (this.toolbar.rotateRightButton) &&
-                                        (
-                                            <Button small
-                                                    icon={{name: "redo"}}
-                                                    type={ButtonType.Info}
-                                                    onClick={async () => await this.onRotateMiniButtonClickAsync(90)}
-                                            />
-                                        )
-                                    }
-
-                                </div>
-                            )
-                            :
-                            (
-                                <>
-                                    {
-                                        (this.toolbar.rotateLeftButton) &&
-                                        (
-                                            <Button small
-                                                    className={styles.controlPanelButton}
-                                                    icon={{name: "undo"}}
-                                                    type={ButtonType.Light}
-                                                    label={ImageInputLocalizer.rotateLeft}
-                                                    onClick={async () => await this.onRotateButtonClickAsync(-90)}
-                                            />
-                                        )
-                                    }
-
-                                    {
-                                        (this.toolbar.rotateRightButton) &&
-                                        (
-                                            <Button small
-                                                    className={styles.controlPanelButton}
-                                                    icon={{name: "redo"}}
-                                                    type={ButtonType.Light}
-                                                    label={ImageInputLocalizer.rotateRight}
-                                                    onClick={async () => await this.onRotateButtonClickAsync(90)}
-                                            />
-                                        )
-                                    }
-                                </>
-                            )
-                    )
-                }
-
-                {
-                    (this.toolbar.moveToTopButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "level-up"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.moveToTop}
-                                onClick={async () => await this.onMoveToTopButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.moveUpButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "arrow-up"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.moveUp}
-                                onClick={async () => await this.onMoveUpButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.moveDownButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "arrow-down"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.moveDown}
-                                onClick={async () => await this.onMoveDownButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.editButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "crop"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.edit}
-                                onClick={async () => await this.onEditButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.previewButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "eye"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.preview}
-                                onClick={async () => await this.onPreviewButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.uploadButton) &&
-                    (
-                        <Button small right
-                                className={styles.controlPanelButton}
-                                icon={{name: "file-import"}}
-                                type={ButtonType.Orange}
-                                label={ImageInputLocalizer.browse}
-                                onClick={async () => await this.onBrowseButtonClickAsync()}
-                        />
-                    )
-
-                }
-
-                {
-                    (this.toolbar.takePictureButton) &&
-                    (
-                        <Button small right
-                                className={styles.controlPanelButton}
-                                icon={{name: "camera"}}
-                                type={ButtonType.Orange}
-                                label={ImageInputLocalizer.camera}
-                                onClick={async () => await this.onCameraButtonClick()}
-                        />
-                    )
-
-                }
-
-                {
-                    (this.showSaveButton) &&
-                    (
-                        <Button small right
-                                className={styles.controlPanelButton}
-                                icon={{name: "save"}}
-                                type={ButtonType.Success}
-                                label={ImageInputLocalizer.save}
-                                onClick={async () => await this.onSaveButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.showBackButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "arrow-left"}}
-                                type={ButtonType.Info}
-                                label={ImageInputLocalizer.back}
-                                onClick={async () => await this.onBackButtonClickAsync()}
-                        />
-                    )
-                }
-
-                {
-                    (this.toolbar.deleteButton) &&
-                    (
-                        <Button small
-                                className={styles.controlPanelButton}
-                                icon={{name: "trash"}}
-                                type={ButtonType.Warning}
-                                label={ImageInputLocalizer.delete}
-                                onClick={async () => await this.onDeleteButtonClickAsync()}
-                        />
-                    )
-                }
-            </React.Fragment>
-        );
-    }
-
-    private renderListViewItem(fileModel: FileModel, index: number): JSX.Element {
-        const activeListViewItemStyle: string | false = (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index) && styles.activeListViewItem;
-        const key: string = `${index}_${fileModel.id}_${fileModel.name}`;
-
-        return (
-            <div key={key}
-                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                 onClick={() => this.onListViewItemClick(index)}
-            >
-
-                <div className={styles.listViewItemThumbnail}>
-                    <img
-                        src={this.getPreviewSource(index)}
-                        alt={this.getPreviewName(index)}
-                    />
-                </div>
-
-                {
-                    this.getPreviewName(index)
-                }
-
-            </div>
-        );
-    }
-
-    private renderListView(): JSX.Element {
-        return (
-            <div className={styles.listView}>
-                {
-                    this.pictures.map((picture, index) => this.renderListViewItem(picture, index))
-                }
-            </div>
-
-        );
-    }
-
     private renderPreviewPanel(): JSX.Element {
         const index: number = this.selectedPictureIndex ?? 0;
         const src: string | undefined = this.getPreviewSource(index);
@@ -986,34 +655,37 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
 
-                <input ref={this.fileInputRef}
-                       className={styles.fileInput}
-                       type="file"
-                       accept={this.acceptedTypes}
-                       multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
-                />
-
-                <input ref={this.cameraFileInputRef}
-                       className={styles.fileInput}
-                       type="file"
-                       accept={this.acceptedTypes}
-                       capture="environment"
-                       multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
-                />
-
                 <div className={styles.controlPanel}>
-                    {
-                        this.renderControlPanel()
-                    }
+
+                    <ImageInputToolbar currentView={this.currentView}
+                                       showSaveButton={this.showSaveButton}
+                                       showBackButton={this.showBackButton}
+                                       miniRotateButtons={this.miniRotateButtons}
+                                       hasSelectedPictureIndex={this.hasSelectedPictureIndex}
+                                       editToolbar={this.props.editToolbar}
+                                       previewToolbar={this.props.previewToolbar}
+                                       selectionToolbar={this.props.selectionToolbar}
+                                       noSelectionToolbar={this.props.noSelectionToolbar}
+                                       onBrowseForFileClick={async (captureMode) => await this.onBrowseForFileClick(captureMode)}
+                                       onEditButtonClickAsync={async () => await this.onEditButtonClickAsync()}
+                                       onSaveButtonClickAsync={async () => await this.onSaveButtonClickAsync()}
+                                       onBackButtonClickAsync={async () => await this.onBackButtonClickAsync()}
+                                       onMoveUpButtonClickAsync={async () => await this.onMoveUpButtonClickAsync()}
+                                       onRotateButtonClickAsync={async (deg) => await this.onRotateButtonClickAsync(deg)}
+                                       onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
+                                       onPreviewButtonClickAsync={async () => await this.onPreviewButtonClickAsync()}
+                                       onMoveDownButtonClickAsync={async () => await this.onMoveDownButtonClickAsync()}
+                                       onMoveToTopButtonClickAsync={async () => await this.onMoveToTopButtonClickAsync()}
+                                       onRotateMiniButtonClickAsync={async (deg) => await this.onRotateMiniButtonClickAsync(deg)}
+                    />
+
                 </div>
 
                 <div className={styles.viewPanel}>
 
                     <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
                          onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDropAsync(event)}
-                         onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOverAsync(event)}
+                         onDragOver={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOverAsync(event)}
                          onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnterAsync(event)}
                          onDragLeave={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragLeaveAsync(event)}
                     >
@@ -1032,7 +704,22 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     {
                         (this.multi) && (this.currentView === ImageInputView.Default) &&
                         (
-                            this.renderListView()
+                            <div className={styles.listView}>
+                                {
+                                    this.pictures.map((fileModel, index) =>
+                                        (
+                                            <ImageInputListItem onListViewItemClick={(index: number) => this.onListViewItemClick(index)}
+                                                                hasSelectedPictureIndex={this.hasSelectedPictureIndex}
+                                                                index={index}
+                                                                getPreviewName={(index: number) => this.getPreviewName(index)}
+                                                                getPreviewSource={(index: number) => this.getPreviewSource(index)}
+                                                                fileModel={fileModel}
+                                                                selectedPictureIndex={this.selectedPictureIndex}
+                                            />
+                                        )
+                                    )
+                                }
+                            </div>
                         )
                     }
 
@@ -1051,73 +738,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  Statics
 
-    /**
-     * Following functionality is enabled:
-     * {@link IIMageInputToolbar.uploadButton}
-     * {@link IIMageInputToolbar.takePictureButton}
-     */
-    public static get defaultNoSelectionToolbar(): IIMageInputToolbar {
-        return {
-            takePictureButton: true,
-            uploadButton: true,
-        };
-    }
-
-    /**
-     * Following functionality is enabled:
-     * {@link IIMageInputToolbar.rotateLeftButton}
-     * {@link IIMageInputToolbar.rotateRightButton}
-     * {@link IIMageInputToolbar.editButton}
-     * {@link IIMageInputToolbar.previewButton}
-     * {@link IIMageInputToolbar.uploadButton}
-     * {@link IIMageInputToolbar.takePictureButton}
-     * {@link IIMageInputToolbar.deleteButton}
-     */
-    public static get defaultSelectionToolbar(): IIMageInputToolbar {
-        return {
-            deleteButton: true,
-            editButton: true,
-            previewButton: true,
-            rotateLeftButton: true,
-            rotateRightButton: true,
-            takePictureButton: true,
-            uploadButton: true,
-        }
-    }
-
-    /**
-     * Following functionality is enabled:
-     * {@link IIMageInputToolbar.editButton}
-     * {@link IIMageInputToolbar.uploadButton}
-     * {@link IIMageInputToolbar.takePictureButton}
-     * {@link IIMageInputToolbar.deleteButton}.
-     *
-     * A "Back"-button which returns the user back to the previous view is also displayed.
-     */
-    public static get defaultPreviewToolbar(): IIMageInputToolbar {
-        return {
-            deleteButton: true,
-            editButton: true,
-            uploadButton: true,
-            takePictureButton: true,
-        };
-    }
-
-    /**
-     * Following functionality is enabled:
-     * {@link IIMageInputToolbar.rotateLeftButton}
-     * {@link IIMageInputToolbar.rotateRightButton}
-     * {@link IIMageInputToolbar.deleteButton}.
-     *
-     * A "Save"-button which saves the changes and a "Back"-button which returns the user back to the previous view are also displayed.
-     */
-    public static get defaultEditToolbar(): IIMageInputToolbar {
-        return {
-            rotateLeftButton: true,
-            rotateRightButton: true,
-            deleteButton: true,
-        };
-    }
 
     private static async fileToFileModel(file: File): Promise<FileModel> {
         const fileData = await ImageInput.readFile(file);

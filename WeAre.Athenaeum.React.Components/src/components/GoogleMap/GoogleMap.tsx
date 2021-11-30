@@ -29,18 +29,21 @@ export interface IGoogleMapProps {
 
     /**
      * Should markers be clustered together.
+     *
      * @default false
      */
     clusterMarkers?: boolean;
 
     /**
      * {@link google.maps.Marker}'s which are displayed on the map.
+     *
      * @default []
      */
     markers?: google.maps.Marker[];
 
     /**
      * {@link google.maps.InfoWindow}'s which are open on the map.
+     *
      * @default []
      */
     infoWindows?: google.maps.InfoWindow[];
@@ -48,6 +51,7 @@ export interface IGoogleMapProps {
     /**
      * Called when the map is clicked.
      * Is not called when a {@link google.maps.Marker} or an {@link google.maps.InfoWindow} is clicked.
+     * 
      * @default undefined
      */
     onClick?(): Promise<void>;

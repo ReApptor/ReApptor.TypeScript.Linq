@@ -28,6 +28,10 @@ export default abstract class BaseAsyncComponent<TProps, TState
         return this.state.isLoading;
     }
 
+    /**
+     * Does the component have a spinner.
+     * Can return true only if {@link hasSpinner} is overridden to return true.
+     */
     public isSpinning(): boolean {
         return (this.hasSpinner()) && (this.isLoading || super.isSpinning());
     }

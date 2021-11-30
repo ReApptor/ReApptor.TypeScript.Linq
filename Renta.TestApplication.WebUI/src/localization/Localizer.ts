@@ -7,6 +7,13 @@ class Localizer extends BaseLocalizer {
     //Constants
     public readonly topNavFrontpageLanguageItemName: string = `TopNav.Frontpage`;
     public readonly pageRoutesTests2LanguageItemName: string = `PageRoutes.Tests2`;
+    public readonly dayOfWeekMondayLanguageItemName: string = `DayOfWeek.Monday`;
+    public readonly dayOfWeekTuesdayLanguageItemName: string = `DayOfWeek.Tuesday`;
+    public readonly dayOfWeekWednsdayLanguageItemName: string = `DayOfWeek.Wednsday`;
+    public readonly dayOfWeekThursdayLanguageItemName: string = `DayOfWeek.Thursday`;
+    public readonly dayOfWeekFridayLanguageItemName: string = `DayOfWeek.Friday`;
+    public readonly dayOfWeekSaturdayLanguageItemName: string = `DayOfWeek.Saturday`;
+    public readonly dayOfWeekSundayLanguageItemName: string = `DayOfWeek.Sunday`;
 
     constructor() {
 
@@ -20,6 +27,13 @@ class Localizer extends BaseLocalizer {
         //Initializer
         this.set(this.topNavFrontpageLanguageItemName, { language: `fi`, value: `Etusivu` }, { language: `en`, value: `Frontpage` },);
         this.set(this.pageRoutesTests2LanguageItemName, { language: `fi`, value: `helloworld` }, { language: `en`, value: `hellouworld/aaa` },);
+        this.set(this.dayOfWeekMondayLanguageItemName, { language: `fi`, value: `maanantai` }, { language: `en`, value: `Monday` },);
+        this.set(this.dayOfWeekTuesdayLanguageItemName, { language: `fi`, value: `tiistai` }, { language: `en`, value: `Tuesday` },);
+        this.set(this.dayOfWeekWednsdayLanguageItemName, { language: `fi`, value: `keskiviikko` }, { language: `en`, value: `Wednsday` },);
+        this.set(this.dayOfWeekThursdayLanguageItemName, { language: `fi`, value: `torstai` }, { language: `en`, value: `Thursday` },);
+        this.set(this.dayOfWeekFridayLanguageItemName, { language: `fi`, value: `perjantai` }, { language: `en`, value: `Friday` },);
+        this.set(this.dayOfWeekSaturdayLanguageItemName, { language: `fi`, value: `lauantai` }, { language: `en`, value: `Saturday` },);
+        this.set(this.dayOfWeekSundayLanguageItemName, { language: `fi`, value: `sunnuntai` }, { language: `en`, value: `Sunday` },);
     }
 
     /**
@@ -34,6 +48,55 @@ class Localizer extends BaseLocalizer {
     */
     public get pageRoutesTests2() : string {
         return this.get(this.pageRoutesTests2LanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Monday" (Monday)
+    */
+    public get dayOfWeekMonday() : string {
+        return this.get(this.dayOfWeekMondayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Tuesday" (Tuesday)
+    */
+    public get dayOfWeekTuesday() : string {
+        return this.get(this.dayOfWeekTuesdayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Wednsday" (Wednsday)
+    */
+    public get dayOfWeekWednsday() : string {
+        return this.get(this.dayOfWeekWednsdayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Thursday" (Thursday)
+    */
+    public get dayOfWeekThursday() : string {
+        return this.get(this.dayOfWeekThursdayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Friday" (Friday)
+    */
+    public get dayOfWeekFriday() : string {
+        return this.get(this.dayOfWeekFridayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Saturday" (Saturday)
+    */
+    public get dayOfWeekSaturday() : string {
+        return this.get(this.dayOfWeekSaturdayLanguageItemName);
+    }
+
+    /**
+    /* "DayOfWeek.Sunday" (Sunday)
+    */
+    public get dayOfWeekSunday() : string {
+        return this.get(this.dayOfWeekSundayLanguageItemName);
     }
 }
 
