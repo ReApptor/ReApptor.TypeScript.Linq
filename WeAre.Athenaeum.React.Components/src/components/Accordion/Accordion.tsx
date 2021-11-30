@@ -24,29 +24,48 @@ export enum TogglerPosition {
 
 export interface IAccordionProps {
     readonly className?: string;
+
+    /**
+     * Classnames for specific sections of the {@link Accordion}.
+     */
     readonly classNames?: IAccordionClassNames;
+
     children: React.ReactNode;
+
+    /**
+     * Text or {@link React.ReactNode} rendered in the {@link Accordion}'s header. Visible also when the {@link Accordion} is collapsed.
+     */
     header: string | React.ReactNode;
 
     /**
      * Should the {@link Accordion} collapse when a click happens outside of it.
+     *
      * @default true
      */
     autoCollapse?: boolean;
+
+    /**
+     * Should the {@link Accordion} be initially rendered as expanded.
+     *
+     * @default false
+     */
     expanded?: boolean;
 
     /**
-     * Added to the maximum-height of the expanded {@link Accordion}.
+     * Added to the maximum-height CSS property of the expanded {@link Accordion}.
      * Useful for making sure that dynamically added elements make the {@link Accordion} resize smoothly.
+     *
      * @default 0
      */
     maxHeightOffset?: number;
 
     /**
      * Should the {@link Accordion} only expand and collapse when a specific toggler-element is clicked.
+     *
      * @default undefined
      */
     toggler?: boolean | React.ReactNode;
+
     togglerIcon?: string | null;
     togglerSize?: IconSize | null;
     togglerPosition?: TogglerPosition | TogglerPosition.Header;
@@ -103,7 +122,6 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     public get expanded(): boolean {
-        ///return assert(this.state.expanded).isBoolean.isTrue.getIsSuccess;
         return this.state.expanded;
     }
 
@@ -112,9 +130,6 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
     }
 
     private get maxHeightOffset(): number {
-        // return (assert(this.props.maxHeightOffset).isNumber.getIsSuccess)
-        //     ? this.props.maxHeightOffset!
-        //     : 0;
         return this.props.maxHeightOffset ?? 0;
     }
 
@@ -212,7 +227,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
 
     public render(): React.ReactNode {
         const expandedStyles = this.expanded && styles.expanded;
-        
+
         return (
             <div id={this.id}
                  className={this.css(this.classNames.accordion, this.props.className, styles.accordion, expandedStyles)}

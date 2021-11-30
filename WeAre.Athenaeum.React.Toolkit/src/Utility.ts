@@ -83,10 +83,22 @@ export default class Utility {
                     const customFormat: boolean = (result[i + 2] === ":") && ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
 
                     if (customFormat) {
-                        if ((param != null) &&
-                            ((typeof param === "number") ||
+                        if 
+                        (
+                            (param != null) &&
+                            (
+                                (typeof param === "number") ||
                                 (typeof param === "string") ||
-                                ((typeof param === "object") && ((param as any).constructor.name === Date.name)))) {
+                                (
+                                    (typeof param === "object") &&
+                                    (
+                                        ((param as any).constructor.name === Date.name) ||
+                                        (param instanceof TimeSpan) || 
+                                        (param.isTimeSpan)
+                                    )
+                                )
+                            )
+                        ) {
 
                             let j: number = result.indexOf("}", i + 2);
 
@@ -98,8 +110,8 @@ export default class Utility {
 
                                 if (format) {
                                     let formattedParam: string | null = null;
-                                    
-                                    if ((typeof param === "number")) {
+
+                                    if (typeof param === "number") {
                                         const enumProvider: IEnumProvider | null = ServiceProvider.findEnumProvider();
                                         //number
                                         if ((format === "c") || (format === "C")) {
@@ -119,8 +131,7 @@ export default class Utility {
                                             formattedParam = param.toFixed(1) + "%";
                                         } else if (format === "0.00%") {
                                             formattedParam = param.toFixed(2) + "%";
-                                        }
-                                        else if ((enumProvider) && (enumProvider.isEnum(format))) {
+                                        } else if ((enumProvider) && (enumProvider.isEnum(format))) {
                                             formattedParam = enumProvider.getEnumText(format, param);
                                         }
                                     } else if ((typeof param === "string") || ((typeof param === "object") && ((param as any).constructor.name === Date.name))) {
@@ -161,6 +172,16 @@ export default class Utility {
                                             const date: Date = new Date(param);
                                             const year: string = date.getFullYear().toString().substr(2);
                                             formattedParam = `${Utility.pad(date.getDate())}.${Utility.pad(date.getMonth() + 1)}.${year}`;
+                                        }
+                                    } else if ((typeof param === "object") && ((param instanceof TimeSpan) || (param.isTimeSpan === true))) {
+                                        const value: TimeSpan = param as TimeSpan;
+                                        
+                                        if (format === "hh:mm:ss") {
+                                            formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
+                                        } else if (format === "c") {
+                                            formattedParam = (value.days > 0)
+                                                ? `${value.days}.${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`
+                                                : `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         }
                                     }
 
@@ -208,25 +229,50 @@ export default class Utility {
                 return this.getDayOfWeek(dayOfWeekOrDate);
 
             case "number":
-                const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+                let name: string;
                 switch (dayOfWeekOrDate) {
                     case 0:
-                        return (localizer) ? localizer.get("DayOfWeek.Sunday") : "Sunday";
+                        name = "Sunday";
+                        break;
                     case 1:
-                        return (localizer) ? localizer.get("DayOfWeek.Monday") : "Monday";
+                        name = "Monday";
+                        break;
                     case 2:
-                        return (localizer) ? localizer.get("DayOfWeek.Tuesday") : "Tuesday";
+                        name = "Tuesday";
+                        break;
                     case 3:
-                        return (localizer) ? localizer.get("DayOfWeek.Wednesday") : "Wednesday";
+                        name = "Wednesday";
+                        break;
                     case 4:
-                        return (localizer) ? localizer.get("DayOfWeek.Thursday") : "Thursday";
+                        name = "Thursday";
+                        break;
                     case 5:
-                        return (localizer) ? localizer.get("DayOfWeek.Friday") : "Friday";
+                        name = "Friday";
+                        break;
                     case 6:
-                        return (localizer) ? localizer.get("DayOfWeek.Saturday") : "Saturday";
+                        name = "Saturday";
+                        break;
+                    default:
+                        throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
                 }
 
-                throw Error(`Unsupported day of week number "${dayOfWeekOrDate}", can be [0..6] => [Sunday..Saturday].`);
+                let localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+                
+                let language: string = navigator.language;
+                if (localizer) {
+                    const tag: string = `DayOfWeek.${name}`;
+                    if (localizer.contains(tag)) {
+                        return localizer.get(tag);
+                    }
+                    
+                    language = localizer.language;
+                }
+
+                const sunday: Date = new Date(Date.UTC(2017, 0, 1));
+                const dayOfWeek: Date = sunday.addDays(dayOfWeekOrDate);
+                name = dayOfWeek.toLocaleString(language, { weekday: "long" });
+                
+                return name;
 
             case "object":
                 if (typeof dayOfWeekOrDate.getDay === "function") {

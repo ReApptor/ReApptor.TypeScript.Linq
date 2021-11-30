@@ -563,7 +563,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
                 const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                await this.setState({items: this.state.items, filteredItems, expanded, model: this.state.model});
+                await this.setState({filteredItems, expanded});
 
                 await this.invokeOnChangeAsync(item, true);
             }
@@ -596,7 +596,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
                     const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                    await this.setState({items: this.state.items, filteredItems, expanded, model: this.state.model});
+                    await this.setState({filteredItems, expanded});
 
                     await this.invokeOnChangeAsync(item, true);
                 }
@@ -623,7 +623,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
                     const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                    await this.setState({items: this.state.items, filteredItems, expanded, model: this.state.model});
+                    await this.setState({filteredItems, expanded});
 
                     await this.invokeOnChangeAsync(item, true);
                 }
@@ -727,7 +727,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 if (this.isMounted) {
                     const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                    await this.setState({items: this.state.items, filteredItems, model: this.state.model});
+                    await this.setState({filteredItems});
                 }
             }
         }
@@ -785,7 +785,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 if (this.isMounted) {
                     const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                    await this.setState({items: this.state.items, filteredItems, model: this.state.model});
+                    await this.setState({filteredItems});
                 }
             }
         } else if ((!this.multiple) && (this.selectedListItem != null)) {
@@ -803,7 +803,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             if (this.isMounted) {
                 const filteredItems: SelectListItem[] = this.getFilteredItems();
 
-                await this.setState({items: this.state.items, filteredItems, model: this.state.model});
+                await this.setState({filteredItems});
             }
         }
     }
