@@ -31,11 +31,11 @@ namespace Renta.Apps.Common.Helpers
         /// <summary>
         /// https://damienbod.com/2019/05/17/updating-microsoft-account-logins-in-asp-net-core-with-openid-connect-and-azure-active-directory/
         /// </summary>
-        public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services, 
-            IOptions<AzureSsoSettings> settings, 
+        public static AuthenticationBuilder AddRentaAuthenticationWithSso(IServiceCollection services,
+            IOptions<AzureSsoSettings> settings,
             string authenticationType,
             Func<HttpContext, Exception, string, Task> onFailure = null
-            )
+        )
         {
             return AddRentaAuthentication(
                 services
@@ -53,17 +53,25 @@ namespace Renta.Apps.Common.Helpers
                         options.CorrelationCookie = settings.Value.GetCorrelationCookie();
                     }),
                 authenticationType);
-         
         }
-        
+
 
         public static AuthenticationBuilder AddRentaAuthenticationWithSignicatSso(
-            AuthenticationBuilder builder,
-            IServiceCollection services, 
+            IServiceCollection services,
             IOptions<SignicatSsoSettings> settings,
+            string authenticationType,
             Func<AuthorizationCodeReceivedContext, Task> signicatRedeemAuthorizationCodeAsync,
             Func<HttpContext, Exception, string, Task> onFailure = null)
         {
+            AuthenticationBuilder builder = AddRentaAuthentication(services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = authenticationType;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(), authenticationType);
+
+
             return builder.AddOpenIdConnect("Signicat", options =>
             {
                 options.Events.OnAuthorizationCodeReceived = signicatRedeemAuthorizationCodeAsync;
@@ -74,7 +82,7 @@ namespace Renta.Apps.Common.Helpers
                 options.ClientId = settings.Value.ClientId;
                 options.ClientSecret = settings.Value.ClientSecret;
                 options.ResponseType = "code";
-                
+
                 foreach (var scope in settings.Value.Scopes)
                 {
                     options.Scope.Add(scope);
