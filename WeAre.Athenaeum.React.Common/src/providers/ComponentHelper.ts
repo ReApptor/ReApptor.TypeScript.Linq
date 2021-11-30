@@ -132,29 +132,59 @@ export default class ch {
         return (this._layout != null) ? this._layout.alert : null;
     }
 
+    /**
+     * Display an error alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout);
         await this.alertAsync(alert);
     }
 
+    /**
+     * Display a flyout error alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutErrorAsync(message: string): Promise<void> {
         await this.alertErrorAsync(message, true, true);
     }
 
+    /**
+     * Display an alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         const alert = new AlertModel(message, AlertType.Success, autoClose, flyout);
         await this.alertAsync(alert);
     }
 
+    /**
+     * Display a flyout alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutMessageAsync(message: string): Promise<void> {
         await this.alertMessageAsync(message, true, true);
     }
 
+    /**
+     * Display a warning alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout);
         await this.alertAsync(alert);
     }
 
+    /**
+     * Display a flyout warning alert in the current {@link ILayoutPage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutWarningAsync(message: string): Promise<void> {
         await this.alertWarningAsync(message, true, true);
     }
@@ -220,13 +250,21 @@ export default class ch {
     }
 
     /**
-     * Gets context
-     * @returns context - ApplicationContext
+     * @returns Current {@link ApplicationContext}.
+     *
+     * @throws Current {@link ApplicationContext} is not defined.
      */
     public static getContext(): ApplicationContext {
         if (this._context == null)
             throw Error(`Component helper. Context is not defined.`);
 
+        return this._context;
+    }
+
+    /**
+     * @returns Current {@link ApplicationContext}, or null if not defined.
+     */
+    public static findContext(): ApplicationContext | null {
         return this._context;
     }
 
@@ -240,6 +278,14 @@ export default class ch {
         return context.language;
     }
 
+    public static getUser<TUser extends IUser>(): TUser {
+        const user: TUser | null = this.findUser();
+        if (user) {
+            return user;
+        }
+        throw Error(`Component helper. User is not defined.`);
+    }
+
     public static findUser<TUser extends IUser>(): TUser | null {
         const context: ApplicationContext | null = this.findContext();
         const userContext: IUserContext | null = context as IUserContext;
@@ -249,24 +295,8 @@ export default class ch {
         return null;
     }
 
-    public static getUser<TUser extends IUser>(): TUser {
-        const user: TUser | null = this.findUser();
-        if (user) {
-            return user;
-        }
-        throw Error(`Component helper. User is not defined.`);
-    }
-
     public static getUserId(): string {
         return this.getUser().id;
-    }
-
-    /**
-     * Gets context
-     * @returns context - ApplicationContext
-     */
-    public static findContext(): ApplicationContext | null {
-        return this._context;
     }
 
     public static getSessionId(): string {
@@ -337,7 +367,7 @@ export default class ch {
     /**
      * @returns Current {@link IBasePage}.
      *
-     * @throws Current page is not defined.
+     * @throws Current {@link IBasePage} is not defined.
      */
     public static getPage(): IBasePage {
         if (this._page == null)
@@ -347,7 +377,7 @@ export default class ch {
     }
 
     /**
-     * @returns Current {@link IBasePage}, or null if current page is not defined.
+     * @returns Current {@link IBasePage}, or null if not defined.
      */
     public static findPage(): IBasePage | null {
         return this._page;
@@ -386,10 +416,16 @@ export default class ch {
         return (this._context != null) && (this._context.mobileApp);
     }
 
+    /**
+     * Is the current window width below the desktop threshold width {@link AthenaeumConstants.desktopMinWidth}.
+     */
     public static get mobile(): boolean {
         return !this.desktop;
     }
 
+    /**
+     * Is the current window width above the desktop threshold width {@link AthenaeumConstants.desktopMinWidth}.
+     */
     public static get desktop(): boolean {
         return (window.innerWidth >= AthenaeumConstants.desktopMinWidth);
     }
