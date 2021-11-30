@@ -124,7 +124,7 @@
     <value>Нет данных</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>RU: Filter results</value>
+    <value>Отфильтровать результаты</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
     <value>Начните писать, чтобы увидеть данные</value>
@@ -157,16 +157,16 @@
     <value>Справка</value>
   </data>
   <data name="NavigationWidget.Previous" xml:space="preserve">
-    <value>RU: Previous</value>
+    <value>Предыдущий</value>
   </data>
   <data name="NavigationWidget.ReturnToPrevious" xml:space="preserve">
-    <value>RU: Return to previous step</value>
+    <value>Вернуться на предыдущий шаг</value>
   </data>
   <data name="NavigationWidget.Next" xml:space="preserve">
-    <value>RU: Next</value>
+    <value>Далее</value>
   </data>
   <data name="NavigationWidget.GoToNext" xml:space="preserve">
-    <value>RU: Go to next step</value>
+    <value>Перейти к следующему шагу</value>
   </data>
   <data name="ConfirmationDialog.AreYouSure" xml:space="preserve">
     <value>Вы уверены?</value>
@@ -184,34 +184,34 @@
     <value>Адрес</value>
   </data>
   <data name="VirtualAddressDivider.Street" xml:space="preserve">
-    <value>RU: Street</value>
+    <value>Улица</value>
   </data>
   <data name="VirtualAddressDivider.City" xml:space="preserve">
-    <value>RU: City</value>
+    <value>Город</value>
   </data>
   <data name="VirtualAddressDivider.Postalcode" xml:space="preserve">
-    <value>RU: Postal code</value>
+    <value>Почтовый индекс</value>
   </data>
   <data name="FileInput.DragAndDrop" xml:space="preserve">
-    <value>RU: Drag'n'drop file here, or click to select</value>
+    <value>Перетащите файл сюда или щелкните, чтобы выбрать</value>
   </data>
   <data name="FileInput.Readonly" xml:space="preserve">
-    <value>RU: File is readonly</value>
+    <value>Файл доступен только для чтения</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
-    <value>RU: Preview</value>
+    <value>Предпросмотр</value>
   </data>
   <data name="FileInput.ChooseFile" xml:space="preserve">
-    <value>RU: Choose file</value>
+    <value>Выберите файл</value>
   </data>
   <data name="LocationPickerModal.SetLocation" xml:space="preserve">
-    <value>RU: Set location</value>
+    <value>Установить местоположение</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
-    <value>RU: Choose location on map</value>
+    <value>Выбрать местоположение на карте</value>
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>RU: Location picker</value>
+    <value>Выбор местоположения</value>
   </data>
   <data name="Alert" xml:space="preserve">
     <value />
@@ -223,7 +223,7 @@
     <value />
   </data>
   <data name="Footer.Frontpage" xml:space="preserve">
-    <value>RU: Frontpage</value>
+    <value>Главная страница</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value />
@@ -232,154 +232,154 @@
     <value />
   </data>
   <data name="PasswordInput.HelpText.Length" xml:space="preserve">
-    <value>RU: at least 8 characters long</value>
+    <value>не менее 8 символов</value>
   </data>
   <data name="DocumentPreviewModal.Download" xml:space="preserve">
     <value>Загрузить</value>
   </data>
   <data name="FileInput.Preview" xml:space="preserve">
-    <value>RU: Preview</value>
+    <value>Предпросмотр</value>
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>RU: QR code scanner not available, probably no permissions to camera on you mobile device.</value>
+    <value>Сканер QR-кода недоступен, возможно, на вашем мобильном устройстве не получено разрешение на использование камеры.</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>Апрель</value>
+    <value>апрель</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>Август</value>
+    <value>август</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>Декабрь</value>
+    <value>декабрь</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>Февраль</value>
+    <value>февраль</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>Январь</value>
+    <value>январь</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>Июль</value>
+    <value>июль</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>Июнь</value>
+    <value>июнь</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>Март</value>
+    <value>март</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>Май</value>
+    <value>май</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>Ноябрь</value>
+    <value>ноябрь</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>Октябрь</value>
+    <value>октябрь</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>Декабрь</value>
+    <value>сентябрь</value>
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
-    <value>RU: one uppercase ('A'-'Z') character</value>
+    <value>одна прописная буква ('A'-'Z')</value>
   </data>
   <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
-    <value>RU: one lowercase ('a'-'z') character</value>
+    <value>одна строчная буква ('a'-'z')</value>
   </data>
   <data name="PasswordForm.HelpText.Number" xml:space="preserve">
-    <value>RU: one number</value>
+    <value>одна цифра</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>RU: one special character</value>
+    <value>один  буквенно-цифровой символ</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>RU: Passwords don't match</value>
+    <value>Пароли не совпадают</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>RU: Current password</value>
+    <value>Текущий пароль</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>RU: Password</value>
+    <value>Пароль</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>RU: Confirm password</value>
+    <value>Подтвердить пароль</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>RU: Save</value>
+    <value>Сохранить</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
-    <value>RU: Document type is not supported, choose file with extension {0}</value>
+    <value>Тип документа не поддерживается, выберите файл с расширением {0}</value>
   </data>
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
-    <value>RU: Document file is too big</value>
+    <value>Файл документа слишком большой</value>
   </data>
   <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
-    <value>RU: Preview is not supported for this type of file, but you can download it instead</value>
+    <value>Предварительный просмотр не поддерживается для файлов этого типа, но вы можете скачать его вместо этого.</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
     <value>Загрузить</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
-    <value>RU: Contact information</value>
+    <value>Контактная информация</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
-    <value>RU: Street</value>
+    <value>Улица</value>
   </data>
   <data name="AddressDivider.City" xml:space="preserve">
-    <value>RU: City</value>
+    <value>Город</value>
   </data>
   <data name="AddressDivider.PostalCode" xml:space="preserve">
-    <value>RU: Postal code</value>
+    <value>Почтовый индекс</value>
   </data>
   <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
-    <value>RU: Document file is too big</value>
+    <value>Файл документа слишком большой</value>
   </data>
   <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
-    <value>RU: Document type is not supported, choose file with extension {0}</value>
+    <value>Тип документа не поддерживается, выберите файл с расширением {0}</value>
   </data>
   <data name="BaseInput.Validators.Length" xml:space="preserve">
-    <value>RU: Text is too short</value>
+    <value>Текст слишком короткий</value>
   </data>
   <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
-    <value>RU: Value must be in range {0} - {1}</value>
+    <value>Значение должно быть в диапазоне {0} - {1}</value>
   </data>
   <data name="BaseInput.Validators.Required" xml:space="preserve">
-    <value>RU: {0} is required</value>
+    <value>Требуется {0}</value>
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
-    <value>RU: Total size of documents is too big</value>
+    <value>Общий размер документов слишком велик</value>
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
-    <value>RU: Back</value>
+    <value>Назад</value>
   </data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>RU: Browse</value>
+    <value>Просмотр</value>
   </data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>RU: Camera</value>
+    <value>Камера</value>
   </data>
   <data name="ImageInput.Delete" xml:space="preserve">
-    <value>RU: Delete</value>
+    <value>Удалить</value>
   </data>
   <data name="ImageInput.Edit" xml:space="preserve">
-    <value>RU: Edit</value>
+    <value>Изменить</value>
   </data>
   <data name="ImageInput.Save" xml:space="preserve">
-    <value>RU: Save</value>
+    <value>Сохранить</value>
   </data>
   <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>RU: RotateLeft</value>
+    <value>Повернуть налево</value>
   </data>
   <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>RU: RotateRight</value>
+    <value>Повернуть вправо</value>
   </data>
   <data name="ImageInput.Preview" xml:space="preserve">
-    <value>RU: Preview</value>
+    <value>Предпросмотр</value>
   </data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>RU: Drop it</value>
+    <value>Перетащите сюда</value>
   </data>
   <data name="MessageBox.Ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>Ок</value>
   </data>
   <data name="MessageBox.AreYouSure" xml:space="preserve">
     <value>Вы уверены?</value>
@@ -400,18 +400,18 @@
     <value>Повторить</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>Отклонить</value>
+    <value>Игнорировать</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
   <data name="ImageInput.MoveDown" xml:space="preserve">
-    <value>RU: Move below</value>
+    <value>Опуститься ниже</value>
   </data>
   <data name="ImageInput.MoveToTop" xml:space="preserve">
-    <value>RU: Move to top</value>
+    <value>В начало</value>
   </data>
   <data name="ImageInput.MoveUp" xml:space="preserve">
-    <value>RU: Move up</value>
+    <value>Подняться</value>
   </data>
 </root>
