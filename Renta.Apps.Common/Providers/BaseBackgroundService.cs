@@ -113,8 +113,15 @@ namespace Renta.Apps.Common.Providers
             if (auth)
             {
                 SecurityProvider securityProvider = scope.ServiceProvider.GetRequiredService<SecurityProvider>();
-                
-                securityProvider.SignIn(RentaConstants.Db.MigrationConsoleUser);
+
+                string user = SecurityProvider.Options.MigrationConsoleUser;
+
+                if (string.IsNullOrWhiteSpace(user))
+                {
+                    user = RentaConstants.Db.MigrationConsoleUser;
+                }
+
+                securityProvider.SignIn(user);
             }
 
             return scope;
