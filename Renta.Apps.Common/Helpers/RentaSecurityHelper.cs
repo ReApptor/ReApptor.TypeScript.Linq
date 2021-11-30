@@ -60,7 +60,6 @@ namespace Renta.Apps.Common.Helpers
             IServiceCollection services,
             IOptions<SignicatSsoSettings> settings,
             string authenticationType,
-            Func<AuthorizationCodeReceivedContext, Task> signicatRedeemAuthorizationCodeAsync,
             Func<HttpContext, Exception, string, Task> onFailure = null)
         {
             AuthenticationBuilder builder = AddRentaAuthentication(services
@@ -74,7 +73,35 @@ namespace Renta.Apps.Common.Helpers
 
             return builder.AddOpenIdConnect("Signicat", options =>
             {
-                options.Events.OnAuthorizationCodeReceived = signicatRedeemAuthorizationCodeAsync;
+                options.Events.OnAuthorizationCodeReceived = async context =>
+                {
+                    var configuration = await context.Options.ConfigurationManager.GetConfigurationAsync(CancellationToken.None);
+                    var requestMessage = new HttpRequestMessage(HttpMethod.Post, configuration.TokenEndpoint);
+                    string authInfo = context.TokenEndpointRequest.ClientId + ":" + context.TokenEndpointRequest.ClientSecret;
+                    authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
+                    var msg = context.TokenEndpointRequest.Clone();
+                    msg.ClientSecret = null;
+                    requestMessage.Content = new FormUrlEncodedContent(msg.Parameters);
+
+
+                    var responseMessage = await context.Backchannel.SendAsync(requestMessage);
+                    if (!responseMessage.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
+                        return;
+                    }
+
+                    try
+                    {
+                        var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                        var message = new OpenIdConnectMessage(responseContent);
+                        context.HandleCodeRedemption(message);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                };
 
                 options.Authority = settings.Value.Authority;
                 options.CallbackPath = settings.Value.CallbackPath;
