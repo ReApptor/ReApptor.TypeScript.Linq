@@ -15,7 +15,7 @@ export default class ApiProvider {
     private static _isSpinning: number = 0;
     private static _manualSpinning: boolean = false;
     private static readonly _loadingCallbacks: ((isLoading: boolean) => Promise<void>)[] = [];
-    
+
     private static async invokeLoadingCallbacksAsync(obsolete: boolean): Promise<void> {
         const isLoading: boolean = this.isLoading;
         if (isLoading != obsolete) {
@@ -26,7 +26,7 @@ export default class ApiProvider {
     private static get offline(): boolean {
         return (navigator) && (!navigator.onLine);
     }
-    
+
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
@@ -55,23 +55,23 @@ export default class ApiProvider {
         const headers = (httpRequest.headers)
             ? new Headers(httpRequest.headers)
             : new Headers();
-        
+
         //Content Type
         if (setContentType) {
             headers.set("Content-Type", "application/json");
         }
-        
+
         //XSRT Token
         const xsrfToken: string | null = ch.getXsrfToken();
         if (xsrfToken != null) {
             headers.set("xsrf-token", xsrfToken);
         }
-        
+
         httpRequest.credentials = "include";
 
         httpRequest.headers = headers;
     }
-    
+
     private static ignoreException(endpoint: string): boolean {
         return (endpoint.endsWith("/OnJsError")) || (endpoint.endsWith("/OnRedirect"));
     }
@@ -100,7 +100,7 @@ export default class ApiProvider {
             }
 
             throw new Error(AthenaeumConstants.apiError);
-            
+
         } finally {
             await this.setAutoIsSpinningAsync(false, caller);
         }
@@ -154,7 +154,7 @@ export default class ApiProvider {
 
         const textResponse: string = await httpResponse.text();
         const endpoint: string = httpResponse.url;
-        
+
         if (ApiProvider.ignoreException(endpoint)) {
             throw new Error(AthenaeumConstants.apiError);
         }
@@ -164,7 +164,7 @@ export default class ApiProvider {
                 requestId: "",
                 debugDetails: `Requested api action not found (404): "${endpoint}".\nServer response:\n${textResponse.trim()}`
             };
-            await PageRouteProvider.error(serverError);            
+            await PageRouteProvider.error(serverError);
             throw new Error(AthenaeumConstants.apiError);
         }
 
@@ -179,18 +179,18 @@ export default class ApiProvider {
                 const debugDetails: string = (offlineOrRequestIsTooBif)
                     ? `Server returned HTML instead of JSON response, probably server is offline or request body is too big.`
                     : `Server returned HTML instead of JSON response, probably requested api action not found.`;
-                
+
                 const serverError: ServerError = {
                     requestId: "",
                     debugDetails: debugDetails + `\nEndpoint: "${endpoint}"\nServer response code: "${httpResponse.status}".\nServer response:\n${textResponse.trim()}}`
                 };
-                
+
                 await PageRouteProvider.error(serverError);
             }
-            
+
             throw new Error(AthenaeumConstants.apiError);
         }
-        
+
         const jsonResponse: any | null = (hasResponse) ? JSON.parse(textResponse) : null;
 
         if ((httpResponse.status === AthenaeumConstants.unauthorizedStatusCode) ||
@@ -212,9 +212,9 @@ export default class ApiProvider {
             throw new Error(AthenaeumConstants.apiError);
         }
 
-        if (httpResponse.status === AthenaeumConstants.badRequestStatusCode) {            
+        if (httpResponse.status === AthenaeumConstants.badRequestStatusCode) {
             const serverError: ServerError = ApiProvider.parseJsonError(jsonResponse);
-            await PageRouteProvider.error(serverError);            
+            await PageRouteProvider.error(serverError);
             throw new Error(AthenaeumConstants.apiError);
         }
 
@@ -228,9 +228,9 @@ export default class ApiProvider {
         }
 
         if (jsonResponse != null) {
-            
+
             const responseContainer = jsonResponse as IResponseContainer;
-            
+
             if ((responseContainer) && (responseContainer.isResponseContainer)) {
                 const value: any = responseContainer.value;
 
@@ -296,53 +296,68 @@ export default class ApiProvider {
       return (this._manualSpinning) || (this._isSpinning > 0);
     }
 
+    /**
+     * Make an HTTP GET-request.
+     *
+     * @param endpoint Address where to send the GET request.
+     * @param caller {@link IBaseComponent} making the GET-request. A spinner will be automatically set to this component,
+     *               unless its {@link IBaseComponent.hasSpinner} returns false, in which case the spinner will be set to the current {@link ILayoutPage}.
+     */
     public static async getAsync<TResponse>(endpoint: string, caller: IBaseComponent | null): Promise<TResponse> {
         const httpRequest = {
-            url: endpoint, 
+            url: endpoint,
             method: "GET"
         } as RequestInit;
-        
+
         this.setHeaders(httpRequest);
 
         const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-        
+
         return response;
     }
 
     public static async postFileAsync<TResponse>(endpoint: string, request: any | null = null, caller: IBaseComponent | null = null): Promise<TResponse> {
 
         const formData = new FormData();
-        
+
         formData.append("file", request);
-        
+
         const httpRequest = {
             url: endpoint,
             body: formData,
             method: "POST"
         } as RequestInit;
-        
+
         this.setHeaders(httpRequest, false);
 
         const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-        
+
         return response;
     }
 
+    /**
+     * Make an HTTP POST-request.
+     *
+     * @param endpoint Address where to send the POST request.
+     * @param request Body of the POST-request.
+     * @param caller {@link IBaseComponent} making the POST-request. A spinner will be automatically set to this component,
+     *               unless its {@link IBaseComponent.hasSpinner} returns false, in which case the spinner will be set to the current {@link ILayoutPage}.
+     */
     public static async postAsync<TResponse>(endpoint: string, request: any | null = null, caller: IBaseComponent | null = null): Promise<TResponse> {
         request = (request != null) ? request : {};
-        
+
         const json: string = JSON.stringify(request);
-        
+
         const httpRequest = {
             url: endpoint,
             body: json,
             method: "POST"
         } as RequestInit;
-        
+
         this.setHeaders(httpRequest);
 
         const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-        
+
         return response;
     }
 

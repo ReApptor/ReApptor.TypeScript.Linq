@@ -29,9 +29,24 @@ export interface IReactComponent {
     componentWillReceiveProps?(props: any): Promise<void>;
 }
 
+/**
+ * A component which can have a spinner.
+ */
 export interface ISpinner {
+
+    /**
+     * Can the component have a spinner.
+     */
     hasSpinner(): boolean;
+
+    /**
+     * Does the component currently have a spinner.
+     */
     isSpinning(): boolean;
+
+    /**
+     * Set {@link isSpinning} to the given value.
+     */
     setSpinnerAsync(isSpinning: boolean): Promise<void>;
 }
 
@@ -73,6 +88,9 @@ export interface IContainer {
     height(): number;
 }
 
+/**
+ * Implementation of {@link IBaseComponent}.
+ */
 export default abstract class BaseComponent<TProps = {}, TState = {}> extends React.Component<TProps, TState> implements IBaseComponent {
 
     private readonly _asGlobalClick: IGlobalClick | null;
@@ -239,14 +257,27 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         this.reRenderAsync();
     }
 
+    /**
+     * Returns false. Must be overridden to return true in order to enable spinner-related functionalities {@link isSpinning} and {@link setSpinnerAsync} for the {@link BaseComponent}.
+     */
     public hasSpinner(): boolean {
         return false;
     }
 
+    /**
+     * Does the {@link BaseComponent} have a spinner.
+     * Can return true only if {@link hasSpinner} is overridden to return true.
+     */
     public isSpinning(): boolean {
         return (this.hasSpinner()) && (this._isSpinning);
     }
 
+    /**
+     * Sets {@link isSpinning} of the {@link BaseComponent}.
+     * Works only if {@link hasSpinner} is overridden to return true.
+     *
+     * @param isSpinning Does the component have a spinner.
+     */
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
         if ((this.hasSpinner()) && (isSpinning !== this._isSpinning)) {
             this._isSpinning = isSpinning;
@@ -362,11 +393,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Resize);
         }
     }
-    
+
     public async componentWillMount(): Promise<void> {
         await this.initializeAsync();
     }
-    
+
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
     }
 }

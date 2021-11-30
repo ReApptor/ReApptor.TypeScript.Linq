@@ -25,9 +25,9 @@ class VirtualAddressDividerLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `RU: Street` }, { language: `pl`, value: `Ulica` }, { language: `nb`, value: `Gate` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `Gade` },);
-        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `RU: City` }, { language: `pl`, value: `Miasto` }, { language: `nb`, value: `By` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `By` },);
-        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `RU: Postal code` }, { language: `pl`, value: `Kod pocztowy` }, { language: `nb`, value: `Postnummer` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postnummer` },);
+        this.set(this.streetLanguageItemName, { language: `en`, value: `Street` }, { language: `uk`, value: `Вулиця` }, { language: `sv`, value: `Gata` }, { language: `ru`, value: `Улица` }, { language: `pl`, value: `Ulica` }, { language: `nb`, value: `Gate` }, { language: `fi`, value: `Katu` }, { language: `da`, value: `Gade` },);
+        this.set(this.cityLanguageItemName, { language: `en`, value: `City` }, { language: `uk`, value: `Місто` }, { language: `sv`, value: `Stad` }, { language: `ru`, value: `Город` }, { language: `pl`, value: `Miasto` }, { language: `nb`, value: `By` }, { language: `fi`, value: `Kaupunki` }, { language: `da`, value: `By` },);
+        this.set(this.postalcodeLanguageItemName, { language: `en`, value: `Postal code` }, { language: `uk`, value: `Поштовий індекс` }, { language: `sv`, value: `Postnummer` }, { language: `ru`, value: `Почтовый индекс` }, { language: `pl`, value: `Kod pocztowy` }, { language: `nb`, value: `Postnummer` }, { language: `fi`, value: `Postinumero` }, { language: `da`, value: `Postnummer` },);
     }
 
     /**
