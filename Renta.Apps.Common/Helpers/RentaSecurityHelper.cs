@@ -110,7 +110,7 @@ namespace Renta.Apps.Common.Helpers
                     string json = Encoding.UTF8.GetString(bytes);
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        IssuerSigningKey = new JsonWebKey(json)
+                        TokenDecryptionKey = new JsonWebKey(json)
                     };
                 }
 
