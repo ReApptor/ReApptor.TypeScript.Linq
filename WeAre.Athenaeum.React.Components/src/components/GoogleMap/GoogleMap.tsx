@@ -8,7 +8,7 @@ import styles from "./GoogleMap.module.scss";
 /**
  * A marker displayed in a {@link GoogleMap}.
  */
-export interface IGoogleMapMarker extends google.maps.ReadonlyMarkerOptions {
+export interface IGoogleMapMarker extends google.maps.MarkerOptions {
 
     /**
      * {@link IGoogleMapInfoWindow} associated with the {@link IGoogleMapMarker}.
