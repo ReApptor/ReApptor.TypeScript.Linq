@@ -25,6 +25,12 @@ export interface IIMageInputToolbar {
     /** Should an "Edit"-button be shown. */
     editButton?: boolean;
 
+    /** Should an "Save"-button be shown. */
+    saveButton?: boolean;
+
+    /** Should an "Back"-button be shown. */
+    backButton?: boolean;
+
     /** Should a "Rotate left"-button be shown. */
     rotateLeftButton?: boolean;
 
@@ -78,9 +84,6 @@ export interface IImageInputToolbarProps extends IImageInputToolbarOverwriteProp
     onSaveButtonClickAsync?: () => Promise<void>;
     onBackButtonClickAsync?: () => Promise<void>;
     onDeleteButtonClickAsync?: () => Promise<void>;
-
-    showSaveButton: boolean;
-    showBackButton: boolean;
 }
 
 export interface IImageInputToolbarState {
@@ -321,7 +324,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                 }
 
                 {
-                    (this.props.showSaveButton) &&
+                    (this.toolbar.saveButton) &&
                     (
                         <Button small right
                                 className={styles.controlPanelButton}
@@ -338,7 +341,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                 }
 
                 {
-                    (this.props.showBackButton) &&
+                    (this.toolbar.backButton) &&
                     (
                         <Button small
                                 className={styles.controlPanelButton}
@@ -459,7 +462,9 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             ...ImageInputToolbar.defaultToolbar,
             rotateLeftButton: true,
             rotateRightButton: true,
-            deleteButton: true
+            deleteButton: true,
+            saveButton: true,
+            backButton: true
         };
     }
 
