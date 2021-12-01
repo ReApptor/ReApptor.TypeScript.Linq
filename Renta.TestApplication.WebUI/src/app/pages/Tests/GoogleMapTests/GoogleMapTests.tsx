@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, FourColumns, GoogleMap, IGoogleMapMarker, NumberInput, PageRow, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
+import {Button, Checkbox, FourColumns, GoogleMap, IGoogleMapMarker, NumberInput, PageRow, ThreeColumns} from "@weare/athenaeum-react-components";
 
 interface IModalTestsState {
     clusterMarkers: boolean;
