@@ -537,8 +537,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <div className={styles.controlPanel}>
 
                     <ImageInputToolbar currentView={this.currentView}
-                                       showSaveButton={this.showSaveButton}
-                                       showBackButton={this.showBackButton}
                                        miniRotateButtons={this.miniRotateButtons}
                                        hasSelectedPictureIndex={this.hasSelectedPictureIndex}
                                        editToolbar={this.props.editToolbar}
