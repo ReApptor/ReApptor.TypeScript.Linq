@@ -6,6 +6,41 @@
     flex-direction: column;
     width: auto;
     min-width: 100%;
+
+    .underlineTabStyle {
+        font-size: 20px;
+        border: 0 !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+
+        text-decoration: underline;
+        text-decoration-thickness: 5px !important;
+        text-decoration-skip-ink: none;
+    }
+
+    .underlineTabStyleActive {
+        @extend .underlineTabStyle;
+
+        color: $text-black !important;
+        text-decoration-color: $orange !important;
+
+        &:hover{
+            text-decoration-color: $orange !important;
+            text-decoration: underline;
+        }
+    }
+
+    .underlineTabStyleInactive {
+        @extend .underlineTabStyle;
+
+        color: $text-black !important;
+        text-decoration-color: $grey !important;
+
+        &:hover{
+            text-decoration-color: $grey !important;
+            text-decoration: underline;
+        }
+    }
     
     .navigationContainer {
         position: relative;

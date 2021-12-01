@@ -13,11 +13,28 @@ export interface ITabHeaderClassNames extends IBaseClassNames {
     readonly headerClose?: string;
 }
 
+/**
+ * Enum used to describe header style. Values:
+ * > {@linkcode TabContainerHeaderStyleType.Default} <br />
+ * > {@linkcode TabContainerHeaderStyleType.Underline}
+ */
+export enum TabContainerHeaderStyleType {
+    /**
+     * Renders tab headers in default (button) appearance.
+     */
+    Default = 0,
+
+    /**
+     * Renders tab headers as underlined text, where selected is highlighted with orange.
+     */
+    Underline = 1,
+}
 
 interface ITabHeaderProps {
     model: TabModel;
     id: string;
-    classNames?: ITabHeaderClassNames
+    classNames?: ITabHeaderClassNames;
+    headerStyleType?: TabContainerHeaderStyleType;
 }
 
 interface ITabHeaderState {
@@ -57,11 +74,14 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         const activeStyle: string = (model.active) && ("active") || "";
         const activeCustomStyle: string = (model.active) && (model.activeClassName) || "";
         const iconStyle: string = (!!model.title) && (styles.hasText) || "";
-        
+        const typedHeaderStyle: string = (this.props.headerStyleType == TabContainerHeaderStyleType.Underline)
+            ? (model.active ? this.css(styles.underlineTabStyleActive) : styles.underlineTabStyleInactive)
+            : ""
+
         return (
             <li id={this.props.id} className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle, this.classNames.headerTab)} title={TabContainerLocalizer.get(model.tooltip)}>
 
-                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink)} onClick={async () => await this.onClickAsync()}>
+                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink, typedHeaderStyle)} onClick={async () => await this.onClickAsync()}>
                     
                     {
                         (model.icon) &&
