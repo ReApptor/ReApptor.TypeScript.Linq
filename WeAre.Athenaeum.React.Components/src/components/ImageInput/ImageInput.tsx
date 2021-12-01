@@ -285,29 +285,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.updatePictureAsync(rotated, this.selectedPictureIndex!);
     }
 
-    private async onMoveToTopButtonClickAsync(): Promise<void> {
-        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
-            return;
-        }
 
-        await this.moveSelectedImageToTopAsync()
-    }
-
-    private async onMoveUpButtonClickAsync(): Promise<void> {
-        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
-            return;
-        }
-
-        await this.moveSelectedImageUpDownAsync(true);
-    }
-
-    private async onMoveDownButtonClickAsync(): Promise<void> {
-        if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! >= this.pictures.length)) {
-            return;
-        }
-
-        await this.moveSelectedImageUpDownAsync(false);
-    }
 
     private onListViewItemClick(index: number): void {
         this.setState(
@@ -361,43 +339,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         await this.addFileListAsync(event.dataTransfer.files)
-    }
-
-    /**
-     * @description It will get the files from input event and calls addFileListAsync method
-     * @link addFileListAsync
-     * @param captureMode if image needs to be taken from camera.
-     * @private
-     */
-    private async onBrowseForFileClick(captureMode: boolean = false): Promise<void> {
-        const input = document.createElement('input') as HTMLInputElement;
-        input.type = 'file';
-        input.style.display = "none";
-
-        if (captureMode) {
-            // @ts-ignore
-            input.capture = "environment";
-        }
-
-        input.multiple = this.multi;
-
-        input.accept = this.acceptedTypes;
-
-        input.onchange = async (event: Event) => {
-            event.preventDefault();
-
-            if (!input.files) {
-                return;
-            }
-
-            const fileList: FileList = input.files;
-
-            await this.addFileListAsync(fileList)
-
-            input.remove();
-        }
-
-        input.click();
     }
 
     private async initializePicturesAsync(): Promise<void> {
@@ -565,31 +506,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async moveSelectedImageUpDownAsync(up: boolean): Promise<void> {
-        if ((!this.hasSelectedPictureIndex)
-            || ((up) && (this.selectedPictureIndex === 0))
-            || ((!up) && (this.selectedPictureIndex === this.pictures.length - 1))) {
-            return;
-        }
-
-        const oldIndex: number = this.selectedPictureIndex!;
-        const oldImage: FileModel = this.pictures[oldIndex];
-        let newIndex: number = (up)
-            ? oldIndex - 1
-            : oldIndex + 1;
-
-        this.pictures[oldIndex] = this.pictures[newIndex];
-        this.pictures[newIndex] = oldImage;
-
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.pictures);
-        }
-
-        await this.setState({
-            selectedPictureIndex: newIndex,
-        });
-    }
-
     private async removePictureAsync(index: number): Promise<void> {
         const pictures = [...this.pictures];
         pictures.splice(index, 1);
@@ -648,17 +564,20 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                        previewToolbar={this.props.previewToolbar}
                                        selectionToolbar={this.props.selectionToolbar}
                                        noSelectionToolbar={this.props.noSelectionToolbar}
-                                       onBrowseForFileClick={async (captureMode) => await this.onBrowseForFileClick(captureMode)}
+                                       onBrowseForFileClick={async (captureMode) => {
+                                           const fileList = await ImageInput.browseForFiles(captureMode, this.multi, this.acceptedTypes);
+                                           await this.addFileListAsync(fileList)
+                                       }}
                                        onEditButtonClickAsync={async () => await this.onEditButtonClickAsync()}
                                        onSaveButtonClickAsync={async () => await this.onSaveButtonClickAsync()}
                                        onBackButtonClickAsync={async () => await this.onBackButtonClickAsync()}
-                                       onMoveUpButtonClickAsync={async () => await this.onMoveUpButtonClickAsync()}
                                        onRotateButtonClickAsync={async (deg) => await this.onRotateButtonClickAsync(deg)}
                                        onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
                                        onPreviewButtonClickAsync={async () => await this.onPreviewButtonClickAsync()}
-                                       onMoveDownButtonClickAsync={async () => await this.onMoveDownButtonClickAsync()}
-                                       onMoveToTopButtonClickAsync={async () => await this.onMoveToTopButtonClickAsync()}
                                        onRotateMiniButtonClickAsync={async (deg) => await this.onRotateMiniButtonClickAsync(deg)}
+                                       // onMoveDownButtonClickAsync={async () => await this.onMoveDownButtonClickAsync()}
+                                       // onMoveUpButtonClickAsync={async () => await this.onMoveUpButtonClickAsync()}
+                                       // onMoveToTopButtonClickAsync={async () => await this.onMoveToTopButtonClickAsync()}
                     />
 
                 </div>
@@ -730,6 +649,49 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Statics
 
 
+
+    /**
+     * @description It will get the files from input event and calls addFileListAsync method
+     * @link addFileListAsync
+     * @param captureMode if image needs to be taken from camera.
+     * @param multiple multiple image select.
+     * @param acceptedTypes file formats to allow.
+     * @private
+     */
+    private static async browseForFiles(captureMode: boolean = false, multiple: boolean = false, acceptedTypes: string = "image/*"): Promise<FileList> {
+        return new Promise(resolve => {
+            const input = document.createElement('input') as HTMLInputElement;
+            input.type = 'file';
+            input.style.display = "none";
+
+            if (captureMode) {
+                // @ts-ignore
+                input.capture = "environment";
+            }
+
+            input.multiple = multiple;
+
+            input.accept = acceptedTypes;
+
+            input.onchange = async (event: Event) => {
+                event.preventDefault();
+
+                if (!input.files) {
+                    return;
+                }
+
+                const fileList: FileList = input.files;
+
+                resolve(fileList);
+
+                input.remove();
+            }
+
+            input.click();
+        })
+    }
+
+
     private static async fileToFileModel(file: File): Promise<FileModel> {
         const fileData = await ImageInput.readFile(file);
         const fileModel = new FileModel(fileData);
@@ -769,4 +731,58 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 throw new TypeError("value is not of type ImageInputView");
         }
     }
+
+
+    // private async onMoveDownButtonClickAsync(): Promise<void> {
+    //     if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! >= this.pictures.length)) {
+    //         return;
+    //     }
+    //
+    //     await this.moveSelectedImageUpDownAsync(false);
+    // }
+    //
+    //
+    // private async onMoveUpButtonClickAsync(): Promise<void> {
+    //     if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
+    //         return;
+    //     }
+    //
+    //     await this.moveSelectedImageUpDownAsync(true);
+    // }
+    //
+    //
+    // private async onMoveToTopButtonClickAsync(): Promise<void> {
+    //     if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! <= 0)) {
+    //         return;
+    //     }
+    //
+    //     await this.moveSelectedImageToTopAsync()
+    // }
+    //
+    //
+    // private async moveSelectedImageUpDownAsync(up: boolean): Promise<void> {
+    //     if ((!this.hasSelectedPictureIndex)
+    //         || ((up) && (this.selectedPictureIndex === 0))
+    //         || ((!up) && (this.selectedPictureIndex === this.pictures.length - 1))) {
+    //         return;
+    //     }
+    //
+    //     const oldIndex: number = this.selectedPictureIndex!;
+    //     const oldImage: FileModel = this.pictures[oldIndex];
+    //     let newIndex: number = (up)
+    //         ? oldIndex - 1
+    //         : oldIndex + 1;
+    //
+    //     this.pictures[oldIndex] = this.pictures[newIndex];
+    //     this.pictures[newIndex] = oldImage;
+    //
+    //     if (this.props.onChange) {
+    //         await this.props.onChange(this, this.pictures);
+    //     }
+    //
+    //     await this.setState({
+    //         selectedPictureIndex: newIndex,
+    //     });
+    // }
+
 }
