@@ -66,19 +66,21 @@ export interface IImageInputToolbarProps extends IImageInputToolbarOverwriteProp
     hasSelectedPictureIndex: boolean;
 
     miniRotateButtons: boolean;
-    onRotateMiniButtonClickAsync: (rotation: number) => Promise<void>;
-    onRotateButtonClickAsync: (rotation: number) => Promise<void>;
-    onMoveToTopButtonClickAsync: () => Promise<void>;
-    onMoveUpButtonClickAsync: () => Promise<void>;
-    onMoveDownButtonClickAsync: () => Promise<void>;
-    onEditButtonClickAsync: () => Promise<void>;
-    onPreviewButtonClickAsync: () => Promise<void>;
-    onBrowseForFileClick: (captureMode: boolean) => Promise<void>;
+
+    onRotateMiniButtonClickAsync?: (rotation: number) => Promise<void>;
+    onRotateButtonClickAsync?: (rotation: number) => Promise<void>;
+    onMoveToTopButtonClickAsync?: () => Promise<void>;
+    onMoveUpButtonClickAsync?: () => Promise<void>;
+    onMoveDownButtonClickAsync?: () => Promise<void>;
+    onEditButtonClickAsync?: () => Promise<void>;
+    onPreviewButtonClickAsync?: () => Promise<void>;
+    onBrowseForFileClick?: (captureMode: boolean) => Promise<void>;
+    onSaveButtonClickAsync?: () => Promise<void>;
+    onBackButtonClickAsync?: () => Promise<void>;
+    onDeleteButtonClickAsync?: () => Promise<void>;
+
     showSaveButton: boolean;
     showBackButton: boolean;
-    onSaveButtonClickAsync: () => Promise<void>;
-    onBackButtonClickAsync: () => Promise<void>;
-    onDeleteButtonClickAsync: () => Promise<void>;
 }
 
 export interface IImageInputToolbarState {
@@ -130,7 +132,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                             <Button small
                                                     icon={{name: "undo"}}
                                                     type={ButtonType.Info}
-                                                    onClick={async () => await this.props.onRotateMiniButtonClickAsync(-90)}
+                                                    onClick={async () => {
+                                                        if (this.props.onRotateMiniButtonClickAsync) {
+                                                            await this.props.onRotateMiniButtonClickAsync(-90);
+                                                        }
+                                                    }}
                                             />
                                         )
                                     }
@@ -141,7 +147,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                             <Button small
                                                     icon={{name: "redo"}}
                                                     type={ButtonType.Info}
-                                                    onClick={async () => await this.props.onRotateMiniButtonClickAsync(90)}
+                                                    onClick={async () => {
+                                                        if (this.props.onRotateMiniButtonClickAsync) {
+                                                            await this.props.onRotateMiniButtonClickAsync(90);
+                                                        }
+                                                    }}
                                             />
                                         )
                                     }
@@ -159,7 +169,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                                     icon={{name: "undo"}}
                                                     type={ButtonType.Light}
                                                     label={ImageInputLocalizer.rotateLeft}
-                                                    onClick={async () => await this.props.onRotateButtonClickAsync(-90)}
+                                                    onClick={async () => {
+                                                        if (this.props.onRotateButtonClickAsync) {
+                                                            await this.props.onRotateButtonClickAsync(-90);
+                                                        }
+                                                    }}
                                             />
                                         )
                                     }
@@ -172,7 +186,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                                     icon={{name: "redo"}}
                                                     type={ButtonType.Light}
                                                     label={ImageInputLocalizer.rotateRight}
-                                                    onClick={async () => await this.props.onRotateButtonClickAsync(90)}
+                                                    onClick={async () => {
+                                                        if (this.props.onRotateButtonClickAsync) {
+                                                            await this.props.onRotateButtonClickAsync(90);
+                                                        }
+                                                    }}
                                             />
                                         )
                                     }
@@ -189,7 +207,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "level-up"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.moveToTop}
-                                onClick={async () => await this.props.onMoveToTopButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onMoveToTopButtonClickAsync) {
+                                        await this.props.onMoveToTopButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -202,7 +224,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "arrow-up"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.moveUp}
-                                onClick={async () => await this.props.onMoveUpButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onMoveUpButtonClickAsync) {
+                                        await this.props.onMoveUpButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -215,7 +241,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "arrow-down"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.moveDown}
-                                onClick={async () => await this.props.onMoveDownButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onMoveDownButtonClickAsync) {
+                                        await this.props.onMoveDownButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -228,7 +258,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "crop"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.edit}
-                                onClick={async () => await this.props.onEditButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onEditButtonClickAsync) {
+                                        await this.props.onEditButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -241,7 +275,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "eye"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.preview}
-                                onClick={async () => await this.props.onPreviewButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onPreviewButtonClickAsync) {
+                                        await this.props.onPreviewButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -254,7 +292,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "file-import"}}
                                 type={ButtonType.Orange}
                                 label={ImageInputLocalizer.browse}
-                                onClick={async () => await this.props.onBrowseForFileClick(false)}
+                                onClick={async () => {
+                                    if (this.props.onBrowseForFileClick) {
+                                        await this.props.onBrowseForFileClick(false);
+                                    }
+                                }}
                         />
                     )
 
@@ -268,7 +310,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "camera"}}
                                 type={ButtonType.Orange}
                                 label={ImageInputLocalizer.camera}
-                                onClick={async () => await this.props.onBrowseForFileClick(true)}
+                                onClick={async () => {
+                                    if (this.props.onBrowseForFileClick) {
+                                        await this.props.onBrowseForFileClick(true);
+                                    }
+                                }}
                         />
                     )
 
@@ -282,7 +328,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "save"}}
                                 type={ButtonType.Success}
                                 label={ImageInputLocalizer.save}
-                                onClick={async () => await this.props.onSaveButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onSaveButtonClickAsync) {
+                                        await this.props.onSaveButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -295,7 +345,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "arrow-left"}}
                                 type={ButtonType.Info}
                                 label={ImageInputLocalizer.back}
-                                onClick={async () => await this.props.onBackButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onBackButtonClickAsync) {
+                                        await this.props.onBackButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
@@ -308,7 +362,11 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 icon={{name: "trash"}}
                                 type={ButtonType.Warning}
                                 label={ImageInputLocalizer.delete}
-                                onClick={async () => await this.props.onDeleteButtonClickAsync()}
+                                onClick={async () => {
+                                    if (this.props.onDeleteButtonClickAsync) {
+                                        await this.props.onDeleteButtonClickAsync();
+                                    }
+                                }}
                         />
                     )
                 }
