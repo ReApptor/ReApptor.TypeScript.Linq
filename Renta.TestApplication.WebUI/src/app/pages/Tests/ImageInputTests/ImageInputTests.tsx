@@ -128,33 +128,33 @@ export default class ImageInputTests extends BaseComponent {
 
                 <Button label={"Set picture"} onClick={() => this.initPictureAsync()} />
 
-                <h4>Toolbar settings</h4>
+                {/*<h4>Toolbar settings</h4>*/}
 
-                {
-                    this.renderToolbarEditor("No selection", this.state.noSelectionToolbar)
-                }
+                {/*{*/}
+                {/*    this.renderToolbarEditor("No selection", this.state.noSelectionToolbar)*/}
+                {/*}*/}
 
-                {
-                    this.renderToolbarEditor("Selection", this.state.selectionToolbar)
-                }
+                {/*{*/}
+                {/*    this.renderToolbarEditor("Selection", this.state.selectionToolbar)*/}
+                {/*}*/}
 
-                {
-                    this.renderToolbarEditor("Preview", this.state.previewToolbar)
-                }
+                {/*{*/}
+                {/*    this.renderToolbarEditor("Preview", this.state.previewToolbar)*/}
+                {/*}*/}
 
-                {
-                    this.renderToolbarEditor("Edit", this.state.editToolbar)
-                }
+                {/*{*/}
+                {/*    this.renderToolbarEditor("Edit", this.state.editToolbar)*/}
+                {/*}*/}
 
                 <h4 className="pt-2 pb-2 ">ImageInput Single Upload</h4>
 
                 <ImageInput minimizeOnEmpty
                             pictures={this.state.picture}
                             convertImage={async (picture) => picture}
-                            noSelectionToolbar={this.state.noSelectionToolbar}
-                            selectionToolbar={this.state.selectionToolbar}
-                            editToolbar={this.state.editToolbar}
-                            previewToolbar={this.state.previewToolbar}
+                            // noSelectionToolbar={this.state.noSelectionToolbar}
+                            // selectionToolbar={this.state.selectionToolbar}
+                            // editToolbar={this.state.editToolbar}
+                            // previewToolbar={this.state.previewToolbar}
                             onChange={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
                 />
 
