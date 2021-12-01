@@ -5,6 +5,23 @@ import {MarkerClusterer} from "@googlemaps/markerclusterer";
 import styles from "./GoogleMap.module.scss";
 
 
+/**
+ * A marker displayed in a {@link GoogleMap}.
+ */
+export interface IGoogleMapMarker extends google.maps.ReadonlyMarkerOptions {
+
+    /**
+     * {@link IGoogleMapInfoWindow} associated with the {@link IGoogleMapMarker}.
+     */
+    infoWindow?: IGoogleMapInfoWindow;
+}
+
+/**
+ * An info window displayed in a {@link GoogleMap}.
+ */
+export interface IGoogleMapInfoWindow extends google.maps.InfoWindowOptions {
+}
+
 export interface IGoogleMapProps {
 
     /**
@@ -23,7 +40,12 @@ export interface IGoogleMapProps {
     initialZoom: number;
 
     /**
-     * @default undefined
+     * Should {@link IGoogleMapInfoWindow}'s displayed on the {@link GoogleMap} be automatically closed when a click happens outside of them.
+     */
+    autoCloseInfoWindows?: boolean;
+
+    /**
+     * Classname added to the root element of the {@link GoogleMap}.
      */
     className?: string;
 
@@ -35,30 +57,34 @@ export interface IGoogleMapProps {
     clusterMarkers?: boolean;
 
     /**
-     * {@link google.maps.Marker}'s which are displayed on the map.
+     * Markers which are displayed on the map.
      *
      * @default []
      */
-    markers?: google.maps.Marker[];
-
-    /**
-     * {@link google.maps.InfoWindow}'s which are open on the map.
-     *
-     * @default []
-     */
-    infoWindows?: google.maps.InfoWindow[];
+    markers?: IGoogleMapMarker[];
 
     /**
      * Called when the map is clicked.
-     * Is not called when a {@link google.maps.Marker} or an {@link google.maps.InfoWindow} is clicked.
-     * 
-     * @default undefined
+     * Is not called when an {@link IGoogleMapMarker} or an {@link IGoogleMapInfoWindow} is clicked.
      */
     onClick?(): Promise<void>;
 }
 
 interface IGoogleMapState {
-    googleMap: google.maps.Map | null;
+}
+
+/**
+ * INTERNAL.
+ * {@link google.maps.InfoWindow} with added state to keep track of whether it is open/closed.
+ */
+interface IGoogleMapInternalInfoWindow extends google.maps.InfoWindow {
+
+    /**
+     * Is the {@link google.maps.InfoWindow} currently open.
+     *
+     * @default false
+     */
+    isOpen?: boolean;
 }
 
 /**
@@ -70,37 +96,83 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
     private readonly _googleMapDiv: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _markerClusterer: MarkerClusterer = new MarkerClusterer({});
-    private _eventListener: google.maps.MapsEventListener | null = null;
+    private _googleMap: google.maps.Map | null = null;
+    private _mapClickEventListener: google.maps.MapsEventListener | null = null;
     private _markers: google.maps.Marker[] = [];
+    private _infoWindows: IGoogleMapInternalInfoWindow[] = [];
 
     public state: IGoogleMapState = {
-        googleMap: null,
     };
 
     // Properties
+
+    private get autoCloseInfoWindows(): boolean {
+        return (!!this.props.autoCloseInfoWindows);
+    }
 
     private get clusterMarkers(): boolean {
         return (!!this.props.clusterMarkers);
     }
 
     private get googleMap(): google.maps.Map {
-        return this.state.googleMap!;
-    }
-
-    private get infoWindows(): google.maps.InfoWindow[] {
-        return this.props.infoWindows ?? [];
+        return this._googleMap!;
     }
 
     // Methods
 
     private async handlePropsAsync(): Promise<void> {
-        this._markers.forEach((marker) => {
-            marker.setMap(null);
-        });
+
+        this._markers
+            .forEach(
+                internalMarker =>
+                    internalMarker.setMap(null));
+
         this._markerClusterer.clearMarkers();
 
-        // need to disassociate the internal markers array from the prop markers array.
-        this._markers = [...(this.props.markers ?? [])];
+        this._infoWindows
+            .forEach(
+                internalInfoWindow =>
+                    internalInfoWindow.close());
+
+        this._infoWindows = [];
+
+        const newMarkers: IGoogleMapMarker[] = this.props.markers ?? [];
+
+        this._markers = newMarkers
+            .map(
+                newMarker => {
+
+                    const internalMarker: google.maps.Marker = new google.maps.Marker(newMarker);
+
+                    if (newMarker.infoWindow) {
+
+                        const internalInfoWindow: IGoogleMapInternalInfoWindow = new google.maps.InfoWindow(newMarker.infoWindow);
+
+                        this._infoWindows.push(internalInfoWindow);
+
+                        internalMarker.addListener(
+                            "click",
+                            () => {
+
+                                internalInfoWindow.isOpen = !internalInfoWindow.isOpen;
+
+                                if (internalInfoWindow.isOpen) {
+
+                                    internalInfoWindow.open(this.googleMap);
+
+                                    if (this.autoCloseInfoWindows) {
+                                        this.closeInfoWindows(internalInfoWindow);
+                                    }
+                                }
+                                else {
+                                    internalInfoWindow.close();
+                                }
+                            });
+                    }
+
+                    return internalMarker;
+                }
+        );
 
         if (this.clusterMarkers) {
             this._markerClusterer.setMap(this.googleMap);
@@ -108,25 +180,49 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
         }
         else {
             this._markerClusterer.setMap(null);
-            this._markers.forEach(marker => marker.setMap(this.googleMap));
+            this._markers
+                .forEach(
+                    internalMarker =>
+                        internalMarker.setMap(this.googleMap));
         }
 
-        this.infoWindows.forEach(infoWindow => infoWindow.open(this.googleMap));
+        this._mapClickEventListener?.remove();
+        this._mapClickEventListener = this.googleMap.addListener(
+            "click",
+            async () => await this.onMapClickAsync());
+    }
 
-        this._eventListener?.remove();
-        this._eventListener = this.googleMap.addListener("click", async () => await this.props.onClick?.());
+    private async onMapClickAsync(): Promise<void> {
+
+        if (this.autoCloseInfoWindows) {
+            this.closeInfoWindows();
+        }
+
+        await this.props.onClick?.();
+    }
+
+    /**
+     * Close all {@link IGoogleMapInternalInfoWindow}'s, except one if specified.
+     *
+     * @param except {@link IGoogleMapInternalInfoWindow} to keep open.
+     */
+    private closeInfoWindows(except?: IGoogleMapInternalInfoWindow): void {
+        this._infoWindows
+            .forEach(
+                internalInfoWindow => {
+                    if (except !== internalInfoWindow ) {
+                        internalInfoWindow.isOpen = false;
+                        internalInfoWindow.close();
+                    }
+                });
     }
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
 
-        const googleMap: google.maps.Map = new google.maps.Map(this._googleMapDiv.current!, {
+        this._googleMap = new google.maps.Map(this._googleMapDiv.current!, {
             center: this.props.initialCenter,
             zoom: this.props.initialZoom,
-        });
-
-        await this.setState({
-            googleMap
         });
 
         await this.handlePropsAsync();
