@@ -486,25 +486,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    private async moveSelectedImageToTopAsync(): Promise<void> {
-        if ((!this.hasSelectedPictureIndex)
-            || (this.selectedPictureIndex === 0)) {
-            return;
-        }
-
-        const oldImage: FileModel = this.pictures[this.selectedPictureIndex!];
-        const imagesAfter: FileModel[] = this.pictures.slice();
-        imagesAfter.remove(oldImage);
-
-        await this.setState({
-            pictures: [oldImage, ...imagesAfter],
-            selectedPictureIndex: 0,
-        });
-
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.pictures);
-        }
-    }
 
     private async removePictureAsync(index: number): Promise<void> {
         const pictures = [...this.pictures];
@@ -733,6 +714,25 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
 
+    // private async moveSelectedImageToTopAsync(): Promise<void> {
+    //     if ((!this.hasSelectedPictureIndex)
+    //         || (this.selectedPictureIndex === 0)) {
+    //         return;
+    //     }
+    //
+    //     const oldImage: FileModel = this.pictures[this.selectedPictureIndex!];
+    //     const imagesAfter: FileModel[] = this.pictures.slice();
+    //     imagesAfter.remove(oldImage);
+    //
+    //     await this.setState({
+    //         pictures: [oldImage, ...imagesAfter],
+    //         selectedPictureIndex: 0,
+    //     });
+    //
+    //     if (this.props.onChange) {
+    //         await this.props.onChange(this, this.pictures);
+    //     }
+    // }
     // private async onMoveDownButtonClickAsync(): Promise<void> {
     //     if ((!this.hasSelectedPictureIndex) || (this.selectedPictureIndex! >= this.pictures.length)) {
     //         return;
