@@ -1,5 +1,5 @@
 import React, {DragEvent} from 'react';
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
@@ -14,16 +14,18 @@ import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 import {ImageInputPreviewModal} from "./ImageInputPreviewModal/ImageInputPreviewModal";
 import {ImageInputCropperModal} from "./ImageInputCropperModal/ImageInputCropperModal";
 import {ReactCropperHelpers} from "./ImageInputCropperModal/CropperHelpers";
+import BaseInput, {IBaseInputProps, IBaseInputState, IImageInputInputType, ValidatorCallback} from "../BaseInput/BaseInput";
 
-interface IImageInputState {
-    isDragOver: boolean;
+interface IImageInputState extends IBaseInputState<IImageInputInputType> {
+    activeImageDragOverDropZone: boolean;
     selectedPictureIndex: number | null;
     pictures: FileModel[];
 }
 
-interface IImageInputProps extends IImageInputToolbarOverwriteProps {
-    pictures: FileModel[] | string | null;
+interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputProps<IImageInputInputType> {
     className?: string;
+    disabled?: boolean;
+    readonly?: boolean;
 
     /** Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multiple} is not set to true. */
     editOnAddInSingleMode?: boolean
@@ -41,20 +43,175 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
 
     previewUrlBuilder?(file: FileModel): string;
     onUploadAsync?(file: FileModel): Promise<FileModel>;
-    onChangeAsync?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
+    onChangeAsync?(sender: ImageInput, value: IImageInputInputType): Promise<void>;
 }
 
-export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
+export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps, IImageInputState> {
 
     private previewModalRef = React.createRef<ImageInputPreviewModal>();
     private cropperModalRef = React.createRef<ImageInputCropperModal>();
-    // private cropperHelper = new ReactCropperHelpers(this.cropperModalRef);
 
     public state: IImageInputState = {
-        isDragOver: false,
+        readonly: this.props.disabled || false,
+        model: {
+            value: this.props.value || (this.props.model ? this.props.model.value : null)
+        },
+        edit: true,
+        activeImageDragOverDropZone: false,
         selectedPictureIndex: null,
+        validationError: null,
         pictures: []
     };
+
+    constructor(props: IImageInputProps) {
+        super(props);
+
+        //  Passed to eventListener and needs binding.
+        this.keyboardKeyPressHandlerAsync = this.keyboardKeyPressHandlerAsync.bind(this);
+    }
+
+    /** @description component initialization: Adds event listener for keyboard keys */
+    public async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+        window.addEventListener("keydown", this.keyboardKeyPressHandlerAsync, false);
+    }
+
+    /** @description component destroy: Removes event listener for keyboard keys */
+    public async componentWillUnmount(): Promise<void> {
+        await super.componentWillUnmount();
+        window.removeEventListener("keydown", this.keyboardKeyPressHandlerAsync, false);
+    }
+
+    /**
+     * @description emitted fileModel should be uploaded before calling this method
+     * @description use this to emit new values to outside world
+     * @description It will handle array value for single mode
+     * @description It will handle single value for multiple mode
+     * @param newValue new output to emit
+     */
+    private async onChangeAsync(newValue: IImageInputInputType): Promise<void> {
+
+        //  Handling if it's in single mode
+        //  Only newValue matters because it's going to replace the currentValue
+
+        if (!this.multiple) {
+
+            if (!newValue){
+                await this.updateValueAsync(null, false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (newValue instanceof FileModel){
+                await this.updateValueAsync(newValue, false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (Array.isArray(newValue)){
+                await this.updateValueAsync(newValue.length > 0 ? newValue[0] : null, false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            return;
+        }
+
+        //  Handling if it's in multiple mode
+        //  NewValue and CurrentValue each has three possible state: FileModel | FileModel[] | null
+        //  Total of 9 possible way should be handled
+
+        if (!newValue){
+            if (!this.value) {
+                await this.updateValueAsync([], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (this.value instanceof FileModel) {
+                await this.updateValueAsync([this.value], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (Array.isArray(this.value)) {
+                await this.updateValueAsync(this.value, false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+        }
+
+        if (newValue instanceof FileModel){
+            if (!this.value) {
+                await this.updateValueAsync([newValue], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (this.value instanceof FileModel) {
+                await this.updateValueAsync([this.value, newValue], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (Array.isArray(this.value)) {
+                await this.updateValueAsync([...this.value, newValue], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+        }
+
+        if (Array.isArray(newValue)){
+            if (!this.value) {
+                await this.updateValueAsync(newValue, false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (this.value instanceof FileModel) {
+                await this.updateValueAsync([this.value, ...newValue], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+
+            if (Array.isArray(this.value)) {
+                await this.updateValueAsync([...this.value, ...newValue], false);
+                await this.emitOnChangeAsync();
+                return;
+            }
+        }
+    }
+
+    /** @description Helper function to invoke onChangeAsync prop */
+    private async emitOnChangeAsync() {
+        if (!this.props.onChangeAsync) {
+            return;
+        }
+
+        await this.props.onChangeAsync(this, this.value);
+    }
+
+    public getValidators(): ValidatorCallback<IImageInputInputType>[] {
+        return [
+        ];
+    }
+
+    /**  @description needs to be arrow function. In initializeAsync it's passed to eventListener. */
+    public keyboardKeyPressHandlerAsync = async (event: KeyboardEvent): Promise<void> => {
+        if (event.code === 'Escape') {
+            await this.onEscapeKeyPressAsync();
+            return;
+        }
+    }
+
+    //  Keyboard Keys listeners
+
+    private async onEscapeKeyPressAsync(): Promise<void> {
+        // if (this.currentView === ImageInputView.Edit) {
+        //     await this.onBackButtonClickAsync();
+        // }
+    }
+
 
     //  Getters
 
@@ -66,8 +223,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return this.state.selectedPictureIndex;
     }
 
-    private get isDragOver(): boolean {
-        return this.state.isDragOver;
+    private get activeImageDragOverDropZone(): boolean {
+        return this.state.activeImageDragOverDropZone;
     }
 
     private get editOnAddInSingleMode(): boolean {
@@ -82,13 +239,35 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return (this.props.multiple === true);
     }
 
-    private get pictures(): FileModel[] {
-        return this.state.pictures;
+    /**
+     * @description use this only to iterate the view
+     * @private
+     */
+    private get viewImageListItems(): FileModel[] {
+        if (!this.value) {
+            return [];
+        }
+
+        if (this.value instanceof FileModel) {
+            return [this.value];
+        }
+
+        if (Array.isArray(this.value)) {
+            return this.value;
+        }
+
+        //  if it's base64 string
+
+        const fileModel = new FileModel();
+
+        fileModel.src = this.value;
+
+        return [fileModel];
     }
 
     private get activePicture(): FileModel | null {
         return (this.hasSelectedPictureIndex)
-            ? this.pictures[this.selectedPictureIndex!]
+            ? this.viewImageListItems[this.selectedPictureIndex!]
             : null;
     }
 
@@ -191,7 +370,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
-        const selectedPicture = this.pictures[this.selectedPictureIndex!];
+        const selectedPicture = this.viewImageListItems[this.selectedPictureIndex!];
 
         let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(selectedPicture));
 
@@ -221,16 +400,16 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onImageInputDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (!this.isDragOver) {
-            await this.setState({ isDragOver: true });
+        if (!this.activeImageDragOverDropZone) {
+            await this.setState({ activeImageDragOverDropZone: true });
         }
     }
 
     private async onDropDownAreaDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (!this.isDragOver) {
-            await this.setState({ isDragOver: true });
+        if (!this.activeImageDragOverDropZone) {
+            await this.setState({ activeImageDragOverDropZone: true });
         }
     }
 
@@ -241,8 +420,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private async onDropDownAreaDragLeaveAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
-        if (this.isDragOver) {
-            await this.setState({ isDragOver: false });
+        if (this.activeImageDragOverDropZone) {
+            await this.setState({ activeImageDragOverDropZone: false });
         }
     }
 
@@ -250,8 +429,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         event.preventDefault();
         event.persist();
 
-        if (this.isDragOver) {
-            await this.setState({ isDragOver: false });
+        if (this.activeImageDragOverDropZone) {
+            await this.setState({ activeImageDragOverDropZone: false });
         }
 
         if (!event?.dataTransfer?.files) {
@@ -261,46 +440,46 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         await this.addFileListAsync(event.dataTransfer.files)
     }
 
-    private async initializePicturesAsync(): Promise<void> {
-
-        let pictures: FileModel[];
-        let selectedPictureIndex: number | null;
-
-        if ((Array.isArray(this.props.pictures)) && (this.props.pictures.length > 0)) {
-            pictures = this.props.pictures;
-            selectedPictureIndex = (typeof this.selectedPictureIndex === "number")
-                ? this.selectedPictureIndex
-                : 0;
-        } else if (typeof this.props.pictures === "string") {
-            pictures = [new FileModel(this.props.pictures as string)];
-            selectedPictureIndex = 0;
-        } else {
-            pictures = [];
-            selectedPictureIndex = null;
-        }
-
-        await this.setState({
-            pictures,
-            selectedPictureIndex
-        });
-    }
+    // private async initializePicturesAsync(): Promise<void> {
+    //
+    //     let pictures: FileModel[];
+    //     let selectedPictureIndex: number | null;
+    //
+    //     if ((Array.isArray(this.props.pictures)) && (this.props.pictures.length > 0)) {
+    //         pictures = this.props.pictures;
+    //         selectedPictureIndex = (typeof this.selectedPictureIndex === "number")
+    //             ? this.selectedPictureIndex
+    //             : 0;
+    //     } else if (typeof this.props.pictures === "string") {
+    //         pictures = [new FileModel(this.props.pictures as string)];
+    //         selectedPictureIndex = 0;
+    //     } else {
+    //         pictures = [];
+    //         selectedPictureIndex = null;
+    //     }
+    //
+    //     await this.setState({
+    //         pictures,
+    //         selectedPictureIndex
+    //     });
+    // }
 
     //  Logic
 
-    public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
+    // public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
+    //
+    //     const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
+    //
+    //     await super.componentWillReceiveProps(nextProps);
+    //
+    //     if (newPictures) {
+    //         await this.initializePicturesAsync();
+    //     }
+    // }
 
-        const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
-
-        await super.componentWillReceiveProps(nextProps);
-
-        if (newPictures) {
-            await this.initializePicturesAsync();
-        }
-    }
-
-    public async initializeAsync(): Promise<void> {
-        await this.initializePicturesAsync();
-    }
+    // public async initializeAsync(): Promise<void> {
+    //     await this.initializePicturesAsync();
+    // }
 
     private async addFileListAsync(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
@@ -377,7 +556,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async updatePictureAsync(fileModel: FileModel, index: number): Promise<void> {
-        const pictures = this.pictures.map((picture: FileModel, i) => {
+        const pictures = this.viewImageListItems.map((picture: FileModel, i) => {
             if (index === i) {
                 return fileModel;
             }
@@ -390,7 +569,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async removePictureAsync(index: number): Promise<void> {
-        const pictures = [...this.pictures];
+        const pictures = [...this.viewImageListItems];
         pictures.splice(index, 1);
 
         const newIndex: number | null = (pictures.length <= 0)
@@ -418,8 +597,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    public render(): JSX.Element {
-        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.pictures.length <= 0)
+    public renderInput(): JSX.Element {
+        const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.viewImageListItems.length <= 0)
             ? styles.minimize
             : null;
 
@@ -446,7 +625,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
                 <div className={styles.viewPanel}>
 
-                    <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
+                    <div className={this.css(styles.dragDropArea, (this.activeImageDragOverDropZone) && styles.dragDropAreaActive)}
                          onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDropAsync(event)}
                          onDragOver={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOverAsync(event)}
                          onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnterAsync(event)}
@@ -459,7 +638,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
                     <div className={styles.listView}>
                         {
-                            this.pictures.map((fileModel, index) =>
+                            this.viewImageListItems.map((fileModel, index) =>
                                 (
                                     <ImageInputListItem index={index}
                                                         fileModel={fileModel}
