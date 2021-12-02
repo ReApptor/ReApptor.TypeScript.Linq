@@ -56,8 +56,8 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
 
     /** List of allowed file extensions. */
     fileTypes?: string[];
-    
-    imageUrl?(file: FileModel): string;
+
+    previewUrlBuilder?(file: FileModel): string;
     onUploadAsync?(file: FileModel): Promise<FileModel>;
     
     onChangeAsync?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
@@ -130,8 +130,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         if (this.activePicture.id) {
-            if (this.props.imageUrl) {
-                return this.props.imageUrl(this.activePicture);
+            if (this.props.previewUrlBuilder) {
+                return this.props.previewUrlBuilder(this.activePicture);
             }
 
             return this.getImageUrl(this.activePicture);
@@ -141,8 +141,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private getImageUrl(image: FileModel): string {
-        return (this.props.imageUrl)
-            ? this.props.imageUrl(image)
+        return (this.props.previewUrlBuilder)
+            ? this.props.previewUrlBuilder(image)
             : ImageProvider.getImageUrl(image);
     }
 
@@ -161,8 +161,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         if (fileModel.id) {
-            if (this.props.imageUrl) {
-                return this.props.imageUrl(fileModel);
+            if (this.props.previewUrlBuilder) {
+                return this.props.previewUrlBuilder(fileModel);
             }
 
             return this.getImageUrl(fileModel);
