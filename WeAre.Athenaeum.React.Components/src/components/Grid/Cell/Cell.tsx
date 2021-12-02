@@ -242,7 +242,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
         const name: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
         return (
-            <label htmlFor={name}>
+            <label htmlFor={name} title={cell.title}>
                 <input type="checkbox"
                        id={name}
                        checked={cellValue}
