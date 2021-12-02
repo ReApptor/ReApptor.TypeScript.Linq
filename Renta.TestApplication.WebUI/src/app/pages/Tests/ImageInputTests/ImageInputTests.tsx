@@ -150,7 +150,7 @@ export default class ImageInputTests extends BaseComponent {
 
                 <ImageInput minimizeOnEmpty
                             pictures={this.state.picture}
-                            convertImage={async (picture) => picture}
+                            onUploadAsync={async (picture) => picture}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
@@ -162,7 +162,7 @@ export default class ImageInputTests extends BaseComponent {
 
                 <ImageInput multi
                             pictures={this.state.pictures}
-                            convertImage={async (image) => image}
+                            onUploadAsync={async (image) => image}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}

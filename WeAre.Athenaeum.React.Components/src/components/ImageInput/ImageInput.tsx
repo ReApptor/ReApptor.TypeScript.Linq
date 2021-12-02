@@ -58,7 +58,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
     fileTypes?: string[];
     
     imageUrl?(file: FileModel): string;
-    convertImage?(file: FileModel): Promise<FileModel>;
+    onUploadAsync?(file: FileModel): Promise<FileModel>;
     
     onChangeAsync?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
@@ -199,8 +199,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         newFileModel.src = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
 
-        if (this.props.convertImage) {
-            newFileModel = await this.props.convertImage(newFileModel);
+        if (this.props.onUploadAsync) {
+            newFileModel = await this.props.onUploadAsync(newFileModel);
 
             if (newFileModel === null || newFileModel === undefined) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -258,8 +258,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(selectedPicture));
 
-        if (this.props.convertImage) {
-            rotated = await this.props.convertImage(rotated);
+        if (this.props.onUploadAsync) {
+            rotated = await this.props.onUploadAsync(rotated);
 
             if (rotated === null || rotated === undefined) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -401,11 +401,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         });
 
         fileModels = await Promise.all(fileModels.map(async (fileModel): Promise<FileModel> => {
-            if (!this.props.convertImage) {
+            if (!this.props.onUploadAsync) {
                 return fileModel;
             }
 
-            const converted: FileModel | null = await this.props.convertImage(fileModel);
+            const converted: FileModel | null = await this.props.onUploadAsync(fileModel);
 
             if (converted === null) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
