@@ -42,8 +42,9 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputP
     fileTypes?: string[];
 
     previewUrlBuilder?(file: FileModel): string;
-    onUpload?(file: FileModel): Promise<FileModel>;
-    onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
+    onDelete?(file: FileModel): Promise<void>;
+    onUpload(file: FileModel): Promise<FileModel>;
+    onChange?(sender: ImageInput, value: IImageInputInputType): Promise<void>;
 }
 
 export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps, IImageInputState> {
@@ -89,7 +90,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
      * @description It will handle single value for multiple mode
      * @param newValue new output to emit
      */
-    private async onChangeAsync(newValue: IImageInputInputType): Promise<void> {
+    private async onInternalChangeAsync(newValue: IImageInputInputType): Promise<void> {
 
         //  Handling if it's in single mode
         //  Only newValue matters because it's going to replace the currentValue
@@ -98,19 +99,19 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
             if (!newValue){
                 await this.updateValueAsync(null, false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (newValue instanceof FileModel){
                 await this.updateValueAsync(newValue, false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (Array.isArray(newValue)){
                 await this.updateValueAsync(newValue.length > 0 ? newValue[0] : null, false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
@@ -124,19 +125,19 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         if (!newValue){
             if (!this.value) {
                 await this.updateValueAsync([], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (this.value instanceof FileModel) {
                 await this.updateValueAsync([this.value], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (Array.isArray(this.value)) {
                 await this.updateValueAsync(this.value, false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
         }
@@ -144,19 +145,19 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         if (newValue instanceof FileModel){
             if (!this.value) {
                 await this.updateValueAsync([newValue], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (this.value instanceof FileModel) {
                 await this.updateValueAsync([this.value, newValue], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (Array.isArray(this.value)) {
                 await this.updateValueAsync([...this.value, newValue], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
         }
@@ -164,31 +165,31 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         if (Array.isArray(newValue)){
             if (!this.value) {
                 await this.updateValueAsync(newValue, false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (this.value instanceof FileModel) {
                 await this.updateValueAsync([this.value, ...newValue], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
 
             if (Array.isArray(this.value)) {
                 await this.updateValueAsync([...this.value, ...newValue], false);
-                await this.emitOnChangeAsync();
+                await this.emitOnChangePropAsync();
                 return;
             }
         }
     }
 
     /** @description Helper function to invoke onChangeAsync prop */
-    private async emitOnChangeAsync() {
-        if (!this.props.onChangeAsync) {
+    private async emitOnChangePropAsync() {
+        if (!this.props.onChange) {
             return;
         }
 
-        await this.props.onChangeAsync(this, this.value);
+        await this.props.onChange(this, this.value);
     }
 
     public getValidators(): ValidatorCallback<IImageInputInputType>[] {
@@ -239,10 +240,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         return (this.props.multiple === true);
     }
 
-    /**
-     * @description use this only to iterate the view
-     * @private
-     */
+    /** @description use this only to iterate the view */
     private get viewImageListItems(): FileModel[] {
         if (!this.value) {
             return [];
@@ -332,58 +330,12 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
     //  Control panel button Click Events
 
-    private async onSaveButtonClickAsync(fileModel: FileModel, index: number): Promise<void> {
+    /** @description Responsible for rotating the selected image and calling updateInternalAsync */
+    private async onRotateMiniButtonClickAsync(fileModel: FileModel, index: number, degree: number): Promise<void> {
 
-        if (!this.cropperModalRef.current) {
-            return;
-        }
-
-        if (!this.props.onUpload) {
-            await this.updatePictureAsync(fileModel, index);
-            return;
-        }
-
-        const uploadedFileModel = await this.props.onUpload(fileModel);
-
-        if (uploadedFileModel === null || uploadedFileModel === undefined) {
-            await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
-            return;
-        }
-
-        await this.updatePictureAsync(uploadedFileModel, index);
-    }
-
-    private async onPreviewButtonClickAsync(): Promise<void> {
-        if (!this.previewModalRef.current) {
-            return;
-        }
-
-        await this.previewModalRef.current.showModal(this.activePicture, this.selectedPictureIndex);
-    }
-
-    private async onDeleteButtonClickAsync(index: number | null = this.selectedPictureIndex): Promise<void> {
-        if (index === null) {
-            return;
-        }
-
-        await this.removePictureAsync(index);
-    }
-
-    private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
-        const selectedPicture = this.viewImageListItems[this.selectedPictureIndex!];
-
-        let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(selectedPicture));
-
-        if (this.props.onUpload) {
-            rotated = await this.props.onUpload(rotated);
-
-            if (rotated === null || rotated === undefined) {
-                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
-                return;
-            }
-        }
-
-        await this.updatePictureAsync(rotated, this.selectedPictureIndex!);
+        const rotated = await ReactCropperHelpers.rotate(fileModel, degree, this.getPreviewSource(fileModel));
+        console.log(rotated)
+        await this.updateInternalAsync(rotated, index);
     }
 
     private onListViewItemClick(index: number): void {
@@ -395,8 +347,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             });
     }
 
-    //  DragAndDrop Functionality Events
-
+    /** @description DragAndDrop Functionality*/
     private async onImageInputDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
@@ -405,6 +356,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         }
     }
 
+    /** @description DragAndDrop Functionality*/
     private async onDropDownAreaDragEnterAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
@@ -413,10 +365,12 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         }
     }
 
+    /** @description DragAndDrop Functionality*/
     private async onDropDownAreaDragOverAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
     }
 
+    /** @description DragAndDrop Functionality*/
     private async onDropDownAreaDragLeaveAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
 
@@ -425,6 +379,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         }
     }
 
+    /** @description DragAndDrop Functionality*/
     private async onDropDownAreaDropAsync(event: DragEvent<HTMLDivElement>): Promise<void> {
         event.preventDefault();
         event.persist();
@@ -437,51 +392,11 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return;
         }
 
-        await this.addFileListAsync(event.dataTransfer.files)
+        await this.addInternalAsync(event.dataTransfer.files)
     }
 
-    // private async initializePicturesAsync(): Promise<void> {
-    //
-    //     let pictures: FileModel[];
-    //     let selectedPictureIndex: number | null;
-    //
-    //     if ((Array.isArray(this.props.pictures)) && (this.props.pictures.length > 0)) {
-    //         pictures = this.props.pictures;
-    //         selectedPictureIndex = (typeof this.selectedPictureIndex === "number")
-    //             ? this.selectedPictureIndex
-    //             : 0;
-    //     } else if (typeof this.props.pictures === "string") {
-    //         pictures = [new FileModel(this.props.pictures as string)];
-    //         selectedPictureIndex = 0;
-    //     } else {
-    //         pictures = [];
-    //         selectedPictureIndex = null;
-    //     }
-    //
-    //     await this.setState({
-    //         pictures,
-    //         selectedPictureIndex
-    //     });
-    // }
-
-    //  Logic
-
-    // public async componentWillReceiveProps(nextProps: IImageInputProps): Promise<void> {
-    //
-    //     const newPictures: boolean = (!Comparator.isEqual(this.props.pictures, nextProps.pictures));
-    //
-    //     await super.componentWillReceiveProps(nextProps);
-    //
-    //     if (newPictures) {
-    //         await this.initializePicturesAsync();
-    //     }
-    // }
-
-    // public async initializeAsync(): Promise<void> {
-    //     await this.initializePicturesAsync();
-    // }
-
-    private async addFileListAsync(fileList: FileList): Promise<void> {
+    /** @description Trigger this on input data when selecting new files. Responsible for uploading and calling @link onInternalChangeAsync */
+    private async addInternalAsync(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
 
         if (fileListAsArray.length === 0) {
@@ -492,11 +407,11 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             fileListAsArray = [fileListAsArray[0]];
         }
 
-        let fileModels: FileModel[] = await Promise.all(fileListAsArray.map(async (file: File): Promise<FileModel> => {
+        const fileModels: FileModel[] = await Promise.all(fileListAsArray.map(async (file: File): Promise<FileModel> => {
             return await ImageInput.fileToFileModel(file);
         }));
 
-        fileModels = fileModels.filter(fileModel => {
+        const filteredFileModels = fileModels.filter(fileModel => {
             if (fileModel.size < this.maxImageRequestSizeInBytes) {
                 return true;
             }
@@ -505,83 +420,108 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return false;
         });
 
-        fileModels = await Promise.all(fileModels.map(async (fileModel): Promise<FileModel> => {
-            if (!this.props.onUpload) {
-                return fileModel;
-            }
+        const uploadedFileModels = await Promise.all(filteredFileModels.map(async (fileModel): Promise<FileModel> => {
+            const uploaded: FileModel | null = await this.props.onUpload(fileModel);
 
-            const converted: FileModel | null = await this.props.onUpload(fileModel);
-
-            if (converted === null) {
+            if (uploaded === null) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
                 return fileModel;
             }
 
-            return converted;
+            return uploaded;
         }));
 
-        await this.addPicturesAsync(fileModels)
+        await this.onInternalChangeAsync(uploadedFileModels);
     }
 
-    private async addPicturesAsync(fileModels: FileModel[]): Promise<void> {
-        if (fileModels.length === 0) {
+    /** @description Trigger this on updating. Responsible for multipleMode and uploading and calling @link onInternalChangeAsync */
+    private async updateInternalAsync(fileModel: FileModel, index: number): Promise<void> {
+
+        if (this.multiple) {
+            if (!Array.isArray(this.value)) {
+                console.error("multiple mode is on and value is not array.");
+                return;
+            }
+
+            const valueToUpdate = [...this.value];
+
+            valueToUpdate[index] = fileModel;
+
+            const uploadedFileModel: FileModel | null = await this.props.onUpload(fileModel);
+
+            if (uploadedFileModel === null) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+
+            valueToUpdate[index] = uploadedFileModel;
+
+            await this.onInternalChangeAsync(valueToUpdate);
+
+            return;
+
+        } else {
+            const currentFileModel = this.value;
+
+            if (!(currentFileModel instanceof FileModel)) {
+                console.error("multiple mode is off while value is not instanceof FileModel");
+                return;
+            }
+
+            const uploadedFileModel: FileModel | null = await this.props.onUpload(fileModel);
+
+            if (uploadedFileModel === null) {
+                await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
+                return;
+            }
+
+            await this.onInternalChangeAsync(uploadedFileModel);
+        }
+    }
+
+    /** @description Trigger this on deleting. Responsible for uploading and calling @link onInternalChangeAsync */
+    private async deleteInternalAsync(index: number | null = this.state.selectedPictureIndex): Promise<void> {
+
+        if (index === null) {
             return;
         }
 
-        if (this.props.onChange) {
-            if (this.multiple) {
-                await this.props.onChange(
-                    this,
-                    [...this.state.pictures, ...fileModels]
-                );
-
-                await this.setState(
-                    {
-                        selectedPictureIndex: this.selectedPictureIndex ?? 0
-                    });
+        if (this.multiple) {
+            if (!Array.isArray(this.value)) {
+                console.error("multiple mode is on and value is not array.");
+                return;
             }
-            else
-            {
-                await this.props.onChange(
-                    this,
-                    fileModels.slice(0, 1)
-                );
 
-                await this.setState(
-                    {
-                        selectedPictureIndex: 0
-                    });
+            const valueToUpdate = [...this.value];
+
+            const fileModelToDelete = this.value[index];
+
+            valueToUpdate.splice(index, 1);
+
+            if (this.props.onDelete) {
+                await this.props.onDelete(fileModelToDelete);
             }
-        }
-    }
 
-    private async updatePictureAsync(fileModel: FileModel, index: number): Promise<void> {
-        const pictures = this.viewImageListItems.map((picture: FileModel, i) => {
-            if (index === i) {
-                return fileModel;
+            await this.onInternalChangeAsync(valueToUpdate);
+
+            return;
+
+        } else {
+            const fileModelToDelete = this.value;
+
+            if (!(fileModelToDelete instanceof FileModel)) {
+                console.error("multiple mode is off while value is not instanceof FileModel");
+                return
             }
-            return picture;
-        });
 
-        if (this.props.onChange) {
-            await this.props.onChange(this, pictures);
-        }
-    }
 
-    private async removePictureAsync(index: number): Promise<void> {
-        const pictures = [...this.viewImageListItems];
-        pictures.splice(index, 1);
+            if (this.props.onDelete) {
+                await this.props.onDelete(fileModelToDelete);
+            }
 
-        const newIndex: number | null = (pictures.length <= 0)
-            ? null
-            : (index <= 0)
-                ? 0
-                : index - 1;
+            await this.onInternalChangeAsync(null);
 
-        await this.setState({selectedPictureIndex: newIndex});
-
-        if (this.props.onChange) {
-            await this.props.onChange(this, pictures);
+            return;
         }
     }
 
@@ -608,19 +548,27 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             >
 
                 <ImageInputToolbar toolbar={this.toolbar}
-                                   onRotateMiniButtonClickAsync={async (deg) => {
-                                       await this.onRotateMiniButtonClickAsync(deg);
-                                   }}
+                                   onRotateMiniButtonClickAsync={async (degree) => {
+                                       if (!this.activePicture || this.state.selectedPictureIndex === null) {
+                                           return;
+                                       }
 
+                                       await this.onRotateMiniButtonClickAsync(this.activePicture, this.state.selectedPictureIndex, degree);
+
+                                   }}
                                    onBrowseForFileClick={async (captureMode) => {
                                        const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
-                                       await this.addFileListAsync(fileList)
+                                       await this.addInternalAsync(fileList)
                                    }}
                                    onEditButtonClickAsync={async () => {
                                        this.cropperModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
                                    }}
-                                   onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
-                                   onPreviewButtonClickAsync={async () => await this.onPreviewButtonClickAsync()}
+                                   onDeleteButtonClickAsync={async () => {
+                                       await this.deleteInternalAsync();
+                                   }}
+                                   onPreviewButtonClickAsync={async () => {
+                                       await this.previewModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
+                                   }}
                 />
 
                 <div className={styles.viewPanel}>
@@ -640,7 +588,8 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                         {
                             this.viewImageListItems.map((fileModel, index) =>
                                 (
-                                    <ImageInputListItem index={index}
+                                    <ImageInputListItem key={index}
+                                                        index={index}
                                                         fileModel={fileModel}
                                                         onListViewItemClick={(index: number) => this.onListViewItemClick(index)}
                                                         hasSelectedPictureIndex={this.hasSelectedPictureIndex}
@@ -658,19 +607,17 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                                             onCrop={(height: number, width: number) => {
 
                                             }}
-                                            onSaveButtonClickAsync={async (fileModel: FileModel, index: number) => {
-                                                this.cropperModalRef.current?.closeModal();
-                                                await this.onSaveButtonClickAsync(fileModel, index);
-                                            }}
                                             onBackButtonClickAsync={async () => {
                                                 this.cropperModalRef.current?.closeModal();
-
+                                            }}
+                                            onSaveButtonClickAsync={async (fileModel: FileModel, index: number) => {
+                                                this.cropperModalRef.current?.closeModal();
+                                                await this.updateInternalAsync(fileModel, index);
                                             }}
                                             onDeleteButtonClickAsync={async (index: number) => {
                                                 this.cropperModalRef.current?.closeModal();
-                                                await this.onDeleteButtonClickAsync(index);
+                                                await this.deleteInternalAsync(index);
                                             }}
-
                     />
 
                     <ImageInputPreviewModal ref={this.previewModalRef}
@@ -701,7 +648,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
     /**
      * @description It will get the files from input event and calls addFileListAsync method
-     * @link addFileListAsync
+     * @link addInternalAsync
      * @param captureMode if image needs to be taken from camera.
      * @param multiple multiple image select.
      * @param acceptedTypes file formats to allow.
