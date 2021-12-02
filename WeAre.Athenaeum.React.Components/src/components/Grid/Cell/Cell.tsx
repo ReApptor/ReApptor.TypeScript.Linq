@@ -524,7 +524,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     case ColumnType.Enum:
 
                         if (!format)
-                            throw Error("Wrong grid declaration. Format property in column definition should contain enum type name for enum cell.");
+                            throw Error("Wrong grid declaration. Format property in column definition should contain enum type name for enum cell!");
 
                         cellStyle = gridStyles.enumCell;
                         const enumName: string = format as string;
