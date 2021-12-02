@@ -1,0 +1,40 @@
+.fullScreen {
+  background-color: darkgray;
+  z-index: 999;
+  position: fixed;
+  top: 45px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0 0 0.5rem 0;
+  bottom: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .preview {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-clip: content-box;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .toolbar {
+    align-self: stretch;
+    //z-index: 1000;
+    //position: fixed;
+    //left: 0;
+    //bottom: 0;
+    //right: 0;
+    //padding: 1rem;
+
+  }
+}
