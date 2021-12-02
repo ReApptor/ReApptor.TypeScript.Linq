@@ -59,7 +59,6 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
 
     previewUrlBuilder?(file: FileModel): string;
     onUploadAsync?(file: FileModel): Promise<FileModel>;
-    
     onChangeAsync?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 

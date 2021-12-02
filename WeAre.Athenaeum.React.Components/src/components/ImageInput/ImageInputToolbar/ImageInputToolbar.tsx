@@ -412,6 +412,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
      * {@link IIMageInputToolbar.editButton}
      * {@link IIMageInputToolbar.uploadButton}
      * {@link IIMageInputToolbar.takePictureButton}
+     * {@link IIMageInputToolbar.backButton}
      *
      * A "Back"-button which returns the user back to the previous view is also displayed.
      */
@@ -421,7 +422,8 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             deleteButton: true,
             editButton: true,
             uploadButton: true,
-            takePictureButton: true
+            takePictureButton: true,
+            backButton: true
         };
     }
 
