@@ -60,7 +60,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
     imageUrl?(file: FileModel): string;
     convertImage?(file: FileModel): Promise<FileModel>;
     
-    onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
+    onChangeAsync?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
@@ -423,9 +423,9 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        if (this.props.onChange) {
+        if (this.props.onChangeAsync) {
             if (this.multi) {
-                await this.props.onChange(
+                await this.props.onChangeAsync(
                     this,
                     [...this.state.pictures, ...fileModels]
                 );
@@ -439,7 +439,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             }
             else
             {
-                await this.props.onChange(
+                await this.props.onChangeAsync(
                     this,
                     fileModels.slice(0, 1)
                 );
@@ -466,8 +466,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return picture;
         });
 
-        if (this.props.onChange) {
-            await this.props.onChange(this, pictures);
+        if (this.props.onChangeAsync) {
+            await this.props.onChangeAsync(this, pictures);
         }
     }
 
@@ -486,8 +486,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         await this.setCurrentViewAsync(ImageInputView.Default);
 
-        if (this.props.onChange) {
-            await this.props.onChange(this, pictures);
+        if (this.props.onChangeAsync) {
+            await this.props.onChangeAsync(this, pictures);
         }
     }
 
