@@ -59,8 +59,10 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
         await this.setState({visible: false, fileModel: null, index: null, rotateOnReady: 0});
     }
 
-    public output(type?: string, quality?: any) {
-        return this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL(type, quality)
+    public output(quality: any = 1, type?: string) {
+        return this.cropperRef.current?.cropper.getCroppedCanvas({
+            imageSmoothingEnabled: false
+        }).toDataURL(type, quality)
     }
 
     public rotateAndFitToScreen(degrees: number) {
@@ -95,7 +97,7 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
                                          if (this.props.onReady && this.state.fileModel && this.state.index !== null) {
                                              const clone: FileModel = Object.assign(Object.create(Object.getPrototypeOf(this.state.fileModel)), this.state.fileModel);
 
-                                             clone.src = this.output() || "";
+                                             clone.src = this.output(1, this.state.fileModel.type) || "";
 
                                              this.props.onReady(event, clone, this.state.index);
                                          }
@@ -119,7 +121,7 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
 
                                                    const clone: FileModel = Object.assign(Object.create(Object.getPrototypeOf(this.state.fileModel)), this.state.fileModel);
 
-                                                   clone.src = this.output() || "";
+                                                   clone.src = this.output(1, clone.type) || "";
 
                                                    await this.props.onSaveButtonClick(clone, this.state.index);
                                                }}
