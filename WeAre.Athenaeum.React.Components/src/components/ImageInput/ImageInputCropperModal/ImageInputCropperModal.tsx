@@ -19,7 +19,7 @@ export interface IImageInputCropperModalProps {
     aspectRatio?: number;
     cropperSource: string;
     dataTestId?: string;
-    onReady?: (event: ReadyEvent) => void
+    onReady?: (event: ReadyEvent, fileModel: FileModel, index: number) => void
     onCrop?: (height: number, width: number) => void
 
     onSaveButtonClickAsync?: (fileModel: FileModel, index: number) => Promise<void>;
@@ -32,6 +32,7 @@ export interface IImageInputCropperModalState {
     visible: boolean;
     fileModel: FileModel | null;
     index: number | null;
+    rotateOnReady: number;
 }
 
 export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModalProps, IImageInputCropperModalState> {
@@ -40,21 +41,22 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
     state: IImageInputCropperModalState = {
         visible: false,
         index: null,
-        fileModel: null
+        fileModel: null,
+        rotateOnReady: 0
     };
 
     private get aspectRatio(): number {
         return this.props.aspectRatio ?? 0;
     }
 
-    public async showModal(fileModel: FileModel | null, index: number | null) {
+    public async showModal(fileModel: FileModel | null, index: number | null, rotateOnReady: number = 0) {
         if (fileModel && index !== null) {
-            await this.setState({visible: true, fileModel, index});
+            await this.setState({visible: true, fileModel, index, rotateOnReady});
         }
     }
 
     public async closeModal() {
-        await this.setState({visible: false, fileModel: null, index: null});
+        await this.setState({visible: false, fileModel: null, index: null, rotateOnReady: 0});
     }
 
     public output(type?: string, quality?: any) {
@@ -88,10 +90,14 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
                                      viewMode={1} // cannot move box outside image borders
                                      guides={false}
                                      ready={(event) => {
-                                         this.rotateAndFitToScreen(0);
+                                         this.rotateAndFitToScreen(this.state.rotateOnReady);
 
-                                         if (this.props.onReady) {
-                                             this.props.onReady(event);
+                                         if (this.props.onReady && this.state.fileModel && this.state.index !== null) {
+                                             const clone: FileModel = Object.assign(Object.create(Object.getPrototypeOf(this.state.fileModel)), this.state.fileModel);
+
+                                             clone.src = this.output() || "";
+
+                                             this.props.onReady(event, clone, this.state.index);
                                          }
                                      }}
                                      crop={(e) => {
@@ -103,10 +109,10 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
 
                             <ImageInputToolbar className={styles.toolbar}
                                                toolbar={ImageInputToolbar.defaultEditToolbar}
-                                               onRotateButtonClickAsync={async (rotation) => {
+                                               onRotateButtonClick={async (rotation) => {
                                                    this.rotateAndFitToScreen(rotation);
                                                }}
-                                               onSaveButtonClickAsync={async () => {
+                                               onSaveButtonClick={async () => {
                                                    if (!this.props.onSaveButtonClickAsync || !this.state.fileModel || this.state.index === null) {
                                                        return;
                                                    }
@@ -117,12 +123,12 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
 
                                                    await this.props.onSaveButtonClickAsync(clone, this.state.index);
                                                }}
-                                               onBackButtonClickAsync={async () => {
+                                               onBackButtonClick={async () => {
                                                    if (this.props.onBackButtonClickAsync) {
                                                        await this.props.onBackButtonClickAsync();
                                                    }
                                                }}
-                                               onDeleteButtonClickAsync={async () => {
+                                               onDeleteButtonClick={async () => {
                                                    if (!this.props.onDeleteButtonClickAsync || this.state.index === null) {
                                                        return;
                                                    }
