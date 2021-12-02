@@ -1,11 +1,11 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, FourColumns, ImageInput, InlineType, IIMageInputToolbar, ImageInputToolbar} from "@weare/athenaeum-react-components";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {Button, Checkbox, FourColumns, ImageInput, InlineType, IIMageInputToolbar, ImageInputToolbar, IImageInputInputType} from "@weare/athenaeum-react-components";
 import {FileModel} from "@weare/athenaeum-toolkit";
 
 interface IIMageInputTestsState {
-    picture: string | null;
-    pictures: FileModel[];
+    picture: FileModel | null;
+    pictures: FileModel[] | null;
     noSelectionToolbar: IIMageInputToolbar;
     selectionToolbar: IIMageInputToolbar;
     editToolbar: IIMageInputToolbar;
@@ -149,25 +149,44 @@ export default class ImageInputTests extends BaseComponent {
                 <h4 className="pt-2 pb-2 ">ImageInput Single Upload</h4>
 
                 <ImageInput minimizeOnEmpty
-                            pictures={this.state.picture}
+                            model={{value: this.state.picture}}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onUpload={async (picture) => picture}
-                            onChange={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
+                            onDelete={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onDeleteAsync: Deleted: ${fileModel.name}`, true, true)
+                            }}
+                            onUpload={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true)
+
+                                return fileModel;
+                            }}
+                            onChange={async (sender, picture) => {
+                                await this.setState({picture: picture})
+                                await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
+                            }}
                 />
 
                 <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
                 <ImageInput multiple
-                            pictures={this.state.pictures}
+                            model={{value: this.state.pictures}}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onUpload={async (image) => image}
-                            onChange={async (sender, pictures) => {await this.setState({pictures})}}
+                            onDelete={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onDeleteAsync: Deleted: ${fileModel.name}`, true, true)
+                            }}
+                            onUpload={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true);
+                                return fileModel;
+                            }}
+                            onChange={async (sender, pictures) => {
+                                await this.setState({pictures: pictures})
+                                await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
+                            }}
                 />
 
             </React.Fragment>
