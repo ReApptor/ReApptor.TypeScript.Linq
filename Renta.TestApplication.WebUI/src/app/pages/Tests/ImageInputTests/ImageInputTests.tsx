@@ -160,7 +160,7 @@ export default class ImageInputTests extends BaseComponent {
 
                 <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
-                <ImageInput multi
+                <ImageInput multiple
                             pictures={this.state.pictures}
                             onUploadAsync={async (image) => image}
                             noSelectionToolbar={this.state.noSelectionToolbar}

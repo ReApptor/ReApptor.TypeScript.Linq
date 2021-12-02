@@ -43,7 +43,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
     pictures: FileModel[] | string | null;
     className?: string;
 
-    /** Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multi} is not set to true. */
+    /** Should Edit-mode be enabled immediately after an image is uploaded. Only works if {@link multiple} is not set to true. */
     editOnAddInSingleMode?: boolean
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
@@ -52,7 +52,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
      * Does the {@link ImageInput} accept multiple images.
      * @default false
      */
-    multi?: boolean;
+    multiple?: boolean;
 
     /** List of allowed file extensions. */
     fileTypes?: string[];
@@ -109,8 +109,8 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         return (this.props.minimizeOnEmpty === true);
     }
 
-    private get multi(): boolean {
-        return (this.props.multi === true);
+    private get multiple(): boolean {
+        return (this.props.multiple === true);
     }
 
     private get pictures(): FileModel[] {
@@ -382,7 +382,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        if ((!this.multi) && (fileListAsArray.length > 1)) {
+        if ((!this.multiple) && (fileListAsArray.length > 1)) {
             fileListAsArray = [fileListAsArray[0]];
         }
 
@@ -423,7 +423,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
 
         if (this.props.onChangeAsync) {
-            if (this.multi) {
+            if (this.multiple) {
                 await this.props.onChangeAsync(
                     this,
                     [...this.state.pictures, ...fileModels]
@@ -527,7 +527,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                                        selectionToolbar={this.props.selectionToolbar}
                                        noSelectionToolbar={this.props.noSelectionToolbar}
                                        onBrowseForFileClick={async (captureMode) => {
-                                           const fileList = await ImageInput.browseForFiles(captureMode, this.multi, this.acceptedTypes);
+                                           const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
                                            await this.addFileListAsync(fileList)
                                        }}
                                        onEditButtonClickAsync={async () => await this.onEditButtonClickAsync()}
@@ -574,7 +574,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     }
 
                     {
-                        (this.multi) && (this.currentView === ImageInputView.Default) &&
+                        (this.multiple) && (this.currentView === ImageInputView.Default) &&
                         (
                             <div className={styles.listView}>
                                 {
@@ -596,7 +596,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     }
 
                     {
-                        ((this.currentView === ImageInputView.Preview) || ((!this.multi) && (this.currentView === ImageInputView.Default) && (this.hasSelectedPictureIndex))) &&
+                        ((this.currentView === ImageInputView.Preview) || ((!this.multiple) && (this.currentView === ImageInputView.Default) && (this.hasSelectedPictureIndex))) &&
                         (
                             this.renderPreviewPanel()
                         )
