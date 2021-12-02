@@ -337,7 +337,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         const modal = this.JQuery(this.modal);
 
-        if (modal) {
+        if ((modal) && (typeof modal.modal === "function")) {
             modal.modal("show");
         }
     }
@@ -349,7 +349,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         const modal = this.JQuery(this.modal);
 
-        if (modal) {
+        if ((modal) && (typeof modal.modal === "function")) {
             modal.modal("hide");
         }
     }
