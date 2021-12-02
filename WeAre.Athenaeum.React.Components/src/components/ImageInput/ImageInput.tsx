@@ -4,17 +4,16 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import {ImageProvider} from "../ImageModal/ImageModal";
-import ImageInputLocalizer from "./ImageInputLocalizer";
-
-import "cropperjs/dist/cropper.css";
-
-import styles from "./ImageInput.module.scss";
 import {IIMageInputToolbar, IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
 import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 import {ImageInputPreviewModal} from "./ImageInputPreviewModal/ImageInputPreviewModal";
 import {ImageInputCropperModal, ReadyEvent} from "./ImageInputCropperModal/ImageInputCropperModal";
-import {ReactCropperHelpers} from "./ImageInputCropperModal/CropperHelpers";
 import BaseInput, {IBaseInputProps, IBaseInputState, IImageInputInputType, ValidatorCallback} from "../BaseInput/BaseInput";
+
+import ImageInputLocalizer from "./ImageInputLocalizer";
+
+import "cropperjs/dist/cropper.css";
+import styles from "./ImageInput.module.scss";
 
 interface IImageInputState extends IBaseInputState<IImageInputInputType> {
     activeImageDragOverDropZone: boolean;
@@ -287,11 +286,6 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
     //  Control panel button Click Events
 
-    /** @description Responsible for rotating the selected image and calling updateInternalAsync */
-    private async onRotateMiniButtonClickAsync(fileModel: FileModel, index: number, degree: number): Promise<void> {
-        this.cropperHiddenModalRef.current?.showModal(fileModel, index, degree);
-    }
-
     private onListViewItemClick(index: number): void {
         this.setState(
             {
@@ -505,12 +499,9 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
                 <ImageInputToolbar toolbar={this.toolbar}
                                    onRotateMiniButtonClick={async (degree) => {
-                                       if (!this.activePicture || this.state.selectedPictureIndex === null) {
-                                           return;
+                                       if (this.activePicture && this.state.selectedPictureIndex !== null) {
+                                           this.cropperHiddenModalRef.current?.showModal(this.activePicture, this.state.selectedPictureIndex, degree);
                                        }
-
-                                       await this.onRotateMiniButtonClickAsync(this.activePicture, this.state.selectedPictureIndex, degree);
-
                                    }}
                                    onBrowseForFileClick={async (captureMode) => {
                                        const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);

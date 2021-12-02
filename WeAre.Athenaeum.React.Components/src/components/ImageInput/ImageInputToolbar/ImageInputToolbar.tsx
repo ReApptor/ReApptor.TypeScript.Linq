@@ -4,6 +4,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 
 import Button, {ButtonType} from "../../Button/Button";
 import ImageInputLocalizer from "../ImageInputLocalizer";
+
 import styles from "./ImageInputToolbar.module.scss";
 
 

@@ -1,7 +1,6 @@
 import React from "react";
 import CropperJs from "cropperjs";
-import Cropper, {ReactCropperElement} from "react-cropper";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {ReactCropperElement} from "react-cropper";
 
 export class ReactCropperHelpers {
 

@@ -1,8 +1,9 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import styles from "./ImageInputPreviewModal.module.scss";
 import {IIMageInputToolbar, ImageInputToolbar, ImageProvider} from "@weare/athenaeum-react-components";
 import {FileModel} from "@weare/athenaeum-toolkit";
+
+import styles from "./ImageInputPreviewModal.module.scss";
 
 export interface IImageInputPreviewModalProps {
     toolbarOverwrite?: Partial<IIMageInputToolbar>;

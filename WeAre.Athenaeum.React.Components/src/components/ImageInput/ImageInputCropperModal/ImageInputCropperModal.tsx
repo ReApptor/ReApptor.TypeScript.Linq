@@ -1,15 +1,15 @@
 import React from "react";
-
-import Cropper, {ReactCropperElement} from 'react-cropper';
 import CropperJs from 'cropperjs';
+import Cropper, {ReactCropperElement} from 'react-cropper';
 
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import {FileModel} from "@weare/athenaeum-toolkit";
+import {ImageInputToolbar} from "@weare/athenaeum-react-components";
+
+import {ReactCropperHelpers} from "./CropperHelpers";
 
 import "./CropperOverride.scss";
 import styles from "./ImageInputCropperModal.module.scss";
-import {ImageInputToolbar} from "@weare/athenaeum-react-components";
-import {FileModel} from "@weare/athenaeum-toolkit";
-import {ReactCropperHelpers} from "./CropperHelpers";
 
 export type ReadyEvent = CropperJs.ReadyEvent<HTMLImageElement>;
 
