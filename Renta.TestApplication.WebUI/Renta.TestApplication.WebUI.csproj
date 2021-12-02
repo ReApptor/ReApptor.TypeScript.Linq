@@ -104,12 +104,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TypeScriptCompile Include="src\app\pages\AnonymousPage\AnonymousPage.ts" />
+      <TypeScriptCompile Include="src\app\pages\AnonymousPage.ts" />
+      <TypeScriptCompile Include="src\app\pages\AuthorizedPage.ts" />
+      <TypeScriptCompile Include="src\app\pages\AuthorizedTestWithParameters\AuthorizedTestWithParameters.tsx" />
       <TypeScriptCompile Include="src\app\pages\Error\Error.tsx" />
       <TypeScriptCompile Include="src\app\pages\PageDefinitions.ts" />
-      <TypeScriptCompile Include="src\app\pages\Tests2\Tests2.tsx" />
+      <TypeScriptCompile Include="src\app\pages\AuthorizedTest\AuthorizedTest.tsx" />
       <TypeScriptCompile Include="src\app\pages\TestApplicationController.ts" />
-      <TypeScriptCompile Include="src\app\pages\Tests3\Tests3.tsx" />
+      <TypeScriptCompile Include="src\app\pages\AnonymousTestWithParameters\AnonymousTestWithParameters.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\FileInputTests\FileInputTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\sampleImage.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\samplePdf.ts" />

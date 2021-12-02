@@ -1,6 +1,11 @@
 import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
 import {IGoogleApiSettings, IMenuItem, IShoppingCart} from "@weare/athenaeum-react-components";
 import PageDefinitions from "./PageDefinitions";
+import AnonymousTestWithParameters from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
+import Tests from "./Tests/Tests";
+import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
+import AuthorizedTestWithParameters from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
+
 
 class TestApplicationController {
     private _applicationContext: ApplicationContext | null = null;
@@ -34,7 +39,7 @@ class TestApplicationController {
             this._applicationContext.language = "en";
             this._applicationContext.country = "fi";
             this._applicationContext.applicationName = "WeAre.Athenaeum.TestApplication";
-            this._applicationContext.currentPage = PageDefinitions.testsRoute;
+            this._applicationContext.currentPage = PageDefinitions.tests;
             this._applicationContext.settings = {
                 googleMapApiUrl: "https://maps.googleapis.com/maps/",
                 googleMapApiKey: "AIzaSyBVcbAv50jbB3VKK-16OJ8kxz7Jn6eT4oc"
@@ -51,16 +56,16 @@ class TestApplicationController {
 
     public async fetchTopNavItems(): Promise<IMenuItem[]> {
         return [
-            {route: PageDefinitions.testsRoute, label: "Tests"},
-            {route: PageDefinitions.testsRoute2, label: "Tests2"},
-            {route: PageDefinitions.testsRoute3, label: "Tests3"}
-
+            {route: PageDefinitions.anonymous, label: nameof(Tests)},
+            {route: PageDefinitions.authorized, label: nameof(AuthorizedTest)},
+            {route: PageDefinitions.anonymousWithParams(), label: nameof(AnonymousTestWithParameters)},
+            {route: PageDefinitions.authorizedWithParams(), label: nameof(AuthorizedTestWithParameters)},
         ];
     }
-    
+
     public async fetchShoppingCartAsync(): Promise<IShoppingCart> {
         return {
-            route: PageDefinitions.testsRoute, productsCount: 1
+            route: PageDefinitions.tests, productsCount: 1
         }
     }
 }
