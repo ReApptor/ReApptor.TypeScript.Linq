@@ -5,9 +5,8 @@
   justify-content: center;
 
   .controlPanelMiniButtonWrap {
-    flex: 1;
     min-width: 120px;
-    max-width: 150px;
+    width: 150px;
     display: flex;
     justify-content: center;
 
@@ -25,9 +24,8 @@
   }
 
   .controlPanelButton {
-    flex: 1;
     min-width: 120px;
-    max-width: 150px;
+    width: 150px;
   }
 }
 

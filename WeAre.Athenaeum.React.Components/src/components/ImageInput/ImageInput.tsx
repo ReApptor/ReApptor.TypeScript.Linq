@@ -29,6 +29,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputP
     editOnAddInSingleMode?: boolean
     maxImageRequestSizeInBytes?: number;
     minimizeOnEmpty?: boolean;
+    cropperDebugMode?: boolean;
 
     /**
      * Does the {@link ImageInput} accept multiple images.
@@ -575,6 +576,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
                     <ImageInputCropperModal ref={this.cropperModalRef}
                                             cropperSource={this.cropperSource}
+                                            cropperDebugMode={this.props.cropperDebugMode}
                                             onCrop={(height: number, width: number) => {
 
                                             }}

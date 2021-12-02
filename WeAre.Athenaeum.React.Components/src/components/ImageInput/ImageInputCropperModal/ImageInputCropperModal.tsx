@@ -19,6 +19,7 @@ export interface IImageInputCropperModalProps {
     aspectRatio?: number;
     cropperSource: string;
     dataTestId?: string;
+    cropperDebugMode?: boolean;
 
     onReady?: (event: ReadyEvent, fileModel: FileModel, index: number) => void
     onCrop?: (height: number, width: number) => void
@@ -111,6 +112,7 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
 
                             <ImageInputToolbar className={styles.toolbar}
                                                toolbar={ImageInputToolbar.defaultEditToolbar}
+                                               cropperDebugMode={this.props.cropperDebugMode}
                                                onRotateButtonClick={async (rotation) => {
                                                    this.rotateAndFitToScreen(rotation);
                                                }}
@@ -136,6 +138,26 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
                                                    }
 
                                                    await this.props.onDeleteButtonClick(this.state.index);
+                                               }}
+                                               onCropperDebugRotateClick={async () => {
+                                                   const cropperHelper = new ReactCropperHelpers(this.cropperRef);
+                                                   cropperHelper.cropper.rotate(90);
+                                               }}
+                                               onCropperDebugSetZoomToFitClick={async () => {
+                                                   const cropperHelper = new ReactCropperHelpers(this.cropperRef);
+                                                   cropperHelper.setZoomToFit();
+                                               }}
+                                               onCropperDebugSetCroppingAreaToCenterOfContainerAndMinimizeClick={async () => {
+                                                   const cropperHelper = new ReactCropperHelpers(this.cropperRef);
+                                                   cropperHelper.setCroppingAreaToCenterOfContainerAndMinimize();
+                                               }}
+                                               onCropperDebugSetImageToCenterOfContainerClick={async () => {
+                                                   const cropperHelper = new ReactCropperHelpers(this.cropperRef);
+                                                   cropperHelper.setImageToCenterOfContainer();
+                                               }}
+                                               onCropperDebugSetCropAreaToImageFullSizeClick={async () => {
+                                                   const cropperHelper = new ReactCropperHelpers(this.cropperRef);
+                                                   cropperHelper.setCropAreaToImageFullSize();
                                                }}
                             />
                         </div>
