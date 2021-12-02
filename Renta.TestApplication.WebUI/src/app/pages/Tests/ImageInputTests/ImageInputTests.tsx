@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {Button, Checkbox, FourColumns, ImageInput, InlineType, IIMageInputToolbar, ImageInputToolbar} from "@weare/athenaeum-react-components";
 import {FileModel} from "@weare/athenaeum-toolkit";
 
@@ -149,25 +149,41 @@ export default class ImageInputTests extends BaseComponent {
                 <h4 className="pt-2 pb-2 ">ImageInput Single Upload</h4>
 
                 <ImageInput minimizeOnEmpty
-                            pictures={this.state.picture}
-                            onUploadAsync={async (picture) => picture}
+                            model={{value: this.state.pictures}}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onChangeAsync={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
+                            onUploadAsync={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true)
+
+                                return fileModel;
+                            }}
+                            onChangeAsync={async (sender, pictures) => {
+                                await this.setState({pictures: pictures})
+                                await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
+                            }}
                 />
 
                 <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
                 <ImageInput multiple
-                            pictures={this.state.pictures}
-                            onUploadAsync={async (image) => image}
+                            model={{value: this.state.pictures}}
+
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onChangeAsync={async (sender, pictures) => {await this.setState({pictures})}}
+
+                            onUploadAsync={async (fileModel: FileModel) => {
+                                await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true)
+
+                                return fileModel;
+                            }}
+                            onChangeAsync={async (sender, pictures) => {
+                                await this.setState({pictures: pictures})
+                                await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
+                            }}
                 />
 
             </React.Fragment>
