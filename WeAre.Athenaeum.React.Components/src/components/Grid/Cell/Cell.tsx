@@ -233,7 +233,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
         
         return (
-            <div className={this.css(alignCenter)}>
+            <div className={this.css(alignCenter)} title={cell.title}>
                 {(icon) && (<Icon {...icon} size={size}/>)}
             </div>
         );
