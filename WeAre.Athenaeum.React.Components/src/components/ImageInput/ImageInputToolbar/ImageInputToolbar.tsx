@@ -70,6 +70,8 @@ export interface IImageInputToolbarOverwriteProps {
 export interface IImageInputToolbarProps{
     toolbar: IIMageInputToolbar;
     className?: string;
+    cropperDebugMode?: boolean;
+
     onRotateMiniButtonClick?: (rotation: number) => Promise<void>;
     onRotateButtonClick?: (rotation: number) => Promise<void>;
     onMoveToTopButtonClick?: () => Promise<void>;
@@ -81,6 +83,11 @@ export interface IImageInputToolbarProps{
     onSaveButtonClick?: () => Promise<void>;
     onBackButtonClick?: () => Promise<void>;
     onDeleteButtonClick?: () => Promise<void>;
+    onCropperDebugRotateClick?: () => Promise<void>;
+    onCropperDebugSetZoomToFitClick?: () => Promise<void>;
+    onCropperDebugSetCroppingAreaToCenterOfContainerAndMinimizeClick?: () => Promise<void>;
+    onCropperDebugSetImageToCenterOfContainerClick?: () => Promise<void>;
+    onCropperDebugSetCropAreaToImageFullSizeClick?: () => Promise<void>;
 }
 
 export interface IImageInputToolbarState {
@@ -92,6 +99,10 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
 
     private get toolbar(): IIMageInputToolbar {
         return this.props.toolbar;
+    }
+
+    private get cropperDebugMode(): boolean {
+        return this.props.cropperDebugMode === true
     }
 
 
@@ -326,6 +337,91 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                                 onClick={async () => {
                                     if (this.props.onDeleteButtonClick) {
                                         await this.props.onDeleteButtonClick();
+                                    }
+                                }}
+                        />
+                    )
+                }
+
+                {
+                    (this.cropperDebugMode) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "debug"}}
+                                type={ButtonType.Info}
+                                label="rotate"
+                                onClick={async () => {
+                                    if (this.props.onCropperDebugRotateClick) {
+                                        await this.props.onCropperDebugRotateClick();
+                                    }
+                                }}
+                        />
+                    )
+                }
+
+                {
+                    (this.cropperDebugMode) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "debug"}}
+                                type={ButtonType.Info}
+                                label="setZoomToFit"
+                                onClick={async () => {
+                                    if (this.props.onCropperDebugSetZoomToFitClick) {
+                                        await this.props.onCropperDebugSetZoomToFitClick();
+                                    }
+                                }}
+                        />
+                    )
+                }
+
+                {
+                    (this.cropperDebugMode) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "debug"}}
+                                type={ButtonType.Info}
+                                label="setCroppingAreaToCenterOfContainer"
+                                onClick={async () => {
+                                    if (this.props.onCropperDebugSetCroppingAreaToCenterOfContainerAndMinimizeClick) {
+                                        await this.props.onCropperDebugSetCroppingAreaToCenterOfContainerAndMinimizeClick();
+                                    }
+                                }}
+                        />
+                    )
+                }
+
+                {
+                    (this.cropperDebugMode) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "debug"}}
+                                type={ButtonType.Info}
+                                label="setImageToCenterOfContainer"
+                                onClick={async () => {
+                                    if (this.props.onCropperDebugSetImageToCenterOfContainerClick) {
+                                        await this.props.onCropperDebugSetImageToCenterOfContainerClick();
+                                    }
+                                }}
+                        />
+                    )
+                }
+
+                {
+                    (this.cropperDebugMode) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "debug"}}
+                                type={ButtonType.Info}
+                                label="setCropAreaToImageFullSize"
+                                onClick={async () => {
+                                    if (this.props.onCropperDebugSetCropAreaToImageFullSizeClick) {
+                                        await this.props.onCropperDebugSetCropAreaToImageFullSizeClick();
                                     }
                                 }}
                         />
