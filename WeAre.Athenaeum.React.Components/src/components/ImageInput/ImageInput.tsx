@@ -343,7 +343,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         await this.addInternalAsync(event.dataTransfer.files)
     }
 
-    /** @description Trigger this on input data when selecting new files. Responsible for uploading and calling @link onInternalChangeAsync */
+    /** @description Trigger this on input data when selecting new files. Responsible for uploading, appending to current data and calling @link onInternalChangeAsync */
     private async addInternalAsync(fileList: FileList): Promise<void> {
         let fileListAsArray: File[] = Array.from(fileList);
 
@@ -379,7 +379,22 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return uploaded;
         }));
 
-        await this.onInternalChangeAsync(uploadedFileModels);
+        if (!this.multiple && (uploadedFileModels.length > 0)) {
+            await this.onInternalChangeAsync(uploadedFileModels);
+            return;
+        }
+
+        else if (this.multiple && Array.isArray(this.value)) {
+            await this.onInternalChangeAsync([...this.value, ...uploadedFileModels]);
+            return;
+
+        }
+
+        else if (this.multiple && !this.value) {
+            await this.onInternalChangeAsync(uploadedFileModels);
+            return;
+        }
+
     }
 
     /** @description Trigger this on updating. Responsible for multipleMode and uploading and calling @link onInternalChangeAsync */
@@ -607,9 +622,9 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                                                 this.previewModalRef.current?.closeModal();
                                                 this.cropperModalRef.current?.showModal(fileModel, index);
                                             }}
-                                            onDeleteButtonClick={async () => {
+                                            onDeleteButtonClick={async (index: number) => {
                                                 this.previewModalRef.current?.closeModal();
-
+                                                await this.deleteInternalAsync(index);
                                             }}
                     />
 
