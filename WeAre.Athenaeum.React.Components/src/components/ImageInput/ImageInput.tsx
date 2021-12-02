@@ -1,21 +1,19 @@
 import React, {DragEvent} from 'react';
-import Cropper, {ReactCropperElement} from 'react-cropper';
 import {BaseComponent, ch} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
-import {ReactCropperHelpers} from "./ReactCropperHelpers";
 import {ImageProvider} from "../ImageModal/ImageModal";
 import ImageInputLocalizer from "./ImageInputLocalizer";
 
 import "cropperjs/dist/cropper.css";
-import "./ReactCropperOverride.scss";
 
 import styles from "./ImageInput.module.scss";
 import {IIMageInputToolbar, IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
 import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 import {ImageInputPreviewModal} from "./ImageInputPreviewModal/ImageInputPreviewModal";
 import {ImageInputCropperModal} from "./ImageInputCropperModal/ImageInputCropperModal";
+import {ReactCropperHelpers} from "./ImageInputCropperModal/CropperHelpers";
 
 export enum ImageInputView {
 
@@ -494,21 +492,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         const propsNoSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.noSelectionToolbar || {})};
 
-        const propsEditToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultEditToolbar,...(this.props.editToolbar || {})};
-
-        switch (this.currentView){
-            case ImageInputView.Default:
-                return (this.hasSelectedPictureIndex)
-                    ? propsSelectionToolbar
-                    : propsNoSelectionToolbar;
-            case ImageInputView.Preview:
-                //  It's handled in it's own component
-                return propsSelectionToolbar;
-
-            case ImageInputView.Edit:
-                return propsEditToolbar;
-            default:
-                throw new TypeError(`Non-existing enum value '${this.currentView}'`);
+        if (this.hasSelectedPictureIndex) {
+            return propsSelectionToolbar;
+        } else {
+            return propsNoSelectionToolbar;
         }
     }
 
@@ -516,9 +503,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.pictures.length <= 0)
             ? styles.minimize
             : null;
-        // const fullScreenStyle: string | null = (this.isFullscreen)
-        //     ? styles.fullScreen
-        //     : null;
 
         return (
             <div className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
