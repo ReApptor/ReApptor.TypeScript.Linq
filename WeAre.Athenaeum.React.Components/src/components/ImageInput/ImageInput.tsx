@@ -1,5 +1,5 @@
 import React, {DragEvent} from 'react';
-import {ch} from "@weare/athenaeum-react-common";
+import {ch, IGlobalKeydown} from "@weare/athenaeum-react-common";
 import {FileModel} from "@weare/athenaeum-toolkit";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
@@ -45,7 +45,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputP
     onChange?(sender: ImageInput, value: IImageInputInputType): Promise<void>;
 }
 
-export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps, IImageInputState> {
+export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps, IImageInputState> implements IGlobalKeydown{
 
     private previewModalRef = React.createRef<ImageInputPreviewModal>();
     private cropperModalRef = React.createRef<ImageInputCropperModal>();
@@ -62,23 +62,13 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         validationError: null
     };
 
-    constructor(props: IImageInputProps) {
-        super(props);
+    async onGlobalKeydown(event: React.SyntheticEvent): Promise<void> {
+        const keyboardEvent = event as unknown as KeyboardEvent;
 
-        //  Passed to eventListener and needs binding.
-        this.keyboardKeyPressHandlerAsync = this.keyboardKeyPressHandlerAsync.bind(this);
-    }
-
-    /** @description component initialization: Adds event listener for keyboard keys */
-    public async componentDidMount(): Promise<void> {
-        await super.componentDidMount();
-        window.addEventListener("keydown", this.keyboardKeyPressHandlerAsync, false);
-    }
-
-    /** @description component destroy: Removes event listener for keyboard keys */
-    public async componentWillUnmount(): Promise<void> {
-        await super.componentWillUnmount();
-        window.removeEventListener("keydown", this.keyboardKeyPressHandlerAsync, false);
+        if (keyboardEvent && keyboardEvent.code === 'Escape') {
+            await this.onEscapeKeyPressAsync();
+            return;
+        }
     }
 
     /**
@@ -168,7 +158,6 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         this.cropperModalRef.current?.closeModal();
         this.previewModalRef.current?.closeModal();
     }
-
 
     //  Getters
 
@@ -706,6 +695,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             };
         });
     }
+
 
     // private async moveSelectedImageToTopAsync(): Promise<void> {
     //     if ((!this.hasSelectedPictureIndex)
