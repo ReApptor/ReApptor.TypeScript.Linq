@@ -78,9 +78,10 @@ export class ReactCropperHelpers {
 
     /**
      * @description It will set the location of image based on container.
-     * Will not effect in viewMode 1 if cropping area is blocking it.
+     * Will not effect in viewMode 1
+     * Will not effect if cropping area is blocking it.
      * When viewMode is on 1 it will set the location of image based on cropping area.
-     * height and width dont effect
+     * height and width will not effect
      */
     setImageToCenterOfContainer(): void {
 

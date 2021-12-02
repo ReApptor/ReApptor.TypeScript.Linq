@@ -128,7 +128,7 @@ export default class Comparator {
         throw new TypeError("value is not a number");
     }
 
-    public static isNumber(value: any): boolean {
+    public static isNumber(value: any): value is number {
         return (typeof value === "number");
     }
 }

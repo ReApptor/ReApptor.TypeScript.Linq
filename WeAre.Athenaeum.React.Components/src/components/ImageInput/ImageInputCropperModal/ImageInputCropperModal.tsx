@@ -19,12 +19,12 @@ export interface IImageInputCropperModalProps {
     aspectRatio?: number;
     cropperSource: string;
     dataTestId?: string;
+
     onReady?: (event: ReadyEvent, fileModel: FileModel, index: number) => void
     onCrop?: (height: number, width: number) => void
-
-    onSaveButtonClickAsync?: (fileModel: FileModel, index: number) => Promise<void>;
-    onBackButtonClickAsync?: () => Promise<void>;
-    onDeleteButtonClickAsync?: (index: number) => Promise<void>;
+    onSaveButtonClick?: (fileModel: FileModel, index: number) => Promise<void>;
+    onBackButtonClick?: () => Promise<void>;
+    onDeleteButtonClick?: (index: number) => Promise<void>;
 
 }
 
@@ -113,7 +113,7 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
                                                    this.rotateAndFitToScreen(rotation);
                                                }}
                                                onSaveButtonClick={async () => {
-                                                   if (!this.props.onSaveButtonClickAsync || !this.state.fileModel || this.state.index === null) {
+                                                   if (!this.props.onSaveButtonClick || !this.state.fileModel || this.state.index === null) {
                                                        return;
                                                    }
 
@@ -121,19 +121,19 @@ export class ImageInputCropperModal extends BaseComponent<IImageInputCropperModa
 
                                                    clone.src = this.output() || "";
 
-                                                   await this.props.onSaveButtonClickAsync(clone, this.state.index);
+                                                   await this.props.onSaveButtonClick(clone, this.state.index);
                                                }}
                                                onBackButtonClick={async () => {
-                                                   if (this.props.onBackButtonClickAsync) {
-                                                       await this.props.onBackButtonClickAsync();
+                                                   if (this.props.onBackButtonClick) {
+                                                       await this.props.onBackButtonClick();
                                                    }
                                                }}
                                                onDeleteButtonClick={async () => {
-                                                   if (!this.props.onDeleteButtonClickAsync || this.state.index === null) {
+                                                   if (!this.props.onDeleteButtonClick || this.state.index === null) {
                                                        return;
                                                    }
 
-                                                   await this.props.onDeleteButtonClickAsync(this.state.index);
+                                                   await this.props.onDeleteButtonClick(this.state.index);
                                                }}
                             />
                         </div>
