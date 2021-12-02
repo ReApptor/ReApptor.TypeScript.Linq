@@ -150,24 +150,24 @@ export default class ImageInputTests extends BaseComponent {
 
                 <ImageInput minimizeOnEmpty
                             pictures={this.state.picture}
-                            onUploadAsync={async (picture) => picture}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onChangeAsync={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
+                            onUpload={async (picture) => picture}
+                            onChange={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
                 />
 
                 <h4 className="pt-2 pb-2 ">ImageInput Multiple Upload</h4>
 
                 <ImageInput multiple
                             pictures={this.state.pictures}
-                            onUploadAsync={async (image) => image}
                             noSelectionToolbar={this.state.noSelectionToolbar}
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onChangeAsync={async (sender, pictures) => {await this.setState({pictures})}}
+                            onUpload={async (image) => image}
+                            onChange={async (sender, pictures) => {await this.setState({pictures})}}
                 />
 
             </React.Fragment>
