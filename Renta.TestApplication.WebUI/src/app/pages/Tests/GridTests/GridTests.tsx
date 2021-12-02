@@ -16,7 +16,8 @@ import {
     GridHoveringType,
     GridOddType,
     GridSelectableType,
-    SelectListItem, TextInput
+    SelectListItem,
+    TextInput
 } from "@weare/athenaeum-react-components";
 
 export interface IGridTestsState {
@@ -133,6 +134,21 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             editable: true,
             type: ColumnType.Text,
             minWidth: 150
+        } as ColumnDefinition,
+        {
+            header: "Icon",
+            accessor: () => "far plus",
+            editable: true,
+            type: ColumnType.Icon,
+            minWidth: 40
+        } as ColumnDefinition,
+        {
+            header: "far fa-atom",
+            accessor: () => "far align-center",
+            textAlign: TextAlign.Center,
+            editable: true,
+            type: ColumnType.Icon,
+            minWidth: 50
         } as ColumnDefinition,
         {
             header: "Enum",
