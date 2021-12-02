@@ -1,11 +1,12 @@
-import {BasePageDefinitions, PageRoute} from "@weare/athenaeum-react-common";
+import {BasePageDefinitions, BasePageParameters, PageRoute} from "@weare/athenaeum-react-common";
 import {Dictionary} from "typescript-collections";
 import Tests from "./Tests/Tests";
-import Tests2 from "./Tests2/Tests2";
-import Tests3 from "./Tests3/Tests3";
+import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
+import AnonymousTestWithParameters from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
+import AuthorizedTestWithParameters from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
+
 
 export default class PageDefinitions extends BasePageDefinitions {
-
 
     protected async require(pageContainer: string, pageName: string): Promise<any> {
         return await require(`./${pageContainer}${pageName}/${pageName}`);
@@ -17,19 +18,30 @@ export default class PageDefinitions extends BasePageDefinitions {
     }
 
     public getRoutes(): Dictionary<string, PageRoute> {
-        let pageRoutes: Dictionary<string, PageRoute> = new Dictionary<string, PageRoute>()
-        pageRoutes.setValue("test2", PageDefinitions.testsRoute2)
-        pageRoutes.setValue("aaa", PageDefinitions.testsRoute3)
+
+        const pageRoutes: Dictionary<string, PageRoute> = new Dictionary<string, PageRoute>()
+
+        pageRoutes.setValue("test2", PageDefinitions.anonymous);
+        pageRoutes.setValue("autoritari", PageDefinitions.authorized);
+        pageRoutes.setValue("paranon", PageDefinitions.anonymousWithParams());
+        pageRoutes.setValue("aupair", PageDefinitions.authorizedWithParams());
 
         return pageRoutes;
     }
 
-    public static readonly testsRoute3: PageRoute = new PageRoute(nameof(Tests3));
-    
-    public static readonly testsRoute2: PageRoute = new PageRoute(nameof(Tests2));
+    public static readonly tests: PageRoute = new PageRoute(nameof(Tests));
 
-    public static readonly testsRoute: PageRoute = new PageRoute(nameof(Tests));
+    public static readonly authorized: PageRoute = new PageRoute(nameof(AuthorizedTest));
 
+    public static readonly anonymous: PageRoute = PageDefinitions.tests;
+
+    public static anonymousWithParams(params?: BasePageParameters): PageRoute {
+        return new PageRoute(nameof(AnonymousTestWithParameters), null, null, params);
+    }
+
+    public static authorizedWithParams(params?: BasePageParameters): PageRoute {
+        return new PageRoute(nameof(AuthorizedTestWithParameters), null, null, params);
+    }
 }
 
 new PageDefinitions();
