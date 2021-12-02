@@ -277,11 +277,21 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
     //  Control panel button Click Events
 
     private onListViewItemClick(index: number): void {
+        if (this.multiple) {
+            this.setState(
+                {
+                    selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
+                        ? null
+                        : index
+                });
+            return;
+        }
+
         this.setState(
             {
-                selectedPictureIndex: (this.hasSelectedPictureIndex) && (this.selectedPictureIndex === index)
-                    ? null
-                    : index
+                selectedPictureIndex: this.value
+                    ? 0
+                    : null
             });
     }
 
@@ -480,6 +490,9 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
     /** @description responsible for updating selectedPictureIndex with new coming state */
     private async updateSelectedPictureIndexBasedOnNewValueAsync(newValue: IImageInputInputType) {
         if (this.state.selectedPictureIndex === null) {
+            if (!this.multiple && newValue) {
+                await this.setState({selectedPictureIndex: 0});
+            }
             return;
         }
 
@@ -490,7 +503,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
         if (!this.multiple && newValue instanceof FileModel) {
             if (this.state.selectedPictureIndex > 0) {
-                this.setState({selectedPictureIndex: 0});
+                await this.setState({selectedPictureIndex: 0});
                 return;
             }
 
@@ -498,7 +511,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         }
 
         if (this.multiple && Array.isArray(newValue) && this.state.selectedPictureIndex >= newValue.length) {
-            this.setState({selectedPictureIndex: newValue.length > 0 ? newValue.length - 1 : null});
+            await this.setState({selectedPictureIndex: newValue.length > 0 ? newValue.length - 1 : null});
             return;
         }
     }
@@ -525,27 +538,6 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
 
-                <ImageInputToolbar toolbar={this.toolbar}
-                                   onRotateMiniButtonClick={async (degree) => {
-                                       if (this.activePicture && Comparator.isNumber(this.state.selectedPictureIndex)) {
-                                           this.cropperHiddenModalRef.current?.showModal(this.activePicture, this.state.selectedPictureIndex, degree);
-                                       }
-                                   }}
-                                   onBrowseForFileClick={async (captureMode) => {
-                                       const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
-                                       await this.addInternalAsync(fileList)
-                                   }}
-                                   onEditButtonClick={async () => {
-                                       this.cropperModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
-                                   }}
-                                   onDeleteButtonClick={async () => {
-                                       await this.deleteInternalAsync();
-                                   }}
-                                   onPreviewButtonClick={async () => {
-                                       await this.previewModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
-                                   }}
-                />
-
                 <div className={styles.viewPanel}>
                     <div className={this.css(styles.dragDropArea, (this.activeImageDragOverDropZone) && styles.dragDropAreaActive)}
                          onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDropAsync(event)}
@@ -558,12 +550,16 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                         </span>
                     </div>
 
-                    <div className={styles.listView}>
+                    <div className={styles.listView}
+                         app-multiple={String(this.multiple)}
+
+                    >
                         {
                             this.viewImageListItems.map((fileModel, index) =>
                                 (
                                     <ImageInputListItem key={index}
                                                         fileModel={fileModel}
+                                                        multiple={this.multiple}
                                                         selected={this.selectedPictureIndex === index}
                                                         previewName={this.getPreviewName(fileModel)}
                                                         previewSource={this.getPreviewSource(fileModel)}
@@ -621,6 +617,26 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
                 </div>
 
+                <ImageInputToolbar toolbar={this.toolbar}
+                                   onRotateMiniButtonClick={async (degree) => {
+                                       if (this.activePicture && Comparator.isNumber(this.state.selectedPictureIndex)) {
+                                           this.cropperHiddenModalRef.current?.showModal(this.activePicture, this.state.selectedPictureIndex, degree);
+                                       }
+                                   }}
+                                   onBrowseForFileClick={async (captureMode) => {
+                                       const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
+                                       await this.addInternalAsync(fileList)
+                                   }}
+                                   onEditButtonClick={async () => {
+                                       this.cropperModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
+                                   }}
+                                   onDeleteButtonClick={async () => {
+                                       await this.deleteInternalAsync();
+                                   }}
+                                   onPreviewButtonClick={async () => {
+                                       await this.previewModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
+                                   }}
+                />
             </div>
         );
     }

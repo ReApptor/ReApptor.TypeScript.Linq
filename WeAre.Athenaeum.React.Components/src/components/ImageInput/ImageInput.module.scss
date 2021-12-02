@@ -4,10 +4,11 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
 .ImageInput {
   position: relative;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding: 0.5rem;
   gap: 0.5rem;
-  height: 400px;
+  min-height: 400px;
+  max-height: 500px;
   border: $border;
 
 
@@ -61,8 +62,13 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
     }
 
     .listView {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
-      overflow-y: auto;
+
+      &[app-multiple=true] {
+        overflow-y: auto;
+      }
     }
 
     .preview{

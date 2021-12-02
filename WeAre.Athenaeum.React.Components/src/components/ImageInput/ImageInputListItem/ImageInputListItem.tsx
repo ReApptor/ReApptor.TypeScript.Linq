@@ -6,6 +6,8 @@ import styles from "./ImageInputListItem.module.scss";
 
 export interface IImageInputListItemProps {
     fileModel: FileModel;
+    className?: string;
+    multiple: boolean;
     selected: boolean;
     previewSource: string;
     previewName: string;
@@ -19,23 +21,22 @@ export class ImageInputListItem extends BaseComponent<IImageInputListItemProps, 
 
 
     render(): JSX.Element {
-        const activeListViewItemStyle: string | false = (this.props.selected) && styles.activeListViewItem;
+        const activeListViewItemStyle: string | false = (this.props.selected && this.props.multiple) && styles.activeListViewItem;
 
         return (
-            <div className={this.css(styles.listViewItem, activeListViewItemStyle)}
+            <div className={this.css(styles.listViewItem, activeListViewItemStyle, this.props.className)}
+                 app-multiple={String(this.props.multiple)}
                  onClick={() => this.props.onListViewItemClick()}
             >
 
-                <div className={styles.listViewItemThumbnail}>
-                    <img
-                        src={this.props.previewSource}
-                        alt={this.props.previewName}
-                    />
+                <div className={styles.listViewItemThumbnail}  style={{backgroundImage: `url(${this.props.previewSource})`}}>
                 </div>
 
-                {
-                    this.props.previewName
-                }
+                <span className={this.css(styles.listViewItemName)}>
+                    {
+                        this.props.previewName
+                    }
+                </span>
 
             </div>
         );
