@@ -339,7 +339,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                                   onChange={async (sender, value) => await this.setState({ requiredType: value! })}
                         />
 
-                        <Dropdown label="Selected Type Format" inline required noValidate noWrap noFilter
+                        <Dropdown label="Selected Text Format" inline required noValidate noWrap noFilter
                                   orderBy={DropdownOrderBy.None}
                                   transform={(item) => new SelectListItem(item.toString(), this.getSelectedTextFormatName(item), null, item)}
                                   items={[false, true, 1, 2, 3, 4, 5]}
