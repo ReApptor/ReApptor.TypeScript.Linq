@@ -10,13 +10,6 @@ $border-active: 1px solid rgba(0, 0, 0, 0.3) !important;
   height: 400px;
   border: $border;
 
-  .controlPanel {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-
-  }
 
   .viewPanel {
     flex-grow: 1;

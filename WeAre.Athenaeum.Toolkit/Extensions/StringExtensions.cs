@@ -41,6 +41,11 @@ namespace WeAre.Athenaeum.Toolkit.Extensions
             return Utility.GetChecksum(value);
         }
 
+        public static int GetHashCode(this string value, bool processIndependent)
+        {
+            return Utility.GetHashCode(value, processIndependent);
+        }
+
         public static bool Like(this string x, string y)
         {
             bool isEmptyX = (string.IsNullOrWhiteSpace(x));

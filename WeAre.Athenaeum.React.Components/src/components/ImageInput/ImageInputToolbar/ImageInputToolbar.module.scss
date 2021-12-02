@@ -1,26 +1,35 @@
-.controlPanelMiniButtonWrap {
-  flex: 1;
-  min-width: 120px;
-  max-width: 150px;
+.controlPanel {
   display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   justify-content: center;
 
-  button:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  .controlPanelMiniButtonWrap {
     flex: 1;
+    min-width: 120px;
+    max-width: 150px;
+    display: flex;
+    justify-content: center;
+
+    button:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      flex: 1;
+    }
+
+    button:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      flex: 1;
+    }
   }
 
-  button:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  .controlPanelButton {
     flex: 1;
+    min-width: 120px;
+    max-width: 150px;
   }
 }
 
 
-.controlPanelButton {
-  flex: 1;
-  min-width: 120px;
-  max-width: 150px;
-}
+

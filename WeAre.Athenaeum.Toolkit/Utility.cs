@@ -133,6 +133,22 @@ namespace WeAre.Athenaeum.Toolkit
 
             return true;
         }
+        
+        private static int CalculateHashCode(string value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            unchecked
+            {
+                int hash = 23;
+                foreach (char c in value)
+                {
+                    hash = hash * 31 + c;
+                }
+                return hash;
+            }
+        }
 
         #endregion
 
@@ -297,6 +313,22 @@ namespace WeAre.Athenaeum.Toolkit
             byte[] hash = Md5(data);
             Guid id = new Guid(hash);
             return id;
+        }
+
+        #endregion
+
+        #region HashCode
+
+        /// <summary>
+        /// Calculates checksum. If "processIndependent" is true - calculate process independent checksum.
+        /// </summary>
+        public static int GetHashCode(string value, bool processIndependent)
+        {
+            int hash = (processIndependent)
+                ? CalculateHashCode(value)
+                : value.GetHashCode();
+
+            return hash;
         }
 
         #endregion

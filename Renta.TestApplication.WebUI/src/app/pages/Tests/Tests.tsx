@@ -2,7 +2,7 @@ import React from "react";
 import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
 
 import CarouselTests from "./CarouselTests/CarouselTests";
-import AnonymousPage from "../AnonymousPage/AnonymousPage";
+import AnonymousPage from "../AnonymousPage";
 import NumberWidgetTests from "./NumberWidgetTests/NumberWidgetTests";
 import ButtonContainerTests from "./ButtonContainerTests/ButtonContainerTests";
 import ButtonTests from "./ButtonTests/ButtonTests";
@@ -41,13 +41,16 @@ import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 export default class Tests extends AnonymousPage {
 
     public getTitle(): string {
-        return "Tests";
+        return nameof(Tests);
     }
 
     public render(): React.ReactNode {
+
+        console.log([this.getTitle(), nameof(this.render)].join("."));
+
         return (
             <PageContainer  className="tests-page">
-                <PageHeader title="Tests" />
+                <PageHeader title={this.getTitle()} />
 
                 <PageRow>
 
@@ -191,7 +194,7 @@ export default class Tests extends AnonymousPage {
                         <Tab id="textAreaWidgetTests" title="TextAreaWidget">
                             <TextAreaWidgetTests />
                         </Tab>
-                        
+
                         <Tab id="addressDividerTests" title="AddressDivider">
                             <AddressDividerTests />
                         </Tab>

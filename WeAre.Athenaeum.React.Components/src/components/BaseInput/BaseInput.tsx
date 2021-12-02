@@ -17,6 +17,11 @@ export interface IInputModel<TInputValue extends BaseInputValue> {
     value: TInputValue;
 }
 
+export type IImageInputInputType = FileModel[] | FileModel | null;
+
+export interface IImageInputModel extends IInputModel<IImageInputInputType> {
+}
+
 export interface IStringInputModel extends IInputModel<string> {
 }
 

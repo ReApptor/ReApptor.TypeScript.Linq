@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Renta.Apps.Common.Configuration.Settings;
 using WeAre.Athenaeum.Common.Providers;
 
@@ -103,6 +104,16 @@ namespace Renta.Apps.Common.Helpers
                     }
                 };
 
+                if (!string.IsNullOrWhiteSpace(settings.Value.Jwk))
+                {
+                    byte[] bytes = Convert.FromBase64String(settings.Value.Jwk);
+                    string json = Encoding.UTF8.GetString(bytes);
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        TokenDecryptionKey = new JsonWebKey(json)
+                    };
+                }
+
                 options.Authority = settings.Value.Authority;
                 options.CallbackPath = settings.Value.CallbackPath;
 
@@ -138,7 +149,7 @@ namespace Renta.Apps.Common.Helpers
         }
 
         public static IServiceCollection AddRentaSecurityProvider(IServiceCollection services, string authenticationType, string packageConsoleUser = RentaConstants.Db.PackageConsoleUser, string migrationConsoleUser = RentaConstants.Db
-        .MigrationConsoleUser)
+            .MigrationConsoleUser)
         {
             return services?.AddSecurityProvider(options =>
             {

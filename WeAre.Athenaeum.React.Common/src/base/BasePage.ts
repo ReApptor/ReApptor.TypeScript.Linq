@@ -26,40 +26,35 @@ export interface IManualProps {
     onClick?(): Promise<void>;
 }
 
+/**
+ * A page contained in an {@link ILayoutPage}.
+ */
 export interface IBasePage extends IBaseComponent {
 
     onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean>;
 
     /**
-     * Display an alert on the page.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * Display an alert on the {@link IBasePage}.
      */
     alertAsync(alert: AlertModel): Promise<void>;
 
     /**
-     * Display an error alert on the page.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * Display an error alert on the {@link IBasePage}.
      */
     alertErrorAsync(message: string, autoClose: boolean): Promise<void>;
 
     /**
-     * Display an error alert on the {page.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * Display an error alert on the {@link IBasePage}.
      */
     alertErrorAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
     /**
-     * Display a success alert on the page.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * Display a success alert on the {@link IBasePage}.
      */
     alertMessageAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
     /**
-     * Hide the alert currently being displayed in the page.
+     * Hide the alert currently being displayed on the {@link IBasePage}.
      */
     hideAlertAsync(): Promise<void>;
 
@@ -73,14 +68,23 @@ export interface IBasePage extends IBaseComponent {
 
     beforeRedirectAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean>;
 
+    /**
+     * Get the {@link ILayoutPage} which contains the {@link IBasePage}.
+     */
     getLayout(): ILayoutPage;
 
+    /**
+     * Get the title of the {@link IBasePage}.
+     */
     getTitle(): string;
 
     getContext(): ApplicationContext;
 
     getManualProps(): IManualProps;
 
+    /**
+     * Returns true.
+     */
     isPage(): boolean;
 
     readonly hasTopNav: boolean;
@@ -96,12 +100,17 @@ export interface IBasePage extends IBaseComponent {
     readonly routeId: string | null;
     readonly parameters: BasePageParameters | null;
     readonly route: PageRoute;
-
     readonly automaticUrlChange?: boolean;
-
 }
 
+/**
+ * A page containing an {@link IBasePage}.
+ */
 export interface ILayoutPage extends IAsyncComponent {
+
+    /**
+     * Set an {@link IBasePage} to the {@link ILayoutPage}.
+     */
     setPageAsync(page: IBasePage): Promise<void>;
 
     reloadTopNavAsync(): Promise<void>;
@@ -113,19 +122,23 @@ export interface ILayoutPage extends IAsyncComponent {
     swipeRightAsync(): Promise<void>;
 
     /**
-     * Display an alert on the page.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * Display an alert on the {@link ILayoutPage}.
      */
     alertAsync(alert: AlertModel): Promise<void>;
 
     /**
-     * Hide the alert currently being displayed in the page.
+     * Hide the alert currently being displayed in the {@link ILayoutPage}.
      */
     hideAlertAsync(): Promise<void>;
 
+    /**
+     * Does the {@link ILayoutPage} have a spinner.
+     */
     isSpinning(): boolean;
 
+    /**
+     * Returns true.
+     */
     isLayout(): boolean;
 
     initializeTooltips(): void;
@@ -149,13 +162,15 @@ export interface IBasePageProps<TParams extends BasePageParameters> {
     routeId?: string;
     parameters?: TParams;
     automaticUrlChange?: boolean;
-
 }
 
 export interface IIsLoading {
     onIsLoading(): Promise<void>;
 }
 
+/**
+ * Implementation of {@link IBasePage}.
+ */
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
     private readonly _asIsLoading: IIsLoading | null;
@@ -202,7 +217,6 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
             ? localizer.get(`PageRoutes.${routeName}`)
             : routeName;
-
 
         if (localizedRouteName) {
             if(!localizedRouteName.startsWith("/")){
@@ -287,38 +301,79 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return true;
     }
 
+    /**
+     * Display an alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public async alertAsync(alert: AlertModel): Promise<void> {
         await ch.alertAsync(alert);
     }
 
+    /**
+     * The alert currently displayed on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     */
     public get alert(): AlertModel | null {
         return ch.alert;
     }
 
+    /**
+     * Display an error alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         return ch.alertErrorAsync(message, autoClose, flyout);
     }
 
+    /**
+     * Display a flyout error alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutErrorAsync(message: string): Promise<void> {
         await ch.flyoutErrorAsync(message);
     }
 
+    /**
+     * Display an alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         return ch.alertMessageAsync(message, autoClose, flyout);
     }
 
+    /**
+     * Display a flyout alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutMessageAsync(message: string): Promise<void> {
         await ch.flyoutMessageAsync(message);
     }
 
+    /**
+     * Display a warning alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         return ch.alertWarningAsync(message, autoClose, flyout);
     }
 
+    /**
+     * Display a flyout warning alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     *
+     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     */
     public static async flyoutWarningAsync(message: string): Promise<void> {
         await ch.flyoutWarningAsync(message);
     }
 
+    /**
+     * Hide the alert currently being displayed on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     */
     public async hideAlertAsync(): Promise<void> {
         return ch.hideAlertAsync();
     }

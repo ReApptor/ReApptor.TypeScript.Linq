@@ -768,6 +768,16 @@ export default class Utility {
             fileReader.readAsArrayBuffer(inputFile)
         });
     }
+    
+    public static getFileExtension(name?: string | null): string {
+        if (name) {
+            const index: number = name.lastIndexOf(".");
+            if ((index !== -1) && (index < name.length)) {
+                return name.substr(index);
+            }
+        }
+        return "";
+    }
 
     public static async transformFileAsync(fileReference: File | null): Promise<FileModel | null> {
 
@@ -779,7 +789,7 @@ export default class Utility {
                 file.lastModified = new Date(fileReference.lastModified);
                 file.name = fileReference.name;
                 file.size = fileReference.size;
-                file.type = fileReference.type;
+                file.type = fileReference.type || this.getFileExtension(fileReference.name);
                 file.src = dataUrl;
                 return file;
             }
