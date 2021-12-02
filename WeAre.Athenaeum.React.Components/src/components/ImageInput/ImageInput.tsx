@@ -12,7 +12,7 @@ import styles from "./ImageInput.module.scss";
 import {IIMageInputToolbar, IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
 import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
 import {ImageInputPreviewModal} from "./ImageInputPreviewModal/ImageInputPreviewModal";
-import {ImageInputCropperModal} from "./ImageInputCropperModal/ImageInputCropperModal";
+import {ImageInputCropperModal, ReadyEvent} from "./ImageInputCropperModal/ImageInputCropperModal";
 import {ReactCropperHelpers} from "./ImageInputCropperModal/CropperHelpers";
 import BaseInput, {IBaseInputProps, IBaseInputState, IImageInputInputType, ValidatorCallback} from "../BaseInput/BaseInput";
 
@@ -51,6 +51,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
     private previewModalRef = React.createRef<ImageInputPreviewModal>();
     private cropperModalRef = React.createRef<ImageInputCropperModal>();
+    private cropperHiddenModalRef = React.createRef<ImageInputCropperModal>();
 
     public state: IImageInputState = {
         readonly: this.props.disabled || false,
@@ -93,7 +94,6 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
     private async onInternalChangeAsync(newValue: IImageInputInputType): Promise<void> {
 
         //  Handling if it's in single mode
-        //  Only newValue matters because it's going to replace the currentValue
 
         if (!this.multiple) {
 
@@ -119,68 +119,26 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         }
 
         //  Handling if it's in multiple mode
-        //  NewValue and CurrentValue each has three possible state: FileModel | FileModel[] | null
-        //  Total of 9 possible way should be handled
 
-        if (!newValue){
-            if (!this.value) {
-                await this.updateValueAsync([], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (this.value instanceof FileModel) {
-                await this.updateValueAsync([this.value], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (Array.isArray(this.value)) {
-                await this.updateValueAsync(this.value, false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
+        if (!newValue) {
+            await this.updateValueAsync([], false);
+            await this.emitOnChangePropAsync();
+            return;
         }
 
         if (newValue instanceof FileModel){
-            if (!this.value) {
-                await this.updateValueAsync([newValue], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (this.value instanceof FileModel) {
-                await this.updateValueAsync([this.value, newValue], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (Array.isArray(this.value)) {
-                await this.updateValueAsync([...this.value, newValue], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
+            await this.updateValueAsync([newValue], false);
+            await this.emitOnChangePropAsync();
+            return;
         }
 
         if (Array.isArray(newValue)){
-            if (!this.value) {
-                await this.updateValueAsync(newValue, false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (this.value instanceof FileModel) {
-                await this.updateValueAsync([this.value, ...newValue], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
-
-            if (Array.isArray(this.value)) {
-                await this.updateValueAsync([...this.value, ...newValue], false);
-                await this.emitOnChangePropAsync();
-                return;
-            }
+            await this.updateValueAsync(newValue, false);
+            await this.emitOnChangePropAsync();
+            return;
         }
+
+        return;
     }
 
     /** @description Helper function to invoke onChangeAsync prop */
@@ -331,10 +289,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
     /** @description Responsible for rotating the selected image and calling updateInternalAsync */
     private async onRotateMiniButtonClickAsync(fileModel: FileModel, index: number, degree: number): Promise<void> {
-
-        const rotated = await ReactCropperHelpers.rotate(fileModel, degree, this.getPreviewSource(fileModel));
-        console.log(rotated)
-        await this.updateInternalAsync(rotated, index);
+        this.cropperHiddenModalRef.current?.showModal(fileModel, index, degree);
     }
 
     private onListViewItemClick(index: number): void {
@@ -442,11 +397,13 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                 return;
             }
 
+            console.log('this.value: ', this.value)
             const valueToUpdate = [...this.value];
 
             valueToUpdate[index] = fileModel;
 
             const uploadedFileModel: FileModel | null = await this.props.onUpload(fileModel);
+            console.log('uploadedFileModel: ', uploadedFileModel)
 
             if (uploadedFileModel === null) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -455,14 +412,14 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
             valueToUpdate[index] = uploadedFileModel;
 
+            console.log('onInternalChangeAsync: ', valueToUpdate)
             await this.onInternalChangeAsync(valueToUpdate);
 
             return;
 
         } else {
-            const currentFileModel = this.value;
 
-            if (!(currentFileModel instanceof FileModel)) {
+            if (!(this.value instanceof FileModel)) {
                 console.error("multiple mode is off while value is not instanceof FileModel");
                 return;
             }
@@ -547,7 +504,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             >
 
                 <ImageInputToolbar toolbar={this.toolbar}
-                                   onRotateMiniButtonClickAsync={async (degree) => {
+                                   onRotateMiniButtonClick={async (degree) => {
                                        if (!this.activePicture || this.state.selectedPictureIndex === null) {
                                            return;
                                        }
@@ -559,13 +516,13 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                                        const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
                                        await this.addInternalAsync(fileList)
                                    }}
-                                   onEditButtonClickAsync={async () => {
+                                   onEditButtonClick={async () => {
                                        this.cropperModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
                                    }}
-                                   onDeleteButtonClickAsync={async () => {
+                                   onDeleteButtonClick={async () => {
                                        await this.deleteInternalAsync();
                                    }}
-                                   onPreviewButtonClickAsync={async () => {
+                                   onPreviewButtonClick={async () => {
                                        await this.previewModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
                                    }}
                 />
@@ -619,17 +576,27 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
                                             }}
                     />
 
+
+                    <ImageInputCropperModal ref={this.cropperHiddenModalRef}
+                                            className="d-none"
+                                            cropperSource={this.cropperSource}
+                                            onReady={async (event: ReadyEvent, fileModel: FileModel, index: number) => {
+                                                this.cropperHiddenModalRef.current?.closeModal();
+                                                await this.updateInternalAsync(fileModel, index);
+                                            }}
+                    />
+
                     <ImageInputPreviewModal ref={this.previewModalRef}
                                             previewUrlBuilder={this.props.previewUrlBuilder}
                                             toolbarOverwrite={this.props.previewToolbar}
-                                            onBackButtonClickAsync={async () => {
+                                            onBackButtonClick={async () => {
                                                 this.previewModalRef.current?.closeModal();
                                             }}
-                                            onEditButtonClickAsync={async (fileModel, index) => {
+                                            onEditButtonClick={async (fileModel, index) => {
                                                 this.previewModalRef.current?.closeModal();
                                                 this.cropperModalRef.current?.showModal(fileModel, index);
                                             }}
-                                            onDeleteButtonClickAsync={async () => {
+                                            onDeleteButtonClick={async () => {
                                                 this.previewModalRef.current?.closeModal();
 
                                             }}

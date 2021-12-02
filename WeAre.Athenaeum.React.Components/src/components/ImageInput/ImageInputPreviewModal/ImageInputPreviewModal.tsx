@@ -7,9 +7,9 @@ import {FileModel} from "@weare/athenaeum-toolkit";
 export interface IImageInputPreviewModalProps {
     toolbarOverwrite?: Partial<IIMageInputToolbar>;
     previewUrlBuilder?(file: FileModel): string;
-    onEditButtonClickAsync?: (fileModel: FileModel, index: number) => Promise<void>;
-    onBackButtonClickAsync?: () => Promise<void>;
-    onDeleteButtonClickAsync?: (index: number) => Promise<void>;
+    onEditButtonClick?: (fileModel: FileModel, index: number) => Promise<void>;
+    onBackButtonClick?: () => Promise<void>;
+    onDeleteButtonClick?: (index: number) => Promise<void>;
 }
 
 export interface IImageInputPreviewModalState {
@@ -75,19 +75,19 @@ export class ImageInputPreviewModal extends BaseComponent<IImageInputPreviewModa
                             </div>
                             <ImageInputToolbar toolbar={this.toolbar}
                                                className={styles.toolbar}
-                                               onDeleteButtonClickAsync={async () => {
-                                                   if (this.props.onDeleteButtonClickAsync && this.state.index !== null) {
-                                                       await this.props.onDeleteButtonClickAsync(this.state.index);
+                                               onDeleteButtonClick={async () => {
+                                                   if (this.props.onDeleteButtonClick && this.state.index !== null) {
+                                                       await this.props.onDeleteButtonClick(this.state.index);
                                                    }
                                                }}
-                                               onBackButtonClickAsync={async () => {
-                                                   if (this.props.onBackButtonClickAsync) {
-                                                       await this.props.onBackButtonClickAsync();
+                                               onBackButtonClick={async () => {
+                                                   if (this.props.onBackButtonClick) {
+                                                       await this.props.onBackButtonClick();
                                                    }
                                                }}
-                                               onEditButtonClickAsync={async () => {
-                                                   if (this.props.onEditButtonClickAsync && this.state.fileModel && this.state.index !== null) {
-                                                       await this.props.onEditButtonClickAsync(this.state.fileModel, this.state.index);
+                                               onEditButtonClick={async () => {
+                                                   if (this.props.onEditButtonClick && this.state.fileModel && this.state.index !== null) {
+                                                       await this.props.onEditButtonClick(this.state.fileModel, this.state.index);
                                                    }
                                                }}
                             />
