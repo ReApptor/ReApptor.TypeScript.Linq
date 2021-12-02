@@ -12,8 +12,10 @@ import "cropperjs/dist/cropper.css";
 import "./ReactCropperOverride.scss";
 
 import styles from "./ImageInput.module.scss";
-import {IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
+import {IIMageInputToolbar, IImageInputToolbarOverwriteProps, ImageInputToolbar} from "./ImageInputToolbar/ImageInputToolbar";
 import {ImageInputListItem} from "./ImageInputListItem/ImageInputListItem";
+import {ImageInputPreviewModal} from "./ImageInputPreviewModal/ImageInputPreviewModal";
+import {ImageInputCropperModal} from "./ImageInputCropperModal/ImageInputCropperModal";
 
 export enum ImageInputView {
 
@@ -64,8 +66,9 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps {
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
 
-    private cropperRef = React.createRef<ReactCropperElement>();
-    private cropperHelper = new ReactCropperHelpers(this.cropperRef);
+    private previewModalRef = React.createRef<ImageInputPreviewModal>();
+    private cropperModalRef = React.createRef<ImageInputCropperModal>();
+    // private cropperHelper = new ReactCropperHelpers(this.cropperModalRef);
 
     public state: IImageInputState = {
         currentView: ImageInputView.Default,
@@ -99,10 +102,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     private get editOnAddInSingleMode(): boolean {
         return (this.props.editOnAddInSingleMode === true);
-    }
-
-    private get isFullscreen(): boolean {
-        return (this.currentView === ImageInputView.Preview) || (this.currentView === ImageInputView.Edit);
     }
 
     private get minimizeOnEmpty(): boolean {
@@ -185,7 +184,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Control panel button Click Events
 
     private async onSaveButtonClickAsync(): Promise<void> {
-        if ((!this.cropperRef.current)
+        if ((!this.cropperModalRef.current)
             || (this.currentView !== ImageInputView.Edit)) {
             return;
         }
@@ -196,7 +195,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         let newFileModel: FileModel = {...this.activePicture};
 
-        newFileModel.src = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
+        newFileModel.src = this.cropperModalRef.current.output() || "";
 
         if (this.props.onUploadAsync) {
             newFileModel = await this.props.onUploadAsync(newFileModel);
@@ -229,11 +228,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onPreviewButtonClickAsync(): Promise<void> {
-        if (!this.hasSelectedPictureIndex) {
+        if (!this.previewModalRef.current) {
             return;
         }
 
-        await this.setCurrentViewAsync(ImageInputView.Preview);
+        await this.previewModalRef.current.showModal(this.activePicture, this.selectedPictureIndex);
     }
 
     private async onDeleteButtonClickAsync(): Promise<void> {
@@ -245,11 +244,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onRotateButtonClickAsync(degrees: number): Promise<void> {
-        if (!this.cropperRef.current) {
+        if (!this.cropperModalRef.current) {
             return;
         }
 
-        this.cropperHelper.rotateAndFitToScreen(degrees);
+        this.cropperModalRef.current.rotateAndFitToScreen(degrees);
     }
 
     private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
@@ -490,60 +489,59 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
         }
     }
 
-    //  Renders
-    private renderPreviewPanel(): JSX.Element {
-        const index: number = this.selectedPictureIndex ?? 0;
-        const src: string | undefined = this.getPreviewSource(this.pictures[index]);
-        const alt: string | undefined = this.getPreviewName(this.pictures[index])
+    private get toolbar(): IIMageInputToolbar {
+        const propsSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.selectionToolbar || {})};
 
-        return (
-            <div className={styles.preview}>
-                <img src={src}
-                     alt={alt}
-                />
-            </div>
-        );
+        const propsNoSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.noSelectionToolbar || {})};
+
+        const propsEditToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultEditToolbar,...(this.props.editToolbar || {})};
+
+        switch (this.currentView){
+            case ImageInputView.Default:
+                return (this.hasSelectedPictureIndex)
+                    ? propsSelectionToolbar
+                    : propsNoSelectionToolbar;
+            case ImageInputView.Preview:
+                //  It's handled in it's own component
+                return propsSelectionToolbar;
+
+            case ImageInputView.Edit:
+                return propsEditToolbar;
+            default:
+                throw new TypeError(`Non-existing enum value '${this.currentView}'`);
+        }
     }
 
     public render(): JSX.Element {
         const minimizeStyle: string | null = (this.minimizeOnEmpty) && (this.pictures.length <= 0)
             ? styles.minimize
             : null;
-        const fullScreenStyle: string | null = (this.isFullscreen)
-            ? styles.fullScreen
-            : null;
+        // const fullScreenStyle: string | null = (this.isFullscreen)
+        //     ? styles.fullScreen
+        //     : null;
 
         return (
-            <div className={this.css(styles.ImageInput, minimizeStyle, fullScreenStyle, this.props.className)}
+            <div className={this.css(styles.ImageInput, minimizeStyle, this.props.className)}
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
 
-                <div className={styles.controlPanel}>
-
-                    <ImageInputToolbar currentView={this.currentView}
-                                       hasSelectedPictureIndex={this.hasSelectedPictureIndex}
-                                       editToolbar={this.props.editToolbar}
-                                       previewToolbar={this.props.previewToolbar}
-                                       selectionToolbar={this.props.selectionToolbar}
-                                       noSelectionToolbar={this.props.noSelectionToolbar}
-                                       onBrowseForFileClick={async (captureMode) => {
-                                           const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
-                                           await this.addFileListAsync(fileList)
-                                       }}
-                                       onEditButtonClickAsync={async () => await this.onEditButtonClickAsync()}
-                                       onSaveButtonClickAsync={async () => await this.onSaveButtonClickAsync()}
-                                       onBackButtonClickAsync={async () => await this.onBackButtonClickAsync()}
-                                       onRotateButtonClickAsync={async (deg) => await this.onRotateButtonClickAsync(deg)}
-                                       onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
-                                       onPreviewButtonClickAsync={async () => await this.onPreviewButtonClickAsync()}
-                                       onRotateMiniButtonClickAsync={async (deg) => await this.onRotateMiniButtonClickAsync(deg)}
-                                       // onMoveDownButtonClickAsync={async () => await this.onMoveDownButtonClickAsync()}
-                                       // onMoveUpButtonClickAsync={async () => await this.onMoveUpButtonClickAsync()}
-                                       // onMoveToTopButtonClickAsync={async () => await this.onMoveToTopButtonClickAsync()}
-                    />
-
-                </div>
-
+                <ImageInputToolbar toolbar={this.toolbar}
+                                   onBrowseForFileClick={async (captureMode) => {
+                                       const fileList = await ImageInput.browseForFiles(captureMode, this.multiple, this.acceptedTypes);
+                                       await this.addFileListAsync(fileList)
+                                   }}
+                                   onEditButtonClickAsync={async () => {
+                                       if (this.activePicture && this.selectedPictureIndex !== null) {
+                                           this.cropperModalRef.current?.showModal(this.activePicture, this.selectedPictureIndex);
+                                       }
+                                   }}
+                                   onSaveButtonClickAsync={async () => await this.onSaveButtonClickAsync()}
+                                   onBackButtonClickAsync={async () => await this.onBackButtonClickAsync()}
+                                   onRotateButtonClickAsync={async (deg) => await this.onRotateButtonClickAsync(deg)}
+                                   onDeleteButtonClickAsync={async () => await this.onDeleteButtonClickAsync()}
+                                   onPreviewButtonClickAsync={async () => await this.onPreviewButtonClickAsync()}
+                                   onRotateMiniButtonClickAsync={async (deg) => await this.onRotateMiniButtonClickAsync(deg)}
+                />
                 <div className={styles.viewPanel}>
 
                     <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
@@ -557,21 +555,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                         </span>
                     </div>
 
-                    {
-                        (this.currentView === ImageInputView.Edit) &&
-                        (
-                            <div className={styles.cropper}>
-                                <Cropper ref={this.cropperRef}
-                                         className={styles.reactCropper}
-                                         style={{height: "100%", width: "100%"}}
-                                         src={this.cropperSource}
-                                         viewMode={1} // cannot move box outside image borders
-                                         guides={false}
-                                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
-                                />
-                            </div>
-                        )
-                    }
 
                     {
                         (this.multiple) && (this.currentView === ImageInputView.Default) &&
@@ -595,12 +578,41 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                         )
                     }
 
-                    {
-                        ((this.currentView === ImageInputView.Preview) || ((!this.multiple) && (this.currentView === ImageInputView.Default) && (this.hasSelectedPictureIndex))) &&
-                        (
-                            this.renderPreviewPanel()
-                        )
-                    }
+                    <ImageInputCropperModal ref={this.cropperModalRef}
+                                            cropperSource={this.cropperSource}
+                                            onCrop={(height: number, width: number) => {
+
+                                            }}
+                                            onSaveButtonClickAsync={async (fileModel: FileModel, index: number) => {
+                                                this.cropperModalRef.current?.closeModal();
+
+                                            }}
+                                            onBackButtonClickAsync={async () => {
+                                                this.cropperModalRef.current?.closeModal();
+
+                                            }}
+                                            onDeleteButtonClickAsync={async (index: number) => {
+                                                this.cropperModalRef.current?.closeModal();
+
+                                            }}
+
+                    />
+
+                    <ImageInputPreviewModal ref={this.previewModalRef}
+                                            previewUrlBuilder={this.props.previewUrlBuilder}
+                                            toolbarOverwrite={this.props.previewToolbar}
+                                            onBackButtonClickAsync={async () => {
+                                                this.previewModalRef.current?.closeModal();
+                                            }}
+                                            onEditButtonClickAsync={async (fileModel, index) => {
+                                                this.previewModalRef.current?.closeModal();
+                                                this.cropperModalRef.current?.showModal(fileModel, index);
+                                            }}
+                                            onDeleteButtonClickAsync={async () => {
+                                                this.previewModalRef.current?.closeModal();
+
+                                            }}
+                    />
 
                 </div>
 

@@ -67,10 +67,9 @@ export interface IImageInputToolbarOverwriteProps {
     editToolbar?: Partial<IIMageInputToolbar>;
 }
 
-export interface IImageInputToolbarProps extends IImageInputToolbarOverwriteProps{
-    currentView: ImageInputView;
-    hasSelectedPictureIndex: boolean;
-
+export interface IImageInputToolbarProps{
+    toolbar: IIMageInputToolbar;
+    className?: string;
     onRotateMiniButtonClickAsync?: (rotation: number) => Promise<void>;
     onRotateButtonClickAsync?: (rotation: number) => Promise<void>;
     onMoveToTopButtonClickAsync?: () => Promise<void>;
@@ -92,32 +91,13 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
     };
 
     private get toolbar(): IIMageInputToolbar {
-        const propsSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.selectionToolbar || {})};
-
-        const propsNoSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.noSelectionToolbar || {})};
-
-        const propsPreviewToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultPreviewToolbar, ...(this.props.previewToolbar || {})};
-
-        const propsEditToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultEditToolbar,...(this.props.editToolbar || {})};
-
-        switch (this.props.currentView){
-            case ImageInputView.Default:
-                return (this.props.hasSelectedPictureIndex)
-                    ? propsSelectionToolbar
-                    : propsNoSelectionToolbar;
-            case ImageInputView.Preview:
-                return propsPreviewToolbar;
-            case ImageInputView.Edit:
-                return propsEditToolbar;
-            default:
-                throw new TypeError(`Non-existing enum value '${this.props.currentView}'`);
-        }
+        return this.props.toolbar;
     }
 
 
     public render(): JSX.Element {
         return (
-            <React.Fragment>
+            <div className={this.css(styles.controlPanel, this.props.className)}>
 
                 {
                     (this.toolbar.rotateMiniButton) &&
@@ -351,7 +331,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
                         />
                     )
                 }
-            </React.Fragment>
+            </div>
 
 
         );
@@ -421,8 +401,6 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             ...ImageInputToolbar.defaultToolbar,
             deleteButton: true,
             editButton: true,
-            uploadButton: true,
-            takePictureButton: true,
             backButton: true
         };
     }
