@@ -208,9 +208,8 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
     //  Keyboard Keys listeners
 
     private async onEscapeKeyPressAsync(): Promise<void> {
-        // if (this.currentView === ImageInputView.Edit) {
-        //     await this.onBackButtonClickAsync();
-        // }
+        this.cropperModalRef.current?.closeModal();
+        this.previewModalRef.current?.closeModal();
     }
 
 
