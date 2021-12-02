@@ -75,8 +75,8 @@ export default class FileInputTests extends BaseComponent {
                                    placeholder={"Push me!"}
                                    fileTypes={["application/pdf"]}
                                    value={this.state.file}
-                                   onRemoveAsync={async () => await this.onRemoveFileAsync()}
-                                   onChangeAsync={async (sender, file: FileModel) => await this.onChangeFileAsync(file)}
+                                   onRemove={async () => await this.onRemoveFileAsync()}
+                                   onChange={async (sender, file: FileModel) => await this.onChangeFileAsync(file)}
                         />
                         
                         <TextInput readonly
@@ -93,8 +93,8 @@ export default class FileInputTests extends BaseComponent {
                                    placeholder={"Push me!"}
                                    fileTypes={["application/pdf"]}
                                    value={this.state.files}
-                                   onRemoveAsync={async (value: FileModel) => await this.onRemoveFilesAsync(value)}
-                                   onChangeAsync={async (sender, value: FileModel[]) => await this.onChangeFilesAsync(value)}
+                                   onRemove={async (value: FileModel) => await this.onRemoveFilesAsync(value)}
+                                   onChange={async (sender, value: FileModel[]) => await this.onChangeFilesAsync(value)}
                         />
                         
                         <TextInput readonly

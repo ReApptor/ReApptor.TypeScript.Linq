@@ -42,8 +42,8 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputP
     fileTypes?: string[];
 
     previewUrlBuilder?(file: FileModel): string;
-    onUploadAsync?(file: FileModel): Promise<FileModel>;
-    onChangeAsync?(sender: ImageInput, value: IImageInputInputType): Promise<void>;
+    onUpload?(file: FileModel): Promise<FileModel>;
+    onChange?(sender: ImageInput, pictures: FileModel[]): Promise<void>;
 }
 
 export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps, IImageInputState> {
@@ -338,12 +338,12 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return;
         }
 
-        if (!this.props.onUploadAsync) {
+        if (!this.props.onUpload) {
             await this.updatePictureAsync(fileModel, index);
             return;
         }
 
-        const uploadedFileModel = await this.props.onUploadAsync(fileModel);
+        const uploadedFileModel = await this.props.onUpload(fileModel);
 
         if (uploadedFileModel === null || uploadedFileModel === undefined) {
             await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -374,8 +374,8 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
         let rotated = await ReactCropperHelpers.rotate(selectedPicture, degrees, this.getPreviewSource(selectedPicture));
 
-        if (this.props.onUploadAsync) {
-            rotated = await this.props.onUploadAsync(rotated);
+        if (this.props.onUpload) {
+            rotated = await this.props.onUpload(rotated);
 
             if (rotated === null || rotated === undefined) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -506,11 +506,11 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         });
 
         fileModels = await Promise.all(fileModels.map(async (fileModel): Promise<FileModel> => {
-            if (!this.props.onUploadAsync) {
+            if (!this.props.onUpload) {
                 return fileModel;
             }
 
-            const converted: FileModel | null = await this.props.onUploadAsync(fileModel);
+            const converted: FileModel | null = await this.props.onUpload(fileModel);
 
             if (converted === null) {
                 await ch.alertErrorAsync(ImageInputLocalizer.documentTypeNotSupported, true);
@@ -528,9 +528,9 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return;
         }
 
-        if (this.props.onChangeAsync) {
+        if (this.props.onChange) {
             if (this.multiple) {
-                await this.props.onChangeAsync(
+                await this.props.onChange(
                     this,
                     [...this.state.pictures, ...fileModels]
                 );
@@ -542,7 +542,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             }
             else
             {
-                await this.props.onChangeAsync(
+                await this.props.onChange(
                     this,
                     fileModels.slice(0, 1)
                 );
@@ -563,8 +563,8 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
             return picture;
         });
 
-        if (this.props.onChangeAsync) {
-            await this.props.onChangeAsync(this, pictures);
+        if (this.props.onChange) {
+            await this.props.onChange(this, pictures);
         }
     }
 
@@ -580,8 +580,8 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
         await this.setState({selectedPictureIndex: newIndex});
 
-        if (this.props.onChangeAsync) {
-            await this.props.onChangeAsync(this, pictures);
+        if (this.props.onChange) {
+            await this.props.onChange(this, pictures);
         }
     }
 
