@@ -1,7 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import styles from "./ImageInputListItem.module.scss";
 import {FileModel} from "@weare/athenaeum-toolkit";
+
+import styles from "./ImageInputListItem.module.scss";
 
 export interface IImageInputListItemProps {
     fileModel: FileModel;
