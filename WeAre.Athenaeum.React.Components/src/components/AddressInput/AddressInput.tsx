@@ -202,7 +202,6 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         }
 
         return;
-
     }
 
     public renderInput(): React.ReactNode {

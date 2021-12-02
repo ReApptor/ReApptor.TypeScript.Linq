@@ -31,11 +31,11 @@ export interface IDropdownWidgetProps<TItem = {}> extends IBaseWidgetProps {
     minHeight?: number;
     addButton?: boolean | string | RenderCallback;
     transform?(item: TItem): SelectListItem;
+    fetchDataAsync?(sender: DropdownWidget<TItem>, endpoint: string): Promise<TItem[]>;
     onToggle?(sender: DropdownWidget<TItem>, expanded: boolean): Promise<void>;
     onFavoriteChange?(sender: DropdownWidget<TItem>, item: TItem | null, favorite: boolean): Promise<void>;
     onChange?(sender: DropdownWidget<TItem>, item: TItem | null, userInteraction: boolean): Promise<void>;
     onChangeAmount?(sender: DropdownWidget<TItem>, item: TItem | null, amount: number): Promise<void>;
-    fetchDataAsync?(sender: DropdownWidget<TItem>, endpoint: string): Promise<TItem[]>;
     onAdd?(sender: DropdownWidget<TItem>): Promise<void>;
     onItemsChange?(sender: DropdownWidget<TItem>): Promise<void>;
     onItemClick?(sender: DropdownWidget<TItem>, item: TItem): Promise<void>;

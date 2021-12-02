@@ -154,12 +154,12 @@ export default class ImageInputTests extends BaseComponent {
                             selectionToolbar={this.state.selectionToolbar}
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
-                            onUploadAsync={async (fileModel: FileModel) => {
+                            onUpload={async (fileModel: FileModel) => {
                                 await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true)
 
                                 return fileModel;
                             }}
-                            onChangeAsync={async (sender, pictures) => {
+                            onChange={async (sender, pictures) => {
                                 await this.setState({pictures: pictures})
                                 await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
                             }}
@@ -175,12 +175,12 @@ export default class ImageInputTests extends BaseComponent {
                             editToolbar={this.state.editToolbar}
                             previewToolbar={this.state.previewToolbar}
 
-                            onUploadAsync={async (fileModel: FileModel) => {
+                            onUpload={async (fileModel: FileModel) => {
                                 await ch.alertMessageAsync(`Mock onUploadAsync: Uploaded: ${fileModel.name}`, true, true)
 
                                 return fileModel;
                             }}
-                            onChangeAsync={async (sender, pictures) => {
+                            onChange={async (sender, pictures) => {
                                 await this.setState({pictures: pictures})
                                 await ch.alertMessageAsync(`Mock onChangeAsync: Updated`, true, true)
                             }}

@@ -102,9 +102,9 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             : (sortDirection == SortDirection.Desc)
                 ? styles.desc
                 : "";
-
+        
         const icon: IIconProps | null = (column.type == ColumnType.Icon)
-            ? GridTransformer.toIcon(header)
+            ? GridTransformer.toIcon(header, true)
             : null;
 
         if (render) {
