@@ -48,16 +48,16 @@ export default class ImageInputTests extends BaseComponent {
 
                     <Checkbox inline
                               inlineType={InlineType.Right}
-                              label={"Rotate left"}
-                              value={toolbar.rotateLeftButton}
-                              onChange={async (_, checked) => {toolbar.rotateLeftButton = checked; await this.reRenderAsync();}}
+                              label={"Rotate buttons"}
+                              value={toolbar.rotateButton}
+                              onChange={async (_, checked) => {toolbar.rotateButton = checked; await this.reRenderAsync();}}
                     />
 
                     <Checkbox inline
                               inlineType={InlineType.Right}
-                              label={"Rotate right"}
-                              value={toolbar.rotateRightButton}
-                              onChange={async (_, checked) => {toolbar.rotateRightButton = checked; await this.reRenderAsync();}}
+                              label={"Rotate mini buttons"}
+                              value={toolbar.rotateMiniButton}
+                              onChange={async (_, checked) => {toolbar.rotateMiniButton = checked; await this.reRenderAsync();}}
                     />
 
                     <Checkbox inline
@@ -151,10 +151,10 @@ export default class ImageInputTests extends BaseComponent {
                 <ImageInput minimizeOnEmpty
                             pictures={this.state.picture}
                             convertImage={async (picture) => picture}
-                            // noSelectionToolbar={this.state.noSelectionToolbar}
-                            // selectionToolbar={this.state.selectionToolbar}
-                            // editToolbar={this.state.editToolbar}
-                            // previewToolbar={this.state.previewToolbar}
+                            noSelectionToolbar={this.state.noSelectionToolbar}
+                            selectionToolbar={this.state.selectionToolbar}
+                            editToolbar={this.state.editToolbar}
+                            previewToolbar={this.state.previewToolbar}
                             onChange={async (sender, files: FileModel[]) => this.setPictureFileAsync(files)}
                 />
 

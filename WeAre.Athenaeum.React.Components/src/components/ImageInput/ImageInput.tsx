@@ -183,21 +183,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
     //  ViewIfStatements
 
-    private get showBackButton(): boolean {
-        return (this.isFullscreen);
-    }
-
-    private get showSaveButton(): boolean {
-        return (this.currentView === ImageInputView.Edit);
-    }
-
-    private get miniRotateButtons(): boolean {
-
-        // TODO: get from props?
-
-        return (this.hasSelectedPictureIndex) && (this.currentView === ImageInputView.Default);
-    }
-
     //  Control panel button Click Events
 
     private async onSaveButtonClickAsync(): Promise<void> {
@@ -537,7 +522,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <div className={styles.controlPanel}>
 
                     <ImageInputToolbar currentView={this.currentView}
-                                       miniRotateButtons={this.miniRotateButtons}
                                        hasSelectedPictureIndex={this.hasSelectedPictureIndex}
                                        editToolbar={this.props.editToolbar}
                                        previewToolbar={this.props.previewToolbar}

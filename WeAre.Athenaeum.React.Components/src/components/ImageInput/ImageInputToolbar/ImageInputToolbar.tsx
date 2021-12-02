@@ -31,11 +31,11 @@ export interface IIMageInputToolbar {
     /** Should an "Back"-button be shown. */
     backButton?: boolean;
 
-    /** Should a "Rotate left"-button be shown. */
-    rotateLeftButton?: boolean;
+    /** Should a "Rotate left and right"-buttons be shown. */
+    rotateButton?: boolean;
 
-    /** Should a "Rotate right"-button be shown. */
-    rotateRightButton?: boolean;
+    /** Should a "Rotate left and right"-mini buttons be shown. */
+    rotateMiniButton?: boolean;
 
     /** Should a "Move up"-button be shown. */
     moveUpButton?: boolean;
@@ -70,8 +70,6 @@ export interface IImageInputToolbarOverwriteProps {
 export interface IImageInputToolbarProps extends IImageInputToolbarOverwriteProps{
     currentView: ImageInputView;
     hasSelectedPictureIndex: boolean;
-
-    miniRotateButtons: boolean;
 
     onRotateMiniButtonClickAsync?: (rotation: number) => Promise<void>;
     onRotateButtonClickAsync?: (rotation: number) => Promise<void>;
@@ -122,83 +120,63 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             <React.Fragment>
 
                 {
-                    ((this.toolbar.rotateLeftButton) || (this.toolbar.rotateRightButton)) &&
+                    (this.toolbar.rotateMiniButton) &&
                     (
-                        (this.props.miniRotateButtons)
-                            ?
-                            (
-                                <div className={styles.controlPanelMiniButtonWrap}>
+                        <div className={styles.controlPanelMiniButtonWrap}>
 
-                                    {
-                                        (this.toolbar.rotateLeftButton) &&
-                                        (
-                                            <Button small
-                                                    icon={{name: "undo"}}
-                                                    type={ButtonType.Info}
-                                                    onClick={async () => {
-                                                        if (this.props.onRotateMiniButtonClickAsync) {
-                                                            await this.props.onRotateMiniButtonClickAsync(-90);
-                                                        }
-                                                    }}
-                                            />
-                                        )
-                                    }
+                            <Button small
+                                    icon={{name: "undo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => {
+                                        if (this.props.onRotateMiniButtonClickAsync) {
+                                            await this.props.onRotateMiniButtonClickAsync(-90);
+                                        }
+                                    }}
+                            />
+                            <Button small
+                                    icon={{name: "redo"}}
+                                    type={ButtonType.Info}
+                                    onClick={async () => {
+                                        if (this.props.onRotateMiniButtonClickAsync) {
+                                            await this.props.onRotateMiniButtonClickAsync(90);
+                                        }
+                                    }}
+                            />
 
-                                    {
-                                        (this.toolbar.rotateRightButton) &&
-                                        (
-                                            <Button small
-                                                    icon={{name: "redo"}}
-                                                    type={ButtonType.Info}
-                                                    onClick={async () => {
-                                                        if (this.props.onRotateMiniButtonClickAsync) {
-                                                            await this.props.onRotateMiniButtonClickAsync(90);
-                                                        }
-                                                    }}
-                                            />
-                                        )
-                                    }
+                        </div>
+                    )
+                }
 
-                                </div>
-                            )
-                            :
-                            (
-                                <>
-                                    {
-                                        (this.toolbar.rotateLeftButton) &&
-                                        (
-                                            <Button small
-                                                    className={styles.controlPanelButton}
-                                                    icon={{name: "undo"}}
-                                                    type={ButtonType.Light}
-                                                    label={ImageInputLocalizer.rotateLeft}
-                                                    onClick={async () => {
-                                                        if (this.props.onRotateButtonClickAsync) {
-                                                            await this.props.onRotateButtonClickAsync(-90);
-                                                        }
-                                                    }}
-                                            />
-                                        )
+                {
+                    (this.toolbar.rotateButton) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "undo"}}
+                                type={ButtonType.Light}
+                                label={ImageInputLocalizer.rotateLeft}
+                                onClick={async () => {
+                                    if (this.props.onRotateButtonClickAsync) {
+                                        await this.props.onRotateButtonClickAsync(-90);
                                     }
-
-                                    {
-                                        (this.toolbar.rotateRightButton) &&
-                                        (
-                                            <Button small
-                                                    className={styles.controlPanelButton}
-                                                    icon={{name: "redo"}}
-                                                    type={ButtonType.Light}
-                                                    label={ImageInputLocalizer.rotateRight}
-                                                    onClick={async () => {
-                                                        if (this.props.onRotateButtonClickAsync) {
-                                                            await this.props.onRotateButtonClickAsync(90);
-                                                        }
-                                                    }}
-                                            />
-                                        )
+                                }}
+                        />
+                    )
+                }
+                {
+                    (this.toolbar.rotateButton) &&
+                    (
+                        <Button small
+                                className={styles.controlPanelButton}
+                                icon={{name: "redo"}}
+                                type={ButtonType.Light}
+                                label={ImageInputLocalizer.rotateRight}
+                                onClick={async () => {
+                                    if (this.props.onRotateButtonClickAsync) {
+                                        await this.props.onRotateButtonClickAsync(90);
                                     }
-                                </>
-                            )
+                                }}
+                        />
                     )
                 }
 
@@ -388,9 +366,9 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             moveDownButton: false,
             moveToTopButton: false,
             moveUpButton: false,
-            rotateLeftButton: false,
+            rotateButton: false,
             previewButton: false,
-            rotateRightButton: false
+            rotateMiniButton: false
         };
     }
 
@@ -412,8 +390,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
      * {@link IIMageInputToolbar.deleteButton}
      * {@link IIMageInputToolbar.editButton}
      * {@link IIMageInputToolbar.previewButton}
-     * {@link IIMageInputToolbar.rotateLeftButton}
-     * {@link IIMageInputToolbar.rotateRightButton}
+     * {@link IIMageInputToolbar.rotateMiniButton}
      * {@link IIMageInputToolbar.takePictureButton}
      * {@link IIMageInputToolbar.uploadButton}
      */
@@ -423,8 +400,7 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
             deleteButton: true,
             editButton: true,
             previewButton: true,
-            rotateLeftButton: true,
-            rotateRightButton: true,
+            rotateMiniButton: true,
             takePictureButton: true,
             uploadButton: true
         }
@@ -451,17 +427,17 @@ export class ImageInputToolbar extends BaseComponent<IImageInputToolbarProps, II
 
     /**
      * Following functionality is enabled:
-     * {@link IIMageInputToolbar.rotateLeftButton}
-     * {@link IIMageInputToolbar.rotateRightButton}
+     * {@link IIMageInputToolbar.rotateButton}
      * {@link IIMageInputToolbar.deleteButton}.
+     * {@link IIMageInputToolbar.saveButton}.
+     * {@link IIMageInputToolbar.backButton}.
      *
      * A "Save"-button which saves the changes and a "Back"-button which returns the user back to the previous view are also displayed.
      */
     public static get defaultEditToolbar(): IIMageInputToolbar {
         return {
             ...ImageInputToolbar.defaultToolbar,
-            rotateLeftButton: true,
-            rotateRightButton: true,
+            rotateButton: true,
             deleteButton: true,
             saveButton: true,
             backButton: true
