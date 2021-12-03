@@ -1,0 +1,40 @@
+.cookieConsentBanner{
+  position: fixed;
+  left: 0;
+  z-index: 2147483645;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #F1F6F4;
+}
+
+.top{
+  top: 0;
+}
+
+.bottom{
+  bottom: 0;
+}
+
+.cookieConsentBannerInner{
+  max-width: 960px;
+  margin: 0 24px auto;
+  padding: 32px 0;
+}
+
+.cookieConsentBannerCopy{
+  margin-bottom: 16px;
+}
+
+.cookieConsentBannerHeader{
+  margin-bottom: 8px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.cookieConsentBannerDescription{
+  font-weight: normal;
+  color: #838F93;
+  font-size: 16px;
+  line-height: 24px;
+}
