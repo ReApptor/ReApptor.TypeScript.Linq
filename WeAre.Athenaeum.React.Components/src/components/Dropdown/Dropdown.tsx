@@ -377,13 +377,17 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private updateModelValue(): void {
-        this.state.model.value = (this.multiple)
+        const value: DropdownValue = (this.multiple)
             ? this.selectedListItems
                 .filter(item => item.selected)
                 .map(item => item.value)
             : (this.selectedListItem != null)
                 ? this.selectedListItem.value
                 : null;
+
+        if (value !== this.state.model.value) {
+            this.state.model.value = value;
+        }
     }
 
     private getVerticalAlign(): DropdownVerticalAlign {
@@ -531,11 +535,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private async selectDefaultAsync(): Promise<void> {
         const autoSelect: boolean = (this.requiredType == DropdownRequiredType.AutoSelect);
-        if ((autoSelect) && (this.state.items.length > 0)) {
-            const unselected: boolean = this.state.items.every(item => !item.selected);
-            if (unselected) {
-                const firstItem: SelectListItem = this.state.items[0];
-                await this.invokeSelectListItemAsync(firstItem, false);
+        if (autoSelect) {
+            const items: SelectListItem[] = this.state.items;
+            if (items.length > 0) {
+                const unselected: boolean = items.every(item => !item.selected);
+                if (unselected) {
+                    const firstItem: SelectListItem = items[0];
+                    await this.invokeSelectListItemAsync(firstItem, false);
+                }
             }
         }
     }
@@ -545,13 +552,18 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const autoCollapse: boolean = this.autoCollapse;
 
         if (this.multiple) {
-            item.selected = !item.selected;
-
-            this.updateModelValue();
+            
+            const restricted: boolean = (item.selected) && (this.requiredType != DropdownRequiredType.Manual) && (this.selectedItems.length === 1);
 
             let expanded: boolean = this.expanded;
 
-            if (autoCollapse) {
+            if (!restricted) {
+                item.selected = !item.selected;
+
+                this.updateModelValue();
+            }
+
+            if ((expanded) && (autoCollapse)) {
                 expanded = false;
 
                 if (this.props.onToggle) {
@@ -879,7 +891,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     public get requiredType(): DropdownRequiredType {
-        return ((this.required) && (!this.multiple))
+        return (this.required)
             ? (this.props.requiredType != null)
                 ? this.props.requiredType
                 : DropdownRequiredType.AutoSelect
@@ -1370,7 +1382,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                 {
                                     (checkbox) &&
                                     (
-                                        <div className={styles.checkbox} onClick={async (e: React.MouseEvent) => await this.favoriteItemHandler(e, item)}>
+                                        <div className={styles.checkbox}>
                                             <Icon name="fas check" size={IconSize.Large} customStyle={{ visibility: !selected ? "hidden" : undefined}} />
                                         </div>
                                     )

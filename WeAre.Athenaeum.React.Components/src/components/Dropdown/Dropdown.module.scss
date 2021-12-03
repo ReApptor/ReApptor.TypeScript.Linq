@@ -143,7 +143,6 @@
                 }
             }
 
-
             display: flex;
             align-items: center;
             padding: 2px 10px;
@@ -353,6 +352,7 @@
                 > div {
                     padding-top: 2px;
                     padding-bottom: 3px;
+                    width: auto;
 
                     > span {
                         display: inline;
