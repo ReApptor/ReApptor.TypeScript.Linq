@@ -303,7 +303,6 @@ export {default as GoogleMap} from "./components/GoogleMap/GoogleMap";
 
 export * from "./components/DateRangeInput/DateRangeInput";
 export * from "./components/ImageInput/ImageInput";
-export * from "./components/ImageInput/ImageInputToolbar/ImageInputToolbar";
 export * from "./components/TabContainer/TabModel";
 export * from "./components/Dropdown/SelectListItem";
 export * from "./components/Grid/GridModel";
