@@ -1,6 +1,7 @@
-import React from "react";
+import {FileModel} from "@weare/athenaeum-toolkit";
+import Cropper, {ReactCropperElement} from "react-cropper";
 import CropperJs from "cropperjs";
-import {ReactCropperElement} from "react-cropper";
+import React from "react";
 
 export class ReactCropperHelpers {
 
@@ -78,10 +79,9 @@ export class ReactCropperHelpers {
 
     /**
      * @description It will set the location of image based on container.
-     * Will not effect in viewMode 1
-     * Will not effect if cropping area is blocking it.
+     * Will not effect in viewMode 1 if cropping area is blocking it.
      * When viewMode is on 1 it will set the location of image based on cropping area.
-     * height and width will not effect
+     * height and width dont effect
      */
     setImageToCenterOfContainer(): void {
 
@@ -143,4 +143,52 @@ export class ReactCropperHelpers {
         this.setZoomToFit();
         this.setCropAreaToImageFullSize()
     }
+
+    /**
+     * @description this is for situations where image rotation is needed without opening the editor
+     * it will create a cropperjs instance and attach it to root element (hidden) and after rotation will return the data
+     *
+     * @param image image to rotate. Checks for src and if it doesnt exists uses cropperSource param
+     * @param degree rotation degree
+     * @param cropperSource url for the image, convert the image.id to url and pass it here
+     */
+    static async rotate(image: FileModel, degree: number, cropperSource: string = ''): Promise<FileModel> {
+        return new Promise<FileModel>(resolve => {
+            const instaCropperWrapper: HTMLDivElement = document.createElement('div');
+
+            const instaCropper: HTMLImageElement = document.createElement('img');
+            instaCropper.style.display = 'block';
+            instaCropper.style.maxWidth = '100%';
+            instaCropper.style.maxHeight = '100%';
+            instaCropperWrapper.style.opacity = "0";
+            instaCropperWrapper.style.zIndex = '-1000';
+            instaCropperWrapper.style.pointerEvents = 'none';
+            instaCropperWrapper.style.position = 'fixed';
+
+            document.getElementById("root")!.appendChild(instaCropperWrapper);
+
+            instaCropperWrapper.appendChild(instaCropper);
+
+            instaCropper.src = image.src || cropperSource;
+
+            const cropper = new CropperJs(instaCropper, {
+                viewMode: 1,
+                scalable: false,
+                ready(event: Cropper.ReadyEvent<HTMLImageElement>) {
+                    const helper = new ReactCropperHelpers(cropper);
+
+                    helper.rotateAndFitToScreen(degree);
+
+                    const src = cropper.getCroppedCanvas().toDataURL(image.type) || "";
+
+                    cropper.destroy();
+
+                    instaCropperWrapper.remove();
+
+                    resolve({...image, src});
+                }
+            });
+        })
+    }
+
 }
