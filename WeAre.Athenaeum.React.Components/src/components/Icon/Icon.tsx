@@ -301,6 +301,15 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
             }
         }
     }
+
+    public static isIconName(name: string): boolean {
+        const lowerName: string = name.toLowerCase().trim();
+        return (
+            (lowerName.startsWith("fa-")) ||
+            (lowerName.includes(" fa-")) ||
+            (Icon.getClassStyle(lowerName) != null)
+        );
+    }
     
     public render(): React.ReactNode {
         return (

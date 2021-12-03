@@ -24,7 +24,7 @@ class DocumentPreviewModalLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `RU: Preview` }, { language: `pl`, value: `Podgląd` }, { language: `nb`, value: `Forhåndsvisning` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `Eksempel` },);
+        this.set(this.previewLanguageItemName, { language: `en`, value: `Preview` }, { language: `uk`, value: `Переглянути` }, { language: `sv`, value: `Förhandsvisning` }, { language: `ru`, value: `Предпросмотр` }, { language: `pl`, value: `Podgląd` }, { language: `nb`, value: `Forhåndsvisning` }, { language: `fi`, value: `Esikatselu` }, { language: `da`, value: `Eksempel` },);
         this.set(this.downloadLanguageItemName, { language: `en`, value: `Download` }, { language: `uk`, value: `Завантажити` }, { language: `sv`, value: `Ladda ner` }, { language: `ru`, value: `Загрузить` }, { language: `pl`, value: `Pobierz` }, { language: `nb`, value: `Last ned` }, { language: `fi`, value: `Lataa` }, { language: `da`, value: `Download` },);
     }
 

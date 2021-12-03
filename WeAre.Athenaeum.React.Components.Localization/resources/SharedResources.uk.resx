@@ -1,16 +1,16 @@
 <root>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>1.3</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
   <data name="Dropdown.MultipleSelected" xml:space="preserve">
     <value>{0} вибран(о)</value>
   </data>
@@ -71,8 +71,8 @@
   <data name="FileInput.DragAndDrop" xml:space="preserve">
     <value>Перетягніть файл, або оберіть його</value>
   </data>
-    <data name="FileInput.Readonly" xml:space="preserve">
-    <value>UK: File is readonly</value>
+  <data name="FileInput.Readonly" xml:space="preserve">
+    <value>Файл доступний лише для читання</value>
   </data>
   <data name="DocumentPreviewModal.Preview" xml:space="preserve">
     <value>Переглянути</value>
@@ -80,29 +80,29 @@
   <data name="FileInput.ChooseFile" xml:space="preserve">
     <value>Оберіть файл</value>
   </data>
-    <data name="Alert" xml:space="preserve">
+  <data name="Alert" xml:space="preserve">
     <value />
   </data>
-    <data name="TextInput" xml:space="preserve">
+  <data name="TextInput" xml:space="preserve">
     <value />
   </data>
-    <data name="TopNav" xml:space="preserve">
+  <data name="TopNav" xml:space="preserve">
     <value />
   </data>
   <data name="Footer.Frontpage" xml:space="preserve">
-    <value>UK: Frontpage</value>
+    <value>Головна сторінка</value>
   </data>
-    <data name="Icon" xml:space="preserve">
+  <data name="Icon" xml:space="preserve">
     <value />
   </data>
-    <data name="DropdownWidget" xml:space="preserve">
+  <data name="DropdownWidget" xml:space="preserve">
     <value />
   </data>
   <data name="WidgetContainer" xml:space="preserve">
     <value />
   </data>
   <data name="LocationPickerModal.Title" xml:space="preserve">
-    <value>UK: Location picker</value>
+    <value>Вибір розташування</value>
   </data>
   <data name="LocationPickerModal.Subtitle" xml:space="preserve">
     <value>Оберіть місце на мапі</value>
@@ -117,7 +117,7 @@
     <value>Немає даних</value>
   </data>
   <data name="Dropdown.FilterResults" xml:space="preserve">
-    <value>UK: Filter results</value>
+    <value>Відфільтрувати результати</value>
   </data>
   <data name="Dropdown.GetResults" xml:space="preserve">
     <value>Почніть писати, щоб побачити дані</value>
@@ -137,170 +137,170 @@
   <data name="FileInput.Preview" xml:space="preserve">
     <value>Переглянути</value>
   </data>
-    <data name="Grid" xml:space="preserve">
+  <data name="Grid" xml:space="preserve">
     <value />
   </data>
-    <data name="AddressInput" xml:space="preserve">
+  <data name="AddressInput" xml:space="preserve">
     <value />
   </data>
-    <data name="ButtonContainer" xml:space="preserve">
+  <data name="ButtonContainer" xml:space="preserve">
     <value />
   </data>
-    <data name="Checkbox" xml:space="preserve">
+  <data name="Checkbox" xml:space="preserve">
     <value />
   </data>
-    <data name="CheckboxNullable" xml:space="preserve">
+  <data name="CheckboxNullable" xml:space="preserve">
     <value />
   </data>
-    <data name="DocumentPreview" xml:space="preserve">
+  <data name="DocumentPreview" xml:space="preserve">
     <value />
   </data>
-    <data name="EmailInput" xml:space="preserve">
+  <data name="EmailInput" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout.FourColumns" xml:space="preserve">
+  <data name="Layout.FourColumns" xml:space="preserve">
     <value />
   </data>
-    <data name="Link" xml:space="preserve">
+  <data name="Link" xml:space="preserve">
     <value />
   </data>
-    <data name="LocationPicker" xml:space="preserve">
+  <data name="LocationPicker" xml:space="preserve">
     <value />
   </data>
-    <data name="NumberInput" xml:space="preserve">
+  <data name="NumberInput" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout.OneColumn" xml:space="preserve">
+  <data name="Layout.OneColumn" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout.Inline" xml:space="preserve">
+  <data name="Layout.Inline" xml:space="preserve">
     <value />
   </data>
-    <data name="Pagination" xml:space="preserve">
+  <data name="Pagination" xml:space="preserve">
     <value />
   </data>
-    <data name="PhoneInput" xml:space="preserve">
+  <data name="PhoneInput" xml:space="preserve">
     <value />
   </data>
-    <data name="Popover" xml:space="preserve">
+  <data name="Popover" xml:space="preserve">
     <value />
   </data>
-    <data name="Slider" xml:space="preserve">
+  <data name="Slider" xml:space="preserve">
     <value />
   </data>
-    <data name="Spinner" xml:space="preserve">
+  <data name="Spinner" xml:space="preserve">
     <value />
   </data>
-    <data name="Switch" xml:space="preserve">
+  <data name="Switch" xml:space="preserve">
     <value />
   </data>
-    <data name="SwitchNullable" xml:space="preserve">
+  <data name="SwitchNullable" xml:space="preserve">
     <value />
   </data>
-    <data name="TabContainer" xml:space="preserve">
+  <data name="TabContainer" xml:space="preserve">
     <value />
   </data>
-    <data name="TextAreaInput" xml:space="preserve">
+  <data name="TextAreaInput" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout.ThreeColumns" xml:space="preserve">
+  <data name="Layout.ThreeColumns" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout.TwoColumns" xml:space="preserve">
+  <data name="Layout.TwoColumns" xml:space="preserve">
     <value />
   </data>
-    <data name="CheckboxWidget" xml:space="preserve">
+  <data name="CheckboxWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="CheckStepWidget" xml:space="preserve">
+  <data name="CheckStepWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="DateInputWidget" xml:space="preserve">
+  <data name="DateInputWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="LinkWidget" xml:space="preserve">
+  <data name="LinkWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="RouteWidget" xml:space="preserve">
+  <data name="RouteWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="TimeWidget" xml:space="preserve">
+  <data name="TimeWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="NumberWidget" xml:space="preserve">
+  <data name="NumberWidget" xml:space="preserve">
     <value />
   </data>
   <data name="QrWidget.Scan.Error" xml:space="preserve">
-    <value>QR код сканер не доступний, можливо немає дозволу на використання камери вашого девайсу.</value>
+    <value>Сканер QR-коду недоступний, можливо, на вашому мобільному пристрої не отримано дозволу на використання камери.</value>
   </data>
-    <data name="SwitchWidget" xml:space="preserve">
+  <data name="SwitchWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="TextAreaWidget" xml:space="preserve">
+  <data name="TextAreaWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="TextInputWidget" xml:space="preserve">
+  <data name="TextInputWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="StepsWidget" xml:space="preserve">
+  <data name="StepsWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="TitleWidget" xml:space="preserve">
+  <data name="TitleWidget" xml:space="preserve">
     <value />
   </data>
-    <data name="Button" xml:space="preserve">
+  <data name="Button" xml:space="preserve">
     <value />
   </data>
-    <data name="DateInput" xml:space="preserve">
+  <data name="DateInput" xml:space="preserve">
     <value />
   </data>
-    <data name="Form" xml:space="preserve">
+  <data name="Form" xml:space="preserve">
     <value />
   </data>
-    <data name="Layout" xml:space="preserve">
+  <data name="Layout" xml:space="preserve">
     <value />
   </data>
-    <data name="WizardContainer" xml:space="preserve">
+  <data name="WizardContainer" xml:space="preserve">
     <value />
   </data>
   <data name="PasswordForm.HelpText.UpperCase" xml:space="preserve">
-    <value>UK: one uppercase ('A'-'Z') character</value>
+    <value>одна велика літера ('A'-'Z')</value>
   </data>
   <data name="PasswordForm.HelpText.LowerCase" xml:space="preserve">
-    <value>UK: one lowercase ('a'-'z') character</value>
+    <value>одна мала буква ('a'-'z')</value>
   </data>
   <data name="PasswordForm.HelpText.Number" xml:space="preserve">
-    <value>UK: one number</value>
+    <value>одна цифра</value>
   </data>
   <data name="PasswordForm.HelpText.SpecialCharacter" xml:space="preserve">
-    <value>UK: one special character</value>
+    <value>один буквено-цифровий символ</value>
   </data>
   <data name="PasswordForm.ResetPassword.PasswordsDontMatchMessage" xml:space="preserve">
-    <value>UK: Passwords don't match</value>
+    <value>Паролі не співпадають</value>
   </data>
   <data name="PasswordForm.ChangePassword.CurrentPassword" xml:space="preserve">
-    <value>UK: Current password</value>
+    <value>Поточний пароль</value>
   </data>
   <data name="PasswordForm.LoginPage.PasswordInput" xml:space="preserve">
-    <value>UK: Password</value>
+    <value>Пароль</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>UK: Confirm password</value>
+    <value>Підтвердити пароль</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
-    <value>UK: Save</value>
+    <value>Зберегти</value>
   </data>
   <data name="ImageInput.DocumentTypeNotSupported" xml:space="preserve">
-    <value>UK: Document type is not supported, choose file with extension {0}</value>
+    <value>Тип документа не підтримується, виберіть файл з розширенням {0}</value>
   </data>
   <data name="ImageModal.PreviewNotSupported" xml:space="preserve">
-    <value>UK: Preview is not supported for this type of file, but you can download it instead</value>
+    <value>Попередній перегляд не підтримується для файлів цього типу, але ви можете завантажити його замість цього.</value>
   </data>
   <data name="ImageModal.Download" xml:space="preserve">
     <value>Завантажити</value>
   </data>
   <data name="Footer.Contact" xml:space="preserve">
-    <value>UK: Contact information</value>
+    <value>Контактна інформація</value>
   </data>
   <data name="AddressDivider.Street" xml:space="preserve">
     <value>Вулиця</value>
@@ -312,88 +312,88 @@
     <value>Поштовий індекс</value>
   </data>
   <data name="BaseInput.Validators.DocumentTooBig" xml:space="preserve">
-    <value>UK: Document file is too big</value>
+    <value>Файл документа занадто великий</value>
   </data>
   <data name="BaseInput.Validators.DocumentTypeNotSupported" xml:space="preserve">
-    <value>UK: Document type is not supported, choose file with extension {0}</value>
+    <value>Тип документа не підтримується, виберіть файл з розширенням {0}</value>
   </data>
   <data name="BaseInput.Validators.Length" xml:space="preserve">
-    <value>UK: Text is too short</value>
+    <value>Текст надто короткий</value>
   </data>
   <data name="BaseInput.Validators.NumberRange" xml:space="preserve">
-    <value>UK: Value must be in range {0} - {1}</value>
+    <value>Значення має бути в діапазоні {0} - {1}</value>
   </data>
   <data name="BaseInput.Validators.Required" xml:space="preserve">
-    <value>UK: {0} is required</value>
+    <value>Потрібно {0}</value>
   </data>
   <data name="BaseInput.Validators.TotalSizeTooBig" xml:space="preserve">
-    <value>UK: Total size of documents is too big</value>
+    <value>Загальний розмір документів занадто великий</value>
   </data>
   <data name="Month.April" xml:space="preserve">
-    <value>UK: April</value>
+    <value>квітень</value>
   </data>
   <data name="Month.August" xml:space="preserve">
-    <value>UK: August</value>
+    <value>серпень</value>
   </data>
   <data name="Month.December" xml:space="preserve">
-    <value>UK: December</value>
+    <value>грудень</value>
   </data>
   <data name="Month.February" xml:space="preserve">
-    <value>UK: February</value>
+    <value>лютий</value>
   </data>
   <data name="Month.January" xml:space="preserve">
-    <value>UK: January</value>
+    <value>січень</value>
   </data>
   <data name="Month.July" xml:space="preserve">
-    <value>UK: July</value>
+    <value>липень</value>
   </data>
   <data name="Month.June" xml:space="preserve">
-    <value>UK: June</value>
+    <value>червень</value>
   </data>
   <data name="Month.March" xml:space="preserve">
-    <value>UK: March</value>
+    <value>березень</value>
   </data>
   <data name="Month.May" xml:space="preserve">
-    <value>UK: May</value>
+    <value>травень</value>
   </data>
   <data name="Month.November" xml:space="preserve">
-    <value>UK: November</value>
+    <value>листопад</value>
   </data>
   <data name="Month.October" xml:space="preserve">
-    <value>UK: October</value>
+    <value>жовтень</value>
   </data>
   <data name="Month.September" xml:space="preserve">
-    <value>UK: September</value>
+    <value>вересень</value>
   </data>
   <data name="ImageInput.Back" xml:space="preserve">
-    <value>UK: Back</value>
+    <value>Назад</value>
   </data>
   <data name="ImageInput.Browse" xml:space="preserve">
-    <value>UK: Browse</value>
+    <value>Перегляд</value>
   </data>
   <data name="ImageInput.Camera" xml:space="preserve">
-    <value>UK: Camera</value>
+    <value>Камера</value>
   </data>
   <data name="ImageInput.Delete" xml:space="preserve">
-    <value>UK: Delete</value>
+    <value>Видалити</value>
   </data>
   <data name="ImageInput.Edit" xml:space="preserve">
-    <value>UK: Edit</value>
+    <value>Змінити</value>
   </data>
   <data name="ImageInput.Save" xml:space="preserve">
-    <value>UK: Save</value>
+    <value>Зберегти</value>
   </data>
   <data name="ImageInput.RotateLeft" xml:space="preserve">
-    <value>UK: RotateLeft</value>
+    <value>Повернути наліво</value>
   </data>
   <data name="ImageInput.RotateRight" xml:space="preserve">
-    <value>UK: RotateRight</value>
+    <value>Повернути праворуч</value>
   </data>
   <data name="ImageInput.Preview" xml:space="preserve">
-    <value>UK: Preview</value>
+    <value>Переглянути</value>
   </data>
   <data name="ImageInput.DropIt" xml:space="preserve">
-    <value>UK: Drop it</value>
+    <value>Перетягніть сюди</value>
   </data>
   <data name="MessageBox.Ok" xml:space="preserve">
     <value>Ok</value>
@@ -405,30 +405,33 @@
     <value>Будьласка, залиште коментар</value>
   </data>
   <data name="MessageBox.Yes" xml:space="preserve">
-    <value>UK: Yes</value>
+    <value>Так</value>
   </data>
   <data name="MessageBox.No" xml:space="preserve">
-    <value>UK: No</value>
+    <value>Ні</value>
   </data>
   <data name="MessageBox.Abort" xml:space="preserve">
-    <value>UK: Abort</value>
+    <value>Перервати</value>
   </data>
   <data name="MessageBox.Retry" xml:space="preserve">
-    <value>UK: Retry</value>
+    <value>Повторити</value>
   </data>
   <data name="MessageBox.Ignore" xml:space="preserve">
-    <value>UK: Ignore</value>
+    <value>Нехтувати</value>
   </data>
   <data name="MessageBox.Cancel" xml:space="preserve">
-    <value>UK: Cancel</value>
+    <value>Перервати</value>
   </data>
   <data name="ImageInput.MoveDown" xml:space="preserve">
-    <value>UK: Move below</value>
+    <value>Опуститись нижче</value>
   </data>
   <data name="ImageInput.MoveToTop" xml:space="preserve">
-    <value>UK: Move to top</value>
+    <value>На початок</value>
   </data>
   <data name="ImageInput.MoveUp" xml:space="preserve">
-    <value>UK: Move up</value>
+    <value>Піднятися</value>
+  </data>
+  <data name="ImageInput.DocumentTooBig" xml:space="preserve">
+    <value>Файл документа занадто великий</value>
   </data>
 </root>

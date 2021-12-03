@@ -1,12 +1,14 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, GoogleMap, NumberInput, PageRow, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
+import {Button, Checkbox, FourColumns, GoogleMap, IGoogleMapMarker, NumberInput, PageRow, ThreeColumns} from "@weare/athenaeum-react-components";
 
 interface IModalTestsState {
     clusterMarkers: boolean;
     lat: number;
     lon: number;
-    markers: google.maps.Marker[];
+    markerCount: number;
+    markersWithInfoWindows: boolean;
+    autoCloseInfoWindows: boolean;
 }
 
 export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> {
@@ -15,44 +17,44 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
         clusterMarkers: false,
         lat: 0,
         lon: 0,
-        markers: [],
+        markerCount: 0,
+        markersWithInfoWindows: false,
+        autoCloseInfoWindows: false,
     };
 
     private readonly _mapRef: React.RefObject<GoogleMap> = React.createRef();
 
-    private async setMarkersAsync(count: number): Promise<void> {
-        while (this.state.markers.length <= count) {
-            this.state.markers.push(new google.maps.Marker({
+    private get markers(): IGoogleMapMarker[] {
+
+        const markers: IGoogleMapMarker[] = [];
+
+        while (markers.length < this.state.markerCount) {
+
+            const marker: IGoogleMapMarker = {
                 title: "marker",
-                position: {lat: (Math.random() - 0.5) * 200, lng: (Math.random() - 0.5) * 200},
-            }));
+                position: {
+                    lat: (Math.random() - 0.5) * 200,
+                    lng: (Math.random() - 0.5) * 200
+                },
+            };
+
+            if (this.state.markersWithInfoWindows) {
+                marker.infoWindow = {
+                    content: `Info window for marker`,
+                    position: marker.position,
+                    pixelOffset: {height: -42, width: 0, equals(): boolean {return false}},
+                };
+            }
+
+            markers.push(marker);
         }
 
-        if (this.state.markers.length > count) {
-            this.state.markers.splice(count);
-        }
-
-        await this.reRenderAsync();
+        return markers;
     }
 
     public render(): React.ReactNode {
         return (
             <React.Fragment>
-                <PageRow>
-                    <TwoColumns>
-                        <NumberInput inline
-                                     label="Markers"
-                                     onChange={async (_, markers) => await this.setMarkersAsync(markers)}
-                        />
-
-                        <Checkbox inline
-                                  label="Cluster markers"
-                                  value={this.state.clusterMarkers}
-                                  onChange={async (_, clusterMarkers) => {await this.setState({clusterMarkers})}}
-                        />
-                    </TwoColumns>
-                </PageRow>
-
                 <PageRow>
                     <ThreeColumns>
                         <NumberInput inline
@@ -73,13 +75,42 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
                     </ThreeColumns>
                 </PageRow>
 
+                <PageRow>
+                    <FourColumns>
+                        <NumberInput inline
+                                     label="Markers"
+                                     value={this.state.markerCount}
+                                     onChange={async (_, markerCount) => {await this.setState({markerCount})}}
+                        />
+
+                        <Checkbox inline
+                                  label="Cluster markers"
+                                  value={this.state.clusterMarkers}
+                                  onChange={async (_, clusterMarkers) => {await this.setState({clusterMarkers})}}
+                        />
+
+                        <Checkbox inline
+                                  label="With info windows"
+                                  value={this.state.markersWithInfoWindows}
+                                  onChange={async (_, markersWithInfoWindows) => {await this.setState({markersWithInfoWindows})}}
+                        />
+
+                        <Checkbox inline
+                                  label="Auto-close info windows"
+                                  value={this.state.autoCloseInfoWindows}
+                                  onChange={async (_, autoCloseInfoWindows) => {await this.setState({autoCloseInfoWindows})}}
+                        />
+                    </FourColumns>
+                </PageRow>
+
                 <GoogleMap ref={this._mapRef}
                            height={"50vh"}
                            initialCenter={{lat: 50, lng: 50}}
                            initialZoom={1}
+                           markers={this.markers}
                            clusterMarkers={this.state.clusterMarkers}
-                           markers={this.state.markers}
-                           onClick={async () => {console.log(`map click, ${this.state.markers.length} markers`)}}
+                           autoCloseInfoWindows={this.state.autoCloseInfoWindows}
+                           onClick={async () => {console.log(`map click`)}}
                 />
             </React.Fragment>
         );

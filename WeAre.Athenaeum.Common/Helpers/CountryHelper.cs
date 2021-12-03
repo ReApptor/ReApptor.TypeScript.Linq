@@ -18,7 +18,8 @@ namespace WeAre.Athenaeum.Common.Helpers
             new CountryInfo("dk", "Danmark", "Denmark", "da-dk", "da"),
             new CountryInfo("pl", "Polska", "Poland", "pl-pl"),
             new CountryInfo("ru", "Россия", "Russia", "ru-ru"),
-            new CountryInfo("ua", "Україна", "Ukraine", "uk-ua", "uk")
+            new CountryInfo("gb", "United Kingdom", "United Kingdom", "en-GB", "en"),
+            new CountryInfo("us", "United States", "United States", "en-US"),
         };
 
         public static readonly CountryInfo DefaultCountry = Countries[0];

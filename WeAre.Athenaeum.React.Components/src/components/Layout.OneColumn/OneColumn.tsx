@@ -4,6 +4,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import styles from "../Layout/Layout.module.scss";
 
 interface IOneColumnProps {
+    id?: string;
     className?: string;
 }
 
@@ -19,9 +20,9 @@ export default class OneColumn extends BaseComponent<IOneColumnProps> {
         );
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
-            <div className={this.props.className}>
+            <div id={this.id} className={this.props.className}>
                 {
                     (this.props.children) && (this.children.length > 0) && this.children.map((item, index) => this.renderRow(index, item))
                 }

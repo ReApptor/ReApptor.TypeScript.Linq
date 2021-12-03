@@ -24,9 +24,9 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     placeholder?: string;
     hidden?: boolean;
     
-    onClickAsync?(sender: FileInput, value: FileModel): Promise<void>;
-    onChangeAsync?(sender: FileInput, value: FileModel | FileModel[]): Promise<void>;
-    onRemoveAsync?(value: FileModel): Promise<void>;
+    onClick?(sender: FileInput, value: FileModel): Promise<void>;
+    onChange?(sender: FileInput, value: FileModel | FileModel[]): Promise<void>;
+    onRemove?(value: FileModel): Promise<void>;
     onBlur?(sender: FileInput): Promise<void>;
 }
 
@@ -109,8 +109,8 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                     const newFiles: FileModel[] = files.filter(file => !(this.value as FileModel[]).map(file => file.name).includes(file.name));
                     const newValue: FileModel[] = this.value.concat(newFiles);
 
-                    if (this.props.onChangeAsync) {
-                        await this.props.onChangeAsync(this, newValue)
+                    if (this.props.onChange) {
+                        await this.props.onChange(this, newValue)
                     }
                     
                     return await this.updateValueAsync(newValue)
@@ -126,8 +126,8 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             await this.updateValueAsync(file);
         }
         
-        if (this.props.onChangeAsync) {
-            await this.props.onChangeAsync(this, this.state.model.value || [])
+        if (this.props.onChange) {
+            await this.props.onChange(this, this.state.model.value || [])
         }
     }
     
@@ -146,14 +146,14 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
 
         await this.updateValueAsync(value);
         
-        if ((this.props.onRemoveAsync) && (removedValue != null)) {
-            await this.props.onRemoveAsync(removedValue);
+        if ((this.props.onRemove) && (removedValue != null)) {
+            await this.props.onRemove(removedValue);
         }
     }
     
     private async onClickHandlerAsync(value: FileModel): Promise<void> {
-        if (this.props.onClickAsync) {
-            await this.props.onClickAsync(this, value);
+        if (this.props.onClick) {
+            await this.props.onClick(this, value);
         }
     }
 
@@ -201,17 +201,18 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
         if (this.value instanceof Array) {
             return (this.value.length > 0) && this.value.map((file: FileModel, index: number) =>
                 <div key={index} className={styles.selectedFile}>
-                    <span className={this.css(this.props.onClickAsync && styles.clickable)} 
+                    <span className={this.css(this.props.onClick && styles.clickable)} 
                           onClick={() => this.onClickHandlerAsync(file)}>{file.name}</span>
                     <Icon name="trash-alt" 
                           onClick={async () => await this.removeSelectedFileAsync(index)} 
-                          confirm={(file.id) && this.props.removeConfirmation}/>
+                          confirm={(file.id) && this.props.removeConfirmation}
+                    />
                 </div>
             )
         } else {
             return (
                 <div className={styles.selectedFile}>
-                    <span className={this.css(this.props.onClickAsync && styles.clickable)} 
+                    <span className={this.css(this.props.onClick && styles.clickable)} 
                           onClick={() => this.onClickHandlerAsync(this.value as FileModel)}>{(this.value as FileModel).name}</span>
                     <Icon name="trash-alt" 
                           onClick={async () => await this.removeSelectedFileAsync()} 

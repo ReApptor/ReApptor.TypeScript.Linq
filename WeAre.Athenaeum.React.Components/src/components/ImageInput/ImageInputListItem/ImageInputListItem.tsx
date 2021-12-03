@@ -1,16 +1,17 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import styles from "./ImageInputListItem.module.scss";
 import {FileModel} from "@weare/athenaeum-toolkit";
+
+import styles from "./ImageInputListItem.module.scss";
 
 export interface IImageInputListItemProps {
     fileModel: FileModel;
-    index: number;
-    hasSelectedPictureIndex: boolean;
-    selectedPictureIndex: number | null;
-    onListViewItemClick: (index: number) => void;
-    getPreviewSource: (index: number) => string;
-    getPreviewName: (index: number) => string;
+    className?: string;
+    multiple: boolean;
+    selected: boolean;
+    previewSource: string;
+    previewName: string;
+    onListViewItemClick: () => void;
 }
 
 export interface IImageInputListItemState {
@@ -20,24 +21,22 @@ export class ImageInputListItem extends BaseComponent<IImageInputListItemProps, 
 
 
     render(): JSX.Element {
-        const activeListViewItemStyle: string | false = (this.props.hasSelectedPictureIndex) && (this.props.selectedPictureIndex === this.props.index) && styles.activeListViewItem;
+        const activeListViewItemStyle: string | false = (this.props.selected && this.props.multiple) && styles.activeListViewItem;
 
         return (
-            <div key={this.props.index}
-                 className={this.css(styles.listViewItem, activeListViewItemStyle)}
-                 onClick={() => this.props.onListViewItemClick(this.props.index)}
+            <div className={this.css(styles.listViewItem, activeListViewItemStyle, this.props.className)}
+                 app-multiple={String(this.props.multiple)}
+                 onClick={() => this.props.onListViewItemClick()}
             >
 
-                <div className={styles.listViewItemThumbnail}>
-                    <img
-                        src={this.props.getPreviewSource(this.props.index)}
-                        alt={this.props.getPreviewName(this.props.index)}
-                    />
+                <div className={styles.listViewItemThumbnail}  style={{backgroundImage: `url(${this.props.previewSource})`}}>
                 </div>
 
-                {
-                    this.props.getPreviewName(this.props.index)
-                }
+                <span className={this.css(styles.listViewItemName)}>
+                    {
+                        this.props.previewName
+                    }
+                </span>
 
             </div>
         );
