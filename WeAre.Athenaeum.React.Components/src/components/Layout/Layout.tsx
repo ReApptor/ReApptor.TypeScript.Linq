@@ -23,6 +23,7 @@ import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "./Layout.module.scss";
+import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
 
 export interface ILayoutProps {
     className?: string;
@@ -34,6 +35,7 @@ export interface ILayoutProps {
     noTopNav?: boolean;
     noFooter?: boolean;
     changeUrl?: boolean;
+    cookieConsent?: ICookieConsentProps
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
@@ -447,6 +449,17 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     (
                         <Spinner global/>
                     )
+                }
+
+                {
+                    (this.props.cookieConsent) && (
+                        <CookieConsent  description={this.props.cookieConsent.description}
+                                        title={this.props.cookieConsent.title}
+                                        acceptButtonText={this.props.cookieConsent.acceptButtonText}
+                                        cookieName={this.props.cookieConsent.cookieName}
+                                        cookieExpirationInDays={this.props.cookieConsent.cookieExpirationInDays}
+                        />
+                    )   
                 }
 
                 <a ref={this._downloadLink}
