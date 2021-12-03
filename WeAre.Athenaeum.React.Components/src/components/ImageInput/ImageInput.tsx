@@ -42,7 +42,7 @@ interface IImageInputProps extends IImageInputToolbarOverwriteProps, IBaseInputP
 
     previewUrlBuilder?(file: FileModel): string;
     onDelete?(file: FileModel): Promise<void>;
-    onUpload(file: FileModel): Promise<FileModel>;
+    onUpload?(file: FileModel): Promise<FileModel>;
     onChange?(sender: ImageInput, value: IImageInputInputType): Promise<void>;
 }
 
@@ -369,6 +369,10 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
         });
 
         const uploadedFileModels = await Promise.all(filteredFileModels.map(async (fileModel): Promise<FileModel> => {
+            if (!this.props.onUpload) {
+                return fileModel;
+            }
+
             const uploaded: FileModel | null = await this.props.onUpload(fileModel);
 
             if (uploaded === null) {
@@ -410,6 +414,11 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
             valueToUpdate[index] = fileModel;
 
+            if (!this.props.onUpload) {
+                await this.onInternalChangeAsync(valueToUpdate);
+                return;
+            }
+
             const uploadedFileModel: FileModel | null = await this.props.onUpload(fileModel);
 
             if (uploadedFileModel === null) {
@@ -427,6 +436,11 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
 
             if (!(this.value instanceof FileModel)) {
                 console.error("multiple mode is off while value is not instanceof FileModel");
+                return;
+            }
+
+            if (!this.props.onUpload) {
+                await this.onInternalChangeAsync(fileModel);
                 return;
             }
 
