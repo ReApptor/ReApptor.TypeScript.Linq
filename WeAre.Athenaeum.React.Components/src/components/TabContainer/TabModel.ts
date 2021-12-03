@@ -3,7 +3,7 @@ import { DataStorageType, IBaseComponent, UserInteractionDataStorage } from "@we
 
 export enum TabRenderType {
     /**
-     * Tab content will be always render
+     * Tab content will be always rendered
      */
     Always,
 

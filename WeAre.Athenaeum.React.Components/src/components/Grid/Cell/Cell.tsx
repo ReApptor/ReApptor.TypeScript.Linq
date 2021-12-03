@@ -1,6 +1,6 @@
 import React from "react";
 import {GeoLocation, IEnumProvider, ServiceProvider, TFormat, Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility} from "@weare/athenaeum-react-common";
+import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility, TextAlign} from "@weare/athenaeum-react-common";
 import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell, RowModel} from "../GridModel";
 import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";
@@ -230,8 +230,10 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     private renderIconCellContent(cell: CellModel<TItem>, cellValue: string | IIconProps | null): React.ReactNode {
         const icon: IIconProps | null = GridTransformer.toIcon(cellValue);
         const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
+        const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
+        
         return (
-            <div>
+            <div className={this.css(alignCenter)} title={cell.title}>
                 {(icon) && (<Icon {...icon} size={size}/>)}
             </div>
         );
@@ -240,7 +242,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
         const name: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
         return (
-            <label htmlFor={name}>
+            <label htmlFor={name} title={cell.title}>
                 <input type="checkbox"
                        id={name}
                        checked={cellValue}
@@ -522,7 +524,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     case ColumnType.Enum:
 
                         if (!format)
-                            throw Error("Wrong grid declaration. Format property in column definition should contain enum type name for enum cell.");
+                            throw Error("Wrong grid declaration. Format property in column definition should contain enum type name for enum cell!");
 
                         cellStyle = gridStyles.enumCell;
                         const enumName: string = format as string;

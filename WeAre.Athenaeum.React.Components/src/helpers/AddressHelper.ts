@@ -259,9 +259,12 @@ export default class AddressHelper {
         return null;
     }
 
-    public static toLocation(formattedAddress: string | null | undefined): GeoLocation | null {
+    public static toLocation(formattedAddress: GeoLocation | string | null | undefined): GeoLocation | null {
         if (!formattedAddress) {
             return null;
+        }
+        if (typeof formattedAddress !== "string") {
+            return formattedAddress;
         }
         
         const geoLocation = new GeoLocation();

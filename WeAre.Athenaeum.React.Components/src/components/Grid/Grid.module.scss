@@ -697,6 +697,13 @@
                 cursor: default;
             }
 
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                justify-content: center;
+                text-align: center;
+            }
+
             .actions {
                 padding: 0 0 0 $baseline;
                 white-space: nowrap;

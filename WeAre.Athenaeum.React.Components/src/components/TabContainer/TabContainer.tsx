@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
 import {ITab, ITabContainer, ITabContainerDefinition, TabContainerModel, TabModel, TabTransformer} from "./TabModel";
-import TabHeader, {ITabHeaderClassNames} from "./TabHeader/TabHeader";
+import TabHeader, {ITabHeaderClassNames, TabContainerHeaderStyleType} from "./TabHeader/TabHeader";
 
 import "./BootstrapOverride.scss";
 import styles from "./TabContainer.module.scss";
@@ -16,6 +16,11 @@ export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClas
 
 interface ITabContainerProps extends ITabContainerDefinition {
     classNames?: ITabContainerClassNames;
+
+    /**
+     * Pass {@linkcode TabContainerHeaderStyleType} to change the header tab's style.
+     */
+    headerStyleType?: TabContainerHeaderStyleType;
 }
 
 interface ITabContainerState {
@@ -82,6 +87,10 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
         return model;
     }
 
+    private get tabContainerStyleType(): TabContainerHeaderStyleType {
+        return this.props.headerStyleType ?? TabContainerHeaderStyleType.Default;
+    }
+
     private get classNames(): ITabContainerClassNames {
         const classNamesCopy: ITabContainerClassNames = {...this.props.classNames} ?? {};
 
@@ -108,7 +117,7 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
                             {
                                 model.tabs.map((tab: TabModel) =>
                                     (
-                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} classNames={this.classNames} />
+                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} classNames={this.classNames} headerStyleType={this.tabContainerStyleType} />
                                     )
                                 )
                             }

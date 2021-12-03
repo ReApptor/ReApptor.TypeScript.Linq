@@ -2,7 +2,7 @@ import React from "react";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import {HashCodeUtility, IPagedList, SortDirection, TFormat, Utility} from "@weare/athenaeum-toolkit";
 import {Align, ch, IAsyncComponent, IBaseComponent, IConfirmation, Justify, PageRoute, TextAlign, VerticalAlign, ArrayScope, ActionType, RenderCallback} from "@weare/athenaeum-react-common";
-import {IIconProps} from "../Icon/Icon";
+import Icon, {IIconProps} from "../Icon/Icon";
 import Comparator from "../../helpers/Comparator";
 import Dropdown, {DropdownAlign, DropdownRequiredType, DropdownVerticalAlign} from "../Dropdown/Dropdown";
 import {IInput} from "../BaseInput/BaseInput";
@@ -2013,13 +2013,18 @@ export class GridTransformer {
         return to;
     }
 
-    public static toIcon(icon: IIconProps | null | undefined | string): IIconProps | null {
+    public static toIcon(icon: IIconProps | null | undefined | string, checkIconName: boolean = false): IIconProps | null {
         if (icon != null) {
             if (typeof icon === "string") {
-                return {
-                    name: icon as string,
+                if ((!checkIconName) || (Icon.isIconName(icon))) {
+                    return {
+                        name: icon as string,
+                    }
                 }
+
+                return null;
             }
+
             return icon as IIconProps;
         }
         return null;

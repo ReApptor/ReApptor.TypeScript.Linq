@@ -1,26 +1,33 @@
 import React from "react";
 import { PageContainer, PageHeader } from "@weare/athenaeum-react-components";
-
-import AnonymousPage from "../AnonymousPage/AnonymousPage";
 import {BasePageParameters, IBasePageProps} from "@weare/athenaeum-react-common";
-import Localizer from "../../../localization/Localizer";
+import AuthorizedPage from "../AuthorizedPage";
+
+
 export interface IRentParameters extends BasePageParameters {
     ignoreGeneratedUrl: true
 }
-export default class Tests3 extends AnonymousPage {
-   
+
+export default class AuthorizedTestWithParameters extends AuthorizedPage<IRentParameters> {
 
     public getTitle(): string {
-        return "Tests3";
+        return nameof(AuthorizedTestWithParameters);
     }
-    
+
     constructor(props: IBasePageProps<IRentParameters>) {
         super(props);
     }
+
     public render(): React.ReactNode {
+
+        console.log(
+            [this.getTitle(), nameof(this.render)].join("."),
+            this.parameters
+        );
+
         return (
             <PageContainer  className="tests-page">
-                <PageHeader title={"Page 3"} />
+                <PageHeader title={this.getTitle()} />
 
             </PageContainer>
         );

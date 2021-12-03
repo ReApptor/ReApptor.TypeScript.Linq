@@ -9,23 +9,22 @@ export interface IAddressDividerTestsState {
 
 export default class AddressDividerTests extends BaseComponent {
 
+    public state: IAddressDividerTestsState = {
+        formattedAddress: ""
+    }
 
-public state: IAddressDividerTestsState = {
-    formattedAddress: ""
-}
-    
-    private doChange(divider: AddressDivider, geo: GeoLocation) {
-        this.setState({formattedAddress: geo.formattedAddress});
+    private async doChange(divider: AddressDivider, geo: GeoLocation): Promise<void> {
+        await this.setState({formattedAddress: geo.formattedAddress});
     }
 
     public render(): React.ReactNode {
         return (
             <React.Fragment>
-                <AddressDivider id="formattedAddress"
-                                onChange={async (geo, location)=> this.doChange(geo, location)}
+                <AddressDivider id="formattedAddressDividerComponent"
                                 location={new GeoLocation(2, 2)}
+                                onChange={async (geo, location) => this.doChange(geo, location)}
                 />
-                Formatted text: <TextInput value={this.state.formattedAddress}></TextInput>
+                Formatted text: <TextInput value={this.state.formattedAddress}/>
             </React.Fragment>
         );
     }
