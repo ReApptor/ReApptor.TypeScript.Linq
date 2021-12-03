@@ -531,7 +531,7 @@ export class ImageInput extends BaseInput<IImageInputInputType, IImageInputProps
     }
 
     private get toolbar(): IIMageInputToolbar {
-        const propsSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.selectionToolbar || {})};
+        const propsSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultSelectionToolbar, ...(this.props.selectionToolbar || {})};
 
         const propsNoSelectionToolbar: IIMageInputToolbar = {...ImageInputToolbar.defaultNoSelectionToolbar, ...(this.props.noSelectionToolbar || {})};
 
