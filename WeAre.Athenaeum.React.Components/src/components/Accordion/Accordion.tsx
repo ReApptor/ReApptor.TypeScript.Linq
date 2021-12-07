@@ -135,6 +135,14 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
 
     // Async-methods
 
+    public async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+
+        if (this.expanded) {
+            await this.recalculateContentHeight();
+        }
+    }
+
     private async setExpanded(expanded: boolean): Promise<void> {
         if (expanded !== this.expanded) {
 
@@ -215,6 +223,10 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
         }
     }
 
+    /**
+     * If content is added dynamically to the {@link Accordion} while it is open, it will not resize itself automatically, causing the content to overflow and clip.
+     * Calling this method will make the {@link Accordion} readjust itself, so all content is visible.
+     */
     public async recalculateContentHeight(): Promise<void> {
         const contentNode: any = this.contentNode;
 

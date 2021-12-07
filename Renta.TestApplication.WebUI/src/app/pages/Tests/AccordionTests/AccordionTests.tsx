@@ -155,6 +155,7 @@ export default class AccordionTests extends BaseComponent<{}, IAccordionTestsSta
                                toggler: "a",
                                }
                                : undefined}
+                           expanded
                 >
                     {
                         this.state.content
