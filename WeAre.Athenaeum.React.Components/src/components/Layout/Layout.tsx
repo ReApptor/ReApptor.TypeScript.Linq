@@ -383,7 +383,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         await this.processTokenAsync();
 
         const originalRoute: string = window.location.pathname;
-        const originalQueryParams: ParsedQuery = queryString.parse(originalRoute);
+        const originalQueryParams: ParsedQuery = queryString.parse(window.location.search);
 
         await this.processUrlRouteAsync(originalRoute, originalQueryParams);
     }
