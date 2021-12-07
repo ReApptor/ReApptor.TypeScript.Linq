@@ -15,7 +15,7 @@ class App extends BaseComponent {
                     onShoppingCartClickAsync={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
                     cookieConsent={{acceptButtonText: "Ok", title: "We use cookies", description: "Yes we do", cookieName: "consent"}}
-                    changeUrl
+                    useRouting
             />
         );
     }
