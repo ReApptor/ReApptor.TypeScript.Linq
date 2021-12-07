@@ -150,6 +150,7 @@ export interface ILayoutPage extends IAsyncComponent {
     readonly hasTopNav: boolean;
     readonly hasFooter: boolean;
     readonly alert: AlertModel | null;
+    readonly useRouting?: boolean;
 }
 
 export interface IBasePageConstructor {
@@ -206,7 +207,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     private async setPageUrlAsync(): Promise<void> {
         const page: IBasePage = this.getPage();
 
-        if (page == null || !page.automaticUrlChange) {
+        if (page == null || !page.automaticUrlChange || !ch.getLayout().useRouting) {
             return;
         }
 
@@ -226,6 +227,19 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
                 localizedRouteName = `${localizedRouteName}/${page.routeId}`
             }
 
+            //Add parameters to query string if any
+            if(page.parameters){
+                let qs  = "";
+                
+                //Querystring.stringify had a problem with parameters object so had to do it this way
+                for (const [key, value] of Object.entries(page.parameters)) {
+                        if(qs != "") {
+                            qs = qs + "&";
+                        }
+                        qs = qs + `${key}=${value}`
+                }
+                localizedRouteName =  (qs) ? `${localizedRouteName}?${qs}` : localizedRouteName;
+            }
             document.title = page.getTitle();
 
             await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, localizedRouteName!);

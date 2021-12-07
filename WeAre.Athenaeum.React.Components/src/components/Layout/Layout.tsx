@@ -34,7 +34,7 @@ export interface ILayoutProps {
     footerLinks?: () => IFooterLink[];
     noTopNav?: boolean;
     noFooter?: boolean;
-    changeUrl?: boolean;
+    useRouting?: boolean;
     cookieConsent?: ICookieConsentProps
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
@@ -222,6 +222,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     ? WebApplicationType.MobileBrowser
                     : WebApplicationType.DesktopBrowser;
     }
+    
+    public get useRouting(): boolean {
+        return this.props.useRouting === true;
+    }
 
     protected async fetchDataAsync(): Promise<ApplicationContext> {
 
@@ -385,7 +389,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const originalRoute: string = window.location.pathname;
         const originalQueryParams: ParsedQuery = queryString.parse(window.location.search);
 
-        await this.processUrlRouteAsync(originalRoute, originalQueryParams);
+        if(this.useRouting){
+            await this.processUrlRouteAsync(originalRoute, originalQueryParams);
+        }
     }
 
     public async componentDidUpdate(): Promise<void> {
