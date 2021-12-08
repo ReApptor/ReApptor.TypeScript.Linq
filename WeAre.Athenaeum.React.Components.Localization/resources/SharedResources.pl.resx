@@ -222,6 +222,9 @@
   <data name="TopNav" xml:space="preserve">
     <value />
   </data>
+  <data name="TopNav.Search.Button" xml:space="preserve">
+    <value>Szukaj</value>
+  </data>
   <data name="Footer.Frontpage" xml:space="preserve">
     <value>Strona główna</value>
   </data>

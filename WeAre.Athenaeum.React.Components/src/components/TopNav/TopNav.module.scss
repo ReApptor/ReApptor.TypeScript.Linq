@@ -107,6 +107,13 @@
         position: absolute;
         right: 0;
         
+        &_search{
+            margin-left: 6px;
+            margin-right: 6px;
+            color: #ffffff;
+            cursor:pointer;
+        }
+        
         &_shoppingCart{
             color: #ffffff;
             cursor:pointer;

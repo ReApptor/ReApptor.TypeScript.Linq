@@ -36,6 +36,7 @@ export interface ILayoutProps {
     noFooter?: boolean;
     useRouting?: boolean;
     cookieConsent?: ICookieConsentProps
+    searchPlaceHolder?: string;
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
@@ -47,7 +48,9 @@ export interface ILayoutProps {
 
     onLogoClick?(sender: IBaseComponent): Promise<void>;
 
-    onShoppingCartClickAsync?(sender: TopNav): Promise<void>;
+    onShoppingCartClick?(sender: TopNav): Promise<void>;
+
+    onSearchClick?(searchTerm: string): Promise<void>;
 
     fetchShoppingCartAsync?(sender: TopNav): Promise<IShoppingCart>;
 }
@@ -222,7 +225,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     ? WebApplicationType.MobileBrowser
                     : WebApplicationType.DesktopBrowser;
     }
-    
+
     public get useRouting(): boolean {
         return this.props.useRouting === true;
     }
@@ -389,7 +392,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const originalRoute: string = window.location.pathname;
         const originalQueryParams: ParsedQuery = queryString.parse(window.location.search);
 
-        if(this.useRouting){
+        if (this.useRouting) {
             await this.processUrlRouteAsync(originalRoute, originalQueryParams);
         }
     }
@@ -398,6 +401,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         if (this._alert) {
             await this.alertAsync(this._alert);
         }
+    }
+
+    private onSearchClickAsync(searchTerm: string): Promise<void>  {
+        if (this.props.onSearchClick) {
+            return this.props.onSearchClick(searchTerm)
+        }
+        return Promise.resolve();
     }
 
     public get applicationName(): string {
@@ -426,7 +436,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 fetchItems={this.props.fetchTopNavItems}
                                 logo={this.props.topNavLogo}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
-                                onShoppingCartClickAsync={this.props.onShoppingCartClickAsync}
+                                onShoppingCartClick={this.props.onShoppingCartClick}
+                                onSearchClick={searchTerm => this.onSearchClickAsync(searchTerm)}
+                                searchPlaceHolder={this.props.searchPlaceHolder}
                                 logoText={this.props.topNavLogoText}
                                 onLogoClick={this.props.onLogoClick}
                         />
@@ -459,13 +471,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
                 {
                     (this.props.cookieConsent) && (
-                        <CookieConsent  description={this.props.cookieConsent.description}
-                                        title={this.props.cookieConsent.title}
-                                        acceptButtonText={this.props.cookieConsent.acceptButtonText}
-                                        cookieName={this.props.cookieConsent.cookieName}
-                                        cookieExpirationInDays={this.props.cookieConsent.cookieExpirationInDays}
+                        <CookieConsent description={this.props.cookieConsent.description}
+                                       title={this.props.cookieConsent.title}
+                                       acceptButtonText={this.props.cookieConsent.acceptButtonText}
+                                       cookieName={this.props.cookieConsent.cookieName}
+                                       cookieExpirationInDays={this.props.cookieConsent.cookieExpirationInDays}
                         />
-                    )   
+                    )
                 }
 
                 <a ref={this._downloadLink}
