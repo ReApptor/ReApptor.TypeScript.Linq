@@ -7,7 +7,6 @@ import Icon, {IconSize, IconStyle} from "../Icon/Icon";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
-import {Button, OneColumn, TextInput, TwoColumns} from "@weare/athenaeum-react-components";
 import Search from "./Search/Search";
 
 export interface IMenuItem {
