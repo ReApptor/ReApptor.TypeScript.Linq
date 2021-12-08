@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent, IGlobalClick} from "@weare/athenaeum-react-common";
 import Icon, {IconSize} from "../../Icon/Icon";
-import {Button, Inline, IStringInputModel, OneColumn, TextInput} from "@weare/athenaeum-react-components";
+import {Button, Form, Inline, IStringInputModel, OneColumn, TextInput} from "@weare/athenaeum-react-components";
 import TopNavLocalizer from "../TopNavLocalizer";
 
 import styles from "./Search.module.scss";
@@ -10,6 +10,7 @@ import styles from "./Search.module.scss";
 interface ISearchProps {
     className?: string;
     searchPlaceHolder?: string;
+
     onSearch?(searchTerm: string): void;
 }
 
@@ -22,7 +23,7 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
         isOpen: false
     };
 
-    private _searchInputModel: IStringInputModel = { value: "" };
+    private _searchInputModel: IStringInputModel = {value: ""};
 
     private async dropdownToggleAsync(): Promise<void> {
         let isOpen: boolean = !this.state.isOpen;
@@ -34,8 +35,8 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
     }
 
     private async onSearchButtonCLickAsync(): Promise<void> {
-        if(this._searchInputModel.value.length >= 3) {
-            if(this.props.onSearch) {
+        if (this._searchInputModel.value.length >= 3) {
+            if (this.props.onSearch) {
                 this.props.onSearch(this._searchInputModel.value);
             }
         }
@@ -59,21 +60,20 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
             <div className={this.css(styles.dropdown, this.props.className)}>
                 <Icon name={"search"}
                       size={IconSize.X2}
-                      className={this.props.className ?? styles.right_search}
+                      className={this.props.className}
                       onClick={async () => await this.dropdownToggleAsync()}
                 />
                 <div className={className}>
-                    <OneColumn>
-                        <Inline>
-                            <TextInput placeholder={this.props.searchPlaceHolder} 
-                                       width={"250px"}
-                                       model={this._searchInputModel}
-                            />
-                            <Button label={TopNavLocalizer.searchButton}
-                                    onClick={async () => await this.onSearchButtonCLickAsync()}
-                            />
-                        </Inline>
-                    </OneColumn>
+                    <Form inline submitOnEnter onSubmit={async () => await this.onSearchButtonCLickAsync()}>
+                        <TextInput placeholder={this.props.searchPlaceHolder}
+                                   className={styles.searchInput}
+                                   width={"250px"}
+                                   model={this._searchInputModel}
+                        />
+                        <Button submit
+                                label={TopNavLocalizer.searchButton}
+                        />
+                    </Form>
 
                 </div>
             </div>
