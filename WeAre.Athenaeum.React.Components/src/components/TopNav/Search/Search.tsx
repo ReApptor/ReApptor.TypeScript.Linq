@@ -24,10 +24,17 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
     };
 
     private _searchInputModel: IStringInputModel = {value: ""};
+    private readonly _searchInputRef: React.RefObject<TextInput> = React.createRef();
 
     private async dropdownToggleAsync(): Promise<void> {
         let isOpen: boolean = !this.state.isOpen;
         await this.setState({isOpen});
+
+        if (isOpen) {
+            if (this._searchInputRef.current) {
+                this._searchInputRef.current.focus();
+            }
+        }
     };
 
     private async closeDropdownAsync(): Promise<void> {
@@ -54,7 +61,9 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
     }
 
     public render(): React.ReactNode {
-        const className: string = (this.state.isOpen) ? styles.dropdown_open : styles.searchContainer;
+        const className: string = (this.state.isOpen)
+            ? styles.dropdown_open
+            : styles.searchContainer;
 
         return (
             <div className={this.css(styles.dropdown, this.props.className)}>
@@ -64,8 +73,11 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
                       onClick={async () => await this.dropdownToggleAsync()}
                 />
                 <div className={className}>
-                    <Form inline submitOnEnter onSubmit={async () => await this.onSearchButtonCLickAsync()}>
-                        <TextInput placeholder={this.props.searchPlaceHolder}
+                    <Form inline submitOnEnter
+                          onSubmit={async () => await this.onSearchButtonCLickAsync()}
+                    >
+                        <TextInput ref={this._searchInputRef}
+                                   placeholder={this.props.searchPlaceHolder}
                                    className={styles.searchInput}
                                    width={"250px"}
                                    model={this._searchInputModel}
