@@ -5,7 +5,7 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class TopNavLocalizer extends BaseComponentLocalizer {
 
     //Constants
-
+    public readonly searchButtonLanguageItemName: string = `Search.Button`;
 
     constructor() {
 
@@ -23,10 +23,15 @@ class TopNavLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-
+        this.set(this.searchButtonLanguageItemName, { language: `en`, value: `Search` }, { language: `uk`, value: `Search` }, { language: `sv`, value: `Sök` }, { language: `ru`, value: `Search` }, { language: `pl`, value: `Szukaj` }, { language: `nb`, value: `Søg` }, { language: `fi`, value: `Etsi` }, { language: `da`, value: `Søg` },);
     }
 
-
+    /**
+    /* "Search.Button" (Search)
+    */
+    public get searchButton() : string {
+        return this.get(this.searchButtonLanguageItemName);
+    }
 }
 
 //Singleton

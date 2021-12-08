@@ -31,6 +31,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly alertLanguageItemName: string = `Alert`;
     public readonly textInputLanguageItemName: string = `TextInput`;
     public readonly topNavLanguageItemName: string = `TopNav`;
+    public readonly topNavSearchButtonLanguageItemName: string = `TopNav.Search.Button`;
     public readonly footerFrontpageLanguageItemName: string = `Footer.Frontpage`;
     public readonly iconLanguageItemName: string = `Icon`;
     public readonly dropdownWidgetLanguageItemName: string = `DropdownWidget`;
@@ -195,6 +196,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.alertLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.textInputLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.topNavLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
+        this.set(this.topNavSearchButtonLanguageItemName, { language: `en`, value: `Search` }, { language: `uk`, value: `Search` }, { language: `sv`, value: `Sök` }, { language: `ru`, value: `Search` }, { language: `pl`, value: `Szukaj` }, { language: `nb`, value: `Søg` }, { language: `fi`, value: `Etsi` }, { language: `da`, value: `Søg` },);
         this.set(this.footerFrontpageLanguageItemName, { language: `en`, value: `Frontpage` }, { language: `uk`, value: `Головна сторінка` }, { language: `sv`, value: `Framsida` }, { language: `ru`, value: `Главная страница` }, { language: `pl`, value: `Strona główna` }, { language: `nb`, value: `Hjemmeside` }, { language: `fi`, value: `Etusivu` }, { language: `da`, value: `Forside` },);
         this.set(this.iconLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
         this.set(this.dropdownWidgetLanguageItemName, { language: `en`, value: `` }, { language: `uk`, value: `` }, { language: `sv`, value: `` }, { language: `ru`, value: `` }, { language: `pl`, value: `` }, { language: `nb`, value: `` }, { language: `fi`, value: `` }, { language: `da`, value: `` },);
@@ -498,6 +500,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get topNav() : string {
         return this.get(this.topNavLanguageItemName);
+    }
+
+    /**
+    /* "TopNav.Search.Button" (Search)
+    */
+    public get topNavSearchButton() : string {
+        return this.get(this.topNavSearchButtonLanguageItemName);
     }
 
     /**

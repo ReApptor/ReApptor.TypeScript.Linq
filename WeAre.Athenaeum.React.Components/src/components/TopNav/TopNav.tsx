@@ -7,6 +7,8 @@ import Icon, {IconSize, IconStyle} from "../Icon/Icon";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
+import {Button, OneColumn, TextInput, TwoColumns} from "@weare/athenaeum-react-components";
+import Search from "./Search/Search";
 
 export interface IMenuItem {
     route: PageRoute;
@@ -25,8 +27,11 @@ export interface ITopNavProps {
     logo?: any;
     logoText?: string;
     applicationName?: string;
+    searchPlaceHolder?: string
 
-    onShoppingCartClickAsync?(sender: TopNav): Promise<void>;
+    onShoppingCartClick?(sender: TopNav): Promise<void>;
+
+    onSearchClick?(searchTerm: string): Promise<void>;
 
     fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
 
@@ -53,8 +58,8 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     private async onShoppingCartClickAsync(): Promise<void> {
-        if (this.props.onShoppingCartClickAsync) {
-            await this.props.onShoppingCartClickAsync(this)
+        if (this.props.onShoppingCartClick) {
+            await this.props.onShoppingCartClick(this)
         }
     }
 
@@ -169,19 +174,9 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         }
 
                         {
-                            (this.items.length > 0) &&
-                            (
-                                <div className={styles.right_hamburgerIcon}
-                                     onClick={async () => await this.toggleHamburgerAsync()}>
-                                    <i className="fas fa-2x fa-bars"/>
-                                </div>
-                            )
-                        }
-
-                        {
                             (this.shoppingCart) && (
                                 <>
-                                    <Icon name={"far shopping-cart"}
+                                    <Icon name={"shopping-cart"}
                                           size={IconSize.X2}
                                           className={this.props.className ?? styles.right_shoppingCart}
                                           onClick={async () => await this.onShoppingCartClickAsync()}
@@ -189,10 +184,29 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                                     {
                                         this.shoppingCart.productsCount > 0 && (
                                             <span className={styles.right_shoppingCartCount}>{this.shoppingCart.productsCount}</span>
-
                                         )
                                     }
                                 </>
+                            )
+                        }
+                        {
+                            (this.props.onSearchClick) && (
+                                <>
+                                    <Search 
+                                        searchPlaceHolder={this.props.searchPlaceHolder}
+                                        onSearch={searchTerm => this.props.onSearchClick!(searchTerm)} 
+                                    />
+                                </>
+                            )
+
+                        }
+
+                        {
+                            (this.items.length > 0) && (
+                                <div className={styles.right_hamburgerIcon}
+                                     onClick={async () => await this.toggleHamburgerAsync()}>
+                                    <i className="fas fa-2x fa-bars"/>
+                                </div>
                             )
                         }
 

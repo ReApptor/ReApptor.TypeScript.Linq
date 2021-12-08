@@ -12,7 +12,9 @@ class App extends BaseComponent {
                     fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
                     topNavLogo="images/logo.svg"
                     footerLogo="images/logo.svg"
-                    onShoppingCartClickAsync={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
+                    onShoppingCartClick={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
+                    onSearchClick={searchTerm => Promise.resolve(alert(searchTerm))}
+                    searchPlaceHolder={"Find"}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
                     cookieConsent={{acceptButtonText: "Ok", title: "We use cookies", description: "Yes we do", cookieName: "consent"}}
                     useRouting
