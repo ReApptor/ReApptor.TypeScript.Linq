@@ -20,7 +20,15 @@ export interface ITextInputProps extends IBaseInputProps<string> {
     autoSuggestItems?: AutoSuggestItem[];
     autoFocus?: boolean;
     trim?: boolean;
+    /**
+    * @deprecated The prop should not be used, use "noAutoComplete" instead to disable browser auto complete (auto-fill)
+    */
     autoComplete?: boolean;
+    /**
+     * Disable disable browser auto complete (auto-fill)
+     */
+    noAutoComplete?: true;
+    
     onChange?(sender: TextInput, value: string, userInteraction: boolean, done: boolean): Promise<void>;
     onBlur?(sender: TextInput): Promise<void>;
 }
@@ -111,6 +119,10 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
     public get str(): string {
         return this.state.model.value || "";
     }
+    
+    public get noAutoComplete(): boolean {
+        return (this.props.noAutoComplete == true) || (this.props.autoComplete === false);
+    }
 
     public renderInput(): React.ReactNode {
 
@@ -138,7 +150,8 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        maxLength={this.props.maxLength || 255}
                        placeholder={TextInputLocalizer.get(this.props.placeholder)}
                        autoFocus={this.props.autoFocus}
-                       autoComplete={(this.props.autoComplete === false) ? "off" : ""}
+                       autoComplete={this.noAutoComplete ? "off" : ""}
+                       role={this.noAutoComplete ? "presentation" : ""}
                        onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
                        onBlur={async () => await this.valueBlurHandlerAsync()}
                        onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
