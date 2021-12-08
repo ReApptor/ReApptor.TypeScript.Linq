@@ -403,13 +403,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    private onSearchClickAsync(searchTerm: string): Promise<void>  {
-        if (this.props.onSearchClick) {
-            return this.props.onSearchClick(searchTerm)
-        }
-        return Promise.resolve();
-    }
-
     public get applicationName(): string {
         return (this.state.data != null) ? this.state.data.applicationName : "";
     }
@@ -437,7 +430,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 logo={this.props.topNavLogo}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
                                 onShoppingCartClick={this.props.onShoppingCartClick}
-                                onSearchClick={searchTerm => this.onSearchClickAsync(searchTerm)}
+                                onSearchClick={this.props.onSearchClick}
                                 searchPlaceHolder={this.props.searchPlaceHolder}
                                 logoText={this.props.topNavLogoText}
                                 onLogoClick={this.props.onLogoClick}
