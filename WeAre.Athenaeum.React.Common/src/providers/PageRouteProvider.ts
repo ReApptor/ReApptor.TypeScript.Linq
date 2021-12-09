@@ -58,21 +58,22 @@ export default class PageRouteProvider {
 
         const context: ApplicationContext = ch.getContext();
         const current: IBasePage | null = ch.findPage();
-
+        const layout: ILayoutPage = ch.getLayout();
+        
         if (id) {
             route = {...route};
             route.id = id;
         }
 
         const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
-
-        if (newPage) {
+      
+        if (newPage || layout.useRouting) {
 
             if (route.name === BasePageDefinitions.dummyRouteName) {
                 return current;
             }
 
-            const layout: ILayoutPage = ch.getLayout();
+          
 
             if (route.name === BasePageDefinitions.logoutRouteName) {
                 await this.logoutAsync(layout);
@@ -242,17 +243,15 @@ export default class PageRouteProvider {
             return null;
         }
 
-        let parts: string[] = route.split("/");
-
-        parts = parts.filter(route => route !== '');
+        const parts: string[] = route
+            .split("/")
+            .filter(route => route !== '');
 
         const firstUrlPart: string = parts[0];
 
-        const secondUrlPart: string | null = (parts.length > 1)
-            ? parts[1]
-            : null;
-
-        const longRoute: string | null = (parts.length > 1)
+        const secondUrlPart: string | undefined = parts[1];
+        
+        const longRoute: string | null = (secondUrlPart)
             ? `${firstUrlPart}/${secondUrlPart}`
             : null;
 
