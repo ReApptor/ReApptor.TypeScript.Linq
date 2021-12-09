@@ -35,7 +35,7 @@ export default class PageRouteProvider {
 
     private static async onRedirectAsync(route: PageRoute): Promise<void> {
         try {
-            if (!this.sendParametersOnRedirect) {
+            if (!this.sendParametersOnRedirect && !ch.getLayout().useRouting) {
                 route.parameters = null;
             }
             await ApiProvider.postAsync("/api/Application/OnRedirect", route);
@@ -59,21 +59,21 @@ export default class PageRouteProvider {
         const context: ApplicationContext = ch.getContext();
         const current: IBasePage | null = ch.findPage();
         const layout: ILayoutPage = ch.getLayout();
-        
+
         if (id) {
             route = {...route};
             route.id = id;
         }
 
         const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
-      
+
         if (newPage || layout.useRouting) {
 
             if (route.name === BasePageDefinitions.dummyRouteName) {
                 return current;
             }
 
-          
+
 
             if (route.name === BasePageDefinitions.logoutRouteName) {
                 await this.logoutAsync(layout);
@@ -250,7 +250,7 @@ export default class PageRouteProvider {
         const firstUrlPart: string = parts[0];
 
         const secondUrlPart: string | undefined = parts[1];
-        
+
         const longRoute: string | null = (secondUrlPart)
             ? `${firstUrlPart}/${secondUrlPart}`
             : null;
@@ -290,5 +290,11 @@ export default class PageRouteProvider {
         return pageDefinitions.render(page, ref);
     }
 
+    /**
+     * Should {@link PageRoute.parameters} be sent to API on {@link redirectAsync}.
+     * Has no effect if {@link ILayoutPage.useRouting} is true, in which case the parameters are always sent.
+     *
+     * @default false
+     */
     public static sendParametersOnRedirect: boolean = false;
 }
