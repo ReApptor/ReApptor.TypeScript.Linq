@@ -1,5 +1,5 @@
 import React from "react";
-import { PageContainer, PageHeader, PageRow, Tab, TabContainer, TabRenderType } from "@weare/athenaeum-react-components";
+import {Checkbox, InlineType, PageContainer, PageHeader, PageRow, Tab, TabContainer, TabContainerHeaderStyleType, TabRenderType} from "@weare/athenaeum-react-components";
 
 import CarouselTests from "./CarouselTests/CarouselTests";
 import AnonymousPage from "../AnonymousPage";
@@ -37,8 +37,16 @@ import PasswordFormTests from "./PasswordFormTests/PasswordFormTests";
 import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
 import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
+import CookieConsentTests from "./CookieConsentTests/CookieConsentTests";
 
-export default class Tests extends AnonymousPage {
+interface ITestsState {
+    underLineTabStyles: boolean;
+}
+
+export default class Tests extends AnonymousPage<{}, ITestsState> {
+    public state: ITestsState = {
+        underLineTabStyles: false
+    };
 
     public getTitle(): string {
         return nameof(Tests);
@@ -49,33 +57,42 @@ export default class Tests extends AnonymousPage {
         console.log([this.getTitle(), nameof(this.render)].join("."));
 
         return (
-            <PageContainer  className="tests-page">
-                <PageHeader title={this.getTitle()} />
+            <PageContainer className="tests-page">
+                <PageHeader title={this.getTitle()}/>
 
+                <Checkbox inline
+                          inlineType={InlineType.Right}
+                          label="Underline tab styles"
+                          value={this.state.underLineTabStyles}
+                          onChange={async (_, underLineTabStyles) => {
+                              await this.setState({underLineTabStyles})
+                          }}
+                />
                 <PageRow>
 
                     <TabContainer id="TestsTabs"
                                   renderType={TabRenderType.ActiveOnly}
+                                  headerStyleType={this.state.underLineTabStyles ? TabContainerHeaderStyleType.Underline : TabContainerHeaderStyleType.Default}
                     >
 
                         <Tab id="AccordionTests" title="Accordion">
-                            <AccordionTests />
+                            <AccordionTests/>
                         </Tab>
 
                         <Tab id="alertTests" title="Alerts">
-                            <AlertTests />
+                            <AlertTests/>
                         </Tab>
 
                         <Tab id="buttonTests" title="Button">
-                            <ButtonTests />
+                            <ButtonTests/>
                         </Tab>
 
                         <Tab id="buttonActionTests" title="Button Action">
-                            <ButtonActionTests />
+                            <ButtonActionTests/>
                         </Tab>
 
                         <Tab id="buttonContainerTests" title="Button Container">
-                            <ButtonContainerTests />
+                            <ButtonContainerTests/>
                         </Tab>
 
                         <Tab id="CarouselTests" title="Carousel">
@@ -83,31 +100,35 @@ export default class Tests extends AnonymousPage {
                         </Tab>
 
                         <Tab id="checkboxTests" title="Checkbox">
-                            <CheckboxTests />
+                            <CheckboxTests/>
+                        </Tab>
+
+                        <Tab id="cookieConsentTests" title="Cookie">
+                            <CookieConsentTests/>
                         </Tab>
 
                         <Tab id="dateInputTests" title="Date Input">
-                            <DateInputTests />
+                            <DateInputTests/>
                         </Tab>
 
                         <Tab id="dateRangeInputTests" title="DateRange Input">
-                            <DateRangeInputTests />
+                            <DateRangeInputTests/>
                         </Tab>
 
                         <Tab id="dropdownTests" title="Dropdown">
-                            <DropdownTests />
+                            <DropdownTests/>
                         </Tab>
 
                         <Tab id="dropdownPerformanceTests" title="DD Performance">
-                            <DropdownPerformanceTests />
+                            <DropdownPerformanceTests/>
                         </Tab>
 
                         <Tab id="dropdownSelectItemsTests" title="Dropdown (SelectItems)">
-                            <DropdownSelectItemsTests />
+                            <DropdownSelectItemsTests/>
                         </Tab>
 
                         <Tab id="dropdownWidgetTests" title="DropdownWidget">
-                            <DropdownWidgetTests />
+                            <DropdownWidgetTests/>
                         </Tab>
 
                         <Tab id="FileInputTests" title="FileInput">
@@ -115,63 +136,63 @@ export default class Tests extends AnonymousPage {
                         </Tab>
 
                         <Tab id="formTests" title="Form">
-                            <FormTests />
+                            <FormTests/>
                         </Tab>
 
                         <Tab id="googleMapTests" title="Google map">
-                            <GoogleMapTests />
+                            <GoogleMapTests/>
                         </Tab>
 
                         <Tab id="gridTest" title="Grids">
-                            <GridTests />
+                            <GridTests/>
                         </Tab>
 
                         <Tab id="ImageInputTests" title="ImageInput">
-                            <ImageInputTests />
+                            <ImageInputTests/>
                         </Tab>
 
                         <Tab id="linkWidgetTests" title="Link Widget">
-                            <LinkWidgetTests />
+                            <LinkWidgetTests/>
                         </Tab>
 
                         <Tab id="listTests" title="List">
-                            <ListTests />
+                            <ListTests/>
                         </Tab>
 
                         <Tab id="locationPickerTests" title="Location picker">
-                            <LocationPickerTests />
+                            <LocationPickerTests/>
                         </Tab>
 
                         <Tab id="messageBoxTests" title="MessageBox">
-                            <MessageBoxTests />
+                            <MessageBoxTests/>
                         </Tab>
 
                         <Tab id="modalTests" title="Modal">
-                            <ModalTests />
+                            <ModalTests/>
                         </Tab>
 
                         <Tab id="nullableSwitchTests" title="Nullable switch">
-                            <NullableSwitchTests />
+                            <NullableSwitchTests/>
                         </Tab>
 
                         <Tab id="numberInputTests" title="Number Input">
-                            <NumberInputTests />
+                            <NumberInputTests/>
                         </Tab>
 
                         <Tab id="numberWidgetTests" title="Number Widget">
-                            <NumberWidgetTests />
+                            <NumberWidgetTests/>
                         </Tab>
 
                         <Tab id="paginationTests" title="Pagination">
-                            <PaginationTests />
+                            <PaginationTests/>
                         </Tab>
 
                         <Tab id="passwordFormTests" title="PassWordForm">
-                            <PasswordFormTests />
+                            <PasswordFormTests/>
                         </Tab>
 
                         <Tab id="SignatureWidgetTests" title="Signature Widget">
-                            <SignatureWidgetTests />
+                            <SignatureWidgetTests/>
                         </Tab>
 
                         <Tab id="SliderTests" title="Slider">
@@ -179,24 +200,24 @@ export default class Tests extends AnonymousPage {
                         </Tab>
 
                         <Tab id="QrWidgetTest" title="Qr Widget">
-                            <QrWidgetTests />
+                            <QrWidgetTests/>
                         </Tab>
 
                         <Tab id="routeWidgetTests" title="RouteWidget">
-                            <RouteWidgetTests />
+                            <RouteWidgetTests/>
                         </Tab>
 
                         <Tab id="phoneInputTests" title="PhoneInput">
-                            <PhoneInputTests />
+                            <PhoneInputTests/>
                         </Tab>
 
 
                         <Tab id="textAreaWidgetTests" title="TextAreaWidget">
-                            <TextAreaWidgetTests />
+                            <TextAreaWidgetTests/>
                         </Tab>
 
                         <Tab id="addressDividerTests" title="AddressDivider">
-                            <AddressDividerTests />
+                            <AddressDividerTests/>
                         </Tab>
                     </TabContainer>
 

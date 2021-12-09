@@ -3,7 +3,7 @@ import {BaseComponent} from "@weare/athenaeum-react-common";
 import styles from "./CookieConsent.module.scss"
 import {Button, ButtonType} from "@weare/athenaeum-react-components";
 
-enum BannerPosition {
+export enum BannerPosition {
     Top,
     Bottom
 }
@@ -15,14 +15,14 @@ interface ICookie {
 
 export interface ICookieConsentProps {
     /**
-     * Description text that is show in the cookie consent banner
-     */
-    description: string
-    
-    /**
      *  Title text shown in cookie consent banner
      */
     title: string;
+
+    /**
+     * Description text that is show in the cookie consent banner
+     */
+    description?: string
 
     /**
      * Accept cookies button text
@@ -38,18 +38,19 @@ export interface ICookieConsentProps {
     /**
      * Name of the consent cookie
      */
-    cookieName:string;
+    cookieName?: string;
 
     /**
      * Expiration of the consent cookie in days. Defaults to "9999-12-31T23:59:59.000Z"
      */
-    cookieExpirationInDays?:number;
+    cookieExpirationInDays?: number;
 }
 
 export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
 
     public get cookieExists(): boolean {
-        const name = this.props.cookieName + "=";
+        const name = this.cookieName + "=";
+        
         const ca = document.cookie.split(';');
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
@@ -61,6 +62,10 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
             }
         }
         return false;
+    }
+    
+    private get cookieName(): string {
+        return this.props.cookieName ?? "consent";
     }
 
     private async saveCookieAsync() {
@@ -74,7 +79,7 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
             : "Fri, 31 Dec 9999 23:59:59 GMT"
 
         let expires: string = "expires=" + expiresValue;
-        document.cookie = this.props.cookieName + "=yes;" + expires + ";path=/";
+        document.cookie = this.cookieName + "=yes;" + expires + ";path=/";
 
         await this.reRenderAsync();
     }
@@ -86,7 +91,7 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
         return (
 
             (!this.cookieExists) && (
-                <div className={this.css(styles.cookieConsentBanner, position === BannerPosition.Bottom ? styles.bottom : styles.top)}>
+                <div className={this.css(styles.cookieConsentBanner, position == BannerPosition.Bottom ? styles.bottom : styles.top)}>
                     <div className={styles.cookieConsentBannerInner}>
                         <div className={styles.cookieConsentBannerCopy}>
                             <div className={styles.cookieConsentBannerHeader}>
