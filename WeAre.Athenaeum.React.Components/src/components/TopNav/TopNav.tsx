@@ -190,12 +190,10 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         }
                         {
                             (this.props.onSearchClick) && (
-                                <>
                                     <Search 
                                         searchPlaceHolder={this.props.searchPlaceHolder}
                                         onSearch={searchTerm => this.props.onSearchClick!(searchTerm)} 
                                     />
-                                </>
                             )
 
                         }

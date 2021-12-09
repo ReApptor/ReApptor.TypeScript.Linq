@@ -28,13 +28,15 @@ class Search extends BaseComponent<ISearchProps, ISearchState> implements IGloba
 
     private async dropdownToggleAsync(): Promise<void> {
         let isOpen: boolean = !this.state.isOpen;
+        
         await this.setState({isOpen});
-
+        
         if (isOpen) {
             if (this._searchInputRef.current) {
                 this._searchInputRef.current.focus();
             }
         }
+  
     };
 
     private async closeDropdownAsync(): Promise<void> {

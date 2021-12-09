@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
-import {AddressHelper, Layout} from "@weare/athenaeum-react-components";
+import {AddressHelper, BannerPosition, Layout} from "@weare/athenaeum-react-components";
 import TestApplicationController from "./pages/TestApplicationController";
 
 class App extends BaseComponent {
@@ -14,9 +14,14 @@ class App extends BaseComponent {
                     footerLogo="images/logo.svg"
                     onShoppingCartClick={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
                     onSearchClick={searchTerm => Promise.resolve(alert(searchTerm))}
-                    searchPlaceHolder={"Find"}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
-                    cookieConsent={{acceptButtonText: "Ok", title: "We use cookies", description: "Yes we do", cookieName: "consent"}}
+                    cookieConsent={
+                        {
+                            acceptButtonText: "Ok",
+                            title: "We use cookies",
+                            position: BannerPosition.Top
+                        }
+                    }
                     useRouting
             />
         );

@@ -468,6 +468,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                        title={this.props.cookieConsent.title}
                                        acceptButtonText={this.props.cookieConsent.acceptButtonText}
                                        cookieName={this.props.cookieConsent.cookieName}
+                                       position={this.props.cookieConsent.position}
                                        cookieExpirationInDays={this.props.cookieConsent.cookieExpirationInDays}
                         />
                     )
