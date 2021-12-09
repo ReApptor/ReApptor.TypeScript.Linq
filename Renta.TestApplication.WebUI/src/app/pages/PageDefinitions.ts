@@ -21,6 +21,7 @@ export default class PageDefinitions extends BasePageDefinitions {
 
         const pageRoutes: Dictionary<string, PageRoute> = new Dictionary<string, PageRoute>()
 
+        pageRoutes.setValue("Tests", PageDefinitions.tests);
         pageRoutes.setValue("test2", PageDefinitions.anonymous);
         pageRoutes.setValue("autoritari", PageDefinitions.authorized);
         pageRoutes.setValue("paranon", PageDefinitions.anonymousWithParams());

@@ -163,7 +163,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private async processUrlRouteAsync(route: string | null, parameters: ParsedQuery): Promise<void> {
 
-        if (route !== null && route !== "/" && route !== "") {
+        if (!!route && route !== "/") {
 
             let pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
             if (pageRoute) {
