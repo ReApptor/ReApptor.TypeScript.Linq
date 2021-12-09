@@ -2,1143 +2,1144 @@
 @import "../Dropdown/Dropdown.module";
 
 .grid {
-    font-size: 0.7rem !important;
-    background-color: $transparent-white;
-    width: auto !important;
-    min-width: 100%;
-    margin-bottom: 0;
-    position: relative;
-    
-    &.noRowHovering {
-        
-        tr:hover {
-            background-color: transparent;
-        }
-        
+  font-size: 0.7rem !important;
+  background-color: $transparent-white;
+  width: auto !important;
+  min-width: 100%;
+  margin-bottom: 0;
+  position: relative;
+
+  &.noRowHovering {
+
+    tr:hover {
+      background-color: transparent;
     }
 
-    thead {
+  }
 
-        th.th {
-            cursor: default;
+  thead {
 
-            min-width: 66px;
+    th.th {
+      cursor: default;
 
-            white-space: nowrap;
-            padding: 0.5rem 0.75rem;
+      min-width: 66px;
 
-            .rotateHeader {
-                transform: translate(0px, 0px) rotate(315deg);
-                width: 30px;
-                margin: 0 auto;
-                position: relative;
-                display: flex;
-                justify-content: center;
-            }
-            
-            &.sortable {
-                cursor: pointer;
-                
-                &:hover {
-                    border-bottom-width: 2px;
-                    border-bottom-color: black;
-                }
+      white-space: nowrap;
+      padding: 0.5rem 0.75rem;
 
-                &.asc, &.desc {
-
-                    > div > span {
-                        text-decoration: underline;
-                    }
-                    
-                }
-            }
-            
-            &.check {
-                min-width: 40px;
-                max-width: 40px;
-                vertical-align: middle;
-                text-align: center;
-                cursor: pointer;
-                
-                input {
-                    cursor: pointer;
-                }
-                
-                &.partially {
-                    input {
-                        opacity: 0.6;
-                    }
-                }
-            }
-        }
-        
-        tr:hover {
-            background-color: transparent !important;
-        }
-        
-    }
-    
-    tbody {
-
-        > tr {
-            height: 0;
-        }
-        
-        &.spinner {
-            width: 0;
-            height: 0;
-            padding: 0;
-            margin: 0;
-            border: 1px transparent;
-            
-            tr {
-                width: 0;
-                height: 0;
-                padding: 0;
-                margin: 0;
-                border: none;
-                
-                td {
-                    width: 0;
-                    height: 0;
-                    padding: 0;
-                    margin: 0;
-                    border: none;
-                    font-size: 0;
-                    line-height: 0;
-                }
-            }
-        }
-    }
-
-    td {
-        vertical-align: middle !important;
-
-        &:first-of-type{
-            min-width: 40px;
-        }
-        
-        &.rowSpan {
-            background-color: inherit;
-        }
-
-        &.square {
-            min-width: 135px;
-        }
-
-        &.dropdown {
-            min-width: 190px;
-        }
-        
-        &.notValid {            
-        }
-
-        &.cellHovering {
-
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.075);
-            }
-        }
-        
-        &.deleted {
-
-            position: relative;
-
-            &:before {
-                position: absolute;
-                top: 50%;
-                left: 0;
-                right: 0;
-                border-bottom: 1px solid $transparent-dark-orange;
-                height: 0;
-                content: "\00B7";
-                font-size: 1px;
-            }
-
-            &.firstColumn:before {
-                left: 0.5rem;
-            }
-
-            &.lastColumn:before {
-                right: 0.5rem;
-            }
-            
-            .defaultCell {
-                span {
-                    opacity: 0.25;
-                }
-            }
-        }
-        
-        &.check {
-            vertical-align: middle;
-            text-align: center;
-            cursor: pointer;
-
-            input {
-                cursor: pointer;
-            }
-            
-            &.disabled {
-                cursor: not-allowed;
-                
-                input {
-                    opacity: 0.6;
-                    cursor: not-allowed;
-                }
-            }
-        }
-        
-        &.checked {
-        }
-        
-        &.selected {
-        }
-
-        &.noWrap {
-            white-space: nowrap;
-
-            .textCell {
-                span {
-                    text-overflow: ellipsis;
-                    overflow-x: hidden;
-                    display: block;
-                }
-            }
-        }
-
-        &.wordBreak {
-            word-break: break-word;
-
-            .textCell {
-                span {
-                    word-break: break-word;
-                }
-            }
-        }
-        
-        &.paddingLarge {
-            padding: 8px 12px;
-
-            .enumCell {
-
-                .dropdown {
-                    > div {
-                        > div {
-                            > div {
-                                :global {
-                                    div.alignTop {
-                                        bottom: 24px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            .defaultCell {
-                min-height: 24px;
-                
-                .twoLines {
-                    position: relative;
-                    height: 23px;
-
-                    span {
-                        position: absolute;
-
-                        &:first-child {
-                            top: -3px;
-                        }
-
-                        &:nth-child(2) {
-                            top: 11px;
-                        }
-                    }
-                }
-            }
-
-            .numberCell {
-
-                .numberContainer {
-
-                    &.numberInfo {
-                        > div {
-                            > div {
-                                span {
-                                    height: 12px !important;
-                                }
-                            }
-                        }
-                    }
-
-                    .numberInput {
-                        > div {
-                            > div {
-                                span {
-                                    padding: 0;
-                                    margin: 0;
-                                    height: 100%;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        &.paddingMedium {
-            padding: 3px 6px;
-
-            .enumCell {
-
-                .dropdown {
-                    min-width: 100%;
-                    width: 100%;
-
-                    > div {
-                        > div {
-                            > div {
-                                padding: 0 3px !important;
-                                margin: 0 -6px !important;
-
-                                > div:first-child {
-                                    padding: 3px 2px !important;
-                                }
-
-                                :global {
-                                    div.alignTop {
-                                        bottom: 24px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            .numberCell {
-
-                .numberContainer {
-
-                    &.numberInfo {
-                        > div {
-                            > div {
-                                span {
-                                    height: 12px !important;
-                                }
-                            }
-                        }
-                    }
-
-                    .numberInput {
-                        > div {
-                            > div {
-                                span {
-                                    padding: 0;
-                                    margin: 0;
-                                    height: 100%;
-                                }
-                                
-                                > div {
-                                    padding: 0 6px !important;
-                                    margin: 0 -9px !important;
-
-
-                                    input {
-                                        padding: 3px 2px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            /* Default cell */
-            .defaultCell {
-                min-height: 24px;
-
-                .twoLines {
-                    position: relative;
-                    height: 24px;
-                    top: 1px;
-
-                    span {
-                        position: absolute;
-
-                        &:first-child {
-                            top: -3px;
-                        }
-
-                        &:nth-child(2) {
-                            top: 11px;
-                        }
-                    }
-
-                }
-                
-                .actions {
-                    margin-right: 0;
-                }
-            }
-
-            /* Text cell */
-            .textCell {
-
-                .textContainer {
-                    .addressInput {
-                        > div {
-                            > div {
-                                padding: 0;
-                                margin-left: 3px;
-
-                                span {
-                                    padding: 0;
-                                    line-height: 22px;
-                                }
-
-                                input {
-                                    padding: 3px 2px;
-                                    width: 100%;
-                                }
-                            }
-                        }
-
-                        &.noWrap {
-                            > div {
-                                > div {
-                                    span {
-                                        max-height: 1px;
-                                        white-space: initial;
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-
-
-                    .textInput {
-                        > div {
-                            > div {
-                                padding: 0;
-                                margin-left: 3px;
-
-                                span {
-                                    padding-left: 3px;
-                                }
-
-                                input {
-                                    padding: 3px 2px;
-                                    width: 100%;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                .actions {
-                    margin-right: 0;
-                }
-                
-                &.noActions {
-                    input {
-                        width: calc(100% + 6px) !important;
-                    }
-                }
-            }
-
-            /* Date cell */
-            .dateCell {
-                .actions {
-                    margin-right: -1px;
-                }
-            }
-        }
-        
-        &.paddingSmall {
-            padding: 1px 3px;
-            
-            /* Enum cell (DropDown) */
-            .enumCell {
-                
-                .dropdown {
-                    min-width: 100%;
-                    width: 100%;
-
-                    > div {
-                        > div {
-                            > div {
-                                padding: 3px !important;
-                                margin: 0 -3px !important;
-
-                                > div:first-child {
-                                    padding: 0 2px !important;
-                                }
-
-                                :global {
-                                    div.alignTop {
-                                        bottom: 25px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            /* Number cell */
-            .numberCell {
-                
-                .numberContainer {
-
-                    padding-left: 3px !important;
-                    
-                    > span {
-                        left: 3px;
-                        top: 11px;
-                    }
-                    
-                    &.numberInfo {
-                        > div {
-                            > div {
-                                span {
-                                    height: 12px !important;
-                                }
-                            }
-                        }
-                    }
-
-                    .numberInput {
-                        > div {
-                            > div {
-                                padding: 0;
-
-                                span {
-                                    padding: 0;
-                                    margin: 0;
-                                    height: 100%;
-                                }
-
-                                > div {
-                                    padding: 3px !important;
-                                    margin: 0 -3px !important;
-
-                                    input {
-                                        padding: 0 3px !important;
-                                        height: 22px;
-                                        margin-top: -2px;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        &.withArrows {
-                            > div {
-                                > div {
-                                    > div {
-                                        > div {
-                                            padding-right: 3px;
-                                            height: 22px;
-                                            top: 1px;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            /* Default cell */
-            .defaultCell {
-                min-height: 24px;
-                
-                span {
-                    padding: 0 3px !important;
-                }
-
-                .twoLines {
-                    position: relative;
-                    height: 24px;
-                    top: 1px;
-
-                    span {
-                        position: absolute;
-
-                        &:first-child {
-                            top: -3px;
-                        }
-
-                        &:nth-child(2) {
-                            top: 10px;
-                        }
-                    }
-                }
-
-                .actions {
-                    margin-right: 1px;
-                }
-            }
-
-            /* Text cell */
-            .textCell {
-                
-                .textContainer {
-                    
-                    .addressInput {
-                        > div {
-                            > div {
-                                padding: 0 3px;
-                                margin-left: 3px;
-
-                                span {
-                                    padding: 0;
-                                    line-height: 22px;
-                                }
-
-                                input {
-                                    height: 22px;
-                                    padding: 0 2px;
-                                    width: calc(100% + 3px);
-                                }
-                            }
-                        }
-                    }
-                    
-                    .textInput {
-                        > div {
-                            > div {
-                                padding: 0 3px;
-                                margin-left: 3px;
-                                
-                                span {
-                                    padding-left: 3px;
-                                }
-                                
-                                input {
-                                    height: 22px;
-                                    padding: 0 2px;
-                                    width: calc(100% + 3px);
-                                }
-                            }
-                        }
-
-                        &.noWrap {
-                            > div {
-                                > div {
-                                    span {
-                                        max-height: 1px;
-                                        white-space: initial;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                .actions {
-                    margin-right: 1px;
-                    padding: 0 0 0 4px;
-                }
-
-                &.noActions {
-                    input {
-                        width: calc(100% + 6px) !important;
-                    }
-                }
-            }
-            
-            /* Date cell */
-            .dateCell {
-                .twoLines {
-                    span {
-                        padding: 0 3px;
-                    }
-                }
-                
-                input {
-                    padding: 0 3px !important;
-                }
-
-                .actions {
-                    margin-right: 5px;
-                }
-            }
-            
-            .cell {
-                .actions {
-                    
-                    > i {
-                        padding: 2px 4px;
-                    }
-                }
-            }
-        }
-
-        .cell {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
-            
-            &.fixedLineHeight {
-                line-height: 12px;
-            }
-
-            &.noActions {
-                min-width: 100%;
-                width: auto;
-            }
-
-            > span {
-                width: inherit;
-                cursor: default;
-            }
-
-            .center {
-                margin-left: auto;
-                margin-right: auto;
-                justify-content: center;
-                text-align: center;
-            }
-
-            .actions {
-                padding: 0 0 0 $baseline;
-                white-space: nowrap;
-                display: block;
-                
-                &:first-child {
-                    padding-left: 0;
-                    width: 100%;
-                }
-                
-                > i {
-                    cursor: pointer;
-                    padding: 4px;
-                    font-size: 1rem;
-                    margin: 0 1px;
-                    
-                    &:first-child {
-                        margin-left: 0;
-                    }
-                    
-                    &:last-child {
-                        margin-right: 0;
-                    }
-
-                    &:hover {
-                        box-shadow: 0px 0px 0px 1px #adadad;
-                        border-radius: 3px;
-                        background-color: $orange;
-                        color: white !important;
-                    }
-                }
-                
-                .actionRight {
-                    float: right;
-                }
-            }
-
-            :global {
-                input:not(.filter) {
-                    padding: 0;
-                    line-height: 1;
-                    height: auto;
-                    min-width: 46px;
-                    color: #212529;
-                }
-            }
-        }
-    }
-    
-    .enumCell {
-        //margin: 0 -0.375rem;
-        
-        .dropdown {
-            min-width: 100%;
-            width: 100%;
-            margin: 0;
-
-            > div {
-                > div {
-                    > div {
-                        padding: 0 0.375rem;
-                        margin: 0 -0.75rem;
-                        
-                        > div:first-child {
-                            
-                            width: 100%;
-                            height: auto;
-
-                            padding: 3px 5px;
-
-                            span {
-                                font-size: 0.8em !important;
-                                text-align: left;
-                                min-height: 16px;
-                            }
-
-                            &:not(:hover) {
-                                background-color: transparent;
-                                border-color: transparent;
-
-                                i {
-                                    display: none;
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-        
-        &.notValid {
-            
-            .dropdown {
-
-                > div {
-                    > div {
-                        > div {
-                            > div:first-child {
-
-                                span {
-                                    color: $danger;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            }
-            
-        }
-    }
-    
-    .numberCell {
-        //margin: 0 -0.375rem;
+      .rotateHeader {
+        transform: translate(0px, 0px) rotate(315deg);
+        width: 30px;
+        margin: 0 auto;
         position: relative;
-        
-        .numberContainer {
-            width: 100%;
+        display: flex;
+        justify-content: center;
+      }
 
-            &.numberInfo {
-                > span {
-                    position: absolute;
-                    left: 0;
-                    top: 0.75rem;
-                    color: #adadad;
-                    cursor: default;
-
-                    &.hideZero {
-                        display: none;
-                    }
-                }
-                
-                .numberInput {
-                    span {
-                        margin-top: -0.5rem;
-                    }
-
-                    &.bold {
-                        span {
-                            font-weight: bold;
-                        }
-                    }
-                }
-            }
-
-            .numberInput {
-                width: 100%;
-                margin: 0;
-
-                span {
-                    padding-bottom: 0.5rem;
-                }
-
-                &.hideZero {
-                    span {
-                        color: transparent;
-                    }
-                }
-
-                > div {
-                    > div {
-                        height: 24px;
-
-                        > div {
-                            position: absolute;
-                            left: 0;
-                            right: 0;
-                            top: 0;
-                            bottom: 0;
-                            padding: 0 0.375rem;
-                            margin: 0 -0.75rem;
-                            
-                            > div {
-                                padding-right: 6px;
-                            }
-                        }
-                    }
-                }
-
-                input {
-                    width: 100%;
-                    font-size: 0.8rem !important;
-                    height: 24px;
-                    padding: 3px 5px;
-
-                    &:focus {
-                        outline: none;
-                        box-shadow: none;
-                        border-color: #ced4da;
-                    }
-                }
-                
-                &.withArrows {
-                    input {
-                        padding-right: 20px;
-                    }
-                }
-            }
-
-        }
-        
-        &.notValid {
-            span {
-                color: $danger;
-            }
-        }
-        
-    }
-    
-    .dateCell {
-        > div {
-            margin: 0;
-        }
-        
-        .twoLines {
-            height: 24px;
-            position: relative;
-            top: -2px;
-            
-            span {
-                color: #adadad;
-                position: relative;
-                top: -2px;
-            }
-        }
-
-        .shortDate {
-            input {
-                width: 42px;
-                min-width: 42px !important;
-            }
-        }
-        
-        input {
-            border: 0;
-            background-color: transparent !important;
-            width: 54px;
-            
-            &:focus, &:active {
-                box-shadow: none;
-            }
-        }
-
-        &.notValid {
-            
-            div {
-                input {
-                    color: $danger;
-                }
-                
-            }
-
-        }
-
-        .actions {
-            margin-right: 0;
-        }
-    }
-    
-    .textCell {
-        position: relative;
-        
-        .textContainer {
-            width: 100%;
-            overflow-x: hidden;
-            margin-left: -6px;
-            margin-right: 0;
-
-            .addressInput {
-                width: 100%;
-                margin: 0;
-
-                > div {
-                    > div {
-                        input {
-                            padding: 3px 5px;
-                            width: 100%;
-                            font-size: 0.8rem !important;
-                            box-sizing: border-box;
-
-                            &:focus {
-                                outline: none;
-                                box-shadow: none;
-                                border-color: #ced4da;
-                            }
-                        }
-
-                        span {
-                            padding:0;
-                            height: auto;
-                            min-height: 16px;
-                            line-height: 22px;
-                        }
-                    }
-                }
-            }
-            
-            .textInput {
-                width: 100%;
-                margin: 0;
-                
-                > div {
-                    > div {
-                        input {
-                            padding: 3px 5px;
-                            width: 100%;
-                            font-size: 0.8rem !important;
-                            box-sizing: border-box;
-
-                            &:focus {
-                                outline: none;
-                                box-shadow: none;
-                                border-color: #ced4da;
-                            }
-                        }
-                        
-                        span {
-                            height: auto;
-                            min-height: 16px;
-                            padding-left: 6px;
-                            padding-right: 0;
-                        }
-                    }
-                }
-            }
-            
-        }
-        
-        &.noActions {
-            .textContainer {
-                width: calc(100% + 12px);
-                margin-left: -6px;
-                margin-right: -6px;
-            }
-            
-            input {
-                width: 100% !important;
-            }
-            
-            span {
-                padding-left: 6px !important;
-                padding-right: 6px !important;
-            }
-        }
-        
-        .actions {
-            margin-right: -6px;
-        }
-    }
-
-    .booleanCell {
-        position: relative;
-        
-        label {
-
-            width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            text-align: center;
-            cursor: pointer;
-
-            input {
-                cursor: pointer;
-                width: auto !important;
-                min-width: auto !important;
-                padding: 0 !important;
-            }
-            
-        }
-    }
-  
-    .defaultCell {
-        
-        span {
-            width: 100% !important;
-        }
-        
-        .twoLines {
-            
-            width: 100%;
-            
-            span {
-                display: block;
-                width: 100% !important;
-                cursor: default;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow-x: hidden;
-                
-                &:last-child {
-                    color: $grey;
-                    font-weight: normal;
-                }
-
-                &.bold {
-                    font-weight: bold;
-                }
-            }
-            
-        }
-        
-        .link {
-            cursor: pointer !important;
-            width: auto !important;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-
-        .actions {
-            margin-right: -6px;
-        }
-    }
-    
-    .emptyRow {
-        
-        height: 34px;
-        
-        td {
-            font-weight: 600;
-            text-align: center;
-            cursor: default;
-            color: $grey;
-        }
+      &.sortable {
+        cursor: pointer;
 
         &:hover {
-            background-color: white !important;
+          border-bottom-width: 2px;
+          border-bottom-color: black;
         }
+
+        &.asc, &.desc {
+
+          > div > span {
+            text-decoration: underline;
+          }
+
+        }
+      }
+
+      &.check {
+        min-width: 40px;
+        max-width: 40px;
+        vertical-align: middle;
+        text-align: center;
+        cursor: pointer;
+
+        input {
+          cursor: pointer;
+        }
+
+        &.partially {
+          input {
+            opacity: 0.6;
+          }
+        }
+      }
     }
+
+    tr:hover {
+      background-color: transparent !important;
+    }
+
+  }
+
+  tbody {
+
+    > tr {
+      height: 0;
+    }
+
+    &.spinner {
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      border: 1px transparent;
+
+      tr {
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+
+        td {
+          width: 0;
+          height: 0;
+          padding: 0;
+          margin: 0;
+          border: none;
+          font-size: 0;
+          line-height: 0;
+        }
+      }
+    }
+  }
+
+  td {
+    vertical-align: middle !important;
+
+    &:first-of-type {
+      min-width: 40px;
+    }
+
+    &.rowSpan {
+      background-color: inherit;
+    }
+
+    &.square {
+      min-width: 135px;
+    }
+
+    &.dropdown {
+      min-width: 190px;
+    }
+
+    &.notValid {
+    }
+
+    &.cellHovering {
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+      }
+    }
+
+    &.deleted {
+
+      position: relative;
+
+      &:before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        border-bottom: 1px solid $transparent-dark-orange;
+        height: 0;
+        content: "\00B7";
+        font-size: 1px;
+      }
+
+      &.firstColumn:before {
+        left: 0.5rem;
+      }
+
+      &.lastColumn:before {
+        right: 0.5rem;
+      }
+
+      .defaultCell {
+        span {
+          opacity: 0.25;
+        }
+      }
+    }
+
+    &.check {
+      vertical-align: middle;
+      text-align: center;
+      cursor: pointer;
+
+      input {
+        cursor: pointer;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+
+        input {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    &.checked {
+    }
+
+    &.selected {
+    }
+
+    &.noWrap {
+      white-space: nowrap;
+
+      .textCell {
+        span {
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          display: block;
+        }
+      }
+    }
+
+    &.wordBreak {
+      word-break: break-word;
+
+      .textCell {
+        span {
+          word-break: break-word;
+        }
+      }
+    }
+
+    &.paddingLarge {
+      padding: 8px 12px;
+
+      .enumCell {
+
+        .dropdown {
+          > div {
+            > div {
+              > div {
+                :global {
+                  div.alignTop {
+                    bottom: 24px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .defaultCell {
+        min-height: 24px;
+
+        .twoLines {
+          position: relative;
+          height: 23px;
+
+          span {
+            position: absolute;
+
+            &:first-child {
+              top: -3px;
+            }
+
+            &:nth-child(2) {
+              top: 11px;
+            }
+          }
+        }
+      }
+
+      .numberCell {
+
+        .numberContainer {
+
+          &.numberInfo {
+            > div {
+              > div {
+                span {
+                  height: 12px !important;
+                }
+              }
+            }
+          }
+
+          .numberInput {
+            > div {
+              > div {
+                span {
+                  padding: 0;
+                  margin: 0;
+                  height: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.paddingMedium {
+      padding: 3px 6px;
+
+      .enumCell {
+
+        .dropdown {
+          min-width: 100%;
+          width: 100%;
+
+          > div {
+            > div {
+              > div {
+                padding: 0 3px !important;
+                margin: 0 -6px !important;
+
+                > div:first-child {
+                  padding: 3px 2px !important;
+                }
+
+                :global {
+                  div.alignTop {
+                    bottom: 24px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .numberCell {
+
+        .numberContainer {
+
+          &.numberInfo {
+            > div {
+              > div {
+                span {
+                  height: 12px !important;
+                }
+              }
+            }
+          }
+
+          .numberInput {
+            > div {
+              > div {
+                span {
+                  padding: 0;
+                  margin: 0;
+                  height: 100%;
+                }
+
+                > div {
+                  padding: 0 6px !important;
+                  margin: 0 -9px !important;
+
+
+                  input {
+                    padding: 3px 2px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      /* Default cell */
+      .defaultCell {
+        min-height: 24px;
+
+        .twoLines {
+          position: relative;
+          height: 24px;
+          top: 1px;
+
+          span {
+            position: absolute;
+
+            &:first-child {
+              top: -3px;
+            }
+
+            &:nth-child(2) {
+              top: 11px;
+            }
+          }
+
+        }
+
+        .actions {
+          margin-right: 0;
+        }
+      }
+
+      /* Text cell */
+      .textCell {
+
+        .textContainer {
+          .addressInput {
+            > div {
+              > div {
+                padding: 0;
+                margin-left: 3px;
+
+                span {
+                  padding: 0;
+                  line-height: 22px;
+                }
+
+                input {
+                  padding: 3px 2px;
+                  width: 100%;
+                }
+              }
+            }
+
+            &.noWrap {
+              > div {
+                > div {
+                  span {
+                    max-height: 1px;
+                    white-space: initial;
+                  }
+                }
+              }
+            }
+
+          }
+
+
+          .textInput {
+            > div {
+              > div {
+                padding: 0;
+                margin-left: 3px;
+
+                span {
+                  padding-left: 3px;
+                }
+
+                input {
+                  padding: 3px 2px;
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+
+        .actions {
+          margin-right: 0;
+        }
+
+        &.noActions {
+          input {
+            width: calc(100% + 6px) !important;
+          }
+        }
+      }
+
+      /* Date cell */
+      .dateCell {
+        .actions {
+          margin-right: -1px;
+        }
+      }
+    }
+
+    &.paddingSmall {
+      padding: 1px 3px;
+
+      /* Enum cell (DropDown) */
+      .enumCell {
+
+        .dropdown {
+          min-width: 100%;
+          width: 100%;
+
+          > div {
+            > div {
+              > div {
+                padding: 3px !important;
+                margin: 0 -3px !important;
+
+                > div:first-child {
+                  padding: 0 2px !important;
+                }
+
+                :global {
+                  div.alignTop {
+                    bottom: 25px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      /* Number cell */
+      .numberCell {
+
+        .numberContainer {
+
+          padding-left: 3px !important;
+
+          > span {
+            left: 3px;
+            top: 11px;
+          }
+
+          &.numberInfo {
+            > div {
+              > div {
+                span {
+                  height: 12px !important;
+                }
+              }
+            }
+          }
+
+          .numberInput {
+            > div {
+              > div {
+                padding: 0;
+
+                span {
+                  padding: 0;
+                  margin: 0;
+                  height: 100%;
+                }
+
+                > div {
+                  padding: 3px !important;
+                  margin: 0 -3px !important;
+
+                  input {
+                    padding: 0 3px !important;
+                    height: 22px;
+                    margin-top: -2px;
+                  }
+                }
+              }
+            }
+
+            &.withArrows {
+              > div {
+                > div {
+                  > div {
+                    > div {
+                      padding-right: 3px;
+                      height: 22px;
+                      top: 1px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      /* Default cell */
+      .defaultCell {
+        min-height: 24px;
+
+        span {
+          padding: 0 3px !important;
+        }
+
+        .twoLines {
+          position: relative;
+          height: 24px;
+          top: 1px;
+
+          span {
+            position: absolute;
+
+            &:first-child {
+              top: -3px;
+            }
+
+            &:nth-child(2) {
+              top: 10px;
+            }
+          }
+        }
+
+        .actions {
+          margin-right: 1px;
+        }
+      }
+
+      /* Text cell */
+      .textCell {
+
+        .textContainer {
+
+          .addressInput {
+            > div {
+              > div {
+                padding: 0 3px;
+                margin-left: 3px;
+
+                span {
+                  padding: 0;
+                  line-height: 22px;
+                }
+
+                input {
+                  height: 22px;
+                  padding: 0 2px;
+                  width: calc(100% + 3px);
+                }
+              }
+            }
+          }
+
+          .textInput {
+            > div {
+              > div {
+                padding: 0 3px;
+                margin-left: 3px;
+
+                span {
+                  padding-left: 3px;
+                }
+
+                input {
+                  height: 22px;
+                  padding: 0 2px;
+                  width: calc(100% + 3px);
+                }
+              }
+            }
+
+            &.noWrap {
+              > div {
+                > div {
+                  span {
+                    max-height: 1px;
+                    white-space: initial;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .actions {
+          margin-right: 1px;
+          padding: 0 0 0 4px;
+        }
+
+        &.noActions {
+          input {
+            width: calc(100% + 6px) !important;
+          }
+        }
+      }
+
+      /* Date cell */
+      .dateCell {
+        .twoLines {
+          span {
+            padding: 0 3px;
+          }
+        }
+
+        input {
+          padding: 0 3px !important;
+        }
+
+        .actions {
+          margin-right: 5px;
+        }
+      }
+
+      .cell {
+        .actions {
+
+          > i {
+            padding: 2px 4px;
+          }
+        }
+      }
+    }
+
+    .cell {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      &.fixedLineHeight {
+        line-height: 12px;
+      }
+
+      &.noActions {
+        min-width: 100%;
+        width: auto;
+      }
+
+      > span {
+        width: inherit;
+        cursor: default;
+      }
+
+      .center {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .actions {
+        padding: 0 0 0 $baseline;
+        white-space: nowrap;
+        display: block;
+
+        &:first-child {
+          padding-left: 0;
+          width: 100%;
+        }
+
+        > i {
+          cursor: pointer;
+          padding: 4px;
+          font-size: 1rem;
+          margin: 0 1px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          &:hover {
+            box-shadow: 0px 0px 0px 1px #adadad;
+            border-radius: 3px;
+            background-color: $orange;
+            color: white !important;
+          }
+        }
+
+        .actionRight {
+          float: right;
+        }
+      }
+
+      :global {
+        input:not(.filter) {
+          padding: 0;
+          line-height: 1;
+          height: auto;
+          min-width: 46px;
+          color: #212529;
+        }
+      }
+    }
+  }
+
+  .enumCell {
+    //margin: 0 -0.375rem;
+
+    .dropdown {
+      min-width: 100%;
+      width: 100%;
+      margin: 0 !important;
+
+      > div {
+        > div {
+          > div {
+            padding: 0 0.375rem;
+            margin: 0 -0.75rem;
+
+            > div:first-child {
+
+              width: 100%;
+              height: auto;
+
+              padding: 3px 5px;
+
+              span {
+                font-size: 0.8em !important;
+                text-align: left;
+                min-height: 16px;
+              }
+
+              &:not(:hover) {
+                background-color: transparent;
+                border-color: transparent;
+
+                i {
+                  display: none;
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+    &.notValid {
+
+      .dropdown {
+
+        > div {
+          > div {
+            > div {
+              > div:first-child {
+
+                span {
+                  color: $danger;
+                }
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+
+  .numberCell {
+    //margin: 0 -0.375rem;
+    position: relative;
+    margin-bottom: 0 !important;
+
+    .numberContainer {
+      width: 100%;
+
+      &.numberInfo {
+        > span {
+          position: absolute;
+          left: 0;
+          top: 0.75rem;
+          color: #adadad;
+          cursor: default;
+
+          &.hideZero {
+            display: none;
+          }
+        }
+
+        .numberInput {
+          span {
+            margin-top: -0.5rem;
+          }
+
+          &.bold {
+            span {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      .numberInput {
+        width: 100%;
+        margin: 0;
+
+        span {
+          padding-bottom: 0.5rem;
+        }
+
+        &.hideZero {
+          span {
+            color: transparent;
+          }
+        }
+
+        > div {
+          > div {
+            height: 24px;
+
+            > div {
+              position: absolute;
+              left: 0;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              padding: 0 0.375rem;
+              margin: 0 -0.75rem;
+
+              > div {
+                padding-right: 6px;
+              }
+            }
+          }
+        }
+
+        input {
+          width: 100%;
+          font-size: 0.8rem !important;
+          height: 24px;
+          padding: 3px 5px;
+
+          &:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #ced4da;
+          }
+        }
+
+        &.withArrows {
+          input {
+            padding-right: 20px;
+          }
+        }
+      }
+
+    }
+
+    &.notValid {
+      span {
+        color: $danger;
+      }
+    }
+
+  }
+
+  .dateCell {
+    > div {
+      margin: 0;
+    }
+
+    .twoLines {
+      height: 24px;
+      position: relative;
+      top: -2px;
+
+      span {
+        color: #adadad;
+        position: relative;
+        top: -2px;
+      }
+    }
+
+    .shortDate {
+      input {
+        width: 42px;
+        min-width: 42px !important;
+      }
+    }
+
+    input {
+      border: 0;
+      background-color: transparent !important;
+      width: 54px;
+
+      &:focus, &:active {
+        box-shadow: none;
+      }
+    }
+
+    &.notValid {
+
+      div {
+        input {
+          color: $danger;
+        }
+
+      }
+
+    }
+
+    .actions {
+      margin-right: 0;
+    }
+  }
+
+  .textCell {
+    position: relative;
+
+    .textContainer {
+      width: 100%;
+      overflow-x: hidden;
+      margin-left: -6px;
+      margin-right: 0;
+
+      .addressInput {
+        width: 100%;
+        margin: 0;
+
+        > div {
+          > div {
+            input {
+              padding: 3px 5px;
+              width: 100%;
+              font-size: 0.8rem !important;
+              box-sizing: border-box;
+
+              &:focus {
+                outline: none;
+                box-shadow: none;
+                border-color: #ced4da;
+              }
+            }
+
+            span {
+              padding: 0;
+              height: auto;
+              min-height: 16px;
+              line-height: 22px;
+            }
+          }
+        }
+      }
+            
+      .textInput {
+        width: 100%;
+        margin: 0 !important;
+
+        > div {
+          > div {
+            input {
+              padding: 3px 5px;
+              width: 100%;
+              font-size: 0.8rem !important;
+              box-sizing: border-box;
+
+              &:focus {
+                outline: none;
+                box-shadow: none;
+                border-color: #ced4da;
+              }
+            }
+
+            span {
+              height: auto;
+              min-height: 16px;
+              padding-left: 6px;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+
+    }
+
+    &.noActions {
+      .textContainer {
+        width: calc(100% + 12px);
+        margin-left: -6px;
+        margin-right: -6px;
+      }
+
+      input {
+        width: 100% !important;
+      }
+
+      span {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+      }
+    }
+
+    .actions {
+      margin-right: -6px;
+    }
+  }
+
+  .booleanCell {
+    position: relative;
+
+    label {
+
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      text-align: center;
+      cursor: pointer;
+
+      input {
+        cursor: pointer;
+        width: auto !important;
+        min-width: auto !important;
+        padding: 0 !important;
+      }
+
+    }
+  }
+
+  .defaultCell {
+
+    span {
+      width: 100% !important;
+    }
+
+    .twoLines {
+
+      width: 100%;
+
+      span {
+        display: block;
+        width: 100% !important;
+        cursor: default;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+
+        &:last-child {
+          color: $grey;
+          font-weight: normal;
+        }
+
+        &.bold {
+          font-weight: bold;
+        }
+      }
+
+    }
+
+    .link {
+      cursor: pointer !important;
+      width: auto !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .actions {
+      margin-right: -6px;
+    }
+  }
+
+  .emptyRow {
+
+    height: 34px;
+
+    td {
+      font-weight: 600;
+      text-align: center;
+      cursor: default;
+      color: $grey;
+    }
+
+    &:hover {
+      background-color: white !important;
+    }
+  }
 }
 
 .pagination {
-    margin-top: $baseline;
-    margin-bottom: 1rem;
-    filter: none !important;
+  margin-top: $baseline;
+  margin-bottom: 1rem;
+  filter: none !important;
 }
