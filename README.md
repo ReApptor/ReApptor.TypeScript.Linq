@@ -2,6 +2,14 @@
 
 This project was generated using [Nx](https://nx.dev) Extensible Build Framework.
 
+## Working with component library
+
+- All development is done in feature branches. 
+- Name of feature branch should follow following pattern feature/{ticket}-{description} Example ```feature/RSW-450-branch-instructions```
+- All pull requests should have at least 2 reviewers-
+- All pull requests should be approved by someone else than the original committer before merging to master
+- When merging to master from feature branch use ```git squash``` and remove feature the branch.
+
 ## Development server
 
 Run `npm run Start:Renta.TestApplication.WebUI` for a dev server.
