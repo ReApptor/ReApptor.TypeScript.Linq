@@ -285,6 +285,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
         }
     }
 
+    /**
+     * @see {@link ch.getPage}
+     */
     public getPage(): IBasePage {
         return ch.getPage();
     }

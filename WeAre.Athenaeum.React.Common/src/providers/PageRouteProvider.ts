@@ -1,5 +1,5 @@
 import React, {ErrorInfo} from "react";
-import {AthenaeumConstants, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import PageCacheProvider from "./PageCacheProvider";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
@@ -168,17 +168,62 @@ export default class PageRouteProvider {
         window.history.replaceState(null, "", newPath);
     }
 
+    /**
+     * Replace current {@link window.URL} with a localized path, id and parameters from the given {@link PageRoute} without reloading the page.
+     * Also pushes the new route to {@link window.history}.
+     * If reloading of the page is wanted, use {@link redirectAsync} instead.
+     *
+     * @param pageRoute {@link PageRoute} from which to get route name, id and parameters.
+     */
+    public static async changeUrlWithRouteWithoutReloadAsync(pageRoute: PageRoute): Promise<void> {
 
-    public static async changeUrlWithoutReplaceWithRoute(pageRoute: any, newPath?: string | null): Promise<void> {
-        if (newPath == null) {
-            newPath = "/";
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+
+        let routeName: string = pageRoute.name;
+
+        if (localizer?.contains(`PageRoutes.${routeName}`)) {
+            routeName = localizer.get(`PageRoutes.${routeName}`);
+        }
+
+        if (!routeName) {
+            routeName = "/";
+        }
+        else {
+
+            if (!routeName.startsWith("/")) {
+                routeName = `/${routeName}`;
+            }
+
+            // Id can only be set in non-root pages
+            if (pageRoute.id) {
+                routeName += `/${pageRoute.id}`;
+            }
+        }
+
+        if (pageRoute.parameters) {
+
+            let query: string = "";
+
+            //Querystring.stringify had a problem with parameters object so had to do it this way
+            for (const [key, value] of Object.entries(pageRoute.parameters)) {
+
+                if (query) {
+                    query += "&";
+                }
+
+                query += `${key}=${value}`
+            }
+
+            if (query) {
+                routeName += `?${query}`;
+            }
         }
 
         //Hack. Without this invokeRedirectAsync will replaceState before this function and it will mess up history
         //Feel free to make better solution for this :)
         await new Promise(r => setTimeout(r, 2));
 
-        window.history.replaceState(pageRoute, "", newPath);
+        window.history.replaceState(pageRoute, "", routeName);
 
     }
 
