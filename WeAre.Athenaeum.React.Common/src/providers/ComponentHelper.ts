@@ -354,8 +354,9 @@ export default class ch {
     }
 
     /**
-     * Gets current {@link ILayoutPage}. All {@link IBasePage}'s are placed inside this component.
-     * @returns layout - inherited from ILayoutPage
+     * @returns Current {@link ILayoutPage}.
+     *
+     * @throws {Error} Current {@link ILayoutPage} is not specified.
      */
     public static getLayout(): ILayoutPage {
         if (this._layout == null)
@@ -367,7 +368,7 @@ export default class ch {
     /**
      * @returns Current {@link IBasePage}.
      *
-     * @throws Current {@link IBasePage} is not defined.
+     * @throws {Error} Current {@link IBasePage} is not defined.
      */
     public static getPage(): IBasePage {
         if (this._page == null)
