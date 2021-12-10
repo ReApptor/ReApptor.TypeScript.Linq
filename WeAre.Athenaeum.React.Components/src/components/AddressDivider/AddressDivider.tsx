@@ -1,20 +1,29 @@
 import React from "react";
 import {GeoLocation} from "@weare/athenaeum-toolkit";
 import {BaseComponent} from "@weare/athenaeum-react-common";
+import OneColumn from "../Layout.OneColumn/OneColumn";
 import TwoColumns from "../Layout.TwoColumns/TwoColumns";
 import AddressInput from "../AddressInput/AddressInput";
 import TextInput from "../TextInput/TextInput";
 import Comparator from "../../helpers/Comparator";
 import { IInput } from "../BaseInput/BaseInput";
+import AddressHelper from "../../helpers/AddressHelper";
 import AddressDividerLocalizer from "./AddressDividerLocalizer";
+
+export enum AddressDividerColumns {
+    Two = 0,
+    
+    One = 1
+}
 
 interface IAddressDividerProps {
     id?: string;
     className?: string;
     required?: boolean;
     readonly?: boolean;
-    location?: GeoLocation;
+    location?: GeoLocation | string;
     locationPicker?: boolean;
+    columns?: AddressDividerColumns;
     onChange?(sender: AddressDivider, location: GeoLocation): Promise<void>;
 }
 
@@ -26,11 +35,11 @@ interface IAddressDividerState {
 export default class AddressDivider extends BaseComponent<IAddressDividerProps, IAddressDividerState> implements IInput {
 
     state: IAddressDividerState = {
-        location: this.props.location || new GeoLocation(),
-        readonly: this.props.readonly || false
+        location: AddressHelper.toLocation(this.props.location) ?? new GeoLocation(),
+        readonly: this.props.readonly ?? false
     };
 
-    private readonly _containerRef: React.RefObject<TwoColumns> = React.createRef();
+    private readonly _containerRef: React.RefObject<any> = React.createRef();
     private readonly _addressInputRef: React.RefObject<AddressInput> = React.createRef();
 
     private get location(): GeoLocation {
@@ -38,7 +47,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
     }
 
     private get addressInput(): AddressInput {
-        const container: TwoColumns = this._containerRef.current!;
+        const container: BaseComponent = this._containerRef.current!;
         return container.findComponent(`${this.id}_formattedAddress`) as AddressInput;
     }
 
@@ -70,6 +79,10 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
         return this.state.readonly;
     }
 
+    public get columns(): AddressDividerColumns {
+        return this.props.columns ?? AddressDividerColumns.Two;
+    }
+
     public async setReadonlyAsync(value: boolean): Promise<void> {
         if (value !== this.state.readonly) {
             await this.setState({readonly: value});
@@ -91,11 +104,22 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
 
     public async componentWillReceiveProps(nextProps: IAddressDividerProps): Promise<void> {
 
+        const newReadonly: boolean = (this.props.readonly != nextProps.readonly);
         const newLocation: boolean = (!Comparator.isEqual(this.props.location, nextProps.location));
+        const newState: boolean = (newReadonly || newLocation);
+        
+        await super.componentWillReceiveProps(nextProps);
+        
+        if (newState) {
+            if (newReadonly) {
+                this.state.readonly = this.props.readonly ?? false;
+            }
 
-        if (newLocation) {
-            const location: GeoLocation = nextProps.location || new GeoLocation();
-            await this.setState({location});
+            if (newLocation) {
+                this.state.location = AddressHelper.toLocation(nextProps.location) ?? new GeoLocation();
+            }
+
+            await this.setState(this.state);
         }
     }
 
@@ -103,27 +127,66 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
         return (
             <React.Fragment>
 
-                <TwoColumns ref={this._containerRef} className={this.props.className}>
+                {
+                    (this.columns == AddressDividerColumns.Two) &&
+                    (
+                        <>
+                            <TwoColumns ref={this._containerRef} className={this.props.className}>
 
-                    <AddressInput id={`${this.id}_formattedAddress`}
-                                  ref={this._addressInputRef}
-                                  label={AddressDividerLocalizer.address}
-                                  required={this.props.required}
-                                  readonly={this.readonly}
-                                  value={this.location.formattedAddress}
-                                  locationPicker={this.props.locationPicker}
-                                  append={this.props.locationPicker}
-                                  onChange={async (location) => await this.onPlaceSelectedAsync(location)}
-                    />
+                                <AddressInput id={`${this.id}_formattedAddress`}
+                                              ref={this._addressInputRef}
+                                              label={AddressDividerLocalizer.address}
+                                              required={this.props.required}
+                                              readonly={this.readonly}
+                                              value={this.location.formattedAddress}
+                                              locationPicker={this.props.locationPicker}
+                                              append={this.props.locationPicker}
+                                              onChange={async (location) => await this.onPlaceSelectedAsync(location)}
+                                />
 
-                    <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly/>
+                                <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly/>
 
-                </TwoColumns>
+                            </TwoColumns>
 
-                <TwoColumns>
-                    <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly/>
-                    <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly/>
-                </TwoColumns>
+                            <TwoColumns>
+                                <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly/>
+                                <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly/>
+                            </TwoColumns>
+                        </>
+                    )
+                }
+
+                {
+                    (this.columns == AddressDividerColumns.One) &&
+                    (
+                        <>
+                            <OneColumn ref={this._containerRef} className={this.props.className}>
+                                <AddressInput id={`${this.id}_formattedAddress`}
+                                              ref={this._addressInputRef}
+                                              label={AddressDividerLocalizer.address}
+                                              required={this.props.required}
+                                              readonly={this.readonly}
+                                              value={this.location.formattedAddress}
+                                              locationPicker={this.props.locationPicker}
+                                              append={this.props.locationPicker}
+                                              onChange={async (location) => await this.onPlaceSelectedAsync(location)}
+                                />
+                            </OneColumn>
+                            
+                            <OneColumn>
+                                <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly/>
+                            </OneColumn>
+
+                            <OneColumn>
+                                <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly/>
+                            </OneColumn>
+                            
+                            <OneColumn>
+                                <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly/>
+                            </OneColumn>
+                        </>
+                    )
+                }
 
             </React.Fragment>
         )
