@@ -28,7 +28,7 @@ export interface ITopNavProps {
     logoText?: string;
     applicationName?: string;
     searchPlaceHolder?: string
-    languages?: ILanguage[]
+    languages?: () => ILanguage[]
 
     onShoppingCartClick?(sender: TopNav): Promise<void>;
 
@@ -114,6 +114,14 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return super.fetchDataAsync();
     }
 
+    private get languages(): ILanguage[] {
+        if (this.props.languages) {
+            return this.props.languages();
+        }
+
+        return TopNavLocalizer.supportedLanguages;
+    }
+
     protected getEndpoint(): string {
         return "/api/Application/GetTopNavItems";
     }
@@ -192,10 +200,10 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         }
                         {
                             (this.props.onSearchClick) && (
-                                    <Search 
-                                        searchPlaceHolder={this.props.searchPlaceHolder}
-                                        onSearch={searchTerm => this.props.onSearchClick!(searchTerm)} 
-                                    />
+                                <Search
+                                    searchPlaceHolder={this.props.searchPlaceHolder}
+                                    onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
+                                />
                             )
 
                         }
@@ -211,7 +219,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
 
                         <LanguageDropdown className={this.props.languageClassName}
-                                          languages={this.props.languages ?? TopNavLocalizer.supportedLanguages}
+                                          languages={this.languages}
                                           currentLanguage={TopNavLocalizer.language}
                                           changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
                         />
@@ -226,4 +234,6 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     public static mountedInstance: TopNav | null = null;
+
+
 }

@@ -23,7 +23,6 @@ class App extends BaseComponent {
                             position: BannerPosition.Top
                         }
                     }
-                    languages={Localizer.supportedLanguages}
                     useRouting
             />
         );
