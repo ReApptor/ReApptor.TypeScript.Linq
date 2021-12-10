@@ -37,7 +37,7 @@ export interface ILayoutProps {
     useRouting?: boolean;
     cookieConsent?: ICookieConsentProps
     searchPlaceHolder?: string;
-    languages?: ILanguage[];
+    languages?: () => ILanguage[];
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
