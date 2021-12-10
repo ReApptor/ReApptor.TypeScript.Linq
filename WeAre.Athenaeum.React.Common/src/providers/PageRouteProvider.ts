@@ -230,43 +230,49 @@ export default class PageRouteProvider {
         return true;
     }
 
-    public static resolveRoute(route: string): PageRoute | null {
+    /**
+     * Get a {@link PageRoute} registered with the given URL, or null if not found.
+     * If the URL contains two parts and no {@link PageRoute} is found with the full path, assigns the last part as an Id.
+     *
+     * @param path URL to resolve to a {@link PageRoute}.
+     */
+    public static resolveRoute(path: string): PageRoute | null {
 
         const pageDefinitions: IPageDefinitions | null = ServiceProvider.getService(nameof<IPageDefinitions>());
 
-        if (!pageDefinitions?.getRoutes) {
-            return null;
-        }
-        let routes: Dictionary<string, PageRoute> | null = pageDefinitions.getRoutes();
+        const routes: Dictionary<string, PageRoute> | undefined = pageDefinitions?.getRoutes?.();
 
         if (!routes) {
             return null;
         }
 
-        const parts: string[] = route
+        const parts: string[] = path
             .split("/")
             .filter(route => route !== '');
 
-        const firstUrlPart: string = parts[0];
+        const pageName: string = parts[0];
 
         const secondUrlPart: string | undefined = parts[1];
 
         const longRoute: string | null = (secondUrlPart)
-            ? `${firstUrlPart}/${secondUrlPart}`
+            ? `${pageName}/${secondUrlPart}`
             : null;
 
+        // Second URL part is NOT an Id.
         if (longRoute && routes.containsKey(longRoute)) {
             return routes.getValue(longRoute)!;
         }
 
-        if (routes.containsKey(firstUrlPart)) {
-            let pageRoute: PageRoute = routes.getValue(firstUrlPart)!;
+        // Second URL part is an Id.
+        if (routes.containsKey(pageName)) {
+            const pageRoute: PageRoute = routes.getValue(pageName)!;
+
             pageRoute.id = secondUrlPart;
+
             return pageRoute;
         }
 
         return null;
-
     }
 
     public static back(): void {
