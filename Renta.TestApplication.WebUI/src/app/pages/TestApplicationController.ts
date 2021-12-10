@@ -58,7 +58,7 @@ class TestApplicationController {
         return [
             {route: PageDefinitions.anonymous, label: nameof(Tests)},
             {route: PageDefinitions.authorized, label: nameof(AuthorizedTest)},
-            {route: PageDefinitions.anonymousWithParams(), label: nameof(AnonymousTestWithParameters)},
+            {route: PageDefinitions.anonymousWithParams({hello: "world!"}), label: nameof(AnonymousTestWithParameters)},
             {route: PageDefinitions.authorizedWithParams(), label: nameof(AuthorizedTestWithParameters)},
         ];
     }
