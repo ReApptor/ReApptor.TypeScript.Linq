@@ -34,7 +34,14 @@ export interface ILayoutProps {
     footerLinks?: () => IFooterLink[];
     noTopNav?: boolean;
     noFooter?: boolean;
+
+    /**
+     * Should routing functionalities be enabled application-wide.
+     *
+     * @default false
+     */
     useRouting?: boolean;
+
     cookieConsent?: ICookieConsentProps
     searchPlaceHolder?: string;
     languages?: ILanguage[];
@@ -162,13 +169,16 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    private async processUrlRouteAsync(route: string | null, parameters: ParsedQuery): Promise<void> {
+    private static async processUrlRouteAsync(): Promise<void> {
+
+        const route: string = window.location.pathname;
 
         if (!!route && route !== "/") {
 
-            let pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
+            const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
+
             if (pageRoute) {
-                pageRoute.parameters = parameters;
+                pageRoute.parameters = queryString.parse(window.location.search);
 
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
@@ -390,11 +400,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         await this.processTokenAsync();
 
-        const originalRoute: string = window.location.pathname;
-        const originalQueryParams: ParsedQuery = queryString.parse(window.location.search);
-
         if (this.useRouting) {
-            await this.processUrlRouteAsync(originalRoute, originalQueryParams);
+            await Layout.processUrlRouteAsync();
         }
     }
 

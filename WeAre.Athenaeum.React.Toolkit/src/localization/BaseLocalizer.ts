@@ -11,9 +11,22 @@ export interface ILanguage {
 export interface ILocalizer {
     readonly language: string;
     readonly supportedLanguages: ILanguage[];
-    getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
-    get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
-    contains(name: string | null | undefined): boolean;
+
+    /**
+     * Get a localized value with the specified key in the given language.
+     */
+    getValue(language: string, key: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+
+    /**
+     * Get a localized value with the specified key in the currently selected language.
+     */
+    get(key: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+
+    /**
+     * Does the {@link ILocalizer} contain a value with the given key.
+     */
+    contains(key: string | null | undefined): boolean;
+
     setLanguage(language: string): boolean;
 }
 
@@ -47,17 +60,17 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
     protected getDefaultLanguage(): string {
         return this._defaultLanguage;
     }
-    
+
     protected getLanguageItems(language: string): Dictionary<string, string> {
         let languageItems: Dictionary<string, string> | null = this._items.getValue(language) as Dictionary<string, string> | null;
         if (!languageItems) {
             languageItems = new Dictionary<string, string>();
             this._items.setValue(language, languageItems);
         }
-        
+
         return languageItems as Dictionary<string, string>;
     }
-    
+
     protected setItem(name: string, language: string, value: string): void {
         const languageItems: Dictionary<string, string> = this.getLanguageItems(language);
         languageItems.setValue(name, value);
@@ -100,12 +113,12 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         }
         return false;
     }
-    
+
     public findLanguage(language: string | null | undefined): ILanguage {
         const item: ILanguage | undefined = (language) ? this.getSupportedLanguages().find(item => item.code === language) : undefined;
         return item || this.findLanguage(this.getDefaultLanguage());
     }
-    
+
     public setLanguage(language: string): boolean {
         if (this._language !== language) {
 
@@ -116,10 +129,10 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
 
             return true;
         }
-        
+
         return false;
     }
-    
+
     public get supportedLanguageCodes(): string[] {
         return this.getSupportedLanguageCodes();
     }
