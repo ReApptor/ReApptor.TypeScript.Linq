@@ -2,6 +2,7 @@ import React from "react";
 import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
 import {AddressHelper, BannerPosition, Layout} from "@weare/athenaeum-react-components";
 import TestApplicationController from "./pages/TestApplicationController";
+import Localizer from "../localization/Localizer";
 
 class App extends BaseComponent {
 
@@ -22,6 +23,7 @@ class App extends BaseComponent {
                             position: BannerPosition.Top
                         }
                     }
+                    languages={Localizer.supportedLanguages}
                     useRouting
             />
         );

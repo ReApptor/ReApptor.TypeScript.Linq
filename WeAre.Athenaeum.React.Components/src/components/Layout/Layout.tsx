@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {FileModel, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {FileModel, ILanguage, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
 import {
     AlertModel,
     ApplicationContext,
@@ -37,6 +37,7 @@ export interface ILayoutProps {
     useRouting?: boolean;
     cookieConsent?: ICookieConsentProps
     searchPlaceHolder?: string;
+    languages?: ILanguage[];
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
@@ -432,6 +433,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 onShoppingCartClick={this.props.onShoppingCartClick}
                                 onSearchClick={this.props.onSearchClick}
                                 searchPlaceHolder={this.props.searchPlaceHolder}
+                                languages={this.props.languages}
                                 logoText={this.props.topNavLogoText}
                                 onLogoClick={this.props.onLogoClick}
                         />

@@ -8,6 +8,7 @@ import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
 import Search from "./Search/Search";
+import {ILanguage} from "@weare/athenaeum-toolkit";
 
 export interface IMenuItem {
     route: PageRoute;
@@ -27,6 +28,7 @@ export interface ITopNavProps {
     logoText?: string;
     applicationName?: string;
     searchPlaceHolder?: string
+    languages?: ILanguage[]
 
     onShoppingCartClick?(sender: TopNav): Promise<void>;
 
@@ -209,7 +211,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
 
                         <LanguageDropdown className={this.props.languageClassName}
-                                          languages={TopNavLocalizer.supportedLanguages}
+                                          languages={this.props.languages ?? TopNavLocalizer.supportedLanguages}
                                           currentLanguage={TopNavLocalizer.language}
                                           changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
                         />
