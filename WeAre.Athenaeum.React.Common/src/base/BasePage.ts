@@ -94,12 +94,18 @@ export interface IBasePage extends IBaseComponent {
      * The alert currently being displayed in the page.
      */
     readonly alert: AlertModel | null;
-
     readonly routeName: string;
     readonly routeIndex: number | null;
     readonly routeId: string | null;
     readonly parameters: BasePageParameters | null;
     readonly route: PageRoute;
+
+    /**
+     * Should {@link window.URL} be updated automatically when the {@link IBasePage} is loaded.
+     * Has effect only if {@link ILayoutPage.useRouting} is set to true.
+     *
+     * @default false
+     */
     readonly automaticUrlChange?: boolean;
 }
 
@@ -150,6 +156,12 @@ export interface ILayoutPage extends IAsyncComponent {
     readonly hasTopNav: boolean;
     readonly hasFooter: boolean;
     readonly alert: AlertModel | null;
+
+    /**
+     * Should routing functionalities be enabled application-wide.
+     *
+     * @default false
+     */
     readonly useRouting?: boolean;
 }
 
@@ -207,42 +219,51 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     private async setPageUrlAsync(): Promise<void> {
         const page: IBasePage = this.getPage();
 
-        if (page == null || !page.automaticUrlChange || !ch.getLayout().useRouting) {
+        if (!page?.automaticUrlChange || !ch.getLayout().useRouting) {
             return;
         }
 
-        let routeName: string = page.routeName;
-
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
-        let localizedRouteName: string | null = ((localizer != null) && (localizer.contains(`PageRoutes.${routeName}`)))
-            ? localizer.get(`PageRoutes.${routeName}`)
-            : routeName;
+        let routeName: string = page.routeName;
 
-        if (localizedRouteName) {
-            if(!localizedRouteName.startsWith("/")){
-                localizedRouteName = `/${localizedRouteName}`
+        if (localizer?.contains(`PageRoutes.${routeName}`)) {
+            routeName = localizer.get(`PageRoutes.${routeName}`);
+        }
+
+        if (routeName) {
+
+            if(!routeName.startsWith("/")){
+                routeName = `/${routeName}`
             }
+
             if (page.routeId) {
-                localizedRouteName = `${localizedRouteName}/${page.routeId}`
+                routeName += `/${page.routeId}`
             }
 
-            //Add parameters to query string if any
-            if(page.parameters){
-                let qs  = "";
-                
+            //Add PageRoute parameters to URL
+            if (page.parameters) {
+
+                let query: string = "";
+
                 //Querystring.stringify had a problem with parameters object so had to do it this way
                 for (const [key, value] of Object.entries(page.parameters)) {
-                        if(qs != "") {
-                            qs = qs + "&";
-                        }
-                        qs = qs + `${key}=${value}`
+
+                    if (query) {
+                        query += "&";
+                    }
+
+                    query += `${key}=${value}`
                 }
-                localizedRouteName =  (qs) ? `${localizedRouteName}?${qs}` : localizedRouteName;
+
+                if (query) {
+                    routeName += `?${query}`;
+                }
             }
+
             document.title = page.getTitle();
 
-            await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, localizedRouteName!);
+            await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, routeName!);
         }
     }
 
