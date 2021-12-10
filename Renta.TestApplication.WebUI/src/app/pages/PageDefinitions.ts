@@ -2,7 +2,7 @@ import {BasePageDefinitions, BasePageParameters, PageRoute} from "@weare/athenae
 import {Dictionary} from "typescript-collections";
 import Tests from "./Tests/Tests";
 import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
-import AnonymousTestWithParameters from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
+import AnonymousTestWithParameters, {IAnonymousParameters} from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
 import AuthorizedTestWithParameters from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
 
 
@@ -36,7 +36,7 @@ export default class PageDefinitions extends BasePageDefinitions {
 
     public static readonly anonymous: PageRoute = PageDefinitions.tests;
 
-    public static anonymousWithParams(params?: BasePageParameters): PageRoute {
+    public static anonymousWithParams(params?: IAnonymousParameters): PageRoute {
         return new PageRoute(nameof(AnonymousTestWithParameters), null, null, params);
     }
 
