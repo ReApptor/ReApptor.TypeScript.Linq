@@ -11,6 +11,7 @@ namespace WeAre.Athenaeum.Common.Helpers
         {
             //http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
             //Culture: [language-COUNTRYCODE]
+            
             //TODO: Generate from all culture
             new CountryInfo("fi", "Suomi", "Finland", "fi-fi"),
             new CountryInfo("se", "Svenska", "Sweden", "sv-se", "sv"),
