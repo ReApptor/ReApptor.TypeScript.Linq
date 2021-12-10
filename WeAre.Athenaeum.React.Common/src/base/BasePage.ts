@@ -217,54 +217,16 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     private async setPageUrlAsync(): Promise<void> {
+
         const page: IBasePage = this.getPage();
 
         if (!page?.automaticUrlChange || !ch.getLayout().useRouting) {
             return;
         }
 
-        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+        document.title = page.getTitle();
 
-        let routeName: string = page.routeName;
-
-        if (localizer?.contains(`PageRoutes.${routeName}`)) {
-            routeName = localizer.get(`PageRoutes.${routeName}`);
-        }
-
-        if (routeName) {
-
-            if(!routeName.startsWith("/")){
-                routeName = `/${routeName}`
-            }
-
-            if (page.routeId) {
-                routeName += `/${page.routeId}`
-            }
-
-            //Add PageRoute parameters to URL
-            if (page.parameters) {
-
-                let query: string = "";
-
-                //Querystring.stringify had a problem with parameters object so had to do it this way
-                for (const [key, value] of Object.entries(page.parameters)) {
-
-                    if (query) {
-                        query += "&";
-                    }
-
-                    query += `${key}=${value}`
-                }
-
-                if (query) {
-                    routeName += `?${query}`;
-                }
-            }
-
-            document.title = page.getTitle();
-
-            await PageRouteProvider.changeUrlWithoutReplaceWithRoute(page.route as object, routeName!);
-        }
+        await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(page.route);
     }
 
     public async componentWillUnmount(): Promise<void> {
