@@ -69,17 +69,21 @@ export default class ch {
     public static async setContextAsync(context: ApplicationContext): Promise<void> {
         if (this._context !== context) {
 
+            console.log("setContextAsync")
             const authorize: boolean = (!!this._context) && ((this._context as IUserContext).username !== (context as IUserContext).username);
-
+            
             //set context
             this._context = context;
 
             if (!this._initialized) {
+                console.log("setContextAsync.onInitializeAsync")
+
                 this._initialized = true;
                 await this.onInitializeAsync();
             }
 
             if (authorize) {
+                console.log("setContextAsync.onAuthorizeAsync")
                 await this.onAuthorizeAsync();
             }
 
@@ -89,11 +93,16 @@ export default class ch {
 
                 const newLanguage: boolean = (context != null) && (localizer != null) && (localizer.setLanguage(context.language));
                 const newCountry: boolean = (context != null) && ((this._context == null) || (this._context.country != context.country));
+                console.log("setContextAsync.layout not null")
 
                 if ((newCountry) || (newLanguage)) {
+                    console.log("setContextAsync.reRenderAsync")
+
                     //reload layout
                     await this._layout.reRenderAsync();
                 } else {
+                    console.log("setContextAsync.reloadTopNavAsync")
+
                     //reload top nav only
                     await this._layout.reloadTopNavAsync();
                 }
