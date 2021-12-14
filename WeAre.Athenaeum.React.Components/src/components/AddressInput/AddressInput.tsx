@@ -15,7 +15,8 @@ export interface IAddressInputProps extends IBaseInputProps<string> {
     small?: boolean;
     readonly?: boolean;
     locationPicker?: boolean;
-
+    country?: string | string[];
+    
     onChange?(location: GeoLocation): Promise<void>;
 }
 
@@ -168,6 +169,18 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
 
         await super.componentWillReceiveProps(nextProps);
     }
+    
+    public get countries(): string[] | null {
+        return (this.props.country != null)
+            ? (typeof this.props.country === "string")
+                ? (this.props.country)
+                    ? [this.props.country]
+                    : null
+                : (this.props.country.length > 0)
+                    ? this.props.country
+                    : null
+            : [ch.country];
+    }
 
     private renderLocationPicker(): React.ReactNode | null {
         if (this.props.locationPicker) {
@@ -216,7 +229,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                                   onPlaceSelected={async (place: GoogleApiResult) => await this.onPlaceSelectedAsync(place)}
                                   types={["address"]}
                                   fields={["address_components", "formatted_address", "geometry"]}
-                                  componentRestrictions={{country: ch.country}}
+                                  componentRestrictions={{country: this.countries}}
                                   defaultValue={this.defaultValue || undefined}
                                   disabled={this.locationPickerIsOpen}
                                   readOnly={this.readonly}

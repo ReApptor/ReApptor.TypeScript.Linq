@@ -24,6 +24,7 @@ interface IAddressDividerProps {
     location?: GeoLocation | string;
     locationPicker?: boolean;
     columns?: AddressDividerColumns;
+    country?: string | string[];
     onChange?(sender: AddressDivider, location: GeoLocation): Promise<void>;
 }
 
@@ -141,6 +142,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                                               value={this.location.formattedAddress}
                                               locationPicker={this.props.locationPicker}
                                               append={this.props.locationPicker}
+                                              country={this.props.country}
                                               onChange={async (location) => await this.onPlaceSelectedAsync(location)}
                                 />
 
