@@ -322,7 +322,7 @@
     <value>Salasana</value>
   </data>
   <data name="PasswordForm.ResetPassword.ConfirmPasswordInput" xml:space="preserve">
-    <value>Vahista salasana</value>
+    <value>Vahvista salasana</value>
   </data>
   <data name="PasswordForm.Save" xml:space="preserve">
     <value>Tallenna</value>
