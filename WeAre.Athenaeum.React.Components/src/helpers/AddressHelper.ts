@@ -384,10 +384,10 @@ export default class AddressHelper {
         const {lat: lat, lon: lon} = coordinate;
         
         const latitude = this.toDegreesMinutesAndSeconds(lat);
-        const latitudeCardinal = lat >= 0 ? "N" : "S";
+        const latitudeCardinal = (lat >= 0) ? "N" : "S";
 
         const longitude = this.toDegreesMinutesAndSeconds(lon);
-        const longitudeCardinal = lon >= 0 ? "E" : "W";
+        const longitudeCardinal = (lon >= 0) ? "E" : "W";
 
         return `${latitude}${latitudeCardinal} ${longitude}${longitudeCardinal}`
     }
