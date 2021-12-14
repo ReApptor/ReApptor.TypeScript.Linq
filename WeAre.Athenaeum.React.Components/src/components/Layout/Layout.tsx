@@ -320,9 +320,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async reloadTopNavAsync(): Promise<void> {
+        console.log("layout.reloadTopNavAsync")
         if (!this.isLoading) {
+            console.log("layout.reloadTopNavAsync:this.isLoading false")
             const topNav: IAsyncComponent | null = TopNav.mountedInstance;
             if (topNav != null) {
+                console.log("layout.reloadTopNavAsync:topNav not null")
                 await topNav.reloadAsync();
             }
         }
