@@ -1,12 +1,13 @@
 import React from "react";
 import {Button, PageContainer, PageHeader} from "@weare/athenaeum-react-components";
-import {BasePageParameters, ch, IBasePageProps, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BasePageParameters, ch, PageRouteProvider} from "@weare/athenaeum-react-common";
 import AnonymousPage from "../AnonymousPage";
 import Localizer from "../../../localization/Localizer";
 
 
 export interface IAnonymousParameters extends BasePageParameters {
     hello: string;
+    world: object;
 }
 
 export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymousParameters> {
@@ -24,9 +25,15 @@ export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymou
     }
 
     private async updateParametersAsync(): Promise<void> {
-        const route = this.route;
+        const params: IAnonymousParameters = this.typedParameters;
 
-        (route.parameters as IAnonymousParameters).hello = ch.getId().toString();
+        params.hello = ch.getId().toString();
+        params.world = {
+            key: params.hello,
+        }
+
+        const route = this.route;
+        route.parameters = params;
 
         await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(route);
     }
