@@ -3,7 +3,7 @@ import {Dictionary} from "typescript-collections";
 import Tests from "./Tests/Tests";
 import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
 import AnonymousTestWithParameters, {IAnonymousParameters} from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
-import AuthorizedTestWithParameters from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
+import AuthorizedTestWithParameters, {IAuthorizedParameters} from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
 
 
 export default class PageDefinitions extends BasePageDefinitions {
@@ -40,7 +40,7 @@ export default class PageDefinitions extends BasePageDefinitions {
         return new PageRoute(nameof(AnonymousTestWithParameters), null, null, params);
     }
 
-    public static authorizedWithParams(params?: BasePageParameters): PageRoute {
+    public static authorizedWithParams(params?: IAuthorizedParameters): PageRoute {
         return new PageRoute(nameof(AuthorizedTestWithParameters), null, null, params);
     }
 }

@@ -4,17 +4,17 @@ import {BasePageParameters, IBasePageProps} from "@weare/athenaeum-react-common"
 import AuthorizedPage from "../AuthorizedPage";
 
 
-export interface IRentParameters extends BasePageParameters {
-    ignoreGeneratedUrl: true
+export interface IAuthorizedParameters extends BasePageParameters {
+    object: object;
 }
 
-export default class AuthorizedTestWithParameters extends AuthorizedPage<IRentParameters> {
+export default class AuthorizedTestWithParameters extends AuthorizedPage<IAuthorizedParameters> {
 
     public getTitle(): string {
         return nameof(AuthorizedTestWithParameters);
     }
 
-    constructor(props: IBasePageProps<IRentParameters>) {
+    constructor(props: IBasePageProps<IAuthorizedParameters>) {
         super(props);
     }
 

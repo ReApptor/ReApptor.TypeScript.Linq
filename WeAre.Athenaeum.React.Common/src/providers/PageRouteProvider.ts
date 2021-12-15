@@ -209,11 +209,23 @@ export default class PageRouteProvider {
             //Querystring.stringify had a problem with parameters object so had to do it this way
             for (const [key, value] of Object.entries(pageRoute.parameters)) {
 
+                const improper: boolean = (!key)
+                    || (typeof value === "function")
+                    || (typeof value === "symbol");
+
+                if (improper) {
+                    continue;
+                }
+
                 if (query) {
                     query += "&";
                 }
 
-                query += `${key}=${value}`
+                const properValue: string = (typeof value === "object")
+                    ? JSON.stringify(value)
+                    : value;
+
+                query += `${key}=${properValue}`
             }
 
             if (query) {
@@ -223,7 +235,7 @@ export default class PageRouteProvider {
 
         //Hack. Without this invokeRedirectAsync will replaceState before this function and it will mess up history
         //Feel free to make better solution for this :)
-        await new Promise(r => setTimeout(r, 2));
+        await new Promise(callback => setTimeout(callback, 2));
 
         window.history.replaceState(pageRoute, "", routeName);
 
