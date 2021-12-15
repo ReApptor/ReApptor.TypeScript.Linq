@@ -144,4 +144,7 @@
     <data name="DayOfWeek.Sunday" xml:space="preserve">
         <value>sunnuntai</value>
     </data>
+    <data name="PageRoutes.AnonymousTestWithParameters" xml:space="preserve">
+        <value>anon</value>
+    </data>
 </root>

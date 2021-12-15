@@ -38,6 +38,7 @@ import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
 import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 import CookieConsentTests from "./CookieConsentTests/CookieConsentTests";
+import Localizer from "../../../localization/Localizer";
 
 interface ITestsState {
     underLineTabStyles: boolean;
@@ -54,7 +55,16 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
 
     public render(): React.ReactNode {
 
-        console.log([this.getTitle(), nameof(this.render)].join("."));
+        const localizerKey: string = "PageRoutes.Tests2";
+
+        console.log(
+            [this.getTitle(), nameof(this.render)].join("."),
+            this.route,
+            "en",
+            Localizer.contains(localizerKey),
+            Localizer.contains(localizerKey, "en"),
+            Localizer.get(localizerKey)
+        );
 
         return (
             <PageContainer className="tests-page">

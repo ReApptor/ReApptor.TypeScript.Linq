@@ -9,24 +9,42 @@ export interface ILanguage {
 }
 
 export interface ILocalizer {
+
+    /**
+     * Currently selected language.
+     */
     readonly language: string;
+
+    /**
+     * List of all supported languages.
+     */
     readonly supportedLanguages: ILanguage[];
 
     /**
      * Get a localized value with the specified key in the given language.
      */
-    getValue(language: string, key: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+    getValue(language: string, name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
 
     /**
      * Get a localized value with the specified key in the currently selected language.
      */
-    get(key: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
+    get(name: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined)[]): string;
 
     /**
-     * Does the {@link ILocalizer} contain a value with the given key.
+     * Does the {@link ILocalizer} contain a localized value with the given key in the given (or default) language.
+     *
+     * @param name Key to check for existing value.
+     * @param language Language of the value. Default language if not specified.
      */
-    contains(key: string | null | undefined): boolean;
+    contains(name: string | null | undefined, language?: string | null): boolean;
 
+    /**
+     * Set the current language.
+     *
+     * @param language New language.
+     * @return Was the language changed.
+     * @throws The language is not supported.
+     */
     setLanguage(language: string): boolean;
 }
 
@@ -105,12 +123,15 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
         return this.getValue(this.getLanguage(), name, ...params);
     }
 
-    public contains(name: string | null | undefined): boolean {
+    public contains(name: string | null | undefined, language?: string | null): boolean {
         if (name) {
-            const defaultLanguage: string = this.getDefaultLanguage();
+            const defaultLanguage: string = language || this.getDefaultLanguage();
+
             const languageItems = this._items.getValue(defaultLanguage) as Dictionary<string, string> | null;
+
             return (languageItems != null) && (languageItems.containsKey(name));
         }
+
         return false;
     }
 

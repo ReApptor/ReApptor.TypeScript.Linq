@@ -170,7 +170,7 @@ export default class PageRouteProvider {
 
     /**
      * Replace current {@link window.URL} with a localized path, id and parameters from the given {@link PageRoute} without reloading the page.
-     * Also pushes the new route to {@link window.history}.
+     * Also replaces the current {@link window.history} entry with the new route.
      * If reloading of the page is wanted, use {@link redirectAsync} instead.
      *
      * @param pageRoute {@link PageRoute} from which to get route name, id and parameters.
@@ -181,8 +181,10 @@ export default class PageRouteProvider {
 
         let routeName: string = pageRoute.name;
 
-        if (localizer?.contains(`PageRoutes.${routeName}`)) {
-            routeName = localizer.get(`PageRoutes.${routeName}`);
+        const localizedRouteKey: string = `PageRoutes.${routeName}`;
+
+        if (localizer?.contains(localizedRouteKey, localizer?.language)) {
+            routeName = localizer.get(localizedRouteKey);
         }
 
         if (!routeName) {
@@ -303,18 +305,41 @@ export default class PageRouteProvider {
             ? `${pageName}/${secondUrlPart}`
             : null;
 
-        // Second URL part is NOT an Id.
-        if (longRoute && routes.containsKey(longRoute)) {
-            return routes.getValue(longRoute)!;
+        // Second URL part is not an Id.
+        if (longRoute) {
+
+            const longRouteKeys: string[] = [
+                longRoute,
+                longRoute.toUpperCase(),
+                longRoute.toLowerCase()
+            ];
+
+            for (let i = 0; i < longRouteKeys.length; i++) {
+                const longRouteKey: string = longRouteKeys[i];
+
+                if (routes.containsKey(longRouteKey)) {
+                    return routes.getValue(longRouteKey)!;
+                }
+            }
         }
 
+        const pageNameKeys: string[] = [
+            pageName,
+            pageName.toUpperCase(),
+            pageName.toLowerCase()
+        ];
+
         // Second URL part is an Id.
-        if (routes.containsKey(pageName)) {
-            const pageRoute: PageRoute = routes.getValue(pageName)!;
+        for (let i = 0; i < pageNameKeys.length; i++) {
+            const pageNameKey: string = pageNameKeys[i];
 
-            pageRoute.id = secondUrlPart;
+            if (routes.containsKey(pageNameKey)) {
+                const pageRoute: PageRoute = routes.getValue(pageNameKey)!;
 
-            return pageRoute;
+                pageRoute.id = secondUrlPart;
+
+                return pageRoute;
+            }
         }
 
         return null;

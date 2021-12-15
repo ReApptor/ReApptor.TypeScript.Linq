@@ -14,6 +14,7 @@ class Localizer extends BaseLocalizer {
     public readonly dayOfWeekFridayLanguageItemName: string = `DayOfWeek.Friday`;
     public readonly dayOfWeekSaturdayLanguageItemName: string = `DayOfWeek.Saturday`;
     public readonly dayOfWeekSundayLanguageItemName: string = `DayOfWeek.Sunday`;
+    public readonly pageRoutesAnonymousTestWithParametersLanguageItemName: string = `PageRoutes.AnonymousTestWithParameters`;
 
     constructor() {
 
@@ -34,6 +35,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.dayOfWeekFridayLanguageItemName, { language: `fi`, value: `perjantai` }, { language: `en`, value: `Friday` },);
         this.set(this.dayOfWeekSaturdayLanguageItemName, { language: `fi`, value: `lauantai` }, { language: `en`, value: `Saturday` },);
         this.set(this.dayOfWeekSundayLanguageItemName, { language: `fi`, value: `sunnuntai` }, { language: `en`, value: `Sunday` },);
+        this.set(this.pageRoutesAnonymousTestWithParametersLanguageItemName, { language: `fi`, value: `aha` }, { language: `en`, value: `aaa` },);
     }
 
     /**
@@ -97,6 +99,13 @@ class Localizer extends BaseLocalizer {
     */
     public get dayOfWeekSunday() : string {
         return this.get(this.dayOfWeekSundayLanguageItemName);
+    }
+
+    /**
+    /* "PageRoutes.AnonymousTestWithParameters" (aaa)
+    */
+    public get pageRoutesAnonymousTestWithParameters() : string {
+        return this.get(this.pageRoutesAnonymousTestWithParametersLanguageItemName);
     }
 }
 

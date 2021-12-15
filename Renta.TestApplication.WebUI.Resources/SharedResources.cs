@@ -59,5 +59,10 @@ namespace Renta.TestApplication.WebUI.Resources
         /// "DayOfWeek.Sunday" (Sunday)
         /// </summary>
         public const string DayOfWeekSunday = @"DayOfWeek.Sunday";
+
+        /// <summary>
+        /// "PageRoutes.AnonymousTestWithParameters" (aaa)
+        /// </summary>
+        public const string PageRoutesAnonymousTestWithParameters = @"PageRoutes.AnonymousTestWithParameters";
     }
 }

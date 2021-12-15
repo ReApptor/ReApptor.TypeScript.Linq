@@ -144,4 +144,7 @@
     <data name="DayOfWeek.Wednsday" xml:space="preserve">
         <value>Wednsday</value>
     </data>
+    <data name="PageRoutes.AnonymousTestWithParameters" xml:space="preserve">
+        <value>aaa</value>
+    </data>
 </root>
