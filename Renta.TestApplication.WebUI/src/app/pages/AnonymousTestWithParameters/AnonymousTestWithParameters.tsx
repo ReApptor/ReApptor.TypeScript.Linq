@@ -2,6 +2,7 @@ import React from "react";
 import {Button, PageContainer, PageHeader} from "@weare/athenaeum-react-components";
 import {BasePageParameters, ch, IBasePageProps, PageRouteProvider} from "@weare/athenaeum-react-common";
 import AnonymousPage from "../AnonymousPage";
+import Localizer from "../../../localization/Localizer";
 
 
 export interface IAnonymousParameters extends BasePageParameters {
@@ -32,9 +33,15 @@ export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymou
 
     public render(): React.ReactNode {
 
+        const localizerKey: string = `PageRoutes.${nameof(AnonymousTestWithParameters)}`;
+
         console.log(
             [this.getTitle(), nameof(this.render)].join("."),
-            this.route
+            this.route,
+            "nb",
+            Localizer.contains(localizerKey),
+            Localizer.contains(localizerKey, "nb"),
+            Localizer.get(localizerKey)
         );
 
         return (
