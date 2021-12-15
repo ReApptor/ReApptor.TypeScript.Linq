@@ -237,24 +237,7 @@ export default class PageRouteProvider {
         //Feel free to make better solution for this :)
         await new Promise(callback => setTimeout(callback, 2));
 
-        //For equality comparison.
-        let browserState = window.history.state as PageRoute;
-        
-        //Strict comparison in PageRoute.isEqual so need to be null, not undefined
-        if (!browserState.id) {
-            browserState.id = null;
-        }
-        
-        //Somewhere along the way null parameters converts to {} (why???) which is truthy
-        //so let's make it null instead
-        if (browserState.parameters == {}){
-            browserState.parameters = null;
-        }
-        
-        //Let's replace the state only if the current state is not the same as the current pageRoute
-        if (!PageRoute.isEqual(browserState, pageRoute as PageRoute)){
-            window.history.replaceState(pageRoute, "", routeName);
-        }
+        window.history.replaceState(pageRoute, "", routeName);
     }
 
     public static stopPropagation(): void {
