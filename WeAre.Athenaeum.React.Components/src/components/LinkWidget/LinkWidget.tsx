@@ -7,6 +7,7 @@ export interface ILinkWidgetProps extends IBaseWidgetProps {
 }
 
 export default class LinkWidget extends BaseWidget<ILinkWidgetProps> {
+
     protected getHref(): string {
         return this.props.url;
     }

@@ -70,7 +70,7 @@ export default class ch {
         if (this._context !== context) {
 
             const authorize: boolean = (!!this._context) && ((this._context as IUserContext).username !== (context as IUserContext).username);
-            
+
             //set context
             this._context = context;
 

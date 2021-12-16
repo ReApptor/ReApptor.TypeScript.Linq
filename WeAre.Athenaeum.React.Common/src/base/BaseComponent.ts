@@ -91,7 +91,9 @@ export interface IContainer {
 /**
  * Implementation of {@link IBaseComponent}.
  */
-export default abstract class BaseComponent<TProps = {}, TState = {}> extends React.Component<TProps, TState> implements IBaseComponent {
+export default abstract class BaseComponent<TProps = {}, TState = {}>
+    extends React.Component<TProps, TState>
+    implements IBaseComponent {
 
     private readonly _asGlobalClick: IGlobalClick | null;
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
@@ -177,6 +179,14 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Re
 
     protected getNode(): JQuery {
         return this.JQuery(`#${this.id}`);
+    }
+
+    /**
+     * See {@link ILayoutPage.useRouting}.
+     */
+    protected get useRouting(): boolean {
+        // noinspection PointlessBooleanExpressionJS - useRouting can be undefined.
+        return (ch.getLayout().useRouting === true);
     }
 
     public get children(): React.ReactElement[] {

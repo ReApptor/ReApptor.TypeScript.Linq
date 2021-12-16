@@ -1,5 +1,5 @@
 import React from "react";
-import {PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {ch, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
 import BaseWidget, { IBaseWidgetProps } from "./BaseWidget";
 
 export type TPageRouteCallback = () => PageRoute;
@@ -10,6 +10,26 @@ export interface IBaseRouteWidgetProps extends IBaseWidgetProps {
 
 export default abstract class BaseRouteWidget<TProps extends IBaseRouteWidgetProps = {}, TData = {}> extends BaseWidget<TProps, TData> {
 
+    protected getRoute(): PageRoute | null {
+
+        const propsRoute: PageRoute | TPageRouteCallback | undefined = this.props.route;
+
+        return (typeof propsRoute === "function")
+            ? propsRoute()
+            : (propsRoute)
+                ? propsRoute
+                : null;
+    }
+
+    protected getHref(): string {
+
+        const route: PageRoute | null = this.getRoute();
+
+        return (this.useRouting && route)
+            ? PageRoute.toRelativePath(route)
+            : super.getHref();
+    }
+
     protected async onNavigateAsync(): Promise<void> {
     }
 
@@ -19,12 +39,9 @@ export default abstract class BaseRouteWidget<TProps extends IBaseRouteWidgetPro
 
             await this.onNavigateAsync();
 
-            if (this.props.route) {
-                
-                const route: PageRoute = (typeof this.props.route === "function")
-                    ? this.props.route()
-                    : this.props.route as PageRoute;
-                
+            const route: PageRoute | null = this.getRoute();
+
+            if (route) {
                 await PageRouteProvider.redirectAsync(route);
             }
         }

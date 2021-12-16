@@ -220,7 +220,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
         const page: IBasePage = this.getPage();
 
-        if (!page?.automaticUrlChange || !ch.getLayout().useRouting) {
+        if (!page?.automaticUrlChange || !this.useRouting) {
             return;
         }
 
