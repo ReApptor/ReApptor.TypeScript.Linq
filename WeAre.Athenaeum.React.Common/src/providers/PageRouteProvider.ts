@@ -177,67 +177,13 @@ export default class PageRouteProvider {
      */
     public static async changeUrlWithRouteWithoutReloadAsync(pageRoute: PageRoute): Promise<void> {
 
-        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-
-        let routeName: string = pageRoute.name;
-
-        const localizedRouteKey: string = `PageRoutes.${routeName}`;
-
-        if (localizer?.contains(localizedRouteKey, localizer?.language)) {
-            routeName = localizer.get(localizedRouteKey);
-        }
-
-        if (!routeName) {
-            routeName = "/";
-        }
-        else {
-
-            if (!routeName.startsWith("/")) {
-                routeName = `/${routeName}`;
-            }
-
-            // Id can only be set in non-root pages
-            if (pageRoute.id) {
-                routeName += `/${pageRoute.id}`;
-            }
-        }
-
-        if (pageRoute.parameters) {
-
-            let query: string = "";
-
-            //Querystring.stringify had a problem with parameters object so had to do it this way
-            for (const [key, value] of Object.entries(pageRoute.parameters)) {
-
-                const improper: boolean = (!key)
-                    || (typeof value === "function")
-                    || (typeof value === "symbol");
-
-                if (improper) {
-                    continue;
-                }
-
-                if (query) {
-                    query += "&";
-                }
-
-                const properValue: string = (typeof value === "object")
-                    ? JSON.stringify(value)
-                    : value;
-
-                query += `${key}=${properValue}`
-            }
-
-            if (query) {
-                routeName += `?${query}`;
-            }
-        }
-
         //Hack. Without this invokeRedirectAsync will replaceState before this function and it will mess up history
         //Feel free to make better solution for this :)
         await new Promise(callback => setTimeout(callback, 2));
 
-        window.history.replaceState(pageRoute, "", routeName);
+        const url: string = PageRoute.toRelativePath(pageRoute);
+
+        window.history.replaceState(pageRoute, "", url);
     }
 
     public static stopPropagation(): void {
