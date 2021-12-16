@@ -90,6 +90,7 @@ export default abstract class BaseAsyncComponent<TProps, TState
                     await this.setState({isLoading: false});
                 }
 
+                // @ts-ignore
                 await PageRouteProvider.exception(e);
             }
         }

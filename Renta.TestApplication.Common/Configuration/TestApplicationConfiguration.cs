@@ -141,9 +141,9 @@ namespace Renta.TestApplication.Common.Configuration
             {
                 return _tokenSettings ??= new TokenSettings
                 {
-                    ServiceTokenTimeoutInMinutes = GetIntEnvironmentVariable("SERVICE_TOKEN_TIMEOUT_MINUTES", TimeSpan.FromDays(31).Minutes),
-                    EmailTokenTimeoutInMinutes = GetIntEnvironmentVariable("EMAIL_TOKEN_TIMEOUT_MINUTES", TimeSpan.FromDays(7).Minutes),
-                    MobileTokenTimeoutInMinutes = GetIntEnvironmentVariable("MOBILE_TOKEN_TIMEOUT_MINUTES", TimeSpan.FromDays(365).Minutes),
+                    ServiceTokenTimeoutInMinutes = GetIntEnvironmentVariable("SERVICE_TOKEN_TIMEOUT_MINUTES", Convert.ToInt32(TimeSpan.FromDays(31).TotalMinutes)),
+                    EmailTokenTimeoutInMinutes = GetIntEnvironmentVariable("EMAIL_TOKEN_TIMEOUT_MINUTES", Convert.ToInt32(TimeSpan.FromDays(7).TotalMinutes)),
+                    MobileTokenTimeoutInMinutes = GetIntEnvironmentVariable("MOBILE_TOKEN_TIMEOUT_MINUTES", Convert.ToInt32(TimeSpan.FromDays(365).TotalMinutes)),
                     SecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetEnvironmentVariable("TOKEN_SECURITY_KEY"))),
                     Issuer = GetEnvironmentVariable("TOKEN_ISSUER")
                 };

@@ -43,7 +43,9 @@ export interface ILayoutProps {
     useRouting?: boolean;
 
     cookieConsent?: ICookieConsentProps
+
     searchPlaceHolder?: string;
+
     languages?: () => ILanguage[];
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
@@ -324,7 +326,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         if (topNav != null) {
             await topNav.reloadAsync();
         }
-        
+
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
@@ -471,7 +473,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
                 {
-                    (this.props.cookieConsent) && (
+                    ((this.props.cookieConsent) && (!this.isLoading)) && (
                         <CookieConsent description={this.props.cookieConsent.description}
                                        title={this.props.cookieConsent.title}
                                        acceptButtonText={this.props.cookieConsent.acceptButtonText}
