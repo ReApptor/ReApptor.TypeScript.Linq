@@ -39,29 +39,53 @@ class TestDateRouteWidget extends RouteWidget {
 }
 
 export default class RouteWidgetTests extends BaseComponent {
-    
-    public render(): React.ReactNode {        
+
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
 
                 <WidgetContainer>
 
-                    <RouteWidget id={"WidgetIcon"} wide icon={{ name: "list"}} label={"Icon"} route={PageDefinitions.dummyRoute} description={"Test routeWidget with icon"} />
-                    
-                    <RouteWidget id={"WidgetText"} wide text={"Text"} label={"Text"} route={PageDefinitions.dummyRoute}  description={"Test routeWidget with text"} />
-                    
-                    <RouteWidget id={"WidgetIconText"} wide icon={{ name: "list"}} text={"Text"} label={"Icon & text"} route={PageDefinitions.dummyRoute}  description={"Test routeWidget with icon and text"} />
-                    
-                    <TestNumberRouteWidget id={"AsyncWidgetNumber"} wide async label={"NumberRouteWidget"} route={PageDefinitions.dummyRoute}  description={"AsyncWidget with number fetching"} />
-                    
+                    <RouteWidget wide
+                                 id={"WidgetIcon"}
+                                 icon={{ name: "list"}}
+                                 label={"Icon"}
+                                 route={PageDefinitions.anonymous}
+                                 description={"AnonymousPage"}
+                    />
+
+                    <RouteWidget wide
+                                 id={"WidgetText"}
+                                 label={"Text"}
+                                 text={"Text"}
+                                 route={PageDefinitions.anonymousWithParams({hello: "o0OöÖ", world: {lorem: "ipsum"}})}
+                                 description={"AnonymousPage with params"}
+                    />
+
+                    <RouteWidget wide
+                                 id={"WidgetIconText"}
+                                 icon={{ name: "list"}}
+                                 label={"Icon & text"}
+                                 text={"Text"}
+                                 route={PageDefinitions.authorized}
+                                 description={"AuthorizedPage"}
+                    />
+
+                    <TestNumberRouteWidget wide async
+                                           id={"AsyncWidgetNumber"}
+                                           label={"NumberRouteWidget"}
+                                           route={PageDefinitions.dummyRoute}
+                                           description={"AsyncWidget with number fetching"}
+                    />
+
                     <TestNumberAsTextRouteWidget id={"AsyncWidgetNumberAsText"} wide async label={"NumberAsTextRouteWidget"} route={PageDefinitions.dummyRoute}  description={"AsyncWidget with number as string fetching"} />
-                    
+
                     <TestTextRouteWidget id={"AsyncWidgetText"} wide async label={"TextRouteWidget"} route={PageDefinitions.dummyRoute}  description={"AsyncWidget with text fetching"} />
-                    
+
                     <TestDateRouteWidget id={"AsyncWidgetDate"} wide async label={"DateRouteWidget"} route={PageDefinitions.dummyRoute}  description={"AsyncWidget with date fetching"} />
 
                 </WidgetContainer>
-                
+
             </React.Fragment>
         );
     }

@@ -25,7 +25,7 @@ export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymou
     }
 
     private async updateParametersAsync(): Promise<void> {
-        const params: IAnonymousParameters = this.typedParameters;
+        const params: IAnonymousParameters | null = this.typedParameters ?? {} as IAnonymousParameters;
 
         params.hello = ch.getId().toString();
         params.world = {

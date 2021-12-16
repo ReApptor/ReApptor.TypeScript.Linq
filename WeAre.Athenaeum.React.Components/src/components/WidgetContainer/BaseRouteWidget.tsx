@@ -8,7 +8,8 @@ export interface IBaseRouteWidgetProps extends IBaseWidgetProps {
     route?: PageRoute | TPageRouteCallback;
 }
 
-export default abstract class BaseRouteWidget<TProps extends IBaseRouteWidgetProps = {}, TData = {}> extends BaseWidget<TProps, TData> {
+export default abstract class BaseRouteWidget<TProps extends IBaseRouteWidgetProps = {}, TData = {}>
+    extends BaseWidget<TProps, TData> {
 
     protected getRoute(): PageRoute | null {
 
@@ -36,6 +37,12 @@ export default abstract class BaseRouteWidget<TProps extends IBaseRouteWidgetPro
     protected async onClickAsync(e: React.SyntheticEvent): Promise<void> {
         if (this.isMounted) {
             e.stopPropagation();
+
+            if (this.useRouting) {
+                // e.stopPropagation does not stop the browser from navigating to the page the widget URL points to, this does.
+                // If routing is not enabled, then the URL is javascript, which does not lead to navigation anyway.
+                e.preventDefault();
+            }
 
             await this.onNavigateAsync();
 

@@ -53,7 +53,9 @@ export interface IBaseWidgetState<TWidgetData> extends IBaseAsyncComponentState<
     transparent: boolean;
 }
 
-export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, TWidgetData = {}> extends BaseAsyncComponent<TProps, IBaseWidgetState<TWidgetData>, TWidgetData> implements IBaseWidget {
+export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, TWidgetData = {}>
+    extends BaseAsyncComponent<TProps, IBaseWidgetState<TWidgetData>, TWidgetData>
+    implements IBaseWidget {
 
     private readonly _spinnerRef: React.RefObject<Spinner> = React.createRef();
 
@@ -322,7 +324,9 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
 
     public render(): React.ReactNode {
         return (
-            <div id={this.id} className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}>
+            <div id={this.id}
+                 className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}
+            >
 
                 <a href={this.getHref()}
                    rel="noreferrer"
@@ -346,7 +350,15 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
 
                 </a>
 
-                {(this.isSpinning()) && <Spinner ref={this._spinnerRef} noShading onDelay={async () => this.onSpinnerDelayHandlerAsync()} /> }
+                {
+                    (this.isSpinning()) &&
+                    (
+                        <Spinner noShading
+                                 ref={this._spinnerRef}
+                                 onDelay={async () => this.onSpinnerDelayHandlerAsync()}
+                        />
+                    )
+                }
 
             </div>
         );

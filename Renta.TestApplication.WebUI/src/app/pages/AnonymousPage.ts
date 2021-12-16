@@ -4,7 +4,7 @@ import {ApplicationContext, BasePage} from "@weare/athenaeum-react-common";
 export default abstract class AnonymousPage<TParams = {}, TState = {}>
     extends BasePage<TParams, TState, ApplicationContext> {
 
-    protected get typedParameters(): TParams {
+    protected get typedParameters(): TParams | null {
         return this.parameters as TParams;
     }
 
