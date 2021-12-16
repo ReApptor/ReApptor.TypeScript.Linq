@@ -30,7 +30,6 @@ export default class PageRoute {
         this.isPageRoute = true;
     }
 
-
     /**
      * Convert a {@link PageRoute} to a relative path.
      *
@@ -42,7 +41,7 @@ export default class PageRoute {
 
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
 
-        const localizedRouteKey: string = `PageRoutes.${path}`;
+        const localizedRouteKey: string = `PageRoutes.${route.name}`;
 
         const pageName: string = (localizer?.contains(localizedRouteKey, localizer?.language))
             ? localizer.get(localizedRouteKey)

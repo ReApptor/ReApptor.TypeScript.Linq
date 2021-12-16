@@ -16,7 +16,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
     private static readonly _pages: Dictionary<string, IBasePageConstructor> = new Dictionary<string, IBasePageConstructor>();
     private static readonly _modules: Dictionary<string, any> = new Dictionary<string, any>();
-    
+
     private async register(pageName: string): Promise<IBasePageConstructor> {
 
         const fullPageName: string = pageName;
@@ -43,7 +43,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
         return constructor;
     }
-    
+
     protected static pageRoutesDictionary: Map<string, PageRoute>;
 
     protected constructor() {
@@ -56,7 +56,7 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public getType(): ServiceType {
         return "IPageDefinitions";
     }
-    
+
     protected abstract require(pageContainer: string, pageName: string): Promise<any>;
 
     public static readonly logoutRouteName: string = "Logout";
@@ -66,23 +66,21 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
     public static readonly dummyRouteName: string = "Dummy";
 
     public static readonly dummyRoute: PageRoute = new PageRoute(BasePageDefinitions.dummyRouteName);
-    
+
     public static readonly offlineRouteName: string = "Offline";
 
     public static readonly offlineRoute: PageRoute = new PageRoute(BasePageDefinitions.offlineRouteName);
-    
+
     public static readonly errorRouteName: string = "Error";
 
     public static readonly errorRoute: PageRoute = new PageRoute(BasePageDefinitions.errorRouteName);
-    
 
-    public  static getRoutes():  Map<string, PageRoute> {
+    public static getRoutes():  Map<string, PageRoute> {
         return this.pageRoutesDictionary ?? new Map<string, PageRoute>();
     };
-    
-    
+
     public async createPageAsync(route: PageRoute): Promise<IBasePage> {
-        
+
         const pageName: string = route.name;
 
         try {
