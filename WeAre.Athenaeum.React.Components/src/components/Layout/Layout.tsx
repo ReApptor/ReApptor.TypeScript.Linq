@@ -173,26 +173,17 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private static async processUrlRouteAsync(): Promise<void> {
 
-        const route: string = window.location.pathname;
+        const pathname: string = window.location.pathname;
 
-        if (!!route && route !== "/") {
+        if (!!pathname && pathname !== "/") {
 
-            const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(route);
-            
-            //This must be done here because otherwise route and browser state might not be equal when they actually should be
-            if (pageRoute) {
-                if (!pageRoute.id) {
-                    pageRoute.id = null;
-                }
-                pageRoute.parameters = queryString.parse(window.location.search);
-            }
+            const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(pathname);
           
             // Let's change url (and browser state) only if we have new pageRoute
             if (pageRoute && !PageRoute.isEqual(window.history.state as PageRoute, pageRoute)) {
-                await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(pageRoute)
+                await PageRouteProvider.redirectAsync(pageRoute)
             }
         }
-
     }
 
     private async processTokenAsync(): Promise<void> {
