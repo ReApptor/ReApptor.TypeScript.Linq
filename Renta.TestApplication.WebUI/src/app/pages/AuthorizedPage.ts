@@ -13,7 +13,7 @@ export default abstract class AuthorizedPage<TParams = {}, TState = {}>
 
             console.log("Unauthorized, redirecting...");
 
-            await PageRouteProvider.redirectAsync(PageDefinitions.anonymousWithParams());
+            await PageRouteProvider.redirectAsync(PageDefinitions.anonymousWithParams({hello: "",world: this.getPage().route}));
         }
     }
 

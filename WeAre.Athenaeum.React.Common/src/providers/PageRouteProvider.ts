@@ -1,16 +1,17 @@
 import React, {ErrorInfo} from "react";
-import {AthenaeumConstants, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, ServiceProvider} from "@weare/athenaeum-toolkit";
 import PageCacheProvider from "./PageCacheProvider";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ApiProvider from "./ApiProvider";
 import ServerError from "../models/ServerError";
 import ApplicationContext from "../models/ApplicationContext";
-import ch from "./ComponentHelper";
+import ch from "./ComponentHelper"
 import IErrorPageParameters from "../models/IErrorPageParameters";
 import BasePageDefinitions, {IPageDefinitions} from "./BasePageDefinitions";
 import AlertModel from "../models/AlertModel";
 import {Dictionary} from "typescript-collections";
+import queryString from "query-string";
 
 export default class PageRouteProvider {
 
@@ -261,6 +262,8 @@ export default class PageRouteProvider {
         const longRoute: string | null = (secondUrlPart)
             ? `${pageName}/${secondUrlPart}`
             : null;
+        
+        let pageRoute: PageRoute | null = null;
 
         // Second URL part is not an Id.
         if (longRoute) {
@@ -275,31 +278,44 @@ export default class PageRouteProvider {
                 const longRouteKey: string = longRouteKeys[i];
 
                 if (routes.containsKey(longRouteKey)) {
-                    return routes.getValue(longRouteKey)!;
+                    pageRoute = routes.getValue(longRouteKey)!;
+                    break;
                 }
             }
         }
 
-        const pageNameKeys: string[] = [
-            pageName,
-            pageName.toUpperCase(),
-            pageName.toLowerCase()
-        ];
-
         // Second URL part is an Id.
-        for (let i = 0; i < pageNameKeys.length; i++) {
-            const pageNameKey: string = pageNameKeys[i];
+        if (!pageRoute) {
+            
+            const pageNameKeys: string[] = [
+                pageName,
+                pageName.toUpperCase(),
+                pageName.toLowerCase()
+            ];
+            
+            for (let i = 0; i < pageNameKeys.length; i++) {
+          
+                const pageNameKey: string = pageNameKeys[i];
 
-            if (routes.containsKey(pageNameKey)) {
-                const pageRoute: PageRoute = routes.getValue(pageNameKey)!;
-
-                pageRoute.id = secondUrlPart;
-
-                return pageRoute;
+                if (routes.containsKey(pageNameKey)) {
+                    pageRoute = routes.getValue(pageNameKey)!;
+                    pageRoute.id = secondUrlPart;
+                    break;
+                }
             }
         }
 
-        return null;
+        if (pageRoute) {
+            
+            //Ensure that the default value is null.
+            if (!pageRoute.id) {
+                pageRoute.id = null;
+            }
+            
+            pageRoute.parameters = queryString.parse(window.location.search);
+        }
+        
+        return pageRoute;
     }
 
     public static back(): void {
