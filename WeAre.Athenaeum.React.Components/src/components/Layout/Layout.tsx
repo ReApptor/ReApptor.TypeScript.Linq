@@ -42,9 +42,9 @@ export interface ILayoutProps {
      */
     useRouting?: boolean;
 
-    cookieConsent?: ICookieConsentProps
+    cookieConsent?: () => ICookieConsentProps
 
-    searchPlaceHolder?: string;
+    searchPlaceHolder?: () => string;
 
     languages?: () => ILanguage[];
 
@@ -472,12 +472,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
                 {
                     ((this.props.cookieConsent) && (!this.isLoading)) && (
-                        <CookieConsent description={this.props.cookieConsent.description}
-                                       title={this.props.cookieConsent.title}
-                                       acceptButtonText={this.props.cookieConsent.acceptButtonText}
-                                       cookieName={this.props.cookieConsent.cookieName}
-                                       position={this.props.cookieConsent.position}
-                                       cookieExpirationInDays={this.props.cookieConsent.cookieExpirationInDays}
+                        <CookieConsent description={this.props.cookieConsent().description}
+                                       title={this.props.cookieConsent().title}
+                                       acceptButtonText={this.props.cookieConsent().acceptButtonText}
+                                       cookieName={this.props.cookieConsent().cookieName}
+                                       position={this.props.cookieConsent().position}
+                                       cookieExpirationInDays={this.props.cookieConsent().cookieExpirationInDays}
                         />
                     )
                 }

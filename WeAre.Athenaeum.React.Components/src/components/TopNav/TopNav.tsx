@@ -27,7 +27,7 @@ export interface ITopNavProps {
     logo?: any;
     logoText?: string;
     applicationName?: string;
-    searchPlaceHolder?: string
+    searchPlaceHolder?: () => string
     languages?: () => ILanguage[]
 
     onShoppingCartClick?(sender: TopNav): Promise<void>;
@@ -112,6 +112,14 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         }
 
         return super.fetchDataAsync();
+    }
+
+    private get searchPlaceHolder(): string {
+        if (this.props.searchPlaceHolder) {
+            return this.props.searchPlaceHolder();
+        }
+
+        return "";
     }
 
     private get languages(): ILanguage[] {
@@ -201,7 +209,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             (this.props.onSearchClick) && (
                                 <Search
-                                    searchPlaceHolder={this.props.searchPlaceHolder}
+                                    searchPlaceHolder={this.searchPlaceHolder}
                                     onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
                                 />
                             )

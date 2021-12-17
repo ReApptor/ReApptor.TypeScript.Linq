@@ -16,13 +16,15 @@ class App extends BaseComponent {
                     onShoppingCartClick={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
                     onSearchClick={searchTerm => Promise.resolve(alert(searchTerm))}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
-                    cookieConsent={
-                        {
-                            acceptButtonText: "Ok",
-                            title: "We use cookies",
-                            position: BannerPosition.Top
-                        }
-                    }
+                    cookieConsent={() => {
+                        return (
+                            {
+                                acceptButtonText: "Ok",
+                                title: "We use cookies",
+                                position: BannerPosition.Top
+                            }
+                        )
+                    }}
                     useRouting
             />
         );
