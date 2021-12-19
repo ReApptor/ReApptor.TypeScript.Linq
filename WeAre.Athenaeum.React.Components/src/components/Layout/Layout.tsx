@@ -176,11 +176,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const pathname: string = window.location.pathname;
 
         if (!!pathname && pathname !== "/") {
-
+            
             const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(pathname);
-          
-            // Let's change url (and browser state) only if we have new pageRoute
-            if (pageRoute && !PageRoute.isEqual(window.history.state as PageRoute, pageRoute)) {
+            
+            if (pageRoute) {
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
         }
