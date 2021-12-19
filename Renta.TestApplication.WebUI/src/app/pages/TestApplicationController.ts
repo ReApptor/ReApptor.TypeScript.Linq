@@ -33,13 +33,15 @@ class TestApplicationController {
 
     public async fetchApplicationContextAsync(timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext> {
         console.log("TestApplicationController.fetchApplicationContextAsync: timezoneOffset=", timezoneOffset, "applicationType=", applicationType);
+        const currentPage = PageDefinitions.tests;
+        currentPage.parameters = {a: "b"};
         if (this._applicationContext == null) {
             this._applicationContext = new ApplicationContext();
             this._applicationContext.id = ch.getComponentId();
             this._applicationContext.language = "en";
             this._applicationContext.country = "fi";
             this._applicationContext.applicationName = "WeAre.Athenaeum.TestApplication";
-            this._applicationContext.currentPage = PageDefinitions.tests;
+            this._applicationContext.currentPage = currentPage;
             this._applicationContext.settings = {
                 googleMapApiUrl: "https://maps.googleapis.com/maps/",
                 googleMapApiKey: "AIzaSyBVcbAv50jbB3VKK-16OJ8kxz7Jn6eT4oc"

@@ -92,6 +92,22 @@ export default class PageRoute {
 
         return path;
     }
+    
+    public static normalize(route: PageRoute | null) {
+        if (!route) {
+            return;
+        } 
+        
+        //Ensure that the default values are null.
+        
+        if (!route.id) {
+            route.id = null;
+        }
+        
+        if (!route.parameters || route.parameters == {}){
+            route.parameters = null;
+        }
+    }
 
     public static isEqual(x: PageRoute | null, y: PageRoute | null): boolean {
 

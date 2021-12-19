@@ -58,54 +58,65 @@ export default class PageRouteProvider {
         this.initialize();
 
         const context: ApplicationContext = ch.getContext();
-        const current: IBasePage | null = ch.findPage();
+        const currentPage: IBasePage | null = ch.findPage();
         const layout: ILayoutPage = ch.getLayout();
 
         if (id) {
             route = {...route};
             route.id = id;
         }
+        
+        //PageRoute in history might be newer than in context. (params might change in page)
+        //It will be updated to session context in onRedirect. 
+        const oldRoute: PageRoute | null = (layout.useRouting) 
+            ? (window.history.state as PageRoute) 
+            : context.currentPage;
+        
+        if (layout.useRouting) {
+            PageRoute.normalize(oldRoute);
+            PageRoute.normalize(route);
+        }
+        
+        const routesAreEqual: boolean = PageRoute.isEqual(oldRoute, route);
+       
+        const newPage: boolean = ((currentPage == null) || (currentPage.routeName !== route.name) || !routesAreEqual);
 
-        const newPage: boolean = ((current == null) || (current.routeName !== route.name) || (!PageRoute.isEqual(context.currentPage, route)));
-
-        if (newPage || layout.useRouting) {
+        if (newPage) {
 
             if (route.name === BasePageDefinitions.dummyRouteName) {
-                return current;
+                return currentPage;
             }
-
-
-
+            
             if (route.name === BasePageDefinitions.logoutRouteName) {
                 await this.logoutAsync(layout);
-                return current;
+                return currentPage;
             }
 
             let newAlert: AlertModel | null = null;
 
-            if (current != null) {
+            if (currentPage != null) {
 
-                const currentAlert: AlertModel | null = current.alert;
+                const currentAlert: AlertModel | null = currentPage.alert;
 
-                const canRedirect: boolean = await current.beforeRedirectAsync(route, innerRedirect);
+                const canRedirect: boolean = await currentPage.beforeRedirectAsync(route, innerRedirect);
 
                 if (!canRedirect) {
-                    const currentRoute: PageRoute = current.route;
+                    const currentRoute: PageRoute = currentPage.route;
 
                     window.history.pushState(currentRoute, currentRoute.name);
 
-                    await current.reRenderAsync();
+                    await currentPage.reRenderAsync();
 
-                    return current;
+                    return currentPage;
                 }
 
                 // New alert was triggered in method "beforeRedirectAsync";
-                if (!AlertModel.isEqual(currentAlert, current.alert)) {
-                    newAlert = current.alert;
+                if (!AlertModel.isEqual(currentAlert, currentPage.alert)) {
+                    newAlert = currentPage.alert;
                 }
 
                 // Hide current alert
-                await current.hideAlertAsync();
+                await currentPage.hideAlertAsync();
             }
 
             const page: IBasePage = await this.createPageAsync(route);
@@ -124,10 +135,14 @@ export default class PageRouteProvider {
             // }
 
             if (!innerRedirect) {
-                if (replace) {
-                    window.history.replaceState(route, route.name);
-                } else {
-                    window.history.pushState(route, route.name);
+                
+                if (!layout.useRouting || !routesAreEqual) {
+                  
+                    if (replace) {
+                        window.history.replaceState(route, route.name);
+                    } else {
+                        window.history.pushState(route, route.name);
+                    }
                 }
             }
 
@@ -148,7 +163,7 @@ export default class PageRouteProvider {
             return page;
         }
 
-        return current;
+        return currentPage;
     }
 
     public static async redirectAsync(route: PageRoute, replace: boolean = false, stopPropagation: boolean = false): Promise<IBasePage | null> {
@@ -306,12 +321,6 @@ export default class PageRouteProvider {
         }
 
         if (pageRoute) {
-            
-            //Ensure that the default value is null.
-            if (!pageRoute.id) {
-                pageRoute.id = null;
-            }
-            
             pageRoute.parameters = queryString.parse(window.location.search);
         }
         
