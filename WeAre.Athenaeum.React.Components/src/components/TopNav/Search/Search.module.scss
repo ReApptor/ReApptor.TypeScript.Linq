@@ -27,6 +27,11 @@
     display: none;
     border: $renta-border;
     box-shadow: $renta-shadow;
+
+    @media screen and (max-width: $break-sm) {
+      right: -65px;
+    }
+
   }
 
   &_open {
