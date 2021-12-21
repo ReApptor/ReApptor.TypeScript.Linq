@@ -1830,7 +1830,7 @@ export class GridTransformer {
             ((item.sorting != null) && (item.sorting != false) && (item.isDefaultSorting))) ||
             (to.columns.find(item => (item.sorting != null) && (item.sorting != false)) || null);
         to.sortDirection = (to.sortColumn != null)
-            ? (to.sortColumn.sorting == SortDirection.Desc)
+            ? (to.sortColumn.sorting === SortDirection.Desc)
                 ? SortDirection.Desc
                 : SortDirection.Asc
             : null;
