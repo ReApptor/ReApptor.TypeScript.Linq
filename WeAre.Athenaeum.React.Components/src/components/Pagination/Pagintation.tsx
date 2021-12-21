@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import Dropdown, { DropdownOrderBy } from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy} from "../Dropdown/Dropdown";
 
 import "./BootstrapOverride.scss";
 import styles from "./Pagination.module.scss";
@@ -36,6 +36,7 @@ interface IPaginationProps {
     totalItemCount: number;
     pageNumber: number;
     dataPerPageVariants?: number[];
+
     onChange?(sender: Pagination, pageNumber: number, pageSize: number): Promise<void>;
 }
 
@@ -76,39 +77,160 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
             const currentFirstRowIndex: number = (this.pageNumber - 1) * this.pageSize;
             const pageNumber: number = (Math.trunc(currentFirstRowIndex / pageSize)) + 1;
 
-            await this.setState({ pageSize, pageNumber });
+            await this.setState({pageSize, pageNumber});
             await this.processAsync();
         }
     }
 
     private get paginationButtons(): PaginationButton[] {
 
+        const isMobile: boolean = this.mobile;
+
         const firstPageNumber: number = 1;
         const currentPageNumber: number = this.pageNumber;
         const totalItemCount: number = this.totalItemCount;
         const pageSize: number = this.pageSize;
 
+        const prevPrevPrevPageNumber = currentPageNumber - 3;
+
         const prevPrevPageNumber = currentPageNumber - 2;
         const prevPageNumber = currentPageNumber - 1;
         const nextPageNumber = currentPageNumber + 1;
         const nextNextPageNumber = currentPageNumber + 2;
+        const nextNextNextPageNumber = currentPageNumber + 3;
         const lastPageNumber = (totalItemCount > 0)
             ? Math.ceil(totalItemCount / pageSize)
             : 1;
 
-        const pages: PaginationButton[] = [
-            {pageNumber: prevPageNumber, current: false, visible: true, disabled: (prevPageNumber < firstPageNumber), label: "‹"},
-            {pageNumber: firstPageNumber, current: false, visible: (firstPageNumber < prevPrevPageNumber), disabled: (firstPageNumber === currentPageNumber), label: firstPageNumber.toString()},
-            {pageNumber: prevPrevPageNumber, current: false, visible: (prevPageNumber - firstPageNumber > 2), disabled: true, label: "..."},
-            {pageNumber: prevPrevPageNumber, current: false, visible: (prevPrevPageNumber >= firstPageNumber), disabled: false, label: prevPrevPageNumber.toString()},
-            {pageNumber: prevPageNumber, current: false, visible: (prevPageNumber >= firstPageNumber), disabled: false, label: prevPageNumber.toString()},
-            {pageNumber: currentPageNumber, current: true, visible: true, disabled: true, label: currentPageNumber.toString()},
-            {pageNumber: nextPageNumber, current: false, visible: (nextPageNumber <= lastPageNumber), disabled: false, label: nextPageNumber.toString()},
-            {pageNumber: nextNextPageNumber, current: false, visible: (nextNextPageNumber <= lastPageNumber), disabled: false, label: nextNextPageNumber.toString()},
-            {pageNumber: nextNextPageNumber, current: false, visible: (lastPageNumber - nextPageNumber > 2), disabled: true, label: "..."},
-            {pageNumber: lastPageNumber, current: false, visible: (lastPageNumber > nextNextPageNumber), disabled: (lastPageNumber === currentPageNumber), label: lastPageNumber.toString()},
-            {pageNumber: nextPageNumber, current: false, visible: true, disabled: (nextPageNumber > lastPageNumber), label: "›"}
-        ];
+        let pages: PaginationButton[] = [];
+        if (isMobile) {
+
+            const firstPageVisible: boolean = (firstPageNumber <= prevPrevPageNumber);
+
+            const prevPrevPrevPageVisible: boolean = (prevPrevPrevPageNumber > 0 && prevPrevPrevPageNumber + 3 === lastPageNumber && prevPrevPrevPageNumber !== firstPageNumber);
+
+            const prevPrevPageVisible: boolean =
+                (
+                    (
+                        (prevPrevPageNumber > 0 && prevPrevPageNumber + 2 === lastPageNumber && prevPrevPageNumber !== firstPageNumber)
+                    )
+                    ||
+                    (
+                        (prevPrevPageNumber > 0 && nextPageNumber >= lastPageNumber && prevPrevPageNumber !== firstPageNumber)
+                    )
+                );
+
+            const lastPageVisible: boolean = (lastPageNumber >= nextNextPageNumber);
+
+            const nextNextNextPageVisible: boolean = (nextNextNextPageNumber - 3 === firstPageNumber && lastPageNumber > 4);
+
+            const nextNextPageVisible: boolean = (lastPageNumber > 4 && (nextNextPageNumber - 2 === firstPageNumber || prevPageNumber === firstPageNumber));
+
+            pages = [
+                //We always want to show 5 numbers on mobile view. 
+                //Examples, where [] marks the selected number. 
+                //A: < [1], 2, 3, 4, 10 >
+                //B: < 1, [2], 3, 4, 10 >
+                //C: < 1, 2, [3], 4, 10 > 
+                //D: < 1, 3, [4], 5, 10 >
+                //E: < 1, 4, [5], 6, 10 >
+                //F: < 1, [7], 8, 9, 10 >
+                //G: < 1, 7, [8], 9, 10 >
+                //H: < 1, 7, 8, [9], 10 >
+                //I: < 1, 7, 8, 9, [10] >
+                
+                //Always show prev arrow. Disable if no previous page
+                {
+                    pageNumber: prevPageNumber, current: false, visible: true,
+                    disabled: (prevPageNumber < firstPageNumber), label: "‹"
+                },
+                //First page. Hide when currentPage is 3, since then line below will render "1"
+                {
+                    pageNumber: firstPageNumber,
+                    current: false,
+                    visible: (firstPageVisible),
+                    disabled: (firstPageNumber === currentPageNumber),
+                    label: firstPageNumber.toString()
+                },
+                //Case I
+                {
+                    pageNumber: prevPrevPrevPageNumber,
+                    current: false,
+                    visible: (prevPrevPrevPageVisible),
+                    disabled: false, label: prevPrevPrevPageNumber.toString()
+                },
+                //Case H
+                {
+                    pageNumber: prevPrevPageNumber,
+                    current: false,
+                    visible: (prevPrevPageVisible),
+                    disabled: false,
+                    label: prevPrevPageNumber.toString()
+                },
+                //Always show next prev page number unless prev is last
+                {
+                    pageNumber: prevPageNumber, current: false,
+                    visible: (prevPageNumber >= firstPageNumber),
+                    disabled: false,
+                    label: prevPageNumber.toString()
+                },
+                //Always show currentPage
+                {
+                    pageNumber: currentPageNumber,
+                    current: true,
+                    visible: true, disabled: true,
+                    label: currentPageNumber.toString()
+                },
+                //Always show next page number unless next is last
+                {
+                    pageNumber: nextPageNumber,
+                    current: false,
+                    visible: (nextPageNumber <= lastPageNumber),
+                    disabled: false,
+                    label: nextPageNumber.toString()
+                },
+                //Case B
+                {
+                    pageNumber: nextNextPageNumber, current: false,
+                    visible: (nextNextPageVisible),
+                    disabled: false,
+                    label: nextNextPageNumber.toString()
+                },
+                //Case A
+                {
+                    pageNumber: nextNextNextPageNumber, current: false,
+                    visible: (nextNextNextPageVisible),
+                    disabled: false,
+                    label: nextNextNextPageNumber.toString()
+                },
+                {
+                    pageNumber: lastPageNumber, current: false,
+                    visible: (lastPageVisible),
+                    disabled: (lastPageNumber === currentPageNumber),
+                    label: lastPageNumber.toString()
+                },
+                {
+                    pageNumber: nextPageNumber, current: false,
+                    visible: true, disabled: (nextPageNumber > lastPageNumber), label: "›"
+                }
+            ];
+
+        } else {
+            pages = [
+                {pageNumber: prevPageNumber, current: false, visible: true, disabled: (prevPageNumber < firstPageNumber), label: "‹"},
+                {pageNumber: firstPageNumber, current: false, visible: (firstPageNumber < prevPrevPageNumber), disabled: (firstPageNumber === currentPageNumber), label: firstPageNumber.toString()},
+                {pageNumber: prevPrevPageNumber, current: false, visible: (prevPageNumber - firstPageNumber > 2), disabled: true, label: "..."},
+                {pageNumber: prevPrevPageNumber, current: false, visible: (prevPrevPageNumber >= firstPageNumber), disabled: false, label: prevPrevPageNumber.toString()},
+                {pageNumber: prevPageNumber, current: false, visible: (prevPageNumber >= firstPageNumber), disabled: false, label: prevPageNumber.toString()},
+                {pageNumber: currentPageNumber, current: true, visible: true, disabled: true, label: currentPageNumber.toString()},
+                {pageNumber: nextPageNumber, current: false, visible: (nextPageNumber <= lastPageNumber), disabled: false, label: nextPageNumber.toString()},
+                {pageNumber: nextNextPageNumber, current: false, visible: (nextNextPageNumber <= lastPageNumber), disabled: false, label: nextNextPageNumber.toString()},
+                {pageNumber: nextNextPageNumber, current: false, visible: (lastPageNumber - nextPageNumber > 2), disabled: true, label: "..."},
+                {pageNumber: lastPageNumber, current: false, visible: (lastPageNumber > nextNextPageNumber), disabled: (lastPageNumber === currentPageNumber), label: lastPageNumber.toString()},
+                {pageNumber: nextPageNumber, current: false, visible: true, disabled: (nextPageNumber > lastPageNumber), label: "›"}
+            ];
+        }
+
 
         return pages;
     }
@@ -153,8 +275,12 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
         return (
             (button.visible) &&
             (
-                <li key={index} className={this.css("page-item", this.classNames.pageItem, activeStyle, disabledStyle)}>
-                    <a href="#" className={this.css("page-link shadow-none", this.classNames.pageLink)} onClick={async (e) => await this.onChangePageNumber(e, button)}>
+                <li key={index}
+                    className={this.css("page-item", this.classNames.pageItem, activeStyle, disabledStyle)}
+                >
+                    <a href="#" className={this.css("page-link shadow-none", this.classNames.pageLink)}
+                       onClick={async (e) => await this.onChangePageNumber(e, button)}
+                    >
                         {button.label}
                     </a>
                 </li>
@@ -166,10 +292,10 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
         await super.componentWillReceiveProps(nextProps);
 
         const newProps: boolean = (nextProps.pageNumber != this.pageNumber) ||
-                                  (nextProps.pageSize != this.pageSize);
+            (nextProps.pageSize != this.pageSize);
 
         if (newProps) {
-            await this.setState({ pageNumber: nextProps.pageNumber, pageSize: nextProps.pageSize });
+            await this.setState({pageNumber: nextProps.pageNumber, pageSize: nextProps.pageSize});
         }
     }
 
@@ -180,7 +306,9 @@ export default class Pagination extends BaseComponent<IPaginationProps, IPaginat
 
                 <ul className={this.css("pagination mb-0", this.classNames.pagination)}>
                     {
-                        this.paginationButtons.map((button, index) => (this.renderPaginationButton(button, index)))
+                        this.paginationButtons.map((button, index) => (
+                            this.renderPaginationButton(button, index))
+                        )
                     }
                 </ul>
 
