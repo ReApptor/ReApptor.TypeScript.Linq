@@ -95,22 +95,23 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                     <ButtonContainer>
 
                         <Button label={"Cancel"} />
-
+                        
                         <Button label={"Dummy"} type={ButtonType.Info} />
 
                         <Button submit label={"Save"} type={ButtonType.Orange} />
 
                     </ButtonContainer>
+                    
 
                     <FourColumns>
 
                         <TextInput label={"-"} model={this.model1} />
 
                         <TextInput label={"validators "} liveValidator={this.validationRows} model={this.model2}  />
-
+                        
                         <TextInput label={"required"} required model={this.model3} />
                         
-                        <TextInput label={"required validators"} required liveValidator={this.validationRows} model={this.model4} />
+                        <TextInput id={"asd"} label={"required validators"} required liveValidator={this.validationRows} model={this.model4} />
 
                     </FourColumns>
 

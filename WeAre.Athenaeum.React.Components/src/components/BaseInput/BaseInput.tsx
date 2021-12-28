@@ -545,8 +545,6 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             const nextModel: IInputModel<TInputValue> | undefined = nextProps.model;
             const value: TInputValue | undefined = model.value;
             const nextValue: TInputValue | undefined = nextProps.value;
-            //Id check is for the case when localizer language changes
-            const resetValidator: boolean = (!nextProps.required) && (!this.isValid()) || (varProps.id !== varNewProps.id);
             const newReadonly: boolean = (varProps.disabled != varNewProps.disabled) || (varProps.readonly != varNewProps.readonly);
 
             if ((nextModel) && (nextModel.value !== model.value)) {
@@ -569,9 +567,9 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
                 await this.updateValueAsync(value, false);
 
-            } else if (resetValidator) {
-                await this.validateAsync();
-            }
+            } 
+              
+            await this.validateAsync();
 
             if (newReadonly) {
                 const readonly: boolean = varNewProps.readonly || varNewProps.disabled || false;
