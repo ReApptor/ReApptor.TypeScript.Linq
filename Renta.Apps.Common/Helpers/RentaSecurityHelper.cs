@@ -71,6 +71,10 @@ namespace Renta.Apps.Common.Helpers
                 })
                 .AddCookie(), authenticationType);
 
+            if (settings == null)
+            {
+                return builder;
+            }
 
             return builder.AddOpenIdConnect("Signicat", options =>
             {
