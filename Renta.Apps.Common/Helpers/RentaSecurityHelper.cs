@@ -71,7 +71,7 @@ namespace Renta.Apps.Common.Helpers
                 })
                 .AddCookie(), authenticationType);
 
-            if (settings == null)
+            if (settings?.Value == null || string.IsNullOrWhiteSpace(settings.Value.ClientId))
             {
                 return builder;
             }
