@@ -1,6 +1,7 @@
 import React from "react";
-import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput} from "@weare/athenaeum-react-components";
+import {BaseComponent, ch, DocumentPreviewSize, PasswordValidationRule} from "@weare/athenaeum-react-common";
+import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow} from "@weare/athenaeum-react-components";
+import PasswordFormLocalizer from "../../../../../../WeAre.Athenaeum.React.Components/src/components/PasswordForm/PasswordFormLocalizer";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
@@ -10,6 +11,20 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
     state: IModalTestsState = {
         documentPreviewSize: DocumentPreviewSize.Medium
+    };
+
+    private readonly model1={value: "1"};
+    private readonly model2={value: "2"};
+    private readonly model3={value: "3"};
+    private readonly model4={value: "4"};
+
+    private get validationRows() {
+       return [
+            new ValidationRow(PasswordValidationRule.UpperCaseCharacter, PasswordFormLocalizer.helpTextUpperCase),
+            new ValidationRow(PasswordValidationRule.LowerCaseCharacter, PasswordFormLocalizer.helpTextLowerCase),
+            new ValidationRow(PasswordValidationRule.NumberCharacter, PasswordFormLocalizer.helpTextNumber),
+            new ValidationRow(PasswordValidationRule.SpecialCharacter, PasswordFormLocalizer.helpTextSpecialCharacter)
+        ]
     };
 
     public render(): React.ReactNode {
@@ -87,9 +102,23 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                     </ButtonContainer>
 
+                    <FourColumns>
+
+                        <TextInput label={"-"} model={this.model1} />
+
+                        <TextInput label={"validators "} liveValidator={this.validationRows} model={this.model2}  />
+
+                        <TextInput label={"required"} required model={this.model3} />
+                        
+                        <TextInput label={"required validators"} required liveValidator={this.validationRows} model={this.model4} />
+
+                    </FourColumns>
+
                 </Form>
 
             </React.Fragment>
         );
+        
     }
+
 }
