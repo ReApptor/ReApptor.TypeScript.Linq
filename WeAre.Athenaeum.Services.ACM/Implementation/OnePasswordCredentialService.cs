@@ -102,6 +102,44 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             VaultReference[] vaults = await client.ListVaultsAsync();
 
             var credentials = new List<ICredential>();
+            var vaultItems = new List<VaultItem>();
+            foreach (VaultReference vault in vaults)
+            {
+                VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
+
+                foreach (VaultItemReference vaultItemReference in vaultItemsReferences)
+                {
+                    VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
+
+                    vaultItems.Add(vaultItem);
+
+                    if ((string.IsNullOrWhiteSpace(path)) || (vaultItem.Id == path) || (vaultItem.Title == path))
+                    {
+                        credentials.AddRange(vaultItem.Transform());
+                    }
+                }
+            }
+
+            if (credentials.Count == 0 && !vaultItems.Any(item => (item.Title == path) || (item.Id == path))) {
+                throw new ArgumentException($"Could not find any 1password credentials by path \"{path}\". Verify the path or token are specified correctly.");
+            }
+
+            return credentials;
+        }
+
+        //vault/list/credential
+        public async Task<IEnumerable<ICredential>> GetCredentialsAsync(string path = "")
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = _settings.Path;
+            }
+
+            OnePasswordApiProvider client = GetClient();
+
+            VaultReference[] vaults = await client.ListVaultsAsync();
+
+            var credentials = new List<ICredential>();
             foreach (VaultReference vault in vaults)
             {
                 VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
