@@ -13,10 +13,10 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
         documentPreviewSize: DocumentPreviewSize.Medium
     };
 
-    private readonly model1={value: "1"};
-    private readonly model2={value: "2"};
-    private readonly model3={value: "3"};
-    private readonly model4={value: "4"};
+    private readonly model1={value: ""};
+    private readonly model2={value: ""};
+    private readonly model3={value: ""};
+    private readonly model4={value: ""};
 
     private get validationRows() {
        return [

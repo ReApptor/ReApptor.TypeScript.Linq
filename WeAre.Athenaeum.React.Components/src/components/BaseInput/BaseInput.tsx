@@ -6,6 +6,7 @@ import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import BaseInputLocalizer from "./BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
+import Localizer from "../../../../Renta.TestApplication.WebUI/src/localization/Localizer";
 
 export type NullableCheckboxType = boolean | null;
 
@@ -380,6 +381,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     private _inputContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _liveValidatorRef: React.RefObject<LiveValidator> = React.createRef();
+    private _localizerLanguage: string = Localizer.language;
 
     private async onInputContainerClickAsync(): Promise<void> {
         if (this.props.clickToEdit) {
@@ -545,7 +547,16 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             const nextModel: IInputModel<TInputValue> | undefined = nextProps.model;
             const value: TInputValue | undefined = model.value;
             const nextValue: TInputValue | undefined = nextProps.value;
+            let resetValidator: boolean = (!nextProps.required) && (!this.isValid());
             const newReadonly: boolean = (varProps.disabled != varNewProps.disabled) || (varProps.readonly != varNewProps.readonly);
+            
+            //Ensure validation localizations change when localizer language changes
+            if (Localizer.language !== this._localizerLanguage) {
+                if (!this.isValid()) {
+                    resetValidator = true;    
+                }
+                this._localizerLanguage = Localizer.language;
+            }
 
             if ((nextModel) && (nextModel.value !== model.value)) {
 
@@ -567,9 +578,9 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
                 await this.updateValueAsync(value, false);
 
-            } 
-              
-            await this.validateAsync();
+            } else if (resetValidator) {
+                await this.validateAsync();
+            }
 
             if (newReadonly) {
                 const readonly: boolean = varNewProps.readonly || varNewProps.disabled || false;
