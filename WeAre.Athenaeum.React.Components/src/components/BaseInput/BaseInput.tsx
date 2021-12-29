@@ -1,12 +1,12 @@
 import React from "react";
-import {Utility, TFormat, FileModel} from "@weare/athenaeum-toolkit";
+import {Utility, TFormat, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
 import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType, ReactUtility} from "@weare/athenaeum-react-common";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import BaseInputLocalizer from "./BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
-import Localizer from "../../../../Renta.TestApplication.WebUI/src/localization/Localizer";
+
 
 export type NullableCheckboxType = boolean | null;
 
@@ -381,7 +381,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     private _inputContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _liveValidatorRef: React.RefObject<LiveValidator> = React.createRef();
-    private _localizerLanguage: string = Localizer.language;
+    private _localizerLanguage: string = BaseInput.getCurrentLocalizerLanguage();
 
     private async onInputContainerClickAsync(): Promise<void> {
         if (this.props.clickToEdit) {
@@ -428,6 +428,10 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     protected get format(): TFormat {
         return (this.props.format || "") as TFormat;
+    }
+    
+    private static getCurrentLocalizerLanguage(): string {
+        return ServiceProvider.findLocalizer()?.language ?? "";
     }
 
     protected get inputElement(): HTMLInputElement | HTMLTextAreaElement | null {
@@ -551,11 +555,12 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             const newReadonly: boolean = (varProps.disabled != varNewProps.disabled) || (varProps.readonly != varNewProps.readonly);
             
             //Ensure validation localizations change when localizer language changes
-            if (Localizer.language !== this._localizerLanguage) {
+            const currentLanguage: string = BaseInput.getCurrentLocalizerLanguage();
+            if (currentLanguage !== this._localizerLanguage) {
                 if (!this.isValid()) {
                     resetValidator = true;    
                 }
-                this._localizerLanguage = Localizer.language;
+                this._localizerLanguage = currentLanguage;
             }
 
             if ((nextModel) && (nextModel.value !== model.value)) {
