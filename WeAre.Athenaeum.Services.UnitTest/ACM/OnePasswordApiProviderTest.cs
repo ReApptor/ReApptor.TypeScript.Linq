@@ -1,6 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Moq;
+using WeAre.Athenaeum.Common.Interfaces.ACM;
+using WeAre.Athenaeum.Services.ACM.Implementation;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword;
 using WeAre.Athenaeum.Services.ACM.Implementation.Api.OnePassword.Models.VaultItem;
 using WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.VaultItem;
@@ -36,6 +41,28 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             
             Assert.NotNull(vaults);
             Assert.NotEmpty(vaults);
+        }
+        
+        [Fact]
+        public async Task ListCredentialsAsyncTest()
+        {
+            var credentialSettings = new OnePasswordCredentialServiceSettings
+            {
+                Path = "broken-acm-unit-tests-path",
+                AccessToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3siYSI6NDgsInUiOiJveGE0aDNoc2s3eXU2amlrdnRtcTNxc3NiNCJ9XSwiYXVkIjpbImNvbS4xcGFzc3dvcmQuY29ubmVjdCJdLCJpYXQiOjE2MjUxMjc2MTUsImlzcyI6ImNvbS4xcGFzc3dvcmQuYjUiLCJqdGkiOiJ1ZHBqN3Fta2NybGV5bzQ2ZHFzdDRuc2N5dSIsInN1YiI6IjVRWVFCUFc1Mk5GQTNERVFWSU1PRzQ0Rk9VIn0.PdozB_biSF--2e4GeDcPvF6QXYsv85FX8p-G1q4O0NKyjQaqcwVfQKtk2AHwVTv1DI4GOtuJvRvrBr4DPfT-pg",
+                ApiUrl = "https://1password.reapptor.biz/v1/"
+            };
+
+            var service = new OnePasswordCredentialService(new Mock<ILogger<OnePasswordCredentialService>>().Object, credentialSettings as ICredentialServiceSettings);
+
+            try
+            {
+                await service.ListCredentialsAsync(credentialSettings.Path);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex);
+            }
         }
         
         [Fact]
