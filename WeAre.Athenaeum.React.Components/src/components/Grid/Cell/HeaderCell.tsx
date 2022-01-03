@@ -29,7 +29,9 @@ interface IHeaderCellProps<TItem = {}> {
     stickyHeader?: boolean;
 
     /**
-
+     * @link stickyHeader used for stickyHeader.
+     * @description to calculate "top" for sticky position
+     * @default 0
      */
     tableHeadRowIndex?: number;
 }
