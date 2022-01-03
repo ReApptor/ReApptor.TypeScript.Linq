@@ -28,6 +28,7 @@ export interface IGridTestsState {
     checkable: boolean;
     headerGroups: boolean;
     search: string | null;
+    stickyHeader: boolean;
 }
 
 enum GridEnum {
@@ -72,6 +73,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         checkable: false,
         headerGroups: true,
         search: null,
+        stickyHeader: false,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -367,6 +369,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               onChange={async (sender, value) => {await this.setState({selectable: value})}}
                     />
 
+                    <Checkbox inline
+                              label="Sticky header"
+                              value={this.state.stickyHeader}
+                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
+                    />
+
                     {
                         (this.state.selectable) &&
                         (
@@ -398,6 +406,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       responsive={this.state.responsive}
                       selectable={this.state.selectable ? this.state.selectableType : undefined}
                       checkable={this.state.checkable}
+                      stickyHeader={this.state.stickyHeader}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}

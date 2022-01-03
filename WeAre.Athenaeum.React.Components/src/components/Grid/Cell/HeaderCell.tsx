@@ -12,6 +12,26 @@ interface IHeaderCellProps<TItem = {}> {
     top: boolean;
     colSpanLeft: boolean;
     hasHeaderGroups: boolean;
+
+    /**
+     * @description to get the height of first row in thead and calculate "top"
+     * @link stickyHeader should be enabled for this to work.
+     * @default null
+     */
+    tableHeadFirstRowRef?: React.RefObject<HTMLTableRowElement>;
+
+    /**
+     * @description for sticky header in view while scrolling.
+     * @description sets th position to sticky
+     * @description uses --app-navbar-height to add top padding while scrolling.
+     * @default false
+     */
+    stickyHeader?: boolean;
+
+    /**
+
+     */
+    tableHeadRowIndex?: number;
 }
 
 export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellProps<TItem>> implements IHeaderCell {
@@ -85,7 +105,8 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             textAlign: StylesUtility.textAlign(textAlign),
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
             height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
-            minWidth: column.minWidth || undefined
+            minWidth: column.minWidth || undefined,
+            ...(this.props.stickyHeader) ? {top: `calc(var(--app-navbar-height) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`} : {}
         };
 
         if (column.stretch) {
@@ -94,6 +115,10 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
 
         const rotateClassName: string = ((column.rotate) && ((!top) || (!column.group)))
             ? styles.rotateHeader
+            : "";
+
+        const stickyHeaderClassName: string = (this.props.stickyHeader)
+            ? styles.stickyHeader
             : "";
 
         const sortableClassName: any = (sortable) && styles.sortable;
@@ -122,7 +147,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
                     colSpan={colSpan || undefined}
-                    className={this.css(styles.th, sortableClassName, sortDirectionClassName)}
+                    className={this.css(styles.th, sortableClassName, sortDirectionClassName, stickyHeaderClassName)}
                     onClick={() => (sortable) && this.sortAsync(column)}
                 >
 
