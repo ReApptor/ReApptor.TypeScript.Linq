@@ -14,23 +14,23 @@ interface IHeaderCellProps<TItem = {}> {
     hasHeaderGroups: boolean;
 
     /**
-     * @description to get the height of first row in thead and calculate "top"
-     * @link stickyHeader should be enabled for this to work.
-     * @default null
-     */
-    tableHeadFirstRowRef?: React.RefObject<HTMLTableRowElement>;
-
-    /**
-     * @description for sticky header in view while scrolling.
-     * @description sets th position to sticky
-     * @description uses --app-navbar-height to add top padding while scrolling.
+     * For sticky header in view while scrolling.
+     * Sets th position to sticky.
+     * Uses {@link var(--app-navbar-height)} to add top padding while scrolling.
      * @default false
      */
     stickyHeader?: boolean;
 
     /**
-     * @link stickyHeader used for stickyHeader.
-     * @description to calculate "top" for sticky position
+     * To get the height of first row in thead and calculate "top".
+     * {@link stickyHeader} should be enabled.
+     * @default null
+     */
+    tableHeadFirstRowRef?: React.RefObject<HTMLTableRowElement>;
+
+    /**
+     * To calculate "top" for sticky position.
+     * {@link stickyHeader} should be enabled.
      * @default 0
      */
     tableHeadRowIndex?: number;
