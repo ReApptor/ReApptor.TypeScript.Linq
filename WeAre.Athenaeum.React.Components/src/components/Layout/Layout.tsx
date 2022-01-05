@@ -21,18 +21,49 @@ import {
 import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
-
-import styles from "./Layout.module.scss";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
 
+import styles from "./Layout.module.scss";
+
+
 export interface ILayoutProps {
+
+    /**
+     * Added to the {@link Layout}'s root elements className.
+     */
     className?: string;
+
     topNavLogo?: any;
     topNavLogoText?: string;
-    footerName?: string;
-    footerLogo?: any;
-    footerLinks?: () => IFooterLink[];
     noTopNav?: boolean;
+
+    /**
+     * Passed to the {@link Footer} of the {@link Layout}.
+     * Has no effect if {@link noFooter} is true.
+     *
+     * @see IFooterProps.name
+     */
+    footerName?: string;
+
+    /**
+     * Passed to the {@link Footer} of the {@link Layout}.
+     * Has no effect if {@link noFooter} is true.
+     *
+     * @see IFooterProps.logo
+     */
+    footerLogo?: any;
+
+    /**
+     * Passed to the {@link Footer} of the {@link Layout}.
+     * Has no effect if {@link noFooter} is true.
+     *
+     * @see IFooterProps.links
+     */
+    footerLinks?: () => IFooterLink[];
+
+    /**
+     * If true, {@link Footer} is not displayed.
+     */
     noFooter?: boolean;
 
     /**
@@ -42,6 +73,10 @@ export interface ILayoutProps {
      */
     useRouting?: boolean;
 
+    /**
+     * A function which returns {@link ICookieConsentProps}.
+     * If this is defined a {@link CookieConsent} will be rendered in the {@link Layout} with the {@link ICookieConsentProps} returned by the function passed to it.
+     */
     cookieConsent?: () => ICookieConsentProps
 
     searchPlaceHolder?: () => string;
@@ -72,9 +107,11 @@ interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
 }
 
 /**
- * Implementation of {@link ILayoutPage}.
+ * A base layout containing an {@link IBasePage}.
  */
-export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext> implements ILayoutPage, IGlobalResize {
+export default class Layout
+    extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext>
+    implements ILayoutPage, IGlobalResize {
 
     state: ILayoutState = {
         isLoading: false,
@@ -176,9 +213,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const pathname: string = window.location.pathname;
 
         if (!!pathname && pathname !== "/") {
-            
+
             const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(pathname);
-            
+
             if (pageRoute) {
                 await PageRouteProvider.redirectAsync(pageRoute)
             }
@@ -236,8 +273,80 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     : WebApplicationType.DesktopBrowser;
     }
 
-    public get useRouting(): boolean {
-        return this.props.useRouting === true;
+    private removeTooltip(): void {
+        this.JQuery('.tooltip').remove();
+    }
+
+    /**
+     * Do not delete - needed for REACT error handling
+     * @return \{error: true}
+     */
+    // noinspection JSUnusedGlobalSymbols
+    public static getDerivedStateFromError(): any {
+        return {error: true};
+    }
+
+    /**
+     * @return {@link ApplicationContext.applicationName}
+     */
+    public get applicationName(): string {
+        return (this.state.data != null) ? this.state.data.applicationName : "";
+    }
+
+
+    // React.Component
+
+
+    public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
+        // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
+        const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
+
+        if ((processed) && (this.state.error)) {
+            await this.setState({error: false});
+        }
+    }
+
+    public async componentDidUpdate(): Promise<void> {
+        if (this._alert) {
+            await this.alertAsync(this._alert);
+        }
+    }
+
+
+    // ISpinner
+
+
+    /**
+     * @inheritDoc
+     *
+     * NOTE: only works if the {@link Layout} is mounted.
+     */
+    public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
+        if ((this.state.isSpinning !== isSpinning) && (this.isMounted)) {
+            await this.setState({isSpinning: isSpinning});
+        }
+    }
+
+    public isSpinning(): boolean {
+        return this.state.isSpinning;
+    }
+
+
+    // BaseAsyncComponent
+
+
+    public async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+
+        if (this.mobile) {
+            this.initializeTooltips();
+        }
+
+        await this.processTokenAsync();
+
+        if (this.useRouting) {
+            await Layout.processUrlRouteAsync();
+        }
     }
 
     protected async fetchDataAsync(): Promise<ApplicationContext> {
@@ -265,17 +374,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         return "/api/Application/GetContext?timezoneOffset=" + timezoneOffset + "&applicationType=" + applicationType;
     }
 
-    public isLayout(): boolean {
-        return true;
-    }
 
-    public get hasTopNav(): boolean {
-        return ((this.props.noTopNav !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasTopNav));
-    }
+    // IGlobalResize
 
-    public get hasFooter(): boolean {
-        return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
-    }
 
     public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
         if (this.mobile !== this._mobile) {
@@ -284,29 +385,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public async swipeLeftAsync(): Promise<void> {
-        if (this.mobile) {
-            this.removeTooltip();
-            await this.swipe(styles.swipeLeft);
-        }
-    }
 
-    public async swipeRightAsync(): Promise<void> {
-        if (this.mobile) {
-            this.removeTooltip();
-            await this.swipe(styles.swipeRight);
-        }
-    }
+    // ILayoutPage
 
-    public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
-        if ((this.state.isSpinning !== isSpinning) && (this.isMounted)) {
-            await this.setState({isSpinning: isSpinning});
-        }
-    }
-
-    public isSpinning(): boolean {
-        return this.state.isSpinning;
-    }
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
@@ -323,7 +404,30 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         if (topNav != null) {
             await topNav.reloadAsync();
         }
+    }
 
+    /**
+     * @inheritDoc
+     *
+     * Only works if {@link mobile} is true.
+     */
+    public async swipeLeftAsync(): Promise<void> {
+        if (this.mobile) {
+            this.removeTooltip();
+            await this.swipe(styles.swipeLeft);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * Only works if {@link mobile} is true.
+     */
+    public async swipeRightAsync(): Promise<void> {
+        if (this.mobile) {
+            this.removeTooltip();
+            await this.swipe(styles.swipeRight);
+        }
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
@@ -344,11 +448,19 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public get alert(): AlertModel | null {
-        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
-        return pageContainer?.alert ?? this._alert;
+    /**
+     * @inheritDoc
+     * @return true
+     */
+    public isLayout(): boolean {
+        return true;
     }
 
+    /**
+     * @inheritDoc
+     *
+     * NOTE: handles only Bootstrap tooltips.
+     */
     public initializeTooltips(): void {
         const tooltip = this.JQuery('[data-toggle="tooltip"]');
 
@@ -364,53 +476,15 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
+    /**
+     * @inheritDoc
+     *
+     * NOTE: handles only Bootstrap tooltips.
+     */
     public reinitializeTooltips(): void {
         this.JQuery('[data-toggle="tooltip"]').tooltip("dispose");
 
         this.initializeTooltips();
-    }
-
-    private removeTooltip(): void {
-        this.JQuery('.tooltip').remove();
-    }
-
-    //Do not delete - needs for REACT error handling
-    // noinspection JSUnusedGlobalSymbols
-    public static getDerivedStateFromError(): any {
-        return {error: true};
-    }
-
-    public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
-        // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
-        const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
-
-        if ((processed) && (this.state.error)) {
-            await this.setState({error: false});
-        }
-    }
-
-    public async componentDidMount(): Promise<void> {
-        await super.componentDidMount();
-
-        if (this.mobile) {
-            this.initializeTooltips();
-        }
-
-        await this.processTokenAsync();
-
-        if (this.useRouting) {
-            await Layout.processUrlRouteAsync();
-        }
-    }
-
-    public async componentDidUpdate(): Promise<void> {
-        if (this._alert) {
-            await this.alertAsync(this._alert);
-        }
-    }
-
-    public get applicationName(): string {
-        return (this.state.data != null) ? this.state.data.applicationName : "";
     }
 
     public download(file: FileModel): void {
@@ -420,6 +494,31 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         link.target = "_self";
         link.click();
     }
+
+    public get hasTopNav(): boolean {
+        return ((this.props.noTopNav !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasTopNav));
+    }
+
+    public get hasFooter(): boolean {
+        return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
+    }
+
+    /**
+     * @inheritDoc
+     * @see IPageContainer.alert
+     */
+    public get alert(): AlertModel | null {
+        const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
+        return pageContainer?.alert ?? this._alert;
+    }
+
+    public get useRouting(): boolean {
+        return this.props.useRouting === true;
+    }
+
+
+    // IReactComponent
+
 
     public render(): React.ReactNode {
         return (
@@ -470,7 +569,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
                 {
-                    ((this.props.cookieConsent) && (!this.isLoading)) && (
+                    ((!this.isLoading) && (this.props.cookieConsent)) &&
+                    (
                         <CookieConsent description={this.props.cookieConsent().description}
                                        title={this.props.cookieConsent().title}
                                        acceptButtonText={this.props.cookieConsent().acceptButtonText}
