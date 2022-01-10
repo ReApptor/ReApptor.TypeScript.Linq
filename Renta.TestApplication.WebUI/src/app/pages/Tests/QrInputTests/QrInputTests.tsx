@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent} from "@weare/athenaeum-react-common";
-import {ButtonType, Form, OneColumn, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
-import QrInput from "../../../../../../WeAre.Athenaeum.React.Components/src/components/QrInput/QrInput";
+import {ButtonType, Form, OneColumn, QrInput, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
+
 
 
 
