@@ -426,4 +426,11 @@
   <data name="ImageInput.MoveUp" xml:space="preserve">
     <value>PL: Move up</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>
+Blisko</value>
+  </data>
+  <data name="QrInput.Button.Label" xml:space="preserve">
+    <value>Kod Qr</value>
+  </data>
 </root>
