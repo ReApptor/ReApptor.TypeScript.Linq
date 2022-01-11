@@ -108,7 +108,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
             height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
             minWidth: column.minWidth || undefined,
-            ...(this.props.stickyHeader) ? {top: `calc(var(--app-navbar-height) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`} : {}
+            ...(this.props.stickyHeader) ? {top: `calc(var(--app-navbar-height, 45px) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`} : {}
         };
 
         if (column.stretch) {
