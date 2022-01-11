@@ -103,12 +103,16 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             ? grid.sortDirection
             : null;
 
+        //  to prevent sticky Header from going under top navbar.
+        const navbarDefaultHeight = '45px';
+        const topCssProperty = `calc(var(--app-navbar-height, ${navbarDefaultHeight}) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`;
+
         const inlineStyles: React.CSSProperties = {
             textAlign: StylesUtility.textAlign(textAlign),
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
             height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
             minWidth: column.minWidth || undefined,
-            ...(this.props.stickyHeader) ? {top: `calc(var(--app-navbar-height, 45px) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`} : {}
+            ...(this.props.stickyHeader) ? {top: topCssProperty} : {}
         };
 
         if (column.stretch) {
