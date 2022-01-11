@@ -858,18 +858,71 @@ export default class Utility {
         return "";
     }
 
+    /**
+     * @param mimeType mimeType to update
+     * @return if mimeType is known then it will return the new version otherwise it will return the given mimeType
+     */
+    private static overwriteDeprecatedMimeTypes(mimeType: string): string {
+        if (mimeType === "application/font-woff") {
+            return "font/woff";
+        }
+
+        return mimeType;
+    }
+
+
+    /**
+     * some browsers returns some deprecated mimeTypes as part of DataUrl, this method will try to update the known ones.
+     * @param dataUrl output of fileReader {@see readUploadedFileAsDataUrl}
+     * @param fileExtension file extension with dot {@see getFileExtension}
+     */
+    private static overwriteDeprecatedMimeTypeInDataUrl(dataUrl: string, fileExtension: string): string {
+        if (fileExtension === ".woff" && dataUrl.startsWith("data:application/font-woff")) {
+            return dataUrl.replace("data:application/font-woff", "data:font/woff");
+        }
+
+        if (fileExtension === ".woff" && dataUrl.startsWith("data:application/octet-stream")) {
+            return dataUrl.replace("data:application/octet-stream", "data:font/woff");
+        }
+
+        if (fileExtension === ".woff2" && dataUrl.startsWith("data:application/octet-stream")) {
+            return dataUrl.replace("data:application/octet-stream", "data:font/woff2");
+        }
+
+        return dataUrl;
+    }
+
+    /**
+     * some browsers don't return mimeType for some file extension so this method will try to return the correct mimeType.
+     * @param fileExtension file extension with dot {@see getFileExtension}
+     */
+    private static getKnownMimeTypesByFileExtension(fileExtension: string): string | null {
+        if (fileExtension === ".woff") {
+            return "font/woff";
+        }
+
+        if (fileExtension === ".woff2") {
+            return "font/woff2";
+        }
+
+        return null;
+    }
+
     public static async transformFileAsync(fileReference: File | null): Promise<FileModel | null> {
 
         if (fileReference) {
             const dataUrl: string = await Utility.readUploadedFileAsDataUrl(fileReference);
-
             if (dataUrl) {
+                const fileExtension: string = this.getFileExtension(fileReference.name);
+                const checkedDataUrl: string = Utility.overwriteDeprecatedMimeTypeInDataUrl(dataUrl, fileExtension);
+                const checkedMimeType: string = Utility.overwriteDeprecatedMimeTypes(fileReference.type);
+
                 const file: FileModel = new FileModel();
                 file.lastModified = new Date(fileReference.lastModified);
                 file.name = fileReference.name;
                 file.size = fileReference.size;
-                file.type = fileReference.type || this.getFileExtension(fileReference.name);
-                file.src = dataUrl;
+                file.type = checkedMimeType || Utility.getKnownMimeTypesByFileExtension(fileExtension) || fileExtension;
+                file.src = checkedDataUrl;
                 return file;
             }
         }
