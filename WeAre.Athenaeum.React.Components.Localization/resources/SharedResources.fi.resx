@@ -417,4 +417,10 @@
   <data name="ImageInput.MoveUp" xml:space="preserve">
     <value>Siirrä ylös</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>Sulje</value>
+  </data>
+  <data name="QrInput.Button.Label" xml:space="preserve">
+    <value>Qr-koodi</value>
+  </data>
 </root>

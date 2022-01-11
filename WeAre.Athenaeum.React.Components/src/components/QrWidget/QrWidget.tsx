@@ -1,7 +1,6 @@
 import React from "react";
 import {ch} from "@weare/athenaeum-react-common";
 import QrReader from "react-qr-reader";
-import BarcodeReader from "react-barcode-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
 
@@ -67,10 +66,6 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                         :
                         (
                             <div>NOT SUPPORTED</div>
-                            // <BarcodeReader delay={300}
-                            //                onScan={async (data) => await this.onScanAsync(data)}
-                            //                onError={async (error) => await this.onScanErrorAsync(error)}
-                            //                style={qrStyle}/>
                         )
                 }
             </div>

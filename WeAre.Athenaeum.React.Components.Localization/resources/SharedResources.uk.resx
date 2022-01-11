@@ -437,4 +437,8 @@
   <data name="ImageInput.DocumentTooBig" xml:space="preserve">
     <value>Файл документа занадто великий</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>
+Закрити</value>
+  </data>
 </root>

@@ -153,6 +153,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly imageInputMoveUpLanguageItemName: string = `ImageInput.MoveUp`;
     public readonly imageInputMoveDownLanguageItemName: string = `ImageInput.MoveDown`;
     public readonly urlInputLanguageItemName: string = `UrlInput`;
+    public readonly qrInputButtonCloseLanguageItemName: string = `QrInput.Button.Close`;
+    public readonly qrInputButtonLabelLanguageItemName: string = `QrInput.Button.Label`;
 
     constructor() {
 
@@ -318,6 +320,8 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.imageInputMoveUpLanguageItemName, { language: `en`, value: `Move up` }, { language: `uk`, value: `Піднятися` }, { language: `sv`, value: `Flytta till toppen` }, { language: `ru`, value: `Подняться` }, { language: `pl`, value: `Przejdź do góry` }, { language: `nb`, value: `Flytt til toppen` }, { language: `fi`, value: `Siirrä ylös` }, { language: `da`, value: `Flyt til toppen` },);
         this.set(this.imageInputMoveDownLanguageItemName, { language: `en`, value: `Move below` }, { language: `uk`, value: `Опуститись нижче` }, { language: `sv`, value: `Flytta ner` }, { language: `ru`, value: `Опуститься ниже` }, { language: `pl`, value: `Padnij` }, { language: `nb`, value: `Flytte ned` }, { language: `fi`, value: `Siirrä alas` }, { language: `da`, value: `Flyt ned` },);
         this.set(this.urlInputLanguageItemName, { language: `en`, value: `` },);
+        this.set(this.qrInputButtonCloseLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `\nЗакрити` }, { language: `sv`, value: `\nStänga` }, { language: `ru`, value: `Закрывать` }, { language: `pl`, value: `\nBlisko` }, { language: `nb`, value: `Lukk` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Tæt` },);
+        this.set(this.qrInputButtonLabelLanguageItemName, { language: `en`, value: `Qr code` }, { language: `sv`, value: `Qr-kod` }, { language: `pl`, value: `Kod Qr` }, { language: `nb`, value: `QR kode` }, { language: `fi`, value: `Qr-koodi` }, { language: `da`, value: `Qr-kode` },);
     }
 
     /**
@@ -1354,6 +1358,20 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get urlInput() : string {
         return this.get(this.urlInputLanguageItemName);
+    }
+
+    /**
+    /* "QrInput.Button.Close" (Close)
+    */
+    public get qrInputButtonClose() : string {
+        return this.get(this.qrInputButtonCloseLanguageItemName);
+    }
+
+    /**
+    /* "QrInput.Button.Label" (Qr code)
+    */
+    public get qrInputButtonLabel() : string {
+        return this.get(this.qrInputButtonLabelLanguageItemName);
     }
 }
 

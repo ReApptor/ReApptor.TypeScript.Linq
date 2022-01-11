@@ -39,6 +39,7 @@ import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
 import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 import CookieConsentTests from "./CookieConsentTests/CookieConsentTests";
 import Localizer from "../../../localization/Localizer";
+import QrInputTests from "./QrInputTests/QrInputTests";
 
 interface ITestsState {
     underLineTabStyles: boolean;
@@ -211,6 +212,10 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
 
                         <Tab id="QrWidgetTest" title="Qr Widget">
                             <QrWidgetTests/>
+                        </Tab>
+
+                        <Tab id="QrInputTests" title="QrInput">
+                            <QrInputTests/>
                         </Tab>
 
                         <Tab id="routeWidgetTests" title="RouteWidget">
