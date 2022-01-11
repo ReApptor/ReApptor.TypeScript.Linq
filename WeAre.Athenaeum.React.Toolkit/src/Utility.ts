@@ -860,9 +860,9 @@ export default class Utility {
 
     /**
      * @param mimeType mimeType to update
-     * @return if mimeType is one of ["application/font-woff"], it will return the new version else will return the given mimeType
+     * @return if mimeType is known then it will return the new version otherwise it will return the given mimeType
      */
-    public static overwriteDeprecatedMimeTypes(mimeType: string): string {
+    private static overwriteDeprecatedMimeTypes(mimeType: string): string {
         if (mimeType === "application/font-woff") {
             return "font/woff";
         }
@@ -872,15 +872,11 @@ export default class Utility {
 
 
     /**
-     * @param dataUrl output of fileReader
-     * @see readUploadedFileAsDataUrl
-     *
-     * @param fileExtension file extension with dot
-     * @see getFileExtension
-     *
-     * @description some browsers returns some deprecated mimeTypes as part of DataUrl, this method will try to update the known ones.
+     * some browsers returns some deprecated mimeTypes as part of DataUrl, this method will try to update the known ones.
+     * @param dataUrl output of fileReader {@see readUploadedFileAsDataUrl}
+     * @param fileExtension file extension with dot {@see getFileExtension}
      */
-    public static overwriteDeprecatedMimeTypeInDataUrl(dataUrl: string, fileExtension: string): string {
+    private static overwriteDeprecatedMimeTypeInDataUrl(dataUrl: string, fileExtension: string): string {
         if (fileExtension === ".woff" && dataUrl.startsWith("data:application/font-woff")) {
             return dataUrl.replace("data:application/font-woff", "data:font/woff");
         }
@@ -897,12 +893,10 @@ export default class Utility {
     }
 
     /**
-     * @param fileExtension file extension with dot
-     * @see getFileExtension
-     *
-     * @description some browsers don't return mimeType for some file extension so this method will try to return the correct mimeType.
+     * some browsers don't return mimeType for some file extension so this method will try to return the correct mimeType.
+     * @param fileExtension file extension with dot {@see getFileExtension}
      */
-    public static getKnownMimeTypesByFileExtension(fileExtension: string): string | null {
+    private static getKnownMimeTypesByFileExtension(fileExtension: string): string | null {
         if (fileExtension === ".woff") {
             return "font/woff";
         }
