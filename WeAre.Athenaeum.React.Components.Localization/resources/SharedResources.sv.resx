@@ -426,4 +426,11 @@
   <data name="ImageInput.MoveUp" xml:space="preserve">
     <value>SV: Move up</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>
+Stänga</value>
+  </data>
+  <data name="QrInput.Button.Label" xml:space="preserve">
+    <value>Qr-kod</value>
+  </data>
 </root>

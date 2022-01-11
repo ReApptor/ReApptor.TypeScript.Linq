@@ -301,6 +301,9 @@ export {default as AthenaeumComponentsConstants} from "./AthenaeumComponentsCons
 export * from "./components/GoogleMap/GoogleMap";
 export {default as GoogleMap} from "./components/GoogleMap/GoogleMap";
 
+export * from "./components/QrInput/QrInput";
+export {default as QrInput} from "./components/QrInput/QrInput";
+
 export * from "./components/DateRangeInput/DateRangeInput";
 export * from "./components/ImageInput/ImageInput";
 export * from "./components/TabContainer/TabModel";

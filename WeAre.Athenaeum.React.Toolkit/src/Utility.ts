@@ -4,7 +4,6 @@ import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 import HashCodeUtility from "./HashCodeUtility";
 import FileModel from "./models/FileModel";
-//import Position from "./models/Position";
 import {Dictionary} from "typescript-collections";
 import {ILocalizer} from "./localization/BaseLocalizer";
 import {ITransformProvider, TFormat} from "./providers/BaseTransformProvider";
@@ -14,6 +13,7 @@ import {StringExtensions} from "./extensions/StringExtensions";
 import {ArrayExtensions} from "./extensions/ArrayExtensions";
 import {NumberExtensions} from "./extensions/NumberExtensions";
 import ServiceProvider from "./providers/ServiceProvider";
+
 
 export default class Utility {
 
@@ -61,14 +61,23 @@ export default class Utility {
     }
 
     public static css(...params: (readonly string[] | string | null | undefined | false)[]): string {
-        return (params) ? params.filter(param => param).join(" ").replace(",", " ").trim() : "";
+        return (params)
+            ? params
+                .filter(param => param)
+                .join(" ")
+                .replace(",", " ")
+                .trim()
+            : "";
     }
 
     /**
+     * Format a string.
      * huehue
-     * @param text the thing to format
-     * @param params format used for formatting 
      * "D" = dd.MM.yyyy
+     *
+     * @param text String to format.
+     * @param params Values used to format the string.
+     * @return The input string formatted with the parameters. If the input string is not defined, an empty string.
      */
     public static format(text: string | null | undefined, ...params: (string | number | boolean | Date | null | undefined | any)[]): string {
         let result: string = text || "";
@@ -83,7 +92,7 @@ export default class Utility {
                     const customFormat: boolean = (result[i + 2] === ":") && ((typeof param === "number") || (typeof param === "object") || (typeof param === "string"));
 
                     if (customFormat) {
-                        if 
+                        if
                         (
                             (param != null) &&
                             (
@@ -93,7 +102,7 @@ export default class Utility {
                                     (typeof param === "object") &&
                                     (
                                         ((param as any).constructor.name === Date.name) ||
-                                        (param instanceof TimeSpan) || 
+                                        (param instanceof TimeSpan) ||
                                         (param.isTimeSpan)
                                     )
                                 )
@@ -175,7 +184,7 @@ export default class Utility {
                                         }
                                     } else if ((typeof param === "object") && ((param instanceof TimeSpan) || (param.isTimeSpan === true))) {
                                         const value: TimeSpan = param as TimeSpan;
-                                        
+
                                         if (format === "hh:mm:ss") {
                                             formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         } else if (format === "c") {
@@ -257,21 +266,21 @@ export default class Utility {
                 }
 
                 let localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-                
+
                 let language: string = navigator.language;
                 if (localizer) {
                     const tag: string = `DayOfWeek.${name}`;
                     if (localizer.contains(tag)) {
                         return localizer.get(tag);
                     }
-                    
+
                     language = localizer.language;
                 }
 
                 const sunday: Date = new Date(Date.UTC(2017, 0, 1));
                 const dayOfWeek: Date = sunday.addDays(dayOfWeekOrDate);
                 name = dayOfWeek.toLocaleString(language, { weekday: "long" });
-                
+
                 return name;
 
             case "object":
@@ -294,7 +303,7 @@ export default class Utility {
         const month: string = this.getMonth(monthOrDate);
         return month.substr(0, 3);
     }
-    
+
     public static getMonth(monthOrDate: number | Date | string): string {
 
         if (Utility.isDateType(monthOrDate)) {
@@ -536,20 +545,34 @@ export default class Utility {
         items.splice(index, 1);
     }
 
+    /**
+     * @param value Number to create a padded string from.
+     * @return The number as a string, with an added leading zero if the number is smaller than 10.
+     */
     public static pad(value: number) {
         value = Math.floor(Math.abs(value));
         return (value < 10 ? "0" : "") + value;
     }
 
+    /**
+     * @return A new {@link Date} with the browsers current date, time and time-zone.
+     */
     public static now(): Date {
         return new Date();
     }
 
+    /**
+     * @return A new {@link Date} with the browsers current date, time and time-zone, with its time-component adjusted to look like it is in UTC time.
+     * @see toUtc
+     */
     public static utcNow(): Date {
         const now: Date = Utility.now();
         return Utility.toUtc(now);
     }
 
+    /**
+     * @see date
+     */
     public static today(): Date {
         return Utility.date();
     }
@@ -558,6 +581,10 @@ export default class Utility {
         return this.today().addDays(1);
     }
 
+    /**
+     * A new {@link Date} with the browsers current date and time-zone, with its time-zone specific time-component set to 0.
+     * @see getDateWithoutTime
+     */
     public static date(): Date {
         return this.getDateWithoutTime(this.now());
     }
@@ -577,15 +604,41 @@ export default class Utility {
         return (date != null) && (Utility.diff(Utility.now(), date).totalMilliseconds > 0);
     }
 
+    /**
+     * NOTE: The output {@link Date} is still in the browsers time-zone!
+     *
+     * @return A new {@link Date} with its time-component adjusted to look like it is in UTC time.
+     */
     public static toUtc(date: Date | string): Date {
         date = new Date(date);
-        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+
+        return new Date(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate(),
+            date.getUTCHours(),
+            date.getUTCMinutes(),
+            date.getUTCSeconds(),
+            date.getUTCMilliseconds()
+        );
     }
 
+    /**
+     * Create a copy of the input {@link Date} and add the {@link timezoneOffset} to it.
+     * This makes the output {@link Date}'s internal UTC date- and time-components equal to the input {@link Date}'s timezone-specific ones.
+     * Extremely useful when making sure {@link Date}'s are serialized properly.
+     *
+     * Example:
+     *      Browsers timezone is UTC+2.
+     *      Input {@link Date} is 2000-01-01-00-00-00, and thus the output {@link Date} is 2000-01-01-02-00-00.
+     *      The input date would be serialized as "1999-12-31T22:00:00.000Z", whereas the output date would be serialized as "2000-01-01T00:00:00.000Z".
+     *
+     * @see utcValueOf
+     */
     public static asUtc(date: Date | string): Date {
         return new Date(Utility.utcValueOf(date));
     }
-    
+
     public static toLocal(date: Date | string): Date {
         date = new Date(date);
         const hoursDiff = date.getHours() - date.getTimezoneOffset() / 60;
@@ -597,28 +650,48 @@ export default class Utility {
         if (typeof date === "string") {
             date = new Date(date);
         }
-        return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
+
+        return Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds(),
+            date.getMilliseconds()
+        );
     }
 
     public static isSunday(date: Date | string): boolean {
-        const value: Date = (typeof date === "string") ? new Date(date) : date;
+        const value: Date = (typeof date === "string")
+            ? new Date(date)
+            : date;
+
         return (value.getDay() == 0);
     }
 
     public static isToday(date: Date | string): boolean {
-        const value: Date = (typeof date === "string") ? new Date(date) : date;
+        const value: Date = (typeof date === "string")
+            ? new Date(date)
+            : date;
+
         const today: Date = this.today();
+
         return (value.getDate() === today.getDate()) &&
             (value.getMonth() === today.getMonth()) &&
             (value.getFullYear() === today.getFullYear());
     }
 
-    // return date only in ISO format (yyyy-mm-dd)
+    /**
+     * @return The input {@link Date}'s date-component in ISO 8601 format (yyyy-mm-dd)
+     */
     public static toISODateString(date: Date) {
         return date.getFullYear() + "-" + Utility.pad(date.getMonth() + 1) + "-" + Utility.pad(date.getDate());
     }
 
-    // return date and time in ISO format with timezone (yyyy-mm-ddThh:MM:ss+Z:Z)
+    /**
+     * @return The input {@link Date}'s date-component, time-component and timezone in ISO 8601 format (yyyy-mm-ddThh:MM:ss+Z:Z)
+     */
     public static toLongISOString(date: Date) {
         const tzo: number = -date.getTimezoneOffset();
         const dif: string = (tzo >= 0) ? "+" : "-";
@@ -662,12 +735,18 @@ export default class Utility {
         return `${Utility.pad(date.getHours())}:${Utility.pad(date.getMinutes())}`;
     }
 
+    /**
+     * @return Copy of the input {@link Date} with its timezone-specific time-component set to 0.
+     */
     public static getDateWithoutTime(date: Date | string): Date {
         const copy = new Date(date);
         copy.setHours(0, 0, 0, 0);
         return copy;
     }
 
+    /**
+     * Difference in minutes between the browsers time-zone and UTC.
+     */
     public static get timezoneOffset(): number {
         const timezoneOffset: number = new Date().getTimezoneOffset();
         return -timezoneOffset;
@@ -768,7 +847,7 @@ export default class Utility {
             fileReader.readAsArrayBuffer(inputFile)
         });
     }
-    
+
     public static getFileExtension(name?: string | null): string {
         if (name) {
             const index: number = name.lastIndexOf(".");
@@ -864,7 +943,7 @@ export default class Utility {
     public static toPagedList<T>(items: readonly T[], pageNumber: number, pageSize: number): IPagedList<T> {
         const firstIndex: number = (pageNumber - 1) * pageSize;
         const totalItemCount: number = items.length;
-        
+
         let pageCount: number = Math.trunc(totalItemCount / pageSize);
         if (pageCount === 0) {
             pageCount = 1;
@@ -974,6 +1053,10 @@ export default class Utility {
         return HashCodeUtility.getHashCode(value);
     }
 
+    /**
+     * @param date Value to check for Dateness
+     * @return Is the value a {@link Date} or a {@link string} representing a date.
+     */
     public static isDateType(date: any): boolean {
         return ((date != null) && (
             ((typeof date === "object") && (date.constructor === Date)) ||
@@ -1035,6 +1118,10 @@ export default class Utility {
         return model;
     }
 
+    /**
+     * @param object Value to clone.
+     * @return Deep clone of the value.
+     */
     public static clone(object: any): any {
         if (object == null) {
             return object;
@@ -1058,7 +1145,7 @@ export default class Utility {
         }
 
         const copy: any = this.clone(from);
-        
+
         for (const key in copy) {
             if (copy.hasOwnProperty(key)) {
                 const value: any = Utility.findValueByAccessor(from, key);
@@ -1077,16 +1164,14 @@ export default class Utility {
     }
 
     /**
-     * Gets unique id
-     * @returns id - number
+     * @returns A unique number.
      */
     public static getId(): number {
         return ++this._number;
     }
 
     /**
-     * Gets component id
-     * @returns id - number
+     * @returns An underscore with a unique number appended to it.
      */
     public static getComponentId(): string {
         return `_${this.getId()}`;

@@ -1,4 +1,5 @@
 using System;
+using System.Security.Authentication;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,7 +47,7 @@ namespace WeAre.Athenaeum.Common.Helpers
 
             return LogLevel.Information;
         }
-        
+
         private static void ConfigureLogging(this ILoggingBuilder builder)
         {
             LogLevel logLevel = GetLogLevel("MICROSOFT_LOGGING_LEVEL");
@@ -72,7 +73,7 @@ namespace WeAre.Athenaeum.Common.Helpers
                 if (web)
                 {
                     IWebHost host = CreateWebHostBuilder<TStartup>(args).Build();
-                
+
                     AthenaeumLayoutRenderer.ServiceProvider = host.Services;
 
                     host.Run();
@@ -80,9 +81,9 @@ namespace WeAre.Athenaeum.Common.Helpers
                 else
                 {
                     IHost host = CreateHostBuilder<TStartup>(args).Build();
-                
+
                     AthenaeumLayoutRenderer.ServiceProvider = host.Services;
-                
+
                     host.Run();
                 }
             }
@@ -103,7 +104,16 @@ namespace WeAre.Athenaeum.Common.Helpers
         {
             return Host
                 .CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<TStartup>(); })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseKestrel(kestrelOptions =>
+                        kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
+                            {
+                                httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
+                            }
+                        ));
+                    webBuilder.UseStartup<TStartup>();
+                })
                 .ConfigureAppConfiguration((hostingContext, config) => { config.AddEnvironmentVariables(); })
                 .ConfigureLogging();
         }
@@ -112,6 +122,12 @@ namespace WeAre.Athenaeum.Common.Helpers
         {
             return WebHost
                 .CreateDefaultBuilder(args)
+                .UseKestrel(kestrelOptions =>
+                    kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
+                        {
+                            httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
+                        }
+                    ))
                 .UseStartup<TStartup>()
                 .ConfigureAppConfiguration((hostingContext, config) => { config.AddEnvironmentVariables(); })
                 .ConfigureLogging();

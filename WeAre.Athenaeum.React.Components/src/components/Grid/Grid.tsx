@@ -20,6 +20,13 @@ export interface IGridClassNames {
 interface IGridProps<TItem = {}> extends IGridDefinition {
     classNames?: IGridClassNames;
     data?: TItem[] | null;
+
+    /**
+     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
+     * @default false
+     */
+    stickyHeader?: boolean;
+
     fetchData?(sender: Grid<TItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<TGridData<TItem>>;
 
     /**
@@ -47,6 +54,8 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         data: null
     };
 
+    //  stickyHeader prop functionality related. (to get height of first row of tr in thead for setting "top" of second row of th in thead in stick mode)
+    private readonly _tableHeadFirstRowRef: React.RefObject<HTMLTableRowElement> = React.createRef();
     private readonly _spinnerRef: React.RefObject<GridSpinner> = React.createRef();
     private _overflowData: IGridOverflowData | null = null;
     private _language: string = GridLocalizer.language;
@@ -398,9 +407,17 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         await this.processResponsiveAsync();
     }
 
-    private renderHeader(column: ColumnModel<TItem>, hasHeaderGroups: boolean, top: boolean,  colSpanLeft: boolean): React.ReactNode {
+    private renderHeader(column: ColumnModel<TItem>, hasHeaderGroups: boolean, top: boolean,  colSpanLeft: boolean, tableHeadRowIndex: number): React.ReactNode {
         return (
-            <HeaderCell key={`grid_header_${column.index}_${top}`} column={column} hasHeaderGroups={hasHeaderGroups} top={top} colSpanLeft={colSpanLeft} />
+            <HeaderCell key={`grid_header_${column.index}_${top}`}
+                        column={column}
+                        hasHeaderGroups={hasHeaderGroups}
+                        top={top}
+                        colSpanLeft={colSpanLeft}
+                        tableHeadFirstRowRef={this._tableHeadFirstRowRef}
+                        stickyHeader={this.props.stickyHeader}
+                        tableHeadRowIndex={tableHeadRowIndex}
+            />
         )
     }
 
@@ -470,15 +487,18 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                             <thead>
                                             {
                                                 <React.Fragment>
-                                                    <tr>
+                                                    <tr ref={this._tableHeadFirstRowRef}>
                                                         {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
-                                                        {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0)))}
+                                                        {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0), 0))}
                                                     </tr>
                                                     {
                                                         (hasHeaderGroups) &&
                                                         (
                                                             <tr>
-                                                                {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0)))}
+                                                                {
+                                                                    columns.map((column, index) =>
+                                                                        this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0), 1))
+                                                                }
                                                             </tr>
                                                         )
                                                     }

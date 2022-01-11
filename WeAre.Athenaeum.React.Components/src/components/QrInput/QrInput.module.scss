@@ -1,0 +1,14 @@
+.qrInputContainer {
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+    .qrInputButton {
+      height: 60px;
+      white-space: normal !important;
+      outline: none !important;
+      box-shadow: none !important;
+      text-transform: uppercase;
+    }
+}

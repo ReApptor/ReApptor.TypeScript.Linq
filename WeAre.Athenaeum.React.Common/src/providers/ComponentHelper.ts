@@ -13,7 +13,7 @@ import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enu
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 /**
- * BaseComponent helper.
+ * {@link BaseComponent} helper.
  * Provides helper functions for component initialization.
  */
 export default class ch {
@@ -44,8 +44,11 @@ export default class ch {
     }
 
     /**
-     * Registers component
-     * @param component - inherited from IBaseComponent
+     * If the input {@link IBaseComponent} is an {@link ILayoutPage}, set it as the current {@link ILayoutPage},
+     * or if it is an {@link IBasePage}, set it as the current {@link IBasePage}.
+     * Otherwise do nothing.
+     *
+     * @param component {@link IBaseComponent} to set as the current {@link ILayoutPage} or {@link IBasePage}.
      */
     public static register(component: IBaseComponent): void {
 
@@ -64,7 +67,7 @@ export default class ch {
 
     /**
      * Sets context
-     * @param context - ApplicationContext
+     * @param context {@link ApplicationContext} to set as the current context.
      */
     public static async setContextAsync(context: ApplicationContext): Promise<void> {
         if (this._context !== context) {
@@ -101,23 +104,25 @@ export default class ch {
         }
     }
 
+    /**
+     * @see ILayoutPage.reloadTopNavAsync
+     */
     public static async reloadTopNavAsync(): Promise<void> {
         if (this._layout != null) {
             await this._layout.reloadTopNavAsync();
         }
     }
 
+    /**
+     * Calls {@link reloadTopNavAsync} without awaiting.
+     */
     public static reloadTopNav(): void {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadTopNavAsync();
     }
 
     /**
-     * Display an alert in the current {@link ILayoutPage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
-     *
-     * @param alert Alert to be displayed in the {@link ILayoutPage}.
+     * @see ILayoutPage.alertAsync
      */
     public static async alertAsync(alert: AlertModel): Promise<void> {
         if (this._layout != null) {
@@ -126,7 +131,7 @@ export default class ch {
     }
 
     /**
-     * The alert being displayed in the current {@link ILayoutPage}.
+     * @see ILayoutPage.alert
      */
     public static get alert(): AlertModel | null {
         return (this._layout != null) ? this._layout.alert : null;
@@ -418,14 +423,14 @@ export default class ch {
     }
 
     /**
-     * Is the current window width below the desktop threshold width {@link AthenaeumConstants.desktopMinWidth}.
+     * Is the current window width below {@link AthenaeumConstants.desktopMinWidth}.
      */
     public static get mobile(): boolean {
         return !this.desktop;
     }
 
     /**
-     * Is the current window width above the desktop threshold width {@link AthenaeumConstants.desktopMinWidth}.
+     * Is the current window width above {@link AthenaeumConstants.desktopMinWidth}.
      */
     public static get desktop(): boolean {
         return (window.innerWidth >= AthenaeumConstants.desktopMinWidth);

@@ -36,6 +36,12 @@
         justify-content: center;
       }
 
+      &.stickyHeader {
+        position: sticky;
+        background: white;
+        z-index: 999;
+      }
+
       &.sortable {
         cursor: pointer;
 
