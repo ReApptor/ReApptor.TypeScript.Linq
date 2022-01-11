@@ -417,4 +417,7 @@
   <data name="ImageInput.MoveUp" xml:space="preserve">
     <value>Подняться</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>Закрывать</value>
+  </data>
 </root>

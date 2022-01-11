@@ -88,14 +88,15 @@ export default class ApiProvider {
             const dataResponse: TResponse = apiResponse as TResponse;
 
             return dataResponse;
-        } catch (e) {
+        }
+        catch (error) {
 
             if (this.offline) {
                 await PageRouteProvider.offline();
             } else {
-                const ignore: boolean = (ApiProvider.isApiError(e)) || (ApiProvider.ignoreException(endpoint));
+                const ignore: boolean = (ApiProvider.isApiError(error)) || (ApiProvider.ignoreException(endpoint));
                 if (!ignore) {
-                    await PageRouteProvider.exception(e);
+                    await PageRouteProvider.exception(error);
                 }
             }
 

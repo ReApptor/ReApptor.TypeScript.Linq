@@ -35,21 +35,33 @@ export interface IBasePage extends IBaseComponent {
 
     /**
      * Display an alert on the {@link IBasePage}.
+     * @param alert {@link AlertModel} to create the alert from.
      */
     alertAsync(alert: AlertModel): Promise<void>;
 
     /**
      * Display an error alert on the {@link IBasePage}.
+     *
+     * @param message Message to display in the alert.
+     * @param autoClose Should the alert be closed automatically after a set period of time.
      */
-    alertErrorAsync(message: string, autoClose: boolean): Promise<void>;
+    alertErrorAsync(message: string, autoClose: boolean): Promise<void>;  // Unnecessary due to the method below (there are no overloads in TS/JS)
 
     /**
      * Display an error alert on the {@link IBasePage}.
+     *
+     * @param message Message to display in the alert.
+     * @param autoClose Should the alert be closed automatically after a set period of time.
+     * @param flyout Should the alert fly-out from the side of the window, instead of being displayed in the top of the {@link IBasePage}.
      */
     alertErrorAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
     /**
      * Display a success alert on the {@link IBasePage}.
+     *
+     * @param message Message to display in the success alert.
+     * @param autoClose Should the alert be closed automatically after a set period of time.
+     * @param flyout Should the alert fly-out from the side of the window, instead of being displayed in the top of the {@link IBasePage}.
      */
     alertMessageAsync(message: string, autoClose: boolean, flyout: boolean): Promise<void>;
 
@@ -58,6 +70,11 @@ export interface IBasePage extends IBaseComponent {
      */
     hideAlertAsync(): Promise<void>;
 
+    /**
+     * Display a confirmation dialog.
+     * @param title Title of the confirmation dialog.
+     * @return Result of the confirmation.
+     */
     confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean>;
 
     messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult>;
@@ -69,35 +86,66 @@ export interface IBasePage extends IBaseComponent {
     beforeRedirectAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean>;
 
     /**
-     * Get the {@link ILayoutPage} which contains the {@link IBasePage}.
+     * @return The {@link ILayoutPage} which contains the {@link IBasePage}.
      */
     getLayout(): ILayoutPage;
 
     /**
-     * Get the title of the {@link IBasePage}.
+     * @return The title of the {@link IBasePage}.
      */
     getTitle(): string;
 
+    /**
+     * @return The current {@link ApplicationContext}.
+     */
     getContext(): ApplicationContext;
 
     getManualProps(): IManualProps;
 
     /**
-     * Returns true.
+     * Is the {@link IBasePage} a page.
+     * @return true
      */
     isPage(): boolean;
 
+    /**
+     * Does the {@link IBasePage} have a TopNav.
+     */
     readonly hasTopNav: boolean;
+
+    /**
+     * Does the {@link IBasePage} have a Footer.
+     */
     readonly hasFooter: boolean;
 
     /**
-     * The alert currently being displayed in the page.
+     * The alert currently being displayed in the {@link IBasePage}.
      */
     readonly alert: AlertModel | null;
+
+    /**
+     * Name of the {@link IBasePage}'s {@link route}.
+     */
     readonly routeName: string;
+
+    /**
+     * Index of the {@link IBasePage}'s {@link route}.
+     */
     readonly routeIndex: number | null;
+
+    /**
+     * Id of the {@link IBasePage}'s {@link route}.
+     */
     readonly routeId: string | null;
+
+    /**
+     * Parameters of the {@link IBasePage}'s {@link route}.
+     */
     readonly parameters: BasePageParameters | null;
+
+    /**
+     * Route of the {@link IBasePage}.
+     */
     readonly route: PageRoute;
 
     /**
@@ -110,7 +158,7 @@ export interface IBasePage extends IBaseComponent {
 }
 
 /**
- * A page containing an {@link IBasePage}.
+ * A base layout page containing an {@link IBasePage}.
  */
 export interface ILayoutPage extends IAsyncComponent {
 
@@ -119,12 +167,19 @@ export interface ILayoutPage extends IAsyncComponent {
      */
     setPageAsync(page: IBasePage): Promise<void>;
 
+    /**
+     * Reload the {@link ILayoutPage}'s TopNav.
+     */
     reloadTopNavAsync(): Promise<void>;
 
-    setSpinnerAsync(isSpinning: boolean): Promise<void>;
-
+    /**
+     * Perform a swipe to the left on the {@link ILayoutPage}.
+     */
     swipeLeftAsync(): Promise<void>;
 
+    /**
+     * Perform a swipe to the right on the {@link ILayoutPage}.
+     */
     swipeRightAsync(): Promise<void>;
 
     /**
@@ -138,24 +193,44 @@ export interface ILayoutPage extends IAsyncComponent {
     hideAlertAsync(): Promise<void>;
 
     /**
-     * Does the {@link ILayoutPage} have a spinner.
-     */
-    isSpinning(): boolean;
-
-    /**
-     * Returns true.
+     * Is the {@link ILayoutPage} a layout.
      */
     isLayout(): boolean;
 
+    /**
+     * Initialize tooltips in the {@link ILayoutPage}.
+     */
     initializeTooltips(): void;
 
+    /**
+     * Reinitialize tooltips in the {@link ILayoutPage}.
+     */
     reinitializeTooltips(): void;
 
+    /**
+     * Download a file.
+     * @param file File to download.
+     */
     download(file: FileModel): void;
 
+    /**
+     * Does the {@link ILayoutPage} have a TopNav.
+     */
     readonly hasTopNav: boolean;
+
+    /**
+     * Does the {@link ILayoutPage} have a Footer.
+     */
     readonly hasFooter: boolean;
+
+    /**
+     * The {@link AlertModel} currently being displayed in the {@link ILayoutPage}.
+     */
     readonly alert: AlertModel | null;
+
+    setSpinnerAsync(isSpinning: boolean): Promise<void>;    // Duplicated from ISpinner.
+
+    isSpinning(): boolean;  // Duplicated from ISpinner.
 
     /**
      * Should routing functionalities be enabled application-wide.
@@ -182,7 +257,7 @@ export interface IIsLoading {
 }
 
 /**
- * Implementation of {@link IBasePage}.
+ * Base class for pages.
  */
 export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
@@ -196,24 +271,10 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return null;
     }
 
-    public isPage(): boolean {
-        return true;
-    }
-
     protected constructor(props: IBasePageProps<TParams> | null = null) {
         super(props || ({} as IBasePageProps<TParams>));
 
         this._asIsLoading = this.asIsLoading();
-    }
-
-    public async componentDidMount(): Promise<void> {
-        await super.componentDidMount();
-
-        if (this._asIsLoading) {
-            DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
-        }
-
-        await this.setPageUrlAsync();
     }
 
     private async setPageUrlAsync(): Promise<void> {
@@ -229,6 +290,78 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(page.route);
     }
 
+    /**
+     * @return User of current {@link IUserContext}.
+     * @see ch.getContext
+     */
+    public findUser<TUser extends IUser>(): TUser | null {
+        return (ch.getContext() as IUserContext).user || null;
+    }
+
+    /**
+     * @return Username of current {@link IUserContext}.
+     * @see ch.getContext
+     */
+    public get username(): string | null {
+        return (ch.getContext() as IUserContext).username || null;
+    }
+
+    /**
+     * @return Is {@link username} defined.
+     */
+    public get isAuthorized(): boolean {
+        return (!!this.username);
+    }
+
+    /**
+     * @see ch.flyoutErrorAsync
+     */
+    public static async flyoutErrorAsync(message: string): Promise<void> {
+        await ch.flyoutErrorAsync(message);
+    }
+
+    /**
+     * @see ch.flyoutMessageAsync
+     */
+    public static async flyoutMessageAsync(message: string): Promise<void> {
+        await ch.flyoutMessageAsync(message);
+    }
+
+    /**
+     * @see ch.alertWarningAsync
+     */
+    public async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
+        return ch.alertWarningAsync(message, autoClose, flyout);
+    }
+
+    /**
+     * @see ch.flyoutWarningAsync
+     */
+    public static async flyoutWarningAsync(message: string): Promise<void> {
+        await ch.flyoutWarningAsync(message);
+    }
+
+    /**
+     * @return ""
+     */
+    public getManual(): string {
+        return "";
+    }
+
+
+    // BaseComponent
+
+
+    public async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+
+        if (this._asIsLoading) {
+            DocumentEventsProvider.register(this.id, DocumentEventType.IsLoading, async () => await this._asIsLoading!.onIsLoading());
+        }
+
+        await this.setPageUrlAsync();
+    }
+
     public async componentWillUnmount(): Promise<void> {
 
         if (this._asIsLoading) {
@@ -238,143 +371,56 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         await super.componentWillUnmount();
     }
 
-    public getLayout(): ILayoutPage {
-        return ch.getLayout();
-    }
 
-    public getTitle(): string {
-        const titleLocalizationItem: string = `${this.routeName}Page.Title`;
-        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
-        return ((localizer != null) && (localizer.contains(titleLocalizationItem)))
-            ? localizer.get(titleLocalizationItem)
-            : this.routeName;
-    }
+    // IBasePage
 
-    public getContext(): TContext {
-        return ch.getContext() as TContext;
-    }
 
-    public findUser<TUser extends IUser>(): TUser | null {
-        return (ch.getContext() as IUserContext).user || null;
-    }
-
-    public get username(): string | null {
-        return (ch.getContext() as IUserContext).username || null;
-    }
-
-    public get isAuthorized(): boolean {
-        return (!!this.username);
-    }
-
-    public get routeName(): string {
-        return this.props.routeName;
-    }
-
-    public get routeIndex(): number | null {
-        return (this.props.routeIndex != null) ? this.props.routeIndex : null;
-    }
-
-    public get automaticUrlChange(): boolean {
-        return !!this.props.automaticUrlChange;
-    }
-
-    public get routeId(): string | null {
-        return (this.props.routeId != null) ? this.props.routeId : null;
-    }
-
-    public get parameters(): BasePageParameters | null {
-        return this.props.parameters || null;
-    }
-
-    public get route(): PageRoute {
-        return new PageRoute(this.routeName, this.routeIndex, this.routeId, this.parameters);
-    }
-
-    public get hasTopNav(): boolean {
-        return true;
-    }
-
-    public get hasFooter(): boolean {
+    /**
+     * @inheritDoc
+     *
+     * Does nothing and returns.
+     * @return true
+     */
+    public async onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean> {
         return true;
     }
 
     /**
-     * Display an alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * @inheritDoc
+     * @see ch.alertAsync
      */
     public async alertAsync(alert: AlertModel): Promise<void> {
         await ch.alertAsync(alert);
     }
 
     /**
-     * The alert currently displayed on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     */
-    public get alert(): AlertModel | null {
-        return ch.alert;
-    }
-
-    /**
-     * Display an error alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * @inheritDoc
+     * @see ch.alertErrorAsync
      */
     public async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         return ch.alertErrorAsync(message, autoClose, flyout);
     }
 
     /**
-     * Display a flyout error alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
-     */
-    public static async flyoutErrorAsync(message: string): Promise<void> {
-        await ch.flyoutErrorAsync(message);
-    }
-
-    /**
-     * Display an alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
+     * @inheritDoc
+     * @see ch.alertMessageAsync
      */
     public async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
         return ch.alertMessageAsync(message, autoClose, flyout);
     }
 
     /**
-     * Display a flyout alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
-     */
-    public static async flyoutMessageAsync(message: string): Promise<void> {
-        await ch.flyoutMessageAsync(message);
-    }
-
-    /**
-     * Display a warning alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
-     */
-    public async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        return ch.alertWarningAsync(message, autoClose, flyout);
-    }
-
-    /**
-     * Display a flyout warning alert on the {@link ILayoutPage} which contains the {@link IBasePage}.
-     *
-     * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
-     */
-    public static async flyoutWarningAsync(message: string): Promise<void> {
-        await ch.flyoutWarningAsync(message);
-    }
-
-    /**
-     * Hide the alert currently being displayed on the {@link ILayoutPage} which contains the {@link IBasePage}.
+     * @inheritDoc
+     * @see ch.hideAlertAsync
      */
     public async hideAlertAsync(): Promise<void> {
         return ch.hideAlertAsync();
     }
 
+    /**
+     * @inheritDoc
+     * @see IPageContainer.confirmAsync
+     */
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null) && (await pageContainer.confirmAsync(title));
@@ -401,21 +447,99 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         }
     }
 
-    public async onSwipeHandlerAsync(direction: SwipeDirection): Promise<boolean> {
-        return true;
-    }
-
+    /**
+     * @inheritDoc
+     *
+     * Does nothing and returns.
+     * @return true
+     */
     public async beforeRedirectAsync(nextRoute: PageRoute, innerRedirect: boolean): Promise<boolean> {
         return true;
     }
 
-    public getManual(): string {
-        return "";
+    /**
+     * @inheritDoc
+     * @see ch.getLayout
+     */
+    public getLayout(): ILayoutPage {
+        return ch.getLayout();
+    }
+
+    public getTitle(): string {
+        const titleLocalizationItem: string = `${this.routeName}Page.Title`;
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+        return ((localizer != null) && (localizer.contains(titleLocalizationItem)))
+            ? localizer.get(titleLocalizationItem)
+            : this.routeName;
+    }
+
+    /**
+     * @inheritDoc
+     * @see ch.getContext
+     */
+    public getContext(): TContext {
+        return ch.getContext() as TContext;
     }
 
     public getManualProps(): IManualProps {
         return {
             manual: this.getManual()
         }
+    }
+
+    /**
+     * @inheritDoc
+     * @return true
+     */
+    public isPage(): boolean {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     * @return true
+     */
+    public get hasTopNav(): boolean {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     * @return true
+     */
+    public get hasFooter(): boolean {
+        return true;
+    }
+
+    public get alert(): AlertModel | null {
+        return ch.alert;
+    }
+
+    public get routeName(): string {
+        return this.props.routeName;
+    }
+
+    public get routeIndex(): number | null {
+        return (this.props.routeIndex != null)
+            ? this.props.routeIndex
+            : null;
+    }
+
+    public get routeId(): string | null {
+        return (this.props.routeId != null)
+            ? this.props.routeId
+            : null;
+    }
+
+    public get parameters(): BasePageParameters | null {
+        return this.props.parameters || null;
+    }
+
+    public get route(): PageRoute {
+        return new PageRoute(this.routeName, this.routeIndex, this.routeId, this.parameters);
+    }
+
+    public get automaticUrlChange(): boolean {
+        return !!this.props.automaticUrlChange;
     }
 }
