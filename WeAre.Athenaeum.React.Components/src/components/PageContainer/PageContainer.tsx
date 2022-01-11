@@ -44,19 +44,19 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     private readonly _descriptionRef: React.RefObject<Description> = React.createRef();
     private readonly _confirmationDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     private readonly _messageBoxRef: React.RefObject<MessageBox> = React.createRef();
-    
+
     private _height: number = 0;
 
     // noinspection JSUnusedLocalSymbols
     private static initialize = (() => ServiceProvider.addSingleton(nameof<IPageContainer>(), () => PageContainer.instance))();
- 
+
     private get manual(): IManualProps {
         const page: IBasePage | null = ch.findPage();
         return (page)
             ? page.getManualProps()
             : {};
     }
-    
+
     private toggleVerticalScroll() {
         if(!this.mobile && this.props.scale) {
             this.JQuery("html").addClass("vertical-scroll");
@@ -64,7 +64,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
             this.JQuery("html").removeClass("vertical-scroll");
         }
     }
-    
+
     private async onAlertCloseAsync(sender: Alert, userInteraction: boolean = true): Promise<void> {
         const animation: boolean = (sender.model.autoClose) && (!userInteraction);
         await this.invokeHideAlertAsync(animation);
@@ -94,23 +94,23 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     }
 
     public height(): number {
-        
+
         if (this._height === 0) {
             const node: JQuery = this.getNode();
             this._height = node.children().first().height() || 0;
         }
-        
+
         const alertHeight: number = (this._alertContainerRef.current)
             ? this._alertContainerRef.current.outerHeight(true)
             : 0;
-        
+
         return (this._height - alertHeight);
     }
 
     public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
         this._height = 0;
     }
-    
+
     public get alert(): AlertModel | null {
         return this.state.alert;
     }
@@ -118,11 +118,15 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     public async alertAsync(alert: AlertModel): Promise<void> {
         await this.setState({ alert: alert });
     }
-    
+
     public async hideAlertAsync(): Promise<void> {
         await this.invokeHideAlertAsync(false);
     }
-    
+
+    /**
+     * @inheritDoc
+     * @see ConfirmationDialog.confirmAsync
+     */
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
         return this._confirmationDialogRef.current!.confirmAsync(title);
     }
@@ -153,14 +157,14 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     }
 
     public render(): React.ReactNode {
-        
+
         const transparentStyle = this.props.transparent ? { backgroundColor: "transparent" } : {};
-        
+
         return (
             <div className={this.css(styles.page, this.props.className, this.props.scale && styles.scale)} id={this.id}>
-                
+
                 <div className={this.css("container", styles.container, this.props.fullHeight && styles.fullHeight, this.props.fullWidth && styles.fullWidth)} style={transparentStyle} >
-                    
+
                     {
                         ((this.alert) && (this.alert.message)) &&
                         (
@@ -173,11 +177,11 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                             </PageRow>
                         )
                     }
-                    
+
                     {this.props.children}
-                    
+
                 </div>
-                
+
                 {
                     (this.manual.manual) &&
                     (
@@ -186,13 +190,13 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 }
 
                 <DocumentPreviewModal ref={this._documentPreviewModalRef} />
-                
+
                 <Description ref={this._descriptionRef} />
-                
+
                 <ConfirmationDialog ref={this._confirmationDialogRef} />
-                
+
                 <MessageBox ref={this._messageBoxRef} />
-                
+
             </div>
         );
     }

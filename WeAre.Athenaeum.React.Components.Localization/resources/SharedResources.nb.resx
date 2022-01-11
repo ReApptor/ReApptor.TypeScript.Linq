@@ -543,4 +543,10 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>NB: Cancel</value>
   </data>
+  <data name="QrInput.Button.Close" xml:space="preserve">
+    <value>Lukk</value>
+  </data>
+  <data name="QrInput.Button.Label" xml:space="preserve">
+    <value>QR kode</value>
+  </data>
 </root>
