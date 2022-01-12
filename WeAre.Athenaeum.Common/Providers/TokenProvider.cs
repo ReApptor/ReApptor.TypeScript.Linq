@@ -55,7 +55,7 @@ namespace WeAre.Athenaeum.Common.Providers
             return jwtToken;
         }
 
-        public TokenInfo Validate<TTokenData>(string jwtToken) where TTokenData : TokenData
+        public TokenInfo Validate<TTokenData>(string jwtToken, bool validateLifetime = true) where TTokenData : TokenData
         {
             var validator = new JwtSecurityTokenHandler();
 
@@ -66,7 +66,7 @@ namespace WeAre.Athenaeum.Common.Providers
                 IssuerSigningKey = _settings.SecurityKey,
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = true,
-                ValidateLifetime = true,
+                ValidateLifetime = validateLifetime,
             };
 
             if (validator.CanReadToken(jwtToken))
@@ -79,12 +79,12 @@ namespace WeAre.Athenaeum.Common.Providers
                     string securityStampClaim = principal.Claims.FirstOrDefault(claim => claim.Type == AthenaeumConstants.ClaimTypes.SecurityStamp)?.Value;
                     string tokenIdClaim = principal.Claims.FirstOrDefault(claim => claim.Type == AthenaeumConstants.ClaimTypes.TokenId)?.Value;
 
-                    if ((!string.IsNullOrWhiteSpace(username)) && 
+                    if ((!string.IsNullOrWhiteSpace(username)) &&
                         (!string.IsNullOrWhiteSpace(securityStampClaim)) && (Guid.TryParse(securityStampClaim, out Guid securityStamp)) && (securityStamp != Guid.Empty) &&
                         (!string.IsNullOrWhiteSpace(tokenIdClaim)) && (Guid.TryParse(tokenIdClaim, out Guid tokenId)) && (tokenId != Guid.Empty))
                     {
                         TTokenData userData = null;
-                        
+
                         if (principal.HasClaim(c => c.Type == AthenaeumConstants.ClaimTypes.UserData))
                         {
                             string userDataJson = principal.Claims.First(c => c.Type == AthenaeumConstants.ClaimTypes.UserData).Value;
