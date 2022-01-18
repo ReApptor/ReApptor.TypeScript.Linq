@@ -22,6 +22,7 @@
       <TypeScriptCompile Include="src\components\ButtonContainer\ButtonContainer.tsx" />
       <TypeScriptCompile Include="src\components\Button\Button.tsx" />
       <TypeScriptCompile Include="src\components\Carousel\Carousel.tsx" />
+      <TypeScriptCompile Include="src\components\ColorInput\ColorInput.tsx" />
       <TypeScriptCompile Include="src\components\ConfirmationDialog\ConfirmationDialogLocalizer.ts" />
       <TypeScriptCompile Include="src\components\ConfirmationDialog\ConfirmationDialog.tsx" />
       <TypeScriptCompile Include="src\components\CookieConsent\CookieConsent.tsx" />

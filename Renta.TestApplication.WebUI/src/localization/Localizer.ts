@@ -35,7 +35,7 @@ class Localizer extends BaseLocalizer {
         this.set(this.dayOfWeekFridayLanguageItemName, { language: `fi`, value: `perjantai` }, { language: `en`, value: `Friday` },);
         this.set(this.dayOfWeekSaturdayLanguageItemName, { language: `fi`, value: `lauantai` }, { language: `en`, value: `Saturday` },);
         this.set(this.dayOfWeekSundayLanguageItemName, { language: `fi`, value: `sunnuntai` }, { language: `en`, value: `Sunday` },);
-        this.set(this.pageRoutesAnonymousTestWithParametersLanguageItemName, { language: `fi`, value: `aha` }, { language: `en`, value: `aaa` },);
+        this.set(this.pageRoutesAnonymousTestWithParametersLanguageItemName, { language: `fi`, value: `anon` }, { language: `en`, value: `aaa` },);
     }
 
     /**
