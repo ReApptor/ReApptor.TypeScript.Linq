@@ -53,7 +53,9 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
                 ApiUrl = "https://1password.reapptor.biz/v1/"
             };
 
-            var service = new OnePasswordCredentialService(new Mock<ILogger<OnePasswordCredentialService>>().Object, credentialSettings as ICredentialServiceSettings);
+            var logger = new Mock<ILogger<OnePasswordCredentialService>>().Object;
+
+            var service = new OnePasswordCredentialService(logger, (ICredentialServiceSettings)credentialSettings);
 
             try
             {
@@ -62,6 +64,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
             catch (Exception ex)
             {
                 Assert.NotNull(ex);
+                Assert.Equal("Could not find any 1password credentials by path \"broken-acm-unit-tests-path\". Verify the path or token are specified correctly.", ex.Message);
             }
         }
         

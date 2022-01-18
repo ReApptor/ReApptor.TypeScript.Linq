@@ -82,6 +82,9 @@ export {default as VirtualAddressDivider} from "./components/VirtualAddressDivid
 export * from "./components/AddressInput/AddressInput";
 export {default as AddressInput} from "./components/AddressInput/AddressInput";
 
+export * from "./components/ColorInput/ColorInput";
+export {default as ColorInput} from "./components/ColorInput/ColorInput";
+
 export * from "./components/Checkbox/Checkbox";
 export {default as Checkbox} from "./components/Checkbox/Checkbox";
 
