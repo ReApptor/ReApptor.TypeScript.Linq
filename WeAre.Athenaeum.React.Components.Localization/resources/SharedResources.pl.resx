@@ -433,4 +433,7 @@ Blisko</value>
   <data name="QrInput.Button.Label" xml:space="preserve">
     <value>Kod Qr</value>
   </data>
+  <data name="AddressInput.Validators.Required" xml:space="preserve">
+    <value>Wpisz i wybierz adres z listy</value>
+  </data>
 </root>

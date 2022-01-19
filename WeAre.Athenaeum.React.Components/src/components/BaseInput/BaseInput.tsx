@@ -42,7 +42,14 @@ export interface IBaseInputProps<TInputValue extends BaseInputValue> {
     label?: string;
     value?: TInputValue;
     model?: IInputModel<TInputValue>;
+
+    /**
+     * Is the {@link BaseInput} required.
+     *
+     * @see getRequiredValidationError
+     */
     required?: boolean;
+
     noValidate?: boolean;
     validators?: ValidatorCallback<TInputValue>[];
     className?: string;
@@ -201,20 +208,41 @@ export class PhoneValidator extends BaseRegexValidator {
 
 export class RequiredValidator extends BaseValidator {
 
+    private readonly _message?: string;
+
+    public constructor(message?: string) {
+        super();
+        this._message = message;
+    }
+
+    private getMessage(): string {
+        return this._message || BaseInputLocalizer.validatorsRequired;
+    }
+
     public validate(value: BaseInputValue): string | null {
+
         if ((value != null) && (Array.isArray(value))) {
-            return (value.length === 0) ? BaseInputLocalizer.validatorsRequired : null;
+            return (value.length === 0)
+                ? this.getMessage()
+                : null;
         }
+
         const str: string | null = BaseValidator.toString(value);
+
         if ((str == null) || (str.length === 0)) {
-            return BaseInputLocalizer.validatorsRequired;
+            return this.getMessage();
         }
+
         return null;
     }
 
     public static readonly instance: RequiredValidator = new RequiredValidator();
 
     public static readonly validator: ValidatorCallback<BaseInputValue> = (value: BaseInputValue) => RequiredValidator.instance.validate(value);
+
+    public static customValidator(message: string): ValidatorCallback<BaseInputValue> {
+        return (value: BaseInputValue) => new RequiredValidator(message).validate(value);
+    }
 }
 
 export class LengthValidator extends BaseValidator {
@@ -377,7 +405,8 @@ export interface IInput extends IBaseComponent {
 }
 
 export default abstract class BaseInput<TInputValue extends BaseInputValue, TProps extends IBaseInputProps<TInputValue>, TState extends IBaseInputState<TInputValue>>
-    extends BaseComponent<TProps, TState> implements IInput, IValidatable<TInputValue>, IGlobalClick {
+    extends BaseComponent<TProps, TState>
+    implements IInput, IValidatable<TInputValue>, IGlobalClick {
 
     private _inputContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _liveValidatorRef: React.RefObject<LiveValidator> = React.createRef();
@@ -429,7 +458,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     protected get format(): TFormat {
         return (this.props.format || "") as TFormat;
     }
-    
+
     private static getCurrentLocalizerLanguage(): string {
         return ServiceProvider.findLocalizer()?.language ?? "";
     }
@@ -553,12 +582,12 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             const nextValue: TInputValue | undefined = nextProps.value;
             let resetValidator: boolean = (!nextProps.required) && (!this.isValid());
             const newReadonly: boolean = (varProps.disabled != varNewProps.disabled) || (varProps.readonly != varNewProps.readonly);
-            
+
             //Ensure validation localizations change when localizer language changes
             const currentLanguage: string = BaseInput.getCurrentLocalizerLanguage();
             if (currentLanguage !== this._localizerLanguage) {
                 if (!this.isValid()) {
-                    resetValidator = true;    
+                    resetValidator = true;
                 }
                 this._localizerLanguage = currentLanguage;
             }
@@ -640,7 +669,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const validators: ValidatorCallback<TInputValue>[] = [];
 
         if (this.props.required) {
-            validators.push(RequiredValidator.validator as ValidatorCallback<TInputValue>);
+            validators.push(RequiredValidator.customValidator(this.getRequiredValidationError()));
         }
 
         validators.push(...this.getValidators());
@@ -696,6 +725,13 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
     protected getContainerClassname(): string {
         return "";
+    }
+
+    /**
+     * @return Error message for "required" validator.
+     */
+    protected getRequiredValidationError(): string {
+        return BaseInputLocalizer.validatorsRequired;
     }
 
     public abstract renderInput(): React.ReactNode;
