@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
-import {BaseInput, IBaseInputProps, IBaseInputState} from "@weare/athenaeum-react-components";
 
 import styles from "./ColorInput.module.scss";
+import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 
 interface IColorInputProps extends IBaseInputProps<string> {
     disabled?: boolean;
