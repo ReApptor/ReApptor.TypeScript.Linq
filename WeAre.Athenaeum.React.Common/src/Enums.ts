@@ -259,12 +259,41 @@ export enum InputValidationRule {
     Password = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9 :])(?=.{8,})",
 
     /**
-     * General phone number validation for Finland, Estonia and Sweden.
-     * It will pass old and new format numbers.
-     * Between numbers space or dash can be used ones.
-     * Number has to start +358 or 00358 or +372 or +41 or +46 or 0 are code can be 2 or 3 digit.
+     * Generalish phone number validation. Requires 5-15 numbers separated by arbtirary amount of separators.
+     *
+     * Example matched numbers (source: https://stdcxx.apache.org/doc/stdlibug/26-1.html and self generated):
+     *
+     * 754-3010
+     *
+     * (541) 754-3010
+     *
+     * +1-541-754-3010
+     *
+     * 1-541-754-3010
+     *
+     * 001-541-754-3010
+     *
+     * 191 541 754 3010
+     *
+     * 636-48018
+     *
+     * (089) / 636-48018
+     *
+     * +49-89-636-48018
+     *
+     * 19-49-89-636-48018
+     *
+     * +358 123 456 789
+     *
+     * 044 440 040 045
+     *
+     * 020202
+     *
+     * 02 02 02
+     *
+     * 020 202
      */
-    Phone = "^((([\\+][\\s]{0,1})|([0]{2}[\\s-]{0,1}))((358|372|41|46)[\\s-]{0,1})|([0]{1}))(([1-9]{1}[0-9]{0,1})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1})([0-9]{2,4})([\\s-]{0,1}))([0-9]{0,3}){1}$"
+    Phone = "^\\+?([- ()/]*[0-9][-()/]*){5,15}$"
 }
 
 export enum PasswordValidationRule {
