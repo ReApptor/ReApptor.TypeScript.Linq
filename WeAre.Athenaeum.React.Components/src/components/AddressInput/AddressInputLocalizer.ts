@@ -5,7 +5,7 @@ import {BaseComponentLocalizer} from "@weare/athenaeum-react-common";
 class AddressInputLocalizer extends BaseComponentLocalizer {
 
     //Constants
-
+    public readonly validatorsRequiredLanguageItemName: string = `Validators.Required`;
 
     constructor() {
 
@@ -23,10 +23,15 @@ class AddressInputLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-
+        this.set(this.validatorsRequiredLanguageItemName, { language: `en`, value: `Type and select an address from the list` }, { language: `sv`, value: `Skriv och välj en adress i listan` }, { language: `pl`, value: `Wpisz i wybierz adres z listy` }, { language: `nb`, value: `Skriv inn og velg en adresse fra listen` }, { language: `fi`, value: `Kirjoita ja valitse osoite listasta` }, { language: `da`, value: `Skriv og vælg en adresse på listen` },);
     }
 
-
+    /**
+    /* "Validators.Required" (Type and select an address from the list)
+    */
+    public get validatorsRequired() : string {
+        return this.get(this.validatorsRequiredLanguageItemName);
+    }
 }
 
 //Singleton
