@@ -278,6 +278,7 @@ export * from "./components/WidgetContainer/BaseRouteWidget";
 export {default as BaseRouteWidget} from "./components/WidgetContainer/BaseRouteWidget";
 
 export * from "./components/PasswordForm/PasswordForm";
+export {default as PasswordFormLocalizer} from "./components/PasswordForm/PasswordFormLocalizer";
 export {default as PasswordForm} from "./components/PasswordForm/PasswordForm";
 
 export * from "./components/ToolbarContainer/ToolbarContainer";

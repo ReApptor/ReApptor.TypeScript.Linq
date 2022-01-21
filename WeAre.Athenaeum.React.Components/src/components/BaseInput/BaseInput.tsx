@@ -121,9 +121,15 @@ export abstract class BaseFileValidator implements IValidator {
             : null;
     }
 
-    public static getType(file: FileModel | null): string | null {
+    public static getMimeType(file: FileModel | null): string | null {
         return (file != null)
             ? file.type.toLowerCase()
+            : null;
+    }
+
+    public static getFileExtension(file: FileModel | null): string | null {
+        return (file != null)
+            ? Utility.getFileExtension(file.name)
             : null;
     }
 }
@@ -375,9 +381,26 @@ export class FileTypeValidator extends BaseFileValidator {
                 ? value as FileModel[]
                 : [value as FileModel];
 
-            const fileTypes: string[] = files.map(file => BaseFileValidator.getType(file) || "");
+            const fileMimeTypes: string[] = files.map(file => BaseFileValidator.getMimeType(file) || "");
+            const fileExtensions: string[] = files.map(file => BaseFileValidator.getFileExtension(file) || "");
 
-            if ((fileTypes.length !== 0) && (!fileTypes.every((fileType: string) => this.fileTypes.includes(fileType)))) {
+            const validateByFileExtension: boolean = this.fileTypes.every((mimeType => mimeType.startsWith(".")));
+
+            //  if user gives fileTypes list of file extensions like [".img", ".jpg"]
+            if (validateByFileExtension) {
+                const areValidFileExtensions: boolean = fileExtensions.every((fileExtension: string) => this.fileTypes.includes(fileExtension));
+
+                if (areValidFileExtensions) {
+                    return null;
+                }
+
+                const allowedFileExtensionsToDisplay = this.fileTypes.map(fileExtensionWithDot => fileExtensionWithDot.replace(".", "")).join();
+
+                return Utility.format(BaseInputLocalizer.validatorsDocumentTypeNotSupported, allowedFileExtensionsToDisplay);
+            }
+
+            //  if user gives fileTypes list of file extensions like ["images/jpg"]
+            if ((fileMimeTypes.length !== 0) && (!fileMimeTypes.every((fileType: string) => this.fileTypes.includes(fileType)))) {
                 return Utility.format(BaseInputLocalizer.validatorsDocumentTypeNotSupported, Utility.getExtensionsFromMimeTypes(this.fileTypes))
             }
         }
