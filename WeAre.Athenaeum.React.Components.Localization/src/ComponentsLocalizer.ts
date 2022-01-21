@@ -155,6 +155,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly urlInputLanguageItemName: string = `UrlInput`;
     public readonly qrInputButtonCloseLanguageItemName: string = `QrInput.Button.Close`;
     public readonly qrInputButtonLabelLanguageItemName: string = `QrInput.Button.Label`;
+    public readonly addressInputValidatorsRequiredLanguageItemName: string = `AddressInput.Validators.Required`;
 
     constructor() {
 
@@ -322,6 +323,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.urlInputLanguageItemName, { language: `en`, value: `` },);
         this.set(this.qrInputButtonCloseLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `\nЗакрити` }, { language: `sv`, value: `\nStänga` }, { language: `ru`, value: `Закрывать` }, { language: `pl`, value: `\nBlisko` }, { language: `nb`, value: `Lukk` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Tæt` },);
         this.set(this.qrInputButtonLabelLanguageItemName, { language: `en`, value: `Qr code` }, { language: `sv`, value: `Qr-kod` }, { language: `pl`, value: `Kod Qr` }, { language: `nb`, value: `QR kode` }, { language: `fi`, value: `Qr-koodi` }, { language: `da`, value: `Qr-kode` },);
+        this.set(this.addressInputValidatorsRequiredLanguageItemName, { language: `en`, value: `Type and select an address from the list` }, { language: `sv`, value: `Skriv och välj en adress i listan` }, { language: `pl`, value: `Wpisz i wybierz adres z listy` }, { language: `nb`, value: `Skriv inn og velg en adresse fra listen` }, { language: `fi`, value: `Kirjoita ja valitse osoite listasta` }, { language: `da`, value: `Skriv og vælg en adresse på listen` },);
     }
 
     /**
@@ -1372,6 +1374,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get qrInputButtonLabel() : string {
         return this.get(this.qrInputButtonLabelLanguageItemName);
+    }
+
+    /**
+    /* "AddressInput.Validators.Required" (Type and select an address from the list)
+    */
+    public get addressInputValidatorsRequired() : string {
+        return this.get(this.addressInputValidatorsRequiredLanguageItemName);
     }
 }
 
