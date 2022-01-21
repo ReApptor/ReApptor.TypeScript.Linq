@@ -4,6 +4,7 @@ import {AthenaeumComponentsConstants, Button, ButtonType, FileInput, TextInput, 
 import {FileModel} from "@weare/athenaeum-toolkit";
 
 export interface IFileInputTestsState {
+    font: FileModel | null;
     file: FileModel | null;
     files: FileModel[];
 }
@@ -11,7 +12,8 @@ export default class FileInputTests extends BaseComponent {
     
     public state: IFileInputTestsState = {
         file: null,
-        files: []
+        files: [],
+        font: null,
     }
     
     private readonly _fileInputRef: React.RefObject<FileInput> = React.createRef();
@@ -27,6 +29,10 @@ export default class FileInputTests extends BaseComponent {
     private async onRemoveFileAsync(): Promise<void> {
         await this.setState({file: null});
     }
+
+    private async onRemoveFontFileAsync(): Promise<void> {
+        await this.setState({font: null});
+    }
     
     private async onRemoveFilesAsync(file: FileModel): Promise<void> {
         this.state.files.remove(file);
@@ -35,6 +41,10 @@ export default class FileInputTests extends BaseComponent {
     
     private async onChangeFileAsync(file: FileModel): Promise<void> {
         await this.setState({file: file});
+    }
+
+    private async onChangeFontFileAsync(file: FileModel): Promise<void> {
+        await this.setState({font: file});
     }
     
     private async onChangeFilesAsync(values: FileModel[]): Promise<void> {
@@ -102,6 +112,25 @@ export default class FileInputTests extends BaseComponent {
                         
                     </div>
                     
+                </ThreeColumns>
+                <ThreeColumns>
+
+                    <div>
+
+                        <FileInput dropZone
+                                   label={"EN: Font"}
+                                   placeholder={"Push me!"}
+                                   value={this.state.font}
+                                   fileTypes={[".otf", ".woff2", ".ttf", ".woff"]}
+                                   onRemove={async () => await this.onRemoveFontFileAsync()}
+                                   onChange={async (sender, file: FileModel) => await this.onChangeFontFileAsync(file)}
+                        />
+
+                        <TextInput readonly
+                                   value={(this.state.font != null) ? "Font exists!" : "Font does not exist!"}/>
+
+                    </div>
+
                 </ThreeColumns>
 
             </React.Fragment>

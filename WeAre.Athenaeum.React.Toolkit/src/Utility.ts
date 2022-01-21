@@ -905,6 +905,14 @@ export default class Utility {
             return "font/woff2";
         }
 
+        if (fileExtension === ".ttf") {
+            return "font/ttf";
+        }
+
+        if (fileExtension === ".otf") {
+            return "font/otf";
+        }
+
         return null;
     }
 
