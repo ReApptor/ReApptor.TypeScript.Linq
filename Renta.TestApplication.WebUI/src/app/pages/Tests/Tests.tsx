@@ -90,6 +90,10 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
                             <AccordionTests/>
                         </Tab>
 
+                        <Tab id="addressDividerTests" title="AddressDivider">
+                            <AddressDividerTests/>
+                        </Tab>
+
                         <Tab id="alertTests" title="Alerts">
                             <AlertTests/>
                         </Tab>
@@ -202,6 +206,22 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
                             <PasswordFormTests/>
                         </Tab>
 
+                        <Tab id="phoneInputTests" title="PhoneInput">
+                            <PhoneInputTests/>
+                        </Tab>
+
+                        <Tab id="QrInputTests" title="QrInput">
+                            <QrInputTests/>
+                        </Tab>
+
+                        <Tab id="QrWidgetTest" title="Qr Widget">
+                            <QrWidgetTests/>
+                        </Tab>
+
+                        <Tab id="routeWidgetTests" title="RouteWidget">
+                            <RouteWidgetTests/>
+                        </Tab>
+
                         <Tab id="SignatureWidgetTests" title="Signature Widget">
                             <SignatureWidgetTests/>
                         </Tab>
@@ -210,29 +230,8 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
                             <SliderTests/>
                         </Tab>
 
-                        <Tab id="QrWidgetTest" title="Qr Widget">
-                            <QrWidgetTests/>
-                        </Tab>
-
-                        <Tab id="QrInputTests" title="QrInput">
-                            <QrInputTests/>
-                        </Tab>
-
-                        <Tab id="routeWidgetTests" title="RouteWidget">
-                            <RouteWidgetTests/>
-                        </Tab>
-
-                        <Tab id="phoneInputTests" title="PhoneInput">
-                            <PhoneInputTests/>
-                        </Tab>
-
-
                         <Tab id="textAreaWidgetTests" title="TextAreaWidget">
                             <TextAreaWidgetTests/>
-                        </Tab>
-
-                        <Tab id="addressDividerTests" title="AddressDivider">
-                            <AddressDividerTests/>
                         </Tab>
                     </TabContainer>
 

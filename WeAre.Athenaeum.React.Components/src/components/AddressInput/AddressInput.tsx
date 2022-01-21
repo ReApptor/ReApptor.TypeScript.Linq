@@ -7,16 +7,23 @@ import LocationPickerModal from "../LocationPickerModal/LocationPickerModal";
 import AddressHelper, { GoogleApiResult } from "../../helpers/AddressHelper";
 import Comparator from "../../helpers/Comparator";
 import Icon from "../Icon/Icon";
+import AddressInputLocalizer from "./AddressInputLocalizer";
 
 import formStyles from "../Form/Form.module.scss";
 import textInputStyles from "../TextInput/TextInput.module.scss";
 
+
 export interface IAddressInputProps extends IBaseInputProps<string> {
     small?: boolean;
     readonly?: boolean;
+
+    /**
+     * Should an icon which clicking opens a Map where the user can select their location be displayed.
+     */
     locationPicker?: boolean;
+
     country?: string | string[];
-    
+
     onChange?(location: GeoLocation): Promise<void>;
 }
 
@@ -136,6 +143,10 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         return AddressHelper.removeLatLon(this.value);
     }
 
+    protected getRequiredValidationError(): string {
+        return AddressInputLocalizer.validatorsRequired;
+    }
+
     public async onGlobalClick(e: React.SyntheticEvent<Element, Event>): Promise<void> {
         if (this.props.clickToEdit) {
 
@@ -169,7 +180,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
 
         await super.componentWillReceiveProps(nextProps);
     }
-    
+
     public get countries(): string[] | null {
         return (this.props.country != null)
             ? (typeof this.props.country === "string")
