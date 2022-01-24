@@ -433,7 +433,7 @@ Stänga</value>
   <data name="QrInput.Button.Label" xml:space="preserve">
     <value>Qr-kod</value>
   </data>
-  <data name="AddressInput.Validators.Required" xml:space="preserve">
+  <data name="AddressInput.Validators.Custom.Required" xml:space="preserve">
     <value>Skriv och välj en adress i listan</value>
   </data>
 </root>
