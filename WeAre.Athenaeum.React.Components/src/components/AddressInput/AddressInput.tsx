@@ -144,7 +144,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
     }
 
     public getCustomRequiredValidationError(): string {
-        return AddressInputLocalizer.validatorsRequired;
+        return AddressInputLocalizer.validatorsCustomRequired;
     }
 
     public async onGlobalClick(e: React.SyntheticEvent<Element, Event>): Promise<void> {
