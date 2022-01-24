@@ -143,7 +143,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         return AddressHelper.removeLatLon(this.value);
     }
 
-    protected getRequiredValidationError(): string {
+    public getCustomRequiredValidationError(): string {
         return AddressInputLocalizer.validatorsRequired;
     }
 
