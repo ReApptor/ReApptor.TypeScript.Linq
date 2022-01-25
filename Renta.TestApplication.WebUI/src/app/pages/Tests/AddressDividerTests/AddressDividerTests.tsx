@@ -16,7 +16,7 @@ export default class AddressDividerTests extends BaseComponent {
     public state: IAddressDividerTestsState = {
         formattedAddress: "",
         columns: null,
-        required: false,
+        required: true,
         locationPicker: false,
         readonly: false,
     }
@@ -49,9 +49,9 @@ export default class AddressDividerTests extends BaseComponent {
     public render(): React.ReactNode {
         return (
             <React.Fragment>
-                
+
                 <Form>
-                    
+
                     <Dropdown label="Columns" inline required noValidate noWrap noFilter
                               orderBy={DropdownOrderBy.None}
                               transform={(item) => new SelectListItem(item.toString(), this.getAddressDividerColumnName(item), null, item)}
@@ -59,28 +59,28 @@ export default class AddressDividerTests extends BaseComponent {
                               selectedItem={this.state.columns || -1}
                               onChange={async (sender, value) => this.setState({ columns: (value != -1) ? value : null })}
                     />
-    
+
                     <Checkbox label="Required" inline
                               value={this.state.required}
                               onChange={async (sender, value) => this.setState({required: value})}
                     />
-    
+
                     <Checkbox label="Location Picker" inline
                               value={this.state.locationPicker}
                               onChange={async (sender, value) => this.setState({locationPicker: value})}
                     />
-    
+
                     <Checkbox label="Readonly" inline
                               value={this.state.readonly}
                               onChange={async (sender, value) => this.setState({readonly: value})}
                     />
-                        
+
                 </Form>
 
                 <hr/>
-                
+
                 <Form ref={this._formRef}>
-                
+
                     <AddressDivider id="addressDivider"
                                     required={this.state.required}
                                     locationPicker={this.state.locationPicker}
@@ -89,19 +89,19 @@ export default class AddressDividerTests extends BaseComponent {
                                     location={this.state.formattedAddress}
                                     onChange={async (sender, location) => this.onChangeAsync(sender, location)}
                     />
-                    
+
                     <Button icon={{name: "fas check"}}
                             label={"Validate"}
                             type={ButtonType.Primary}
                             onClick={() => this.validateAsync()}
                     />
-                    
+
                 </Form>
 
                 <hr/>
-                
+
                 <span><b>Formatted text:</b> {this.state.formattedAddress}</span>
-                
+
             </React.Fragment>
         );
     }

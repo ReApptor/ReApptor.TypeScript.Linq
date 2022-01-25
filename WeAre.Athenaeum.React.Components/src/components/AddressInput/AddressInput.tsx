@@ -143,8 +143,8 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
         return AddressHelper.removeLatLon(this.value);
     }
 
-    protected getRequiredValidationError(): string {
-        return AddressInputLocalizer.validatorsRequired;
+    public getCustomRequiredValidationError(): string {
+        return AddressInputLocalizer.validatorsCustomRequired;
     }
 
     public async onGlobalClick(e: React.SyntheticEvent<Element, Event>): Promise<void> {

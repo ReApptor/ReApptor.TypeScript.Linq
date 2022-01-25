@@ -692,7 +692,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const validators: ValidatorCallback<TInputValue>[] = [];
 
         if (this.props.required) {
-            validators.push(RequiredValidator.customValidator(this.getRequiredValidationError()));
+            validators.push(RequiredValidator.customValidator(this.getCustomRequiredValidationError?.() || BaseInputLocalizer.validatorsRequired));
         }
 
         validators.push(...this.getValidators());
@@ -753,9 +753,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     /**
      * @return Error message for "required" validator.
      */
-    protected getRequiredValidationError(): string {
-        return BaseInputLocalizer.validatorsRequired;
-    }
+    public getCustomRequiredValidationError?(): string;
 
     public abstract renderInput(): React.ReactNode;
 

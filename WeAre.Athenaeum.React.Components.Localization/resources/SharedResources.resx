@@ -567,7 +567,7 @@
   <data name="QrInput.Button.Label" xml:space="preserve">
     <value>Qr code</value>
   </data>
-  <data name="AddressInput.Validators.Required" xml:space="preserve">
+  <data name="AddressInput.Validators.Custom.Required" xml:space="preserve">
     <value>Type and select an address from the list</value>
   </data>
 </root>
