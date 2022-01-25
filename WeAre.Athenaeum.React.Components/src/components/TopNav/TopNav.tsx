@@ -4,11 +4,11 @@ import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
 import Icon, {IconSize, IconStyle} from "../Icon/Icon";
+import Search from "./Search/Search";
+import {ILanguage} from "@weare/athenaeum-toolkit";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
-import Search from "./Search/Search";
-import {ILanguage} from "@weare/athenaeum-toolkit";
 
 export interface IMenuItem {
     route: PageRoute;
@@ -27,23 +27,19 @@ export interface ITopNavProps {
     logo?: any;
     logoText?: string;
     applicationName?: string;
-    searchPlaceHolder?: () => string
-    languages?: () => ILanguage[]
-
+    searchPlaceHolder?: () => string;
+    languages?: () => ILanguage[];
+    
     onShoppingCartClick?(sender: TopNav): Promise<void>;
-
     onSearchClick?(searchTerm: string): Promise<void>;
-
     fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
-
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
-
     onLogoClick?(sender: TopNav): Promise<void>;
 }
 
 interface ITopNavState extends IBaseAsyncComponentState<IMenuItem[]> {
-    isHamburgerOpen: boolean,
-    shoppingCart: IShoppingCart | null
+    isHamburgerOpen: boolean;
+    shoppingCart: IShoppingCart | null;
 }
 
 export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavState, IMenuItem[]> implements IGlobalClick {
@@ -55,17 +51,17 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     };
 
     private async backAsync(): Promise<void> {
-        await PageRouteProvider.back();
+        PageRouteProvider.back();
     }
 
     private async onShoppingCartClickAsync(): Promise<void> {
         if (this.props.onShoppingCartClick) {
-            await this.props.onShoppingCartClick(this)
+            await this.props.onShoppingCartClick(this);
         }
     }
 
     private async toggleHamburgerAsync(): Promise<void> {
-        let isHamburgerOpen: boolean = !this.state.isHamburgerOpen;
+        const isHamburgerOpen: boolean = !this.state.isHamburgerOpen;
         await this.setState({isHamburgerOpen});
     }
 
@@ -74,9 +70,9 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     public async onGlobalClick(e: React.SyntheticEvent): Promise<void> {
-        let target = e.target as Node;
-        let container = document.querySelector(`.${styles.right_hamburgerIcon}`);
-        let outsideHamburgerIcon: boolean = ((container != null) && (!container.contains(target)));
+        const target = e.target as Node;
+        const container = document.querySelector(`.${styles.right_hamburgerIcon}`);
+        const outsideHamburgerIcon: boolean = ((container != null) && (!container.contains(target)));
         if (outsideHamburgerIcon) {
             await this.closeHamburgerAsync();
         }
@@ -104,7 +100,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
     protected async fetchDataAsync(): Promise<IMenuItem[]> {
         if (this.props.fetchShoppingCart) {
-            let shoppingCart: IShoppingCart = await this.props.fetchShoppingCart(this);
+            const shoppingCart: IShoppingCart = await this.props.fetchShoppingCart(this);
             await this.setState({shoppingCart})
         }
         if (this.props.fetchItems) {
@@ -118,7 +114,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         if (this.props.searchPlaceHolder) {
             return this.props.searchPlaceHolder();
         }
-
+        
         return "";
     }
 
@@ -242,6 +238,4 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     public static mountedInstance: TopNav | null = null;
-
-
 }
