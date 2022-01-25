@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Amazon.XRay.Recorder.Handlers.System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -206,6 +207,7 @@ namespace Renta.TestApplication.WebUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [SuppressMessage("Usage", "MVC1005:Cannot use UseMvc with Endpoint Routing")]
         public void Configure(IApplicationBuilder app, TestApplicationConfiguration configuration)
         {
             Logger.LogEnvironmentInformation(configuration);
@@ -258,6 +260,7 @@ namespace Renta.TestApplication.WebUI
             
             app.UseApiExceptionMiddleware();
 
+            // ReSharper disable once MVC1005
             app.UseMvc();
 
             app.UseSpa(spa =>
