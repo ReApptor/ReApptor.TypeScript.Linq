@@ -417,15 +417,6 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
-  <data name="ImageInput.MoveDown" xml:space="preserve">
-    <value>PL: Move below</value>
-  </data>
-  <data name="ImageInput.MoveToTop" xml:space="preserve">
-    <value>PL: Move to top</value>
-  </data>
-  <data name="ImageInput.MoveUp" xml:space="preserve">
-    <value>PL: Move up</value>
-  </data>
   <data name="QrInput.Button.Close" xml:space="preserve">
     <value>
 Blisko</value>
