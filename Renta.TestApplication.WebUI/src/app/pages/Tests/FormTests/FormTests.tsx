@@ -101,7 +101,6 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                         <Button submit label={"Save"} type={ButtonType.Orange} />
 
                     </ButtonContainer>
-                    
 
                     <FourColumns>
 
