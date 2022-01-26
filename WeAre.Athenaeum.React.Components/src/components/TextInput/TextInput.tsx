@@ -138,17 +138,18 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
 
         return (
             <React.Fragment>
+                
                 <input id={this.getInputId()}
                        type={this.getType()}
-                       value={this.str}
-                       title={this.props.title}
-                       readOnly={this.readonly}
                        className={this.css(styles.textInput, "form-control", smallStyle, autoSuggestStyle)}
                        style={inlineStyles}
+                       title={TextInputLocalizer.get(this.props.title)}
+                       placeholder={TextInputLocalizer.get(this.props.placeholder)}
+                       value={this.str}
+                       readOnly={this.readonly}
                        size={this.props.size || 10}
                        minLength={this.props.minLength || 0}
                        maxLength={this.props.maxLength || 255}
-                       placeholder={TextInputLocalizer.get(this.props.placeholder)}
                        autoFocus={this.props.autoFocus}
                        autoComplete={this.noAutoComplete ? "off" : ""}
                        role={this.noAutoComplete ? "presentation" : ""}
@@ -161,15 +162,22 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                     (this.autoSuggestItems.length > 0) &&
                     (
                         <React.Fragment>
-                            <i id={this.toggleButtonId} className={this.css(styles.icon, "fa fa-caret-down")} onClick={async () => await this.toggleAutoSuggest()}/>
+                            
+                            <i id={this.toggleButtonId}
+                               className={this.css(styles.icon, "fa fa-caret-down")}
+                               onClick={async () => await this.toggleAutoSuggest()}
+                            />
 
                             <AutoSuggest ref={this._autoSuggestRef}
                                          items={this.autoSuggestItems}
                                          toggleButtonId={this.toggleButtonId}
-                                         onSelect={async (_, value) => await this.setValueFromAutoSuggest(value)}/>
+                                         onSelect={async (_, value) => await this.setValueFromAutoSuggest(value)}
+                            />
+                            
                         </React.Fragment>
                     )
                 }
+                
             </React.Fragment>
         );
     }

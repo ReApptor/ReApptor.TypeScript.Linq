@@ -9,60 +9,76 @@ namespace Renta.TestApplication.WebUI.Resources
     {
         public static readonly ReadOnlyCollection<CultureInfo> SupportedCultures = new ReadOnlyCollection<CultureInfo>(new[]
         {
-            new CultureInfo("fi"),
             new CultureInfo("en"),
+            new CultureInfo("da"),
+            new CultureInfo("fi"),
+            new CultureInfo("nb"),
+            new CultureInfo("pl"),
+            new CultureInfo("ru"),
+            new CultureInfo("sv"),
+            new CultureInfo("uk"),
         });
 
-        public static readonly CultureInfo DefaultCulture = new CultureInfo("fi");
+        public static readonly CultureInfo DefaultCulture = new CultureInfo("en");
 
         /// <summary>
-        /// "TopNav.Frontpage" (Frontpage)
+        /// "TopNav.Frontpage" (Etusivu)
         /// </summary>
         public const string TopNavFrontpage = @"TopNav.Frontpage";
 
         /// <summary>
-        /// "PageRoutes.Tests2" (hellouworld/aaa)
+        /// "PageRoutes.Tests2" (helloworld)
         /// </summary>
         public const string PageRoutesTests2 = @"PageRoutes.Tests2";
 
         /// <summary>
-        /// "DayOfWeek.Monday" (Monday)
+        /// "DayOfWeek.Monday" (maanantai)
         /// </summary>
         public const string DayOfWeekMonday = @"DayOfWeek.Monday";
 
         /// <summary>
-        /// "DayOfWeek.Tuesday" (Tuesday)
+        /// "DayOfWeek.Tuesday" (tiistai)
         /// </summary>
         public const string DayOfWeekTuesday = @"DayOfWeek.Tuesday";
 
         /// <summary>
-        /// "DayOfWeek.Wednsday" (Wednsday)
+        /// "DayOfWeek.Wednsday" (keskiviikko)
         /// </summary>
         public const string DayOfWeekWednsday = @"DayOfWeek.Wednsday";
 
         /// <summary>
-        /// "DayOfWeek.Thursday" (Thursday)
+        /// "DayOfWeek.Thursday" (torstai)
         /// </summary>
         public const string DayOfWeekThursday = @"DayOfWeek.Thursday";
 
         /// <summary>
-        /// "DayOfWeek.Friday" (Friday)
+        /// "DayOfWeek.Friday" (perjantai)
         /// </summary>
         public const string DayOfWeekFriday = @"DayOfWeek.Friday";
 
         /// <summary>
-        /// "DayOfWeek.Saturday" (Saturday)
+        /// "DayOfWeek.Saturday" (lauantai)
         /// </summary>
         public const string DayOfWeekSaturday = @"DayOfWeek.Saturday";
 
         /// <summary>
-        /// "DayOfWeek.Sunday" (Sunday)
+        /// "DayOfWeek.Sunday" (sunnuntai)
         /// </summary>
         public const string DayOfWeekSunday = @"DayOfWeek.Sunday";
 
         /// <summary>
-        /// "PageRoutes.AnonymousTestWithParameters" (aaa)
+        /// "PageRoutes.AnonymousTestWithParameters" (anon)
         /// </summary>
         public const string PageRoutesAnonymousTestWithParameters = @"PageRoutes.AnonymousTestWithParameters";
+
+        /// <summary>
+        /// "TextInput2.Label" (FI: Text input #2)
+        /// </summary>
+        public const string TextInput2Label = @"TextInput2.Label";
+
+        /// <summary>
+        /// "TextInput2.Placeholder" (FI: Text input #2 (Placeholder))
+        /// </summary>
+        public const string TextInput2Placeholder = @"TextInput2.Placeholder";
     }
 }
