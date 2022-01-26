@@ -7,7 +7,6 @@ import BaseInputLocalizer from "./BaseInputLocalizer";
 
 import styles from "../Form/Form.module.scss";
 
-
 export type NullableCheckboxType = boolean | null;
 
 export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date | null, Date | null];
@@ -819,6 +818,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
         return (
             <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassname(), this.props.className)} hidden={this.props.hidden}>
+                
                 {
                     (this.props.label) &&
                     (
@@ -826,15 +826,17 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
+                                
                                 {
                                     (this.state.validationError)
-                                        ? BaseInputLocalizer.get(this.state.validationError, this.props.label)
-                                        : ReactUtility.toMultiLines(this.props.label)
+                                        ? BaseInputLocalizer.get(this.state.validationError, BaseInputLocalizer.get(this.props.label))
+                                        : ReactUtility.toMultiLines(BaseInputLocalizer.get(this.props.label))
                                 }
+                                
                             </label>
 
                             {
-                                (this.props.required && !this.noValidate && !this.state.validationError) &&
+                                ((this.props.required) && (!this.noValidate) && (!this.state.validationError)) &&
                                 (
                                     <span className={styles.required}>*</span>
                                 )
@@ -847,7 +849,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                 <div className="d-flex h-100">
 
                     {
-                        (this.props.prepend) && this.renderPrepend()
+                        (this.props.prepend) && (this.renderPrepend())
                     }
 
                     <div ref={this._inputContainerRef} className={this.css(styles.inputContainer, inputBorderRadius, this.state.validationError && styles.validationError)} onClick={async () => await this.onInputContainerClickAsync()}>
@@ -855,7 +857,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
                     </div>
 
                     {
-                        (this.props.append) && this.renderAppend()
+                        (this.props.append) && (this.renderAppend())
                     }
 
                 </div>

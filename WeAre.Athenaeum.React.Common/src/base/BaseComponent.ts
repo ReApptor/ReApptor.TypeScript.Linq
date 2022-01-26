@@ -415,9 +415,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     public async initializeAsync(): Promise<void> {
     }
 
-
     // IReactComponent
-
 
     public get isMounted(): boolean {
         return this._isMounted;
@@ -466,7 +464,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
 
     // ISpinner
 
-
     /**
      * @inheritDoc
      *
@@ -501,7 +498,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
 
 
     // IBaseComponent
-
 
     public get childComponents(): IBaseComponent[] {
 
