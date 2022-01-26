@@ -25,7 +25,6 @@ import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent
 
 import styles from "./Layout.module.scss";
 
-
 export interface ILayoutProps {
 
     /**
@@ -109,9 +108,7 @@ interface ILayoutState extends IBaseAsyncComponentState<ApplicationContext> {
 /**
  * A base layout containing an {@link IBasePage}.
  */
-export default class Layout
-    extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext>
-    implements ILayoutPage, IGlobalResize {
+export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutState, ApplicationContext> implements ILayoutPage, IGlobalResize {
 
     state: ILayoutState = {
         isLoading: false,
@@ -296,7 +293,6 @@ export default class Layout
 
     // React.Component
 
-
     public async componentDidCatch(error: Error, errorInfo: React.ErrorInfo): Promise<void> {
         // noinspection JSVoidFunctionReturnValueUsed,TypeScriptValidateJSTypes
         const processed: boolean = await PageRouteProvider.exception(error, errorInfo);
@@ -312,9 +308,7 @@ export default class Layout
         }
     }
 
-
     // ISpinner
-
 
     /**
      * @inheritDoc
@@ -374,9 +368,7 @@ export default class Layout
         return "/api/Application/GetContext?timezoneOffset=" + timezoneOffset + "&applicationType=" + applicationType;
     }
 
-
     // IGlobalResize
-
 
     public async onGlobalResize(e: React.SyntheticEvent): Promise<void> {
         if (this.mobile !== this._mobile) {
@@ -385,9 +377,7 @@ export default class Layout
         }
     }
 
-
     // ILayoutPage
-
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
