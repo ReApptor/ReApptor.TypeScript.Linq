@@ -221,7 +221,7 @@ export class RequiredValidator extends BaseValidator {
     }
 
     private getMessage(): string {
-        return this._message || BaseInputLocalizer.validatorsRequired;
+        return this._message || BaseInputLocalizer.validatorsRequiredLanguageItemName;
     }
 
     public validate(value: BaseInputValue): string | null {
@@ -691,7 +691,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const validators: ValidatorCallback<TInputValue>[] = [];
 
         if (this.props.required) {
-            validators.push(RequiredValidator.customValidator(this.getCustomRequiredValidationError?.() || BaseInputLocalizer.validatorsRequired));
+            validators.push(RequiredValidator.customValidator(this.getCustomRequiredValidationError?.() || BaseInputLocalizer.validatorsRequiredLanguageItemName));
         }
 
         validators.push(...this.getValidators());
