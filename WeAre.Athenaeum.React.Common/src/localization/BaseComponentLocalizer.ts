@@ -44,7 +44,6 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
 
     protected constructor(supportedLanguages: ILanguage[], language: string) {
         super(supportedLanguages, language);
-        //this._component = component;
     }
 
     protected getApplicationLocalizer(): ILocalizer | null {

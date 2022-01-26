@@ -1,13 +1,22 @@
 import React from "react";
 import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
-import {AddressHelper, BannerPosition, Layout} from "@weare/athenaeum-react-components";
+import {AddressHelper, BannerPosition, ICookieConsentProps, Layout} from "@weare/athenaeum-react-components";
 import TestApplicationController from "./pages/TestApplicationController";
 
 class App extends BaseComponent {
+    
+    private get cookieContent(): ICookieConsentProps {
+        return {
+            acceptButtonText: "Ok",
+            title: "We use cookies",
+            position: BannerPosition.Top
+        }
+    }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
-            <Layout fetchContext={(sender, timezoneOffset, applicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
+            <Layout useRouting
+                    fetchContext={(sender, timezoneOffset, applicationType) => TestApplicationController.fetchApplicationContextAsync(timezoneOffset, applicationType)}
                     tokenLogin={(sender, token) => TestApplicationController.tokenLoginAsync(token)}
                     fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
                     topNavLogo="images/logo.svg"
@@ -15,16 +24,7 @@ class App extends BaseComponent {
                     onShoppingCartClick={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
                     onSearchClick={searchTerm => Promise.resolve(alert(searchTerm))}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
-                    cookieConsent={() => {
-                        return (
-                            {
-                                acceptButtonText: "Ok",
-                                title: "We use cookies",
-                                position: BannerPosition.Top
-                            }
-                        )
-                    }}
-                    useRouting
+                    cookieConsent={() => this.cookieContent}
             />
         );
     }
