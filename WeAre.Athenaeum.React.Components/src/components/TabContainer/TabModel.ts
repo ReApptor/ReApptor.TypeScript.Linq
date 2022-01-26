@@ -1,5 +1,7 @@
 import {IIconProps} from "../Icon/Icon";
-import { DataStorageType, IBaseComponent, UserInteractionDataStorage } from "@weare/athenaeum-react-common";
+import {DataStorageType, IBaseComponent, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
+import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
+import React from "react";
 
 export enum TabRenderType {
     /**
@@ -37,6 +39,7 @@ export interface ITabDefinition {
     icon?: IIconProps;
     ignorable?: boolean;
     active?: boolean;
+    closeConfirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
     onClose?(tab: TabModel): Promise<void>;
     onSelect?(tab: TabModel): Promise<void>;
 }
@@ -160,8 +163,18 @@ export class TabContainerModel {
         }
     }
     
-    public async closeTabAsync(tab: TabModel): Promise<void> {
+    public async closeTabAsync(tab: TabModel, confirmed: boolean, data: string): Promise<void> {
         if (!tab.closed) {
+
+            const confirmNeeded: boolean = (!!tab.closeConfirm) && (!confirmed);
+
+            if ((confirmNeeded) && (tab.closeConfirmDialogRef.current)) {
+                await tab.closeConfirmDialogRef.current.openAsync();
+                return;
+            }
+            
+            // Close the tab:
+
             tab.closed = true;
             
             if (tab.active) {
@@ -179,7 +192,7 @@ export class TabContainerModel {
             await tab.reRenderAsync();
             
             if (tab.onClose) {
-                await tab.onClose(tab);
+                await tab.onClose(tab, data);
             }
             
             if (this.onClose) {
@@ -215,8 +228,12 @@ export class TabModel {
     public instance: ITab = {} as ITab;
     
     public headerInstance: ITabHeader = {} as ITabHeader;
+
+    public closeConfirm: string | IConfirmation | ConfirmationDialogTitleCallback | null = null;
+
+    public readonly closeConfirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     
-    public onClose?(tab: TabModel): Promise<void>;
+    public onClose?(tab: TabModel, data: string): Promise<void>;
 
     public onSelect?(tab: TabModel): Promise<void>;
     
@@ -242,6 +259,7 @@ export class TabTransformer {
         to.ignorable = from.ignorable || false;
         to.title = from.title || "";
         to.tooltip = from.tooltip || "";
+        to.closeConfirm = from.closeConfirm || null;
         to.onSelect = from.onSelect;
         to.onClose = from.onClose;
         return to;
