@@ -202,7 +202,8 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
     public render(): React.ReactNode {
         const DropdownTemplate = (id: string) => {
             return (
-                <Dropdown key={id} id={id} ref={this.getRef(id)} noWrap
+                <Dropdown noWrap
+                          key={id} id={id} ref={this.getRef(id)}
                           label="Dropdown"
                           className={this.state.width}
                           items={this.items}
