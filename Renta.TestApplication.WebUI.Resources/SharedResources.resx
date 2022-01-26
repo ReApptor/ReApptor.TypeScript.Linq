@@ -147,4 +147,10 @@
     <data name="PageRoutes.AnonymousTestWithParameters" xml:space="preserve">
         <value>anon</value>
     </data>
+    <data name="TextInput2.Label" xml:space="preserve">
+        <value>FI: Text input #2</value>
+    </data>
+    <data name="TextInput2.Placeholder" xml:space="preserve">
+        <value>FI: Text input #2 (Placeholder)</value>
+    </data>
 </root>

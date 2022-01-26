@@ -1,6 +1,7 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize, PasswordValidationRule} from "@weare/athenaeum-react-common";
 import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow, PasswordFormLocalizer} from "@weare/athenaeum-react-components";
+import Localizer from "../../../../localization/Localizer";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
@@ -43,9 +44,9 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                     <ThreeColumns>
 
-                        <TextInput label={"Text input #1 (NoAutoComplete)"} autoComplete={false} />
+                        <TextInput autoComplete={false} label={"Text input #1 (NoAutoComplete)"} />
 
-                        <TextInput label={"Text input #2"} required />
+                        <TextInput required label={Localizer.textInput2LabelLanguageItemName} placeholder={Localizer.textInput2PlaceholderLanguageItemName} />
 
                         <TextInput label={"Text input #3"} readonly />
 
@@ -100,7 +101,6 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                         <Button submit label={"Save"} type={ButtonType.Orange} />
 
                     </ButtonContainer>
-                    
 
                     <FourColumns>
 

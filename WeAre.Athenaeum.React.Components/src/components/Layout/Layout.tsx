@@ -77,7 +77,7 @@ export interface ILayoutProps {
      * A function which returns {@link ICookieConsentProps}.
      * If this is defined a {@link CookieConsent} will be rendered in the {@link Layout} with the {@link ICookieConsentProps} returned by the function passed to it.
      */
-    cookieConsent?: () => ICookieConsentProps
+    cookieConsent?: () => ICookieConsentProps;
 
     searchPlaceHolder?: () => string;
 
@@ -532,12 +532,12 @@ export default class Layout
                     (
                         <TopNav applicationName={this.applicationName}
                                 fetchItems={this.props.fetchTopNavItems}
+                                languages={this.props.languages}
                                 logo={this.props.topNavLogo}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
                                 onShoppingCartClick={this.props.onShoppingCartClick}
                                 onSearchClick={this.props.onSearchClick}
                                 searchPlaceHolder={this.props.searchPlaceHolder}
-                                languages={this.props.languages}
                                 logoText={this.props.topNavLogoText}
                                 onLogoClick={this.props.onLogoClick}
                         />
@@ -546,7 +546,7 @@ export default class Layout
 
                 <main className={styles.main}>
                     {
-                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && PageRouteProvider.render(this.state.page, this._pageRef)
+                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
                     }
                 </main>
 
@@ -564,7 +564,7 @@ export default class Layout
                 {
                     ((this.state.error) || (this.state.isSpinning)) &&
                     (
-                        <Spinner global/>
+                        <Spinner global />
                     )
                 }
 

@@ -1,3 +1,4 @@
+import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
 import AlertModel from "../models/AlertModel";
@@ -13,10 +14,8 @@ import DescriptionModel from "../models/DescriptionModel";
 import IPageContainer from "../models/IPageContainer";
 import IUser from "../models/IUser";
 import IUserContext from "../models/IUserContext";
-import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
+import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
-import {PageRouteProvider} from "../index";
-
 
 export interface IManualProps {
     title?: string;

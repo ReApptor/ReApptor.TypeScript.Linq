@@ -949,7 +949,6 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                     this.pictures.map((picture, index) => this.renderListViewItem(picture, index))
                 }
             </div>
-
         );
     }
 
