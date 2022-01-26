@@ -112,7 +112,9 @@ export default class Footer extends BaseComponent<IFooterProps> {
     public render(): React.ReactNode {
         return (
             <footer className={styles.footer}>
+                
                 <div className={styles.upperFooter}>
+                    
                     {
                         (this.props.logo) &&
                         (
@@ -127,9 +129,11 @@ export default class Footer extends BaseComponent<IFooterProps> {
                             (this.links.map((link, index) => (this.renderLink(link, index))))
                         }
                     </div>
+                    
                 </div>
 
                 <div className={styles.lowerFooter}>
+                    
                     {
                         this.renderCopyright()
                     }
@@ -142,7 +146,9 @@ export default class Footer extends BaseComponent<IFooterProps> {
                             </span>
                         )
                     }
+                    
                 </div>
+                
             </footer>
         );
     }

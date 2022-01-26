@@ -2,9 +2,10 @@ import React from "react";
 import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
 import Icon from "../../Icon/Icon";
 import {ITabHeader, TabModel} from "../TabModel";
+import ConfirmationDialog from "../../ConfirmationDialog/ConfirmationDialog";
+import TabContainerLocalizer from "../TabContainerLocalizer";
 
 import styles from "../TabContainer.module.scss";
-import TabContainerLocalizer from "../TabContainerLocalizer";
 
 export interface ITabHeaderClassNames extends IBaseClassNames {
     readonly headerTab?: string;
@@ -49,8 +50,8 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         await this.model.container.activateTabAsync(this.model);
     }
 
-    private async onCloseAsync(): Promise<void> {
-        await this.model.container.closeTabAsync(this.model);
+    private async onCloseAsync(confirmed: boolean = false, data: string = ""): Promise<void> {
+        await this.model.container.closeTabAsync(this.model, confirmed, data);
     }
 
     public get model(): TabModel {
@@ -96,6 +97,16 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                         (model.onClose) &&
                         (
                             <Icon className={this.css(styles.close, this.classNames.headerClose)} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
+                        )
+                    }
+                    
+                    {
+                        (model.closeConfirm) &&
+                        (
+                            <ConfirmationDialog ref={model.closeConfirmDialogRef}
+                                                title={model.closeConfirm}
+                                                callback={(caller, data) => this.onCloseAsync(true, data)}
+                            />
                         )
                     }
 
