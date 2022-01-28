@@ -102,7 +102,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
             VaultReference[] vaults = await client.ListVaultsAsync();
 
             var credentials = new List<ICredential>();
-            var vaultItems = new List<VaultItem>();
+            bool pathWasFound = false;
             foreach (VaultReference vault in vaults)
             {
                 VaultItemReference[] vaultItemsReferences = await client.ListVaultItemsAsync(vault.Id);
@@ -111,18 +111,16 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation
                 {
                     VaultItem vaultItem = await client.GetVaultItemAsync(vaultItemReference.Vault.Id, vaultItemReference.Id);
 
-                    vaultItems.Add(vaultItem);
-
                     if ((string.IsNullOrWhiteSpace(path)) || (vaultItem.Id == path) || (vaultItem.Title == path))
                     {
+                        pathWasFound = true;
                         credentials.AddRange(vaultItem.Transform());
                     }
                 }
             }
 
-            if (credentials.Count == 0 && !vaultItems.Any(item => (item.Title == path) || (item.Id == path))) {
-                throw new ArgumentException($"Could not find any 1password credentials by path \"{path}\". Verify the path or token are specified correctly.");
-            }
+            if (!pathWasFound)
+                throw new ArgumentOutOfRangeException(nameof(path),$"No vault item found by path \"{path}\". Verify the path or token are specified correctly.");
 
             return credentials;
         }
