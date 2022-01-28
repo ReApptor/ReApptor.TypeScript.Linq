@@ -44,7 +44,7 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
         }
         
         [Fact]
-        public async Task ListCredentialsAsyncTest()
+        public async Task WrongPathListCredentialsAsyncTest()
         {
             var credentialSettings = new OnePasswordCredentialServiceSettings
             {
@@ -66,6 +66,27 @@ namespace WeAre.Athenaeum.Services.UnitTest.ACM
                 Assert.NotNull(ex);
                 Assert.Equal("Could not find any 1password credentials by path \"broken-acm-unit-tests-path\". Verify the path or token are specified correctly.", ex.Message);
             }
+        }
+        
+        
+        [Fact]
+        public async Task ListCredentialsAsyncTest()
+        {
+            var credentialSettings = new OnePasswordCredentialServiceSettings
+            {
+                Path = "acm-unit-test-website-mock-item",
+                AccessToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Inl5N3czNDR0aDY1d2R2bm5iNzdzeHZiam51IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiNVVFQkJBWE41UkZZN05CVk9FNVdYNlFRTEkiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoiRHZsWVE3TEhXbFN4QlBIVTM5TExuRTVTWG1ibFBkLW8iLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3siYSI6NDgsInUiOiJveGE0aDNoc2s3eXU2amlrdnRtcTNxc3NiNCJ9XSwiYXVkIjpbImNvbS4xcGFzc3dvcmQuY29ubmVjdCJdLCJpYXQiOjE2MjUxMjc2MTUsImlzcyI6ImNvbS4xcGFzc3dvcmQuYjUiLCJqdGkiOiJ1ZHBqN3Fta2NybGV5bzQ2ZHFzdDRuc2N5dSIsInN1YiI6IjVRWVFCUFc1Mk5GQTNERVFWSU1PRzQ0Rk9VIn0.PdozB_biSF--2e4GeDcPvF6QXYsv85FX8p-G1q4O0NKyjQaqcwVfQKtk2AHwVTv1DI4GOtuJvRvrBr4DPfT-pg",
+                ApiUrl = "https://1password.reapptor.biz/v1/"
+            };
+
+            var logger = new Mock<ILogger<OnePasswordCredentialService>>().Object;
+
+            var service = new OnePasswordCredentialService(logger, (ICredentialServiceSettings)credentialSettings);
+            
+            IEnumerable<ICredential> credentials = await service.ListCredentialsAsync(credentialSettings.Path);
+                        
+            Assert.NotNull(credentials);
+            Assert.NotEmpty(credentials);
         }
         
         [Fact]
