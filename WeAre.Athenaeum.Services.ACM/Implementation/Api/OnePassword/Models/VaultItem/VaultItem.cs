@@ -30,7 +30,7 @@ namespace WeAre.Athenaeum.Services.ACM.Implementation.API.OnePassword.Models.Vau
         /// Array of URL objects containing URLs for the item.
         /// </summary>
         [JsonProperty("urls")]
-        public Uri[] Urls { get; set; }
+        public VaultItemUrl[] Urls { get; set; }
 
         /// <summary>
         /// Mark the item as a favorite.
