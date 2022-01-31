@@ -355,7 +355,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                     (
                         <Spinner noShading
                                  ref={this._spinnerRef}
-                                 onDelay={async () => this.onSpinnerDelayHandlerAsync()}
+                                 onDelay={() => this.onSpinnerDelayHandlerAsync()}
                         />
                     )
                 }
