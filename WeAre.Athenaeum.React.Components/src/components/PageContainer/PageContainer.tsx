@@ -90,7 +90,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     }
 
     public isAsync(): boolean {
-        return this.getEndpoint().length > 0;
+        return (this.getEndpoint().length > 0);
     }
 
     public height(): number {
