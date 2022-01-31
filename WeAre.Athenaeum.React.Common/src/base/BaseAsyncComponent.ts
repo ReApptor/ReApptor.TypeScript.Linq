@@ -141,7 +141,6 @@ export default abstract class BaseAsyncComponent<TProps, TState
 
     // BaseComponent
 
-
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
         await this.invokeReloadDataAsync();
@@ -158,8 +157,7 @@ export default abstract class BaseAsyncComponent<TProps, TState
 
 
     // IAsyncComponent
-
-
+    
     public isAsync(): boolean {
         return (this._isAsync) && (this.getEndpoint().length > 0);
     }
