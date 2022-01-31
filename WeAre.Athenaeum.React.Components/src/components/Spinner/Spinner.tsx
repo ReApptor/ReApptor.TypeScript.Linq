@@ -43,29 +43,28 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
         await this.showSpinnerDelayAsync();
     }
 
-    private async showSpinnerDelayAsync() {
-        await Utility.wait(SPINNER_CURSOR_DELAY);
+    private async showSpinnerDelayAsync(): Promise<void> {
+        //await Utility.wait(SPINNER_CURSOR_DELAY);
 
         if (this.isMounted) {
-            await this.setState({ showCursor: true });
+            await this.setState({showCursor: true});
+
+            //await Utility.wait(SPINNER_BACKGROUND_DELAY);
         }
 
-        await Utility.wait(SPINNER_BACKGROUND_DELAY);
-
-        if (this.isMounted) {
-            await this.setState({ showSpinner: true });
-
-            if (this.props.onDelay) {
-                await this.props.onDelay();
-            }
-        }
+        // if (this.isMounted) {
+        //     await this.setState({showSpinner: true});
+        //
+        //     if (this.props.onDelay) {
+        //         await this.props.onDelay();
+        //     }
+        // }
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         if (this.state.showCursor) {
-
             const localStyle: any = (!this.props.global) && (styles.local);
-
+            
             const overlayStyle: CSSProperties = {};
             const containerStyle: CSSProperties = {};
             if (this.state.showSpinner) {
@@ -76,7 +75,7 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
             return (
                 <div className={styles.spinner}>
 
-                    <div className={this.css(styles.overlay, localStyle)} style={overlayStyle}/>
+                    <div className={this.css(styles.overlay, localStyle)} style={overlayStyle} />
 
                     <div className={styles.container} style={containerStyle}>
                         <span className={styles.background}/>
@@ -85,8 +84,8 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
 
                 </div>
             )
-        } else {
-            return null;
         }
+
+        return (<React.Fragment/>);
     }
 }
