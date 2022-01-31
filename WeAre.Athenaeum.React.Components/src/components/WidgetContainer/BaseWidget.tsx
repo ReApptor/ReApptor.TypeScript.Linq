@@ -57,8 +57,6 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     extends BaseAsyncComponent<TProps, IBaseWidgetState<TWidgetData>, TWidgetData>
     implements IBaseWidget {
 
-    private readonly _spinnerRef: React.RefObject<Spinner> = React.createRef();
-
     state: IBaseWidgetState<TWidgetData> = {
         text: (this.props.text as string | null),
         number: null,
@@ -354,8 +352,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                     (this.isSpinning()) &&
                     (
                         <Spinner noShading
-                                 ref={this._spinnerRef}
-                                 onDelay={async () => this.onSpinnerDelayHandlerAsync()}
+                                 onDelay={() => this.onSpinnerDelayHandlerAsync()}
                         />
                     )
                 }

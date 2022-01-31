@@ -44,21 +44,24 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerState>
     }
 
     private async showSpinnerDelayAsync(): Promise<void> {
-        //await Utility.wait(SPINNER_CURSOR_DELAY);
+        
+        await Utility.wait(SPINNER_CURSOR_DELAY);
 
         if (this.isMounted) {
+            
             await this.setState({showCursor: true});
 
-            //await Utility.wait(SPINNER_BACKGROUND_DELAY);
+            await Utility.wait(SPINNER_BACKGROUND_DELAY);
         }
 
-        // if (this.isMounted) {
-        //     await this.setState({showSpinner: true});
-        //
-        //     if (this.props.onDelay) {
-        //         await this.props.onDelay();
-        //     }
-        // }
+        if (this.isMounted) {
+            
+            await this.setState({showSpinner: true});
+
+            if (this.props.onDelay) {
+                await this.props.onDelay();
+            }
+        }
     }
 
     public render(): React.ReactNode {
