@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Renta.Components.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
