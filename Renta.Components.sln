@@ -38,6 +38,7 @@ ProjectSection(SolutionItems) = preProject
 	nx.json = nx.json
 	workspace.json = workspace.json
 	tsconfig.base.json = tsconfig.base.json
+	Renta.Components.snk = Renta.Components.snk
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "React", "React", "{73374FF9-71EC-44D9-8858-8459A65C2B89}"
