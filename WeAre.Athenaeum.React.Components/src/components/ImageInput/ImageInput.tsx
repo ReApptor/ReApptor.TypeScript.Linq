@@ -999,7 +999,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                        type="file"
                        accept={this.acceptedTypes}
                        multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
+                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChangeAsync(event)}
                 />
 
                 <input ref={this.cameraFileInputRef}
@@ -1008,7 +1008,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                        accept={this.acceptedTypes}
                        capture="environment"
                        multiple={this.multi}
-                       onChange={async (event: ChangeEvent<HTMLInputElement>) => await this.onFileInputChangeAsync(event)}
+                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChangeAsync(event)}
                 />
 
                 <div className={styles.controlPanel}>
@@ -1020,10 +1020,10 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 <div className={styles.viewPanel}>
 
                     <div className={this.css(styles.dragDropArea, (this.isDragOver) && styles.dragDropAreaActive)}
-                         onDrop={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDropAsync(event)}
-                         onDragOver={async(event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragOverAsync(event)}
-                         onDragEnter={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragEnterAsync(event)}
-                         onDragLeave={async (event: DragEvent<HTMLDivElement>) => await this.onDropDownAreaDragLeaveAsync(event)}
+                         onDrop={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDropAsync(event)}
+                         onDragOver={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragOverAsync(event)}
+                         onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragEnterAsync(event)}
+                         onDragLeave={(event: DragEvent<HTMLDivElement>) => this.onDropDownAreaDragLeaveAsync(event)}
                     >
                         <span className={styles.dragDropAreaOverlay}>
                             {ImageInputLocalizer.dropIt}
