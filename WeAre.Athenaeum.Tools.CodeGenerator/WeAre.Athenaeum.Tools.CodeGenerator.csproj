@@ -3,8 +3,6 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <OutputType>Exe</OutputType>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>../Renta.Components.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <PropertyGroup>
