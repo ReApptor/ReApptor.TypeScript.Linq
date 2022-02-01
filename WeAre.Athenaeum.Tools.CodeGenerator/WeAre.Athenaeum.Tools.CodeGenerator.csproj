@@ -5,7 +5,6 @@
         <OutputType>Exe</OutputType>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Renta.Components.snk</AssemblyOriginatorKeyFile>
-        <PublicSign>true</PublicSign>
     </PropertyGroup>
 
     <PropertyGroup>
