@@ -8,12 +8,7 @@ import {Utility} from "@weare/athenaeum-toolkit";
 import QrInputLocalizer from "./QrInputLocalizer";
 
 export interface IQrInputProps {
-    /**
-     * Called when QR code is found.
-     * @param code The found QR code.
-     */
-    onQr?(code: string): Promise<void>;
-    
+   
     className?: string;
     buttonClassName?: string;
     
@@ -36,6 +31,18 @@ export interface IQrInputProps {
      * @default false
      */
     autoClose?: boolean;
+
+    /**
+     * If set true, {@link QrInput} will close when QR code is read successfully.
+     * @default false
+     */
+    closeOnQr?: boolean;
+
+    /**
+     * Called when QR code is found.
+     * @param code The found QR code.
+     */
+    onQr?(code: string): Promise<void>;
 }
 
 interface IQrInputState {
@@ -57,6 +64,9 @@ export default class QrInput extends BaseComponent<IQrInputProps, IQrInputState>
 
     private async onScanAsync(code: string | null): Promise<void> {
         if (code && this.props.onQr) {
+            if (this.props.closeOnQr) {
+                await this.setState({showQrReader: false});
+            }
             await this.props.onQr(code);
         }
     }

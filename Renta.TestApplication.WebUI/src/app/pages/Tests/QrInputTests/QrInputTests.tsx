@@ -16,7 +16,7 @@ export default class QrInputTests extends BaseComponent<{}, IQrInputTestsState> 
             <Form className={"col-md-6 mx-auto"}>
          
                 <OneColumn>
-                    <QrInput autoClose
+                    <QrInput autoClose closeOnQr
                              buttonType={ButtonType.Orange}
                              label={"console.log(code)"}
                              onQr={async (code) => {console.log(code)}}
@@ -31,7 +31,7 @@ export default class QrInputTests extends BaseComponent<{}, IQrInputTestsState> 
                 </TwoColumns>
         
                 <ThreeColumns>
-                    <QrInput autoClose
+                    <QrInput autoClose closeOnQr
                              label={"window.alert(code)"}
                              onQr={async (code) => {window.alert(code)}}
                     />
