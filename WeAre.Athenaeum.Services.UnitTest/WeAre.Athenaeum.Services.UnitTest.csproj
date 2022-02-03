@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Renta.Apps.Common\Renta.Apps.Common.csproj" />
       <ProjectReference Include="..\WeAre.Athenaeum.Services.ACM\WeAre.Athenaeum.Services.ACM.csproj" />
     </ItemGroup>
 
