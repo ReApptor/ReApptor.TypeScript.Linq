@@ -15,15 +15,9 @@ namespace Renta.Apps.Common.Models.Geo
 
         public string PostalBox { get; set; }
 
-        public string FormattedAddress
-        {
-            get { return this.GetFormattedAddress(); }
-        }
+        public string FormattedAddress => this.GetFormattedAddress(true);
 
-        public int HashCode
-        {
-            get { return FormattedAddress.ToLowerInvariant().GetHashCode(); }
-        }
+        public int HashCode => FormattedAddress.ToLowerInvariant().GetHashCode();
 
         public bool IsGeoLocation => true;
     }
