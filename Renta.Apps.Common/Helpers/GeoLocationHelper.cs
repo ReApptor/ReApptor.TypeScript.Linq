@@ -1,6 +1,6 @@
 using System;
-using System.Globalization;
 using System.Linq;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Renta.Apps.Common.Interfaces.Geo;
 using Renta.Apps.Common.Models.Geo;
@@ -167,24 +167,29 @@ namespace Renta.Apps.Common.Helpers
         {
             if (address != null)
             {
-                string[] items = {address.Address, address.City, address.PostalCode, address.Country.GetCountryName()};
-                
+                string[] items = { address.Address, address.City, address.PostalCode, address.Country.GetCountryName() };
+
                 items = items.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray();
-                
+
                 if (items.Length > 0)
                 {
                     string formattedAddress = string.Join(", ", items);
-                    
+
                     if ((includeCoordinates) && (address is IGeoCoordinate coordinates) && (coordinates.Lat > 0) && (coordinates.Lon > 0))
                     {
                         //#LAT, LON"
                         var formatInfo = new NumberFormatInfo { NumberDecimalSeparator = "." };
-                        return $"{formattedAddress}, #{coordinates.Lat.ToString(formatInfo)}, {coordinates.Lon.ToString(formatInfo)}";
+                        string lat = coordinates.Lat.ToString(formatInfo).TrimEnd('0');
+                        string lon = coordinates.Lon.ToString(formatInfo).TrimEnd('0');
+
+                        return $"{formattedAddress}, #{lat}, {lon}";
                     }
+
+                    return formattedAddress;
                 }
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }
