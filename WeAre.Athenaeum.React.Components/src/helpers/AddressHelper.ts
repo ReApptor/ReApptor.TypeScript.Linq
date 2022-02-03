@@ -180,61 +180,69 @@ export default class AddressHelper {
         return addressValue;
     }
 
-    public static getCountryName(countryCode: string): string {
-        if (countryCode) {
-            countryCode = countryCode.trim().toLowerCase();
+    public static getCountryName(countryCodeOrName: string): string {
+        if (countryCodeOrName) {
+            countryCodeOrName = countryCodeOrName.trim().toLowerCase();
 
-            switch (countryCode) {
-                //"fi", "Suomi", "Finland", "fi-fi"
+            switch (countryCodeOrName) {
+                //"fi", "fi-fi", "Finland", "Suomi"
                 case "fi":
                 case "fi-fi":
-                case "suomi":
                 case "finland":
+                case "suomi":
                     return "Suomi";
-                //"se", "Svenska", "Sweden", "sv-se", "sv"
+                    
+                //"se", "sv", "sv-se", "Sweden", "Svenska"
                 case "se":
                 case "sv":
                 case "sv-se":
                 case "sweden":
                 case "svenska":
                     return "Svenska";
-                //"no", "Norge", "Norway", "nb-no", "nb", "nor"
+                    
+                //"no", "nb", "nor", "nb-no", "Norway", "Norge"
                 case "no":
                 case "nb":
+                case "nor":
                 case "nb-no":
                 case "norway":
                 case "norge":
                     return "Norge";
-                //"dk", "Danmark", "Denmark", "da-dk", "da"
+                    
+                //"dk", "da", "da-dk", "Denmark", "Danmark"
                 case "dk":
                 case "da":
                 case "da-dk":
                 case "denmark":
                 case "danmark":
                     return "Danmark";
-                //"pl", "Polska", "Poland", "pl-pl"
+                    
+                //"pl", "pl-pl", "Poland", "Polska"
                 case "pl":
                 case "pl-pl":
                 case "poland":
                 case "polska":
                     return "Polska";
-                //"ru", "Россия", "Russia", "ru-ru"
+                    
+                //"ru", "ru-ru", "Russia", "Россия"
                 case "ru":
                 case "ru-ru":
                 case "russia":
                 case "россия":
                     return "Россия";
-                //"ua", "Україна", "Ukraine", "uk-ua", "uk"
+                    
+                //"ua", "uk", "uk-ua", "Ukraine", "Україна", "Украина"
                 case "ua":
                 case "uk":
                 case "uk-ua":
                 case "ukraine":
                 case "україна":
+                case "украина":
                     return "Україна";
             }
         }
 
-        return countryCode;
+        return countryCodeOrName;
     }
 
     public static extractCoordinate(formattedAddress: string): GeoCoordinate | null {
@@ -263,6 +271,7 @@ export default class AddressHelper {
         if (!formattedAddress) {
             return null;
         }
+        
         if (typeof formattedAddress !== "string") {
             return formattedAddress;
         }
@@ -271,30 +280,54 @@ export default class AddressHelper {
         
         geoLocation.formattedAddress = formattedAddress;
 
-        const parts: string[] = formattedAddress
-            .replace(/([#])/gm, "")
-            .split(",")
-            .map(item => item.trim())
-            .filter(item => !!item);
+        //Formatted address comes in formats:
+        //  "Äyritie 12, 01510 Vantaa, Finland, #60.21083359999999, 24.951597"
+        //  "Äyritie 12, Vantaa, Finland, #60.21083359999999, 24.951597"
+        //  "Äyritie 12, Vantaa, 01510, Finland, #60.21083359999999, 24.951597"
+        //  "Äyritie 12, Vantaa, Finland, #60.21083359999999, 24.951597"
 
-        if (parts.length > 4) {
-            const lat: number = Number(parts[parts.length - 2]);
-            const lon: number = Number(parts[parts.length - 1]);
+        const includesLocation: boolean = (formattedAddress.includes("#"));
+        if (includesLocation) {
+            const parts: string[] = formattedAddress
+                .replace(/([#])/gm, "")
+                .split(",")
+                .map(item => item.trim())
+                .filter(item => !!item);
 
-            const cityPostalCodeParts: string[] = parts[1].trim().split(" ");
+            const length: number = parts.length;
+            if (length > 4) {
+                const lat: number = Number(parts[length - 2]);
+                const lon: number = Number(parts[length - 1]);
+                
+                const cityPostalCodeParts: string[] = parts[length - 4].trim().split(" ");
+                if (cityPostalCodeParts.length == 2)
+                {
+                    geoLocation.postalCode = cityPostalCodeParts[0];
+                    geoLocation.city = cityPostalCodeParts[1];
+                } else if (cityPostalCodeParts.length == 1)
+                {
+                    if (parts.length > 5)
+                    {
+                        geoLocation.postalCode = parts[length - 4];
+                        geoLocation.city = parts[length - 5];
+                    }
+                    else
+                    {
+                        geoLocation.city = cityPostalCodeParts[0];
+                    }
+                }
 
-            if ((!isNaN(lat) && isFinite(lat) && lat > 0)) {
-                geoLocation.lat = lat;
-            }            
-            
-            if ((!isNaN(lon) && isFinite(lon) && lon > 0)) {
-                geoLocation.lon = lon;
+                if ((!isNaN(lat) && isFinite(lat) && lat > 0)) {
+                    geoLocation.lat = lat;
+                }
+
+                if ((!isNaN(lon) && isFinite(lon) && lon > 0)) {
+                    geoLocation.lon = lon;
+                }
+
+                geoLocation.address = parts[0];
+                geoLocation.country = this.getCountryName(parts[length - 3]);
             }
-
-            geoLocation.address = parts[0];
-            geoLocation.postalCode = (cityPostalCodeParts.length > 1) ? cityPostalCodeParts[0] : "";
-            geoLocation.city = (cityPostalCodeParts.length > 1) ? cityPostalCodeParts[1] : parts[1];
-            geoLocation.country = this.getCountryName(parts[2]);
         }
         
         return geoLocation;
