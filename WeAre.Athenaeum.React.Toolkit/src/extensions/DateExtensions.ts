@@ -34,6 +34,13 @@ declare global {
         addMonths(value: number): Date;
 
         /**
+         * Returns a new DateTime that adds the specified number of years to the value of this instance.
+         * @param value - A number of years. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of years represented by value.
+         */
+        addYears(value: number): Date;
+
+        /**
          * Converts the value of the current DateTime object to Coordinated Universal Time (UTC).
          * @returns Date - An object whose Kind property is Utc, and whose value is the UTC equivalent to the value of the current DateTime object, or MaxValue if the converted value is too large to be represented by a DateTime object, or MinValue if the converted value is too small to be represented by a DateTime object.
          */
@@ -128,6 +135,12 @@ export const DateExtensions = function () {
     if (Date.prototype.addMonths == null) {
         Date.prototype.addMonths = function(value: number): Date {
             return Utility.addMonths(this, value);
+        };
+    }
+    
+    if (Date.prototype.addYears == null) {
+        Date.prototype.addYears = function(value: number): Date {
+            return Utility.addYears(this, value);
         };
     }
     
