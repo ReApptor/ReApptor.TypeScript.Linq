@@ -14,7 +14,6 @@ import {ArrayExtensions} from "./extensions/ArrayExtensions";
 import {NumberExtensions} from "./extensions/NumberExtensions";
 import ServiceProvider from "./providers/ServiceProvider";
 
-
 export default class Utility {
 
     private static _geoEnabled: boolean | null = null;
@@ -72,7 +71,6 @@ export default class Utility {
 
     /**
      * Format a string.
-     * huehue
      * "D" = dd.MM.yyyy
      *
      * @param text String to format.
@@ -165,7 +163,7 @@ export default class Utility {
                                         } else if (format === "g") {
                                             const date: Date = new Date(param);
                                             formattedParam = this.toDateShortTimeString(date);
-                                        } else if (format === "t") {
+                                        } else if ((format === "t") || (format == "HH:mm")) {
                                             const date: Date = new Date(param);
                                             formattedParam = this.toShortTimeString(date);
                                         } else if (format === "HH:mm:ss") {
@@ -179,12 +177,13 @@ export default class Utility {
                                             formattedParam = `${Utility.pad(date.getDate())}.${Utility.pad(date.getMonth() + 1)}`;
                                         } else if ((format === "d") || (format === "dd.MM.yy")) {
                                             const date: Date = new Date(param);
-                                            const year: string = date.getFullYear().toString().substr(2);
-                                            formattedParam = `${Utility.pad(date.getDate())}.${Utility.pad(date.getMonth() + 1)}.${year}`;
+                                            formattedParam = this.toShortDateString(date);
+                                        } else if ((format === "dt") || (format === "dd.MM.yy HH:mm")) {
+                                            const date: Date = new Date(param);
+                                            formattedParam = this.toShortDateShortTimeString(date);
                                         }
                                     } else if ((typeof param === "object") && ((param instanceof TimeSpan) || (param.isTimeSpan === true))) {
                                         const value: TimeSpan = param as TimeSpan;
-
                                         if (format === "hh:mm:ss") {
                                             formattedParam = `${Utility.pad(value.hours)}:${Utility.pad(value.minutes)}:${Utility.pad(value.seconds)}`;
                                         } else if (format === "c") {
@@ -716,6 +715,12 @@ export default class Utility {
         return `${Utility.toDateString(date)} ${Utility.toTimeString(date)}`;
     }
 
+    public static toShortDateString(date: Date | string): string {
+        const value: Date = (typeof date === "string") ? new Date(date) : date;
+        const year: string = value.getFullYear().toString().substr(2);
+        return `${Utility.pad(value.getDate())}.${Utility.pad(value.getMonth() + 1)}.${year}`;
+    }
+
     public static toTimeString(date: Date | string): string {
         const value: Date = (typeof date === "string") ? new Date(date) : date;
         return `${Utility.pad(value.getHours())}:${Utility.pad(value.getMinutes())}:${Utility.pad(value.getSeconds())}`;
@@ -724,6 +729,11 @@ export default class Utility {
     public static toDateShortTimeString(date: Date | string): string {
         const value: Date = (typeof date === "string") ? new Date(date) : date;
         return this.toDateString(value) + " " + this.toShortTimeString(value);
+    }
+
+    public static toShortDateShortTimeString(date: Date | string): string {
+        const value: Date = (typeof date === "string") ? new Date(date) : date;
+        return `${this.toShortDateString(value)} ${this.toShortTimeString(value)}`;
     }
 
     public static toDateString(date: Date | string): string {
