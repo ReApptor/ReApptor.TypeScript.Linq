@@ -38,6 +38,8 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     minDate?: Date | null;
     showMonthDropdown?: boolean;
     showMonthYearPicker?: boolean;
+    showYearDropdown?: boolean;
+    showMonthYearDropdown?: boolean;
     shortDate?: boolean;
     small?: boolean;
     readonly?: boolean;
@@ -161,6 +163,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             withPortal={this.props.popup}
                             showMonthDropdown={this.props.showMonthDropdown}
                             showMonthYearPicker={this.props.showMonthYearPicker}
+                            showYearDropdown={this.props.showYearDropdown}
+                            showMonthYearDropdown={this.props.showMonthYearDropdown}
                             ref={this.props.forwardedRef}
                             locale={DateInputLocalizer.language}
                             readOnly={this.readonly}
