@@ -217,7 +217,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
                 await this.setValueAsync([this.startDate, clickedDate]);
 
-                await this.setState((state) => ({showDatePicker: false}));
+                await this.setState(() => ({showDatePicker: false}));
 
                 await this.emitOnChange();
 
@@ -239,7 +239,7 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
 
             await this.emitOnChange();
 
-            await this.setState((state) => ({showDatePicker: false}));
+            await this.setState(() => ({showDatePicker: false}));
 
             return;
         }
@@ -475,8 +475,8 @@ export class DateRangeInput extends BaseInput<DateRangeInputValue,IDateRangeInpu
         return new Date(unixTime).getDate();
     }
 
-    private static isValidDateRangeInputValue(dateRangeInputValue: DateRangeInputValue | undefined): dateRangeInputValue is DateRangeInputValue {
-        return !!dateRangeInputValue && Array.isArray(dateRangeInputValue) && dateRangeInputValue.length === 2;
+    private static isValidDateRangeInputValue(dateRangeInputValue: DateRangeInputValue | null | undefined): dateRangeInputValue is DateRangeInputValue {
+        return (!!dateRangeInputValue) && (Array.isArray(dateRangeInputValue)) && (dateRangeInputValue.length === 2);
     }
 
     private static todayInUnixTime(): number {
