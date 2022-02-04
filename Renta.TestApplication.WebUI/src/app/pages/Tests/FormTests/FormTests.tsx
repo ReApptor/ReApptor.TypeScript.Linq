@@ -52,6 +52,12 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                     </ThreeColumns>
 
+                    <ThreeColumns>
+
+                        <TextInput trim required label={"Text input #4 (trim, required)"} />
+                        
+                    </ThreeColumns>
+
                     <FourColumns>
 
                         <TextAreaInput label={"Text area #1 (50)"} placeholder={"Enter value"} maxLength={50} />

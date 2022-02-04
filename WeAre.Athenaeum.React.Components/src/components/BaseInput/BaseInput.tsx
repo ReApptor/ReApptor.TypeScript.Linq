@@ -39,7 +39,7 @@ export interface IBaseInputProps<TInputValue extends BaseInputValue> {
     title?: string;
     name?: string;
     label?: string;
-    value?: TInputValue;
+    value?: TInputValue | null;
     model?: IInputModel<TInputValue>;
 
     /**
@@ -237,7 +237,7 @@ export class RequiredValidator extends BaseValidator {
         if ((str == null) || (str.length === 0)) {
             return this.getMessage();
         }
-
+        
         return null;
     }
 
@@ -600,12 +600,12 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         if (this.isMounted) {
             const model: IInputModel<TInputValue> = this.state.model;
             const nextModel: IInputModel<TInputValue> | undefined = nextProps.model;
-            const value: TInputValue | undefined = model.value;
-            const nextValue: TInputValue | undefined = nextProps.value;
-            let resetValidator: boolean = (!nextProps.required) && (!this.isValid());
+            const value: TInputValue | null | undefined = model.value;
+            const nextValue: TInputValue | null | undefined = nextProps.value;
             const newReadonly: boolean = (varProps.disabled != varNewProps.disabled) || (varProps.readonly != varNewProps.readonly);
 
             //Ensure validation localizations change when localizer language changes
+            let resetValidator: boolean = (!nextProps.required) && (!this.isValid());
             const currentLanguage: string = BaseInput.getCurrentLocalizerLanguage();
             if (currentLanguage !== this._localizerLanguage) {
                 if (!this.isValid()) {
