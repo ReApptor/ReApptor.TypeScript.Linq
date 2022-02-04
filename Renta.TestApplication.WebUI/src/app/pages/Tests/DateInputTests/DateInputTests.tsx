@@ -16,6 +16,7 @@ export interface IDateInputTestsState {
     small: boolean;
     showMonthDropdown: boolean;
     showMonthYearPicker: boolean;
+    showYearDropdown: boolean;
     readonly: boolean;
     rentaStyle: boolean;
     expanded: boolean;
@@ -29,6 +30,7 @@ export default class DateInputTests extends BaseComponent {
         maxDate: null,
         minDateActive: false,
         maxDateActive: false,
+        showYearDropdown: false,
         todayButton: false,
         inline: false,
         popup: false,
@@ -59,9 +61,11 @@ export default class DateInputTests extends BaseComponent {
                     <Checkbox inline className="pt-1 pb-1" label="showOnlyTime" value={this.state.showOnlyTime} onChange={async (sender, showOnlyTime) => {await this.setState({showOnlyTime})}} />
                     
                     <Checkbox inline className="pt-1 pb-1" label="small" value={this.state.small} onChange={async (sender, small) => {await this.setState({small})}} />
-                    
+
+                    <Checkbox inline className="pt-1 pb-1" label="showYearDropdown" value={this.state.showYearDropdown} onChange={async (sender, showYearDropdown) => {await this.setState({showYearDropdown})}} />
+
                     <Checkbox inline className="pt-1 pb-1" label="showMonthDropdown" value={this.state.showMonthDropdown} onChange={async (sender, showMonthDropdown) => {await this.setState({showMonthDropdown})}} />
-                   
+                    
                     <Checkbox inline className="pt-1 pb-1" label="showMonthYearPicker" value={this.state.showMonthYearPicker} onChange={async (sender, showMonthYearPicker) => {await this.setState({showMonthYearPicker})}} />
                     
                     <Checkbox inline className="pt-1 pb-1" label="readonly" value={this.state.readonly} onChange={async (sender, readonly) => {await this.setState({readonly})}} />
@@ -94,6 +98,7 @@ export default class DateInputTests extends BaseComponent {
                             small={this.state.small}
                             showMonthDropdown={this.state.showMonthDropdown}
                             showMonthYearPicker={this.state.showMonthYearPicker}
+                            showYearDropdown={this.state.showYearDropdown}
                             readonly={this.state.readonly}
                             rentaStyle={this.state.rentaStyle}
                             expanded={this.state.expanded}
