@@ -379,6 +379,12 @@ export default class Utility {
         return date;
     }
 
+    public static addYears(date: Date | string, years: number): Date {
+        date = new Date(date);
+        date.setFullYear(date.getFullYear() + years);
+        return date;
+    }
+
     public static isLeapYear(year: number | null = null): boolean {
         return (year != null)
             ? (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
