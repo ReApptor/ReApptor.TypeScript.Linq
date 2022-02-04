@@ -31,7 +31,7 @@
     "react": "16.13.1",
     "react-barcode-reader": "^0.0.2",
     "react-cropper": "^2.1.8",
-    "react-datepicker": "^4.6.0",
+    "react-datepicker": "^2.9.3",
     "react-dom": "^16.8.2",
     "react-google-autocomplete": "^1.1.2",
     "react-qr-reader": "^2.2.1",
