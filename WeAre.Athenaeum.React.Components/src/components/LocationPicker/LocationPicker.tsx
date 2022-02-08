@@ -11,6 +11,16 @@ interface ILocationPickerProps {
     id?: string;
     className?: string;
     location?: GeoLocation;
+    
+    /**
+     * Zoom level of the map view. 
+     * 0 = Whole world
+     * 5 = Finland almost fits to map
+     * 10 = Espoo - Helsinki and Sipoo in one view
+     * 15 = Katajanokka fits to view
+     * 20 = Single house fits to view
+     */
+    zoomLevel?: number;
     infoWindow?: boolean;
     readonly?: boolean;
     fullWidth?: boolean;
@@ -63,7 +73,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     }
 
     private async initAsync(): Promise<void> {
-        this._googleMap = await AddressHelper.createMapAsync(this.locationPicker, this.state.location);
+        this._googleMap = await AddressHelper.createMapAsync(this.locationPicker, this.state.location, this.props.zoomLevel);
 
         if (!this.readonly) {
             AddressHelper.google.maps.event.addListener(this._googleMap, "click", async (event: any) => {

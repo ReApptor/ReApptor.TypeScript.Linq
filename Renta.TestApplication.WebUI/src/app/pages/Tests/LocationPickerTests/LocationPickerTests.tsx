@@ -14,8 +14,8 @@ export default class LocationPickerTests extends BaseComponent<{}, LocationPicke
     get fullWidth() {
         return this.state.fullWidth;
     }
-    
-    public render(): React.ReactNode {        
+
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
                 <div style={{margin: "1rem 0"}}>
@@ -26,7 +26,9 @@ export default class LocationPickerTests extends BaseComponent<{}, LocationPicke
                         onChange={async (checkbox, value) => await this.setState({fullWidth: value})}
                     />
                 </div>
-                <LocationPicker fullWidth={this.fullWidth}/>
+                <LocationPicker fullWidth={this.fullWidth}
+                                zoomLevel={10}
+                />
             </React.Fragment>
         );
     }
