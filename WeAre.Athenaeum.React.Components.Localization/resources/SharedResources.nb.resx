@@ -157,7 +157,7 @@
     <value>Bekreft</value>
   </data>
   <data name="ConfirmationDialog.CloseButton" xml:space="preserve">
-    <value>Stäng</value>
+    <value>Lukk</value>
   </data>
   <data name="ConfirmationDialog.Comment" xml:space="preserve">
     <value>Vennligst legg igjen en kommentar</value>
