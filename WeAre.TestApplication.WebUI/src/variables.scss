@@ -1,0 +1,52 @@
+/* Breakpoints 
+   TODO: utilize bootstrap mixins with breakpoints
+*/
+$break-xxs: 310px;
+$break-xs: 480px;
+$break-sm: 640px;
+$break-md: 768px;
+$break-lg: 1024px;
+$break-xlg: 1280px;
+$break-xxlg: 1460px;
+
+/* Sizes */
+$baseline: 8px;
+$radius: 6px;
+
+/* Colors */
+$orange: rgb(254, 80, 0);
+$transparent-orange: rgba(254, 80, 0, 0.9);
+$dark-orange: rgb(234, 60, 0);
+$transparent-dark-orange: rgba(234, 60, 0, 0.9);
+$light-gray: rgb(227, 227, 227);
+$grey: #adadad;
+$dark-gray: rgb(65, 64, 66);
+$white: rgb(255, 255, 255);
+$transparent-white: rgba(255, 255, 255, 0.95);
+$text-black: #333;
+$danger: #a94442;
+$blue: #337ab7;
+$dark-blue: #0000aa;
+$green: #33b77a;
+$dark-green: #006600;
+$separator-color: rgba(0, 0, 0, 0.1);
+$approved: #28a74520;
+$declined: #a9444220;
+$processed: #F1F3FFFF;
+$completed: #17A2B811;
+$new: #ffb34760;
+
+/* Hover colors */
+$orange-hover: $transparent-dark-orange;
+$button-hover: $light-gray;
+$border-hover: $grey;
+
+/* Shadows */
+$renta-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+
+/* Border */
+$renta-border: 1px solid rgba(0, 0, 0, 0.15);
+
+.font-renta {
+    font-family: "DINProMedium";
+}

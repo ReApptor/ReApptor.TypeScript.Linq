@@ -1,7 +1,7 @@
 ﻿using System;
-using Renta.Apps.Common.Configuration.Settings;
-using WeAre.Athenaeum.Services.Sms.Implementation;
-using WeAre.Athenaeum.Services.Sms.Models;
+using WeAre.Apps.Common.Configuration.Settings;
+using WeAre.ReApptor.Services.Sms.Implementation;
+using WeAre.ReApptor.Services.Sms.Models;
 
 namespace AwsPinpointSmsTestConsole
 {

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <NeutralLanguage>en</NeutralLanguage>
+    </PropertyGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="dotnet run --project &quot;$(ProjectDir)../WeAre.ReApptor.Tools.CodeGenerator/WeAre.ReApptor.Tools.CodeGenerator.csproj&quot;" />
+    </Target>
+</Project>
