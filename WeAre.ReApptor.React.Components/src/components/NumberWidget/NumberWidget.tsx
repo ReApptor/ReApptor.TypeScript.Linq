@@ -1,6 +1,6 @@
 import React from "react";
-import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/athenaeum-toolkit";
-import {IGlobalClick} from "@weare/athenaeum-react-common";
+import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/reapptor-toolkit";
+import {IGlobalClick} from "@weare/reapptor-react-common";
 import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 

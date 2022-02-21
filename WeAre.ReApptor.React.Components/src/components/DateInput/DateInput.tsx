@@ -1,7 +1,7 @@
 import React from 'react';
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
-import {Utility, TFormat} from "@weare/athenaeum-toolkit";
-import {RenderCallback} from "@weare/athenaeum-react-common";
+import {Utility, TFormat} from "@weare/reapptor-toolkit";
+import {RenderCallback} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import DateInputLocalizer from "./DateInputLocalizer";
 

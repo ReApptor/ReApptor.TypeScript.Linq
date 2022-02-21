@@ -1,4 +1,4 @@
-import {PageRouteProvider} from "@weare/athenaeum-react-common";
+import {PageRouteProvider} from "@weare/reapptor-react-common";
 import AnonymousPage from "./AnonymousPage";
 import PageDefinitions from "./PageDefinitions";
 

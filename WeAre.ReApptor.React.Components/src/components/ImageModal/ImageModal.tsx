@@ -1,6 +1,6 @@
 import React from "react";
-import {FileModel} from "@weare/athenaeum-toolkit";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {FileModel} from "@weare/reapptor-toolkit";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
 import Modal, {ModalSize} from "../Modal/Modal";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Button, {ButtonType} from "../Button/Button";

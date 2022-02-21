@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import styles from "./CookieConsent.module.scss"
-import {Button, ButtonType} from "@weare/athenaeum-react-components";
+import {Button, ButtonType} from "@weare/reapptor-react-components";
 
 /**
  * Position of a cookie-consent banner.

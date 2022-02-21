@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Checkbox, Dropdown, DropdownOrderBy, DropdownSubtextType, Form, List, SelectListItem, TwoColumns} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {Checkbox, Dropdown, DropdownOrderBy, DropdownSubtextType, Form, List, SelectListItem, TwoColumns} from "@weare/reapptor-react-components";
 
 export interface IListTestsState {
     multiSelect: boolean,

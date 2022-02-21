@@ -1,4 +1,4 @@
-import {AthenaeumConstants, GeoCoordinate} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, GeoCoordinate} from "@weare/reapptor-toolkit";
 
 export default class AthenaeumComponentsConstants extends AthenaeumConstants {
     

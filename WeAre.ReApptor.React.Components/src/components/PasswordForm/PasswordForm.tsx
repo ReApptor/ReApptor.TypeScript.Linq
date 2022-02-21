@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, PasswordValidationRule} from "@weare/athenaeum-react-common";
+import {BaseComponent, PasswordValidationRule} from "@weare/reapptor-react-common";
 import PasswordFormLocalizer from "./PasswordFormLocalizer";
 import {ValidationRow} from "../PasswordInput/LiveValidator/LiveValidator";
 import {IStringInputModel} from "../BaseInput/BaseInput";

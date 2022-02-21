@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseInputType} from "@weare/athenaeum-react-common";
+import {BaseInputType} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, LengthValidator, ValidatorCallback} from "../BaseInput/BaseInput";
 
 import styles from "./TextAreaInput.module.scss";

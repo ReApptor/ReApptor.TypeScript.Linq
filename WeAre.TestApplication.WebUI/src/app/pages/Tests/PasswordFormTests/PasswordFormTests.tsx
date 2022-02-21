@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import {PasswordForm, PasswordFormType} from "@weare/athenaeum-react-components";
+import {BaseComponent, DocumentPreviewSize} from "@weare/reapptor-react-common";
+import {PasswordForm, PasswordFormType} from "@weare/reapptor-react-components";
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;

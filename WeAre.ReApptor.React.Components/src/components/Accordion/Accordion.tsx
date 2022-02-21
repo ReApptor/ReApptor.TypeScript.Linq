@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/athenaeum-react-common";
-import { Utility } from "@weare/athenaeum-toolkit";
+import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/reapptor-react-common";
+import { Utility } from "@weare/reapptor-toolkit";
 import Icon, {IconSize} from "../Icon/Icon";
 
 import styles from "./Accordion.module.scss";

@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseClassNames} from "@weare/reapptor-react-common";
 import {ITab, ITabContainer, ITabContainerDefinition, TabContainerModel, TabModel, TabTransformer} from "./TabModel";
 import TabHeader, {ITabHeaderClassNames, TabContainerHeaderStyleType} from "./TabHeader/TabHeader";
 

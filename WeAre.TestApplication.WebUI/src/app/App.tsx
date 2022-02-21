@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
-import {AddressHelper, BannerPosition, ICookieConsentProps, Layout} from "@weare/athenaeum-react-components";
+import {BaseComponent, ch, UserInteractionDataStorage} from "@weare/reapptor-react-common";
+import {AddressHelper, BannerPosition, ICookieConsentProps, Layout} from "@weare/reapptor-react-components";
 import TestApplicationController from "./pages/TestApplicationController";
 
 class App extends BaseComponent {

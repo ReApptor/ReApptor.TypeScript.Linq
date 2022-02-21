@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseInputType} from "@weare/athenaeum-react-common";
+import {BaseInputType} from "@weare/reapptor-react-common";
 import BaseInput, {ValidatorCallback, IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import AutoSuggest, { AutoSuggestItem } from "./AutoSuggest/AutoSuggest";
 import TextInputLocalizer from "./TextInputLocalizer";

@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames} from "@weare/athenaeum-react-common";
+import {BaseComponent, IBaseClassNames} from "@weare/reapptor-react-common";
 import Icon from "../../Icon/Icon";
 import {ITabHeader, TabModel} from "../TabModel";
 import ConfirmationDialog from "../../ConfirmationDialog/ConfirmationDialog";

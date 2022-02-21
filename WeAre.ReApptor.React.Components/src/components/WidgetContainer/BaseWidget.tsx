@@ -1,6 +1,6 @@
 import React from "react";
-import {TFormat, Utility} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, LinkTarget, ReactUtility} from "@weare/athenaeum-react-common";
+import {TFormat, Utility} from "@weare/reapptor-toolkit";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseClassNames, LinkTarget, ReactUtility} from "@weare/reapptor-react-common";
 import Icon, {IconSize, IIconProps} from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import BaseWidgetContainer from "./BaseWidgetContainer";

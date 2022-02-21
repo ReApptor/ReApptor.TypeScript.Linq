@@ -1,8 +1,8 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {RouteWidget, WidgetContainer} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {RouteWidget, WidgetContainer} from "@weare/reapptor-react-components";
 import PageDefinitions from "../../PageDefinitions";
-import {TFormat, Utility} from "@weare/athenaeum-toolkit";
+import {TFormat, Utility} from "@weare/reapptor-toolkit";
 
 class TestNumberRouteWidget extends RouteWidget {
     protected get numberFormat(): TFormat {

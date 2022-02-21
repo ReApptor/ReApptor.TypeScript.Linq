@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {ButtonType, Form, OneColumn, QrInput, ThreeColumns, TwoColumns} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {ButtonType, Form, OneColumn, QrInput, ThreeColumns, TwoColumns} from "@weare/reapptor-react-components";
 
 
 

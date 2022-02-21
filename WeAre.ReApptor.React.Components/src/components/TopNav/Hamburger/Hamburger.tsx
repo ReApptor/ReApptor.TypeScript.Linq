@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import { IMenuItem } from "../TopNav";
 import Link from "../../Link/Link";
 

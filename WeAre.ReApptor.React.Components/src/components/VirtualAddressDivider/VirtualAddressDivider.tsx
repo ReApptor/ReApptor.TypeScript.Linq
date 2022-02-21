@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import TwoColumns from "../Layout.TwoColumns/TwoColumns";
 import TextInput from "../TextInput/TextInput";
 import { IInput } from "../BaseInput/BaseInput";

@@ -1,6 +1,6 @@
 import React from "react";
 import Icon, { IIconProps } from "../../Icon/Icon";
-import { BaseComponent, Justify } from "@weare/athenaeum-react-common";
+import { BaseComponent, Justify } from "@weare/reapptor-react-common";
 import styles from "../Icon.module.scss";
 
 export interface IIconActionProps {

@@ -1,5 +1,5 @@
 import BasePageParameters from "./BasePageParameters";
-import {ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
 
 export default class PageRoute {
 

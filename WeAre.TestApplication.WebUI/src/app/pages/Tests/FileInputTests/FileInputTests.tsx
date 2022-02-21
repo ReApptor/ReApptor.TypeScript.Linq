@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {AthenaeumComponentsConstants, Button, ButtonType, FileInput, TextInput, ThreeColumns} from "@weare/athenaeum-react-components";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {AthenaeumComponentsConstants, Button, ButtonType, FileInput, TextInput, ThreeColumns} from "@weare/reapptor-react-components";
+import {FileModel} from "@weare/reapptor-toolkit";
 
 export interface IFileInputTestsState {
     font: FileModel | null;

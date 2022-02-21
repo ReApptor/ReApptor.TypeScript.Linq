@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@weare/reapptor-react-common";
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";

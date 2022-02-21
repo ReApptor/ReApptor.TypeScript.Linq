@@ -1,10 +1,10 @@
 import React from "react";
-import {BaseComponent, ch, IGlobalClick} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch, IGlobalClick} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import QrWidgetLocalizer from "../QrWidget/QrWidgetLocalizer";
-import {Button, ButtonType, IIconProps} from "@weare/athenaeum-react-components";
+import {Button, ButtonType, IIconProps} from "@weare/reapptor-react-components";
 import styles from "./QrInput.module.scss";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 import QrInputLocalizer from "./QrInputLocalizer";
 
 export interface IQrInputProps {

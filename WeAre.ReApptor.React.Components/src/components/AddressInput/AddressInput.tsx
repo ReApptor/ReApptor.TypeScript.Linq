@@ -1,7 +1,7 @@
 import React from "react";
 import Autocomplete from "react-google-autocomplete";
-import {GeoLocation, Utility} from "@weare/athenaeum-toolkit";
-import {ch, BaseInputType} from "@weare/athenaeum-react-common";
+import {GeoLocation, Utility} from "@weare/reapptor-toolkit";
+import {ch, BaseInputType} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
 import LocationPickerModal from "../LocationPickerModal/LocationPickerModal";
 import AddressHelper, { GoogleApiResult } from "../../helpers/AddressHelper";

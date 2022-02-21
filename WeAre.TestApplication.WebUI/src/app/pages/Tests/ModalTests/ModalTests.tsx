@@ -1,7 +1,7 @@
 import React from "react";
-import {FileModel} from "@weare/athenaeum-toolkit";
-import {BaseComponent, ch, DocumentPreviewSize} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, Modal, ImageModal, ModalSize} from "@weare/athenaeum-react-components";
+import {FileModel} from "@weare/reapptor-toolkit";
+import {BaseComponent, ch, DocumentPreviewSize} from "@weare/reapptor-react-common";
+import {Button, Checkbox, Modal, ImageModal, ModalSize} from "@weare/reapptor-react-components";
 import {samplePdf} from './samplePdf';
 import {sampleImage} from './sampleImage';
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import {MarkerClusterer} from "@googlemaps/markerclusterer";
 
 import styles from "./GoogleMap.module.scss";

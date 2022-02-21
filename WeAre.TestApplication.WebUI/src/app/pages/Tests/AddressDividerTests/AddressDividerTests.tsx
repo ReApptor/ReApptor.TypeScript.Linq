@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {AddressDivider, AddressDividerColumns, AddressHelper, Button, ButtonType, Checkbox, Dropdown, DropdownOrderBy, Form, Inline, OneColumn, SelectListItem, TextInput, TwoColumns} from "@weare/athenaeum-react-components";
-import {GeoLocation} from "@weare/athenaeum-toolkit";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {AddressDivider, AddressDividerColumns, AddressHelper, Button, ButtonType, Checkbox, Dropdown, DropdownOrderBy, Form, Inline, OneColumn, SelectListItem, TextInput, TwoColumns} from "@weare/reapptor-react-components";
+import {GeoLocation} from "@weare/reapptor-toolkit";
 import {add} from "lodash";
 
 export interface IAddressDividerTestsState {

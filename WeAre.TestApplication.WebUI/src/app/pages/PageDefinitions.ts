@@ -1,4 +1,4 @@
-import {BasePageDefinitions, BasePageParameters, PageRoute} from "@weare/athenaeum-react-common";
+import {BasePageDefinitions, BasePageParameters, PageRoute} from "@weare/reapptor-react-common";
 import {Dictionary} from "typescript-collections";
 import Tests from "./Tests/Tests";
 import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";

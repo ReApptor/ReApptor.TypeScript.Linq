@@ -1,5 +1,5 @@
-import {GeoCoordinate, GeoLocation, Utility} from "@weare/athenaeum-toolkit";
-import {ApplicationContext, ch} from "@weare/athenaeum-react-common";
+import {GeoCoordinate, GeoLocation, Utility} from "@weare/reapptor-toolkit";
+import {ApplicationContext, ch} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;

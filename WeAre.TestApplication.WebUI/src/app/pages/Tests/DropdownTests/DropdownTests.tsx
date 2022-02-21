@@ -1,6 +1,6 @@
 import React from "react";
 import {Dictionary} from "typescript-collections";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
 import {
     Button,
     ButtonType,
@@ -21,7 +21,7 @@ import {
     SelectListItem,
     TextInput,
     TwoColumns
-} from "@weare/athenaeum-react-components";
+} from "@weare/reapptor-react-components";
 
 import styles from "./DropdownTests.module.scss";
 

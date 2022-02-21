@@ -1,5 +1,5 @@
 import Utility from "../Utility";
-import {TimeSpan} from "@weare/athenaeum-toolkit";
+import {TimeSpan} from "@weare/reapptor-toolkit";
 
 describe("getFileExtension", function() {    
     

@@ -1,6 +1,6 @@
 import React from "react";
 import {ReactElement} from "react";
-import {AthenaeumConstants} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants} from "@weare/reapptor-toolkit";
 
 export default class ReactUtility {
     

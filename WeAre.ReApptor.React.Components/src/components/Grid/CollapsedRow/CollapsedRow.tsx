@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import Cell from "../Cell/Cell";
 import {CellModel, ColumnModel, GridModel, RowModel} from "../GridModel";
 import GridLocalizer from "../GridLocalizer";

@@ -1,6 +1,6 @@
 import React from "react";
-import {FileModel} from "@weare/athenaeum-toolkit";
-import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/athenaeum-react-common";
+import {FileModel} from "@weare/reapptor-toolkit";
+import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
 

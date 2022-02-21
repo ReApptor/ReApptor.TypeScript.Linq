@@ -1,4 +1,4 @@
-import {BoolUtility, ISelectListItem, NumberUtility, StringUtility} from "@weare/athenaeum-toolkit";
+import {BoolUtility, ISelectListItem, NumberUtility, StringUtility} from "@weare/reapptor-toolkit";
 
 /**
  /* Represents the optgroup HTML element and its attributes.

@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 
 import "react-datepicker/dist/react-datepicker.css";

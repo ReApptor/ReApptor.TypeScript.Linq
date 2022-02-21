@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import FooterLocalizer from "./FooterLocalizer";
 
 import styles from "./Footer.module.scss";

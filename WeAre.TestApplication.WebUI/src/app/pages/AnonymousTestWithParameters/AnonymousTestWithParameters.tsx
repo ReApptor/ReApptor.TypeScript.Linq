@@ -1,6 +1,6 @@
 import React from "react";
-import {Button, PageContainer, PageHeader} from "@weare/athenaeum-react-components";
-import {BasePageParameters, ch, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {Button, PageContainer, PageHeader} from "@weare/reapptor-react-components";
+import {BasePageParameters, ch, PageRouteProvider} from "@weare/reapptor-react-common";
 import AnonymousPage from "../AnonymousPage";
 import Localizer from "../../../localization/Localizer";
 

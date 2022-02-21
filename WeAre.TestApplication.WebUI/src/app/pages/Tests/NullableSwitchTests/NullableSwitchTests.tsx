@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import { CheckboxNullable, SwitchNullable } from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import { CheckboxNullable, SwitchNullable } from "@weare/reapptor-react-components";
 
 export default class NullableSwitchTests extends BaseComponent {
 

@@ -1,5 +1,5 @@
 import {IIconProps} from "../Icon/Icon";
-import {DataStorageType, IBaseComponent, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
+import {DataStorageType, IBaseComponent, UserInteractionDataStorage} from "@weare/reapptor-react-common";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
 import React from "react";
 

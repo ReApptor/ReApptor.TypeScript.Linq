@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, ButtonType, ButtonContainer} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {Button, ButtonType, ButtonContainer} from "@weare/reapptor-react-components";
 
 interface IButtonTestsState {
 }

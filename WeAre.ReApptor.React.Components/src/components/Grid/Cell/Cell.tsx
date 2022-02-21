@@ -1,6 +1,6 @@
 import React from "react";
-import {GeoLocation, IEnumProvider, ServiceProvider, TFormat, Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility, TextAlign} from "@weare/athenaeum-react-common";
+import {GeoLocation, IEnumProvider, ServiceProvider, TFormat, Utility} from "@weare/reapptor-toolkit";
+import {BaseComponent, PageRouteProvider, ReactUtility, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
 import {CellAction, CellModel, CellPaddingType, ColumnAction, ColumnModel, ColumnSettings, ColumnType, GridAccessorCallback, GridHoveringType, GridModel, GridRouteCallback, GridTransformer, ICell, RowModel} from "../GridModel";
 import DropdownCell from "./DropdownCell/DropdownCell";
 import CellActionComponent from "./CellActionComponent/CellActionComponent";

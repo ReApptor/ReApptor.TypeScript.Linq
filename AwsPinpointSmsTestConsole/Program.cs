@@ -14,7 +14,6 @@ namespace AwsPinpointSmsTestConsole
                 Console.WriteLine("Send sms - start");
                 var awsPinpoint = new AwsPinpointSmsService(new AwsSettings
                 {
-                    //Profile = "dev-athenaeum",
                     AwsPinpointRegion = "eu-west-1",
                     AwsPinpointAppId = "e5d655865a594134994366c6a2e81151",
                     AwsPinpointSenderId = "DevWeAre"

@@ -1,5 +1,5 @@
 import React from "react";
-import {ActionType, ch, DescriptionModel, IConfirmation, BaseComponent} from "@weare/athenaeum-react-common";
+import {ActionType, ch, DescriptionModel, IConfirmation, BaseComponent} from "@weare/reapptor-react-common";
 import {CellAction, CellModel, ColumnAction, DescriptionCellAction, GridConfirmationDialogTitleCallback, ICellAction} from "../../GridModel";
 import Icon, {IIconProps} from "../../../Icon/Icon";
 import Button from "../../../Button/Button";

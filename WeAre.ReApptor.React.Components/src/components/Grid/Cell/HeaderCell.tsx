@@ -1,6 +1,6 @@
 import React from "react";
-import {SortDirection} from "@weare/athenaeum-toolkit";
-import {BaseComponent, StylesUtility, TextAlign, VerticalAlign} from "@weare/athenaeum-react-common";
+import {SortDirection} from "@weare/reapptor-toolkit";
+import {BaseComponent, StylesUtility, TextAlign, VerticalAlign} from "@weare/reapptor-react-common";
 import {ColumnModel, ColumnType, GridModel, GridTransformer, IHeaderCell} from "../GridModel";
 import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
 import GridLocalizer from "../GridLocalizer";

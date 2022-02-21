@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, ch, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch, PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
 import {IBaseWidget, IBaseWidgetProps} from "../WidgetContainer/BaseWidget";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 

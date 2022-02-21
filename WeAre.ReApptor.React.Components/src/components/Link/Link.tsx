@@ -1,6 +1,6 @@
 import React from "react";
-import {PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 
 import styles from "./Link.module.scss";
 

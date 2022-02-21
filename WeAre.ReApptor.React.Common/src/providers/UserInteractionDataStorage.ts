@@ -1,4 +1,4 @@
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 import ApplicationContext from "../models/ApplicationContext";
 import {IBasePage} from "../base/BasePage";

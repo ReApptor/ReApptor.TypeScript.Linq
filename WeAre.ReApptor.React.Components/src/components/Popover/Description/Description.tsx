@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, DescriptionModel} from "@weare/athenaeum-react-common";
+import {BaseComponent, DescriptionModel} from "@weare/reapptor-react-common";
 import Form from "../../Form/Form";
 import ButtonContainer from "../../ButtonContainer/ButtonContainer";
 import Button, {ButtonType} from "../../Button/Button";

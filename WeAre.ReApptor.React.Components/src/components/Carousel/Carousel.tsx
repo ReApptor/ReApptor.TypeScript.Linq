@@ -1,8 +1,8 @@
 import React, {CSSProperties, ReactElement} from "react";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
 import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {Navigation, Pagination} from "swiper";
-import {assert, IBaseAsserter} from "@weare/athenaeum-toolkit";
+import {assert, IBaseAsserter} from "@weare/reapptor-toolkit";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
 
 

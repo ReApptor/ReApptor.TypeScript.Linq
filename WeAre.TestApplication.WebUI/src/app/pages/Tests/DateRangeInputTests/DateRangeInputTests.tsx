@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Form, DateRangeInput, OneColumn, Checkbox, DateInput, DateRangeInputValue, Button} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {Form, DateRangeInput, OneColumn, Checkbox, DateInput, DateRangeInputValue, Button} from "@weare/reapptor-react-components";
 
 export interface IDateRangeInputTestsState {
     expanded: boolean;

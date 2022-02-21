@@ -1,7 +1,7 @@
 import React, {ChangeEvent, DragEvent, LegacyRef, RefObject} from 'react';
 import Cropper, {ReactCropperElement} from 'react-cropper';
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {FileModel} from "@weare/reapptor-toolkit";
 import Button, {ButtonType} from "../Button/Button";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";

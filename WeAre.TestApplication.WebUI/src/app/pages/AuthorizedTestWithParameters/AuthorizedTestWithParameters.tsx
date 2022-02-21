@@ -1,6 +1,6 @@
 import React from "react";
-import { PageContainer, PageHeader } from "@weare/athenaeum-react-components";
-import {BasePageParameters, IBasePageProps} from "@weare/athenaeum-react-common";
+import { PageContainer, PageHeader } from "@weare/reapptor-react-components";
+import {BasePageParameters, IBasePageProps} from "@weare/reapptor-react-common";
 import AuthorizedPage from "../AuthorizedPage";
 
 

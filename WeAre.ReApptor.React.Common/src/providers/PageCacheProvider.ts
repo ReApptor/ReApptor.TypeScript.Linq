@@ -4,7 +4,7 @@
 
 import {Mutex} from "async-mutex";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 import ch from "./ComponentHelper";
 
 class PageCacheProviderContainer {

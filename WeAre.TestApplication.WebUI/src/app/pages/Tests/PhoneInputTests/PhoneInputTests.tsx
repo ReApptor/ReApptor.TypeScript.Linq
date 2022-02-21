@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Form, PhoneInput} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {Form, PhoneInput} from "@weare/reapptor-react-components";
 
 interface IPhoneInputTestsState {
 }

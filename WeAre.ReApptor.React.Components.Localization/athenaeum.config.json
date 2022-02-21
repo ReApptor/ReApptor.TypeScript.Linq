@@ -4,14 +4,14 @@
     "destinationPath": "$(ProjectDir)/src/ComponentsLocalizer.ts",
     "type": "0",
     "neutralLanguage": "en",
-    "import": "import {BaseComponentsLocalizer} from \"@weare/athenaeum-react-common\";",
+    "import": "import {BaseComponentsLocalizer} from \"@weare/reapptor-react-common\";",
     "baseClassName": "BaseComponentsLocalizer"
   }, {
     "neutralResourcePath": "$(ProjectDir)/resources/SharedResources.resx",
     "destinationPath": "$(ProjectDir)/../WeAre.ReApptor.React.Components/src/components/$(COMPONENT_FULL_NAME)/$(COMPONENT_NAME)Localizer.ts",
     "type": "0",
     "neutralLanguage": "en",
-    "import": "import {BaseComponentLocalizer} from \"@weare/athenaeum-react-common\";",
+    "import": "import {BaseComponentLocalizer} from \"@weare/reapptor-react-common\";",
     "baseClassName": "BaseComponentLocalizer",
     "exclude": ["Month.*", "DayOfWeek.*"]
   }]

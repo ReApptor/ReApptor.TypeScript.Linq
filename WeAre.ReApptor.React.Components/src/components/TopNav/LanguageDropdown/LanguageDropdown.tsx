@@ -1,6 +1,6 @@
 import React from "react";
-import {ILanguage} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IGlobalClick} from "@weare/athenaeum-react-common";
+import {ILanguage} from "@weare/reapptor-toolkit";
+import {BaseComponent, IGlobalClick} from "@weare/reapptor-react-common";
 
 import styles from "./LanguageDropdown.module.scss";
 

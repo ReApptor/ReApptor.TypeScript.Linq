@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import { WidgetContainer, LinkWidget, IconSize } from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import { WidgetContainer, LinkWidget, IconSize } from "@weare/reapptor-react-components";
 
 export default class LinkWidgetTests extends BaseComponent {
 

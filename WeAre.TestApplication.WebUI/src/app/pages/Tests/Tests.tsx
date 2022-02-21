@@ -1,5 +1,5 @@
 import React from "react";
-import {Checkbox, InlineType, PageContainer, PageHeader, PageRow, Tab, TabContainer, TabContainerHeaderStyleType, TabRenderType} from "@weare/athenaeum-react-components";
+import {Checkbox, InlineType, PageContainer, PageHeader, PageRow, Tab, TabContainer, TabContainerHeaderStyleType, TabRenderType} from "@weare/reapptor-react-components";
 
 import CarouselTests from "./CarouselTests/CarouselTests";
 import AnonymousPage from "../AnonymousPage";

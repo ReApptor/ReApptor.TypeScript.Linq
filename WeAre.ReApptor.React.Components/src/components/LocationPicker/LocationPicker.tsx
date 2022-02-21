@@ -1,6 +1,6 @@
 import React from "react";
-import {GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
+import {GeoLocation, GeoCoordinate} from "@weare/reapptor-toolkit";
+import {BaseComponent, IBaseComponent} from "@weare/reapptor-react-common";
 import Comparator from "../../helpers/Comparator";
 import AddressHelper from "../../helpers/AddressHelper";
 import AddressInput from "../AddressInput/AddressInput";

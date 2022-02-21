@@ -33,13 +33,13 @@ example :
 
 
 
-## @weare/athenaeum-react-components
+## @weare/reapptor-react-components
 ./WeAre.ReApptor.React.Components
 
 
-latest version: `npm show @weare/athenaeum-react-components version`
+latest version: `npm show @weare/reapptor-react-components version`
 
-`npm install @weare/athenaeum-react-components@latest`
+`npm install @weare/reapptor-react-components@latest`
 
 ### [1.0.638] - 2021-04-27
 
@@ -91,12 +91,12 @@ latest version: `npm show @weare/athenaeum-react-components version`
 
 
 
-## @weare/athenaeum-react-common
+## @weare/reapptor-react-common
 ./WeAre.ReApptor.Common
 
-latest version: `npm show @weare/athenaeum-react-common version`
+latest version: `npm show @weare/reapptor-react-common version`
 
-`npm install @weare/athenaeum-react-common@latest`
+`npm install @weare/reapptor-react-common@latest`
 
 
 ### [1.0.649] - 2021-04-30
@@ -113,10 +113,10 @@ outerWidth method added to BaseComponent
 
 
 
-## @weare/athenaeum-toolkit
+## @weare/reapptor-toolkit
 ./WeAre.ReApptor.React.Toolkit
 
-latest version: `npm show @weare/athenaeum-toolkit version`
+latest version: `npm show @weare/reapptor-toolkit version`
 
-`npm install @weare/athenaeum-toolkit@latest`
+`npm install @weare/reapptor-toolkit@latest`
 

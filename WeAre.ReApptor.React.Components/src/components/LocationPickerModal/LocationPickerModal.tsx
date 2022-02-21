@@ -1,6 +1,6 @@
 import React from "react";
-import {GeoLocation} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IBaseComponent} from "@weare/athenaeum-react-common";
+import {GeoLocation} from "@weare/reapptor-toolkit";
+import {BaseComponent, IBaseComponent} from "@weare/reapptor-react-common";
 import LocationPicker from "../LocationPicker/LocationPicker";
 import Modal from "../Modal/Modal";
 import AddressHelper from "../../helpers/AddressHelper";

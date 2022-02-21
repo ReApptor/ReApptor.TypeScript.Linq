@@ -1,5 +1,5 @@
 import React from "react";
-import {INumberFormat, NumberParsingResult, NumberUtility, TFormat, Utility} from "@weare/athenaeum-toolkit";
+import {INumberFormat, NumberParsingResult, NumberUtility, TFormat, Utility} from "@weare/reapptor-toolkit";
 import BaseInput, {IBaseInputProps, IBaseInputState, NumberRangeValidator, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IIconProps} from "../Icon/Icon";
 

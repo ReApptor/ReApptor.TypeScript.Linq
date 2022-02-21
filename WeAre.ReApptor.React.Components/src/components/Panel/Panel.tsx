@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, DataStorageType, UserInteractionDataStorage} from "@weare/athenaeum-react-common";
+import {BaseComponent, DataStorageType, UserInteractionDataStorage} from "@weare/reapptor-react-common";
 
 import styles from "./Panel.module.scss";
 
