@@ -34,7 +34,7 @@ example :
 
 
 ## @weare/athenaeum-react-components
-./WeAre.Athenaeum.React.Components
+./WeAre.ReApptor.React.Components
 
 
 latest version: `npm show @weare/athenaeum-react-components version`
@@ -92,7 +92,7 @@ latest version: `npm show @weare/athenaeum-react-components version`
 
 
 ## @weare/athenaeum-react-common
-./WeAre.Athenaeum.Common
+./WeAre.ReApptor.Common
 
 latest version: `npm show @weare/athenaeum-react-common version`
 
@@ -114,7 +114,7 @@ outerWidth method added to BaseComponent
 
 
 ## @weare/athenaeum-toolkit
-./WeAre.Athenaeum.React.Toolkit
+./WeAre.ReApptor.React.Toolkit
 
 latest version: `npm show @weare/athenaeum-toolkit version`
 

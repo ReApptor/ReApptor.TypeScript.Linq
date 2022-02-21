@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WeAre.Athenaeum.Services.Sms\WeAre.Athenaeum.Services.Sms.csproj" />
+      <ProjectReference Include="..\WeAre.ReApptor.Services.Sms\WeAre.ReApptor.Services.Sms.csproj" />
     </ItemGroup>
 
 </Project>

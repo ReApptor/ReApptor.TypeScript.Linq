@@ -2,7 +2,7 @@ npm install -g @microsoft/api-extractor
 npm install -g @microsoft/api-documenter
 
 mkdir input
-cd ../WeAre.Athenaeum.React.Toolkit/
+cd ../WeAre.ReApptor.React.Toolkit/
 npm install
 npm run build
 mkdir ./etc
@@ -12,7 +12,7 @@ rm -r ./etc
 rm -r ./temp
 rm -r ./dist
 
-cd ../WeAre.Athenaeum.React.Common/
+cd ../WeAre.ReApptor.React.Common/
 npm install
 npm run build
 mkdir ./etc
