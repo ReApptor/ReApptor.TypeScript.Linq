@@ -1,5 +1,5 @@
 {
-  "npmScope": "renta-components",
+  "npmScope": "reapptor-components",
   "affected": {
     "defaultBase": "master"
   },
@@ -27,16 +27,19 @@
     ]
   },
   "projects": {
-    "Renta.TestApplication.WebUI": {
+    "WeAre.TestApplication.WebUI": {
       "tags": []
     },
-    "WeAre.Athenaeum.React.Common": {
+    "WeAre.ReApptor.React.Components.Localization": {
       "tags": []
     },
-    "WeAre.Athenaeum.React.Components": {
+    "WeAre.ReApptor.React.Components": {
       "tags": []
     },
-    "WeAre.Athenaeum.React.Toolkit": {
+    "WeAre.ReApptor.React.Common": {
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Toolkit": {
       "tags": []
     }
   }

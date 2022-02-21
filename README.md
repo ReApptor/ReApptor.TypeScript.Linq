@@ -12,7 +12,7 @@ This project was generated using [Nx](https://nx.dev) Extensible Build Framework
 
 ## Development server
 
-Run `npm run Start:Renta.TestApplication.WebUI` for a dev server.
+Run `npm run Start:WeAre.TestApplication.WebUI` for a dev server.
 
 ## Generate an application
 
@@ -29,15 +29,15 @@ Run `npx nx g @nrwl/react:lib my-lib` to generate a library.
 
 ## Code scaffolding
 
-Run `nx g @nrwl/react:component my-component --project=Renta.TestApplication.WebUI` to generate a new component.
+Run `nx g @nrwl/react:component my-component --project=WeAre.TestApplication.WebUI` to generate a new component.
 
 ## Build
 
-Run `npm run Build:Renta.TestApplication.WebUI` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run Build:WeAre.TestApplication.WebUI` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 
-Run `npm run Test:Renta.TestApplication.WebUI` to execute the unit tests via [Jest](https://jestjs.io).
+Run `npm run Test:WeAre.TestApplication.WebUI` to execute the unit tests via [Jest](https://jestjs.io).
 
 ## Understand your workspace
 
@@ -104,7 +104,7 @@ Please refer to [`CHANGELOG.md`](CHANGELOG.md) to see the complete list of chang
 3. we added `post-install.js` to add `ts-nameof` to rollup configuration generator. It will run automatically after `npm install` 
 
 
-4. we added `extra-webpack.js` to add support of fonts to React applications. currently only for `Renta.TestApplication.WebUI`. 
+4. we added `extra-webpack.js` to add support of fonts to React applications. currently only for `WeAre.TestApplication.WebUI`. 
 we just push a plugin to the nx original webpack setting `@nrwl/react/plugins/webpack.js`   
 To enable it  we need to add this to 
 

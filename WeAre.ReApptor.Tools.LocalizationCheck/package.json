@@ -1,0 +1,54 @@
+{
+  "name": "@weare/localization-check",
+  "version": "1.0.0",
+  "private": false,
+  "description": "",
+  "type": "commonjs",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "bin": {
+    "weare-check-localization": "./lib/cjs/index.js"
+  },
+  "scripts": {
+    "start": "ts-node --project tsconfig-tsnode.json src/index.ts",
+    "start:watch": "nodemon --ext '.' --watch 'src' --exec 'npm run start'",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w"
+  },
+  "keywords": [
+    "weare",
+    "reapptor",
+    "components",
+    "react",
+    "typescript",
+    "npm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "escalade": "^3.1.1",
+    "getopts": "^2.3.0",
+    "interpret": "^2.2.0",
+    "rechoir": "^0.7.0",
+    "resx": "^2.0.3",
+    "rollup-plugin-preserve-shebangs": "^0.2.0",
+    "tslib": "^2.1.0"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@types/interpret": "^1.1.1",
+    "@types/node": "^14.14.31",
+    "@types/rechoir": "^0.6.1",
+    "@types/resx": "^2.0.0",
+    "nodemon": "^2.0.7",
+    "rollup": "^2.39.0",
+    "rollup-plugin-typescript2": "^0.28.0",
+    "ts-node": "^9.1.1",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.2.2"
+  }
+}

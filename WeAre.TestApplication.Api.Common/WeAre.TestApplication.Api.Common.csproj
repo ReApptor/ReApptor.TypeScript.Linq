@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Copyright>Copyright © 2020, WeAre Solutions Oy</Copyright>
+        <Company>WeAre Solutions Oy</Company>
+        <Product>ReApptor Components</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+</Project>
