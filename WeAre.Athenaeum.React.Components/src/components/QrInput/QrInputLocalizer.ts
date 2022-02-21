@@ -24,7 +24,7 @@ class QrInputLocalizer extends BaseComponentLocalizer {
             "en");
         
         //Initializer
-        this.set(this.buttonCloseLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `\nЗакрити` }, { language: `sv`, value: `\nStänga` }, { language: `ru`, value: `Закрывать` }, { language: `pl`, value: `\nBlisko` }, { language: `nb`, value: `Lukk` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Tæt` },);
+        this.set(this.buttonCloseLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `\nЗакрити` }, { language: `sv`, value: `Stänga` }, { language: `ru`, value: `Закрывать` }, { language: `pl`, value: `\nBlisko` }, { language: `nb`, value: `Lukk` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Tæt` },);
         this.set(this.buttonLabelLanguageItemName, { language: `en`, value: `Qr code` }, { language: `sv`, value: `Qr-kod` }, { language: `pl`, value: `Kod Qr` }, { language: `nb`, value: `QR kode` }, { language: `fi`, value: `Qr-koodi` }, { language: `da`, value: `Qr-kode` },);
     }
 
