@@ -7,14 +7,14 @@ pipelines:
     master: # Pipelines that will be triggered automatically
       - parallel:
           - step:
-              name: Athenaeum React Toolkit Build
+              name: ReApptor React Toolkit Build
               image: node:14
               caches:
                 - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Toolkit
+                - cd WeAre.ReApptor.React.Toolkit
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -43,16 +43,16 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
               artifacts:
-                - WeAre.Athenaeum.React.Toolkit/temp/**
+                - WeAre.ReApptor.React.Toolkit/temp/**
           - step:
-              name: Athenaeum React Common Build
+              name: ReApptor React Common Build
               image: node:14
               caches:
                 - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Common
+                - cd WeAre.ReApptor.React.Common
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -67,7 +67,7 @@ pipelines:
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Change toolkit version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.Athenaeum.React.Toolkit
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Toolkit
                 # Run build
                 - npm run build
                 # Create documentation
@@ -83,16 +83,16 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
               artifacts:
-                - WeAre.Athenaeum.React.Common/temp/**
+                - WeAre.ReApptor.React.Common/temp/**
           - step:
-              name: Athenaeum React Components Localization Build
+              name: ReApptor React Components Localization Build
               image: node:14
               caches:
                 - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Components.Localization
+                - cd WeAre.ReApptor.React.Components.Localization
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -121,14 +121,14 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Athenaeum React Components Build
+              name: ReApptor React Components Build
               image: node:14
               caches:
                 - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Components
+                - cd WeAre.ReApptor.React.Components
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -144,9 +144,9 @@ pipelines:
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
                 # Change toolkit version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.Athenaeum.React.Toolkit
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Toolkit
                 # Change common version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.Athenaeum.React.Common
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Common
                 # Run build
                 - npm run build
                 ## Create documentation
@@ -163,41 +163,41 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: Athenaeum Toolkit Build
+              name: ReApptor Toolkit Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Toolkit/WeAre.Athenaeum.Toolkit.csproj -o obj/weare-athenaeum-toolkit/publish
-                - dotnet nuget push obj/weare-athenaeum-toolkit/publish/WeAre.Athenaeum.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Toolkit/WeAre.ReApptor.Toolkit.csproj -o obj/weare-reapptor-toolkit/publish
+                - dotnet nuget push obj/weare-reapptor-toolkit/publish/WeAre.ReApptor.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
-              name: Athenaeum Redis Build
+              name: ReApptor Redis Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.Cache/WeAre.Athenaeum.Services.Cache.csproj -o obj/weare-athenaeum-cache/publish
-                - dotnet nuget push obj/weare-athenaeum-cache/publish/WeAre.Athenaeum.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Cache/WeAre.ReApptor.Services.Cache.csproj -o obj/weare-reapptor-cache/publish
+                - dotnet nuget push obj/weare-reapptor-cache/publish/WeAre.ReApptor.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
-              name: Athenaeum Sms Build
+              name: ReApptor Sms Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.Sms/WeAre.Athenaeum.Services.Sms.csproj -o obj/weare-athenaeum-sms/publish
-                - dotnet nuget push obj/weare-athenaeum-sms/publish/WeAre.Athenaeum.Services.Sms.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Sms/WeAre.ReApptor.Services.Sms.csproj -o obj/weare-reapptor-sms/publish
+                - dotnet nuget push obj/weare-reapptor-sms/publish/WeAre.ReApptor.Services.Sms.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
-              name: Athenaeum ACM Build
+              name: ReApptor ACM Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Services.ACM/WeAre.Athenaeum.Services.ACM.csproj -o obj/weare-athenaeum-acm/publish
-                - dotnet nuget push obj/weare-athenaeum-acm/publish/WeAre.Athenaeum.Services.ACM.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.ACM/WeAre.ReApptor.Services.ACM.csproj -o obj/weare-reapptor-acm/publish
+                - dotnet nuget push obj/weare-reapptor-acm/publish/WeAre.ReApptor.Services.ACM.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: UI Toolkit Tests
               image: node:14
@@ -205,28 +205,28 @@ pipelines:
                 - node
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.React.Toolkit
+                - cd WeAre.ReApptor.React.Toolkit
                 - node -v && npm -v
                 - npm install --prefix ..
                 - npm test
           - step:
-              name: WeAre Athenaeum Common Build
+              name: WeAre ReApptor Common Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Common/WeAre.Athenaeum.Common.csproj -o obj/weare-athenaeum-common/publish
-                - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.Athenaeum.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Common/WeAre.ReApptor.Common.csproj -o obj/weare-reapptor-common/publish
+                - dotnet nuget push obj/weare-reapptor-common/publish/WeAre.ReApptor.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
-              name: WeAre Athenaeum Tools Localization Check CLI Build
+              name: WeAre ReApptor Tools Localization Check CLI Build
               image: node:14
               caches:
                 - node
               script:
                 # Update npm settings
                 - echo $BITBUCKET_BUILD_NUMBER
-                - cd WeAre.Athenaeum.Tools.LocalizationCheck
+                - cd WeAre.ReApptor.Tools.LocalizationCheck
                 - node -v && npm -v
                 - npm config set strict-ssl true
                 - npm config set ca ""
@@ -255,23 +255,23 @@ pipelines:
                 # Publish to MyGet
                 - npm publish
           - step:
-              name: WeAre Athenaeum Tools CodeGenerator
+              name: WeAre ReApptor Tools CodeGenerator
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Athenaeum.Tools.CodeGenerator/WeAre.Athenaeum.Tools.CodeGenerator.csproj -o obj/weare-athenaeum-tools-codegenerator/publish
-                - dotnet nuget push obj/weare-athenaeum-tools-codegenerator/publish/WeAre.Athenaeum.Tools.CodeGenerator.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Tools.CodeGenerator/WeAre.ReApptor.Tools.CodeGenerator.csproj -o obj/weare-reapptor-tools-codegenerator/publish
+                - dotnet nuget push obj/weare-reapptor-tools-codegenerator/publish/WeAre.ReApptor.Tools.CodeGenerator.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
-              name: Renta Apps Common Build
+              name: WeAre Apps Common Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
               caches:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./Renta.Apps.Common/Renta.Apps.Common.csproj -o obj/reapptor-apps-common/publish
-                - dotnet nuget push obj/reapptor-apps-common/publish/Renta.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Apps.Common/WeAre.Apps.Common.csproj -o obj/reapptor-apps-common/publish
+                - dotnet nuget push obj/reapptor-apps-common/publish/WeAre.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
       - step:
           name: Build Documentation
           image: node:14
@@ -284,8 +284,8 @@ pipelines:
             - npm install -g @microsoft/api-documenter
             - cd Documentation
             - mkdir input
-            - cp -a ../WeAre.Athenaeum.React.Toolkit/temp/. ./input/
-            - cp -a ../WeAre.Athenaeum.React.Common/temp/. ./input/
+            - cp -a ../WeAre.ReApptor.React.Toolkit/temp/. ./input/
+            - cp -a ../WeAre.ReApptor.React.Common/temp/. ./input/
             - api-documenter markdown -i ./input/ -o ./docs/
             - cp index.html ./docs/index.html
             - mv ./docs/index.md ./docs/README.md

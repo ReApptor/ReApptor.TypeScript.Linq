@@ -51,7 +51,7 @@
   "TOKEN_SECURITY_KEY": "123-456-789-abc-def-ghi",
   "TOKEN_ISSUER": "https://www.weare.fi",
   //SMS
-  "SMS_USER": "renta",
+  "SMS_USER": "weare",
   "SMS_PASSWORD": "B4UgE5ewrupe",
   "SMS_URL": "http://gw.labyrintti.com:28080/",
   "SMS_WHITELIST_NUMBERS": "",

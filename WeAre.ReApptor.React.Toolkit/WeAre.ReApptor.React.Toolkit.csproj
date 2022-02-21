@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Module</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0.0</Version>
+        <PackageVersion>1.0.0.0</PackageVersion>
+        <Copyright>Copyright © 2020, WeAre Solutions Oy</Copyright>
+        <Product>ReApptor Components</Product>
+        <Authors>WeAre Solutions Oy</Authors>
+        <Company>WeAre Solutions Oy</Company>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="src\ArrayUtility.ts" />
+      <TypeScriptCompile Include="src\AthenaeumConstants.ts" />
+      <TypeScriptCompile Include="src\BoolUtility.ts" />
+      <TypeScriptCompile Include="src\DateUtility.ts" />
+      <TypeScriptCompile Include="src\extensions\ArrayExtensions.ts" />
+      <TypeScriptCompile Include="src\extensions\DateExtensions.ts" />
+      <TypeScriptCompile Include="src\extensions\NumberExtensions.ts" />
+      <TypeScriptCompile Include="src\extensions\StringExtensions.ts" />
+      <TypeScriptCompile Include="src\HashCodeUtility.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\Assert.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IArrayAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IBaseAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IBigIntAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IBooleanAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyArrayAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyStringAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IUnknownAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\INumberAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeNullObjectAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IObjectAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\Asserter\IStringAsserter.ts" />
+      <TypeScriptCompile Include="src\helpers\PwaHelper.ts" />
+      <TypeScriptCompile Include="src\localization\BaseLocalizer.ts" />
+      <TypeScriptCompile Include="src\models\FileModel.ts" />
+      <TypeScriptCompile Include="src\models\GeoCoordinate.ts" />
+      <TypeScriptCompile Include="src\models\GeoLocation.ts" />
+      <TypeScriptCompile Include="src\models\ISelectListItem.ts" />
+      <TypeScriptCompile Include="src\models\IPagedList.ts" />
+      <TypeScriptCompile Include="src\models\Position.ts" />
+      <TypeScriptCompile Include="src\models\TimeSpan.ts" />
+      <TypeScriptCompile Include="src\NumberUtility.ts" />
+      <TypeScriptCompile Include="src\providers\BaseEnumProvider.ts" />
+      <TypeScriptCompile Include="src\providers\BaseTransformProvider.ts" />
+      <TypeScriptCompile Include="src\providers\ServiceProvider.ts" />
+      <TypeScriptCompile Include="src\providers\Singleton.ts" />
+      <TypeScriptCompile Include="src\providers\StringConverter.ts" />
+      <TypeScriptCompile Include="src\providers\TypeConverter.ts" />
+      <TypeScriptCompile Include="src\providers\TypeResolver.ts" />
+      <TypeScriptCompile Include="src\StringUtility.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.getService.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.spec.ts" />
+      <TypeScriptCompile Include="src\tests\StringConverter.toString.spec.ts" />
+      <TypeScriptCompile Include="src\tests\TypeConverter.toTitle.spec.ts" />
+      <TypeScriptCompile Include="src\tests\TypeResolver.resove.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.copyTo.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.getFileExtension.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
+      <TypeScriptCompile Include="src\Utility.ts" />
+      <TypeScriptCompile Include="src\index.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="lib\**" />
+      <Compile Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="lib\**" />
+      <EmbeddedResource Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="lib\**" />
+      <None Remove="package-lock.json" />
+      <None Remove=".babelrc" />
+      <None Remove=".eslintrc.json" />
+      <None Remove="dist\**" />
+    </ItemGroup>
+
+</Project>

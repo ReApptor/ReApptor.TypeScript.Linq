@@ -15,14 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@weare/athenaeum-react-common": [
-        "WeAre.Athenaeum.React.Common/src/index.ts"
+      "@weare/reapptor-react-common": [
+        "WeAre.ReApptor.React.Common/src/index.ts"
       ],
-      "@weare/athenaeum-react-components": [
-        "WeAre.Athenaeum.React.Components/src/index.ts"
+      "@weare/reapptor-react-components": [
+        "WeAre.ReApptor.React.Components/src/index.ts"
       ],
-      "@weare/athenaeum-toolkit": [
-        "WeAre.Athenaeum.React.Toolkit/src/index.ts"
+      "@weare/reapptor-toolkit": [
+        "WeAre.ReApptor.React.Toolkit/src/index.ts"
       ]
     }
   },

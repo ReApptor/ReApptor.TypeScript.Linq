@@ -22,10 +22,11 @@ function getRollupOptions(options) {
         const className = file.split(".module.scss")[0];
 
         const kebabCaseClassName = className
-          .replace(/([a-z])([A-Z])/g, "$1-$2")
-          .replace(/[\s_]+/g, "-")
-          .toLowerCase();
+            .replace(/([a-z])([A-Z])/g, "$1-$2")
+            .replace(/[\s_]+/g, "-")
+            .toLowerCase();
 
+        // The styles prefix is "athenaeum"
         return `athenaeum-${kebabCaseClassName}-${name}`;
       },
     },
@@ -37,4 +38,5 @@ function getRollupOptions(options) {
 
   return originalProcessed;
 }
+
 module.exports = getRollupOptions;
