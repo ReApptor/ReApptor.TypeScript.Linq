@@ -1,15 +1,9 @@
 module.exports = {
-    globals: {
-        "ts-jest": {
-            "astTransformers": {
-                before: ["ts-nameof"]
-            }
-        }
-    },
-    roots: ['<rootDir>/src'],
+    displayName: 'WeAre.ReApptor.React.Components',
+    preset: '../jest.preset.js',
     transform: {
-        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.[tj]sx?$': 'babel-jest',
     },
-    testRegex: '(/__tests__/.*|(\\.|/)(test))\\.tsx?$',
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
-}
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+    coverageDirectory: '../coverage/libs/WeAre.ReApptor.React.Components.Localization'
+};

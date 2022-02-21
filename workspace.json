@@ -82,24 +82,24 @@
         }
       }
     },
-    "WeAre.ReApptor.React.Common": {
-      "root": "WeAre.ReApptor.React.Common",
-      "sourceRoot": "WeAre.ReApptor.React.Common/src",
+    "WeAre.ReApptor.React.Components.Localization": {
+      "root": "WeAre.ReApptor.React.Components.Localization",
+      "sourceRoot": "WeAre.ReApptor.React.Components.Localization/src",
       "projectType": "library",
       "targets": {
         "build": {
           "executor": "@nrwl/web:package",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "WeAre.ReApptor.React.Common/dist",
-            "tsConfig": "WeAre.ReApptor.React.Common/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Common/package.json",
-            "entryFile": "WeAre.ReApptor.React.Common/src/index.ts",
+            "outputPath": "WeAre.ReApptor.React.Components.Localization/dist",
+            "tsConfig": "WeAre.ReApptor.React.Components.Localization/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Components.Localization/package.json",
+            "entryFile": "WeAre.ReApptor.React.Components.Localization/src/index.ts",
             "external": ["react/jsx-runtime"],
             "rollupConfig": "./extra-rollup",
             "assets": [
               {
-                "glob": "WeAre.ReApptor.React.Common/README.md",
+                "glob": "WeAre.ReApptor.React.Components.Localization/README.md",
                 "input": ".",
                 "output": "."
               }
@@ -110,15 +110,15 @@
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "WeAre.ReApptor.React.Common/**/*.{ts,tsx,js,jsx}"
+              "WeAre.ReApptor.React.Components.Localization/**/*.{ts,tsx,js,jsx}"
             ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.ReApptor.React.Common"],
+          "outputs": ["coverage/WeAre.ReApptor.React.Components.Localization"],
           "options": {
-            "jestConfig": "WeAre.ReApptor.React.Common/jest.config.js",
+            "jestConfig": "WeAre.ReApptor.React.Components.Localization/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -164,6 +164,48 @@
           "outputs": ["coverage/WeAre.ReApptor.React.Components"],
           "options": {
             "jestConfig": "WeAre.ReApptor.React.Components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "WeAre.ReApptor.React.Common": {
+      "root": "WeAre.ReApptor.React.Common",
+      "sourceRoot": "WeAre.ReApptor.React.Common/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "WeAre.ReApptor.React.Common/dist",
+            "tsConfig": "WeAre.ReApptor.React.Common/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Common/package.json",
+            "entryFile": "WeAre.ReApptor.React.Common/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "WeAre.ReApptor.React.Common/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "WeAre.ReApptor.React.Common/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/WeAre.ReApptor.React.Common"],
+          "options": {
+            "jestConfig": "WeAre.ReApptor.React.Common/jest.config.js",
             "passWithNoTests": true
           }
         }
