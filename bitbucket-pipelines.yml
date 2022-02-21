@@ -121,8 +121,6 @@ pipelines:
                 - npm pack
                 # Publish to MyGet
                 - npm publish
-                artifacts:
-                  - WeAre.ReApptor.React.Components.Localization/temp/**
           - step:
               name: ReApptor React Components Build
               image: node:14
