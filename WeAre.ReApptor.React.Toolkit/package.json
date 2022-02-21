@@ -1,5 +1,6 @@
 {
   "name": "@weare/reapptor-toolkit",
+  "license": "UNLICENSED",
   "version": "0.0.1",
   "scripts": {
     "build": "npm run Build:WeAre.ReApptor.React.Toolkit --prefix ..",

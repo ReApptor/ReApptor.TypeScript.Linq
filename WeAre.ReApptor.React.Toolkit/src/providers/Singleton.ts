@@ -3,7 +3,7 @@ import {Dictionary} from "typescript-collections";
 type Data = Dictionary<string, any>;
 
 interface IWindowContainer {
-    __athenaeumSingletonData?: Data;
+    __reApptorSingletonData?: Data;
 }
 
 class Singleton {
@@ -12,7 +12,7 @@ class Singleton {
     private getData(): Data {
         if (this._data == null) {
             const container: IWindowContainer = window as IWindowContainer;
-            this._data = container.__athenaeumSingletonData || (container.__athenaeumSingletonData = new Dictionary<string, any>());
+            this._data = container.__reApptorSingletonData || (container.__reApptorSingletonData = new Dictionary<string, any>());
         }
         return this._data;
     }
@@ -21,7 +21,7 @@ class Singleton {
         const data: Data = this.getData();
         if (data.containsKey(name)) {
             if (warning) {
-                console.warn(`Athenaeum Singleton Warning. Multiple instance of singleton object "${name}" found. Probably several instances of one of the packages are loaded. This will not break the app but it is not recommended to use two major versions.`);
+                console.warn(`ReApptor§ Singleton Warning. Multiple instance of singleton object "${name}" found. Probably several instances of one of the packages are loaded. This will not break the app but it is not recommended to use two major versions.`);
             }
             return data.getValue(name);
         }

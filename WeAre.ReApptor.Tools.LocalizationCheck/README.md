@@ -1,4 +1,4 @@
-# WeAreAthenaeum.Tools.LocalizationCheck
+# WeAre.ReApptor.Tools.LocalizationCheck
 
 
 ### See what localizations are unused in resources file.

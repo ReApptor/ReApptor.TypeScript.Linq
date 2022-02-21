@@ -30,10 +30,13 @@
     "WeAre.TestApplication.WebUI": {
       "tags": []
     },
-    "WeAre.ReApptor.React.Common": {
+    "WeAre.ReApptor.React.Components.Localization": {
       "tags": []
     },
     "WeAre.ReApptor.React.Components": {
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Common": {
       "tags": []
     },
     "WeAre.ReApptor.React.Toolkit": {
