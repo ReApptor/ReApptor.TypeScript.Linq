@@ -417,18 +417,8 @@
   <data name="MessageBox.Cancel" xml:space="preserve">
     <value>Avbryt</value>
   </data>
-  <data name="ImageInput.MoveDown" xml:space="preserve">
-    <value>SV: Move below</value>
-  </data>
-  <data name="ImageInput.MoveToTop" xml:space="preserve">
-    <value>SV: Move to top</value>
-  </data>
-  <data name="ImageInput.MoveUp" xml:space="preserve">
-    <value>SV: Move up</value>
-  </data>
   <data name="QrInput.Button.Close" xml:space="preserve">
-    <value>
-Stänga</value>
+    <value>Stänga</value>
   </data>
   <data name="QrInput.Button.Label" xml:space="preserve">
     <value>Qr-kod</value>
