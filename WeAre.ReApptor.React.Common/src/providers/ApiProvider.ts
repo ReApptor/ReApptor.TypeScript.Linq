@@ -1,7 +1,7 @@
 /**
  * API provider
  */
-import {AthenaeumConstants, Utility} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, Utility} from "@weare/reapptor-toolkit";
 import {IBaseComponent} from "../base/BaseComponent";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ServerError from "../models/ServerError";

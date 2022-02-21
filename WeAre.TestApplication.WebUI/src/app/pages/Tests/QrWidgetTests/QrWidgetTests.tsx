@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {QrWidget, QrWidgetType, WidgetContainer} from "@weare/athenaeum-react-components";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {QrWidget, QrWidgetType, WidgetContainer} from "@weare/reapptor-react-components";
 
 export default class QrWidgetTests extends BaseComponent {
     

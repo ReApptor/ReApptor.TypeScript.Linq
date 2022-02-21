@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent, IGlobalClick} from "@weare/athenaeum-react-common";
+import {BaseComponent, IGlobalClick} from "@weare/reapptor-react-common";
 import Icon, {IconSize} from "../../Icon/Icon";
-import {Button, Form, Inline, IStringInputModel, OneColumn, TextInput} from "@weare/athenaeum-react-components";
+import {Button, Form, Inline, IStringInputModel, OneColumn, TextInput} from "@weare/reapptor-react-components";
 import TopNavLocalizer from "../TopNavLocalizer";
 
 import styles from "./Search.module.scss";

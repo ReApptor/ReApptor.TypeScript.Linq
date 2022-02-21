@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {IGlobalClick} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {IGlobalClick} from "@weare/reapptor-react-common";
 import { IconSize, IconStyle, IIconProps } from "../Icon/Icon";
 import BaseWidget, { IBaseWidgetProps } from "./BaseWidget";
 

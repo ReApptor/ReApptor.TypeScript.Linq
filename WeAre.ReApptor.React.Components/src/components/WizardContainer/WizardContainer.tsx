@@ -1,5 +1,5 @@
 import React from "react";
-import {IBasePage} from "@weare/athenaeum-react-common";
+import {IBasePage} from "@weare/reapptor-react-common";
 import NavigationWidget from "../NavigationWidget/NavigationWidget";
 import { IIconProps } from "../Icon/Icon";
 import BaseWidgetContainer, { IBaseWidgetContainerProps } from "../WidgetContainer/BaseWidgetContainer";

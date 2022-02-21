@@ -1,4 +1,4 @@
-import {ApplicationContext, BasePage} from "@weare/athenaeum-react-common";
+import {ApplicationContext, BasePage} from "@weare/reapptor-react-common";
 
 
 export default abstract class AnonymousPage<TParams = {}, TState = {}>

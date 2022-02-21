@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import Cell from "../Cell/Cell";
 import CollapsedRow from "../CollapsedRow/CollapsedRow";
 import {BorderType, CellModel, GridHoveringType, GridModel, GridOddType, GridSelectableType, IRow, RowModel} from "../GridModel";

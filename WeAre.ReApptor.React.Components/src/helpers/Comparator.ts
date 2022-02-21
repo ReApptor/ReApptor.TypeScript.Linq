@@ -1,5 +1,5 @@
-import {Utility, GeoLocation, GeoCoordinate} from "@weare/athenaeum-toolkit";
-import {PageRoute} from "@weare/athenaeum-react-common";
+import {Utility, GeoLocation, GeoCoordinate} from "@weare/reapptor-toolkit";
+import {PageRoute} from "@weare/reapptor-react-common";
 import { SelectListItem, StatusListItem } from "../components/Dropdown/SelectListItem";
 import AddressHelper from "./AddressHelper";
 

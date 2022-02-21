@@ -1,5 +1,5 @@
 import React, {ErrorInfo} from "react";
-import {AthenaeumConstants, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, ServiceProvider} from "@weare/reapptor-toolkit";
 import PageCacheProvider from "./PageCacheProvider";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, ILayoutPage} from "../base/BasePage";

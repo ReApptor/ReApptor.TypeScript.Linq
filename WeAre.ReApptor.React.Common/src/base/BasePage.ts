@@ -1,4 +1,4 @@
-import {FileModel, ILocalizer, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {FileModel, ILocalizer, ServiceProvider} from "@weare/reapptor-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
 import AlertModel from "../models/AlertModel";

@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {IGlobalClick} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {IGlobalClick} from "@weare/reapptor-react-common";
 import BaseWidget, { IBaseWidgetProps } from "./BaseWidget";
 
 import styles from "./WidgetContainer.module.scss";

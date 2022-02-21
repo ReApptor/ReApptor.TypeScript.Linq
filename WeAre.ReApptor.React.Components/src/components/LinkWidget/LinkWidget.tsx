@@ -1,4 +1,4 @@
-import {LinkTarget} from "@weare/athenaeum-react-common";
+import {LinkTarget} from "@weare/reapptor-react-common";
 import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
 
 export interface ILinkWidgetProps extends IBaseWidgetProps {

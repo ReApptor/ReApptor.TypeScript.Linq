@@ -1,18 +1,17 @@
 import { Configuration, TypescriptLocalizationPrefix } from "./src/types";
 
-
 const configuration: Configuration = {
     typescriptLocalizationPrefix: TypescriptLocalizationPrefix.LOCALIZER,
     logSearchStrings: true,
     deleteOnFound: false,
     resources: [
-        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.ReApptor.TemplateApp.WebUI.Resources/SharedResources.resx"
+        "/Users/ericaska/Desktop/WEARE/REAPPTOR/reapptor-app-template/WeAre.ReApptor.TemplateApp.WebUI.Resources/SharedResources.resx"
     ],
     cSharpDirectories: [
-        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.ReApptor.TemplateApp.WebUI",
-        "/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.ReApptor.TemplateApp.WebUI.Server"
+        "/Users/ericaska/Desktop/WEARE/REAPPTOR/reapptor-app-template/WeAre.ReApptor.TemplateApp.WebUI",
+        "/Users/ericaska/Desktop/WEARE/REAPPTOR/reapptor-app-template/WeAre.ReApptor.TemplateApp.WebUI.Server"
     ],
-    typescriptComponentsDirectories: ["/Users/ericaska/Desktop/WEARE/ATHENAEUM/athenaeum-app-template/WeAre.ReApptor.TemplateApp.WebUI/src"],
+    typescriptComponentsDirectories: ["/Users/ericaska/Desktop/WEARE/REAPPTOR/reapptor-app-template/WeAre.ReApptor.TemplateApp.WebUI/src"],
     prefixesToExclude: [
         "Month.",
         "DayOfWeek.",

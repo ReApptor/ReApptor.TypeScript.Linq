@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import { ColumnModel, GridModel, ITotalRow } from "../GridModel";
 
 import styles from "./TotalRow.module.scss";

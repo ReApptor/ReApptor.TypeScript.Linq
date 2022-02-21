@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent, ReactUtility} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {BaseComponent, ReactUtility} from "@weare/reapptor-react-common";
 import Icon, {IconSize} from "../../Icon/Icon";
 import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";

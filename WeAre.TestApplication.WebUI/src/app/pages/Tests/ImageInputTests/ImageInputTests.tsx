@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, FourColumns, IIMageInputToolbar, ImageInput, InlineType} from "@weare/athenaeum-react-components";
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {Button, Checkbox, FourColumns, IIMageInputToolbar, ImageInput, InlineType} from "@weare/reapptor-react-components";
+import {FileModel} from "@weare/reapptor-toolkit";
 
 interface IIMageInputTestsState {
     picture: string | null;

@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {AlertModel, AlertType, BaseComponent} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {AlertModel, AlertType, BaseComponent} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import AlertLocalizer from "./AlertLocalizer";
 

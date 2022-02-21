@@ -1,4 +1,4 @@
-import {BaseInputType} from "@weare/athenaeum-react-common";
+import {BaseInputType} from "@weare/reapptor-react-common";
 import TextInput from "../TextInput/TextInput";
 import { PhoneValidator, ValidatorCallback } from "../BaseInput/BaseInput";
 

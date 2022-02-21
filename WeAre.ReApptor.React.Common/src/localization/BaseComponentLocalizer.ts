@@ -1,4 +1,4 @@
-import {ILocalizer, ServiceType, BaseLocalizer, ILanguage, IService, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {ILocalizer, ServiceType, BaseLocalizer, ILanguage, IService, ServiceProvider} from "@weare/reapptor-toolkit";
 
 export type LanguageCallback = string | (() => string);
 

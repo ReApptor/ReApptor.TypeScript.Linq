@@ -1,7 +1,7 @@
 import React from "react";
-import {ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
-import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPreviewModel, IPageContainer, IBaseAsyncComponentState, BaseAsyncComponent, IContainer, IGlobalResize, IConfirmation, ConfirmationDialogTitleCallback} from "@weare/athenaeum-react-common";
-import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/athenaeum-react-common";
+import {ServiceProvider, Utility} from "@weare/reapptor-toolkit";
+import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPreviewModel, IPageContainer, IBaseAsyncComponentState, BaseAsyncComponent, IContainer, IGlobalResize, IConfirmation, ConfirmationDialogTitleCallback} from "@weare/reapptor-react-common";
+import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 import Alert from "../Alert/Alert";

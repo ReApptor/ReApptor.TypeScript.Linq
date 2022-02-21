@@ -1,5 +1,5 @@
 import React from "react";
-import {ch} from "@weare/athenaeum-react-common";
+import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";

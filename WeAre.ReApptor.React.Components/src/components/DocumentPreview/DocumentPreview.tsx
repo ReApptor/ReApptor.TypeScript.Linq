@@ -1,6 +1,6 @@
 import React from "react";
-import {FileModel} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseComponent, Justify} from "@weare/athenaeum-react-common";
+import {FileModel} from "@weare/reapptor-toolkit";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseComponent, Justify} from "@weare/reapptor-react-common";
 import Popover from "../Popover/Popover";
 import Spinner from "../Spinner/Spinner";
 

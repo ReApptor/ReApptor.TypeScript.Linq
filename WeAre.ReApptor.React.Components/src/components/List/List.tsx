@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/reapptor-react-common";
 import { SelectListItem } from "../Dropdown/SelectListItem";
 import Dropdown, {DropdownOrderBy, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import ListLocalizer from "./ListLocalizer";

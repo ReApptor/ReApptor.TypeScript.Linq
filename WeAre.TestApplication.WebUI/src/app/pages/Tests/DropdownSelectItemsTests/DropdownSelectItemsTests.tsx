@@ -1,8 +1,8 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {ch} from "@weare/athenaeum-react-common";
-import { Button, ButtonType, Dropdown, DropdownOrderBy, Form, FourColumns } from "@weare/athenaeum-react-components";
+import {Utility} from "@weare/reapptor-toolkit";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {ch} from "@weare/reapptor-react-common";
+import { Button, ButtonType, Dropdown, DropdownOrderBy, Form, FourColumns } from "@weare/reapptor-react-components";
 
 export interface IDropdownSelectItemsTestsState {
     selectedItemId: string | null,

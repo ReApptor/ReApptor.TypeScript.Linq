@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility, TFormat, FileModel, ServiceProvider} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType, ReactUtility} from "@weare/athenaeum-react-common";
+import {Utility, TFormat, FileModel, ServiceProvider} from "@weare/reapptor-toolkit";
+import {BaseComponent, IBaseComponent, IGlobalClick, RenderCallback, InputValidationRule, BaseInputType, ReactUtility} from "@weare/reapptor-react-common";
 import LiveValidator, { ValidationRow } from "../PasswordInput/LiveValidator/LiveValidator";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import BaseInputLocalizer from "./BaseInputLocalizer";

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
 import Button, { ButtonType } from "../Button/Button";
 import TextAreaInput from "../TextAreaInput/TextAreaInput";
 import ConfirmationDialogLocalizer from "./ConfirmationDialogLocalizer";

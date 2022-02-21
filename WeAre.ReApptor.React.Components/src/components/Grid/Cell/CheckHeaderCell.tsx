@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import { GridModel } from "../GridModel";
 
 import gridStyles from "../Grid.module.scss";

@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
-import {CookieConsent, Button, Form, TextInput, NumberInput} from "@weare/athenaeum-react-components";
+import {BaseComponent} from "@weare/reapptor-react-common";
+import {CookieConsent, Button, Form, TextInput, NumberInput} from "@weare/reapptor-react-components";
 
 
 export default class CookieConsentTests extends BaseComponent {

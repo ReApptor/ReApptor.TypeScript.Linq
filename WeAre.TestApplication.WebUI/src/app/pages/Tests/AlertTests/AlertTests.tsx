@@ -1,7 +1,7 @@
 import React from "react";
-import {BaseComponent, ch} from "@weare/athenaeum-react-common";
-import {Button, Checkbox, Icon, IconSize, InlineType} from "@weare/athenaeum-react-components";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {Button, Checkbox, Icon, IconSize, InlineType} from "@weare/reapptor-react-components";
+import {Utility} from "@weare/reapptor-toolkit";
 
 export default class AlertTests extends BaseComponent {
     

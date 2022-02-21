@@ -1,10 +1,10 @@
 import React from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import IconLocalizer from "./IconLocalizer";
 import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
 import styles from "./Icon.module.scss";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 
 export enum IconSize {
     Normal,

@@ -1,5 +1,5 @@
 import {AlertType} from "../Enums";
-import {Utility} from "@weare/athenaeum-toolkit";
+import {Utility} from "@weare/reapptor-toolkit";
 
 export default class AlertModel {
 

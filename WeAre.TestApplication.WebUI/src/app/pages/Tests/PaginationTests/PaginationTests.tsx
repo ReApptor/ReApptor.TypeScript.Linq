@@ -1,7 +1,7 @@
 import React from "react";
-import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/athenaeum-toolkit";
-import {ch, ActionType, BaseComponent, TextAlign} from "@weare/athenaeum-react-common";
-import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType, Pagination} from "@weare/athenaeum-react-components";
+import {ArrayUtility, Utility, IPagedList, SortDirection} from "@weare/reapptor-toolkit";
+import {ch, ActionType, BaseComponent, TextAlign} from "@weare/reapptor-react-common";
+import {ColumnActionDefinition, ColumnActionType, Checkbox, ColumnDefinition, ColumnType, Form, Grid, GridHoveringType, GridOddType, CellModel, SelectListItem, DropdownRequiredType, Pagination} from "@weare/reapptor-react-components";
 
 export interface IPaginationTestsState {
     bePagination: boolean;

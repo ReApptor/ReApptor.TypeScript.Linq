@@ -1,4 +1,4 @@
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {FileModel} from "@weare/reapptor-toolkit";
 import Cropper, {ReactCropperElement} from "react-cropper";
 import CropperJs from "cropperjs";
 import React from "react";

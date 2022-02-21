@@ -1,5 +1,5 @@
 import TextInput from "../TextInput/TextInput";
-import {BaseInputType} from "@weare/athenaeum-react-common";
+import {BaseInputType} from "@weare/reapptor-react-common";
 import { EmailValidator, ValidatorCallback } from "../BaseInput/BaseInput";
 
 export default class EmailInput extends TextInput {

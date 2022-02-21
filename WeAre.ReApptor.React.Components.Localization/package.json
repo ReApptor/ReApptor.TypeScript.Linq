@@ -1,5 +1,5 @@
 {
-  "name": "@weare/athenaeum-react-components-localization",
+  "name": "@weare/reapptor-react-components-localization",
   "private": false,
   "version": "1.0.0",
   "type": "commonjs",
@@ -7,8 +7,8 @@
   "module": "./lib/esm/index.js",
   "types": "./lib/types/src/index.d.ts",
   "dependencies": {
-    "@weare/athenaeum-react-common": "^1.0.5",
-    "@weare/athenaeum-toolkit": "^1.0.3"
+    "@weare/reapptor-react-common": "^1.0.5",
+    "@weare/reapptor-toolkit": "^1.0.3"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -35,7 +35,6 @@
   "browserslist": [],
   "keywords": [
     "weare",
-    "athenaeum",
     "components",
     "localization",
     "react",

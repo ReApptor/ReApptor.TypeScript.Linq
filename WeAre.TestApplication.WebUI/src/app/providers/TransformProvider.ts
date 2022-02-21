@@ -1,5 +1,5 @@
-import {BaseTransformProvider, Utility, GeoLocation, TFormat} from "@weare/athenaeum-toolkit";
-import {ITitleModel, SelectListGroup, SelectListItem} from "@weare/athenaeum-react-components";
+import {BaseTransformProvider, Utility, GeoLocation, TFormat} from "@weare/reapptor-toolkit";
+import {ITitleModel, SelectListGroup, SelectListItem} from "@weare/reapptor-react-components";
 
 class TransformProvider extends BaseTransformProvider {
     

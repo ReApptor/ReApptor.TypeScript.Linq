@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBaseComponent} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBaseComponent} from "@weare/reapptor-react-common";
 import {Dictionary} from "typescript-collections";
 import IBaseWidget from "./BaseWidget";
 

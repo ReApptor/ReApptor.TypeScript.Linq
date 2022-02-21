@@ -1,6 +1,6 @@
 import React from "react";
-import {Utility, FileModel} from "@weare/athenaeum-toolkit";
-import {BaseInputType} from "@weare/athenaeum-react-common";
+import {Utility, FileModel} from "@weare/reapptor-toolkit";
+import {BaseInputType} from "@weare/reapptor-react-common";
 import BaseInput, { ValidatorCallback, IBaseInputProps, IBaseInputState, FileSizeValidator, FileTypeValidator, FilesSizeValidator } from "../BaseInput/BaseInput";
 import Icon from "../Icon/Icon";
 import FileInputLocalizer from "./FileInputLocalizer";

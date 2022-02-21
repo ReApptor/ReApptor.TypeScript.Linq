@@ -1,5 +1,5 @@
-import {ApplicationContext, ch, WebApplicationType} from "@weare/athenaeum-react-common";
-import {IGoogleApiSettings, IMenuItem, IShoppingCart} from "@weare/athenaeum-react-components";
+import {ApplicationContext, ch, WebApplicationType} from "@weare/reapptor-react-common";
+import {IGoogleApiSettings, IMenuItem, IShoppingCart} from "@weare/reapptor-react-components";
 import PageDefinitions from "./PageDefinitions";
 import AnonymousTestWithParameters from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
 import Tests from "./Tests/Tests";

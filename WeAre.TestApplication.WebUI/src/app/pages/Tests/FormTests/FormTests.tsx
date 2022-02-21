@@ -1,6 +1,6 @@
 import React from "react";
-import {BaseComponent, ch, DocumentPreviewSize, PasswordValidationRule} from "@weare/athenaeum-react-common";
-import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow, PasswordFormLocalizer} from "@weare/athenaeum-react-components";
+import {BaseComponent, ch, DocumentPreviewSize, PasswordValidationRule} from "@weare/reapptor-react-common";
+import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow, PasswordFormLocalizer} from "@weare/reapptor-react-components";
 import Localizer from "../../../../localization/Localizer";
 
 interface IModalTestsState {

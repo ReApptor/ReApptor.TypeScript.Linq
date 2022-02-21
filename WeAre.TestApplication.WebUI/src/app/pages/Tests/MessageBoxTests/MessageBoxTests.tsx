@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, DialogResult, MessageBoxButtons, IMessageBoxButtons, MessageBoxIcon, ch} from "@weare/athenaeum-react-common";
+import {BaseComponent, DialogResult, MessageBoxButtons, IMessageBoxButtons, MessageBoxIcon, ch} from "@weare/reapptor-react-common";
 import {
     Form, TextInput, ButtonType,
     TwoColumns,
@@ -7,7 +7,7 @@ import {
     DropdownOrderBy,
     SelectListItem,
     Button
-} from "@weare/athenaeum-react-components";
+} from "@weare/reapptor-react-components";
 
 import styles from "./MessageBoxTests.module.scss";
 

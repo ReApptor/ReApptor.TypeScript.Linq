@@ -1,6 +1,6 @@
 import React from "react";
-import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/athenaeum-toolkit";
-import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/athenaeum-react-common";
+import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
+import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/reapptor-react-common";
 import {
     CellModel,
     Checkbox,
@@ -18,7 +18,7 @@ import {
     GridSelectableType,
     SelectListItem,
     TextInput
-} from "@weare/athenaeum-react-components";
+} from "@weare/reapptor-react-components";
 
 export interface IGridTestsState {
     bePagination: boolean;

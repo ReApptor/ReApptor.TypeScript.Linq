@@ -1,4 +1,4 @@
-import {AthenaeumConstants, FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {AthenaeumConstants, FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
 import ApplicationContext from "../models/ApplicationContext";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ApiProvider from "./ApiProvider";

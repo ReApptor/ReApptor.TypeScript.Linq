@@ -1,5 +1,5 @@
 import React from "react";
-import {ch, PageRoute, PageRouteProvider} from "@weare/athenaeum-react-common";
+import {ch, PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
 import BaseWidget, { IBaseWidgetProps } from "./BaseWidget";
 
 export type TPageRouteCallback = () => PageRoute;

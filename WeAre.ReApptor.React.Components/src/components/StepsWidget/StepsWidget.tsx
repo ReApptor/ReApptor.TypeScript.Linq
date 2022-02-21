@@ -1,5 +1,5 @@
 import React from "react";
-import {ch, IBasePage, PageRoute} from "@weare/athenaeum-react-common";
+import {ch, IBasePage, PageRoute} from "@weare/reapptor-react-common";
 import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
 import Comparator from "../../helpers/Comparator";
 import {IIconProps} from "../Icon/Icon";

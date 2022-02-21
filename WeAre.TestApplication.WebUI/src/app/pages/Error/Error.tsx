@@ -1,6 +1,6 @@
 import React from "react";
-import {ServerError, BasePageParameters} from "@weare/athenaeum-react-common";
-import { PageContainer, PageHeader, PageRow } from "@weare/athenaeum-react-components";
+import {ServerError, BasePageParameters} from "@weare/reapptor-react-common";
+import { PageContainer, PageHeader, PageRow } from "@weare/reapptor-react-components";
 import AnonymousPage from "../AnonymousPage";
 
 import styles from "./Error.module.scss";

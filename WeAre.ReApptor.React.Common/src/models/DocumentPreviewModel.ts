@@ -1,4 +1,4 @@
-import {FileModel} from "@weare/athenaeum-toolkit";
+import {FileModel} from "@weare/reapptor-toolkit";
 import {IBaseComponent} from "../base/BaseComponent";
 
 export type DocumentPreviewCallback = (sender: IBaseComponent) => FileModel | Promise<FileModel>;

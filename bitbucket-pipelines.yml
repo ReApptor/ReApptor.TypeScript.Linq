@@ -169,8 +169,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Toolkit/WeAre.ReApptor.Toolkit.csproj -o obj/weare-athenaeum-toolkit/publish
-                - dotnet nuget push obj/weare-athenaeum-toolkit/publish/WeAre.ReApptor.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Toolkit/WeAre.ReApptor.Toolkit.csproj -o obj/weare-reapptor-toolkit/publish
+                - dotnet nuget push obj/weare-reapptor-toolkit/publish/WeAre.ReApptor.Toolkit.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: ReApptor Redis Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
@@ -178,8 +178,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Cache/WeAre.ReApptor.Services.Cache.csproj -o obj/weare-athenaeum-cache/publish
-                - dotnet nuget push obj/weare-athenaeum-cache/publish/WeAre.ReApptor.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Cache/WeAre.ReApptor.Services.Cache.csproj -o obj/weare-reapptor-cache/publish
+                - dotnet nuget push obj/weare-reapptor-cache/publish/WeAre.ReApptor.Services.Cache.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: ReApptor Sms Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
@@ -187,8 +187,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Sms/WeAre.ReApptor.Services.Sms.csproj -o obj/weare-athenaeum-sms/publish
-                - dotnet nuget push obj/weare-athenaeum-sms/publish/WeAre.ReApptor.Services.Sms.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.Sms/WeAre.ReApptor.Services.Sms.csproj -o obj/weare-reapptor-sms/publish
+                - dotnet nuget push obj/weare-reapptor-sms/publish/WeAre.ReApptor.Services.Sms.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: ReApptor ACM Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
@@ -196,8 +196,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.ACM/WeAre.ReApptor.Services.ACM.csproj -o obj/weare-athenaeum-acm/publish
-                - dotnet nuget push obj/weare-athenaeum-acm/publish/WeAre.ReApptor.Services.ACM.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Services.ACM/WeAre.ReApptor.Services.ACM.csproj -o obj/weare-reapptor-acm/publish
+                - dotnet nuget push obj/weare-reapptor-acm/publish/WeAre.ReApptor.Services.ACM.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: UI Toolkit Tests
               image: node:14
@@ -216,8 +216,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Common/WeAre.ReApptor.Common.csproj -o obj/weare-athenaeum-common/publish
-                - dotnet nuget push obj/weare-athenaeum-common/publish/WeAre.ReApptor.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Common/WeAre.ReApptor.Common.csproj -o obj/weare-reapptor-common/publish
+                - dotnet nuget push obj/weare-reapptor-common/publish/WeAre.ReApptor.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: WeAre ReApptor Tools Localization Check CLI Build
               image: node:14
@@ -261,8 +261,8 @@ pipelines:
                 - dotnetcore
               script:
                 - echo $BITBUCKET_BUILD_NUMBER
-                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Tools.CodeGenerator/WeAre.ReApptor.Tools.CodeGenerator.csproj -o obj/weare-athenaeum-tools-codegenerator/publish
-                - dotnet nuget push obj/weare-athenaeum-tools-codegenerator/publish/WeAre.ReApptor.Tools.CodeGenerator.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
+                - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.ReApptor.Tools.CodeGenerator/WeAre.ReApptor.Tools.CodeGenerator.csproj -o obj/weare-reapptor-tools-codegenerator/publish
+                - dotnet nuget push obj/weare-reapptor-tools-codegenerator/publish/WeAre.ReApptor.Tools.CodeGenerator.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
           - step:
               name: WeAre Apps Common Build
               image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine

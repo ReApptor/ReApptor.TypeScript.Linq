@@ -1,6 +1,6 @@
 import React from "react";
 import queryString, {ParsedQuery} from "query-string";
-import {FileModel, ILanguage, ServiceProvider, Utility} from "@weare/athenaeum-toolkit";
+import {FileModel, ILanguage, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
 import {
     AlertModel,
     ApplicationContext,
@@ -17,7 +17,7 @@ import {
     PageRouteProvider,
     SwipeDirection,
     WebApplicationType
-} from "@weare/athenaeum-react-common";
+} from "@weare/reapptor-react-common";
 import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";

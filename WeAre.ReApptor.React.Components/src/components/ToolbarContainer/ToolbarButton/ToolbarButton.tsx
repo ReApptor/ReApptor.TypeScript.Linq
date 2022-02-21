@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/athenaeum-react-common";
+import {BaseComponent} from "@weare/reapptor-react-common";
 import Button, {IButtonProps} from "../../Button/Button";
 import Inline from "../../Layout.Inline/Inline";
 import ToolbarContainerLocalizer from "../ToolbarContainerLocalizer";

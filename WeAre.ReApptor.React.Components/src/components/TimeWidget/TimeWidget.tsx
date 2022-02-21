@@ -1,4 +1,4 @@
-import {TimeSpan, Utility} from "@weare/athenaeum-toolkit";
+import {TimeSpan, Utility} from "@weare/reapptor-toolkit";
 import BaseRouteWidget, { IBaseRouteWidgetProps } from "../WidgetContainer/BaseRouteWidget";
 
 export interface ITimeWidgetProps extends IBaseRouteWidgetProps {

@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, RenderCallback} from "@weare/athenaeum-react-common";
+import {BaseComponent, RenderCallback} from "@weare/reapptor-react-common";
 
 import styles from "../PageContainer.module.scss";
 

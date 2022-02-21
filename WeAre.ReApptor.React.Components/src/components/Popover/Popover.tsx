@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Utility} from "@weare/athenaeum-toolkit";
-import {Justify, Align, BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/athenaeum-react-common";
+import {Utility} from "@weare/reapptor-toolkit";
+import {Justify, Align, BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
 
 import styles from "./Popover.module.scss";
 

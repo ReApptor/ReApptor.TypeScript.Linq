@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/athenaeum-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/reapptor-react-common";
 import { CellModel, ColumnSettings } from "../../GridModel";
 import Comparator from "../../../../helpers/Comparator";
 import Dropdown, { DropdownOrderBy } from "../../../Dropdown/Dropdown";

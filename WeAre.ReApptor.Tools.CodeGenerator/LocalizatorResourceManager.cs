@@ -304,7 +304,7 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
         {
             import = (!string.IsNullOrWhiteSpace(import))
                 ? import.Trim()
-                : @"import {BaseLocalizer} from ""@weare/athenaeum-toolkit"";";
+                : @"import {BaseLocalizer} from ""@weare/reapptor-toolkit"";";
 
             if (!import.EndsWith(";"))
             {

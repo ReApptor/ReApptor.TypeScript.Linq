@@ -1,6 +1,6 @@
 import React from "react";
 import {Dictionary} from "typescript-collections";
-import {IService, ServiceType, Utility, ServiceProvider} from "@weare/athenaeum-toolkit";
+import {IService, ServiceType, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import PageRoute from "../models/PageRoute";
 import {IBasePage, IBasePageConstructor} from "../base/BasePage";
 import BasePageParameters from "../models/BasePageParameters";
