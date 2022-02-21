@@ -21,16 +21,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="lib\**" />
+        <Compile Remove="lib\**" />
+        <Compile Remove="dist\**" />
+        <Compile Remove="temp\**" />
+        <Compile Remove="etc\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="lib\**" />
+        <EmbeddedResource Remove="lib\**" />
+        <EmbeddedResource Remove="dist\**" />
+        <EmbeddedResource Remove="temp\**" />
+        <EmbeddedResource Remove="etc\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="lib\**" />
       <None Remove="package-lock.json" />
+      <None Remove="dist\**" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
