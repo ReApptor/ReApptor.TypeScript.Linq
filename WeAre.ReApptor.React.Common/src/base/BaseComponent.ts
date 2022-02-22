@@ -373,7 +373,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     /**
      * @see Utility.css
      */
-    public css(...params: (readonly string[] | string | null | undefined | false)[]): string {
+    public css(...params: (readonly string[] | string | null | undefined | false | (() => (readonly string[] | string | null | undefined | false)))[]): string {
         return Utility.css(...params);
     }
 
