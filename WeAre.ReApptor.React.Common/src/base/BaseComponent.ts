@@ -9,7 +9,6 @@ import ch from "../providers/ComponentHelper";
 import JQueryUtility from "../JQueryUtility";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
-
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
 
 export interface IChildrenProps {
@@ -169,6 +168,10 @@ export interface IGlobalKeydown {
     onGlobalKeydown(e: React.SyntheticEvent): Promise<void>;
 }
 
+export interface IGlobalScroll {
+    onGlobalScroll(e: React.SyntheticEvent): Promise<void>;
+}
+
 export interface IContainer {
     height(): number;
 }
@@ -183,6 +186,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     private readonly _asGlobalClick: IGlobalClick | null;
     private readonly _asGlobalKeydown: IGlobalKeydown | null;
     private readonly _asGlobalResize: IGlobalResize | null;
+    private readonly _asGlobalScroll: IGlobalScroll | null;
     private _childComponentIds: Dictionary<string, React.RefObject<IBaseComponent>>;
     private _childComponentRefs: React.RefObject<IBaseComponent>[];
     private _isMounted: boolean;
@@ -194,6 +198,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
         this._asGlobalClick = this.asGlobalClick();
         this._asGlobalKeydown = this.asGlobalKeydown();
         this._asGlobalResize = this.asGlobalResize();
+        this._asGlobalScroll = this.asGlobalScroll();
         this._childComponentIds = new Dictionary<string, React.RefObject<IBaseComponent>>();
         this._childComponentRefs = [];
         this._isMounted = false;
@@ -231,6 +236,14 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     private asGlobalResize(): IGlobalResize | null {
         const instance = (this as any) as (IGlobalResize | null);
         if ((instance != null) && (typeof instance.onGlobalResize === "function")) {
+            return instance;
+        }
+        return null;
+    }
+
+    private asGlobalScroll(): IGlobalScroll | null {
+        const instance = (this as any) as (IGlobalScroll | null);
+        if ((instance != null) && (typeof instance.onGlobalScroll === "function")) {
             return instance;
         }
         return null;
@@ -439,6 +452,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
         if (this._asGlobalResize) {
             DocumentEventsProvider.register(this.id, DocumentEventType.Resize,  (e: React.SyntheticEvent) => this._asGlobalResize!.onGlobalResize(e));
         }
+
+        if (this._asGlobalScroll) {
+            DocumentEventsProvider.register(this.id, DocumentEventType.Scroll,  (e: React.SyntheticEvent) => this._asGlobalScroll!.onGlobalScroll(e));
+        }
     }
 
     public async componentWillReceiveProps(nextProps: TProps): Promise<void> {
@@ -458,6 +475,10 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
 
         if (this._asGlobalResize) {
             DocumentEventsProvider.unregister(this.id, DocumentEventType.Resize);
+        }
+
+        if (this._asGlobalScroll) {
+            DocumentEventsProvider.unregister(this.id, DocumentEventType.Scroll);
         }
     }
 

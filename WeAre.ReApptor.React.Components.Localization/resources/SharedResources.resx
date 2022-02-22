@@ -570,4 +570,7 @@
   <data name="AddressInput.Validators.Custom.Required" xml:space="preserve">
     <value>Type and select an address from the list</value>
   </data>
+  <data name="LeftNav" xml:space="preserve">
+    <value />
+  </data>
 </root>

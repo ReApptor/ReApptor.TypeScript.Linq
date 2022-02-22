@@ -18,10 +18,11 @@ import {
     SwipeDirection,
     WebApplicationType
 } from "@weare/reapptor-react-common";
-import TopNav, {IMenuItem, IShoppingCart} from "../TopNav/TopNav";
+import TopNav, {IMenuItem, IShoppingCart, ITopNavProfile} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
+import LeftNav, {ILeftNavProps} from "../LeftNav/LeftNav";
 
 import styles from "./Layout.module.scss";
 
@@ -32,6 +33,7 @@ export interface ILayoutProps {
      */
     className?: string | (() => string | null | undefined);
 
+    topNavClassName?: string | (() => string | null | undefined);
     topNavLogo?: any;
     topNavLogoText?: string;
     noTopNav?: boolean;
@@ -82,6 +84,10 @@ export interface ILayoutProps {
 
     languages?: () => ILanguage[];
 
+    profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+
+    leftNav?: ILeftNavProps | (() => ILeftNavProps | null) | null;
+
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
 
     tokenLogin?(sender: IBaseComponent, token: string): Promise<void>;
@@ -119,6 +125,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     };
 
     private readonly _pageRef: React.RefObject<IBasePage> = React.createRef();
+    private readonly _topNavRef: React.RefObject<TopNav> = React.createRef();
+    private readonly _leftNavRef: React.RefObject<LeftNav> = React.createRef();
     private readonly _downloadLink: React.RefObject<HTMLAnchorElement> = React.createRef();
 
     private _mobile: boolean = this.mobile;
@@ -126,6 +134,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
+    private _leftNav: ILeftNavProps | null = null;
 
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
@@ -203,6 +212,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 this._swiping = false;
             }
         }
+    }
+
+    private async onTopNavFetchItemsAsync(): Promise<void> {
+        await this.reloadLeftNavAsync();
     }
 
     private static async processUrlRouteAsync(): Promise<void> {
@@ -389,11 +402,35 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
+    public async reRenderTopNavAsync(): Promise<void> {
+        const topNav: IAsyncComponent | null = TopNav.mountedInstance;
+        if (topNav != null) {
+            await topNav.reRenderAsync();
+        }
+    }
+
     public async reloadTopNavAsync(): Promise<void> {
+        this._leftNav = null;
         const topNav: IAsyncComponent | null = TopNav.mountedInstance;
         if (topNav != null) {
             await topNav.reloadAsync();
+            await this.reRenderLeftNavAsync();
         }
+    }
+
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this._leftNavRef.current != null) {
+            await this._leftNavRef.current.reRenderAsync();
+        }
+    }
+
+    public async reloadLeftNavAsync(): Promise<void> {
+        this._leftNav = null;
+        if (this._leftNavRef.current != null) {
+            await this._leftNavRef.current.reloadAsync();
+        }
+        await this.reRenderAsync();
+        await this.reRenderTopNavAsync();
     }
 
     /**
@@ -485,8 +522,44 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         link.click();
     }
 
+    public get leftNav(): ILeftNavProps | null {
+
+        const leftNav: ILeftNavProps | null = (this.props.leftNav)
+            ? (typeof this.props.leftNav === "function")
+                ? this.props.leftNav()
+                : this.props.leftNav
+            : null;
+
+        if (leftNav != null) {
+            // initialize items:
+            if (leftNav.items == null) {
+                const fetchTopNavItems = this.props.fetchTopNavItems;
+                if (fetchTopNavItems != null) {
+                    leftNav.items = () => fetchTopNavItems(this);
+                } else {
+                    leftNav.items = async () => this._topNavRef.current?.items || [];
+                }
+            }
+
+            // initialize userProfile
+            if (leftNav.userProfile == null) {
+                //return Profile.resolveUserProfile(this, this.props.userProfile);
+                const profile: ITopNavProfile | null = TopNav.resolveProfile(this.props.profile);
+                leftNav.userProfile = profile?.userProfile;
+            }
+
+            this._leftNav = leftNav;
+        }
+
+        return this._leftNav;
+    }
+
     public get hasTopNav(): boolean {
         return ((this.props.noTopNav !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasTopNav));
+    }
+
+    public get hasLeftNav(): boolean {
+        return ((this.leftNav !== null) && (this.hasData) && (this.state.page != null) && (this.state.page.hasLeftNav));
     }
 
     public get hasFooter(): boolean {
@@ -520,7 +593,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 {
                     (this.hasTopNav) &&
                     (
-                        <TopNav applicationName={this.applicationName}
+                        <TopNav ref={this._topNavRef}
+                                className={this.props.topNavClassName}
+                                applicationName={this.applicationName}
+                                leftNavRef={this._leftNavRef}
                                 fetchItems={this.props.fetchTopNavItems}
                                 languages={this.props.languages}
                                 logo={this.props.topNavLogo}
@@ -529,15 +605,30 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 onSearchClick={this.props.onSearchClick}
                                 searchPlaceHolder={this.props.searchPlaceHolder}
                                 logoText={this.props.topNavLogoText}
+                                profile={this.props.profile}
                                 onLogoClick={this.props.onLogoClick}
+                                onFetchItems={() => this.onTopNavFetchItemsAsync()}
                         />
                     )
                 }
 
-                <main className={styles.main}>
+
+                <main className={this.css(styles.main, this.hasLeftNav && styles.leftNav)}>
+
+                    {
+                        (this.hasLeftNav) &&
+                        (
+                            <LeftNav ref={this._leftNavRef} {...this.leftNav}
+                                     className={this.css(styles.leftNav, this.leftNav?.className)}
+                                     onToggle={() => this.reRenderTopNavAsync()}
+                            />
+                        )
+                    }
+
                     {
                         ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
                     }
+
                 </main>
 
                 {
