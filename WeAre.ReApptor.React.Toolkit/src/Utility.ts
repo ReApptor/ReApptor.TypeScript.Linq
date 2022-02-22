@@ -59,9 +59,10 @@ export default class Utility {
         return null;
     }
 
-    public static css(...params: (readonly string[] | string | null | undefined | false)[]): string {
+    public static css(...params: (readonly string[] | string | null | undefined | false | (() => (readonly string[] | string | null | undefined | false)))[]): string {
         return (params)
             ? params
+                .map(param => (typeof param === "function") ? param() : param)
                 .filter(param => param)
                 .join(" ")
                 .replace(",", " ")
