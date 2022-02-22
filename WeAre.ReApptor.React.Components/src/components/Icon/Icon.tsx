@@ -1,10 +1,11 @@
 import React from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/reapptor-react-common";
-import IconLocalizer from "./IconLocalizer";
 import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
+import {FileModel, Utility} from "@weare/reapptor-toolkit";
+import IconLocalizer from "./IconLocalizer";
+
 import styles from "./Icon.module.scss";
-import {Utility} from "@weare/reapptor-toolkit";
 
 export enum IconSize {
     Normal,
@@ -14,17 +15,17 @@ export enum IconSize {
     Small,
 
     Large,
-    
+
     X2,
-    
+
     X3,
-    
+
     X4,
-    
+
     X5,
-    
+
     X7,
-    
+
     X10
 }
 
@@ -43,9 +44,9 @@ export enum IconStyle {
 export interface IIconProps {
     id?: string;
     name: string;
-    tooltip?: string;
-    style?: IconStyle;
-    size?: IconSize;
+    tooltip?: string | null;
+    style?: IconStyle | null;
+    size?: IconSize | null;
     className?: string;
     dataTarget?: string;
     dataModal?: string;
@@ -66,7 +67,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
     state: IIconState = {
         isOpen: false
     }
-    
+
     private readonly _confirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     private _forcedWidth: number | null = null;
     private _actionLoading: boolean = false;
@@ -75,7 +76,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
     public static get Action(): typeof IconAction {
         return IconAction;
     }
-    
+
     private static add(lowerClassName: string, className: string, style: string, asPrefix: boolean = false): string {
         const includes: boolean = (asPrefix)
             ? lowerClassName.startsWith(style + " ")
@@ -101,7 +102,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                 this._forcedWidth = buttonWidth;
             }
 
-            this.reRenderAsync();
+            await this.reRenderAsync();
         }
     }
 
@@ -123,7 +124,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         }
     }
 
-    private static addSize(lowerClassName: string, className: string, size?: IconSize): string {
+    private static addSize(lowerClassName: string, className: string, size?: IconSize | null): string {
         if (size != null) {
             switch (size) {
                 case IconSize.ExtraSmall:
@@ -153,7 +154,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                 case IconSize.X10:
                     className = Icon.add(lowerClassName, className, "fa-10x");
                     break;
-                }
+            }
         }
 
         return className;
@@ -233,13 +234,13 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         if (classStyle != null) {
             name = name.substr(4);
         }
-        
+
         if ((!lowerName.startsWith("fa-")) && (!lowerName.includes(" fa-"))) {
             className += " fa-";
         } else {
             className += " ";
         }
-        
+
         className += name;
 
         className = Icon.addSize(lowerClassName, className, this.props.size);
@@ -250,7 +251,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
 
         return className;
     }
-    
+
     private get disabledStyle(): React.CSSProperties {
         return {
             opacity: 0.5,
@@ -261,7 +262,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
     private get dataTarget(): string {
         return this.props.dataTarget || "";
     }
-    
+
     private get dataModal(): string {
         return this.props.dataModal || "";
     }
@@ -287,11 +288,11 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
     }
 
     private async onClickAsync(confirmed: boolean): Promise<void> {
-        
+
         if (this.hasActions) {
             return await this.toggleActions();
         }
-        
+
         const confirmNeeded: boolean = (!!this.props.confirm) && (!confirmed);
         if (confirmNeeded) {
             await this._confirmDialogRef.current!.openAsync();
@@ -310,10 +311,41 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
             (Icon.getClassStyle(lowerName) != null)
         );
     }
-    
+
+    public static renderIcon(icon: IIconProps | FileModel | string, className?: string | null, size: IconSize | null = IconSize.X2, onClick?: () => Promise<void>): React.ReactNode {
+
+        if (typeof icon === "string") {
+
+            const isIcon: boolean = Icon.isIconName(icon);
+
+            if (isIcon) {
+                return (
+                    <Icon name={icon} size={size} className={className || undefined} onClick={onClick}/>
+                )
+            }
+
+            return (
+                <img src={icon} alt="" className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+            )
+        }
+
+        const isFileModel: boolean = ((icon instanceof FileModel) || ((icon as any).isFileModel));
+        if (isFileModel) {
+            const fileModel = icon as FileModel;
+            return (
+                <img src={fileModel.src} alt={fileModel.name} className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+            );
+        }
+
+        return (
+            <Icon {...icon} size={size} className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+        );
+    }
+
     public render(): React.ReactNode {
         return (
             <React.Fragment>
+
                 <i id={this.id}
                    style={this.props.customStyle ? this.props.customStyle : (this.props.disabled) ? this.disabledStyle : (this.hasActions) ? {position:"relative"} : {}}
                    className={this.getClassName()}
@@ -322,20 +354,27 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                    data-toggle={this.dataToggleModal}
                    data-dismiss={this.dataDismissModal}
                    data-modal={this.dataModal}
-                   onClick={async (e: React.MouseEvent) => await this.onClickAsync(false)}
+                   onClick={async () => await this.onClickAsync(false)}
                 >
-                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, styles.color_grey,  "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
+                    {
+                        (this.children.length > 0) &&
+                        (
+                            <div id={this.actionsId} className={this.css(styles.actions, styles.color_grey,  "actions-container", !this.showActions && "invisible")}> {this.children}</div>
+                        )
+                    }
 
                 </i>
+
                 {
                     (this.props.confirm) &&
                     (
                         <ConfirmationDialog ref={this._confirmDialogRef}
                                             title={this.props.confirm}
-                                            callback={(caller) => this.onClickAsync(true)}
+                                            callback={() => this.onClickAsync(true)}
                         />
                     )
                 }
+
             </React.Fragment>
         );
     }

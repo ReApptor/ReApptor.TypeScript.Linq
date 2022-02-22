@@ -199,6 +199,9 @@ export {default as Spinner} from "./components/Spinner/Spinner";
 export * from "./components/TopNav/TopNav";
 export {default as TopNav} from "./components/TopNav/TopNav";
 
+export * from "./components/LeftNav/LeftNav";
+export {default as LeftNav} from "./components/LeftNav/LeftNav";
+
 export * from "./components/TopNav/Hamburger/Hamburger";
 export {default as Hamburger} from "./components/TopNav/Hamburger/Hamburger";
 
