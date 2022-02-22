@@ -1,0 +1,59 @@
+@import "../../../../variables";
+
+.userProfile {
+
+  padding: 4*$baseline;
+  background-color: $dark-gray;
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    
+    img {
+      border-radius: 50%;
+      border: 1px solid white;
+      max-width: 70px;
+      max-height: 70px;
+    }
+    
+  }
+
+  .info {
+
+    margin-left: 3*$baseline;
+    display: flex;
+    flex-direction: column;
+
+    .label {
+
+      color: $grey;
+      white-space: nowrap;
+
+      &.fullName {
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      &.roleName {
+        font-size: 0.9em;
+      }
+
+    }
+
+    .rating {
+
+      padding-top: $baseline;
+
+      .star {
+        color: $grey;
+
+        &:not(:first-child) {
+          margin-left: $baseline;
+        }
+      }
+
+    }
+
+  }
+
+}

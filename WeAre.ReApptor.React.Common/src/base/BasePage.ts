@@ -113,6 +113,11 @@ export interface IBasePage extends IBaseComponent {
     readonly hasTopNav: boolean;
 
     /**
+     * Does the {@link IBasePage} have a LeftNav.
+     */
+    readonly hasLeftNav: boolean;
+
+    /**
      * Does the {@link IBasePage} have a Footer.
      */
     readonly hasFooter: boolean;
@@ -172,6 +177,11 @@ export interface ILayoutPage extends IAsyncComponent {
     reloadTopNavAsync(): Promise<void>;
 
     /**
+     * Reload the {@link ILayoutPage}'s LeftNav.
+     */
+    reloadLeftNavAsync(): Promise<void>;
+
+    /**
      * Perform a swipe to the left on the {@link ILayoutPage}.
      */
     swipeLeftAsync(): Promise<void>;
@@ -216,6 +226,11 @@ export interface ILayoutPage extends IAsyncComponent {
      * Does the {@link ILayoutPage} have a TopNav.
      */
     readonly hasTopNav: boolean;
+
+    /**
+     * Does the {@link ILayoutPage} have a LeftNav.
+     */
+    readonly hasLeftNav: boolean;
 
     /**
      * Does the {@link ILayoutPage} have a Footer.
@@ -496,9 +511,19 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     /**
      * @inheritDoc
+     * Can be overridden in a page class to show/hide top navigation menu.
      * @return true
      */
     public get hasTopNav(): boolean {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     * Can be overridden in a page class to show/hide left navigation menu.
+     * @return true
+     */
+    public get hasLeftNav(): boolean {
         return true;
     }
 

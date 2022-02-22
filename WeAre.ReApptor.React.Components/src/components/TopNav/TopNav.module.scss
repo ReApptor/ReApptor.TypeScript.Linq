@@ -11,14 +11,14 @@
     position: fixed;
     width: 100%;
     z-index: 1000;
-    
+
     .left {
         display: flex;
         height: inherit;
         align-items: center;
         position: absolute;
         left: 0;
-        
+
         &_backIcon {
             color: white;
             cursor: pointer;
@@ -47,7 +47,22 @@
                 padding-right: 6px;
             }
         }
-        
+
+        &_leftNav {
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            min-width: 25px;
+
+            @media screen and (min-width: $break-xs) {
+                min-width: 32px;
+
+                &:not(:first-child) {
+                    padding-left: 6px;
+                }
+            }
+        }
+
         img {
             height: $baseline * 4;
             margin: 0 12px;
@@ -63,7 +78,7 @@
                 height: $baseline * 2;
             }
         }
-        
+
         span {
             font-size: 1.8em;
             color: white;
@@ -76,21 +91,21 @@
             }
         }
     }
-    
+
     .middle {
         display: flex;
         height: inherit;
-        
+
         &_link {
             padding: 0 $baseline * 2;
             height: inherit;
             display: flex;
             align-items: center;
-            
+
             &:hover {
                 background-color: $dark-orange;
             }
-            
+
             &.active {
                 text-decoration: underline;
             }
@@ -100,26 +115,26 @@
             }
         }
     }
-    
+
     .right {
         display: flex;
         align-items: center;
         position: absolute;
         right: 0;
-        
-        &_search{
+
+        &_search {
             margin-left: 6px;
             margin-right: 6px;
             color: #ffffff;
             cursor:pointer;
         }
-        
-        &_shoppingCart{
+
+        &_shoppingCart {
             color: #ffffff;
             cursor:pointer;
         }
-        
-        &_shoppingCartCount{
+
+        &_shoppingCartCount {
             font-size: 12px;
             background: #000000;
             color: #fff;
@@ -132,7 +147,7 @@
             -moz-border-radius: 9px;
             border-radius: 9px;
         }
-        
+
         &_infoIcon {
             color: white;
             margin: 0 12px;
@@ -151,7 +166,7 @@
             margin: 0 12px;
             width: 25px;
             z-index: 1;
-            
+
             @extend .hover;
 
             @media screen and (max-width: $break-xs) {
@@ -164,7 +179,7 @@
             }
         }
     }
-    
+
     .hover {
         &:hover {
             color: black;

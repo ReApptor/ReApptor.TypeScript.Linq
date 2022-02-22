@@ -1,0 +1,27 @@
+.leftNavTests {
+  min-height: 600px;
+  
+  .leftNavContainer {
+    
+    position: relative;
+
+    .leftMenu {
+
+      > div {
+
+        > div:last-child {
+          padding: 30px;
+        }
+
+      }
+
+    }
+    
+  }
+  
+  .expander {
+    min-width: 50px;
+    margin-bottom: 10px;
+  }
+  
+}

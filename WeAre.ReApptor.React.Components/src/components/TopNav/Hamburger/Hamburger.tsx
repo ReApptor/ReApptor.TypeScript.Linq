@@ -2,9 +2,9 @@ import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import { IMenuItem } from "../TopNav";
 import Link from "../../Link/Link";
+import TopNavLocalizer from "../TopNavLocalizer";
 
 import styles from "./Hamburger.module.scss";
-import TopNavLocalizer from "../TopNavLocalizer";
 
 interface IHamburgerProps {
     open: boolean;
@@ -21,9 +21,9 @@ export default class Hamburger extends BaseComponent<IHamburgerProps> {
             <ul className={className}>
                 {
                     this.props.menuItems.length &&
-                    this.props.menuItems.map((item, index) => (
+                    this.props.menuItems.map((item: IMenuItem, index: number) => (
                         <li key={index}>
-                            <Link className={styles.link} route={item.route}>{TopNavLocalizer.get(item.label)}</Link>
+                            <Link className={styles.link} route={Link.toRoute(item)}>{TopNavLocalizer.get(item.label)}</Link>
                         </li>
                     ))
                 }

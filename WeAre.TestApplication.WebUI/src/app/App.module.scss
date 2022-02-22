@@ -1,6 +1,12 @@
-@import "variables";
+@import "../variables";
 
 .page {
   padding: 15px $baseline;
   height: 100%;
+}
+
+.menuItemCountTransparent {
+  background-color: transparent !important;
+  padding: 0 !important;
+  font-size: 1.1em !important;
 }
