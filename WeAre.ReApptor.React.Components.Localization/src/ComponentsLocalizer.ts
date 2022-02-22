@@ -156,6 +156,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     public readonly qrInputButtonCloseLanguageItemName: string = `QrInput.Button.Close`;
     public readonly qrInputButtonLabelLanguageItemName: string = `QrInput.Button.Label`;
     public readonly addressInputValidatorsCustomRequiredLanguageItemName: string = `AddressInput.Validators.Custom.Required`;
+    public readonly leftNavLanguageItemName: string = `LeftNav`;
 
     constructor() {
 
@@ -324,6 +325,7 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
         this.set(this.qrInputButtonCloseLanguageItemName, { language: `en`, value: `Close` }, { language: `uk`, value: `\nЗакрити` }, { language: `sv`, value: `Stänga` }, { language: `ru`, value: `Закрывать` }, { language: `pl`, value: `\nBlisko` }, { language: `nb`, value: `Lukk` }, { language: `fi`, value: `Sulje` }, { language: `da`, value: `Tæt` },);
         this.set(this.qrInputButtonLabelLanguageItemName, { language: `en`, value: `Qr code` }, { language: `sv`, value: `Qr-kod` }, { language: `pl`, value: `Kod Qr` }, { language: `nb`, value: `QR kode` }, { language: `fi`, value: `Qr-koodi` }, { language: `da`, value: `Qr-kode` },);
         this.set(this.addressInputValidatorsCustomRequiredLanguageItemName, { language: `en`, value: `Type and select an address from the list` }, { language: `sv`, value: `Skriv och välj en adress i listan` }, { language: `pl`, value: `Wpisz i wybierz adres z listy` }, { language: `nb`, value: `Skriv inn og velg en adresse fra listen` }, { language: `fi`, value: `Kirjoita ja valitse osoite listasta` }, { language: `da`, value: `Skriv og vælg en adresse på listen` },);
+        this.set(this.leftNavLanguageItemName, { language: `en`, value: `` },);
     }
 
     /**
@@ -1381,6 +1383,13 @@ class ComponentsLocalizer extends BaseComponentsLocalizer {
     */
     public get addressInputValidatorsCustomRequired() : string {
         return this.get(this.addressInputValidatorsCustomRequiredLanguageItemName);
+    }
+
+    /**
+    /* "LeftNav" ()
+    */
+    public get leftNav() : string {
+        return this.get(this.leftNavLanguageItemName);
     }
 }
 

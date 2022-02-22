@@ -1,0 +1,47 @@
+@import "../../../variables";
+
+.profile {
+  
+  position: relative;
+  
+  &.expanded {
+  }
+  
+  .icon {
+    cursor: pointer;
+    color: white;
+  }
+  
+  .container {
+
+    background-color: $orange;
+    border-radius: $radius;
+    border: $renta-border;
+    box-shadow: $renta-shadow;
+    color: white;
+    top: 37px;
+    right: 0;
+    margin-right: -35px;
+    min-width: 35px;
+    height: auto;
+    font-weight: 600;
+    position: absolute;
+    z-index: 11;
+    display: none;
+    user-select: none;
+    overflow: hidden;
+    
+    .userProfileContainer {
+    }
+    
+    .itemsContainer {
+      padding: $baseline 0;
+    }
+    
+    &.expanded {
+      display: block !important;
+    }
+    
+  }
+  
+}

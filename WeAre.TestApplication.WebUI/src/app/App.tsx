@@ -4,7 +4,7 @@ import {AddressHelper, BannerPosition, ICookieConsentProps, Layout} from "@weare
 import TestApplicationController from "./pages/TestApplicationController";
 
 class App extends BaseComponent {
-    
+
     private get cookieContent(): ICookieConsentProps {
         return {
             acceptButtonText: "Ok",
@@ -21,10 +21,12 @@ class App extends BaseComponent {
                     fetchTopNavItems={() => TestApplicationController.fetchTopNavItems()}
                     topNavLogo="images/logo.svg"
                     footerLogo="images/logo.svg"
+                    profile={TestApplicationController.profile}
                     onShoppingCartClick={(sender) => Promise.resolve(alert("Shoppingcar clicked"))}
                     onSearchClick={searchTerm => Promise.resolve(alert(searchTerm))}
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
                     cookieConsent={() => this.cookieContent}
+                    leftNav={() => TestApplicationController.leftNav}
             />
         );
     }

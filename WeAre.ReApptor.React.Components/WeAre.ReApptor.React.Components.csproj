@@ -45,6 +45,8 @@
       <TypeScriptCompile Include="src\components\ImageInput\ImageInputToolbar\ImageInputToolbar.tsx" />
       <TypeScriptCompile Include="src\components\ImageModal\ImageModal.tsx" />
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
+      <TypeScriptCompile Include="src\components\LeftNav\LeftNav.tsx" />
+      <TypeScriptCompile Include="src\components\LeftNav\LeftNavLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Link\Link.tsx" />
       <TypeScriptCompile Include="src\components\List\List.tsx" />
       <TypeScriptCompile Include="src\components\MessageBox\MessageBox.tsx" />
@@ -64,6 +66,8 @@
       <TypeScriptCompile Include="src\components\TextInput\TextInputLocalizer.ts" />
       <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarButton\ToolbarButton.tsx" />
       <TypeScriptCompile Include="src\components\ToolbarContainer\ToolbarContainer.tsx" />
+      <TypeScriptCompile Include="src\components\TopNav\MenuItem\MenuItem.tsx" />
+      <TypeScriptCompile Include="src\components\TopNav\Profile\Profile.tsx" />
       <TypeScriptCompile Include="src\components\TopNav\TopNav.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseCheckboxWidget.tsx" />
       <TypeScriptCompile Include="src\components\WidgetContainer\BaseExpandableWidget.tsx" />

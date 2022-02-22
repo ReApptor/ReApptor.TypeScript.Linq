@@ -114,6 +114,15 @@ export default class ch {
     }
 
     /**
+     * @see ILayoutPage.reloadLeftNavAsync
+     */
+    public static async reloadLeftNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reloadLeftNavAsync();
+        }
+    }
+
+    /**
      * Calls {@link reloadTopNavAsync} without awaiting.
      */
     public static reloadTopNav(): void {

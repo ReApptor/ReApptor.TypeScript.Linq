@@ -112,6 +112,8 @@
       <TypeScriptCompile Include="src\app\pages\TestApplicationController.ts" />
       <TypeScriptCompile Include="src\app\pages\AnonymousTestWithParameters\AnonymousTestWithParameters.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\FileInputTests\FileInputTests.tsx" />
+      <TypeScriptCompile Include="src\app\pages\Tests\JQueryUtilityTests\JQueryUtilityTests.tsx" />
+      <TypeScriptCompile Include="src\app\pages\Tests\LeftNavTests\LeftNavTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\sampleImage.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\ModalTests\samplePdf.ts" />
       <TypeScriptCompile Include="src\app\pages\Tests\RouteWidgetTests\RouteWidgetTests.tsx" />

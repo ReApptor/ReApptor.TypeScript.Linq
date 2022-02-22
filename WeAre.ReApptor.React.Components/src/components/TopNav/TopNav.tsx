@@ -3,16 +3,43 @@ import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClic
 import Link from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
-import Icon, {IconSize, IconStyle} from "../Icon/Icon";
+import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import Search from "./Search/Search";
-import {ILanguage} from "@weare/reapptor-toolkit";
+import {ILanguage, FileModel} from "@weare/reapptor-toolkit";
+import LeftNav from "../LeftNav/LeftNav";
+import Profile from "./Profile/Profile";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
 
+export type TMenuItemRoute = PageRoute | ((menuItem: IMenuItem) => Promise<void>);
+
 export interface IMenuItem {
-    route: PageRoute;
     label: string;
+    route?: TMenuItemRoute | null;
+    icon?: IIconProps | string | null;
+    className?: string;
+    bottom?: boolean;
+    count?: number | (() => number);
+    countClassName?: string;
+    items?: IMenuItem[];
+}
+
+export interface IUserProfile {
+    className?: string;
+    avatar?: IIconProps | FileModel | string | null;
+    userFullName?: string | null;
+    roleName?: string | null;
+    rating?: number | null;
+    render?(profile: IUserProfile): React.ReactNode;
+}
+
+export interface ITopNavProfile {
+    id?: string;
+    className?: string;
+    icon?: IIconProps | FileModel | string | null;
+    userProfile?: boolean | IUserProfile | ((sender: ITopNavProfile) => IUserProfile);
+    items?: IMenuItem[] | null;
 }
 
 export interface IShoppingCart {
@@ -21,20 +48,25 @@ export interface IShoppingCart {
     productsCount: number;
 }
 
-export interface ITopNavProps {
-    className?: string;
+interface ITopNavProps {
+    className?: string | (() => string | null | undefined);
     languageClassName?: string;
+    shoppingCardClassName?: string;
     logo?: any;
     logoText?: string;
     applicationName?: string;
     searchPlaceHolder?: () => string;
     languages?: () => ILanguage[];
-    
-    onShoppingCartClick?(sender: TopNav): Promise<void>;
-    onSearchClick?(searchTerm: string): Promise<void>;
+    profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+    leftNavRef?: React.RefObject<LeftNav>;
+
     fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
+    onShoppingCartClick?(sender: TopNav): Promise<void>;
+    onSearchClick?(searchTerm: string): Promise<void>;
     onLogoClick?(sender: TopNav): Promise<void>;
+    onLeftNavToggle?(sender: TopNav): Promise<void>;
+    onFetchItems?(sender: TopNav): Promise<void>;
 }
 
 interface ITopNavState extends IBaseAsyncComponentState<IMenuItem[]> {
@@ -50,8 +82,23 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         shoppingCart: null
     };
 
+    private _profile: ITopNavProfile | null = null;
+
     private async backAsync(): Promise<void> {
         PageRouteProvider.back();
+    }
+
+    private async toggleLeftNavAsync(): Promise<void> {
+        const leftNav: LeftNav | null = this.leftNav;
+
+        if (leftNav) {
+
+            await leftNav.toggleAsync();
+
+            if (this.props.onLeftNavToggle) {
+                await this.props.onLeftNavToggle(this);
+            }
+        }
     }
 
     private async onShoppingCartClickAsync(): Promise<void> {
@@ -110,11 +157,17 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return super.fetchDataAsync();
     }
 
+    protected async processDataAsync(state: ITopNavState, data: IMenuItem[] | null): Promise<void> {
+        if (this.props.onFetchItems) {
+            await this.props.onFetchItems(this);
+        }
+    }
+
     private get searchPlaceHolder(): string {
         if (this.props.searchPlaceHolder) {
             return this.props.searchPlaceHolder();
         }
-        
+
         return "";
     }
 
@@ -124,6 +177,10 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         }
 
         return TopNavLocalizer.supportedLanguages;
+    }
+
+    private get leftNav(): LeftNav | null {
+        return this.props.leftNavRef?.current ?? null;
     }
 
     protected getEndpoint(): string {
@@ -138,7 +195,19 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return this.state.shoppingCart;
     }
 
-    private get manual(): IManualProps {
+    public static resolveProfile(profile?: ITopNavProfile | (() => ITopNavProfile | null) | null): ITopNavProfile | null {
+        return (profile)
+            ? (typeof profile === "function")
+                ? profile()
+                : profile
+            : null
+    }
+
+    public get profile(): ITopNavProfile | null {
+        return this._profile ?? (this._profile = TopNav.resolveProfile(this.props.profile));
+    }
+
+    public get manual(): IManualProps {
         const page: IBasePage | null = ch.findPage();
         return (page)
             ? page.getManualProps()
@@ -146,22 +215,39 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     }
 
     public render(): React.ReactNode {
+
+        const leftNav: LeftNav | null = this.leftNav;
+        const hasLeftNav: boolean = (leftNav != null);
+
         return (
             <nav className={this.css(styles.navigation, this.props.className)}>
                 <React.Fragment>
 
                     <div className={styles.left}>
 
-                        <div className={styles.left_backIcon} onClick={async () => await this.backAsync()}>
+                        <div className={styles.left_backIcon} onClick={() => this.backAsync()}>
                             <i className="fas fa-chevron-circle-left"/>
                         </div>
 
                         {
-                            (this.props.logo) && (
+                            (leftNav) &&
+                            (
+                                <Icon id={leftNav.toggleButtonId}
+                                      name={leftNav.expanded ? "fal fa-times" : "fal fa-bars"}
+                                      size={IconSize.X2}
+                                      className={styles.left_leftNav}
+                                      onClick={() => this.toggleLeftNavAsync()}
+                                />
+                            )
+                        }
+
+                        {
+                            (this.props.logo) &&
+                            (
                                 <img src={this.props.logo}
-                                     alt={this.props.logoText || "weare"}
-                                     onClick={async () => await this.onLogoClick()
-                                     }/>
+                                     alt={this.props.logoText || "renta"}
+                                     onClick={async () => await this.onLogoClick()}
+                                />
                             )
                         }
 
@@ -169,7 +255,16 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
                     <div className={styles.middle}>
                         {
-                            this.items.map((item, index) => (<Link key={index} className={this.css(styles.middle_link)} route={item.route}>{TopNavLocalizer.get(item.label)}</Link>))
+                            (!hasLeftNav) &&
+                            (
+                                this.items.map((item, index) =>
+                                    (
+                                        <Link key={index} className={this.css(styles.middle_link)} route={Link.toRoute(item)}>
+                                            {TopNavLocalizer.get(item.label)}
+                                        </Link>
+                                    )
+                                )
+                            )
                         }
                     </div>
 
@@ -180,47 +275,63 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             (
                                 <Icon name={this.manual.icon || "question-circle"}
                                       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
-                                      style={IconStyle.Regular} size={IconSize.X2}
-                                      toggleModal={!this.manual.onClick} dataTarget="page-help-info" onClick={this.manual.onClick}
+                                      style={IconStyle.Regular}
+                                      size={IconSize.X2}
+                                      toggleModal={!this.manual.onClick}
+                                      dataTarget="page-help-info"
+                                      onClick={this.manual.onClick}
                                 />
                             )
                         }
 
                         {
-                            (this.shoppingCart) && (
+                            (this.shoppingCart) &&
+                            (
                                 <>
+
                                     <Icon name={"shopping-cart"}
                                           size={IconSize.X2}
-                                          className={this.props.className ?? styles.right_shoppingCart}
-                                          onClick={async () => await this.onShoppingCartClickAsync()}
+                                          className={this.css(this.props.shoppingCardClassName, this.props.className ?? styles.right_shoppingCart)}
+                                          onClick={() => this.onShoppingCartClickAsync()}
                                     />
+
                                     {
-                                        this.shoppingCart.productsCount > 0 && (
+                                        (this.shoppingCart.productsCount > 0) &&
+                                        (
                                             <span className={styles.right_shoppingCartCount}>{this.shoppingCart.productsCount}</span>
                                         )
                                     }
+
                                 </>
                             )
                         }
+
                         {
-                            (this.props.onSearchClick) && (
-                                <Search
-                                    searchPlaceHolder={this.searchPlaceHolder}
-                                    onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
+                            (this.props.onSearchClick) &&
+                            (
+                                <Search searchPlaceHolder={this.searchPlaceHolder}
+                                        onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
                                 />
                             )
-
                         }
 
                         {
-                            (this.items.length > 0) && (
+                            (this.profile) &&
+                            (
+                                <Profile {...this.profile} />
+                            )
+                        }
+
+                        {
+                            ((!hasLeftNav) && (this.items.length > 0)) &&
+                            (
                                 <div className={styles.right_hamburgerIcon}
-                                     onClick={async () => await this.toggleHamburgerAsync()}>
+                                     onClick={() => this.toggleHamburgerAsync()}
+                                >
                                     <i className="fas fa-2x fa-bars"/>
                                 </div>
                             )
                         }
-
 
                         <LanguageDropdown className={this.props.languageClassName}
                                           languages={this.languages}
@@ -230,7 +341,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
                     </div>
 
-                    <Hamburger menuItems={this.items} open={this.state.isHamburgerOpen}/>
+                    <Hamburger menuItems={this.items} open={this.state.isHamburgerOpen} />
 
                 </React.Fragment>
             </nav>

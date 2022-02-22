@@ -1,6 +1,5 @@
 import React from "react";
 import {Checkbox, InlineType, PageContainer, PageHeader, PageRow, Tab, TabContainer, TabContainerHeaderStyleType, TabRenderType} from "@weare/reapptor-react-components";
-
 import CarouselTests from "./CarouselTests/CarouselTests";
 import AnonymousPage from "../AnonymousPage";
 import NumberWidgetTests from "./NumberWidgetTests/NumberWidgetTests";
@@ -38,8 +37,10 @@ import TextAreaWidgetTests from "./TextAreaWidgetTests/TextAreaWidgetTests";
 import GoogleMapTests from "./GoogleMapTests/GoogleMapTests";
 import AddressDividerTests from "./AddressDividerTests/AddressDividerTests";
 import CookieConsentTests from "./CookieConsentTests/CookieConsentTests";
-import Localizer from "../../../localization/Localizer";
 import QrInputTests from "./QrInputTests/QrInputTests";
+import JQueryUtilityTests from "./JQueryUtilityTests/JQueryUtilityTests";
+import LeftNavTests from "./LeftNavTests/LeftNavTests";
+import Localizer from "../../../localization/Localizer";
 
 interface ITestsState {
     underLineTabStyles: boolean;
@@ -85,6 +86,14 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
                                   renderType={TabRenderType.ActiveOnly}
                                   headerStyleType={this.state.underLineTabStyles ? TabContainerHeaderStyleType.Underline : TabContainerHeaderStyleType.Default}
                     >
+
+                        <Tab id="JQueryUtilityTests" title="JQueryUtility">
+                            <JQueryUtilityTests/>
+                        </Tab>
+
+                        <Tab id="LeftNavTests" title="LeftNav">
+                            <LeftNavTests/>
+                        </Tab>
 
                         <Tab id="AccordionTests" title="Accordion">
                             <AccordionTests/>

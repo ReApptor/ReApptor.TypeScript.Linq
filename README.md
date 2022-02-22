@@ -26,6 +26,23 @@ Run `nx g @nrwl/react:lib my-lib --publishable --importPath @weare/package-name`
 
 Run `npx nx g @nrwl/react:lib my-lib` to generate a library.
 
+## MyGet (npm & nuget) packages
+
+### NuGet
+
+Navigate: <b>Rider / Project / Manage NuGet Packages / Sources / New Source</b>
+
+Name: <b>WeAre NuGet</b>
+
+Url: https://www.myget.org/F/reapptor-apps/auth/c1974203-0797-4879-9034-e16c256c1445/api/v3/index.json
+
+### Npm
+
+Navigate: <b>Rider / Terminal:</b>
+
+Name: <b>@weare</b>
+
+Run `npm config set @weare:registry https://www.myget.org/F/reapptor-apps/auth/c1974203-0797-4879-9034-e16c256c1445/npm/`
 
 ## Code scaffolding
 
