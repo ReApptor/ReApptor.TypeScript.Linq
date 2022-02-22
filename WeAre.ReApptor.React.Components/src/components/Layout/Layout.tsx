@@ -30,7 +30,7 @@ export interface ILayoutProps {
     /**
      * Added to the {@link Layout}'s root elements className.
      */
-    className?: string;
+    className?: string | (() => string | null | undefined);
 
     topNavLogo?: any;
     topNavLogoText?: string;
