@@ -34,7 +34,7 @@ export default class Utility {
 
     public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
         if (this.geoEnabled) {
-            options = options || { timeout: 1000 };
+            options = options || { maximumAge: 30000, timeout: 1000 };
             return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;

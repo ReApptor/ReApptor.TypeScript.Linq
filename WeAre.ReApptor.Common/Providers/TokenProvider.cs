@@ -69,6 +69,9 @@ namespace WeAre.ReApptor.Common.Providers
                 ValidateLifetime = validateLifetime,
             };
 
+            bool emptySecurityStamp = false;
+            bool emptyTokenId = false;
+
             if (validator.CanReadToken(jwtToken))
             {
                 try
@@ -80,27 +83,33 @@ namespace WeAre.ReApptor.Common.Providers
                     string tokenIdClaim = principal.Claims.FirstOrDefault(claim => claim.Type == AthenaeumConstants.ClaimTypes.TokenId)?.Value;
 
                     if ((!string.IsNullOrWhiteSpace(username)) &&
-                        (!string.IsNullOrWhiteSpace(securityStampClaim)) && (Guid.TryParse(securityStampClaim, out Guid securityStamp)) && (securityStamp != Guid.Empty) &&
-                        (!string.IsNullOrWhiteSpace(tokenIdClaim)) && (Guid.TryParse(tokenIdClaim, out Guid tokenId)) && (tokenId != Guid.Empty))
+                        (!string.IsNullOrWhiteSpace(securityStampClaim)) && (Guid.TryParse(securityStampClaim, out Guid securityStamp)) &&
+                        (!string.IsNullOrWhiteSpace(tokenIdClaim)) && (Guid.TryParse(tokenIdClaim, out Guid tokenId)))
                     {
-                        TTokenData userData = null;
+                        emptySecurityStamp = (securityStamp == Guid.Empty);
+                        emptyTokenId = (tokenId == Guid.Empty);
 
-                        if (principal.HasClaim(c => c.Type == AthenaeumConstants.ClaimTypes.UserData))
+                        if ((!emptySecurityStamp) && (!emptyTokenId))
                         {
-                            string userDataJson = principal.Claims.First(c => c.Type == AthenaeumConstants.ClaimTypes.UserData).Value;
-                            if (!string.IsNullOrWhiteSpace(userDataJson))
+                            TTokenData userData = null;
+
+                            if (principal.HasClaim(c => c.Type == AthenaeumConstants.ClaimTypes.UserData))
                             {
-                                userData = TokenData.Deserialize<TTokenData>(userDataJson);
+                                string userDataJson = principal.Claims.First(c => c.Type == AthenaeumConstants.ClaimTypes.UserData).Value;
+                                if (!string.IsNullOrWhiteSpace(userDataJson))
+                                {
+                                    userData = TokenData.Deserialize<TTokenData>(userDataJson);
+                                }
                             }
-                        }
 
-                        return new TokenInfo
-                        {
-                            Id = tokenId,
-                            SecurityStamp = securityStamp,
-                            Username = username,
-                            Data = userData
-                        };
+                            return new TokenInfo
+                            {
+                                Id = tokenId,
+                                SecurityStamp = securityStamp,
+                                Username = username,
+                                Data = userData
+                            };
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -109,7 +118,19 @@ namespace WeAre.ReApptor.Common.Providers
                 }
             }
 
-            throw new InvalidOperationException("Invalid jwt token. Unable to get Username, SecurityStamp or TokenId from token.");
+            string error = "Invalid jwt token. Unable to get Username, SecurityStamp or TokenId from token.";
+
+            if (emptyTokenId)
+            {
+                error = $"{error}. TokenId is empty.";
+            }
+
+            if (emptySecurityStamp)
+            {
+                error = $"{error}. SecurityStamp is empty.";
+            }
+
+            throw new InvalidOperationException(error);
         }
     }
 }
