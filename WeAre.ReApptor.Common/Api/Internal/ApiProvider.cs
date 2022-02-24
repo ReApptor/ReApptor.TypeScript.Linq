@@ -29,34 +29,34 @@ namespace WeAre.ReApptor.Common.Api.Internal
             return base.InvokeAsync<TRequest, TResponse>(method, action, keys, @params, request, throwNotFound, contentType);
         }
 
-        public new Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
+        public new Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TRequest : class
             where TResponse : class
         {
-            return base.InvokeAsync<TRequest, TResponse>(action, keys, @params, request, throwNotFound);
+            return base.InvokeAsync<TRequest, TResponse>(action, keys, @params, request, throwNotFound, userAgent, acceptEncoding);
         }
 
-        public new Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        public new Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
-            return base.InvokeAsync<TResponse>(method, action, keys, @params, throwNotFound);
+            return base.InvokeAsync<TResponse>(method, action, keys, @params, throwNotFound, userAgent, acceptEncoding);
         }
         
-        public new Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        public new Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
-            return base.InvokeAsync<TResponse>(method, action, form, keys, @params, throwNotFound);
+            return base.InvokeAsync<TResponse>(method, action, form, keys, @params, throwNotFound, userAgent, acceptEncoding);
         }
 
-        public new Task<TResponse> InvokeAsync<TResponse>(string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        public new Task<TResponse> InvokeAsync<TResponse>(string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
-            return base.InvokeAsync<TResponse>(action, keys, @params, throwNotFound);
+            return base.InvokeAsync<TResponse>(action, keys, @params, throwNotFound, userAgent, acceptEncoding);
         }
 
-        public new Task InvokeAsync(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        public new Task InvokeAsync(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
         {
-            return base.InvokeAsync(method, action, keys, @params, throwNotFound);
+            return base.InvokeAsync(method, action, keys, @params, throwNotFound, userAgent, acceptEncoding);
         }
         
         #endregion

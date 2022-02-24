@@ -156,15 +156,25 @@ namespace WeAre.ReApptor.Common.Api
             return Task.FromResult(0);
         }
 
-        protected virtual async Task<HttpClient> GetHttpClientAsync()
+        protected virtual async Task<HttpClient> GetHttpClientAsync(string userAgent = null, string acceptEncoding = null)
         {
-            HttpClient client = CreateHttpClient();
+            HttpClient httpClient = CreateHttpClient();
 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if (!string.IsNullOrWhiteSpace(userAgent))
+            {
+                httpClient.DefaultRequestHeaders.Add("User-Agent", userAgent);
+            }
+
+            if (string.IsNullOrWhiteSpace(acceptEncoding))
+            {
+                acceptEncoding = "application/json";
+            }
+            
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptEncoding));
 
             if (_settings.TimeoutInSeconds > 0)
             {
-                client.Timeout = TimeSpan.FromSeconds(_settings.TimeoutInSeconds);
+                httpClient.Timeout = TimeSpan.FromSeconds(_settings.TimeoutInSeconds);
             }
 
             if (!_authorizing)
@@ -172,7 +182,7 @@ namespace WeAre.ReApptor.Common.Api
                 try
                 {
                     _authorizing = true;
-                    await AuthorizeAsync(client);
+                    await AuthorizeAsync(httpClient);
                 }
                 finally
                 {
@@ -180,53 +190,53 @@ namespace WeAre.ReApptor.Common.Api
                 }
             }
 
-            return client;
+            return httpClient;
         }
 
-        protected async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
+        protected async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null, string userAgent = null, string acceptEncoding = null)
         {
-            using HttpClient tkHttpClient = await GetHttpClientAsync();
+            using HttpClient httpClient = await GetHttpClientAsync(userAgent, acceptEncoding);
 
             method ??= (content != null) ? HttpMethod.Post : HttpMethod.Get;
 
             if (method == HttpMethod.Get)
             {
-                return await tkHttpClient.GetAsync(url);
+                return await httpClient.GetAsync(url);
             }
 
             if (method == HttpMethod.Delete)
             {
-                return await tkHttpClient.DeleteAsync(url);
+                return await httpClient.DeleteAsync(url);
             }
 
             if (method == HttpMethod.Put)
             {
-                return await tkHttpClient.PutAsync(url, content);
+                return await httpClient.PutAsync(url, content);
             }
 
             if (method == HttpMethod.Post)
             {
-                return await tkHttpClient.PostAsync(url, content);
+                return await httpClient.PostAsync(url, content);
             }
 
             if (method == HttpMethod.Patch)
             {
-                return await tkHttpClient.PatchAsync(url, content);
+                return await httpClient.PatchAsync(url, content);
             }
 
             return (content != null)
-                ? await tkHttpClient.PostAsync(url, content)
-                : await tkHttpClient.GetAsync(url);
+                ? await httpClient.PostAsync(url, content)
+                : await httpClient.GetAsync(url);
         }
 
         #region Invokes
 
-        private async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, HttpContent content, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        private async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, HttpContent content, string userAgent = null, string acceptEncoding = null, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
             where TResponse : class
         {
             string url = GetUrl(action, keys, @params);
 
-            HttpResponseMessage httpResponse = await Utility.InvokeAsync(() => SendAsync(url, method, content), 3);
+            HttpResponseMessage httpResponse = await Utility.InvokeAsync(() => SendAsync(url, method, content, userAgent, acceptEncoding), 3);
 
             string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
 
@@ -256,7 +266,7 @@ namespace WeAre.ReApptor.Common.Api
             return response;
         }
 
-        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string contentType = null)
+        protected async Task<TResponse> InvokeAsync<TRequest, TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string contentType = null, string userAgent = null, string acceptEncoding = null)
             where TRequest : class
             where TResponse : class
         {
@@ -285,39 +295,39 @@ namespace WeAre.ReApptor.Common.Api
                 }
             }
 
-            return await InvokeAsync<TResponse>(method, action, content, keys, @params, throwNotFound);
+            return await InvokeAsync<TResponse>(method, action, content, userAgent, acceptEncoding, keys, @params, throwNotFound);
         }
 
-        protected async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        protected async Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, IEnumerable<KeyValuePair<string, string>> form, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
             using var content = new FormUrlEncodedContent(form);
 
-            return await InvokeAsync<TResponse>(method, action, content, keys, @params, throwNotFound);
+            return await InvokeAsync<TResponse>(method, action, content, userAgent, acceptEncoding, keys, @params, throwNotFound);
         }
 
-        protected Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true)
+        protected Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, string[] keys = null, (string, object)[] @params = null, TRequest request = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TRequest : class
             where TResponse : class
         {
-            return InvokeAsync<TRequest, TResponse>(null, action, keys, @params, request, throwNotFound: throwNotFound);
+            return InvokeAsync<TRequest, TResponse>(null, action, keys, @params, request, throwNotFound: throwNotFound, userAgent: userAgent, acceptEncoding: acceptEncoding);
         }
 
-        protected Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        protected Task<TResponse> InvokeAsync<TResponse>(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
-            return InvokeAsync<object, TResponse>(method, action, keys, @params, throwNotFound: throwNotFound);
+            return InvokeAsync<object, TResponse>(method, action, keys, @params, throwNotFound: throwNotFound, userAgent: userAgent, acceptEncoding: acceptEncoding);
         }
 
-        protected Task<TResponse> InvokeAsync<TResponse>(string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        protected Task<TResponse> InvokeAsync<TResponse>(string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
             where TResponse : class
         {
-            return InvokeAsync<object, TResponse>(null, action, keys, @params, throwNotFound: throwNotFound);
+            return InvokeAsync<object, TResponse>(null, action, keys, @params, throwNotFound: throwNotFound, userAgent: userAgent, acceptEncoding: acceptEncoding);
         }
 
-        protected Task InvokeAsync(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true)
+        protected Task InvokeAsync(HttpMethod method, string action, string[] keys = null, (string, object)[] @params = null, bool throwNotFound = true, string userAgent = null, string acceptEncoding = null)
         {
-            return InvokeAsync<object, object>(method, action, keys, @params, throwNotFound: throwNotFound);
+            return InvokeAsync<object, object>(method, action, keys, @params, throwNotFound: throwNotFound, userAgent: userAgent, acceptEncoding: acceptEncoding);
         }
 
         #endregion
