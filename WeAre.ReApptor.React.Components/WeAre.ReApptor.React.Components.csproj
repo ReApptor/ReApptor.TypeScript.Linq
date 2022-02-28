@@ -38,11 +38,6 @@
       <TypeScriptCompile Include="src\components\Grid\TotalRow\TotalRow.tsx" />
       <TypeScriptCompile Include="src\components\Icon\Icon.tsx" />
       <TypeScriptCompile Include="src\components\Icon\IconAction.tsx\IconAction.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageInputCropperModal\CropperHelpers.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageInputCropperModal\ImageInputCropperModal.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageInputListItem\ImageInputListItem.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageInputPreviewModal\ImageInputPreviewModal.tsx" />
-      <TypeScriptCompile Include="src\components\ImageInput\ImageInputToolbar\ImageInputToolbar.tsx" />
       <TypeScriptCompile Include="src\components\ImageModal\ImageModal.tsx" />
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
       <TypeScriptCompile Include="src\components\LeftNav\LeftNav.tsx" />
@@ -109,6 +104,8 @@
       <None Remove="etc\**" />
       <None Remove="temp\**" />
       <None Remove="tsdoc-metadata.json" />
+      <None Remove="Test.js" />
+      <None Remove="Test2.js" />
     </ItemGroup>
 
 </Project>
