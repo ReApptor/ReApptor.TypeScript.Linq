@@ -1,6 +1,6 @@
 import {Utility, GeoLocation, GeoCoordinate} from "@weare/reapptor-toolkit";
 import {PageRoute} from "@weare/reapptor-react-common";
-import { SelectListItem, StatusListItem } from "../components/Dropdown/SelectListItem";
+import { SelectListItem, StatusListItem } from "@weare/reapptor-react-components";
 import AddressHelper from "./AddressHelper";
 
 export default class Comparator {
@@ -10,7 +10,7 @@ export default class Comparator {
     }
 
     private static isEqualGeoLocation(x: GeoLocation, y: GeoLocation): boolean {
-        if (x.formattedAddress === y.formattedAddress) {
+        if ((x.formattedAddress) && (y.formattedAddress) && (x.formattedAddress === y.formattedAddress)) {
             return true;
         }
 
