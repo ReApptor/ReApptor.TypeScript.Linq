@@ -111,7 +111,7 @@ export default class AddressHelper {
         return (location.lat > 0 && location.lon > 0);
     }
 
-    public static async createMapAsync(element: HTMLDivElement, center: GeoCoordinate | null = null, zoom: number = 16): Promise<google.maps.Map> {
+    public static async createMapAsync(element: HTMLDivElement,  center: GeoCoordinate | null = null, zoom: number = 16): Promise<google.maps.Map> {
         center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || AthenaeumComponentsConstants.defaultLocation;
 
         const centerGoogle = new this.google.maps.LatLng(center!.lat, center!.lon);
