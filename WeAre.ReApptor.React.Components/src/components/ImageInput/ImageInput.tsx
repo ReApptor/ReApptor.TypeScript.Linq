@@ -162,7 +162,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Getters
 
     private get hasSelectedPictureIndex(): boolean {
-        return Comparator.isNumber(this.state.selectedPictureIndex);
+        return (this.state.selectedPictureIndex != null);
     }
 
     private get selectedPictureIndex(): number | null {
@@ -170,11 +170,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get currentView(): ImageInputView {
-        return ImageInput.assertIsImageInputView(this.state.currentView);
+        return this.state.currentView;
     }
 
     private get previousView(): ImageInputView {
-        return ImageInput.assertIsImageInputView(this.state.previousView);
+        return this.state.previousView;
     }
 
     private get isDragOver(): boolean {
@@ -262,7 +262,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private get acceptedTypes(): string {
-        return (this.props.fileTypes && this.props.fileTypes.length)
+        return ((this.props.fileTypes) && (this.props.fileTypes.length))
             ? this.props.fileTypes.join(",")
             : "image/*";
     }
@@ -544,7 +544,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async setCurrentViewAsync(currentView: ImageInputView): Promise<void> {
-        if (this.currentView !== ImageInput.assertIsImageInputView(currentView)) {
+        if (this.currentView != currentView) {
             await this.setState({
                 previousView: this.currentView,
                 currentView
@@ -1152,18 +1152,5 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                 resolve(null);
             };
         });
-    }
-
-    private static assertIsImageInputView(value: any): ImageInputView {
-        switch (value) {
-            case ImageInputView.Default:
-                return ImageInputView.Default;
-            case ImageInputView.Preview:
-                return ImageInputView.Preview;
-            case ImageInputView.Edit:
-                return ImageInputView.Edit;
-            default:
-                throw new TypeError("value is not of type ImageInputView");
-        }
     }
 }

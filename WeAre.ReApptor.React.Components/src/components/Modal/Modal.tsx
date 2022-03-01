@@ -42,6 +42,16 @@ interface IModalProps<TData = {}> {
      */
     content?: string;
 
+    /**
+     * True to disable modal is responsive (full window in mobile view).
+     */
+    notResponsive?: boolean;
+
+    /**
+     * Set to true o hide the modal header
+     */
+    noHeader?: boolean;
+    
     info?: boolean;
     className?: string;
     contentClassName?: string;
@@ -100,7 +110,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     private get sizeStyle(): string {
-        if (this.mobile) {
+        if (this.fullWindow) {
             return (this._animation) ? "mobile" : "mobile animation";
         }
 
@@ -131,6 +141,21 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return this.props.info || false;
     }
 
+    public get notResponsive(): boolean {
+        return (this.props.notResponsive == true);
+    }
+
+    /**
+     * The modal takes the full size of the window (if mobile is true and responsive is true)
+     */
+    public get fullWindow(): boolean {
+        return (!this.notResponsive) && (this.mobile);
+    }
+
+    public get noHeader(): boolean {
+        return (this.props.noHeader === true);
+    }
+
     public getBodyNode(): JQuery {
         return this.JQuery(`#${this.id}_body`);
     }
@@ -158,7 +183,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     //  Logics
 
     private togglePageScroll(toggle: boolean): void {
-        if (this.mobile) {
+        if (this.fullWindow) {
             return
         }
 
@@ -185,7 +210,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             this.setData(this.transformData(data));
         }
 
-        if (this.mobile) {
+        if (this.fullWindow) {
             this.JQuery("body").addClass("mobile");
         }
 
@@ -195,7 +220,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private async onCloseHandlerAsync(): Promise<void> {
         this.togglePageScroll(false);
 
-        if (this.mobile) {
+        if (this.fullWindow) {
             this.JQuery("body").removeClass("mobile");
         }
 
@@ -356,31 +381,31 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     //  PropsMethodCallHelpers
 
-    async onPropBeforeOpen(): Promise<void> {
+    private async onPropBeforeOpen(): Promise<void> {
         if (this.props.onBeforeOpen) {
             await this.props.onBeforeOpen(this);
         }
     }
 
-    async onPropBeforeClose(): Promise<void> {
+    private async onPropBeforeClose(): Promise<void> {
         if (this.props.onBeforeClose) {
             await this.props.onBeforeClose(this);
         }
     }
 
-    async onPropOpen(): Promise<void> {
+    private async onPropOpen(): Promise<void> {
         if (this.props.onOpen) {
             await this.props.onOpen(this);
         }
     }
 
-    async onPropClose(): Promise<void> {
+    private async onPropClose(): Promise<void> {
         if (this.props.onClose) {
             await this.props.onClose(this);
         }
     }
 
-    async onPropToggle(isOpen: boolean): Promise<void> {
+    private async onPropToggle(isOpen: boolean): Promise<void> {
         if (this.props.onToggle) {
             await this.props.onToggle(this, isOpen);
         }
@@ -415,45 +440,57 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     public renderModal(): React.ReactNode {
         const modalContentStyle: any = (this.props.size === ModalSize.Auto) && "w-auto";
-        const toolbarStyle: any = (this.mobile) ? "mobile-toolbar" : "toolbar";
-        const infoContentStyle: any = this.props.keepTextFormatting ? "textFormatting" : "";
+        const infoContentStyle: any = this.props.keepTextFormatting && "textFormatting";
+        const centeredStyle: any = (!this.fullWindow) && "modal-dialog-centered";
+        const toolbarStyle: any = (this.fullWindow) ? "mobile-toolbar" : "toolbar";
 
         return (
-            <div id={this.id} ref={this._modalRef}
-                 tabIndex={-1} role="dialog"
+            <div id={this.id}
+                 ref={this._modalRef}
+                 tabIndex={-1}
+                 role="dialog"
                  className={this.css("modal", this.props.className)}
             >
 
-                <div className={this.css("modal-dialog", this.desktop && "modal-dialog-centered", this.sizeStyle)} role="document">
+                <div className={this.css("modal-dialog", centeredStyle, this.sizeStyle)} role="document">
 
                     <div className={this.css("modal-content", modalContentStyle, this.props.contentClassName)}>
-                        <div className="modal-header">
-                            <div className="modal-header-content">
-                                <h5 className="modal-title">{this.toMultiLines(this.title)}</h5>
-                                <h6 className="modal-title">{this.toMultiLines(this.subtitle)}</h6>
-                            </div>
 
-                            <div className={toolbarStyle}>
+                        {
+                            (!this.noHeader) &&
+                            (
+                                <div className="modal-header">
 
-                                {
-                                    this.renderToolbar()
-                                }
+                                    <div className="modal-header-content">
+                                        <h5 className="modal-title">{this.toMultiLines(this.title)}</h5>
+                                        <h6 className="modal-title">{this.toMultiLines(this.subtitle)}</h6>
+                                    </div>
 
-                                {
-                                    <Icon
-                                        name={this.mobile ? "chevron-down" : "times"}
-                                        className={this.mobile ? "" : "dismiss"}
-                                        style={IconStyle.Regular}
-                                        size={IconSize.X2}
-                                        onClick={() => this.onCloseButtonClick()}
-                                    />
-                                }
+                                    <div className={toolbarStyle}>
 
-                            </div>
+                                        {
+                                            this.renderToolbar()
+                                        }
 
-                        </div>
+                                        {
+                                            <Icon name={this.fullWindow ? "chevron-down" : "times"}
+                                                  className={this.fullWindow ? "" : "dismiss"}
+                                                  style={IconStyle.Regular}
+                                                  size={IconSize.X2}
+                                                  onClick={() => this.onCloseButtonClick()}
+                                            />
+                                        }
 
-                        <div id={`${this.id}_body`} ref={this._modalBodyRef} className={this.css("modal-body", this.props.bodyClassName)} onClick={(e: React.MouseEvent) => this.onModalBodyClick(e)}>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        <div id={`${this.id}_body`}
+                             ref={this._modalBodyRef}
+                             className={this.css("modal-body", this.props.bodyClassName)}
+                             onClick={(e: React.MouseEvent) => this.onModalBodyClick(e)}
+                        >
 
                             {
                                 (!this.props.children) &&

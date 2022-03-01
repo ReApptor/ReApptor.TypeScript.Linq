@@ -1,9 +1,10 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import {MarkerClusterer} from "@googlemaps/markerclusterer";
+import Comparator from "../../helpers/Comparator";
+import {GeoCoordinate} from "@weare/reapptor-toolkit";
 
 import styles from "./GoogleMap.module.scss";
-
 
 /**
  * A marker displayed in a {@link GoogleMap}.
@@ -23,6 +24,10 @@ export interface IGoogleMapInfoWindow extends google.maps.InfoWindowOptions {
 }
 
 export interface IGoogleMapProps {
+    /**
+     * Classname added to the root element of the {@link GoogleMap}.
+     */
+    className?: string;
 
     /**
      * Height of the map. Without a specified height, the map will be rendered with a height of one pixel.
@@ -32,22 +37,17 @@ export interface IGoogleMapProps {
     /**
      * Initial center coordinates of the map.
      */
-    initialCenter: google.maps.LatLngLiteral;
+    center: google.maps.LatLngLiteral | GeoCoordinate;
 
     /**
-     * Initial zoom-level of the map. Must be a positive number with a maximum value defined in Google Maps documentation.
+     * Zoom-level of the map. Must be a positive number with a maximum value defined in Google Maps documentation.
      */
-    initialZoom: number;
+    zoom: number;
 
     /**
      * Should {@link IGoogleMapInfoWindow}'s displayed on the {@link GoogleMap} be automatically closed when a click happens outside of them.
      */
     autoCloseInfoWindows?: boolean;
-
-    /**
-     * Classname added to the root element of the {@link GoogleMap}.
-     */
-    className?: string;
 
     /**
      * Should markers be clustered together.
@@ -56,12 +56,23 @@ export interface IGoogleMapProps {
      */
     clusterMarkers?: boolean;
 
+    /** The initial display options for the Street View Pegman control. */
+    streetViewControl?: boolean;
+
+    /** The enabled/disabled state of the Fullscreen control. */
+    fullscreenControl?: boolean;
+
+    /** The initial enabled/disabled state of the Map type control. */
+    mapTypeControl?: boolean;
+
     /**
      * Markers which are displayed on the map.
      *
      * @default []
      */
     markers?: IGoogleMapMarker[];
+
+    polyLinePath?: google.maps.LatLng[];
 
     /**
      * Called when the map is clicked.
@@ -100,6 +111,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     private _mapClickEventListener: google.maps.MapsEventListener | null = null;
     private _markers: google.maps.Marker[] = [];
     private _infoWindows: IGoogleMapInternalInfoWindow[] = [];
+    private _polyline: google.maps.Polyline | null = null;
 
     public state: IGoogleMapState = {
     };
@@ -118,30 +130,35 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
         return this._googleMap!;
     }
 
+    private get polylinePath(): google.maps.LatLng[] | null {
+        return this.props.polyLinePath || null;
+    }
+    
+    private get center(): google.maps.LatLngLiteral {
+        const center: google.maps.LatLngLiteral | GeoCoordinate = this.props.center;
+        if ((center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
+            const coordinate = center as GeoCoordinate;
+            return { lat: coordinate.lat, lng: coordinate.lon } as google.maps.LatLngLiteral;
+        }
+        return center;
+    }
+
     // Methods
 
-    private async handlePropsAsync(): Promise<void> {
+    private async handlePropsAsync(newEvent: boolean = true, newMarkers: boolean = true, newPolyLine: boolean = true, newZoom: boolean = false, newCenter: boolean = false): Promise<void> {
 
-        this._markers
-            .forEach(
-                internalMarker =>
-                    internalMarker.setMap(null));
+        if (newMarkers) {
+            this._markers.forEach(internalMarker => internalMarker.setMap(null));
 
-        this._markerClusterer.clearMarkers();
+            this._markerClusterer.clearMarkers();
 
-        this._infoWindows
-            .forEach(
-                internalInfoWindow =>
-                    internalInfoWindow.close());
+            this._infoWindows.forEach(internalInfoWindow => internalInfoWindow.close());
 
-        this._infoWindows = [];
+            this._infoWindows = [];
 
-        const newMarkers: IGoogleMapMarker[] = this.props.markers ?? [];
+            const markers: IGoogleMapMarker[] = this.props.markers ?? [];
 
-        this._markers = newMarkers
-            .map(
-                newMarker => {
-
+            this._markers = markers.map(newMarker => {
                     const internalMarker: google.maps.Marker = new google.maps.Marker(newMarker);
 
                     if (newMarker.infoWindow) {
@@ -150,46 +167,51 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
                         this._infoWindows.push(internalInfoWindow);
 
-                        internalMarker.addListener(
-                            "click",
-                            () => {
+                        internalMarker.addListener("click", () => {
+                            internalInfoWindow.isOpen = !internalInfoWindow.isOpen;
+                            if (internalInfoWindow.isOpen) {
 
-                                internalInfoWindow.isOpen = !internalInfoWindow.isOpen;
+                                internalInfoWindow.open(this.googleMap);
 
-                                if (internalInfoWindow.isOpen) {
-
-                                    internalInfoWindow.open(this.googleMap);
-
-                                    if (this.autoCloseInfoWindows) {
-                                        this.closeInfoWindows(internalInfoWindow);
-                                    }
+                                if (this.autoCloseInfoWindows) {
+                                    this.closeInfoWindows(internalInfoWindow);
                                 }
-                                else {
-                                    internalInfoWindow.close();
-                                }
-                            });
+                            } else {
+                                internalInfoWindow.close();
+                            }
+                        });
                     }
 
                     return internalMarker;
                 }
-        );
+            );
 
-        if (this.clusterMarkers) {
-            this._markerClusterer.setMap(this.googleMap);
-            this._markerClusterer.addMarkers(this._markers);
-        }
-        else {
-            this._markerClusterer.setMap(null);
-            this._markers
-                .forEach(
-                    internalMarker =>
-                        internalMarker.setMap(this.googleMap));
+            if (this.clusterMarkers) {
+                this._markerClusterer.setMap(this.googleMap);
+                this._markerClusterer.addMarkers(this._markers);
+            } else {
+                this._markerClusterer.setMap(null);
+                this._markers.forEach(internalMarker => internalMarker.setMap(this.googleMap));
+            }
         }
 
-        this._mapClickEventListener?.remove();
-        this._mapClickEventListener = this.googleMap.addListener(
-            "click",
-            async () => await this.onMapClickAsync());
+        if (newPolyLine) {
+            this._polyline?.setMap(null);
+            this.setPolyline();
+        }
+
+        if (newEvent) {
+            this._mapClickEventListener?.remove();
+            this._mapClickEventListener = this.googleMap.addListener("click", async () => await this.onMapClickAsync());
+        }
+
+        if (newZoom) {
+            this.googleMap.setZoom(this.props.zoom);
+        }
+
+        if (newCenter) {
+            this.googleMap.setCenter(this.center);
+        }
     }
 
     private async onMapClickAsync(): Promise<void> {
@@ -207,30 +229,72 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
      * @param except {@link IGoogleMapInternalInfoWindow} to keep open.
      */
     private closeInfoWindows(except?: IGoogleMapInternalInfoWindow): void {
-        this._infoWindows
-            .forEach(
-                internalInfoWindow => {
-                    if (except !== internalInfoWindow ) {
-                        internalInfoWindow.isOpen = false;
-                        internalInfoWindow.close();
-                    }
-                });
+        this._infoWindows.forEach(internalInfoWindow => {
+            if (except !== internalInfoWindow) {
+                internalInfoWindow.isOpen = false;
+                internalInfoWindow.close();
+            }
+        });
+    }
+
+    private setPolyline(): void {
+        if ((this._googleMap) && (this.polylinePath)) {
+            
+            const lineSymbol: google.maps.Symbol = {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillOpacity: 1,
+                strokeOpacity: 1,
+                strokeWeight: 2,
+                fillColor: '#173443',
+                strokeColor: '#98c8e5',
+                scale: 5
+            };
+
+            this._polyline = new google.maps.Polyline({
+                path: this.polylinePath,
+                map: this._googleMap,
+                clickable: false,
+                geodesic: true,
+                strokeColor: "black",
+                strokeOpacity: 0.1,
+                strokeWeight: 5,
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '0',
+                    repeat: '20px'
+                }],
+            });
+            
+        }
     }
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
 
-        this._googleMap = new google.maps.Map(this._googleMapDiv.current!, {
-            center: this.props.initialCenter,
-            zoom: this.props.initialZoom,
-        });
+        const options = {
+            streetViewControl: this.props.streetViewControl ?? true,
+            fullscreenControl: this.props.fullscreenControl ?? true,
+            mapTypeControl: this.props.mapTypeControl ?? true,
+            center: this.center,
+            zoom: this.props.zoom,
+        };
+
+        //this._googleMap = await AddressHelper.createMapAsync(this._googleMapDiv.current!, options)
+        
+        this._googleMap = new google.maps.Map(this._googleMapDiv.current!, options);
 
         await this.handlePropsAsync();
     }
 
-    public async UNSAFE_componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
+    public async componentWillReceiveProps(nextProps: IGoogleMapProps): Promise<void> {
+        const newMarkers: boolean = (!Comparator.isEqual(nextProps.markers, this.props.markers));
+        const newCenter: boolean = (!Comparator.isEqual(nextProps.center, this.props.center));
+        const newZoom: boolean = (nextProps.zoom != this.props.zoom);
+        const newPolyLinePath: boolean = (!Comparator.isEqual(nextProps.polyLinePath, this.props.polyLinePath));
+        
         await super.componentWillReceiveProps(nextProps);
-        await this.handlePropsAsync();
+        
+        await this.handlePropsAsync(false, newMarkers, newPolyLinePath, newZoom, newCenter);
     }
 
     /**

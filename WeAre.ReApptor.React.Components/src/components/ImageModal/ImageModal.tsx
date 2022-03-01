@@ -15,6 +15,8 @@ interface IImageModalProps {
     picture?: FileModel;
     size?: ModalSize;
     download?: boolean;
+    notResponsive?: boolean;
+    noHeader?: boolean;
     
     imageUrl?(file: FileModel): string;
 }
@@ -113,6 +115,8 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
                    title={this.props.title}
                    subtitle={this.subtitle}
                    size={this.props.size}
+                   notResponsive={this.props.notResponsive}
+                   noHeader={this.props.noHeader}
             >
                 <div>
                     {
@@ -132,7 +136,10 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
                 {
                     (this.props.download && this.picture) &&
                     (
-                        <Button type={ButtonType.Orange} onClick={async () => await this.download()} label={ImageModalLocalizer.download} />
+                        <Button type={ButtonType.Orange}
+                                onClick={async () => await this.download()}
+                                label={ImageModalLocalizer.download}
+                        />
                     )
                 }
                 
