@@ -1,23 +1,27 @@
 import React from "react";
 import {FileModel} from "@weare/reapptor-toolkit";
 import {BaseComponent, ch, DocumentPreviewSize} from "@weare/reapptor-react-common";
-import {Button, Checkbox, Modal, ImageModal, ModalSize} from "@weare/reapptor-react-components";
+import {Button, Checkbox, Modal, ImageModal, ModalSize, Form} from "@weare/reapptor-react-components";
 import {samplePdf} from './samplePdf';
 import {sampleImage} from './sampleImage';
 
 interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
+    notResponsive: boolean;
+    noHeader: boolean;
 }
 
 export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
 
     state: IModalTestsState = {
-        documentPreviewSize: DocumentPreviewSize.Medium
+        documentPreviewSize: DocumentPreviewSize.Medium,
+        notResponsive: false,
+        "noHeader": false,
     };
 
     private readonly _document1: FileModel = new FileModel(samplePdf);
 
-    get exampleImageFileModel(): FileModel {
+    public get exampleImageFileModel(): FileModel {
         const fileModel = new FileModel(sampleImage);
 
         fileModel.type = "image/jpeg";
@@ -33,11 +37,28 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
         return (
             <React.Fragment>
 
-                <Modal id={"modal_1"} title={"Modal #1"}>
+                <Form>
+
+                    <Checkbox inline
+                              label="Not responsive"
+                              value={this.state.notResponsive}
+                              onChange={async (sender, value) => {await this.setState({notResponsive: value})}}
+                    />
+
+                    <Checkbox inline
+                              label="No header"
+                              value={this.state.noHeader}
+                              onChange={async (sender, value) => {await this.setState({noHeader: value})}}
+                    />
+
+                </Form>
+
+
+                <Modal id={"modal_1"} title={"Modal #1"} notResponsive={this.state.notResponsive} noHeader={this.state.noHeader}>
                     <p>Test content for modal #1</p>
                 </Modal>
 
-                <Button label={"Open modal #1"} toggleModal dataTarget={"modal_1"} />
+                <Button label={"Open modal #1"} toggleModal dataTarget={"modal_1"}/>
 
                 <Checkbox label={"Large document size"} inline
                           value={this.state.documentPreviewSize == DocumentPreviewSize.Large}
@@ -46,7 +67,13 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
 
                 <Button label={"Document preview #1"} onClick={async () => await ch.preloadedDocumentPreviewAsync(this._document1, "document 1", this.state.documentPreviewSize)} />
 
-                <ImageModal id={"imageModal_1"} title={"ImageModal"} picture={this.exampleImageFileModel} size={ModalSize.ExtraLarge}/>
+                <ImageModal id={"imageModal_1"} 
+                            title={"ImageModal"} 
+                            picture={this.exampleImageFileModel} 
+                            size={ModalSize.ExtraLarge}
+                            notResponsive={this.state.notResponsive}
+                            noHeader={this.state.noHeader}
+                />
 
                 <Button label={"Open ImageModal #1"} toggleModal dataTarget={"imageModal_1"} />
 
