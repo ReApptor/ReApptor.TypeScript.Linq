@@ -111,17 +111,23 @@ export default class AddressHelper {
         return (location.lat > 0 && location.lon > 0);
     }
 
-    public static async createMapAsync(element: HTMLDivElement,  center: GeoCoordinate | null = null, zoom: number = 16): Promise<google.maps.Map> {
-        center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || AthenaeumComponentsConstants.defaultLocation;
+    public static async createMapAsync(element: HTMLDivElement, center?: GeoLocation | GeoCoordinate | null, zoom?: number | null, options?: google.maps.MapOptions | null): Promise<google.maps.Map> {
+        if (!options) {
+            options = {};
+        }
 
-        const centerGoogle = new this.google.maps.LatLng(center!.lat, center!.lon);
-        
-        return new this.google.maps.Map(element, {
-            zoom: zoom,
-            center: centerGoogle
-        });
+        if (!options.zoom) {
+            options.zoom = zoom || 16;
+        }
+
+        if (!options.center) {
+            center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || AthenaeumComponentsConstants.defaultLocation;
+            options.center = new this.google.maps.LatLng(center!.lat, center!.lon);
+        }
+
+        return new this.google.maps.Map(element, options);
     }
-
+    
     public static async addMarkerAsync(position: google.maps.LatLng | GeoCoordinate, map: google.maps.Map): Promise<google.maps.Marker> {
         if (position instanceof GeoCoordinate) {
             position = this.toGoogleCoordinate(position);
@@ -245,20 +251,22 @@ export default class AddressHelper {
         return countryCodeOrName;
     }
 
-    public static extractCoordinate(formattedAddress: string): GeoCoordinate | null {
-        const index: number = formattedAddress.indexOf("#");
-        if (index > 0) {
-            let items: string[] = formattedAddress.split("#");
-            
-            if ((items.length > 1) && (items[1])) {
-                items = items[1].split(",");
-                
-                if (items.length > 1 && items[0] && items[1]) {
-                    const lat: number = Number(items[0]);
-                    const lon: number = Number(items[1]);
-                    
-                    if ((!isNaN(lat) && isFinite(lat) && lat > 0) && (!isNaN(lon) && isFinite(lon) && lon > 0)) {
-                        return new GeoCoordinate(lat, lon);
+    public static extractCoordinate(formattedAddress: string | null | undefined): GeoCoordinate | null {
+        if (formattedAddress) {
+            const index: number = formattedAddress.indexOf("#");
+            if (index > 0) {
+                let items: string[] = formattedAddress.split("#");
+
+                if ((items.length > 1) && (items[1])) {
+                    items = items[1].split(",");
+
+                    if (items.length > 1 && items[0] && items[1]) {
+                        const lat: number = Number(items[0]);
+                        const lon: number = Number(items[1]);
+
+                        if ((!isNaN(lat) && isFinite(lat) && lat > 0) && (!isNaN(lon) && isFinite(lon) && lon > 0)) {
+                            return new GeoCoordinate(lat, lon);
+                        }
                     }
                 }
             }
@@ -333,10 +341,10 @@ export default class AddressHelper {
         return geoLocation;
     }
     
-    public static getCoordinate(location: GeoLocation): GeoCoordinate | null {
+    public static getCoordinate(location: GeoCoordinate | GeoLocation): GeoCoordinate | null {
         return (this.hasCoordinates(location))
             ? location
-            : this.extractCoordinate(location.formattedAddress);
+            : this.extractCoordinate((location as GeoLocation).formattedAddress);
     }
     
     public static async findLocationByLatLngAsync(latLng: google.maps.LatLng): Promise<GeoLocation | null> {
