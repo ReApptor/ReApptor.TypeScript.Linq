@@ -8,6 +8,8 @@ import {AddressHelper} from "../../index";
 
 import styles from "./GoogleMap.module.scss";
 
+export type TGoogleMapMarkerCallback = (sender: GoogleMap, marker: IGoogleMapMarker, coordinate: GeoCoordinate) => Promise<void>;
+
 /**
  * A marker displayed in a {@link GoogleMap}.
  */
@@ -18,8 +20,8 @@ export interface IGoogleMapMarker extends google.maps.MarkerOptions {
      */
     infoWindow?: IGoogleMapInfoWindow;
     
-    onClick?(sender: GoogleMap, marker: IGoogleMapMarker): Promise<void>;
-    onDoubleClick?(sender: GoogleMap, marker: IGoogleMapMarker): Promise<void>;
+    onClick?: TGoogleMapMarkerCallback;
+    onDoubleClick?: TGoogleMapMarkerCallback;
 }
 
 /**
@@ -178,7 +180,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
                         this._infoWindows.push(internalInfoWindow);
                     }
                     
-                    internalMarker.addListener("click", () => {
+                    internalMarker.addListener("click", (event: google.maps.MapMouseEvent) => {
                         if (internalInfoWindow) {
                             internalInfoWindow.isOpen = !internalInfoWindow.isOpen;
                             if (internalInfoWindow.isOpen) {
@@ -194,13 +196,21 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
                         }
 
                         if (newMarker.onClick) {
-                            newMarker.onClick(this, newMarker);
+                            const lon: number = event.latLng.lng();
+                            const lat: number = event.latLng.lat();
+                            const coordinate = new GeoCoordinate(lat, lon);
+
+                            newMarker.onClick(this, newMarker, coordinate);
                         }
                     });
 
-                    internalMarker.addListener("dblclick", () => {
+                    internalMarker.addListener("dblclick", (event: google.maps.MapMouseEvent) => {
                         if (newMarker.onDoubleClick) {
-                            newMarker.onDoubleClick(this, newMarker);
+                            const lon: number = event.latLng.lng();
+                            const lat: number = event.latLng.lat();
+                            const coordinate = new GeoCoordinate(lat, lon);
+
+                            newMarker.onDoubleClick(this, newMarker, coordinate);
                         }
                     });
 
@@ -246,7 +256,6 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
             const lon: number = event.latLng.lng();
             const lat: number = event.latLng.lat();
-
             const coordinate = new GeoCoordinate(lat, lon);
 
             await this.props.onClick(this, coordinate);
