@@ -45,10 +45,14 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
 
             if (this.state.markersWithInfoWindows) {
                 marker.infoWindow = {
-                    content: `Info window for marker`,
+                    content: `Info window for marker, double click to select!`,
                     position: marker.position,
                     pixelOffset: {height: -42, width: 0, equals(): boolean {return false}},
                 };
+            }
+
+            marker.onDoubleClick = async (sender, marker) => {
+                alert("OnMarkerDoubleClick=" + marker.title);
             }
 
             this._markers.push(marker);
