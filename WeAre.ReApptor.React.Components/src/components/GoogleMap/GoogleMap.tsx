@@ -17,6 +17,9 @@ export interface IGoogleMapMarker extends google.maps.MarkerOptions {
      * {@link IGoogleMapInfoWindow} associated with the {@link IGoogleMapMarker}.
      */
     infoWindow?: IGoogleMapInfoWindow;
+    
+    onClick?(sender: GoogleMap, marker: IGoogleMapMarker): Promise<void>;
+    onDoubleClick?(sender: GoogleMap, marker: IGoogleMapMarker): Promise<void>;
 }
 
 /**
@@ -164,13 +167,17 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
             this._markers = markers.map(newMarker => {
                     const internalMarker: google.maps.Marker = new google.maps.Marker(newMarker);
 
+                    let internalInfoWindow: IGoogleMapInternalInfoWindow | null = null;
+
                     if (newMarker.infoWindow) {
 
-                        const internalInfoWindow: IGoogleMapInternalInfoWindow = new google.maps.InfoWindow(newMarker.infoWindow);
+                        internalInfoWindow = new google.maps.InfoWindow(newMarker.infoWindow);
 
                         this._infoWindows.push(internalInfoWindow);
-
-                        internalMarker.addListener("click", () => {
+                    }
+                    
+                    internalMarker.addListener("click", () => {
+                        if (internalInfoWindow) {
                             internalInfoWindow.isOpen = !internalInfoWindow.isOpen;
                             if (internalInfoWindow.isOpen) {
 
@@ -182,8 +189,18 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
                             } else {
                                 internalInfoWindow.close();
                             }
-                        });
-                    }
+                        }
+
+                        if (newMarker.onClick) {
+                            newMarker.onClick(this, newMarker);
+                        }
+                    });
+
+                    internalMarker.addListener("dblclick", () => {
+                        if (newMarker.onDoubleClick) {
+                            newMarker.onDoubleClick(this, newMarker);
+                        }
+                    });
 
                     return internalMarker;
                 }
