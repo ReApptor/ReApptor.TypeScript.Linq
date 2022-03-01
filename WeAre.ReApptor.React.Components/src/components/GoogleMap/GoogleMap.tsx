@@ -1,8 +1,10 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import {MarkerClusterer} from "@googlemaps/markerclusterer";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
-import {GeoCoordinate} from "@weare/reapptor-toolkit";
+import {GeoCoordinate, GeoLocation} from "@weare/reapptor-toolkit";
+import {AddressHelper} from "../../index";
 
 import styles from "./GoogleMap.module.scss";
 
@@ -35,9 +37,9 @@ export interface IGoogleMapProps {
     height: string | number;
 
     /**
-     * Initial center coordinates of the map.
+     * Center coordinates of the map.
      */
-    center: google.maps.LatLngLiteral | GeoCoordinate;
+    center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate;
 
     /**
      * Zoom-level of the map. Must be a positive number with a maximum value defined in Google Maps documentation.
@@ -135,10 +137,11 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     }
     
     private get center(): google.maps.LatLngLiteral {
-        const center: google.maps.LatLngLiteral | GeoCoordinate = this.props.center;
-        if ((center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
-            const coordinate = center as GeoCoordinate;
-            return { lat: coordinate.lat, lng: coordinate.lon } as google.maps.LatLngLiteral;
+        const center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate = this.props.center;
+        if ((center instanceof GeoLocation) || ((center as any).isGeoLocation) ||
+            (center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
+            const coordinate: GeoCoordinate | null = AddressHelper.getCoordinate(center as GeoLocation) || AthenaeumComponentsConstants.defaultLocation;
+            return {lat: coordinate.lat, lng: coordinate.lon} as google.maps.LatLngLiteral;
         }
         return center;
     }
@@ -271,7 +274,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
 
-        const options = {
+        const options: google.maps.MapOptions = {
             streetViewControl: this.props.streetViewControl ?? true,
             fullscreenControl: this.props.fullscreenControl ?? true,
             mapTypeControl: this.props.mapTypeControl ?? true,
@@ -279,9 +282,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
             zoom: this.props.zoom,
         };
 
-        //this._googleMap = await AddressHelper.createMapAsync(this._googleMapDiv.current!, options)
-        
-        this._googleMap = new google.maps.Map(this._googleMapDiv.current!, options);
+        this._googleMap = await AddressHelper.createMapAsync(this._googleMapDiv.current!, null, null, options)
 
         await this.handlePropsAsync();
     }

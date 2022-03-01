@@ -15,8 +15,8 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
 
     public state: IModalTestsState = {
         clusterMarkers: false,
-        lat: 0,
-        lon: 0,
+        lat: 50,
+        lon: 50,
         markerCount: 0,
         markersWithInfoWindows: false,
         autoCloseInfoWindows: false,
@@ -84,6 +84,7 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
 
                 <PageRow>
                     <FourColumns>
+                        
                         <NumberInput inline
                                      label="Markers"
                                      value={this.state.markerCount}
@@ -107,12 +108,13 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
                                   value={this.state.autoCloseInfoWindows}
                                   onChange={async (_, autoCloseInfoWindows) => {this.clearMarkers(); await this.setState({autoCloseInfoWindows})}}
                         />
+                        
                     </FourColumns>
                 </PageRow>
 
                 <GoogleMap ref={this._mapRef}
                            height={"50vh"}
-                           center={{lat: 50, lng: 50}}
+                           center={{lat: this.state.lat, lng: this.state.lon}}
                            zoom={1}
                            markers={this.markers}
                            clusterMarkers={this.state.clusterMarkers}

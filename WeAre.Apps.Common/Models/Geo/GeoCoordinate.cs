@@ -13,5 +13,7 @@ namespace WeAre.Apps.Common.Models.Geo
         /// "Longitude"
         /// </summary>
         public decimal Lon { get; set; }
+
+        public bool IsGeoCoordinate => true;
     }
 }
