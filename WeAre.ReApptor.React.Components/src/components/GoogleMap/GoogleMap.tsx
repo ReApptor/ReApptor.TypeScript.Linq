@@ -29,6 +29,8 @@ export interface IGoogleMapInfoWindow extends google.maps.InfoWindowOptions {
 }
 
 export interface IGoogleMapProps {
+    id?: string;
+    
     /**
      * Classname added to the root element of the {@link GoogleMap}.
      */
@@ -83,7 +85,7 @@ export interface IGoogleMapProps {
      * Called when the map is clicked.
      * Is not called when an {@link IGoogleMapMarker} or an {@link IGoogleMapInfoWindow} is clicked.
      */
-    onClick?(): Promise<void>;
+    onClick?(sender: GoogleMap, coordinate: GeoCoordinate): Promise<void>;
 }
 
 interface IGoogleMapState {
@@ -222,7 +224,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
         if (newEvent) {
             this._mapClickEventListener?.remove();
-            this._mapClickEventListener = this.googleMap.addListener("click", async () => await this.onMapClickAsync());
+            this._mapClickEventListener = this.googleMap.addListener("click", (event) => this.onMapClickAsync(event));
         }
 
         if (newZoom) {
@@ -234,13 +236,21 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
         }
     }
 
-    private async onMapClickAsync(): Promise<void> {
+    private async onMapClickAsync(event: google.maps.MapMouseEvent): Promise<void> {
 
         if (this.autoCloseInfoWindows) {
             this.closeInfoWindows();
         }
+        
+        if (this.props.onClick) {
 
-        await this.props.onClick?.();
+            const lon: number = event.latLng.lng();
+            const lat: number = event.latLng.lat();
+
+            const coordinate = new GeoCoordinate(lat, lon);
+
+            await this.props.onClick(this, coordinate);
+        }
     }
 
     /**
@@ -325,7 +335,8 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
 
     public render() {
         return (
-            <div ref={this._googleMapDiv}
+            <div id={this.id}
+                 ref={this._googleMapDiv}
                  className={this.css(styles.googleMap, this.props.className)}
                  style={{height: this.props.height}}
             />
