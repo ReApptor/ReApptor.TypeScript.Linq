@@ -399,10 +399,6 @@ export default class Utility {
         return [31, (this.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     };
 
-    public static distance(x: Position, y: GeoCoordinate): number {
-        return Math.sqrt(Math.pow(y.lat - x.coords.latitude, 2) + Math.pow(y.lon - x.coords.longitude, 2));
-    }
-
     public static max<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
