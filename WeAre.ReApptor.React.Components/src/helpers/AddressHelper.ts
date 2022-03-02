@@ -1,6 +1,7 @@
 import {GeoCoordinate, GeoLocation, Utility} from "@weare/reapptor-toolkit";
 import {ApplicationContext, ch} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
+import {IGoogleMapInfoWindow, IGoogleMapMarker, TGoogleMapMarkerCallback} from "../components/GoogleMap/GoogleMap";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;
 
@@ -127,7 +128,47 @@ export default class AddressHelper {
 
         return new this.google.maps.Map(element, options);
     }
-    
+
+    public static toMarker(coordinate: GeoCoordinate, title?: string | null, iconUrl?: string | null, size?: number | null, offsetY?: number | null, onClick?: TGoogleMapMarkerCallback, onDoubleClick?: TGoogleMapMarkerCallback): IGoogleMapMarker {
+
+        const position: google.maps.LatLngLiteral = {
+            lat: coordinate.lat,
+            lng: coordinate.lon,
+        };
+
+        size = size || 40;
+
+        let infoWindow: IGoogleMapInfoWindow | null = null;
+
+        if (title) {
+            const content: string = `<b>${title}</b>`;
+
+            offsetY = offsetY || -(4 / 5 * size);
+
+            infoWindow = {
+                content,
+                position,
+                pixelOffset: new google.maps.Size(0, offsetY),
+            };
+        }
+
+        const icon = (iconUrl)
+            ? {
+                url: iconUrl,
+                scaledSize: new google.maps.Size(size, size)
+            }
+            : undefined;
+
+        return {
+            title: title || undefined,
+            infoWindow: infoWindow || undefined,
+            position,
+            icon,
+            onClick,
+            onDoubleClick,
+        } as IGoogleMapMarker;
+    }
+
     public static async addMarkerAsync(position: google.maps.LatLng | GeoCoordinate, map: google.maps.Map): Promise<google.maps.Marker> {
         if (position instanceof GeoCoordinate) {
             position = this.toGoogleCoordinate(position);
@@ -341,10 +382,24 @@ export default class AddressHelper {
         return geoLocation;
     }
     
-    public static getCoordinate(location: GeoCoordinate | GeoLocation): GeoCoordinate | null {
-        return (this.hasCoordinates(location))
-            ? location
-            : this.extractCoordinate((location as GeoLocation).formattedAddress);
+    public static getCoordinate(location: GeoCoordinate | GeoLocation | Position | string | null): GeoCoordinate | null {
+        if (location) {
+            if (typeof location === "string") {
+                return AddressHelper.extractCoordinate(location);
+            }
+
+            const position = location as Position;
+            if ((position?.coords.latitude != null) && (position?.coords.longitude != null)) {
+                return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
+            }
+
+            let coordinate = location as GeoCoordinate | GeoLocation;
+            return (this.hasCoordinates(coordinate))
+                ? coordinate
+                : this.extractCoordinate((coordinate as GeoLocation).formattedAddress);
+        }
+        
+        return null;
     }
     
     public static async findLocationByLatLngAsync(latLng: google.maps.LatLng): Promise<GeoLocation | null> {
@@ -431,5 +486,73 @@ export default class AddressHelper {
         const longitudeCardinal = (lon >= 0) ? "E" : "W";
 
         return `${latitude}${latitudeCardinal} ${longitude}${longitudeCardinal}`
+    }
+    
+    public static findCenter(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): GeoCoordinate {
+
+        const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
+        const yCoordinate: GeoCoordinate | null = this.getCoordinate(y);
+
+        if (!xCoordinate)
+            throw Error(`AddressHelper.distance(x, y): GEO coordinate cannot be extracted from argument "x": "${x}".`);
+        if (!yCoordinate)
+            throw Error(`AddressHelper.distance(x, y): GEO coordinate cannot be extracted from argument "y": "${y}".`);
+
+        const lat: number = (xCoordinate.lat + yCoordinate.lat) / 2;
+        const lon: number = (xCoordinate.lon + yCoordinate.lon) / 2;
+        
+        return new GeoCoordinate(lat, lon);
+    }
+    
+    public static distance(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): number {
+        
+        const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
+        const yCoordinate: GeoCoordinate | null = this.getCoordinate(y);
+
+        if (!xCoordinate)
+            throw Error(`AddressHelper.distance(x, y): GEO coordinate cannot be extracted from argument "x": "${x}".`);
+        if (!yCoordinate)
+            throw Error(`AddressHelper.distance(x, y): GEO coordinate cannot be extracted from argument "y": "${y}".`);
+
+        // The math module contains a function
+        // named toRadians which converts from
+        // degrees to radians.
+        const lon1: number = xCoordinate.lon * Math.PI / 180;
+        const lon2: number = yCoordinate.lon * Math.PI / 180;
+        const lat1: number = xCoordinate.lat * Math.PI / 180;
+        const lat2: number = yCoordinate.lat * Math.PI / 180;
+
+        // Haversine formula
+        const dLon: number = lon2 - lon1;
+        const dLat: number = lat2 - lat1;
+        const a: number = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dLon / 2), 2);
+
+        const c: number = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        const r: number = 6371;
+
+        // calculate the result
+        return (c * r);
+    }
+
+    public static findZoom(center: GeoCoordinate | GeoLocation | Position | string, x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): number {
+
+        const xDistance: number = AddressHelper.distance(center, x);
+        const yDistance: number = AddressHelper.distance(center, y);
+
+        const maxDistanceKm: number = Utility.max([xDistance, yDistance]);
+
+        const maxWidth: number = 3 * maxDistanceKm;
+        const zoomLevels: number[] = [40000, 20000, 10000, 5000, 2500, 1250, 625, 312.5, 156.25, 78.125, 39.0625, 19.53125, 9.765625, 4.8828125, 2.44140625, 1.220703125, 0.6103515625, 0.3051757813, 0.1525878906];
+
+        for (let zoom: number = 0; zoom < zoomLevels.length - 1; zoom++) {
+            if (maxWidth > zoomLevels[zoom + 1]) {
+                return zoom;
+            }
+        }
+
+        return 0;
     }
 }
