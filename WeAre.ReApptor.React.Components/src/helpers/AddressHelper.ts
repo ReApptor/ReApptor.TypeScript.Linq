@@ -389,11 +389,11 @@ export default class AddressHelper {
             }
 
             const position = location as Position;
-            if ((position?.coords.latitude != null) && (position?.coords.longitude != null)) {
+            if ((position.coords?.latitude != null) && (position.coords?.longitude != null)) {
                 return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
             }
 
-            let coordinate = location as GeoCoordinate | GeoLocation;
+            const coordinate = location as GeoCoordinate | GeoLocation;
             return (this.hasCoordinates(coordinate))
                 ? coordinate
                 : this.extractCoordinate((coordinate as GeoLocation).formattedAddress);
