@@ -455,6 +455,13 @@ export default class ch {
         }
     }
 
+    public static async takePictureAsync(camera: boolean = true): Promise<FileModel | null> {
+        if (this._layout != null) {
+            return this._layout.takePictureAsync(camera);
+        }
+        return null;
+    }
+
     /**
      * Gets unique id
      * @returns id - number

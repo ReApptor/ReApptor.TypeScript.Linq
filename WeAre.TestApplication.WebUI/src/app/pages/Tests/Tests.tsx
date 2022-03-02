@@ -40,6 +40,7 @@ import CookieConsentTests from "./CookieConsentTests/CookieConsentTests";
 import QrInputTests from "./QrInputTests/QrInputTests";
 import JQueryUtilityTests from "./JQueryUtilityTests/JQueryUtilityTests";
 import LeftNavTests from "./LeftNavTests/LeftNavTests";
+import InlineImageTests from "./InlineImageTests/InlineImageTests";
 import Localizer from "../../../localization/Localizer";
 
 interface ITestsState {
@@ -173,6 +174,10 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
 
                         <Tab id="ImageInputTests" title="ImageInput">
                             <ImageInputTests/>
+                        </Tab>
+
+                        <Tab id="InlineImageTests" title="InlineImage">
+                            <InlineImageTests/>
                         </Tab>
 
                         <Tab id="linkWidgetTests" title="Link Widget">
