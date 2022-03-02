@@ -146,12 +146,12 @@ interface IImageInputProps {
 
 export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState> {
 
-    private fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    private cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
-    private cropperRef = React.createRef<ReactCropperElement>();
-    private cropperHelper = new ReactCropperHelpers(this.cropperRef);
+    private _fileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
+    private _cameraFileInputRef: LegacyRef<HTMLInputElement> | undefined = React.createRef();
+    private _cropperRef = React.createRef<ReactCropperElement>();
+    private _cropperHelper = new ReactCropperHelpers(this._cropperRef);
 
-    public state: IImageInputState = {
+    state: IImageInputState = {
         currentView: ImageInputView.Default,
         isDragOver: false,
         previousView: ImageInputView.Default,
@@ -302,11 +302,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     //  Control panel button Click Events
 
     private async onBrowseButtonClickAsync(): Promise<void> {
-        if (!this.fileInputRef) {
+        if (!this._fileInputRef) {
             return;
         }
 
-        const ref: RefObject<HTMLInputElement> = this.fileInputRef as RefObject<HTMLInputElement>;
+        const ref: RefObject<HTMLInputElement> = this._fileInputRef as RefObject<HTMLInputElement>;
 
         if (!ref.current) {
             return
@@ -316,11 +316,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onCameraButtonClick(): Promise<void> {
-        if (!this.cameraFileInputRef) {
+        if (!this._cameraFileInputRef) {
             return;
         }
 
-        const ref: RefObject<HTMLInputElement> = this.cameraFileInputRef as RefObject<HTMLInputElement>;
+        const ref: RefObject<HTMLInputElement> = this._cameraFileInputRef as RefObject<HTMLInputElement>;
 
         if (!ref.current) {
             return
@@ -330,7 +330,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onSaveButtonClickAsync(): Promise<void> {
-        if ((!this.cropperRef.current)
+        if ((!this._cropperRef.current)
             || (this.currentView !== ImageInputView.Edit)) {
             return;
         }
@@ -341,7 +341,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
 
         let newFileModel: FileModel = {...this.activePicture};
 
-        newFileModel.src = this.cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
+        newFileModel.src = this._cropperRef.current?.cropper.getCroppedCanvas().toDataURL() || "";
 
         if (this.props.convertImage) {
             newFileModel = await this.props.convertImage(newFileModel);
@@ -390,11 +390,11 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     }
 
     private async onRotateButtonClickAsync(degrees: number): Promise<void> {
-        if (!this.cropperRef.current) {
+        if (!this._cropperRef.current) {
             return;
         }
 
-        this.cropperHelper.rotateAndFitToScreen(degrees);
+        this._cropperHelper.rotateAndFitToScreen(degrees);
     }
 
     private async onRotateMiniButtonClickAsync(degrees: number): Promise<void> {
@@ -499,7 +499,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
             return;
         }
 
-        await this.addFileListAsync(event.target.files)
+        await this.addFileListAsync(event.target.files);
     }
 
     private async initializePicturesAsync(): Promise<void> {
@@ -969,13 +969,13 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
     private renderCropperPanel(): JSX.Element {
         return (
             <div className={styles.cropper}>
-                <Cropper ref={this.cropperRef}
+                <Cropper ref={this._cropperRef}
                          className={styles.reactCropper}
                          style={{height: "100%", width: "100%"}}
                          src={this.cropperSource}
                          viewMode={1} // cannot move box outside image borders
                          guides={false}
-                         ready={() => this.cropperHelper.setCropAreaToImageFullSize()}
+                         ready={() => this._cropperHelper.setCropAreaToImageFullSize()}
                 />
             </div>
         )
@@ -994,7 +994,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                  onDragEnter={(event: DragEvent<HTMLDivElement>) => this.onImageInputDragEnterAsync(event)}
             >
 
-                <input ref={this.fileInputRef}
+                <input ref={this._fileInputRef}
                        className={styles.fileInput}
                        type="file"
                        accept={this.acceptedTypes}
@@ -1002,7 +1002,7 @@ export class ImageInput extends BaseComponent<IImageInputProps, IImageInputState
                        onChange={(event: ChangeEvent<HTMLInputElement>) => this.onFileInputChangeAsync(event)}
                 />
 
-                <input ref={this.cameraFileInputRef}
+                <input ref={this._cameraFileInputRef}
                        className={styles.fileInput}
                        type="file"
                        accept={this.acceptedTypes}

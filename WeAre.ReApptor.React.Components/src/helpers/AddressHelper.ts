@@ -129,7 +129,7 @@ export default class AddressHelper {
         return new this.google.maps.Map(element, options);
     }
 
-    public static toMarker(coordinate: GeoCoordinate, title?: string | null, iconUrl?: string | null, size?: number | null, offsetY?: number | null, onClick?: TGoogleMapMarkerCallback, onDoubleClick?: TGoogleMapMarkerCallback): IGoogleMapMarker {
+    public static toMarker(coordinate: GeoCoordinate, title?: string | null, iconUrl?: string | null, size?: number | null, offsetY?: number | null, onClick?: TGoogleMapMarkerCallback | null, onDoubleClick?: TGoogleMapMarkerCallback | null): IGoogleMapMarker {
 
         const position: google.maps.LatLngLiteral = {
             lat: coordinate.lat,
