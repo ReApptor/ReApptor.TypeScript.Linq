@@ -152,7 +152,7 @@ export class ReactCropperHelpers {
      * @param degree rotation degree
      * @param cropperSource url for the image, convert the image.id to url and pass it here
      */
-    static async rotate(image: FileModel, degree: number, cropperSource: string = ''): Promise<FileModel> {
+    public static async rotate(image: FileModel, degree: number, cropperSource: string = ''): Promise<FileModel> {
         return new Promise<FileModel>(resolve => {
             const instaCropperWrapper: HTMLDivElement = document.createElement('div');
 
@@ -190,5 +190,4 @@ export class ReactCropperHelpers {
             });
         })
     }
-
 }
