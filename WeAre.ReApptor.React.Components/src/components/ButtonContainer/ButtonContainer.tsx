@@ -14,43 +14,52 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
     state: IButtonContainerState = {
     };
 
-    private get buttons(): React.ReactElement[] {
+    private getButtons(): React.ReactElement[] {
         const buttons: React.ReactElement[] = React.Children.map(this.props.children, item => {
             return item as React.ReactElement;
         }) || [];
         return buttons;
     }
 
-    private get left(): React.ReactElement[] {
-        const buttons: React.ReactElement[] = this.buttons;
-        const leftButtons: React.ReactElement[] = this.buttons.filter(item => item.props.right !== true);
-        return (leftButtons.length != buttons.length)
-            ? leftButtons
-            : (buttons.length > 1)
+    private getLeft(buttons: React.ReactElement[]): React.ReactElement[] {
+        const undefinedOrder: boolean = buttons.every(item => item.props.right == null);
+        if (undefinedOrder) {
+            return (buttons.length > 1)
                 ? buttons.slice(0, buttons.length - 1)
                 : [];
+        }
+        
+        return buttons.filter(item => item.props.right !== true);
     }
 
-    private get right(): React.ReactElement[] {
-        const buttons: React.ReactElement[] = this.buttons;
-        const rightButtons: React.ReactElement[] = this.buttons.filter(item => item.props.right === true);
-        return (rightButtons.length > 0)
-            ? (rightButtons)
-            : (buttons.length > 1)
+    private getRight(buttons: React.ReactElement[]): React.ReactElement[] {
+        const undefinedOrder: boolean = buttons.every(item => item.props.right == null);
+        if (undefinedOrder) {
+            return (buttons.length > 1)
                 ? buttons.slice(buttons.length - 1)
                 : buttons;
+        }
+        
+        return buttons.filter(item => item.props.right === true);
     }
     
     public render(): React.ReactNode {
+        const buttons: React.ReactElement[] = this.getButtons();
+        const left: React.ReactElement[] = this.getLeft(buttons);
+        const right: React.ReactElement[] = this.getRight(buttons);
+        const leftEmpty: boolean = (left.length == 0);
+        const rightEmpty: boolean = (right.length == 0);
+        const rightMargin: boolean = (!leftEmpty) && (!rightEmpty);
+        
         return (
             <div className={this.css(styles.buttonContainer, this.props.className)}>
                 
-                <div className={this.css(styles.left, "col-md-6")}>
-                    {this.left}
+                <div className={this.css(styles.row, styles.left, leftEmpty && styles.empty)}>
+                    {left}
                 </div>
                 
-                <div className={this.css(styles.right, "col-md-6")}>
-                    {this.right}
+                <div className={this.css(styles.row, styles.right, rightEmpty && styles.empty, rightMargin && styles.margin)}>
+                    {right}
                 </div>
                 
             </div>

@@ -3,46 +3,46 @@
 .buttonContainer {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    justify-content: space-between;
     
-    .left {
-        padding-right: 0;
-        margin: 0 !important;
+    .row {
+        display: flex;
+        flex-wrap: wrap;
         
-        button {
-            margin-right: $baseline;
+        &.left {
         }
         
-        @media screen and (max-width: $break-md) {
-            padding-right: 15px;
-            
-            button {
-                display: block;
-                width: 100%;
-                margin-bottom: $baseline;
+        &.right {
+            &.margin {
+                margin-left: $baseline;
+
+                @media screen and (max-width: $break-md) {
+                    margin-left: 0 !important;
+                    margin-top: $baseline;
+                }
             }
         }
-    }
-    
-    .right {
-        display: flex;
-        justify-content: flex-end;
-        padding-left: 0;
-        margin: 0 !important;
+        
+        &.empty {
+        }
 
-        @media screen and (max-width: $break-md){
-            padding-left: 15px;
+        button:not(:first-child) {
+            margin-left: $baseline;
+        }
+
+        @media screen and (max-width: $break-md) {
+            width: 100%;
             
             button {
                 display: block;
                 width: 100%;
-                margin-bottom: $baseline;
-                
-                &:last-of-type {
-                    margin-bottom: 0px;
+                margin-left: 0 !important;
+
+                &:not(:first-child) {
+                    margin-top: $baseline;
                 }
             }
         }
     }
+    
 }
