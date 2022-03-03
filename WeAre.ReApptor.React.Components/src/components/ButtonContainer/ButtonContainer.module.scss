@@ -10,9 +10,13 @@
         flex-wrap: wrap;
         
         &.left {
+            justify-content: flex-start;
+            flex-grow: 1;
         }
         
         &.right {
+            justify-content: flex-end;
+            
             &.margin {
                 margin-left: $baseline;
 
@@ -26,8 +30,14 @@
         &.empty {
         }
 
-        button:not(:first-child) {
-            margin-left: $baseline;
+        button {
+            margin-bottom: auto;
+            
+            &:not(:global(.btn-block)) {
+                &:not(:first-child) {
+                    margin-left: $baseline;
+                }
+            }
         }
 
         @media screen and (max-width: $break-md) {
@@ -36,10 +46,13 @@
             button {
                 display: block;
                 width: 100%;
-                margin-left: 0 !important;
+                
+                &:not(:global(.btn-block)) {
+                    margin-left: 0 !important;
 
-                &:not(:first-child) {
-                    margin-top: $baseline;
+                    &:not(:first-child) {
+                        margin-top: $baseline;
+                    }
                 }
             }
         }
