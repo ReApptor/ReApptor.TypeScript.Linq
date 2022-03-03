@@ -543,8 +543,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const input: HTMLInputElement | null = (camera)
             ? this._cameraInputRef.current
             : this._imageInputRef.current;
-
-        console.log(camera);
         
         if (input) {
             input.click();
