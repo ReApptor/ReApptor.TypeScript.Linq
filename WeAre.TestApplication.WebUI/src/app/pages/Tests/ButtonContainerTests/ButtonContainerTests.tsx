@@ -71,6 +71,18 @@ export default class ButtonContainerTests extends BaseComponent<{}, IButtonTests
 
                 </ButtonContainer>
 
+                <h5 className="pb-3 pt-5">ButtonContainer with block buttons</h5>
+
+                <ButtonContainer>
+
+                    <Button label={"Default (icon, disabled)"} icon={{name: "far plus"}} block right={false} />
+
+                    <Button label={"Blue (icon, disabled)"} icon={{name: "far user"}} block right />
+
+                    <Button label={"Orange (icon, disabled)"} icon={{name: "far user"}} block right />
+
+                </ButtonContainer>
+
             </React.Fragment>
         );
     }
