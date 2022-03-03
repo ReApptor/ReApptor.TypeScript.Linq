@@ -54,7 +54,7 @@ namespace WeAre.Apps.Common.Extensions
             return x.Distance(y.Lat, y.Lon);
         }
 
-        public static double Distance(IEnumerable<IGeoCoordinate> coordinates)
+        public static double Distance(this IEnumerable<IGeoCoordinate> coordinates)
         {
             IGeoCoordinate[] items = (coordinates ?? Array.Empty<IGeoCoordinate>())
                 .Where(item => item != null)
