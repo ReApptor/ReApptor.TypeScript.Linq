@@ -1,7 +1,7 @@
 import React from "react";
-import {Utility} from "@weare/reapptor-toolkit";
+import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import {BaseComponent, ReactUtility} from "@weare/reapptor-react-common";
-import Icon, {IconSize} from "../../Icon/Icon";
+import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
 import {SelectListItem, StatusListItem} from "../SelectListItem";
 import {AmountListItem} from "../Dropdown";
 import DropdownLocalizer from "../DropdownLocalizer";
@@ -85,7 +85,12 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
     private renderStatusListItem(item: StatusListItem): React.ReactNode {
         const noWrapCss: any = this.props.noWrap && styles.noWrap;
         const lineThroughCss: any = item.lineThrough && styles.lineThrough;
-
+        const icon: string | IIconProps | FileModel | null = (item.completed === true)
+            ? null
+            : (item.completed === false)
+                ? "fal exclamation-square" 
+                : item.completed;
+        
         return (
             <React.Fragment>
 
@@ -100,10 +105,10 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                 </div>
 
                 {
-                    (!item.completed) &&
+                    (icon != null) &&
                     (
                         <div className={this.css(styles.notCompleted)}>
-                            <Icon name="fal exclamation-square" size={IconSize.Normal} />
+                            { Icon.renderIcon(icon, null, IconSize.Normal)}
                         </div>
                     )
                 }

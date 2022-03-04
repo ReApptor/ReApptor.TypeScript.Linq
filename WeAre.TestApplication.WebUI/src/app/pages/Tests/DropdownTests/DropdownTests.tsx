@@ -25,8 +25,14 @@ import {
 
 import styles from "./DropdownTests.module.scss";
 
+import daFlag from "./flags/da.png";
+import deFlag from "./flags/de.png";
+import enFlag from "./flags/en.png";
+import fiFlag from "./flags/fi.png";
+
 export interface IDropdownTestsState {
     generateGroups: boolean,
+    icons: boolean,
     multiple: boolean,
     groupSelected: boolean,
     favorite: boolean,
@@ -54,6 +60,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
     state: IDropdownTestsState = {
         generateGroups: false,
+        icons: false,
         multiple: false,
         groupSelected: false,
         favorite: false,
@@ -77,6 +84,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         verticalAlign: DropdownVerticalAlign.Auto
     };
 
+    private readonly _icons: string[] = ["fas plus", "fas ban", "fal add", "fal fa-backward", daFlag, deFlag, enFlag, fiFlag];
     private readonly _refs: Dictionary<string, React.RefObject<Dropdown<any>>> = new Dictionary<string, React.RefObject<Dropdown<any>>>();
     private readonly _formRef: React.RefObject<Form> = React.createRef();
 
@@ -95,31 +103,47 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         }
     }
 
-    private generateItem(index: number, group: number | null = null, description: boolean = false): any {
+    private generateItem(index: number, group: number | null = null, description: boolean = false, statusIcon: boolean | string | null = null): any {
         return {
             name: "{0:00}th item".format(index),
             group: group ? "Group #{0:00}".format(group) : null,
-            description: description ? "Description for item \"{0}\", group \"{1}\"".format(index, group ? group : "no group") : null
+            description: description ? "Description for item \"{0}\", group \"{1}\"".format(index, group ? group : "no group") : null,
+            completed: statusIcon
         };
     }
+    
+    private generateIcon(): boolean | string {
+        const length: number = this._icons.length;
+        const index: number = Math.trunc((2 * length) * Math.random()); 
+        if (index < length) {
+            return this._icons[index];
+        }
+        if (index < length + 0.5 * length) {
+            return false;
+        }
+        return true;
+    }
 
-    private generateItems(generateGroups: boolean): any[] {
+    private generateItems(generateGroups: boolean, generateIcons: boolean): any[] {
         return [
-            this.generateItem(0, generateGroups ? 1 : null, true),
-            this.generateItem(1, generateGroups ? 1 : null, true),
-            this.generateItem(2, generateGroups ? 1 : null, true),
-            this.generateItem(3, generateGroups ? 2 : null, true),
-            this.generateItem(4, generateGroups ? 2 : null, true),
-            this.generateItem(5, generateGroups ? 3 : null, true),
-            this.generateItem(6, generateGroups ? 3 : null, true),
-            this.generateItem(7),
-            this.generateItem(8),
-            this.generateItem(9)
+            this.generateItem(0, generateGroups ? 1 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(1, generateGroups ? 1 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(2, generateGroups ? 1 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(3, generateGroups ? 2 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(4, generateGroups ? 2 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(5, generateGroups ? 3 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(6, generateGroups ? 3 : null, true, generateIcons ? this.generateIcon() : null),
+            this.generateItem(7, null, false, generateIcons ? this.generateIcon() : null),
+            this.generateItem(8, null, false, generateIcons ? this.generateIcon() : null),
+            this.generateItem(9, null, false, generateIcons ? this.generateIcon() : null),
+            this.generateItem(10, null, false, generateIcons ? this.generateIcon() : null),
+            this.generateItem(11, null, false, generateIcons ? this.generateIcon() : null),
+            this.generateItem(12, null, false, generateIcons ? this.generateIcon() : null),
         ];
     }
 
     private get items(): any[] {
-        return this._items || (this._items = this.generateItems(this.state.generateGroups));
+        return this._items || (this._items = this.generateItems(this.state.generateGroups, this.state.icons));
     }
     
     private getRef(id: string): React.RefObject<Dropdown<any>> {
@@ -267,12 +291,17 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
                         <Checkbox label="Generate groups" inline
                                   value={this.state.generateGroups}
-                                  onChange={async (sender, value) => { this._items = null; await this.setState({generateGroups: value}) }}
+                                  onChange={async (sender, value) => { this._items = null; await this.setState({generateGroups: value}); }}
+                        />
+
+                        <Checkbox label="Status icons" inline
+                                  value={this.state.icons}
+                                  onChange={async (sender, value) => { this._items = null; await this.setState({icons: value}); }}
                         />
 
                         <Checkbox label="Multi Select" inline
                                   value={this.state.multiple}
-                                  onChange={async (sender, value) => await this.setState({multiple: value})}
+                                  onChange={async (sender, value) => { await this.setState({multiple: value}); }}
                         />
 
                         <Checkbox label="Favorite" inline

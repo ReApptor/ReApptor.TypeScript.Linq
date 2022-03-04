@@ -1,4 +1,5 @@
-import {BoolUtility, ISelectListItem, NumberUtility, StringUtility} from "@weare/reapptor-toolkit";
+import {BoolUtility, FileModel, ISelectListItem, NumberUtility, StringUtility} from "@weare/reapptor-toolkit";
+import {IIconProps} from "../Icon/Icon";
 
 /**
  /* Represents the optgroup HTML element and its attributes.
@@ -197,14 +198,14 @@ export class SelectListItem implements ISelectListItem {
 
 export class StatusListItem extends SelectListItem {
 
-    constructor(lineThrough: boolean = false, completed: boolean = false, value: string | null = null, text: string | null = null, subtext: string | null = null, ref: any = null) {
+    constructor(lineThrough: boolean = false, completed: boolean | string | IIconProps | FileModel = false, value: string | null = null, text: string | null = null, subtext: string | null = null, ref: any = null) {
         super(value, text, subtext, ref);
         
         this.lineThrough = lineThrough;
         this.completed = completed;
     }
 
-    public completed: boolean = false;
+    public completed: boolean | string | IIconProps | FileModel = false;
 
     public lineThrough: boolean = false;
 
