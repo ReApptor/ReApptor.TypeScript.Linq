@@ -59,6 +59,19 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
         }
     }
 
+    private getItems(): IMenuItem[] {
+        const items: IMenuItem[] = this.state.data || [];
+        return items.filter(item => (item.visible == null) || (item.visible === true) || ((typeof item.visible === "function") && item.visible()))
+    }
+
+    private getTopItems(items: IMenuItem[]): IMenuItem[] {
+        return items.where(item => !item.bottom);
+    }
+
+    private getBottomItems(items: IMenuItem[]): IMenuItem[] {
+        return items.where(item => !!item.bottom);
+    }
+
     protected getEndpoint(): string {
         return "";
     }
@@ -126,18 +139,6 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
 
     public get collapsed(): boolean {
         return !this.expanded;
-    }
-
-    public get items(): IMenuItem[] {
-        return this.state.data || [];
-    }
-
-    public get topItems(): IMenuItem[] {
-        return this.items.where(item => !item.bottom);
-    }
-
-    public get bottomItems(): IMenuItem[] {
-        return this.items.where(item => !!item.bottom);
     }
     
     public async initializeAsync(): Promise<void> {
@@ -236,30 +237,6 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
         }
     }
     
-    public renderItems(): React.ReactNode {
-        return (
-            <>
-                {
-                    this.topItems.map((item: IMenuItem, index: number) =>
-                        (
-                            <MenuItem key={index} {...item} onClick={() => this.onItemClickAsync()}/>
-                        )
-                    )
-                }
-
-                <div className={styles.expander}/>
-
-                {
-                    this.bottomItems.map((item: IMenuItem, index: number) =>
-                        (
-                            <MenuItem key={index} {...item} onClick={() => this.onItemClickAsync()}/>
-                        )
-                    )
-                }
-            </>
-        );
-    }
-    
     public async componentWillReceiveProps(nextProps: ILeftNavProps): Promise<void> {
         
         const newItems: boolean = (!Comparator.isEqual(this.props.items, nextProps.items));
@@ -273,9 +250,37 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
         }
     }
 
+    private renderItems(items: IMenuItem[]): React.ReactNode {
+        const topItems: IMenuItem[] = this.getTopItems(items);
+        const bottomItems: IMenuItem[] = this.getBottomItems(items);
+
+        return (
+            <>
+                {
+                    topItems.map((item: IMenuItem, index: number) =>
+                        (
+                            <MenuItem key={index} {...item} onClick={() => this.onItemClickAsync()}/>
+                        )
+                    )
+                }
+
+                <div className={styles.expander}/>
+
+                {
+                    bottomItems.map((item: IMenuItem, index: number) =>
+                        (
+                            <MenuItem key={index} {...item} onClick={() => this.onItemClickAsync()}/>
+                        )
+                    )
+                }
+            </>
+        );
+    }
+
     public render(): React.ReactNode {
 
         const userProfile: IUserProfile | null = this.getUserProfile();
+        const items: IMenuItem[] = (this.expanded) ? this.getItems() : [];
         
         const inlineStyles: React.CSSProperties = {
             height: this.props.height || undefined,
@@ -306,7 +311,7 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
                             <div className={styles.itemsContainer}>
 
                                 {
-                                    (this.items) && (this.renderItems())
+                                    (items.length > 0) && (this.renderItems(items))
                                 }
                                 
                             </div>

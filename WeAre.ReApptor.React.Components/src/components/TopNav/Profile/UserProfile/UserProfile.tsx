@@ -15,7 +15,8 @@ interface IUserProfileState {
 
 export class UserProfile extends BaseComponent<IUserProfileProps, IUserProfileState> {
 
-    state: IUserProfileState = {};
+    state: IUserProfileState = {
+    };
 
     public get profile(): IUserProfile {
         return this.props;
