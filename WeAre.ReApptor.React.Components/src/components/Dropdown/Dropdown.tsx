@@ -1,5 +1,5 @@
 import React from "react";
-import {ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
+import {FileModel, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
 import {BaseInputType, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -246,9 +246,17 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const favorite: boolean = (Utility.findStringValueByAccessor(item, "favorite") === "true");
         const groupName: string | null = Utility.findStringValueByAccessor(item, ["group", "group.name"]);
         const deleted: any | null = Utility.findValueByAccessor(item, ["delete", "isDeleted"]);
+        const completed: any | null = Utility.findValueByAccessor(item, ["completed", "isCompleted", "status"]);
+        
+        const isDeleted: boolean = (deleted === true) || (deleted == "1");
+        const hasCompleted = (completed != null) && (
+            (typeof completed === "boolean") || (typeof completed === "string") ||
+            (completed instanceof FileModel) || (completed.isFileModel) ||
+            ((completed as IIconProps).name)
+        );
 
-        const selectListItem = (deleted == true)
-            ? new StatusListItem(true, true)
+        const selectListItem = ((isDeleted) || (hasCompleted))
+            ? new StatusListItem(isDeleted, (completed ?? true))
             : new SelectListItem();
 
         selectListItem.value = (value)
