@@ -317,6 +317,8 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         if (typeof icon === "string") {
 
             const isIcon: boolean = Icon.isIconName(icon);
+            
+            console.log("size=", size);
 
             if (isIcon) {
                 return (
@@ -325,7 +327,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
             }
 
             return (
-                <img src={icon} alt="" className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+                <img src={icon} alt="" className={Utility.css(className)} onClick={onClick}/>
             )
         }
 
@@ -333,12 +335,12 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         if (isFileModel) {
             const fileModel = icon as FileModel;
             return (
-                <img src={fileModel.src} alt={fileModel.name} className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+                <img src={fileModel.src} alt={fileModel.name} className={Utility.css(className)} onClick={onClick}/>
             );
         }
 
         return (
-            <Icon {...icon} size={size} className={Utility.css(styles.element, styles.icon)} onClick={onClick}/>
+            <Icon {...icon} size={size} className={Utility.css(className)} onClick={onClick}/>
         );
     }
 
