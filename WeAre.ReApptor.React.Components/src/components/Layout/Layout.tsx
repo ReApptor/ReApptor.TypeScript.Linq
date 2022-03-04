@@ -354,9 +354,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         return this.state.isSpinning;
     }
 
-
     // BaseAsyncComponent
-
 
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
@@ -615,6 +613,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     // IReactComponent
 
     public render(): React.ReactNode {
+        
+        const hasTopNav: boolean = (this.hasTopNav);
+        const hasLeftNav: boolean = (this.hasLeftNav);
+        
         return (
             <div className={this.css(styles.layout, this.props.className)}
                  onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}
@@ -622,12 +624,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                  onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
 
                 {
-                    (this.hasTopNav) &&
+                    (hasTopNav) &&
                     (
                         <TopNav ref={this._topNavRef}
                                 className={this.props.topNavClassName}
                                 applicationName={this.applicationName}
-                                leftNavRef={this._leftNavRef}
+                                leftNavRef={hasLeftNav ? this._leftNavRef : undefined}
                                 fetchItems={this.props.fetchTopNavItems}
                                 languages={this.props.languages}
                                 logo={this.props.topNavLogo}
@@ -644,10 +646,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
 
-                <main className={this.css(styles.main, this.hasLeftNav && styles.leftNav)}>
+                <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
 
                     {
-                        (this.hasLeftNav) &&
+                        (hasLeftNav) &&
                         (
                             <LeftNav ref={this._leftNavRef} {...this.leftNav}
                                      className={this.css(styles.leftNav, this.leftNav?.className)}
