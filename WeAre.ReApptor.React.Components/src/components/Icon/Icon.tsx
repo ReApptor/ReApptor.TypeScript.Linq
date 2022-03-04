@@ -317,8 +317,6 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         if (typeof icon === "string") {
 
             const isIcon: boolean = Icon.isIconName(icon);
-            
-            console.log("size=", size);
 
             if (isIcon) {
                 return (
