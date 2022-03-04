@@ -23,6 +23,7 @@ export interface IMenuItem {
     count?: number | (() => number);
     countClassName?: string;
     items?: IMenuItem[];
+    visible?: boolean | (() => boolean);
 }
 
 export interface IUserProfile {
