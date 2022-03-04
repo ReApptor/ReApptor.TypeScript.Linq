@@ -1,6 +1,6 @@
 import React from "react";
 import {FileModel, ITransformProvider, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, ch, IGlobalClick, IGlobalKeydown, IUser} from "@weare/reapptor-react-common";
+import {ApplicationContext, BaseComponent, ch, IGlobalClick, IGlobalKeydown, IUser, IUserContext} from "@weare/reapptor-react-common";
 import {IIconProps, IMenuItem, ITopNavProfile, IUserProfile} from "@weare/reapptor-react-components";
 import {MenuItem} from "../MenuItem/MenuItem";
 import Icon, {IconSize} from "../../Icon/Icon";
@@ -53,21 +53,26 @@ export default class Profile extends BaseComponent<IProfileProps, IProfileState>
     }
     
     public static findUserProfile(): IUserProfile | null {
-        const user: IUser | null = ch.findUser();
-        if (user) {
-            const transformProvider: ITransformProvider | null = ServiceProvider.findTransformProvider();
-            const userFullName: string | null = transformProvider?.toString(user) || Utility.findStringValueByAccessor(user, ["fullName", "username", "login"]);
-            if (userFullName) {
-                const role: any = Utility.findValueByAccessor(user, "role");
-                const roleName: string | null = transformProvider?.toString(role) || Utility.findStringValueByAccessor(user, ["role.Name", "role.roleName", "roleName"]);
-                const rating: number | null = Utility.findValueByAccessor(user, "rating");
-                const avatar: IIconProps | FileModel | string | null = Utility.findValueByAccessor(user, "avatar");
-                
-                return {
-                    userFullName,
-                    roleName,
-                    rating,
-                    avatar
+        const context: ApplicationContext | null = ch.findContext();
+        const userContext: IUserContext | null = context as IUserContext;
+        if (userContext) {
+            const user: IUser | null = userContext.user;
+            if (user) {
+                const transformProvider: ITransformProvider | null = ServiceProvider.findTransformProvider();
+                const userFullName: string | null = transformProvider?.toString(user) || Utility.findStringValueByAccessor(user, ["fullName", "username", "login"]);
+                if (userFullName) {
+                    const roleNameAccessor = ["role.Name", "role.roleName", "roleName"];
+                    const role: any = Utility.findValueByAccessor(userContext, "role") || Utility.findValueByAccessor(user, "role");
+                    const roleName: string | null = transformProvider?.toString(role) || Utility.findStringValueByAccessor(userContext, roleNameAccessor) || Utility.findStringValueByAccessor(user, roleNameAccessor);
+                    const rating: number | null = Utility.findValueByAccessor(user, "rating");
+                    const avatar: IIconProps | FileModel | string | null = Utility.findValueByAccessor(user, "avatar");
+
+                    return {
+                        userFullName,
+                        roleName,
+                        rating,
+                        avatar
+                    } as IUserProfile;
                 }
             }
         }
