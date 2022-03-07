@@ -2,7 +2,6 @@ import Utility from "../Utility";
 import DateUtility from "../DateUtility";
 import HashCodeUtility from "../HashCodeUtility";
 import {TimeSpan} from "../index";
-import Time = google.maps.Time;
 
 /* eslint-disable no-extend-native */
 
