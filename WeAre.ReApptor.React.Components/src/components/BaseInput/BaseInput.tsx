@@ -51,6 +51,7 @@ export interface IBaseInputProps<TInputValue extends BaseInputValue> {
 
     noValidate?: boolean;
     validators?: ValidatorCallback<TInputValue>[];
+    liveValidator?: ValidationRow[];
     className?: string;
     prepend?: boolean| string | React.ReactNode | RenderCallback;
     append?: boolean| string | React.ReactNode | RenderCallback;
@@ -58,7 +59,6 @@ export interface IBaseInputProps<TInputValue extends BaseInputValue> {
     clickToEdit?: boolean;
     format?: TFormat;
     inline?: boolean;
-    liveValidator?: ValidationRow[];
     validLength?: number;
     onValidationError?(validator: ValidatorCallback<TInputValue>, value: TInputValue): string | null;
 }
@@ -544,6 +544,12 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     public focus(): void {
         if (this.inputElement) {
             this.inputElement.focus();
+        }
+    }
+    
+    public click(): void {
+        if (this.inputElement) {
+            this.inputElement.click();
         }
     }
 

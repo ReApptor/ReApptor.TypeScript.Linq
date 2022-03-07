@@ -57,9 +57,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
     }
     
     public async openAsync(): Promise<void> {
-        if (this.inputElement) {
-            this.inputElement.click();
-        }
+        this.click();
     }
     
     protected getType(): BaseInputType {
