@@ -66,6 +66,6 @@ export {IUnknownAsserter} from "./helpers/Asserter/IUnknownAsserter"
 
 //Other:
 export * from "./localization/BaseLocalizer";
-export *  from "./AthenaeumConstants";
+export * from "./AthenaeumConstants";
 export {default as BaseLocalizer} from "./localization/BaseLocalizer";
 export {default as AthenaeumConstants}  from "./AthenaeumConstants";

@@ -1,7 +1,6 @@
 import Utility from "../Utility";
 import DateUtility from "../DateUtility";
 import HashCodeUtility from "../HashCodeUtility";
-import TimeSpan from "../models/TimeSpan";
 
 /* eslint-disable no-extend-native */
 
@@ -19,12 +18,6 @@ declare global {
          * @returns Date - A new object with the same date as this instance, and the time value set to 12:00:00 midnight (00:00:00).
          */
         date(): Date;
-
-        /**
-         * Gets the time component of this instance.
-         * @returns TimeSpan - A new object with the same time as this instance.
-         */
-        time(): TimeSpan;
 
         /**
          * Returns a new Date that adds the specified number of days to the value of this instance.
@@ -116,13 +109,6 @@ declare global {
          * @returns boolean - true if the value parameter equals the value of this instance; otherwise, false.
          */
         equals(value: Date): boolean;
-
-        /**
-         * Adds timespan to the current instance
-         * @param value - A time span object.
-         * @returns Date - An object whose value is the sum of the date and time represented by this instance and timespan by value.
-         */
-        add(value: TimeSpan): Date;
     }
 }
 
@@ -140,11 +126,11 @@ export const DateExtensions = function () {
         };
     }
     
-    if (Date.prototype.time == null) {
-        Date.prototype.time = function (): TimeSpan {
-            return DateUtility.time(this);
-        };
-    }
+    // if (Date.prototype.time == null) {
+    //     Date.prototype.time = function (): TimeSpan {
+    //         return DateUtility.time(this);
+    //     };
+    // }
     
     if (Date.prototype.addDays == null) {
         Date.prototype.addDays = function(value: number): Date {
@@ -164,11 +150,11 @@ export const DateExtensions = function () {
         };
     }
 
-    if (Date.prototype.add == null) {
-        Date.prototype.add = function (value: TimeSpan): Date {
-            return DateUtility.add(this, value);
-        };
-    }
+    // if (Date.prototype.add == null) {
+    //     Date.prototype.add = function (value: TimeSpan): Date {
+    //         return DateUtility.add(this, value);
+    //     };
+    // }
     
     if (Date.prototype.toUniversalTime == null) {
         Date.prototype.toUniversalTime = function(): Date {
