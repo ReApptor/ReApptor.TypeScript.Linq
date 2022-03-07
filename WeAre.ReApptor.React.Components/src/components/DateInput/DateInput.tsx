@@ -46,6 +46,7 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     customInput?: RenderCallback;
     showTime?: boolean;
     showOnlyTime?: boolean;
+    timeFormat?: string;
     onChange?(date: Date): Promise<void>;
     onBlur?(sender: DateInput): Promise<void>;
 }
@@ -120,6 +121,10 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         e.preventDefault()
     }
 
+    public async openAsync(): Promise<void> {
+        this.click();
+    }
+
     public async clearAsync(): Promise<void> {
         const model = this.state.model as any;
         model.value = null;
@@ -132,16 +137,19 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         this.clearAsync();
     }
 
-    public renderValue(): React.ReactNode {
-        const strValue: string = this.state.model.value != null ? Utility.toDateString(this.state.model.value) : "";
-        return <span className={formStyles.value}>{strValue}</span>
-    }
-
     public async componentDidMount(): Promise<void> {
         //super
         await super.componentDidMount();
         //set input as readonly to avoid auto complete
         this.JQuery(`#${this.getInputId()}`).prop("readonly", true);
+    }
+
+    public renderValue(): React.ReactNode {
+        const strValue: string = (this.state.model.value != null)
+            ? Utility.toDateString(this.state.model.value)
+            : "";
+        
+        return <span className={formStyles.value}>{strValue}</span>
     }
 
     public renderInput(): React.ReactNode {
@@ -151,6 +159,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
                 <DatePicker id={this.getInputId()}
+                            ref={this.props.forwardedRef}
+                            timeFormat={this.props.timeFormat || "HH:mm"}
                             title={DateInputLocalizer.get(this.props.title)}
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
@@ -165,7 +175,6 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             showMonthYearPicker={this.props.showMonthYearPicker}
                             showYearDropdown={this.props.showYearDropdown}
                             showMonthYearDropdown={this.props.showMonthYearDropdown}
-                            ref={this.props.forwardedRef}
                             locale={DateInputLocalizer.language}
                             readOnly={this.readonly}
                             customInput={this.renderCustomInput()}
