@@ -117,6 +117,11 @@ declare global {
          */
         equals(value: Date): boolean;
 
+        /**
+         * Adds timespan to the current instance
+         * @param value - A time span object.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and timespan by value.
+         */
         add(value: TimeSpan): Date;
     }
 }
