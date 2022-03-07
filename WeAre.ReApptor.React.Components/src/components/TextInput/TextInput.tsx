@@ -31,6 +31,7 @@ export interface ITextInputProps extends IBaseInputProps<string> {
     
     onChange?(sender: TextInput, value: string, userInteraction: boolean, done: boolean): Promise<void>;
     onBlur?(sender: TextInput): Promise<void>;
+    onClick?(sender: TextInput): Promise<void>;
 }
 
 export interface ITextInputState extends IBaseInputState<string> {
@@ -99,6 +100,12 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
         }
     }
 
+    protected async clickHandlerAsync(): Promise<void> {
+        if (this.props.onClick) {
+            await this.props.onClick(this);
+        }
+    }
+
     public getValidators(): ValidatorCallback<string>[] {
         return [];
     }
@@ -154,7 +161,8 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        autoComplete={this.noAutoComplete ? "off" : ""}
                        role={this.noAutoComplete ? "presentation" : ""}
                        onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
-                       onBlur={async () => await this.valueBlurHandlerAsync()}
+                       onBlur={() => this.valueBlurHandlerAsync()}
+                       onClick={() => this.clickHandlerAsync()}
                        onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
                 />
 
