@@ -1,4 +1,3 @@
-
 import Utility from "./Utility";
 import TimeSpan from "./models/TimeSpan";
 
