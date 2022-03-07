@@ -1,6 +1,6 @@
 ﻿import Utility from "../Utility";
 
-    export default class TimeSpan {
+export default class TimeSpan {
 
     public static readonly millisecondsPerSecond: number = 1000.0;
     public static readonly millisecondsPerMinute: number = 60000.0;
