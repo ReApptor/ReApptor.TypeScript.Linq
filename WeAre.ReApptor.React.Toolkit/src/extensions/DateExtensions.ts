@@ -1,7 +1,7 @@
 import Utility from "../Utility";
 import DateUtility from "../DateUtility";
 import HashCodeUtility from "../HashCodeUtility";
-import {TimeSpan} from "../index";
+import TimeSpan from "../models/TimeSpan";
 
 /* eslint-disable no-extend-native */
 
