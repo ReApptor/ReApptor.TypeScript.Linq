@@ -1,5 +1,4 @@
 import Utility from "../Utility";
-import {TimeSpan} from "@weare/reapptor-toolkit";
 
 describe("getFileExtension", function() {    
     
