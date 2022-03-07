@@ -1,5 +1,6 @@
-import {TimeSpan} from "./index";
+
 import Utility from "./Utility";
+import TimeSpan from "./models/TimeSpan";
 
 export default class DateUtility {
 
