@@ -214,6 +214,7 @@ export default class TimeSpan {
      * @returns number - A 32-bit signed integer hash code.
      */
     public getHashCode(): number {
+        // noinspection ShiftOutOfRangeJS
         return this._totalMilliseconds ^ (this._totalMilliseconds >> 32);
     }
 
