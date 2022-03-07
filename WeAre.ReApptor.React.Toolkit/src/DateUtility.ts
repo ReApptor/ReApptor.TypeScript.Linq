@@ -1,3 +1,5 @@
+import {TimeSpan} from "./index";
+import Utility from "./Utility";
 
 export default class DateUtility {
 
@@ -27,5 +29,16 @@ export default class DateUtility {
         const yValue: number = y.valueOf();
 
         return (xValue === yValue);
+    }
+
+    public static time(x: Date | string): TimeSpan {
+        x = (typeof x === "string") ? new Date(x) : x;
+        return Utility.diff(x, x.date());
+    }
+
+    public static add(x: Date | string, y: TimeSpan): Date {
+        x = (typeof x === "string") ? new Date(x) : x;
+        const totalMilliseconds: number = x.getTime() + y.totalMilliseconds;
+        return  new Date(totalMilliseconds);
     }
 }
