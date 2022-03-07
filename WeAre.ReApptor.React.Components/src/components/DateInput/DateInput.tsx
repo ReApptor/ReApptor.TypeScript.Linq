@@ -46,6 +46,7 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     customInput?: RenderCallback;
     showTime?: boolean;
     showOnlyTime?: boolean;
+    timeIntervals?: number;
     timeFormat?: string;
     onChange?(date: Date): Promise<void>;
     onBlur?(sender: DateInput): Promise<void>;
@@ -180,6 +181,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             customInput={this.renderCustomInput()}
                             showTimeSelect={this.props.showTime}
                             showTimeSelectOnly={this.props.showOnlyTime}
+                            timeIntervals={this.props.timeIntervals}
                             onChange={async (date: Date) => await this.handleChangeAsync(date)}
                             onChangeRaw={(e) => this.handleRawChange(e)}
                             onBlur={() => this.valueBlurHandlerAsync()}
