@@ -127,8 +127,11 @@ export default class Utility {
                                         } else if ((format === "0") || (format === "n") || (format === "N")) {
                                             formattedParam = param.toFixed(0).toString();
                                         } else if (format === "00") {
-                                            param = param.toFixed(0);
-                                            formattedParam = ((param >= 0) && (param < 10)) ? "0" + param : param.toString();
+                                            formattedParam = Utility.pad(param, false);
+                                        } else if (format === "000") {
+                                            formattedParam = Utility.pad(param, false, 3);
+                                        } else if (format === "0000") {
+                                            formattedParam = Utility.pad(param, false, 4);
                                         } else if (format === "0.0") {
                                             formattedParam = param.toFixed(1).toString();
                                         } else if (format === "0.00") {
@@ -549,11 +552,20 @@ export default class Utility {
 
     /**
      * @param value Number to create a padded string from.
+     * @param abs If true value will be abs
+     * @param length Length of the result string
      * @return The number as a string, with an added leading zero if the number is smaller than 10.
      */
-    public static pad(value: number) {
-        value = Math.floor(Math.abs(value));
-        return (value < 10 ? "0" : "") + value;
+    public static pad(value: number, abs: boolean = true, length: number = 2): string {
+        value = Math.floor(value);
+        if (abs) {
+            value = Math.abs(value);
+        }
+        let str: string = value.toString();
+        while (str.length < length) {
+            str = "0" + str;
+        }
+        return str;
     }
 
     /**
