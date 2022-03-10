@@ -132,6 +132,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                     (this.columns == AddressDividerColumns.Two) &&
                     (
                         <>
+                            
                             <TwoColumns ref={this._containerRef} className={this.props.className}>
 
                                 <AddressInput id={`${this.id}_formattedAddress`}
@@ -154,6 +155,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                                 <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly/>
                                 <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly/>
                             </TwoColumns>
+                            
                         </>
                     )
                 }
@@ -162,6 +164,7 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                     (this.columns == AddressDividerColumns.One) &&
                     (
                         <>
+                            
                             <OneColumn ref={this._containerRef} className={this.props.className}>
                                 <AddressInput id={`${this.id}_formattedAddress`}
                                               ref={this._addressInputRef}
@@ -176,16 +179,17 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
                             </OneColumn>
                             
                             <OneColumn>
-                                <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly/>
+                                <TextInput id={`${this.id}_address`} label={AddressDividerLocalizer.street} value={this.location.address} readonly />
                             </OneColumn>
 
                             <OneColumn>
-                                <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly/>
+                                <TextInput id={`${this.id}_city`} label={AddressDividerLocalizer.city} value={this.location.city} readonly />
                             </OneColumn>
                             
                             <OneColumn>
-                                <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly/>
+                                <TextInput id={`${this.id}_postalCode`} label={AddressDividerLocalizer.postalCode} value={this.location.postalCode} readonly />
                             </OneColumn>
+                            
                         </>
                     )
                 }
