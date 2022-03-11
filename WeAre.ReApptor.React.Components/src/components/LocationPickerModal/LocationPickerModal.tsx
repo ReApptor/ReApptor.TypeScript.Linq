@@ -18,6 +18,17 @@ interface ILocationPickerModalProps {
     location?: GeoLocation;
     infoWindow?: boolean;
     readonly?: boolean;
+
+    /**
+     * True to disable modal responsiveness (full window in mobile view).
+     */
+    notResponsive?: boolean;
+
+    /**
+     * True to hide the modal header
+     */
+    noHeader?: boolean;
+    
     onSubmit?(sender: IBaseComponent, location: GeoLocation): Promise<void>;
     onOpen?(sender: IBaseComponent): Promise<void>;
     onClose?(sender: IBaseComponent): Promise<void>;
@@ -115,6 +126,8 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                    title={this.props.title || LocationPickerModalLocalizer.title}
                    subtitle={this.props.subtitle || LocationPickerModalLocalizer.subtitle}
                    className={styles.locationPickerModal}
+                   notResponsive={this.props.notResponsive}
+                   noHeader={this.props.noHeader}
                    onOpen={() => this.onOpenAsync()}
                    onClose={() => this.onCloseAsync()}
             >

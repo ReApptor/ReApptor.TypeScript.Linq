@@ -43,12 +43,12 @@ interface IModalProps<TData = {}> {
     content?: string;
 
     /**
-     * True to disable modal is responsive (full window in mobile view).
+     * True to disable modal responsiveness (full window in mobile view).
      */
     notResponsive?: boolean;
 
     /**
-     * Set to true o hide the modal header
+     * True to hide the modal header
      */
     noHeader?: boolean;
     
