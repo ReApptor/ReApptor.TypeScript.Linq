@@ -67,9 +67,12 @@ export default class Alert extends BaseComponent<IAlertProps> {
         return this.props.model;
     }
 
-    public render(): React.ReactNode {        
+    public render(): React.ReactNode {
+        const mobileStyle: any = this.mobile && styles.mobile;
+        const flyoutStyle: any = this.model.flyout && styles.flyout;
+        
         return (
-            <div id={this.id} className={this.css((this.model.flyout && styles.flyout), styles.alert, "alert", this.getAlertType(), this.props.className)}>
+            <div id={this.id} className={this.css(styles.alert, "alert", flyoutStyle, mobileStyle, this.getAlertType(), this.props.className)}>
                 <span className={styles.message}>
                     
                     {
