@@ -6,6 +6,7 @@ import {Utility} from "@weare/reapptor-toolkit";
 export default class AlertTests extends BaseComponent {
     
     private _autoClose: boolean = true;
+    private _flyout: boolean = false;
 
     private async confirmAsync(): Promise<void> {
         if (await ch.confirmAsync("Are you sure you want to confirm?")) {
@@ -64,31 +65,61 @@ export default class AlertTests extends BaseComponent {
                 </div>
 
                 <div className="p-2">
-                    <Button label="Programmatically" onClick={async () => await this.confirmAsync()} />
+                    <Checkbox label="Flyout" inline inlineType={InlineType.Right}
+                              value={this._flyout}
+                              onChange={async (sender, value) => {this._flyout = value}}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Button label="Programmatically with inner processing" onClick={async () => await this.doubleConfirmAsync()} />
+                    <Button label="Programmatically"
+                            onClick={async () => await this.confirmAsync()}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Button label="Alert" confirm={"Are you sure?"} onClick={async () => await ch.alertMessageAsync("YES")} />
+                    <Button label="Programmatically with inner processing"
+                            onClick={async () => await this.doubleConfirmAsync()}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Button label="Button with comment and delay" confirm={{ title: "Are you sure?", comment: true }} onClick={async () => this.onSubmitAsync(true)} />
+                    <Button label="Alert"
+                            confirm={"Are you sure?"}
+                            onClick={async () => await ch.alertMessageAsync("YES", this._autoClose, this._flyout)}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Button label="Button with double confirm and delay" confirm={{ title: "Are you sure?", comment: false }} onClick={async () => this.onConfirmSubmitAsync(true)} />
+                    <Button label="Button with comment and delay"
+                            confirm={{ title: "Are you sure?", comment: true }}
+                            onClick={async () => this.onSubmitAsync(true)}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Icon name="fal exclamation-triangle" className="blue" size={IconSize.X2} confirm={"Are you sure?"} onClick={async () => await ch.alertMessageAsync("YES")} />
+                    <Button label="Button with double confirm and delay"
+                            confirm={{ title: "Are you sure?", comment: false }}
+                            onClick={async () => this.onConfirmSubmitAsync(true)}
+                    />
                 </div>
 
                 <div className="p-2">
-                    <Icon name="fal exclamation-triangle" className="blue" size={IconSize.X2} confirm={{ title: "Are you sure?", comment: true, minLength: 10 }} onClick={async () => await ch.alertMessageAsync("YES")} />
+                    <Icon name="fal exclamation-triangle"
+                          className="blue"
+                          size={IconSize.X2}
+                          confirm={"Are you sure?"}
+                          onClick={async () => await ch.alertMessageAsync("YES", this._autoClose, this._flyout)}
+                    />
+                </div>
+
+                <div className="p-2">
+                    <Icon name="fal exclamation-triangle"
+                          className="blue"
+                          size={IconSize.X2}
+                          confirm={{ title: "Are you sure?", comment: true, minLength: 10 }}
+                          onClick={async () => await ch.alertMessageAsync("YES", this._autoClose, this._flyout)}
+                    />
                 </div>
 
             </React.Fragment>
