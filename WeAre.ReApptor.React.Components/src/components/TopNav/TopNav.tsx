@@ -20,7 +20,7 @@ export interface IMenuItem {
     icon?: IIconProps | string | null;
     className?: string;
     bottom?: boolean;
-    count?: number | (() => number);
+    count?: number | (() => number | null);
     countClassName?: string;
     items?: IMenuItem[];
     visible?: boolean | (() => boolean);
