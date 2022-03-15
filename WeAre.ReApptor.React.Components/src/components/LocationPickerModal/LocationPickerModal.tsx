@@ -157,8 +157,17 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
 
                     {
                         (!this.readonly)
-                            ? (<Button type={ButtonType.Orange} label={LocationPickerModalLocalizer.setLocation} onClick={async () => await this.onSubmitAsync()}/>)
-                            : (<div/>)
+                            ?
+                            (
+                                <Button type={ButtonType.Orange}
+                                        label={LocationPickerModalLocalizer.setLocation}
+                                        onClick={async () => await this.onSubmitAsync()}
+                                />
+                            )
+                            :
+                            (
+                                <div/>
+                            )
                     }
                     
                 </ButtonContainer>
