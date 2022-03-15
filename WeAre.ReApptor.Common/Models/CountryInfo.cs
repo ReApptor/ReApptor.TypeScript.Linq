@@ -11,7 +11,7 @@ namespace WeAre.ReApptor.Common.Models
             Aliases = Array.Empty<string>();
         }
 
-        public CountryInfo(string code, string name, string englishName, string culture, params string[] aliases)
+        public CountryInfo(string code, string name, string englishName, string culture, string[] defaultTimeZoneIds, params string[] aliases)
         {
             if (code == null)
                 throw new ArgumentNullException(nameof(code));
@@ -34,7 +34,8 @@ namespace WeAre.ReApptor.Common.Models
             Name = name.Trim();
             EnglishName = englishName.Trim();
             Culture = culture.Trim();
-            Aliases = (aliases ?? new string[0]).AddRange(new[] {code, name, englishName, culture})
+            DefaultTimeZoneIds = defaultTimeZoneIds;
+            Aliases = (aliases ?? Array.Empty<string>()).AddRange(new[] {code, name, englishName, culture})
                 .Where(item => !string.IsNullOrWhiteSpace(item))
                 .Select(item => item.Trim())
                 .Distinct()
@@ -59,6 +60,11 @@ namespace WeAre.ReApptor.Common.Models
         public string Culture { get; set; }
             
         public string[] Aliases { get; set; }
+        
+        /// <summary>
+        /// Array of default time zone (capital) ids (Windows & Unix/Mac)
+        /// </summary>
+        public string[] DefaultTimeZoneIds { get; set; }
 
         public bool IsCountryInfo => true;
     }
