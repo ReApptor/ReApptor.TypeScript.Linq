@@ -97,8 +97,10 @@ export default class ch {
                     //reload layout
                     await this._layout.reRenderAsync();
                 } else {
-                    //reload top nav only
+                    //reload top nav
                     await this._layout.reloadTopNavAsync();
+                    //reload left nav
+                    await this._layout.reloadLeftNavAsync();
                 }
             }
         }
