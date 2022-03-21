@@ -84,6 +84,18 @@ export interface IGoogleMapProps {
     polyLinePath?: google.maps.LatLng[];
 
     /**
+     * If false, prevents the map from being dragged. Dragging is enabled by
+     * default.
+     */
+    draggable?: boolean;
+
+    /**
+     * If false, disables scrollWheel zooming on the map. The scrollWheel is
+     * enabled by default.
+     */
+    scrollWheel?: boolean;
+
+    /**
      * Called when the map is clicked.
      * Is not called when an {@link IGoogleMapMarker} or an {@link IGoogleMapInfoWindow} is clicked.
      */
@@ -316,6 +328,8 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
             mapTypeControl: this.props.mapTypeControl ?? true,
             center: this.center,
             zoom: this.props.zoom,
+            draggable: this.props.draggable,
+            scrollwheel: this.props.scrollWheel
         };
 
         this._googleMap = await AddressHelper.createMapAsync(this._googleMapDiv.current!, null, null, options)
