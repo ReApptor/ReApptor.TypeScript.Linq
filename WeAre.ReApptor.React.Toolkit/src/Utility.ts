@@ -732,7 +732,8 @@ export default class Utility {
 
     public static toShortDateString(date: Date | string): string {
         const value: Date = (typeof date === "string") ? new Date(date) : date;
-        const year: string = value.getFullYear().toString().substr(2);
+        let year: string = value.getFullYear().toString().substring(2);
+        year = (year.length == 1) ? "0" + year : year;
         return `${Utility.pad(value.getDate())}.${Utility.pad(value.getMonth() + 1)}.${year}`;
     }
 
@@ -753,7 +754,7 @@ export default class Utility {
 
     public static toDateString(date: Date | string): string {
         const value: Date = (typeof date === "string") ? new Date(date) : date;
-        return `${Utility.pad(value.getDate())}.${Utility.pad(value.getMonth() + 1)}.${value.getFullYear()}`;
+        return `${Utility.pad(value.getDate())}.${Utility.pad(value.getMonth() + 1)}.${Utility.pad(value.getFullYear())}`;
     }
 
     public static toShortTimeString(date: Date): string {
