@@ -15,14 +15,31 @@ export default class HashCodeUtility {
         const hasOwnProperty = Object.prototype.hasOwnProperty;
 
         let hash: number = 0;
-
+        
+        const names: string[] = [];
         for (let property in object) {
             if (hasOwnProperty.call(object, property)) {
-                //hash += HashCodeUtility.hash(property + HashCodeUtility.getHashCode(object[property]));
-                hash = this.inc(hash, this.getStringHashCode(property));
-                hash = this.inc(hash, this.getHashCode(object[property]));
+                names.push(property);
             }
         }
+        
+        const length: number = names.length;
+        if (length > 0) {
+            names.sort();
+            for (let i: number = 0; i < length; i++) {
+                const name: string = names[i];
+                hash = this.inc(hash, this.getStringHashCode(name));
+                hash = this.inc(hash, this.getHashCode(object[name]));
+            }
+        }
+        
+        // for (let property in object) {
+        //     if (hasOwnProperty.call(object, property)) {
+        //         //hash += HashCodeUtility.hash(property + HashCodeUtility.getHashCode(object[property]));
+        //         hash = this.inc(hash, this.getStringHashCode(property));
+        //         hash = this.inc(hash, this.getHashCode(object[property]));
+        //     }
+        // }
 
         return hash;
     }
