@@ -346,7 +346,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      */
     public async setSpinnerAsync(isSpinning: boolean): Promise<void> {
         if ((this.state.isSpinning !== isSpinning) && (this.isMounted)) {
-            await this.setState({isSpinning: isSpinning});
+            await this.setState({isSpinning});
         }
     }
 

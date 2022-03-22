@@ -66,6 +66,7 @@
       <TypeScriptCompile Include="src\tests\Utility.copyTo.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.getFileExtension.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.getHashCode.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />

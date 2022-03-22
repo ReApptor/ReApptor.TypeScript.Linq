@@ -127,7 +127,8 @@ describe("TypeResolver", function() {
         const result1: string = TypeResolver.resolve(instance1);
         const result2: string = TypeResolver.resolve(instance2);
 
-        expect(result1).toBe("type:3375195");
-        expect(result2).toBe("type:3375195");
+        expect(result1).not.toEqual(0);
+        expect(result2).not.toEqual(0);
+        expect(result2).toBe(result1);
     });
 });
