@@ -45,6 +45,12 @@ export default class PageRouteProvider {
         }
     }
 
+    private static onRedirect(route: PageRoute): void {
+        // do not await, just notification event
+        // noinspection JSIgnoredPromiseFromCall
+        this.onRedirectAsync(route);
+    }
+
     private static async onJsErrorAsync(serverError: ServerError): Promise<void> {
         try {
             await ApiProvider.postAsync("/api/Application/OnJsError", serverError);
@@ -79,7 +85,7 @@ export default class PageRouteProvider {
         
         const routesAreEqual: boolean = PageRoute.isEqual(oldRoute, route);
        
-        const newPage: boolean = ((currentPage == null) || (currentPage.routeName !== route.name) || !routesAreEqual);
+        const newPage: boolean = ((currentPage == null) || (currentPage.routeName !== route.name) || (!routesAreEqual));
 
         if (newPage) {
 
@@ -151,9 +157,7 @@ export default class PageRouteProvider {
             if (route.name !== BasePageDefinitions.errorRouteName) {
                 // clear cache
                 PageCacheProvider.clear();
-                // do not await, just notification event
-                // noinspection ES6MissingAwait
-                this.onRedirectAsync(route);
+                this.onRedirect(route);
             }
 
             if (stopPropagation) {
@@ -335,11 +339,27 @@ export default class PageRouteProvider {
         window.history.forward();
     }
 
-    public static push(route: PageRoute, title: string | null = null): void {
+    public static push(route: PageRoute, title: string | null = null, replace: boolean = false): void {
+
         if (title) {
             document.title = title;
         }
-        window.history.pushState(route, title || route.name);
+
+        const stateTitle: string = title || route.name;
+
+        if (replace) {
+            window.history.replaceState(route, stateTitle);
+        } else {
+            window.history.pushState(route, stateTitle);
+        }
+
+        const context: ApplicationContext = ch.getContext();
+
+        const routesAreEqual: boolean = PageRoute.isEqual(context.currentPage, route);
+
+        if (!routesAreEqual) {
+            this.onRedirect(route);
+        }
     }
 
     public static render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement {
