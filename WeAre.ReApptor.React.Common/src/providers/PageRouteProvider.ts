@@ -339,18 +339,24 @@ export default class PageRouteProvider {
         window.history.forward();
     }
 
-    public static push(route: PageRoute, title: string | null = null): void {
-        
+    public static push(route: PageRoute, title: string | null = null, replace: boolean = false): void {
+
         if (title) {
             document.title = title;
         }
-        
-        window.history.pushState(route, title || route.name);
+
+        const stateTitle: string = title || route.name;
+
+        if (replace) {
+            window.history.replaceState(route, stateTitle);
+        } else {
+            window.history.pushState(route, stateTitle);
+        }
 
         const context: ApplicationContext = ch.getContext();
 
         const routesAreEqual: boolean = PageRoute.isEqual(context.currentPage, route);
-        
+
         if (!routesAreEqual) {
             this.onRedirect(route);
         }
