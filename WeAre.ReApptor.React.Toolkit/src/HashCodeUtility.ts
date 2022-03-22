@@ -16,20 +16,20 @@ export default class HashCodeUtility {
 
         let hash: number = 0;
         
-        const names: string[] = [];
+        const properties: string[] = [];
         for (let property in object) {
             if (hasOwnProperty.call(object, property)) {
-                names.push(property);
+                properties.push(property);
             }
         }
         
-        const length: number = names.length;
+        const length: number = properties.length;
         if (length > 0) {
-            names.sort();
+            properties.sort();
             for (let i: number = 0; i < length; i++) {
-                const name: string = names[i];
-                hash = this.inc(hash, this.getStringHashCode(name));
-                hash = this.inc(hash, this.getHashCode(object[name]));
+                const property: string = properties[i];
+                hash = this.inc(hash, this.getStringHashCode(property));
+                hash = this.inc(hash, this.getHashCode(object[property]));
             }
         }
         
