@@ -296,8 +296,8 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
                 fillOpacity: 1,
                 strokeOpacity: 1,
                 strokeWeight: 2,
-                fillColor: '#173443',
-                strokeColor: '#98c8e5',
+                fillColor: "#173443",
+                strokeColor: "#98c8e5",
                 scale: 5
             };
 
@@ -311,8 +311,8 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
                 strokeWeight: 5,
                 icons: [{
                     icon: lineSymbol,
-                    offset: '0',
-                    repeat: '20px'
+                    offset: "0",
+                    repeat: "20px"
                 }],
             });
             
