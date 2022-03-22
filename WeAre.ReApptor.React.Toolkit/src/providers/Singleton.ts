@@ -21,7 +21,7 @@ class Singleton {
         const data: Data = this.getData();
         if (data.containsKey(name)) {
             if (warning) {
-                console.warn(`ReApptor§ Singleton Warning. Multiple instance of singleton object "${name}" found. Probably several instances of one of the packages are loaded. This will not break the app but it is not recommended to use two major versions.`);
+                console.warn(`ReApptor Singleton Warning. Multiple instance of singleton object "${name}" found. Probably several instances of one of the packages are loaded. This will not break the app but it is not recommended to use two major versions.`);
             }
             return data.getValue(name);
         }
