@@ -93,7 +93,7 @@ export default class PageRoute {
         return path;
     }
     
-    public static normalize(route: PageRoute | null) {
+    public static normalize(route: PageRoute | null): void {
         if (!route) {
             return;
         } 
