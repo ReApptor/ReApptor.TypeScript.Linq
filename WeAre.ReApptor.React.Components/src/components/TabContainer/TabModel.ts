@@ -1,7 +1,7 @@
+import React from "react";
 import {IIconProps} from "../Icon/Icon";
 import {DataStorageType, IBaseComponent, UserInteractionDataStorage} from "@weare/reapptor-react-common";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
-import React from "react";
 
 export enum TabRenderType {
     /**
@@ -39,7 +39,7 @@ export interface ITabDefinition {
     icon?: IIconProps;
     ignorable?: boolean;
     active?: boolean;
-    closeConfirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
+    closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
     onClose?(tab: TabModel): Promise<void>;
     onSelect?(tab: TabModel): Promise<void>;
 }
@@ -229,7 +229,7 @@ export class TabModel {
     
     public headerInstance: ITabHeader = {} as ITabHeader;
 
-    public closeConfirm: string | IConfirmation | ConfirmationDialogTitleCallback | null = null;
+    public closeConfirm: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null = null;
 
     public readonly closeConfirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     

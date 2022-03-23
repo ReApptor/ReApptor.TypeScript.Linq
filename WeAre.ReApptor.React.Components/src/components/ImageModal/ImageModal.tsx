@@ -4,6 +4,7 @@ import {BaseComponent, ch} from "@weare/reapptor-react-common";
 import Modal, {ModalSize} from "../Modal/Modal";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Button, {ButtonType} from "../Button/Button";
+import {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
 import ImageModalLocalizer from "./ImageModalLocalizer";
 
 import styles from "./ImageModal.module.scss";
@@ -17,6 +18,7 @@ interface IImageModalProps {
     download?: boolean;
     notResponsive?: boolean;
     noHeader?: boolean;
+    closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
     
     imageUrl?(file: FileModel): string;
 }
@@ -117,6 +119,7 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
                    size={this.props.size}
                    notResponsive={this.props.notResponsive}
                    noHeader={this.props.noHeader}
+                   closeConfirm={this.props.closeConfirm}
             >
                 <div>
                     {
