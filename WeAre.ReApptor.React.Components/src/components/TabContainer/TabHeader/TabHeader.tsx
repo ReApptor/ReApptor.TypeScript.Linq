@@ -104,7 +104,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                         (model.closeConfirm) &&
                         (
                             <ConfirmationDialog ref={model.closeConfirmDialogRef}
-                                                title={model.closeConfirm}
+                                                title={typeof model.closeConfirm !== "boolean" ? model.closeConfirm : undefined}
                                                 callback={(caller, data) => this.onCloseAsync(true, data)}
                             />
                         )
