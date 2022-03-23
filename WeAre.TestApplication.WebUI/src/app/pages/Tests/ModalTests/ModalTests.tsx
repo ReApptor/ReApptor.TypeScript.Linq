@@ -9,6 +9,7 @@ interface IModalTestsState {
     documentPreviewSize: DocumentPreviewSize;
     notResponsive: boolean;
     noHeader: boolean;
+    closeConfirm: boolean,
 }
 
 export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
@@ -16,7 +17,8 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
     state: IModalTestsState = {
         documentPreviewSize: DocumentPreviewSize.Medium,
         notResponsive: false,
-        "noHeader": false,
+        noHeader: false,
+        closeConfirm: false,
     };
 
     private readonly _document1: FileModel = new FileModel(samplePdf);
@@ -51,10 +53,16 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
                               onChange={async (sender, value) => {await this.setState({noHeader: value})}}
                     />
 
+                    <Checkbox inline
+                              label="Close confirm"
+                              value={this.state.closeConfirm}
+                              onChange={async (sender, value) => {await this.setState({closeConfirm: value})}}
+                    />
+
                 </Form>
 
 
-                <Modal id={"modal_1"} title={"Modal #1"} notResponsive={this.state.notResponsive} noHeader={this.state.noHeader}>
+                <Modal id={"modal_1"} title={"Modal #1"} notResponsive={this.state.notResponsive} noHeader={this.state.noHeader} closeConfirm={this.state.closeConfirm}>
                     <p>Test content for modal #1</p>
                 </Modal>
 
@@ -73,6 +81,7 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
                             size={ModalSize.ExtraLarge}
                             notResponsive={this.state.notResponsive}
                             noHeader={this.state.noHeader}
+                            closeConfirm={this.state.closeConfirm}
                 />
 
                 <Button label={"Open ImageModal #1"} toggleModal dataTarget={"imageModal_1"} />

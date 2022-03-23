@@ -4,9 +4,10 @@ import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@wea
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
+import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
+import ModalLocalizer from "./ModalLocalizer";
 
 import "./BootstrapOverride.scss";
-import ModalLocalizer from "./ModalLocalizer";
 
 export enum ModalSize {
     Default,
@@ -58,11 +59,13 @@ interface IModalProps<TData = {}> {
     bodyClassName?: string;
     toolbar?: RenderCallback;
     keepTextFormatting?: boolean;
+    closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
+    
     transform?(data: any): TData;
     onBeforeOpen?(sender: Modal): Promise<void>;
     onOpen?(sender: Modal): Promise<void>;
     onBeforeClose?(sender: Modal): Promise<void>;
-    onClose?(sender: Modal): Promise<void>;
+    onClose?(sender: Modal, data: string): Promise<void>;
     onToggle?(sender: Modal, isOpen: boolean): Promise<void>;
 }
 
@@ -81,6 +84,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     };
 
     private static _openInstance: Modal | null = null;
+    private readonly _closeConfirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     private _animation: boolean = true;
     private _modalRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _modalBodyRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -166,10 +170,6 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     //  ViewMethodCalls
 
-    private async onCloseButtonClick() {
-        await this.closeAsync();
-    }
-
     private onModalBodyClick(e: React.MouseEvent): void {
         if (!this.isInfo) {
             return;
@@ -224,9 +224,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             this.JQuery("body").removeClass("mobile");
         }
 
-        await this.setModalToClose();
+        await this.setModalToCloseAsync(false);
 
         this.scrollBack();
+    }
+
+    private async onCloseAsync(confirmed: boolean = false, data: string = ""): Promise<void> {
+        await this.setModalToCloseAsync(confirmed, data);
     }
 
     private scrollBack(): void {
@@ -271,8 +275,15 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         await this.onPropToggle(true);
     }
 
-    private async setModalToClose(animation: boolean = true) {
+    private async setModalToCloseAsync(confirmed: boolean, data: string = "") {
         if (!this.state.isOpen) {
+            return;
+        }
+
+        const confirmNeeded: boolean = (!!this.props.closeConfirm) && (!confirmed);
+
+        if ((confirmNeeded) && (this._closeConfirmDialogRef.current)) {
+            await this._closeConfirmDialogRef.current.openAsync();
             return;
         }
 
@@ -284,7 +295,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
         this.closeModal();
 
-        await this.onPropClose();
+        await this.onPropCloseAsync(data);
 
         if ((openInstance) && (Modal._openInstance == null)) {
             await openInstance.openAsync();
@@ -355,7 +366,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         node.off("hide.bs.modal");
     }
 
-    private showBootstrapModal() {
+    private showBootstrapModal(): void {
         if (!this.modal) {
             return;
         }
@@ -367,7 +378,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         }
     }
 
-    private hideBootstrapModal() {
+    private hideBootstrapModal(): void {
         if (!this.modal) {
             return;
         }
@@ -399,9 +410,9 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         }
     }
 
-    private async onPropClose(): Promise<void> {
+    private async onPropCloseAsync(data: string = ""): Promise<void> {
         if (this.props.onClose) {
-            await this.props.onClose(this);
+            await this.props.onClose(this, data);
         }
     }
 
@@ -420,7 +431,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     public async closeAsync(): Promise<void> {
-        await this.setModalToClose()
+        await this.onPropCloseAsync();
     }
 
     public async toggleAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
@@ -477,7 +488,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                                                   className={this.fullWindow ? "" : "dismiss"}
                                                   style={IconStyle.Regular}
                                                   size={IconSize.X2}
-                                                  onClick={() => this.onCloseButtonClick()}
+                                                  onClick={() => this.onCloseAsync()}
                                             />
                                         }
 
@@ -509,14 +520,33 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             ((!this.props.info) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
-                                    <Button label={ModalLocalizer.saveChanges} type={ButtonType.Orange} submit/>
-                                    <Button label={ModalLocalizer.close} type={ButtonType.Default} onClick={() => this.onCloseButtonClick()}/>
+                                    
+                                    <Button submit
+                                            label={ModalLocalizer.saveChanges}
+                                            type={ButtonType.Orange}
+                                    />
+                                    
+                                    <Button label={ModalLocalizer.close}
+                                            type={ButtonType.Default}
+                                            onClick={() => this.onCloseAsync()}
+                                    />
+                                    
                                 </div>
                             )
                         }
 
                         {
                             (this.isSpinning()) && <Spinner/>
+                        }
+
+                        {
+                            (this.props.closeConfirm) &&
+                            (
+                                <ConfirmationDialog ref={this._closeConfirmDialogRef}
+                                                    title={typeof this.props.closeConfirm !== "boolean" ? this.props.closeConfirm : undefined}
+                                                    callback={(caller, data) => this.onCloseAsync(true, data)}
+                                />
+                            )
                         }
 
                     </div>
