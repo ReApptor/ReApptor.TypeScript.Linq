@@ -710,6 +710,13 @@ namespace WeAre.ReApptor.Toolkit
             return ((data != null) && (data.Length > 0)) ? $"data:{mimeType};base64,{Convert.ToBase64String(data)}" : null;
         }
 
+        public static bool IsEqual(string x, string y, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase)
+        {
+            bool xNull = (x == null);
+            bool yNull = (y == null);
+            return (((xNull) && (yNull)) || ((!xNull) && (!yNull) && (string.Compare(x, y, comparisonType) == 0)));
+        }
+
         public static bool IsEqual(byte[] x, byte[] y)
         {
             if (x == y)
