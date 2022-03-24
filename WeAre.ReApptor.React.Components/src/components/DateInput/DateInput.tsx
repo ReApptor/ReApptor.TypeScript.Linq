@@ -48,6 +48,7 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     showOnlyTime?: boolean;
     timeIntervals?: number;
     timeFormat?: string;
+    excludeDates?: Date[];
     onChange?(date: Date): Promise<void>;
     onBlur?(sender: DateInput): Promise<void>;
 }
@@ -162,6 +163,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                 <DatePicker id={this.getInputId()}
                             ref={this.props.forwardedRef}
                             timeFormat={this.props.timeFormat || "HH:mm"}
+                            excludeDates={this.props.excludeDates}
                             title={DateInputLocalizer.get(this.props.title)}
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
