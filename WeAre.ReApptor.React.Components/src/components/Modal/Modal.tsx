@@ -431,7 +431,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     public async closeAsync(): Promise<void> {
-        await this.onPropCloseAsync();
+        await this.setModalToCloseAsync(false);
     }
 
     public async toggleAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
