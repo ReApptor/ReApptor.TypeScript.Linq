@@ -69,8 +69,6 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     }
 
     private async handleChangeAsync(date: Date): Promise<void> {
-        console.log("onChange: date=", date);
-        
         await this.updateValueAsync(date);
 
         if (this.props.clickToEdit) {
