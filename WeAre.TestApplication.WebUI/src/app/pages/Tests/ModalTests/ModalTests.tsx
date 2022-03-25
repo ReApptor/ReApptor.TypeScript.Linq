@@ -10,6 +10,7 @@ interface IModalTestsState {
     notResponsive: boolean;
     noHeader: boolean;
     closeConfirm: boolean,
+    preventEsc: boolean,
 }
 
 export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
@@ -19,6 +20,7 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
         notResponsive: false,
         noHeader: false,
         closeConfirm: false,
+        preventEsc: false,
     };
 
     private readonly _document1: FileModel = new FileModel(samplePdf);
@@ -59,10 +61,21 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
                               onChange={async (sender, value) => {await this.setState({closeConfirm: value})}}
                     />
 
+                    <Checkbox inline
+                              label="Prevent ESC"
+                              value={this.state.preventEsc}
+                              onChange={async (sender, value) => {await this.setState({preventEsc: value})}}
+                    />
+
                 </Form>
 
 
-                <Modal id={"modal_1"} title={"Modal #1"} notResponsive={this.state.notResponsive} noHeader={this.state.noHeader} closeConfirm={this.state.closeConfirm}>
+                <Modal id={"modal_1"} title={"Modal #1"}
+                       notResponsive={this.state.notResponsive}
+                       noHeader={this.state.noHeader}
+                       preventEsc={this.state.preventEsc}
+                       closeConfirm={this.state.closeConfirm}
+                >
                     <p>Test content for modal #1</p>
                 </Modal>
 
@@ -73,7 +86,9 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
                           onChange={async (sender, value) => await this.setState({documentPreviewSize: value ? DocumentPreviewSize.Large : DocumentPreviewSize.Medium})}
                 />
 
-                <Button label={"Document preview #1"} onClick={async () => await ch.preloadedDocumentPreviewAsync(this._document1, "document 1", this.state.documentPreviewSize)} />
+                <Button label={"Document preview #1"}
+                        onClick={async () => await ch.preloadedDocumentPreviewAsync(this._document1, "document 1", this.state.documentPreviewSize)}
+                />
 
                 <ImageModal id={"imageModal_1"} 
                             title={"ImageModal"} 
@@ -81,7 +96,6 @@ export default class ModalTests extends BaseComponent<{}, IModalTestsState> {
                             size={ModalSize.ExtraLarge}
                             notResponsive={this.state.notResponsive}
                             noHeader={this.state.noHeader}
-                            closeConfirm={this.state.closeConfirm}
                 />
 
                 <Button label={"Open ImageModal #1"} toggleModal dataTarget={"imageModal_1"} />
