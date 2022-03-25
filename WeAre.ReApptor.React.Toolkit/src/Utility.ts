@@ -153,7 +153,7 @@ export default class Utility {
                                             //The abbreviated name of the day of the week.
                                             formattedParam = this.getShortDayOfWeek(param);
                                         } else if (format === "MMMM") {
-                                            //The abbreviated name of the month.
+                                            //The name of the month.
                                             formattedParam = this.getMonth(param);
                                         } else if (format === "MMM") {
                                             //The abbreviated name of the month.

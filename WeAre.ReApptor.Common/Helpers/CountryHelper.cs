@@ -18,7 +18,7 @@ namespace WeAre.ReApptor.Common.Helpers
             //http://www.world-timedate.com/timezone/timezone_info_by_country.php?country_id=46
             
             //TODO: Generate from all culture
-            new CountryInfo("fi", "Suomi", "Finland", "fi-fi", new[] { "Europe/Helsinki", "FLE Standard Time" }, "FLE Standard Time"),
+            new CountryInfo("fi", "Suomi", "Finland", "fi-fi", new[] { "Europe/Helsinki", "FLE Standard Time" }),
             new CountryInfo("se", "Svenska", "Sweden", "sv-se", new[] { "Europe/Stockholm", "W. Europe Standard Time" }, "sv"),
             new CountryInfo("no", "Norge", "Norway", "nb-no", new[] { "Europe/Oslo", "W. Europe Standard Time" }, "nb", "nor"),
             new CountryInfo("dk", "Danmark", "Denmark", "da-dk", new[] { "Europe/Copenhagen", "Romance Standard Time" }, "da"),

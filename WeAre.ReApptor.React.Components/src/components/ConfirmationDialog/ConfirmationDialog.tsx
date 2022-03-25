@@ -18,6 +18,7 @@ export interface IConfirmation {
 }
 
 interface IConfirmationDialogProps {
+    id?: string;
     minLength?: number;
     title?: string | IConfirmation | ConfirmationDialogTitleCallback;
     confirmButtonLabel?: string;
@@ -221,11 +222,11 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         const processingStyle: any = (this.processing) && styles.processing;
 
         return (
-            <div id={"confirmation-dialog" + this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
+            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
 
                 <div className={styles.dialogOverlay} />
 
-                <div className={styles.dialogContent} id={`confirmationContent-${this.id}`}>
+                <div id={`confirmationContent-${this.id}`} className={styles.dialogContent}>
 
                     <h5>{this.toMultiLines(ConfirmationDialogLocalizer.get(this.model.title))}</h5>
 
@@ -245,7 +246,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                     }
 
                     <Button block
-                            id={"confirmation-dialog-confirm" + this.id}
+                            id={"confirmation-dialog-confirm-" + this.id}
                             label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButton}
                             type={ButtonType.Orange}
                             disabled={this.processing || !this.canConfirm}
@@ -253,7 +254,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                     />
 
                     <Button block
-                            id={"confirmation-dialog-cancel" + this.id}
+                            id={"confirmation-dialog-cancel-" + this.id}
                             label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButton}
                             type={ButtonType.Default}
                             disabled={this.processing}

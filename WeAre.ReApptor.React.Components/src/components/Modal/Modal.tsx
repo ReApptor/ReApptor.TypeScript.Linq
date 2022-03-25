@@ -52,6 +52,11 @@ interface IModalProps<TData = {}> {
      * True to hide the modal header
      */
     noHeader?: boolean;
+
+    /**
+     * True to prevent modal closing by escape button
+     */
+    preventEsc?: boolean;
     
     info?: boolean;
     className?: string;
@@ -90,6 +95,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private _modalBodyRef: React.RefObject<HTMLDivElement> = React.createRef();
     private _data: TData | null = null;
     private _scrollY: number = 0;
+    private _confirmed: boolean = false;
 
     //  Getters
 
@@ -160,6 +166,10 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return (this.props.noHeader === true);
     }
 
+    public get preventEsc(): boolean {
+        return (this.props.preventEsc === true);
+    }
+
     public getBodyNode(): JQuery {
         return this.JQuery(`#${this.id}_body`);
     }
@@ -201,6 +211,17 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         }
     }
 
+    private async confirmNeededAsync(): Promise<boolean> {
+        const confirmNeeded: boolean = ((!!this.props.closeConfirm) && (!this._confirmed));
+        
+        if ((confirmNeeded) && (this._closeConfirmDialogRef.current)) {
+            await this._closeConfirmDialogRef.current.openAsync();
+            return true;
+        }
+
+        return false;
+    }
+    
     private async onOpenHandlerAsync(event: any): Promise<void> {
         this.togglePageScroll(true);
 
@@ -214,23 +235,34 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             this.JQuery("body").addClass("mobile");
         }
 
-        await this.setModalToOpen();
+        await this.setModalToOpenAsync();
     }
 
     private async onCloseHandlerAsync(): Promise<void> {
+        
+        if (await this.confirmNeededAsync()) {
+            this.openModal(false);
+            return;
+        }
+        
         this.togglePageScroll(false);
 
         if (this.fullWindow) {
             this.JQuery("body").removeClass("mobile");
         }
 
-        await this.setModalToCloseAsync(false);
+        await this.setModalToCloseAsync();
 
         this.scrollBack();
     }
 
-    private async onCloseAsync(confirmed: boolean = false, data: string = ""): Promise<void> {
-        await this.setModalToCloseAsync(confirmed, data);
+    private async onCloseAsync(): Promise<void> {
+        
+        if (await this.confirmNeededAsync()) {
+            return;
+        }
+        
+        await this.setModalToCloseAsync();
     }
 
     private scrollBack(): void {
@@ -253,10 +285,12 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return true;
     }
 
-    private async setModalToOpen(animation: boolean = true) {
+    private async setModalToOpenAsync(animation: boolean = true): Promise<void> {
         if (this.state.isOpen) {
             return;
         }
+        
+        this._confirmed = false;
 
         await this.onPropBeforeOpen();
 
@@ -275,17 +309,13 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         await this.onPropToggle(true);
     }
 
-    private async setModalToCloseAsync(confirmed: boolean, data: string = "") {
+    private async setModalToCloseAsync(data: string = ""): Promise<void> {
+        
         if (!this.state.isOpen) {
             return;
         }
-
-        const confirmNeeded: boolean = (!!this.props.closeConfirm) && (!confirmed);
-
-        if ((confirmNeeded) && (this._closeConfirmDialogRef.current)) {
-            await this._closeConfirmDialogRef.current.openAsync();
-            return;
-        }
+        
+        this._confirmed = true;
 
         await this.onPropBeforeClose();
 
@@ -426,12 +456,18 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
 
     public async openAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
         this._scrollY = window.scrollY;
+        
         this.setData(data);
-        await this.setModalToOpen(animation);
+        
+        await this.setModalToOpenAsync(animation);
     }
 
     public async closeAsync(): Promise<void> {
-        await this.setModalToCloseAsync(false);
+        if (await this.confirmNeededAsync()) {
+            return;
+        }
+        
+        await this.setModalToCloseAsync();
     }
 
     public async toggleAsync(data: TData | null = null, animation: boolean = true): Promise<void> {
@@ -458,7 +494,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return (
             <div id={this.id}
                  ref={this._modalRef}
-                 tabIndex={-1}
+                 tabIndex={!this.preventEsc ? -1 : undefined}
                  role="dialog"
                  className={this.css("modal", this.props.className)}
             >
@@ -544,7 +580,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                             (
                                 <ConfirmationDialog ref={this._closeConfirmDialogRef}
                                                     title={typeof this.props.closeConfirm !== "boolean" ? this.props.closeConfirm : undefined}
-                                                    callback={(caller, data) => this.onCloseAsync(true, data)}
+                                                    callback={(caller, data) => this.setModalToCloseAsync(data)}
                                 />
                             )
                         }
