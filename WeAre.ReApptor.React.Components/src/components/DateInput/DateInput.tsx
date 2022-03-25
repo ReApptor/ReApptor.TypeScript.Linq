@@ -51,6 +51,7 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     excludeDates?: Date[];
     onChange?(date: Date): Promise<void>;
     onBlur?(sender: DateInput): Promise<void>;
+    onItemClick?(sender: DateInput, date: Date): Promise<void>;
 }
 
 interface IDateInputState extends IBaseInputState<Date> {
@@ -79,7 +80,13 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         }
     }
 
-    private async handleRawChange(e: React.ChangeEvent) {
+    private async handleSelectAsync(date: Date): Promise<void> {
+        if (this.props.onItemClick) {
+            await this.props.onItemClick(this, date);
+        }
+    }
+
+    private async handleRawChangeAsync(e: React.ChangeEvent) {
         e.preventDefault();
     }
 
@@ -184,8 +191,9 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             showTimeSelect={this.props.showTime}
                             showTimeSelectOnly={this.props.showOnlyTime}
                             timeIntervals={this.props.timeIntervals}
-                            onChange={async (date: Date) => await this.handleChangeAsync(date)}
-                            onChangeRaw={(e) => this.handleRawChange(e)}
+                            onChange={(date: Date) => this.handleChangeAsync(date)}
+                            onSelect={async (date: Date) => this.handleSelectAsync(date) }
+                            onChangeRaw={(e) => this.handleRawChangeAsync(e)}
                             onBlur={() => this.valueBlurHandlerAsync()}
                 />
             </div>
