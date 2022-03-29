@@ -8,6 +8,11 @@ namespace WeAre.ReApptor.Common.Helpers
 {
     public static class CountryHelper
     {
+        /// <summary>
+        /// "XZ" (Internation waters county code: ISO 3166-1 alpha-2.)
+        /// </summary>
+        public const string InternationalWatersCode = "XZ";
+        
         public static readonly CountryInfo[] Countries =
         {
             //Cultures:
@@ -30,6 +35,11 @@ namespace WeAre.ReApptor.Common.Helpers
         };
 
         public static readonly CountryInfo DefaultCountry = Countries[0];
+
+        public static bool IsInternationalWaters(this string country)
+        {
+            return (!string.IsNullOrWhiteSpace(country) && country.Equals(InternationalWatersCode, StringComparison.InvariantCultureIgnoreCase));
+        }
 
         public static CountryInfo FindCountryInfo(this string country)
         {
@@ -64,16 +74,21 @@ namespace WeAre.ReApptor.Common.Helpers
             return countryInfo?.Code ?? country;
         }
 
-        public static string GetCountryName(this string country)
+        public static string GetCountryName(this string country, bool excludeInternationalWaters = true)
         {
+            if ((excludeInternationalWaters) && (country.IsInternationalWaters()))
+            {
+                return "";
+            }
+
             CountryInfo countryInfo = country.FindCountryInfo();
 
             return countryInfo?.Name ?? country;
         }
 
-        public static string GetCountryName(this CultureInfo culture)
+        public static string GetCountryName(this CultureInfo culture, bool excludeInternationalWaters = true)
         {
-            return GetCountryName(culture?.TwoLetterISOLanguageName);
+            return GetCountryName(culture?.TwoLetterISOLanguageName, excludeInternationalWaters);
         }
 
         public static TimeZoneInfo GetDefaultCountyTimeZone(this string country)
