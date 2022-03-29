@@ -2,6 +2,7 @@ import {GeoCoordinate, GeoLocation, Utility} from "@weare/reapptor-toolkit";
 import {ApplicationContext, ch} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
 import {IGoogleMapInfoWindow, IGoogleMapMarker, TGoogleMapMarkerCallback} from "../components/GoogleMap/GoogleMap";
+import pl from "date-fns/locale/pl";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;
 
@@ -12,7 +13,7 @@ export interface IGoogleApiSettings {
 }
 
 export default class AddressHelper {
-    
+
     private static _google: any = null;
 
     private static toDegreesMinutesAndSeconds(coordinate: number): string {
@@ -24,7 +25,7 @@ export default class AddressHelper {
 
         return `${degrees}°${minutes}'${seconds}"`
     }
-    
+
     private static improveGoogleFormattedAddress(formattedAddress: string, address: string, streetNumber: string): string {
         if ((formattedAddress) && (address) && (streetNumber)) {
             const parts: string[] = formattedAddress
@@ -60,7 +61,7 @@ export default class AddressHelper {
 
         return `${settings.googleMapApiUrl}api/js?key=${settings.googleMapApiKey}&libraries=places`;
     }
-    
+
     public static async loadGoogleLibraryAsync(): Promise<void> {
         if (this.isGoogleApiRegistered) {
             return Promise.resolve();
@@ -74,7 +75,7 @@ export default class AddressHelper {
         googleMapScript.id = "googleScript";
 
         return new Promise<void>((resolve, reject) => {
-            
+
             googleMapScript.addEventListener("load", () => {
                 this._google = (window as any).google;
                 resolve();
@@ -96,14 +97,14 @@ export default class AddressHelper {
     public static get google(): any {
         if (this._google == null)
             throw new Error("Google API script is not initialized, probably script is not loaded.");
-        
+
         return this._google;
     }
-    
+
     public static get geocoder(): google.maps.Geocoder {
         return new this.google.maps.Geocoder;
     }
-    
+
     public static toGoogleCoordinate(coordinate: GeoCoordinate): google.maps.LatLng {
         return new this.google.maps.LatLng(coordinate.lat, coordinate.lon);
     }
@@ -173,22 +174,22 @@ export default class AddressHelper {
         if (position instanceof GeoCoordinate) {
             position = this.toGoogleCoordinate(position);
         }
-        
+
         return new this.google.maps.Marker({
             position: position,
             map: map
         });
     }
-    
+
     public static async addInfoWindow(content: string): Promise<google.maps.InfoWindow> {
-        return new this.google.maps.InfoWindow({ content });
+        return new this.google.maps.InfoWindow({content});
     }
-    
+
     public static async setMapCenterAsync(position: google.maps.LatLng | GeoCoordinate, map: google.maps.Map): Promise<void> {
         if (position instanceof GeoCoordinate) {
             position = this.toGoogleCoordinate(position);
         }
-        
+
         map.setCenter(position);
     }
 
@@ -238,7 +239,7 @@ export default class AddressHelper {
                 case "finland":
                 case "suomi":
                     return "Suomi";
-                    
+
                 //"se", "sv", "sv-se", "Sweden", "Svenska"
                 case "se":
                 case "sv":
@@ -246,7 +247,7 @@ export default class AddressHelper {
                 case "sweden":
                 case "svenska":
                     return "Svenska";
-                    
+
                 //"no", "nb", "nor", "nb-no", "Norway", "Norge"
                 case "no":
                 case "nb":
@@ -255,7 +256,7 @@ export default class AddressHelper {
                 case "norway":
                 case "norge":
                     return "Norge";
-                    
+
                 //"dk", "da", "da-dk", "Denmark", "Danmark"
                 case "dk":
                 case "da":
@@ -263,21 +264,21 @@ export default class AddressHelper {
                 case "denmark":
                 case "danmark":
                     return "Danmark";
-                    
+
                 //"pl", "pl-pl", "Poland", "Polska"
                 case "pl":
                 case "pl-pl":
                 case "poland":
                 case "polska":
                     return "Polska";
-                    
+
                 //"ru", "ru-ru", "Russia", "Россия"
                 case "ru":
                 case "ru-ru":
                 case "russia":
                 case "россия":
                     return "Россия";
-                    
+
                 //"ua", "uk", "uk-ua", "Ukraine", "Україна", "Украина"
                 case "ua":
                 case "uk":
@@ -312,7 +313,7 @@ export default class AddressHelper {
                 }
             }
         }
-        
+
         return null;
     }
 
@@ -320,13 +321,13 @@ export default class AddressHelper {
         if (!formattedAddress) {
             return null;
         }
-        
+
         if (typeof formattedAddress !== "string") {
             return formattedAddress;
         }
-        
+
         const geoLocation = new GeoLocation();
-        
+
         geoLocation.formattedAddress = formattedAddress;
 
         //Formatted address comes in formats:
@@ -347,21 +348,16 @@ export default class AddressHelper {
             if (length > 4) {
                 const lat: number = Number(parts[length - 2]);
                 const lon: number = Number(parts[length - 1]);
-                
+
                 const cityPostalCodeParts: string[] = parts[length - 4].trim().split(" ");
-                if (cityPostalCodeParts.length == 2)
-                {
+                if (cityPostalCodeParts.length == 2) {
                     geoLocation.postalCode = cityPostalCodeParts[0];
                     geoLocation.city = cityPostalCodeParts[1];
-                } else if (cityPostalCodeParts.length == 1)
-                {
-                    if (parts.length > 5)
-                    {
+                } else if (cityPostalCodeParts.length == 1) {
+                    if (parts.length > 5) {
                         geoLocation.postalCode = parts[length - 4];
                         geoLocation.city = parts[length - 5];
-                    }
-                    else
-                    {
+                    } else {
                         geoLocation.city = cityPostalCodeParts[0];
                     }
                 }
@@ -378,10 +374,10 @@ export default class AddressHelper {
                 geoLocation.country = this.getCountryName(parts[length - 3]);
             }
         }
-        
+
         return geoLocation;
     }
-    
+
     public static getCoordinate(location: GeoCoordinate | GeoLocation | Position | string | null): GeoCoordinate | null {
         if (location) {
             if (typeof location === "string") {
@@ -398,17 +394,17 @@ export default class AddressHelper {
                 ? coordinate
                 : this.extractCoordinate((coordinate as GeoLocation).formattedAddress);
         }
-        
+
         return null;
     }
-    
+
     public static async findLocationByLatLngAsync(latLng: google.maps.LatLng): Promise<GeoLocation | null> {
         return new Promise((resolve, reject) => {
             const request: google.maps.GeocoderRequest = {
                 location: latLng,
                 region: "fi"
             };
-            
+
             this.geocoder!.geocode(request, (results, status) => {
                 if (status === this.google.maps.GeocoderStatus.OK) {
                     resolve(this.getLocationFromGeocodeResult(results[0]));
@@ -446,19 +442,28 @@ export default class AddressHelper {
         const lon: number = this.findLon(result);
         return new GeoCoordinate(lat, lon);
     }
-    
+
     public static getLocationFromGeocodeResult(result: GoogleApiResult): GeoLocation {
         const lat: number = this.findLat(result);
         const lon: number = this.findLon(result);
 
-        const address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
-        const country: string = this.findAddressComponent(result, "country");
+        let address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
+        let country: string = this.findAddressComponent(result, "country");
         const town: string = this.findAddressComponent(result, "locality");
         const postalCode: string = this.findAddressComponent(result, "postal_code");
         const streetNumber: string = this.findAddressComponent(result, "street_number");
+        if (!address) {
+            const plusCode: string = this.findAddressComponent(result, "plus_code");
+            if (plusCode) {
+                address = plusCode;
+                if (!country) {
+                    country = "XZ"; // Internation waters county code: ISO 3166-1 alpha-2.
+                }
+            }
+        }
         const googleFormattedAddress: string = this.improveGoogleFormattedAddress(result.formatted_address || "", address, streetNumber);
         const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat, lon);
-        
+
         const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat > 0) && (lon > 0);
 
         const geoLocation: GeoLocation = new GeoLocation();
@@ -472,13 +477,13 @@ export default class AddressHelper {
             geoLocation.lon = lon;
             geoLocation.postalCode = postalCode;
         }
-        
+
         return geoLocation;
     }
 
     public static toDMS(coordinate: GeoCoordinate): string {
         const {lat: lat, lon: lon} = coordinate;
-        
+
         const latitude = this.toDegreesMinutesAndSeconds(lat);
         const latitudeCardinal = (lat >= 0) ? "N" : "S";
 
@@ -487,7 +492,7 @@ export default class AddressHelper {
 
         return `${latitude}${latitudeCardinal} ${longitude}${longitudeCardinal}`
     }
-    
+
     public static findCenter(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): GeoCoordinate {
 
         const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
@@ -500,12 +505,12 @@ export default class AddressHelper {
 
         const lat: number = (xCoordinate.lat + yCoordinate.lat) / 2;
         const lon: number = (xCoordinate.lon + yCoordinate.lon) / 2;
-        
+
         return new GeoCoordinate(lat, lon);
     }
-    
+
     public static distance(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): number {
-        
+
         const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
         const yCoordinate: GeoCoordinate | null = this.getCoordinate(y);
 
