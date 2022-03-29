@@ -451,14 +451,23 @@ export default class AddressHelper {
         const lat: number = this.findLat(result);
         const lon: number = this.findLon(result);
 
-        const address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
-        const country: string = this.findAddressComponent(result, "country");
+        let address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
+        let country: string = this.findAddressComponent(result, "country");
         const town: string = this.findAddressComponent(result, "locality");
         const postalCode: string = this.findAddressComponent(result, "postal_code");
         const streetNumber: string = this.findAddressComponent(result, "street_number");
+        if (!address) {
+            const plusCode: string = this.findAddressComponent(result, "plus_code");
+            if (plusCode) {
+                address = plusCode;
+                if (!country) {
+                    country = "XZ"; // Internation waters county code: ISO 3166-1 alpha-2.
+                }
+            }
+        }
         const googleFormattedAddress: string = this.improveGoogleFormattedAddress(result.formatted_address || "", address, streetNumber);
         const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat, lon);
-        
+
         const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat > 0) && (lon > 0);
 
         const geoLocation: GeoLocation = new GeoLocation();
@@ -472,7 +481,7 @@ export default class AddressHelper {
             geoLocation.lon = lon;
             geoLocation.postalCode = postalCode;
         }
-        
+
         return geoLocation;
     }
 
