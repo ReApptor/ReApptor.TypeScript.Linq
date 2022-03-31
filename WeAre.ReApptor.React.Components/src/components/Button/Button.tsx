@@ -56,6 +56,8 @@ export interface IButtonProps {
      */
     icon?: IIconProps;
 
+    iconPosition?: Justify;
+
     block?: boolean;
 
     /**
@@ -87,6 +89,16 @@ export interface IButtonProps {
      * The button will aligned to the right in the ButtonContainer
      */
     right?: boolean;
+
+    /**
+     * The number is displayed in the upper right corner.
+     */
+    count?: number | (() => number | null);
+
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
+    countClassName?: string;
 
     children?: React.ReactNode | React.ReactNode[];
 
@@ -146,11 +158,51 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                 return styles.color_grey;
         }
     }
+    
+    private getCount(): number | null {
+        return (this.props.count != null)
+            ? (typeof this.props.count === "function")
+                ? this.props.count()
+                : this.props.count
+            : null;
+    }
+
+    private getLeftSideIcon(): IIconProps | null {
+        if (this._actionProps && this._actionProps.title && this._actionProps.icon && this._actionProps.iconPosition != Justify.Right) {
+            return this._actionProps.icon;
+        }
+
+        if ((this._actionProps) && (this._actionProps.title)) {
+            return null;
+        }
+
+        if ((this.props.icon) && (this.iconPosition == Justify.Left)) {
+            return this.props.icon;
+        }
+
+        return null;
+    }
+
+    private getRightSideIcon(): IIconProps | null {
+        if (this._actionProps && this._actionProps.icon && this._actionProps.iconPosition == Justify.Right) {
+            return this._actionProps.icon;
+        }
+
+        if (this._actionProps && this._actionProps.icon) {
+            return null;
+        }
+
+        if ((this.props.icon) && (this.iconPosition == Justify.Right)) {
+            return this.props.icon;
+        }
+
+        return null;
+    }
 
     private async onClickAsync(confirmed: boolean = true, data: string | null = null): Promise<void> {
 
         if (this.hasActions) {
-            return await this.toggleActions();
+            return await this.toggleActionsAsync();
         }
 
         const confirmNeeded: boolean = (!!this.props.confirm) && (!confirmed);
@@ -169,11 +221,11 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
     }
 
-    private async toggleActions(): Promise<void> {
+    private async toggleActionsAsync(): Promise<void> {
         await this.setState({isOpen: !this.state.isOpen});
     }
 
-    private async closeActions(): Promise<void> {
+    private async closeActionsAsync(): Promise<void> {
         await this.setState({isOpen: false});
     }
 
@@ -200,41 +252,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private get hasActions(): boolean {
         return !!this.props.children;
     }
-
-    private get showCaret(): boolean {
-        return this.hasActions && !this.rightSideIcon && !this._actionProps?.title;
-    }
-
+    
     private get showActions(): boolean {
         return this.hasActions && this.state.isOpen;
-    }
-
-    private get leftSideIcon(): IIconProps | null {
-        if (this._actionProps && this._actionProps.title && this._actionProps.icon && this._actionProps.iconPosition !== Justify.Right) {
-            return this._actionProps.icon;
-        }
-
-        if (this._actionProps && this._actionProps.title) {
-            return null;
-        }
-
-        if (this.props.icon) {
-            return this.props.icon;
-        }
-
-        return null;
-    }
-
-    private get rightSideIcon(): IIconProps | null {
-        if (this._actionProps && this._actionProps.icon && this._actionProps.iconPosition === Justify.Right) {
-            return this._actionProps.icon;
-        }
-
-        if (this._actionProps && this._actionProps.icon) {
-            return null;
-        }
-
-        return null;
     }
 
     private get label(): string | undefined {
@@ -269,16 +289,18 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     }
 
     public async onGlobalClick(e: React.MouseEvent): Promise<void> {
-        const target = e.target as Node;
+        if (this.state.isOpen) {
+            const target = e.target as Node;
 
-        const outside: boolean = Utility.clickedOutside(target, this.id);
-
-        if (outside && this.state.isOpen) {
-            await this.closeActions();
+            const outside: boolean = Utility.clickedOutside(target, this.id);
+            
+            if (outside) {
+                await this.closeActionsAsync();
+            }
         }
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
         if (this.hasActions) {
@@ -293,15 +315,30 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                 this._forcedWidth = buttonWidth;
             }
 
-            this.reRenderAsync();
+            await this.reRenderAsync();
         }
     }
 
+    public get count(): number | null {
+        return this.getCount();
+    }
+
+    public get iconPosition(): Justify {
+        return this.props.iconPosition ?? Justify.Left;
+    }
+
     public render(): React.ReactNode {
+
+        const count: number | null = this.getCount();
+        const leftSideIcon: IIconProps | null = this.getLeftSideIcon();
+        const rightSideIcon: IIconProps | null = this.getRightSideIcon();
+        
+        const showCaret: boolean = (this.hasActions) && (!rightSideIcon) && (!this._actionProps?.title);
+
         const blockStyle: any = (this.props.block) && "btn-block";
         const smallStyle: any = (this.props.small) && styles.small;
-        const iconPaddingStyle: any = (this.props.icon) && styles.iconPadding;
-        const labelPaddingStyle: any = (this.props.label) && styles.labelPadding;
+        const labelRightPaddingStyle: any = (this.props.label) && (leftSideIcon) && styles.labelRightPadding;
+        const labelLeftPaddingStyle: any = (this.props.label) && (rightSideIcon) && styles.labelLeftPadding;
         const hoverStyle: any = (this.desktop) && styles.hover;
 
         const inlineStyles: React.CSSProperties = this.props.style || {};
@@ -320,7 +357,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         type={this.props.submit ? "submit" : "button"}
                         disabled={this.props.disabled}
                         title={ButtonLocalizer.get(this.props.title)}
-                        className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, iconPaddingStyle, labelPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
+                        className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, labelRightPaddingStyle, labelLeftPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
                         style={inlineStyles}
                         data-target={`#${this.dataTarget}`}
                         data-modal={this.dataModal}
@@ -329,16 +366,25 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         onClick={() => this.onClickAsync(false)}
                 >
 
-                    {this.leftSideIcon && <Icon {...this.leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
+                    {leftSideIcon && <Icon {...leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
                     {<span>{this.label}</span>}
 
-                    {this.rightSideIcon && <Icon {...this.rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
+                    {rightSideIcon && <Icon {...rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
-                    {this.showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
+                    {showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
 
                     {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
-
+                    
+                    {
+                        (count != null) &&
+                        (
+                            <div className={this.css(styles.count, this.props.countClassName)}>
+                                <span>{count}</span>
+                            </div>
+                        )
+                    }
+                    
                 </button>
 
                 {
