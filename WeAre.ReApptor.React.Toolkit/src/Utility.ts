@@ -611,7 +611,7 @@ export default class Utility {
     }
 
     public static inFuture(date: Date | string | null, dateOnly: boolean = false): boolean {
-        return (date != null) && (Utility.diff(dateOnly ? Utility.today() : Utility.now(), Utility.now()).totalMilliseconds > 0);
+        return (date != null) && (Utility.diff(date, dateOnly ? Utility.today() : Utility.now()).totalMilliseconds > 0);
     }
 
     public static inPast(date: Date | string | null, dateOnly: boolean = false): boolean {
