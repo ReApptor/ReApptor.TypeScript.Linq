@@ -159,7 +159,12 @@ namespace WeAre.ReApptor.Toolkit.Extensions
         {
             return Utility.TryToDecimal(value, out result);
         }
-
+        
         #endregion
+        
+        public static bool IsBase64Src(this string src)
+        {
+            return Utility.IsBase64Src(src);
+        }
     }
 }

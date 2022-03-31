@@ -66,7 +66,7 @@ declare global {
 
         inFuture(): boolean;
 
-        inPast(dateOnly: boolean): boolean;
+        inPast(dateOnly?: boolean): boolean;
 
         isSunday(): boolean;
 
