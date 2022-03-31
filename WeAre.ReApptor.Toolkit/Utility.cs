@@ -709,7 +709,12 @@ namespace WeAre.ReApptor.Toolkit
         {
             return ((data != null) && (data.Length > 0)) ? $"data:{mimeType};base64,{Convert.ToBase64String(data)}" : null;
         }
-
+        
+        public static bool IsBase64Src(this string src)
+        {
+            return (!string.IsNullOrWhiteSpace(src)) && (src.StartsWith("data:"));
+        }
+        
         public static bool IsEqual(string x, string y, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase)
         {
             bool xNull = (x == null);
