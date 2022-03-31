@@ -7,6 +7,8 @@ namespace WeAre.Apps.Common.Extensions
 {
     public static class GeoLocationExtensions
     {
+        #region Distance
+
         public static double Distance(this IGeoCoordinate x, double lat, double lon)
         {
             if (x == null)
@@ -69,5 +71,40 @@ namespace WeAre.Apps.Common.Extensions
 
             return distance;
         }
+
+        #endregion
+
+        #region IsCompleted
+
+        public static bool IsCompleted(this IGeoLocation location)
+        {
+            return (location != null) &&
+                   (!string.IsNullOrWhiteSpace(location.Address)) &&
+                   (!string.IsNullOrWhiteSpace(location.Country)) &&
+                   (location.Lat > 0) &&
+                   (location.Lon > 0);
+        }
+
+        public static bool IsCompleted(this IGeoAddress address)
+        {
+            return (address != null) &&
+                   (!string.IsNullOrWhiteSpace(address.Address)) &&
+                   (!string.IsNullOrWhiteSpace(address.Country)) &&
+                   (address is IGeoCoordinate coordinate) &&
+                   (coordinate.Lat > 0) &&
+                   (coordinate.Lon > 0);
+        }
+
+        public static bool IsCompleted(this IGeoCoordinate coordinate)
+        {
+            return (coordinate != null) &&
+                   (coordinate.Lat > 0) &&
+                   (coordinate.Lon > 0) &&
+                   (coordinate is IGeoAddress address) &&
+                   (!string.IsNullOrWhiteSpace(address.Address)) &&
+                   (!string.IsNullOrWhiteSpace(address.Country));
+        }
+
+        #endregion
     }
 }
