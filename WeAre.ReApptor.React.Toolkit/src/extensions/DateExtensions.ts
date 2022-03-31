@@ -66,7 +66,7 @@ declare global {
 
         inFuture(): boolean;
 
-        inPast(): boolean;
+        inPast(dateOnly: boolean): boolean;
 
         isSunday(): boolean;
 
@@ -187,8 +187,8 @@ export const DateExtensions = function () {
     }
     
     if (Date.prototype.inPast == null) {
-        Date.prototype.inPast = function(): boolean {
-            return Utility.inPast(this);
+        Date.prototype.inPast = function(dateOnly: boolean = false): boolean {
+            return Utility.inPast(this, dateOnly);
         };
     }
     
