@@ -20,7 +20,13 @@ export interface IMenuItem {
     icon?: IIconProps | string | null;
     className?: string;
     bottom?: boolean;
+    /**
+     * The number is displayed in the upper right corner.
+     */
     count?: number | (() => number | null);
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
     countClassName?: string;
     items?: IMenuItem[];
     visible?: boolean | (() => boolean);
