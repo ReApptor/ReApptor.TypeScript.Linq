@@ -610,8 +610,8 @@ export default class Utility {
         return (fromValue <= dateValue) && (dateValue <= toValue);
     }
 
-    public static inFuture(date: Date | string | null): boolean {
-        return (date != null) && (Utility.diff(date, Utility.now()).totalMilliseconds > 0);
+    public static inFuture(date: Date | string | null, dateOnly: boolean = false): boolean {
+        return (date != null) && (Utility.diff(dateOnly ? Utility.today() : Utility.now(), Utility.now()).totalMilliseconds > 0);
     }
 
     public static inPast(date: Date | string | null, dateOnly: boolean = false): boolean {

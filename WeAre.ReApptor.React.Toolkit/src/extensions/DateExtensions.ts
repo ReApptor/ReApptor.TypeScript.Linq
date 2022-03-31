@@ -64,7 +64,7 @@ declare global {
          */
         getHashCode(): number;
 
-        inFuture(): boolean;
+        inFuture(dateOnly?: boolean): boolean;
 
         inPast(dateOnly?: boolean): boolean;
 
@@ -181,8 +181,8 @@ export const DateExtensions = function () {
     }
     
     if (Date.prototype.inFuture == null) {
-        Date.prototype.inFuture = function(): boolean {
-            return Utility.inFuture(this);
+        Date.prototype.inFuture = function(dateOnly: boolean = false): boolean {
+            return Utility.inFuture(this, dateOnly);
         };
     }
     
