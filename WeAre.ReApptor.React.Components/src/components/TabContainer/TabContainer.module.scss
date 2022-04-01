@@ -80,6 +80,7 @@
     }
     
     .tab {
+        position: relative;
         
         .closed {
             display: none;
@@ -100,6 +101,21 @@
             &:hover {
                 opacity: 1;
             }
+        }
+        
+        .count {
+            position: absolute;
+            right: -10px;
+            top: -7px;
+            padding-left: 9px;
+            padding-right: 9px;
+            font-size: 12px;
+            background: #000000;
+            color: #fff;
+            vertical-align: top;
+            border-radius: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
         }
     }
     
