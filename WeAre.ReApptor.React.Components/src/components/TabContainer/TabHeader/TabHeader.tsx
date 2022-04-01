@@ -57,7 +57,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
     public get model(): TabModel {
         return this.props.model;
     }
-
+    
     private get classNames(): ITabHeaderClassNames {
         const classNamesCopy: ITabHeaderClassNames = {...this.props.classNames} ?? {};
 
@@ -70,6 +70,8 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         
         const model: TabModel = this.model;
         model.headerInstance = this;
+
+        const count: number | null = model.getCount();
 
         const closedStyle: string = (model.closed) && (styles.closed) || "";
         const activeStyle: string = (model.active) && ("active") || "";
@@ -99,7 +101,16 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                             <Icon className={this.css(styles.close, this.classNames.headerClose)} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
                         )
                     }
-                    
+
+                    {
+                        (count != null) &&
+                        (
+                            <div className={this.css(styles.count, model.countClassName)}>
+                                <span>{count}</span>
+                            </div>
+                        )
+                    }
+
                     {
                         (model.closeConfirm) &&
                         (
