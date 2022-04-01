@@ -88,15 +88,15 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
                                   headerStyleType={this.state.underLineTabStyles ? TabContainerHeaderStyleType.Underline : TabContainerHeaderStyleType.Default}
                     >
 
-                        <Tab id="JQueryUtilityTests" title="JQueryUtility">
+                        <Tab id="jQueryUtilityTests" title="JQueryUtility" count={3}>
                             <JQueryUtilityTests/>
                         </Tab>
 
-                        <Tab id="LeftNavTests" title="LeftNav">
+                        <Tab id="leftNavTests" title="LeftNav" count={() => 4}>
                             <LeftNavTests/>
                         </Tab>
 
-                        <Tab id="AccordionTests" title="Accordion">
+                        <Tab id="accordionTests" title="Accordion" count={() => 32}>
                             <AccordionTests/>
                         </Tab>
 

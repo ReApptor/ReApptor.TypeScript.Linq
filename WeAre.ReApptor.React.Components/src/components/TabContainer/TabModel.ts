@@ -40,6 +40,14 @@ export interface ITabDefinition {
     ignorable?: boolean;
     active?: boolean;
     closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
+    /**
+     * The number is displayed in the upper right corner.
+     */
+    count?: number | (() => number | null);
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
+    countClassName?: string;
     onClose?(tab: TabModel): Promise<void>;
     onSelect?(tab: TabModel): Promise<void>;
 }
@@ -231,11 +239,24 @@ export class TabModel {
 
     public closeConfirm: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null = null;
 
+    public count: number | (() => number | null) | null = null;
+
+    public countClassName: string | null = null;
+
     public readonly closeConfirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     
     public onClose?(tab: TabModel, data: string): Promise<void>;
 
     public onSelect?(tab: TabModel): Promise<void>;
+
+    public getCount(): number | null {
+        const count: number | (() => number | null) | null = this.count;
+        return (count != null)
+            ? (typeof count === "function")
+                ? count()
+                : count
+            : null;
+    }
     
     public async reRenderAsync(): Promise<void> {
         if (this.headerInstance.reRenderAsync) {
@@ -252,14 +273,16 @@ export class TabTransformer {
     public static toTab(from: ITabDefinition, id: string): TabModel {
         const to = new TabModel();
         to.id = id;
-        to.active = from.active || false;
-        to.className = from.className || null;
-        to.activeClassName = from.activeClassName || null;
-        to.icon = from.icon || null;
-        to.ignorable = from.ignorable || false;
+        to.active = from.active ?? false;
+        to.className = from.className ?? null;
+        to.activeClassName = from.activeClassName ?? null;
+        to.icon = from.icon ?? null;
+        to.ignorable = from.ignorable ?? false;
         to.title = from.title || "";
         to.tooltip = from.tooltip || "";
-        to.closeConfirm = from.closeConfirm || null;
+        to.closeConfirm = from.closeConfirm ?? null;
+        to.count = from.count ?? null;
+        to.countClassName = from.countClassName ?? null;
         to.onSelect = from.onSelect;
         to.onClose = from.onClose;
         return to;
