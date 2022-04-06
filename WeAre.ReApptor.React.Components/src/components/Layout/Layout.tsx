@@ -130,6 +130,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private readonly _downloadLink: React.RefObject<HTMLAnchorElement> = React.createRef();
     private readonly _imageInputRef: React.RefObject<HTMLInputElement> = React.createRef();
     private readonly _cameraInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+    private readonly _callToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
+    private readonly _emailToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
 
     private _mobile: boolean = this.mobile;
     private _touch: React.Touch | null = null;
@@ -553,6 +555,26 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         return new Promise(() => null);
     }
+    
+    public callTo(phone: string): void {
+        const anchor: HTMLAnchorElement | null = this._callToAnchorRef.current;
+        
+        if (anchor) {
+            anchor.href = `tel:${phone}`;
+            anchor.text = phone;
+            anchor.click();
+        }
+    }
+    
+    public mailTo(email: string): void {
+        const anchor: HTMLAnchorElement | null = this._callToAnchorRef.current;
+        
+        if (anchor) {
+            anchor.href = `mailto:${email}`;
+            anchor.text = email;
+            anchor.click();
+        }
+    }
 
     public get leftNav(): ILeftNavProps | null {
 
@@ -620,9 +642,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         
         return (
             <div className={this.css(styles.layout, this.props.className)}
-                 onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}
-                 onTouchEnd={async (e: React.TouchEvent) => await this.onTouchEndHandlerAsync(e)}
-                 onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
+                 onTouchStart={(e: React.TouchEvent) => this.onTouchStartHandlerAsync(e)}
+                 onTouchEnd={(e: React.TouchEvent) => this.onTouchEndHandlerAsync(e)}
+                 onTouchMove={(e: React.TouchEvent) => this.onTouchMoveHandlerAsync(e)}>
 
                 {
                     (hasTopNav) &&
@@ -717,6 +739,18 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                        accept="image/*"
                        multiple={false}
                        onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
+                />
+                
+                <a ref={this._callToAnchorRef}
+                   id={`${this.id}_callToAnchor`}
+                   style={{display: "none"}}
+                   href={""}
+                />
+                
+                <a ref={this._emailToAnchorRef}
+                   id={`${this.id}_emailToAnchor`}
+                   style={{display: "none"}}
+                   href={""}
                 />
 
             </div>

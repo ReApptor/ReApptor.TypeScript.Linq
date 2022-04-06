@@ -28,7 +28,7 @@ export default class InlineImageTests extends BaseComponent {
                     <ButtonContainer>
 
                         <Button label={"Camera"}
-                                icon={{name: "fas fa-camera"}}
+                                icon={{name: "fas fa-phone"}}
                                 type={ButtonType.Blue}
                                 onClick={() => this.takePictureAsync(true)}
                         />
@@ -37,6 +37,18 @@ export default class InlineImageTests extends BaseComponent {
                                 icon={{name: "fas fa-image"}}
                                 type={ButtonType.Blue}
                                 onClick={() => this.takePictureAsync(false)}
+                        />
+
+                        <Button label={"Call-to"}
+                                icon={{name: "fas fa-image"}}
+                                type={ButtonType.Blue}
+                                onClick={async () => ch.callTo("+7 921 0932323")}
+                        />
+
+                        <Button label={"Mail-to"}
+                                icon={{name: "fas fa-envelope"}}
+                                type={ButtonType.Blue}
+                                onClick={async () => ch.mailTo("mail.me@google.com")}
                         />
                         
                     </ButtonContainer>

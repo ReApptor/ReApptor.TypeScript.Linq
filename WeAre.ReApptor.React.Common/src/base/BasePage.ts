@@ -230,6 +230,18 @@ export interface ILayoutPage extends IAsyncComponent {
     takePictureAsync(camera?: boolean): Promise<FileModel | null>;
 
     /**
+     * Activates default "call-to" behaviour
+     * @param phone The phone number
+     */
+    callTo(phone: string): void;
+
+    /**
+     * Activates default "mail-to" behaviour
+     * @param email The email address
+     */
+    mailTo(email: string): void;
+
+    /**
      * Does the {@link ILayoutPage} have a TopNav.
      */
     readonly hasTopNav: boolean;
