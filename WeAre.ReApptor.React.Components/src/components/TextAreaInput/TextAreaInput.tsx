@@ -39,7 +39,7 @@ export default class TextAreaInput extends BaseInput<string, ITextAreaInputProps
     }
 
     protected async valueBlurHandlerAsync(): Promise<void> {
-        await super.validateAsync();
+        await super.valueBlurHandlerAsync();
 
         if (this.props.onBlur) {
             await this.props.onBlur(this);
