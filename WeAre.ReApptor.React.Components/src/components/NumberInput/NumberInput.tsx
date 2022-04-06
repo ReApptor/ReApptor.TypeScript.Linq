@@ -165,7 +165,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     protected async valueBlurHandlerAsync(): Promise<void> {
         await this.saveChangesAsync();
 
-        await super.validateAsync();
+        await super.valueBlurHandlerAsync();
 
         if (this.props.onBlur) {
             await this.props.onBlur(this);
