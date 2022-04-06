@@ -65,7 +65,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
     }
 
     protected async valueBlurHandlerAsync(): Promise<void> {
-        await super.validateAsync();
+        await super.valueBlurHandlerAsync();
 
         if (this.props.onBlur) {
             await this.props.onBlur(this);

@@ -464,6 +464,18 @@ export default class ch {
         return null;
     }
 
+    public static callTo(phone: string): void {
+        if (this._layout != null) {
+            return this._layout.callTo(phone);
+        }
+    }
+
+    public static mailTo(email: string): void {
+        if (this._layout != null) {
+            return this._layout.mailTo(email);
+        }
+    }
+
     /**
      * Gets unique id
      * @returns id - number

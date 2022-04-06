@@ -11,7 +11,7 @@ export type NullableCheckboxType = boolean | null;
 
 export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date | null, Date | null];
 
-export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null;
+export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null | Promise<string | null>;
 
 export interface IInputModel<TInputValue extends BaseInputValue> {
     value: TInputValue;
@@ -671,7 +671,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             model.value = value;
 
             if (validate) {
-                this.validate();
+                await this.validateAsync();
             } else {
                 state.validationError = null;
             }
@@ -683,17 +683,10 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     protected async valueBlurHandlerAsync(): Promise<void> {
-        await this.validateAsync();
+        await this.validateAsync(false);
     }
 
-    protected validate(): void {
-
-        if (this.noValidate) {
-            return;
-        }
-
-        const value: TInputValue = this.value;
-
+    private groupValidators(): ValidatorCallback<TInputValue>[] {
         const validators: ValidatorCallback<TInputValue>[] = [];
 
         if (this.props.required) {
@@ -706,41 +699,60 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             validators.push(...(this.props.validators as ValidatorCallback<TInputValue>[]));
         }
 
-        let error: string | null = null;
+        return validators;
+    }
 
-        validators.forEach(validator => {
-            if (!error) {
-                let validationError: string | null = validator(value);
-                if (validationError) {
-                    if (this.props.onValidationError) {
-                        validationError = this.props.onValidationError(validator, value);
+    public async validateAsync(syncOnly: boolean = true): Promise<void> {
+
+        if (this.noValidate) {
+            return;
+        }
+
+        const prevError: string | null = this.state.validationError;
+
+        const value: TInputValue = this.value;
+
+        const validators: ValidatorCallback<TInputValue>[] = this.groupValidators();
+
+        let validationError: string | null = null;
+
+        await Utility.forEachAsync(validators, async (validator) => {
+            if (!validationError) {
+                let validationResult: string | null | Promise<string | null> = validator(value);
+                if (validationResult) {
+                    let error: string | null = (typeof validationResult === "string")
+                        ? validationResult
+                        : (!syncOnly)
+                            ? await validationResult
+                            : null;
+                    if (error) {
+                        if (this.props.onValidationError) {
+                            error = this.props.onValidationError(validator, value);
+                        }
+                        validationError = error;
                     }
-                    error = validationError;
                 }
             }
         });
 
-        error = (error) ? error : null;
+        validationError = (validationError) ? validationError : null;
+        
+        if (validationError !== prevError) {
+            const state: TState = this.state;
+            state.validationError = validationError;
 
-        const state: IBaseInputState<TInputValue> = this.state;
+            //console.log("state.validationError=", state.validationError);
 
-        state.validationError = error;
+            if (this.isMounted) {
+                await this.setState(state);
+            }
+        }
     }
 
     public isInput(): boolean { return true; }
 
     public getValidators(): ValidatorCallback<TInputValue>[] {
         return [];
-    }
-
-    public async validateAsync(): Promise<void> {
-        const error: string | null = this.state.validationError;
-
-        this.validate();
-
-        if (this.state.validationError !== error) {
-            await this.setState(this.state);
-        }
     }
 
     protected getInputId(): string {
