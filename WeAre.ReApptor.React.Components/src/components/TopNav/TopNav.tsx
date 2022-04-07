@@ -399,7 +399,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             (
                                 <>
 
-                                    <Icon name={"fal fa-comment-alt-lines"}
+                                    <Icon name={"fal fa-bell"}
                                           size={IconSize.X2}
                                           className={this.css(styles.right_notifications, notifications.className)}
                                           onClick={() => this.onNotificationsClickAsync(notifications)}
