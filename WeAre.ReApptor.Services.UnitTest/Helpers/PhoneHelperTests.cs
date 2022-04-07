@@ -184,5 +184,18 @@ namespace WeAre.ReApptor.Services.UnitTest.Helpers
             Assert.Equal("+380669911422", international);
             Assert.True(isValid);
         }
+        
+        [Fact]
+        public void ParseInternationalFiNumberTest()
+        {
+            const string value = @"0406486664";
+
+            string international = value.ToInternationalNumber("fi");
+            
+            bool isValid = value.IsPhoneNumberValid("ua");
+
+            Assert.Equal("+358406486664", international);
+            Assert.True(isValid);
+        }
     }
 }
