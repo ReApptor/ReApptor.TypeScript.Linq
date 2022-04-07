@@ -18,7 +18,7 @@ import {
     SwipeDirection,
     WebApplicationType
 } from "@weare/reapptor-react-common";
-import TopNav, {IMenuItem, IShoppingCart, ITopNavProfile} from "../TopNav/TopNav";
+import TopNav, {IMenuItem, IShoppingCart, ITopNavNotifications, ITopNavProfile} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
@@ -85,6 +85,8 @@ export interface ILayoutProps {
     languages?: () => ILanguage[];
 
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+
+    notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
 
     leftNav?: ILeftNavProps | (() => ILeftNavProps | null) | null;
 
@@ -656,6 +658,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 fetchItems={this.props.fetchTopNavItems}
                                 languages={this.props.languages}
                                 logo={this.props.topNavLogo}
+                                notifications={this.props.notifications}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
                                 onShoppingCartClick={this.props.onShoppingCartClick}
                                 onSearchClick={this.props.onSearchClick}

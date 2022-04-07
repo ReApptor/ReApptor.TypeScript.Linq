@@ -1,6 +1,6 @@
 import {Utility} from "@weare/reapptor-toolkit";
 import {ApplicationContext, ch, IUserContext, WebApplicationType} from "@weare/reapptor-react-common";
-import {IGoogleApiSettings, ILeftNavProps, IMenuItem, IShoppingCart, ITopNavProfile} from "@weare/reapptor-react-components";
+import {IGoogleApiSettings, ILeftNavProps, IMenuItem, IShoppingCart, ITopNavNotifications, ITopNavProfile} from "@weare/reapptor-react-components";
 import PageDefinitions from "./PageDefinitions";
 import AnonymousTestWithParameters from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
 import Tests from "./Tests/Tests";
@@ -107,6 +107,13 @@ class TestApplicationController {
     public async fetchShoppingCartAsync(): Promise<IShoppingCart> {
         return {
             route: PageDefinitions.tests, productsCount: 1
+        }
+    }
+
+    public getNotifications(): ITopNavNotifications {
+        return {
+            count: 12,
+            onClick: async () => alert("Notifications onCLick!")
         }
     }
 
