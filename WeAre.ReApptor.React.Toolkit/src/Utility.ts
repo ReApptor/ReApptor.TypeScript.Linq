@@ -595,9 +595,9 @@ export default class Utility {
         return this.today().addDays(1);
     }
 
-    public static getWeekNumber(currentDate: Date): number {
-        const beginningOfTheYear: Date  = new Date(currentDate.getFullYear(), 0, 1);
-        const days: number = Math.floor((currentDate.getTime() - beginningOfTheYear.getTime()) / (24 * 60 * 60 * 1000));
+    public static getWeekNumber(date: Date): number {
+        const beginningOfTheYear: Date  = new Date(date.getFullYear(), 0, 1);
+        const days: number = Math.floor((date.getTime() - beginningOfTheYear.getTime()) / (24 * 60 * 60 * 1000));
         return Math.ceil(days / 7);
     }
 
