@@ -96,6 +96,16 @@ describe('dateTests', function() {
         
         expect(result).toStrictEqual(expected);
     });
+        
+    test('getWeekNumber', function () {
+        // april 4, 2022
+        const date: Date = new Date(2022, 3, 4);
+        const expected: number = 14;
+        
+        const result = Utility.getWeekNumber(date);
+        
+        expect(result).toStrictEqual(expected);
+    });
     
     test('getTomorrow', function () {
         const expected: Date = new Date().addDays(1);
