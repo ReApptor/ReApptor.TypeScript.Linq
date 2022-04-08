@@ -281,6 +281,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 this._tokenProcessing = false;
             }
         }
+        
     }
 
     private isMobileApp(): boolean {
@@ -419,6 +420,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
+        this._tokenProcessing = false;
+        
         await this.setState({page: page});
 
         if (this.mobile) {
