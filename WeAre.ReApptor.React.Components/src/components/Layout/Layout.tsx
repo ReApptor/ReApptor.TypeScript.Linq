@@ -281,6 +281,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 this._tokenProcessing = false;
             }
         }
+        
     }
 
     private isMobileApp(): boolean {
