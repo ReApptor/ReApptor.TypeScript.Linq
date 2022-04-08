@@ -267,8 +267,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         if (token) {
             try {
-                
-                this._tokenProcessing = false;
+                this._tokenProcessing = true;
                 
                 if (this.props.tokenLogin) {
                     await this.props.tokenLogin(this, token);
@@ -279,9 +278,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 await PageRouteProvider.changeUrlWithoutReload();
                 
             } finally {
-                
-                this._tokenProcessing = true;
-                
+                this._tokenProcessing = false;
             }
         }
     }
