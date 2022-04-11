@@ -278,7 +278,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 await PageRouteProvider.changeUrlWithoutReload();
                 
             } finally {
-                this._tokenProcessing = false;
+                if (this._tokenProcessing) {
+                    this._tokenProcessing = false;
+                    await this.reRenderAsync();
+                }
             }
         }
         
