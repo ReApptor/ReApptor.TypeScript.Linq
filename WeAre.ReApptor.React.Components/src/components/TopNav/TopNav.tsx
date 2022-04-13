@@ -55,6 +55,27 @@ export interface IShoppingCart {
     productsCount: number;
 }
 
+export interface ITopNavNotifications {
+    /**
+     * Custom styles (class name).
+     */
+    className?: string;
+    
+    /**
+     * The number is displayed in the upper right corner.
+     */
+    count?: number | (() => number | null);
+    
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
+    countClassName?: string;
+
+    visible?: boolean | (() => boolean);
+    
+    onClick?(sender: TopNav): Promise<void>;
+}
+
 interface ITopNavProps {
     className?: string | (() => string | null | undefined);
     languageClassName?: string;
@@ -65,11 +86,13 @@ interface ITopNavProps {
     searchPlaceHolder?: () => string;
     languages?: () => ILanguage[];
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+    notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
     leftNavRef?: React.RefObject<LeftNav>;
 
     fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
     onShoppingCartClick?(sender: TopNav): Promise<void>;
+    onNotificationsClick?(sender: TopNav): Promise<void>;
     onSearchClick?(searchTerm: string): Promise<void>;
     onLogoClick?(sender: TopNav): Promise<void>;
     onLeftNavToggle?(sender: TopNav): Promise<void>;
@@ -111,6 +134,15 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     private async onShoppingCartClickAsync(): Promise<void> {
         if (this.props.onShoppingCartClick) {
             await this.props.onShoppingCartClick(this);
+        }
+    }
+
+    private async onNotificationsClickAsync(notifications: ITopNavNotifications): Promise<void> {
+        if (notifications.onClick) {
+            await notifications.onClick(this);
+        }
+        if (this.props.onNotificationsClick) {
+            await this.props.onNotificationsClick(this);
         }
     }
 
@@ -209,6 +241,42 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                 : profile
             : null
     }
+    
+    public static resolveNotifications(notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null): ITopNavNotifications | null {
+        if (notifications != null) {
+            if (typeof notifications === "function") {
+                const data: ITopNavNotifications | number | null = notifications();
+                if (data != null) {
+                    if (typeof data === "number") {
+                        return {
+                            count: data
+                        } as ITopNavNotifications;
+                    } else {
+                        return data;
+                    }
+                }
+            } else if (typeof notifications === "number") {
+                return {
+                    count: notifications
+                } as ITopNavNotifications;
+            } else {
+                return notifications;
+            }
+        }
+        return null;
+    }
+    
+    public static isNotificationsVisible(notifications: ITopNavNotifications): boolean {
+        return ((notifications.visible == null) || (notifications.visible == true) || ((typeof notifications.visible === "function") && (notifications.visible())));
+    }
+    
+    public static getNotificationsCount(notifications: ITopNavNotifications): number {
+        return (notifications.count != null)
+            ? (typeof notifications.count === "function")
+                ? notifications.count() ?? 0
+                : notifications.count
+            : 0;
+    }
 
     public get profile(): ITopNavProfile | null {
         return this._profile ?? (this._profile = TopNav.resolveProfile(this.props.profile));
@@ -225,6 +293,10 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
 
         const leftNav: LeftNav | null = this.leftNav;
         const hasLeftNav: boolean = (leftNav != null);
+        
+        const notifications: ITopNavNotifications | null = TopNav.resolveNotifications(this.props.notifications);
+        const notificationsVisible: boolean = (notifications != null) && (TopNav.isNotificationsVisible(notifications));
+        const notificationsCount: number = ((notifications != null) && (notificationsVisible != null)) ? TopNav.getNotificationsCount(notifications) : 0;
 
         return (
             <nav className={this.css(styles.navigation, this.props.className)}>
@@ -319,6 +391,28 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                                 <Search searchPlaceHolder={this.searchPlaceHolder}
                                         onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
                                 />
+                            )
+                        }
+
+                        {
+                            ((notifications != null) && (notificationsVisible)) &&
+                            (
+                                <>
+
+                                    <Icon name={"fal fa-bell"}
+                                          size={IconSize.X2}
+                                          className={this.css(styles.right_notifications, notifications.className)}
+                                          onClick={() => this.onNotificationsClickAsync(notifications)}
+                                    />
+
+                                    {
+                                        (notificationsCount > 0) &&
+                                        (
+                                            <span className={this.css(styles.right_notificationsCount, notifications.countClassName)}>{notificationsCount}</span>
+                                        )
+                                    }
+
+                                </>
                             )
                         }
 

@@ -32,6 +32,8 @@ export default class NumberInputTests extends BaseComponent {
 
                     <ThreeColumns>
 
+                        <NumberInput label={"Test ([min = 0])"} min={0} />
+
                         <NumberInput label={"Test (step 1, hide zero, hide arrows)"} step={1} hideZero={true} hideArrows={true} placeholder={"Input me"} />
 
                     </ThreeColumns>

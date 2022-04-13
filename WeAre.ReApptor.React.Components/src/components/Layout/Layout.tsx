@@ -18,7 +18,7 @@ import {
     SwipeDirection,
     WebApplicationType
 } from "@weare/reapptor-react-common";
-import TopNav, {IMenuItem, IShoppingCart, ITopNavProfile} from "../TopNav/TopNav";
+import TopNav, {IMenuItem, IShoppingCart, ITopNavNotifications, ITopNavProfile} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
@@ -86,6 +86,8 @@ export interface ILayoutProps {
 
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
 
+    notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
+
     leftNav?: ILeftNavProps | (() => ILeftNavProps | null) | null;
 
     fetchContext?(sender: IBaseComponent, timezoneOffset: number, applicationType: WebApplicationType): Promise<ApplicationContext>;
@@ -134,6 +136,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private readonly _emailToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
 
     private _mobile: boolean = this.mobile;
+    private _tokenProcessing: boolean = false;
     private _touch: React.Touch | null = null;
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
@@ -263,14 +266,25 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
 
         if (token) {
-            if (this.props.tokenLogin) {
-                await this.props.tokenLogin(this, token);
-            } else {
-                await this.postAsync("/api/Application/TokenLogin", token);
-            }
+            try {
+                this._tokenProcessing = true;
+                
+                if (this.props.tokenLogin) {
+                    await this.props.tokenLogin(this, token);
+                } else {
+                    await this.postAsync("/api/Application/TokenLogin", token);
+                }
 
-            await PageRouteProvider.changeUrlWithoutReload();
+                await PageRouteProvider.changeUrlWithoutReload();
+                
+            } finally {
+                if (this._tokenProcessing) {
+                    this._tokenProcessing = false;
+                    await this.reRenderAsync();
+                }
+            }
         }
+        
     }
 
     private isMobileApp(): boolean {
@@ -320,7 +334,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public get applicationName(): string {
         return (this.state.data != null) ? this.state.data.applicationName : "";
     }
-
 
     // React.Component
 
@@ -410,6 +423,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
+        this._tokenProcessing = false;
+        
         await this.setState({page: page});
 
         if (this.mobile) {
@@ -636,9 +651,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     // IReactComponent
 
     public render(): React.ReactNode {
-        
-        const hasTopNav: boolean = (this.hasTopNav);
-        const hasLeftNav: boolean = (this.hasLeftNav);
+
+        const contextVisible: boolean = (!this._tokenProcessing);
+        const hasTopNav: boolean = (contextVisible) && (this.hasTopNav);
+        const hasLeftNav: boolean = (contextVisible) && (this.hasLeftNav);
         
         return (
             <div className={this.css(styles.layout, this.props.className)}
@@ -656,6 +672,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 fetchItems={this.props.fetchTopNavItems}
                                 languages={this.props.languages}
                                 logo={this.props.topNavLogo}
+                                notifications={this.props.notifications}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
                                 onShoppingCartClick={this.props.onShoppingCartClick}
                                 onSearchClick={this.props.onSearchClick}
@@ -668,27 +685,31 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     )
                 }
 
+                {
+                    (contextVisible) &&
+                    (
+                        <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
 
-                <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
+                            {
+                                (hasLeftNav) &&
+                                (
+                                    <LeftNav ref={this._leftNavRef} {...this.leftNav}
+                                             className={this.css(styles.leftNav, this.leftNav?.className)}
+                                             onToggle={() => this.reRenderTopNavAsync()}
+                                    />
+                                )
+                            }
 
-                    {
-                        (hasLeftNav) &&
-                        (
-                            <LeftNav ref={this._leftNavRef} {...this.leftNav}
-                                     className={this.css(styles.leftNav, this.leftNav?.className)}
-                                     onToggle={() => this.reRenderTopNavAsync()}
-                            />
-                        )
-                    }
+                            {
+                                ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
+                            }
 
-                    {
-                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
-                    }
-
-                </main>
+                        </main>
+                    )
+                }
 
                 {
-                    ((this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
+                    ((contextVisible) && (this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
                     (
                         <Footer version={ch.version}
                                 links={this.props.footerLinks}
@@ -699,14 +720,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
                 {
-                    ((this.state.error) || (this.state.isSpinning)) &&
+                    ((this.state.error) || (this.state.isSpinning) || (this._tokenProcessing)) &&
                     (
                         <Spinner global />
                     )
                 }
 
                 {
-                    ((!this.isLoading) && (this.props.cookieConsent)) &&
+                    ((contextVisible) && (!this.isLoading) && (this.props.cookieConsent)) &&
                     (
                         <CookieConsent description={this.props.cookieConsent().description}
                                        title={this.props.cookieConsent().title}
@@ -718,40 +739,49 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     )
                 }
 
-                <a ref={this._downloadLink}
-                   style={{display: "none"}}
-                />
-                
-                <input ref={this._imageInputRef}
-                       id={`${this.id}_imageInput`}
-                       style={{display: "none"}}
-                       type="file"
-                       accept="image/*"
-                       multiple={false}
-                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                />
+                {
+                    (contextVisible) &&
+                    (
+                        <>
+                            
+                            <a ref={this._downloadLink}
+                               style={{display: "none"}}
+                            />
 
-                <input ref={this._cameraInputRef}
-                       id={`${this.id}_cameraInput`}
-                       style={{display: "none"}}
-                       type="file"
-                       capture="environment"
-                       accept="image/*"
-                       multiple={false}
-                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                />
-                
-                <a ref={this._callToAnchorRef}
-                   id={`${this.id}_callToAnchor`}
-                   style={{display: "none"}}
-                   href={""}
-                />
-                
-                <a ref={this._emailToAnchorRef}
-                   id={`${this.id}_emailToAnchor`}
-                   style={{display: "none"}}
-                   href={""}
-                />
+                            <input ref={this._imageInputRef}
+                                   id={`${this.id}_imageInput`}
+                                   style={{display: "none"}}
+                                   type="file"
+                                   accept="image/*"
+                                   multiple={false}
+                                   onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
+                            />
+
+                            <input ref={this._cameraInputRef}
+                                   id={`${this.id}_cameraInput`}
+                                   style={{display: "none"}}
+                                   type="file"
+                                   capture="environment"
+                                   accept="image/*"
+                                   multiple={false}
+                                   onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
+                            />
+
+                            <a ref={this._callToAnchorRef}
+                               id={`${this.id}_callToAnchor`}
+                               style={{display: "none"}}
+                               href={""}
+                            />
+
+                            <a ref={this._emailToAnchorRef}
+                               id={`${this.id}_emailToAnchor`}
+                               style={{display: "none"}}
+                               href={""}
+                            />
+                            
+                        </>
+                    )
+                }
 
             </div>
         );

@@ -27,6 +27,7 @@ class App extends BaseComponent {
                     fetchShoppingCartAsync={() => TestApplicationController.fetchShoppingCartAsync()}
                     cookieConsent={() => this.cookieContent}
                     leftNav={() => TestApplicationController.leftNav}
+                    notifications={() => TestApplicationController.getNotifications()}
             />
         );
     }
