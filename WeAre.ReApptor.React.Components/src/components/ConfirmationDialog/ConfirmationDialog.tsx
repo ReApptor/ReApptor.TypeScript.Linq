@@ -15,6 +15,7 @@ export interface IConfirmation {
     placeholder?: string;
     minLength?: number;
     comment?: boolean;
+    className?: string;
 }
 
 interface IConfirmationDialogProps {
@@ -222,7 +223,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         const processingStyle: any = (this.processing) && styles.processing;
 
         return (
-            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
+            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle, this.model.className)}>
 
                 <div className={styles.dialogOverlay} />
 
