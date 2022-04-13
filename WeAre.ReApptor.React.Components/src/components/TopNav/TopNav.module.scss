@@ -148,6 +148,27 @@
             border-radius: 9px;
         }
 
+        &_notifications {
+            color: #ffffff;
+            cursor:pointer;
+            margin-left: 6px;
+            margin-right: 6px;
+        }
+
+        &_notificationsCount {
+            font-size: 12px;
+            background: #000000;
+            color: #fff;
+            vertical-align: top;
+            margin-left: -18px;
+            margin-top: -15px;
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+
         &_infoIcon {
             color: white;
             margin: 0 12px;

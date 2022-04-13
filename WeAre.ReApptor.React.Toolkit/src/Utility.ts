@@ -465,10 +465,26 @@ export default class Utility {
         }
         return count;
     }
+    
+    public static digits(value: number): number {
+        value = Math.abs(value);
+        value = Math.trunc(value);
+        return value.toString().length;
+    }
 
     public static round(value: number, digits: number = 0): number {
         digits = Math.round(digits);
         if (digits > 0) {
+            const intDigits = this.digits(value);
+            const totalDigits = intDigits + digits;
+            const maxDigits = 18;
+            if (totalDigits > maxDigits) {
+                digits -= totalDigits - maxDigits;
+                if (digits <= 0) {
+                    return Math.round(value);
+                }
+            }
+            
             const k = Math.pow(10, digits);
             value *= k;
             value = Math.round(value);
