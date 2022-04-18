@@ -5,42 +5,42 @@ import React from "react";
 
 export class ReactCropperHelpers {
 
-    constructor(private cropperOrRefObject: CropperJs | React.RefObject<ReactCropperElement>) {}
+    constructor(private cropperOrRefObject: CropperJs | React.RefObject<ReactCropperElement>) {
+    }
 
-    get cropper(): CropperJs {
+    public get cropper(): CropperJs {
         if (this.cropperOrRefObject instanceof CropperJs) {
             return this.cropperOrRefObject;
         }
 
         if (!this.cropperOrRefObject.current?.cropper) {
             throw new TypeError("Passed reference React.RefObject<ReactCropperElement> is null or undefined");
-
         }
+        
         return this.cropperOrRefObject.current.cropper;
-
     }
 
-    get containerWidth(): number {
+    public get containerWidth(): number {
         return this.cropper.getContainerData().width;
     }
 
-    get containerHeight(): number {
+    public get containerHeight(): number {
         return this.cropper.getContainerData().height;
     }
 
-    get canvasWidth(): number {
+    public get canvasWidth(): number {
         return this.cropper.getCanvasData().width;
     }
 
-    get canvasHeight(): number {
+    public get canvasHeight(): number {
         return this.cropper.getCanvasData().height;
     }
 
-    get canvasImageWidth(): number {
+    public get canvasImageWidth(): number {
         return this.cropper.getCanvasData().naturalWidth;
     }
 
-    get canvasImageHeight(): number {
+    public get canvasImageHeight(): number {
         return this.cropper.getCanvasData().naturalHeight;
     }
 
@@ -73,7 +73,7 @@ export class ReactCropperHelpers {
      * of container but if image is not covering the center it
      * will be set to the closest corner to the center
      */
-    setCroppingAreaToCenterOfContainerAndMinimize(): void {
+    public setCroppingAreaToCenterOfContainerAndMinimize(): void {
         this.cropper.setCropBoxData({left: this.containerWidth / 2, top: this.containerHeight / 2, width: 0, height: 0});
     }
 
@@ -83,18 +83,18 @@ export class ReactCropperHelpers {
      * When viewMode is on 1 it will set the location of image based on cropping area.
      * height and width dont effect
      */
-    setImageToCenterOfContainer(): void {
+    public setImageToCenterOfContainer(): void {
 
-        const left = (this.containerWidth / 2) - (this.canvasWidth / 2);
-        const top = (this.containerHeight / 2) - (this.canvasHeight / 2);
+        const left: number = (this.containerWidth / 2) - (this.canvasWidth / 2);
+        const top: number = (this.containerHeight / 2) - (this.canvasHeight / 2);
 
         this.cropper.setCanvasData({left, top});
     }
 
     /**
-     * @description When viewMode is on 1  and cropping area is covering the image it will be blocked
+     * @description When viewMode is on 1 and cropping area is covering the image it will be blocked
      */
-    setZoomToFit(): void {
+    public setZoomToFit(): void {
         if (this.isImageLandscape) {
             if (this.isImageHorizontallyOverflowed) {
                 const ratio = (this.containerWidth / this.canvasImageWidth);
@@ -120,7 +120,7 @@ export class ReactCropperHelpers {
         return;
     }
 
-    setCropAreaToImageFullSize(): void {
+    public setCropAreaToImageFullSize(): void {
         if (!this.cropper) {
             return;
         }
@@ -135,13 +135,13 @@ export class ReactCropperHelpers {
         });
     }
 
-    rotateAndFitToScreen(degree: number) {
+    public rotateAndFitToScreen(degree: number) {
         this.cropper.rotate(degree);
         this.setZoomToFit();
         this.setCroppingAreaToCenterOfContainerAndMinimize();
         this.setImageToCenterOfContainer();
         this.setZoomToFit();
-        this.setCropAreaToImageFullSize()
+        this.setCropAreaToImageFullSize();
     }
 
     /**
@@ -152,18 +152,18 @@ export class ReactCropperHelpers {
      * @param degree rotation degree
      * @param cropperSource url for the image, convert the image.id to url and pass it here
      */
-    public static async rotate(image: FileModel, degree: number, cropperSource: string = ''): Promise<FileModel> {
+    public static async rotate(image: FileModel, degree: number, cropperSource: string = ""): Promise<FileModel> {
         return new Promise<FileModel>(resolve => {
-            const instaCropperWrapper: HTMLDivElement = document.createElement('div');
+            const instaCropperWrapper: HTMLDivElement = document.createElement("div");
 
-            const instaCropper: HTMLImageElement = document.createElement('img');
-            instaCropper.style.display = 'block';
-            instaCropper.style.maxWidth = '100%';
-            instaCropper.style.maxHeight = '100%';
+            const instaCropper: HTMLImageElement = document.createElement("img");
+            instaCropper.style.display = "block";
+            instaCropper.style.maxWidth = "100%";
+            instaCropper.style.maxHeight = "100%";
             instaCropperWrapper.style.opacity = "0";
-            instaCropperWrapper.style.zIndex = '-1000';
-            instaCropperWrapper.style.pointerEvents = 'none';
-            instaCropperWrapper.style.position = 'fixed';
+            instaCropperWrapper.style.zIndex = "-1000";
+            instaCropperWrapper.style.pointerEvents = "none";
+            instaCropperWrapper.style.position = "fixed";
 
             document.getElementById("root")!.appendChild(instaCropperWrapper);
 
@@ -179,13 +179,13 @@ export class ReactCropperHelpers {
 
                     helper.rotateAndFitToScreen(degree);
 
-                    const src = cropper.getCroppedCanvas().toDataURL(image.type) || "";
+                    image.src = cropper.getCroppedCanvas().toDataURL(image.type) || "";
 
                     cropper.destroy();
 
                     instaCropperWrapper.remove();
 
-                    resolve({...image, src});
+                    resolve(image);
                 }
             });
         })
