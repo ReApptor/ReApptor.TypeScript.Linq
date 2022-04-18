@@ -1,10 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=38e1ee5b_002Dd0d0_002D4d37_002Da056_002D8d6706db7530/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PhoneHelperTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=38e1ee5b_002Dd0d0_002D4d37_002Da056_002D8d6706db7530/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PhoneHelperTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B7FD1B97-0D19-4034-8DCA-584A23F991E9::.NETCoreApp,Version=v3.1::WeAre.ReApptor.Services.UnitTest.Helpers.PhoneHelperTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::117BCF79-9014-423F-A717-F950526729B4::.NETCoreApp,Version=v3.1::WeAre.ReApptor.Toolkit.UnitTest.DateOnlyAttributeTests.WinterWinterTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=db0ff5c0_002D56a8_002D4ad9_002D9358_002Da44acfba8c2e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TimeZonesTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=db0ff5c0_002D56a8_002D4ad9_002D9358_002Da44acfba8c2e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TimeZonesTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::117BCF79-9014-423F-A717-F950526729B4::.NETCoreApp,Version=v3.1::WeAre.ReApptor.Toolkit.UnitTest.CountryHelperTests.TimeZonesTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::B7FD1B97-0D19-4034-8DCA-584A23F991E9::.NETCoreApp,Version=v3.1::WeAre.ReApptor.Services.UnitTest.Helpers.PhoneHelperTests.ParseInternationalFiNumberTest&lt;/TestId&gt;

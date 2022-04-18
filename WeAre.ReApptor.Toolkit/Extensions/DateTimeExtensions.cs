@@ -10,11 +10,27 @@ namespace WeAre.ReApptor.Toolkit.Extensions
         }
 
         /// <summary>
+        /// Takes only date
+        /// </summary>
+        public static DateTime AsDate(this DateTime from)
+        {
+            return new DateTime(from.Year, from.Month, from.Day, 0, 0, 0, from.Kind);
+        }
+
+        /// <summary>
         /// Takes only date, sets (does not convert) DateTimeKind as Uts   
         /// </summary>
         public static DateTime AsUtcDate(this DateTime from)
         {
             return new DateTime(from.Year, from.Month, from.Day, 0, 0, 0, DateTimeKind.Utc);
+        }
+
+        /// <summary>
+        /// Cuts seconds and milliseconds.
+        /// </summary>
+        public static DateTime Trunc(this DateTime from)
+        {
+            return new DateTime(from.Year, from.Month, from.Day, from.Hour, from.Minute, 0, from.Kind);
         }
 
         /// <summary>
@@ -37,9 +53,18 @@ namespace WeAre.ReApptor.Toolkit.Extensions
                 : from;
         }
 
+        /// <summary>
+        /// Sets (does not convert) DateTimeKind to Unspecified
+        /// </summary>
+        public static DateTime AsUnspecified(this DateTime from)
+        {
+            return (from.Kind != DateTimeKind.Unspecified)
+                ? new DateTime(from.Ticks, DateTimeKind.Unspecified)
+                : from;
+        }
+
         public static DateTime FirstDayOfMonth(this DateTime value)
         {
-            //return value.Date.AddDays(1 - value.Day);
             return new DateTime(value.Year, value.Month, 1, 0, 0, 0, value.Kind);
         }
 
