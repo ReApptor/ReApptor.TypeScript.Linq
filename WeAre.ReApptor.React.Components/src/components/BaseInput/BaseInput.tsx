@@ -11,7 +11,7 @@ export type NullableCheckboxType = boolean | null;
 
 export type BaseInputValue = string | number | boolean | string[] | number[] | FileModel | FileModel[] | Date | null | NullableCheckboxType | [Date | null, Date | null];
 
-export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null | Promise<string | null>;
+export type ValidatorCallback<TInputValue extends BaseInputValue> = (value: TInputValue) => string | null;
 
 export interface IInputModel<TInputValue extends BaseInputValue> {
     value: TInputValue;
@@ -237,7 +237,7 @@ export class RequiredValidator extends BaseValidator {
         if ((str == null) || (str.length === 0)) {
             return this.getMessage();
         }
-        
+
         return null;
     }
 
@@ -546,7 +546,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             this.inputElement.focus();
         }
     }
-    
+
     public click(): void {
         if (this.inputElement) {
             this.inputElement.click();
@@ -671,7 +671,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             model.value = value;
 
             if (validate) {
-                await this.validateAsync();
+                this.validate();
             } else {
                 state.validationError = null;
             }
@@ -683,10 +683,17 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     protected async valueBlurHandlerAsync(): Promise<void> {
-        await this.validateAsync(false);
+        await this.validateAsync();
     }
 
-    private groupValidators(): ValidatorCallback<TInputValue>[] {
+    protected validate(): void {
+
+        if (this.noValidate) {
+            return;
+        }
+
+        const value: TInputValue = this.value;
+
         const validators: ValidatorCallback<TInputValue>[] = [];
 
         if (this.props.required) {
@@ -699,60 +706,41 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
             validators.push(...(this.props.validators as ValidatorCallback<TInputValue>[]));
         }
 
-        return validators;
-    }
+        let error: string | null = null;
 
-    public async validateAsync(syncOnly: boolean = true): Promise<void> {
-
-        if (this.noValidate) {
-            return;
-        }
-
-        const prevError: string | null = this.state.validationError;
-
-        const value: TInputValue = this.value;
-
-        const validators: ValidatorCallback<TInputValue>[] = this.groupValidators();
-
-        let validationError: string | null = null;
-
-        await Utility.forEachAsync(validators, async (validator) => {
-            if (!validationError) {
-                let validationResult: string | null | Promise<string | null> = validator(value);
-                if (validationResult) {
-                    let error: string | null = (typeof validationResult === "string")
-                        ? validationResult
-                        : (!syncOnly)
-                            ? await validationResult
-                            : null;
-                    if (error) {
-                        if (this.props.onValidationError) {
-                            error = this.props.onValidationError(validator, value);
-                        }
-                        validationError = error;
+        validators.forEach(validator => {
+            if (!error) {
+                let validationError: string | null = validator(value);
+                if (validationError) {
+                    if (this.props.onValidationError) {
+                        validationError = this.props.onValidationError(validator, value);
                     }
+                    error = validationError;
                 }
             }
         });
 
-        validationError = (validationError) ? validationError : null;
-        
-        if (validationError !== prevError) {
-            const state: TState = this.state;
-            state.validationError = validationError;
+        error = (error) ? error : null;
 
-            //console.log("state.validationError=", state.validationError);
+        const state: IBaseInputState<TInputValue> = this.state;
 
-            if (this.isMounted) {
-                await this.setState(state);
-            }
-        }
+        state.validationError = error;
     }
 
     public isInput(): boolean { return true; }
 
     public getValidators(): ValidatorCallback<TInputValue>[] {
         return [];
+    }
+
+    public async validateAsync(): Promise<void> {
+        const error: string | null = this.state.validationError;
+
+        this.validate();
+
+        if (this.state.validationError !== error) {
+            await this.setState(this.state);
+        }
     }
 
     protected getInputId(): string {
@@ -836,7 +824,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
         return (
             <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassname(), this.props.className)} hidden={this.props.hidden}>
-                
+
                 {
                     (this.props.label) &&
                     (
@@ -844,13 +832,13 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
-                                
+
                                 {
                                     (this.state.validationError)
                                         ? BaseInputLocalizer.get(this.state.validationError, BaseInputLocalizer.get(this.props.label))
                                         : ReactUtility.toMultiLines(BaseInputLocalizer.get(this.props.label))
                                 }
-                                
+
                             </label>
 
                             {
