@@ -95,7 +95,7 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
                     Console.WriteLine($"{Name}. TargetPath=\"{settingsProvider.TargetPath}\".");
                     Console.WriteLine($"{Name}. SettingFilePath=\"{settingsProvider.SettingFilePath}\".");
                 
-                    foreach (string arg in args ?? new string[0])
+                    foreach (string arg in args ?? Array.Empty<string>())
                     {
                         Console.WriteLine($"{Name}. ARG. value=\"{arg}\"");
                     }
@@ -115,6 +115,7 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
                 
                 while (ex != null)
                 {
+                    Console.WriteLine(ex.GetType().FullName);
                     Console.WriteLine(ex.Message);
                     Console.WriteLine(ex.StackTrace);
                     ex = ex.InnerException;
