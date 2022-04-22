@@ -53,6 +53,15 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
                 catch (BadImageFormatException)
                 {
                 }
+                catch (Exception ex)
+                {
+                    bool skip = (ex.Message.Contains("A strongly-named assembly is required."));
+                    
+                    if (!skip)
+                    {
+                        throw;
+                    }
+                }
             }
         }
         
