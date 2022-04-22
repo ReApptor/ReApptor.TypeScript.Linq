@@ -55,8 +55,8 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
                 }
                 catch (Exception ex)
                 {
-                    bool skip = (ex.Message.Contains("A strongly-named assembly is required."));
-                    
+                    bool skip = ((ex.InnerException is ReflectionTypeLoadException inner) && (inner.Message.Contains("A strongly-named assembly is required.")));
+
                     if (!skip)
                     {
                         throw;
