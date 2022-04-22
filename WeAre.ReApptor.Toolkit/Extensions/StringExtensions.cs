@@ -96,6 +96,21 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             
             return value;
         }
+        
+        /// <summary>
+        /// Remove all space and dashes.
+        /// </summary>
+        public static string RemoveAllSpacesAndDashes(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            var reg = new Regex(@"\s|[-]", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            
+            return reg.Replace(value, string.Empty);
+        }
 
         /// <summary>
         /// Removes UTF file preamble (BOM)
