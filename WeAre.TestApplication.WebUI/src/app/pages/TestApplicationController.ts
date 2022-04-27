@@ -47,7 +47,7 @@ class TestApplicationController {
             this._applicationContext.currentPage = currentPage;
             this._applicationContext.settings = {
                 googleMapApiUrl: "https://maps.googleapis.com/maps/",
-                googleMapApiKey: "AIzaSyBVcbAv50jbB3VKK-16OJ8kxz7Jn6eT4oc"
+                googleMapApiKey: "AIzaSyBur-MN9IGcpKAa23pDNUtXJpbfkRfAZvY"
             } as IGoogleApiSettings;
         }
         this._applicationContext.applicationType = applicationType;
