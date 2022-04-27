@@ -429,8 +429,11 @@ export default class ch {
         return (!!user);
     }
 
+    /**
+     * Is the current application mobile (located under "/mobile" domain) or PWA application ("display-mode: standalone" or referrer has "android-app://"))
+     */
     public static get mobileApp(): boolean {
-        return (this._context != null) && (this._context.mobileApp);
+        return (this._context != null) && ((this._context.mobileApp) || (this._context.pwaApp));
     }
 
     /**
