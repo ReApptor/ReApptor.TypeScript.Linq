@@ -141,7 +141,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
-    private _leftNav: ILeftNavProps | null = null;
     private _imageInputResolver: ((file: FileModel | null) => void) | null = null;
 
     private async onImageInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -466,7 +465,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async reloadLeftNavAsync(): Promise<void> {
-        this._leftNav = null;
         if (this.hasLeftNav) {
             if (this._leftNavRef.current != null) {
                 await this._leftNavRef.current.reloadAsync();
@@ -627,11 +625,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 const profile: ITopNavProfile | null = TopNav.resolveProfile(this.props.profile);
                 leftNav.userProfile = profile?.userProfile;
             }
-
-            this._leftNav = leftNav;
         }
 
-        return this._leftNav;
+        return leftNav;
     }
 
     public get hasTopNav(): boolean {
@@ -666,6 +662,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const contextVisible: boolean = (!this._tokenProcessing);
         const hasTopNav: boolean = (contextVisible) && (this.hasTopNav);
         const hasLeftNav: boolean = (contextVisible) && (this.hasLeftNav);
+        const leftNav: ILeftNavProps | null = (hasLeftNav) ? this.leftNav : null;
         
         return (
             <div className={this.css(styles.layout, this.props.className)}
@@ -702,10 +699,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                         <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
 
                             {
-                                (hasLeftNav) &&
+                                (leftNav) &&
                                 (
-                                    <LeftNav ref={this._leftNavRef} {...this.leftNav}
-                                             className={this.css(styles.leftNav, this.leftNav?.className)}
+                                    <LeftNav ref={this._leftNavRef} {...leftNav}
+                                             className={this.css(styles.leftNav, leftNav.className)}
                                              onToggle={() => this.reRenderTopNavAsync()}
                                     />
                                 )
