@@ -297,11 +297,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     private isPwaApp(): boolean {
         return (
+            // 1) Main check: is device is in standalone mode ("display": "standalone" in manifest.json);
             (window.matchMedia("(display-mode: standalone)").matches) ||
-            //(window.matchMedia('(display-mode: fullscreen)').matches) ||
-            //(window.matchMedia('(display-mode: minimal-ui)').matches) ||
             ((window.navigator as any).standalone) ||
-            (document.referrer.includes("android-app://"))
+            // 2) Android app with PWA application can fill referrer
+            (document.referrer.includes("android-app://")) ||
+            // 3) Exception: samsung devices (some tablets don't process "(display-mode: standalone)" right):
+            (!!navigator.userAgent.match(/SAMSUNG|Samsung|SGH-[I|N|T]|GT-[I|N]|SM-[A|N|P|T|Z]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))
         );
     }
 
