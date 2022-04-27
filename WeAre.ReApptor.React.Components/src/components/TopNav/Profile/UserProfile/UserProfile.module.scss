@@ -12,10 +12,13 @@
     img {
       border-radius: 50%;
       border: 1px solid white;
+      width: 70px;
       max-width: 70px;
       max-height: 70px;
       min-width: 50px;
       min-height: 50px;
+      object-fit: contain;
+      object-position: center;
     }
   }
 
