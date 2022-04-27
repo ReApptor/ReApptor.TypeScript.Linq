@@ -201,6 +201,11 @@ export default class ApiProvider {
         }
 
         if (httpResponse.status === AthenaeumConstants.forbiddenStatusCode) {
+            if (!ch.isDevelopment) {
+                await ch.reinitializeContextAsync();
+                throw new Error(AthenaeumConstants.apiError);
+            }
+            
             const page: IBasePage | null = ch.findPage();
             const user: IUser | null = ch.findUser();
             const username: string = (user) ? user.username : "unauthorized";
