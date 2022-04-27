@@ -296,6 +296,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private isPwaApp(): boolean {
+        // TODO: "device-detector-js" can be used to analyze UserAgent to define device type properly!
+        // https://www.npmjs.com/package/device-detector-js
         return (
             // 1) Main check: is device is in standalone mode ("display": "standalone" in manifest.json);
             (window.matchMedia("(display-mode: standalone)").matches) ||
