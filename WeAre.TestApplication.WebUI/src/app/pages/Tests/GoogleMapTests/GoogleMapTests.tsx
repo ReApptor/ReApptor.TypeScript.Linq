@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
-import {Button, Checkbox, FourColumns, GoogleMap, IGoogleMapMarker, NumberInput, PageRow, ThreeColumns} from "@weare/reapptor-react-components";
+import {AddressHelper, Button, Checkbox, FourColumns, GoogleMap, IGoogleMapMarker, NumberInput, PageRow, Tab, TabContainer, ThreeColumns} from "@weare/reapptor-react-components";
 
 interface IModalTestsState {
     clusterMarkers: boolean;
@@ -116,15 +116,31 @@ export default class GoogleMapTests extends BaseComponent<{}, IModalTestsState> 
                     </FourColumns>
                 </PageRow>
 
-                <GoogleMap ref={this._mapRef}
-                           height={"50vh"}
-                           center={{lat: this.state.lat, lng: this.state.lon}}
-                           zoom={1}
-                           markers={this.markers}
-                           clusterMarkers={this.state.clusterMarkers}
-                           autoCloseInfoWindows={this.state.autoCloseInfoWindows}
-                           onClick={async () => {console.log(`map click`)}}
-                />
+                <TabContainer>
+                    
+                    <Tab id="dynamicMap" title="Dynamic Map">
+                        
+                        <GoogleMap ref={this._mapRef}
+                                   height={"50vh"}
+                                   center={{lat: this.state.lat, lng: this.state.lon}}
+                                   zoom={1}
+                                   markers={this.markers}
+                                   clusterMarkers={this.state.clusterMarkers}
+                                   autoCloseInfoWindows={this.state.autoCloseInfoWindows}
+                                   onClick={async () => {console.log(`map click`)}}
+                        />
+                        
+                    </Tab>
+                    
+                    <Tab id="staticMap" title="Static Map">
+                        
+                        <img src={AddressHelper.googleStaticApiUrl({lat: this.state.lat, lng: this.state.lon}, 1)}
+                             alt={"google static map"}
+                        />
+                        
+                    </Tab>
+                    
+                </TabContainer>
                 
             </React.Fragment>
         );

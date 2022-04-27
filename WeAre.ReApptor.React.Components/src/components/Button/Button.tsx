@@ -119,6 +119,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
     private _forcedWidth: number | null = null;
     private _actionLoading: boolean = false;
     private _actionProps: IButtonActionProps | null = null;
+    private _onClickInvoking: boolean = false;
 
     public static get Action(): typeof ButtonAction {
         return ButtonAction;
@@ -198,6 +199,24 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
 
         return null;
     }
+    
+    private async invokeOnClickAsync(data: string | null = null): Promise<void> {
+        if (!this._onClickInvoking) {
+            try {
+                this._onClickInvoking = true;
+
+                if (this.props.route) {
+                    await PageRouteProvider.redirectAsync(this.props.route);
+                }
+
+                if (this.props.onClick) {
+                    await this.props.onClick(this, data);
+                }
+            } finally {
+                this._onClickInvoking = false;
+            }
+        }
+    }
 
     private async onClickAsync(confirmed: boolean = true, data: string | null = null): Promise<void> {
 
@@ -210,14 +229,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         if (confirmNeeded) {
             await this._confirmDialogRef.current!.openAsync();
         } else {
-
-            if (this.props.route) {
-                await PageRouteProvider.redirectAsync(this.props.route);
-            }
-
-            if (this.props.onClick) {
-                await this.props.onClick(this, data);
-            }
+            await this.invokeOnClickAsync(data);
         }
     }
 
