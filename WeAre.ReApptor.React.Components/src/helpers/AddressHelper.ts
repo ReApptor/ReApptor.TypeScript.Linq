@@ -1,4 +1,4 @@
-import {GeoCoordinate, GeoLocation, Utility} from "@weare/reapptor-toolkit";
+import {GeoCoordinate, GeoLocation, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
 import {ApplicationContext, ch} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
 import {IGoogleMapInfoWindow, IGoogleMapMarker, TGoogleMapMarkerCallback} from "../components/GoogleMap/GoogleMap";
@@ -59,6 +59,50 @@ export default class AddressHelper {
             throw new Error("Application context doesn't provide Google API settings: \"googleMapApiKey\" or \"googleMapApiUrl\" are empty.");
 
         return `${settings.googleMapApiUrl}api/js?key=${settings.googleMapApiKey}&libraries=places`;
+    }
+    
+    public static toGoogleLatLon(center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate): google.maps.LatLngLiteral {
+        if ((center instanceof GeoLocation) || ((center as any).isGeoLocation) ||
+            (center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
+            const coordinate: GeoCoordinate | null = AddressHelper.getCoordinate(center as GeoLocation) || AthenaeumComponentsConstants.defaultLocation;
+            return {lat: coordinate.lat, lng: coordinate.lon} as google.maps.LatLngLiteral;
+        }
+        return center;
+    }
+
+    public static googleStaticApiUrl(center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate, zoom: number, markers?: IGoogleMapMarker[] | null): string {
+        const context: ApplicationContext = ch.getContext();
+        const settings = context.settings as IGoogleApiSettings;
+
+        if ((!settings.googleMapApiKey) || (!settings.googleMapApiUrl))
+            throw new Error("Application context doesn't provide Google API settings: \"googleMapApiKey\" or \"googleMapApiUrl\" are empty.");
+        
+        const googleCenter: google.maps.LatLngLiteral = this.toGoogleLatLon(center);
+        
+        let src: string = `${settings.googleMapApiUrl}api/staticmap?key=${settings.googleMapApiKey}`;
+        
+        src = src + "&scale=1&size=640x480&format=PNG&maptype=roadmap";
+        src = src + "&center=" + encodeURIComponent("{0},{1}".format(googleCenter.lat, googleCenter.lng));
+        src = src + "&zoom=" + encodeURIComponent("{0}".format(zoom));
+
+        const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
+        src = src + "&language=" + encodeURIComponent("{0}".format(localizer?.language || "en"));
+
+        if (markers) {
+            let markersSrc: string = "";
+            for (let i: number = 0; i < markers.length; i++) {
+                const marker: IGoogleMapMarker = markers[i];
+                if (marker.position) {
+                    markersSrc += "{0}/{1}".format(marker.position.lat, marker.position.lng);
+                }
+                if (i < markers.length - 1) {
+                    markersSrc += "|";
+                }
+            }
+            src = src + "&markers=" + encodeURIComponent(markersSrc);
+        }
+
+        return src;
     }
     
     public static async loadGoogleLibraryAsync(): Promise<void> {

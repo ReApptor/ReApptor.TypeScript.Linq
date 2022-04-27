@@ -156,13 +156,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     }
     
     private get center(): google.maps.LatLngLiteral {
-        const center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate = this.props.center;
-        if ((center instanceof GeoLocation) || ((center as any).isGeoLocation) ||
-            (center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
-            const coordinate: GeoCoordinate | null = AddressHelper.getCoordinate(center as GeoLocation) || AthenaeumComponentsConstants.defaultLocation;
-            return {lat: coordinate.lat, lng: coordinate.lon} as google.maps.LatLngLiteral;
-        }
-        return center;
+        return AddressHelper.toGoogleLatLon(this.props.center);
     }
 
     // Methods
