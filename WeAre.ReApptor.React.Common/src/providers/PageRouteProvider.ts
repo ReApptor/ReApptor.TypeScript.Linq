@@ -32,6 +32,7 @@ export default class PageRouteProvider {
 
     private static async logoutAsync(layout: ILayoutPage): Promise<void> {
         await layout.postAsync("/api/Application/Logout", null);
+        PageRouteProvider.stopPropagation();
     }
 
     private static async onRedirectAsync(route: PageRoute): Promise<void> {
