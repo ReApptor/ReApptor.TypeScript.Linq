@@ -570,6 +570,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             : this._imageInputRef.current;
         
         if (input) {
+            input.value = "";
             input.click();
 
             return new Promise((resolve) => {
