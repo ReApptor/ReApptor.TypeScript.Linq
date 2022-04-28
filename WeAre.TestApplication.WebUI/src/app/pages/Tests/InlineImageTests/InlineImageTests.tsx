@@ -15,8 +15,14 @@ export default class InlineImageTests extends BaseComponent {
     
     private async takePictureAsync(camera: boolean): Promise<void> {
         const image: FileModel | null = await ch.takePictureAsync(camera);
-        
-        await this.setState({ image });
+
+        if (image != null) {
+            await this.setState({image});
+        }
+    }
+    
+    private async clearPictureAsync(): Promise<void> {
+        await this.setState({ image: null });
     }
 
     public render(): React.ReactNode {
@@ -37,6 +43,11 @@ export default class InlineImageTests extends BaseComponent {
                                 icon={{name: "fas fa-image"}}
                                 type={ButtonType.Blue}
                                 onClick={() => this.takePictureAsync(false)}
+                        />
+
+                        <Button label={"Clear image"}
+                                type={ButtonType.Link}
+                                onClick={() => this.clearPictureAsync()}
                         />
 
                         <Button label={"Call-to"}
