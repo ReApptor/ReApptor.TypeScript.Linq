@@ -5,7 +5,8 @@ import {FileModel, Utility} from "@weare/reapptor-toolkit";
 export default class TakePicture extends BaseComponent {
 
     private readonly _imageInputRef: React.RefObject<HTMLInputElement> = React.createRef();
-    private readonly _cameraInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+    private readonly _cameraUserInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+    private readonly _cameraEnvironmentInputRef: React.RefObject<HTMLInputElement> = React.createRef();
     private _imageInputResolver: ((file: FileModel | null) => void) | null = null;
     private _bodyOnFocusCallback: ((this: GlobalEventHandlers, ev: FocusEvent) => any) | null = null;
     
@@ -65,25 +66,19 @@ export default class TakePicture extends BaseComponent {
 
         this.subscribeOnFocusEvent();
 
-        const cameraType: CameraType | null = (camera === false)
-            ? null
-            : (camera === true)
+        const cameraType: CameraType | null = (typeof camera === "boolean")
+            ? (camera)
                 ? CameraType.OutwardFacingCamera
-                : camera;
+                : null
+            : camera;
         
         const input: HTMLInputElement | null = (cameraType != null)
-            ? this._cameraInputRef.current
+            ? (cameraType == CameraType.OutwardFacingCamera)
+                ? this._cameraEnvironmentInputRef.current
+                : this._cameraUserInputRef.current
             : this._imageInputRef.current;
 
         if (input) {
-            if (cameraType != null) {
-                const capture: string = (cameraType == CameraType.OutwardFacingCamera)
-                    ? "environment"
-                    : "user";
-
-                input.setAttribute("capture", capture);
-            }
-            
             input.value = "";
             input.click();
 
@@ -104,16 +99,27 @@ export default class TakePicture extends BaseComponent {
                        style={{display: "none"}}
                        type="file"
                        accept="image/*"
+                       capture={false}
                        multiple={false}
                        onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
                 />
 
-                <input ref={this._cameraInputRef}
-                       id={`${this.id}_cameraInput`}
+                <input ref={this._cameraUserInputRef}
+                       id={`${this.id}_cameraUserInput`}
                        style={{display: "none"}}
                        type="file"
-                       capture="environment"
                        accept="image/*"
+                       capture="user"
+                       multiple={false}
+                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
+                />
+
+                <input ref={this._cameraEnvironmentInputRef}
+                       id={`${this.id}_cameraEnvironmentInput`}
+                       style={{display: "none"}}
+                       type="file"
+                       accept="image/*"
+                       capture="environment"
                        multiple={false}
                        onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
                 />
