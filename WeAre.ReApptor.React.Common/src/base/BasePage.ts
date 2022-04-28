@@ -6,7 +6,7 @@ import ApplicationContext from "../models/ApplicationContext";
 import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
-import {DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
+import {CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
@@ -16,18 +16,6 @@ import IUser from "../models/IUser";
 import IUserContext from "../models/IUserContext";
 import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
-
-export enum CameraType {
-    /**
-     * Front camera, capture="user"
-     */
-    UserFacingCamera,
-
-    /**
-     * Back camera, capture="environment"
-     */
-    OutwardFacingCamera
-}
 
 export interface IManualProps {
     title?: string;
