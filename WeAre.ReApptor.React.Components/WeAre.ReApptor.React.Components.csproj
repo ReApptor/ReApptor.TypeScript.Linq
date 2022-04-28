@@ -40,6 +40,7 @@
       <TypeScriptCompile Include="src\components\Icon\IconAction.tsx\IconAction.tsx" />
       <TypeScriptCompile Include="src\components\ImageModal\ImageModal.tsx" />
       <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
+      <TypeScriptCompile Include="src\components\Layout\TakePicture\TakePicture.tsx" />
       <TypeScriptCompile Include="src\components\LeftNav\LeftNav.tsx" />
       <TypeScriptCompile Include="src\components\LeftNav\LeftNavLocalizer.ts" />
       <TypeScriptCompile Include="src\components\Link\Link.tsx" />

@@ -15,8 +15,10 @@ export default class InlineImageTests extends BaseComponent {
     
     private async takePictureAsync(camera: boolean): Promise<void> {
         const image: FileModel | null = await ch.takePictureAsync(camera);
-        
-        await this.setState({ image });
+
+        if (image != null) {
+            await this.setState({image});
+        }
     }
     
     private async clearPictureAsync(): Promise<void> {

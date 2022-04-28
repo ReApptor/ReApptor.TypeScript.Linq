@@ -1,10 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import queryString, {ParsedQuery} from "query-string";
 import {FileModel, ILanguage, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import {
     AlertModel,
     ApplicationContext,
-    BaseAsyncComponent,
+    BaseAsyncComponent, CameraType,
     ch,
     IAsyncComponent,
     IBaseAsyncComponentState,
@@ -23,6 +23,7 @@ import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
 import LeftNav, {ILeftNavProps} from "../LeftNav/LeftNav";
+import TakePicture from "./TakePicture/TakePicture";
 
 import styles from "./Layout.module.scss";
 
@@ -130,8 +131,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private readonly _topNavRef: React.RefObject<TopNav> = React.createRef();
     private readonly _leftNavRef: React.RefObject<LeftNav> = React.createRef();
     private readonly _downloadLink: React.RefObject<HTMLAnchorElement> = React.createRef();
-    private readonly _imageInputRef: React.RefObject<HTMLInputElement> = React.createRef();
-    private readonly _cameraInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+    private readonly _takePictureRef: React.RefObject<TakePicture> = React.createRef();
     private readonly _callToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
     private readonly _emailToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
 
@@ -141,20 +141,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
-    private _imageInputResolver: ((file: FileModel | null) => void) | null = null;
-
-    private async onImageInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-        event.preventDefault();
-
-        if (this._imageInputResolver) {
-            const fileModel: FileModel | null = ((event.target.files) && (event.target.files.length > 0))
-                ? await Utility.transformFileAsync(event.target.files[0])
-                : null;
-
-            this._imageInputResolver(fileModel);
-            this._imageInputResolver = null;
-        }
-    }
     
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
@@ -563,22 +549,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         link.click();
     }
     
-    public takePictureAsync(camera: boolean = true): Promise<FileModel | null> {
-
-        const input: HTMLInputElement | null = (camera)
-            ? this._cameraInputRef.current
-            : this._imageInputRef.current;
-        
-        if (input) {
-            input.value = "";
-            input.click();
-
-            return new Promise((resolve) => {
-                this._imageInputResolver = resolve;
-            });
-        }
-
-        return new Promise(() => null);
+    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
+        return (this._takePictureRef.current)
+            ? this._takePictureRef.current.takePictureAsync(camera)
+            : null;
     }
     
     public callTo(phone: string): void {
@@ -753,29 +727,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     (
                         <>
                             
+                            <TakePicture ref={this._takePictureRef} />
+                            
                             <a ref={this._downloadLink}
                                style={{display: "none"}}
                             />
-
-                            <input ref={this._imageInputRef}
-                                   id={`${this.id}_imageInput`}
-                                   style={{display: "none"}}
-                                   type="file"
-                                   accept="image/*"
-                                   multiple={false}
-                                   onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                            />
-
-                            <input ref={this._cameraInputRef}
-                                   id={`${this.id}_cameraInput`}
-                                   style={{display: "none"}}
-                                   type="file"
-                                   capture="environment"
-                                   accept="image/*"
-                                   multiple={false}
-                                   onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                            />
-
+                            
                             <a ref={this._callToAnchorRef}
                                id={`${this.id}_callToAnchor`}
                                style={{display: "none"}}

@@ -17,6 +17,18 @@ import IUserContext from "../models/IUserContext";
 import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
+export enum CameraType {
+    /**
+     * Front camera, capture="user"
+     */
+    UserFacingCamera,
+
+    /**
+     * Back camera, capture="environment"
+     */
+    OutwardFacingCamera
+}
+
 export interface IManualProps {
     title?: string;
     manual?: string;
@@ -227,7 +239,7 @@ export interface ILayoutPage extends IAsyncComponent {
      * Take a picture (file) from camera of file storage.
      * @param camera True to take a picture from camera (outward-facing camera, "capture:environment").
      */
-    takePictureAsync(camera?: boolean): Promise<FileModel | null>;
+    takePictureAsync(camera?: boolean | CameraType): Promise<FileModel | null>;
 
     /**
      * Activates default "call-to" behaviour
