@@ -1,6 +1,6 @@
 import {AthenaeumConstants, FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
 import ApplicationContext from "../models/ApplicationContext";
-import {IBasePage, ILayoutPage} from "../base/BasePage";
+import {CameraType, IBasePage, ILayoutPage} from "../base/BasePage";
 import ApiProvider from "./ApiProvider";
 import {IBaseComponent} from "../base/BaseComponent";
 import AlertModel from "../models/AlertModel";
@@ -460,7 +460,7 @@ export default class ch {
         }
     }
 
-    public static async takePictureAsync(camera: boolean = true): Promise<FileModel | null> {
+    public static async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
         if (this._layout != null) {
             return this._layout.takePictureAsync(camera);
         }
