@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {BaseComponent, CameraType, ch} from "@weare/reapptor-react-common";
 import {Button, ButtonContainer, ButtonType, PageRow} from "@weare/reapptor-react-components";
 import {FileModel} from "@weare/reapptor-toolkit";
 
@@ -13,7 +13,7 @@ export default class InlineImageTests extends BaseComponent {
         image: null
     };
     
-    private async takePictureAsync(camera: boolean): Promise<void> {
+    private async takePictureAsync(camera: boolean | CameraType = true): Promise<void> {
         const image: FileModel | null = await ch.takePictureAsync(camera);
 
         if (image != null) {
@@ -37,6 +37,18 @@ export default class InlineImageTests extends BaseComponent {
                                 icon={{name: "fas fa-phone"}}
                                 type={ButtonType.Blue}
                                 onClick={() => this.takePictureAsync(true)}
+                        />
+
+                        <Button label={"Camera (UserFacingCamera)"}
+                                icon={{name: "fas fa-phone"}}
+                                type={ButtonType.Blue}
+                                onClick={() => this.takePictureAsync(CameraType.UserFacingCamera)}
+                        />
+
+                        <Button label={"Camera (OutwardFacingCamera)"}
+                                icon={{name: "fas fa-phone"}}
+                                type={ButtonType.Blue}
+                                onClick={() => this.takePictureAsync(CameraType.OutwardFacingCamera)}
                         />
 
                         <Button label={"Image"}
