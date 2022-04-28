@@ -141,7 +141,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
-    private _leftNav: ILeftNavProps | null = null;
     private _imageInputResolver: ((file: FileModel | null) => void) | null = null;
 
     private async onImageInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -296,8 +295,15 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private isPwaApp(): boolean {
-        // TODO: "device-detector-js" can be used to analyze UserAgent to define device type properly!
+        // TODO:
+        // "device-detector-js" can be used to analyze UserAgent to define device type properly!
         // https://www.npmjs.com/package/device-detector-js
+        // For example:
+        // const deviceDetector = new DeviceDetector();
+        // const device: DeviceDetectorResult = deviceDetector.parse(window.navigator.userAgent);
+        // const deviceType: DeviceType = device.device?.type ?? "";
+        // const isMobileApp: boolean = (deviceType === "smartphone") || (deviceType === "tablet");
+        
         return (
             // 1) Main check: is device is in standalone mode ("display": "standalone" in manifest.json);
             (window.matchMedia("(display-mode: standalone)").matches) ||
@@ -459,7 +465,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async reloadLeftNavAsync(): Promise<void> {
-        this._leftNav = null;
         if (this.hasLeftNav) {
             if (this._leftNavRef.current != null) {
                 await this._leftNavRef.current.reloadAsync();
@@ -620,11 +625,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 const profile: ITopNavProfile | null = TopNav.resolveProfile(this.props.profile);
                 leftNav.userProfile = profile?.userProfile;
             }
-
-            this._leftNav = leftNav;
         }
 
-        return this._leftNav;
+        return leftNav;
     }
 
     public get hasTopNav(): boolean {
@@ -659,6 +662,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         const contextVisible: boolean = (!this._tokenProcessing);
         const hasTopNav: boolean = (contextVisible) && (this.hasTopNav);
         const hasLeftNav: boolean = (contextVisible) && (this.hasLeftNav);
+        const leftNav: ILeftNavProps | null = (hasLeftNav) ? this.leftNav : null;
         
         return (
             <div className={this.css(styles.layout, this.props.className)}
@@ -695,10 +699,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                         <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
 
                             {
-                                (hasLeftNav) &&
+                                (leftNav) &&
                                 (
-                                    <LeftNav ref={this._leftNavRef} {...this.leftNav}
-                                             className={this.css(styles.leftNav, this.leftNav?.className)}
+                                    <LeftNav ref={this._leftNavRef} {...leftNav}
+                                             className={this.css(styles.leftNav, leftNav.className)}
                                              onToggle={() => this.reRenderTopNavAsync()}
                                     />
                                 )
