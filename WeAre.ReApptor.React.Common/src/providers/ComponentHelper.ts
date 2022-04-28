@@ -1,6 +1,6 @@
-import {AthenaeumConstants, FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
+import {AthenaeumConstants, FileModel, ILocalizer, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import ApplicationContext from "../models/ApplicationContext";
-import {CameraType, IBasePage, ILayoutPage} from "../base/BasePage";
+import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ApiProvider from "./ApiProvider";
 import {IBaseComponent} from "../base/BaseComponent";
 import AlertModel from "../models/AlertModel";
@@ -9,7 +9,7 @@ import IUserContext from "../models/IUserContext";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
-import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
+import {AlertType, CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 
 /**
