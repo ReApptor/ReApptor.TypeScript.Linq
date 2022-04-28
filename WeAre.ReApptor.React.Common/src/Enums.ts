@@ -1,3 +1,15 @@
+export enum CameraType {
+    /**
+     * Front camera, capture="user"
+     */
+    UserFacingCamera,
+
+    /**
+     * Back camera, capture="environment"
+     */
+    OutwardFacingCamera
+}
+
 export enum WebApplicationType {
     DesktopBrowser,
 
