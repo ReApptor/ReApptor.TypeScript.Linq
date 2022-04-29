@@ -368,6 +368,20 @@ export default class Utility {
             .replace(/\d(?=(\d{3})+\.)/g, '$& ');
     }
 
+    public static addMinutes(date: Date | string, minutes: number): Date {
+        const copy: Date = new Date(date);
+        //copy.setTime(copy.getTime() + (minutes*60*1000));
+        copy.setMinutes(copy.getMinutes() + minutes);
+        return copy;
+    }
+
+    public static addHours(date: Date | string, hours: number): Date {
+        const copy: Date = new Date(date);
+        //copy.setTime(copy.getTime() + (hours*60*60*1000));
+        copy.setHours(copy.getHours() + hours);
+        return copy;
+    }
+
     public static addDays(date: Date | string, days: number): Date {
         const copy: Date = new Date(date);
         copy.setDate(copy.getDate() + days);
