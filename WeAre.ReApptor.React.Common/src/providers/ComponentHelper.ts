@@ -153,8 +153,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout);
+    public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -163,8 +163,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutErrorAsync(message: string): Promise<void> {
-        await this.alertErrorAsync(message, true, true);
+    public static async flyoutErrorAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertErrorAsync(message, true, true, autoCloseDelay);
     }
 
     /**
@@ -172,8 +172,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout);
+    public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -182,8 +182,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutMessageAsync(message: string): Promise<void> {
-        await this.alertMessageAsync(message, true, true);
+    public static async flyoutMessageAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertMessageAsync(message, true, true, autoCloseDelay);
     }
 
     /**
@@ -191,8 +191,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout);
+    public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -201,8 +201,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutWarningAsync(message: string): Promise<void> {
-        await this.alertWarningAsync(message, true, true);
+    public static async flyoutWarningAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertWarningAsync(message, true, true, autoCloseDelay);
     }
 
     /**
