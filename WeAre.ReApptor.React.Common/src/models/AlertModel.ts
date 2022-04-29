@@ -3,11 +3,15 @@ import {Utility} from "@weare/reapptor-toolkit";
 
 export default class AlertModel {
 
-    constructor(message: string = "", alertType: AlertType = AlertType.Success, autoClose: boolean = false, flyout: boolean = false) {
+    constructor(message: string = "", alertType: AlertType = AlertType.Success, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null) {
         this.message = message;
         this.alertType = alertType;
         this.autoClose = autoClose;
         this.flyout = flyout;
+        
+        if (autoCloseDelay) {
+            this.autoCloseDelay = autoCloseDelay;
+        }
     }
 
     /**
