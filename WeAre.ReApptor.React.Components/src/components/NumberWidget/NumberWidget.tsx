@@ -16,6 +16,8 @@ export interface INumberWidgetProps extends IBaseWidgetProps {
     canMinimize?: boolean;
     readonly?: boolean;
     reverse?: boolean;
+    plusIcon?: string;
+    minusIcon?: string;
     onChange?(sender: NumberWidget, value: number): Promise<void>;
 }
 
@@ -233,11 +235,13 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
     }
 
     public getIconName(iconPosition: number): string {
-        if (this.reverse) {
-            return (iconPosition == 1) ? "plus-circle" : "minus-circle";
-        } else {
-            return (iconPosition == 1) ? "minus-circle" : "plus-circle";
-        }
+        return (this.reverse)
+            ? (iconPosition == 1)
+                ? this.props.plusIcon || "plus-circle"
+                : this.props.minusIcon || "minus-circle"
+            : (iconPosition == 1)
+                ? this.props.minusIcon || "minus-circle"
+                : this.props.plusIcon || "plus-circle"
     }
 
     public getIconStyle(iconPosition: number): string {
@@ -302,7 +306,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
             <div id={`number-widget-body_${this.id}`} className={this.css(styles.numberWidget, this.edit && styles.edit, this.readonly && styles.readonly)}>
 
                 <div onClick={this.getIconOnClick(1)} className={this.getIconStyle(1)}>
-                    <Icon name={this.getIconName(1)} size={IconSize.X2} style={IconStyle.Regular}/>
+                    <Icon name={this.getIconName(1)} size={IconSize.X2} style={IconStyle.Regular} />
                 </div>
 
                 {
