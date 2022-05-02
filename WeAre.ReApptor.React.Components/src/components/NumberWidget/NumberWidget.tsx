@@ -1,8 +1,8 @@
 import React from "react";
-import {INumberFormat, NumberParsingResult, NumberUtility, Utility, TFormat} from "@weare/reapptor-toolkit";
+import {INumberFormat, NumberParsingResult, NumberUtility, TFormat, Utility} from "@weare/reapptor-toolkit";
 import {IGlobalClick} from "@weare/reapptor-react-common";
-import BaseWidget, { IBaseWidgetProps } from "../WidgetContainer/BaseWidget";
-import Icon, { IconSize, IconStyle } from "../Icon/Icon";
+import BaseWidget, {IBaseWidgetProps} from "../WidgetContainer/BaseWidget";
+import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 
 import styles from "../WidgetContainer/WidgetContainer.module.scss";
 
@@ -16,8 +16,8 @@ export interface INumberWidgetProps extends IBaseWidgetProps {
     canMinimize?: boolean;
     readonly?: boolean;
     reverse?: boolean;
-    plusIcon?: string;
-    minusIcon?: string;
+    plusIcon?: IIconProps | null;
+    minusIcon?: IIconProps | null;
     onChange?(sender: NumberWidget, value: number): Promise<void>;
 }
 
@@ -234,26 +234,14 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
         return true;
     }
 
-    public getIconName(iconPosition: number): string {
+    public getIconStyle(iconPosition: number): string {
         return (this.reverse)
             ? (iconPosition == 1)
-                ? this.props.plusIcon || "plus-circle"
-                : this.props.minusIcon || "minus-circle"
-            : (iconPosition == 1)
-                ? this.props.minusIcon || "minus-circle"
-                : this.props.plusIcon || "plus-circle"
-    }
-
-    public getIconStyle(iconPosition: number): string {
-        if (this.reverse) {
-            return (iconPosition == 1)
                 ? this.css(!this.canIncrease && styles.disabled)
-                : this.css(!this.canDecrease && styles.disabled);
-        } else {
-            return (iconPosition == 1)
+                : this.css(!this.canDecrease && styles.disabled)
+            : (iconPosition == 1)
                 ? this.css(!this.canDecrease && styles.disabled)
                 : this.css(!this.canIncrease && styles.disabled);
-        }
     }
 
     public getIconOnClick(iconPosition: number): any {
@@ -300,14 +288,34 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
             }
         }
     }
+    
+    private getIconProps(iconPosition: number): IIconProps {
+        const minusIconProps: IIconProps = this.props.minusIcon || {name: "minus-circle", style: IconStyle.Regular};
+        const plusIconProps: IIconProps = this.props.plusIcon || {name: "plus-circle", style: IconStyle.Regular};
+        return (this.reverse)
+            ? (iconPosition == 1)
+                ? plusIconProps
+                : minusIconProps
+            : (iconPosition == 1)
+                ? minusIconProps
+                : plusIconProps;
+    }
+    
+    private renderIcon(iconPosition: number): React.ReactNode {
+        const iconProps: IIconProps = this.getIconProps(iconPosition);
+        return (
+            <div onClick={this.getIconOnClick(iconPosition)} className={this.getIconStyle(iconPosition)}>
+                {/*<Icon name={this.getIconName(iconPosition)} size={IconSize.X2} style={IconStyle.Regular} />*/}
+                <Icon {...iconProps} size={IconSize.X2} />
+            </div>
+        )
+    }
 
     protected renderContent(renderHidden: boolean = false): React.ReactNode {
         return (
             <div id={`number-widget-body_${this.id}`} className={this.css(styles.numberWidget, this.edit && styles.edit, this.readonly && styles.readonly)}>
 
-                <div onClick={this.getIconOnClick(1)} className={this.getIconStyle(1)}>
-                    <Icon name={this.getIconName(1)} size={IconSize.X2} style={IconStyle.Regular} />
-                </div>
+                { this.renderIcon(1) }
 
                 {
                     (this.edit)
@@ -330,9 +338,7 @@ export default class NumberWidget extends BaseWidget<INumberWidgetProps, INumber
                         )
                 }
 
-                <div onClick={this.getIconOnClick(2)} className={this.getIconStyle(2)}>
-                    <Icon name={this.getIconName(2)} size={IconSize.X2} style={IconStyle.Regular}/>
-                </div>
+                { this.renderIcon(2) }
 
             </div>
         );
