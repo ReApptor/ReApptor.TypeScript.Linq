@@ -93,6 +93,18 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     private get selected(): Date | null {
         return (this.state.model.value != null) ? new Date(this.state.model.value) : null;
     }
+    
+    private get minTime(): Date | null {
+        return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.minDate))
+            ? this.props.minDate
+            : null;
+    }
+    
+    private get maxTime(): Date | null {
+        return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.maxDate))
+            ? this.props.maxDate
+            : null;
+    }
 
     private renderCustomInput(): React.ReactNode {
         return (this.props.customInput) ? this.props.customInput(this) : null;
@@ -175,6 +187,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
                             maxDate={this.props.maxDate}
+                            minTime={this.minTime || undefined}
+                            maxTime={this.maxTime || undefined}
                             selected={this.selected}
                             className="form-control"
                             calendarClassName={this.css("datepicker", this.calendarClassName)}
