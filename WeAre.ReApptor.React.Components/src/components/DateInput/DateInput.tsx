@@ -34,8 +34,10 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     expanded?: boolean;
     rentaStyle?: boolean;
     popup?: boolean;
-    maxDate?: Date | null;
     minDate?: Date | null;
+    maxDate?: Date | null;
+    minTime?: Date | null;
+    maxTime?: Date | null;
     showMonthDropdown?: boolean;
     showMonthYearPicker?: boolean;
     showYearDropdown?: boolean;
@@ -92,34 +94,6 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
 
     private get selected(): Date | null {
         return (this.state.model.value != null) ? new Date(this.state.model.value) : null;
-    }
-
-    private endOfDay(value: Date): Date {
-        const date = new Date(value);
-        date.setHours(23, 59, 59, 999);
-        return date;
-    }
-    
-    private get minTime(): Date | null {
-        return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.minDate))
-            ? (this.props.minDate.date().inPast(true))
-                ? this.props.minDate.date()
-                : (this.props.minDate.date().inFuture(true))
-                    ? this.endOfDay(this.props.minDate)
-                    : this.props.minDate
-            : null;
-    }
-    
-    private get maxTime(): Date | null {
-        return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.maxDate))
-            ? (this.props.maxDate.date().inFuture(true))
-                ? this.endOfDay(this.props.maxDate)
-                : (this.props.maxDate.date().inPast(true))
-                    ? this.props.maxDate.date()
-                    : this.props.maxDate
-            : (this.minTime)
-                ? this.endOfDay(this.minTime)
-                : null;
     }
 
     private renderCustomInput(): React.ReactNode {
@@ -203,8 +177,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
                             maxDate={this.props.maxDate}
-                            minTime={this.minTime || undefined}
-                            maxTime={this.maxTime || undefined}
+                            minTime={this.props.minTime || undefined}
+                            maxTime={this.props.maxTime || undefined}
                             selected={this.selected}
                             className="form-control"
                             calendarClassName={this.css("datepicker", this.calendarClassName)}
