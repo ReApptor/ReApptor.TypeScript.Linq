@@ -100,10 +100,18 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
             : null;
     }
     
+    private endOfDay(value: Date): Date {
+        const date = new Date(value);
+        date.setHours(23, 59, 59, 999);
+        return date;
+    }
+    
     private get maxTime(): Date | null {
         return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.maxDate))
             ? this.props.maxDate
-            : null;
+            : (this.minTime)
+                ? this.endOfDay(this.minTime)
+                : null;
     }
 
     private renderCustomInput(): React.ReactNode {
