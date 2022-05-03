@@ -102,9 +102,9 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     
     private get minTime(): Date | null {
         return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.minDate))
-            ? (this.props.minDate.inPast(true))
+            ? (this.props.minDate.date().inPast(true))
                 ? this.props.minDate.date()
-                : (this.props.minDate.inFuture(true))
+                : (this.props.minDate.date().inFuture(true))
                     ? this.endOfDay(this.props.minDate)
                     : this.props.minDate
             : null;
@@ -112,9 +112,9 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     
     private get maxTime(): Date | null {
         return ((this.props.showTime) && (this.props.showOnlyTime) && (this.props.maxDate))
-            ? (this.props.maxDate.inFuture(true))
+            ? (this.props.maxDate.date().inFuture(true))
                 ? this.endOfDay(this.props.maxDate)
-                : (this.props.maxDate.inPast(true))
+                : (this.props.maxDate.date().inPast(true))
                     ? this.props.maxDate.date()
                     : this.props.maxDate
             : (this.minTime)
