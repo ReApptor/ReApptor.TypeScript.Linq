@@ -1270,13 +1270,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <div className={this.css(className)}>
+            <div className={this.css(styles.toggleButtonContainer, className)}>
                 
-                {
-                    (clearButton) && (this.renderClearIcon())
-                }
+                { (clearButton) && (this.renderClearIcon()) }
 
-                <Icon {...iconProps} size={IconSize.Normal} />
+                <Icon {...iconProps} size={IconSize.Normal} className={styles.toggleButton} />
+                
             </div>
         );
     }
