@@ -1,4 +1,4 @@
-# RentaComponents
+# ReApptor Components
 
 This project was generated using [Nx](https://nx.dev) Extensible Build Framework.
 
