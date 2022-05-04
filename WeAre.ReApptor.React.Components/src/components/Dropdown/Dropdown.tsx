@@ -1252,12 +1252,13 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private renderClearIcon(): React.ReactNode {
         return (
-            <Icon stopPropagation
-                  name="fa fa-times"
-                  size={IconSize.Normal}
-                  className={this.css(styles.clearButton)}
-                  onClick={() => this.clearSelectedAsync()}
-            />
+            <div className={this.css(styles.clearButton)}>
+                <Icon stopPropagation
+                      name="fa fa-times"
+                      size={IconSize.Normal}
+                      onClick={() => this.clearSelectedAsync()}
+                />
+            </div>
         );
     }
 
@@ -1282,7 +1283,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 
                 { (clearButton) && (this.renderClearIcon()) }
 
-                <Icon {...iconProps} size={IconSize.Normal} className={styles.toggleButton} />
+                <div className={styles.toggleButton}>
+                    <Icon {...iconProps} size={IconSize.Normal} />
+                </div>
                 
             </div>
         );
