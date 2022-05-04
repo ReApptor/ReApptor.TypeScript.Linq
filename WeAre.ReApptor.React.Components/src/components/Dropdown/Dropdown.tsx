@@ -127,10 +127,15 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     textAlign?: TextAlign;
     filterMinLength?: number;
     filterMaxLength?: number;
+    noFilter?: boolean;
+
+    /**
+     * Focuses filter search input on expanding for mobile application or disable for desktop. 
+     */
+    filterAutoFocus?: boolean;
     minWidth?: number | string;
     autoCollapse?: boolean;
     small?: boolean;
-    noFilter?: boolean;
     noSubtext?: boolean;
     noGrouping?: boolean;
     subtextType?: DropdownSubtextType;
@@ -205,7 +210,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     };
 
     private onFilterInputClick(): void {
-        if ((this.desktop) && (this._filterInputRef.current)) {
+        const filterAutoFocus: boolean = (this.desktop)
+            ? (this.props.filterAutoFocus !== false)
+            : (this.props.filterAutoFocus == true);
+        if ((filterAutoFocus) && (this._filterInputRef.current)) {
             this._filterInputRef.current.focus();
         }
     }
@@ -1270,13 +1278,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <div className={this.css(className)}>
+            <div className={this.css(styles.toggleButtonContainer, className)}>
                 
-                {
-                    (clearButton) && (this.renderClearIcon())
-                }
+                { (clearButton) && (this.renderClearIcon()) }
 
-                <Icon {...iconProps} size={IconSize.Normal} />
+                <Icon {...iconProps} size={IconSize.Normal} className={styles.toggleButton} />
+                
             </div>
         );
     }
