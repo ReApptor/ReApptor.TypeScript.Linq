@@ -31,29 +31,30 @@ import enFlag from "./flags/en.png";
 import fiFlag from "./flags/fi.png";
 
 export interface IDropdownTestsState {
-    generateGroups: boolean,
-    icons: boolean,
-    multiple: boolean,
-    groupSelected: boolean,
-    favorite: boolean,
-    noFilter: boolean,
-    amountListItem: boolean,
-    dropdownWidget: boolean,
-    required: boolean,
-    disabled: boolean,
-    autoCollapse: boolean,
-    toggleButton: boolean,
-    withToggleIconName: boolean,
-    withToggleIconProps: boolean,
-    noSubtext: boolean,
-    addButton: boolean,
-    subtextType: DropdownSubtextType,
-    selectType: DropdownSelectType,
-    requiredType: DropdownRequiredType,
-    selectedTextFormat: boolean | number,
-    width: string,
-    align: DropdownAlign | null,    
-    verticalAlign: DropdownVerticalAlign | null,    
+    generateGroups: boolean;
+    icons: boolean;
+    multiple: boolean;
+    groupSelected: boolean;
+    favorite: boolean;
+    noFilter: boolean;
+    clearButton: boolean;
+    amountListItem: boolean;
+    dropdownWidget: boolean;
+    required: boolean;
+    disabled: boolean;
+    autoCollapse: boolean;
+    toggleButton: boolean;
+    withToggleIconName: boolean;
+    withToggleIconProps: boolean;
+    noSubtext: boolean;
+    addButton: boolean;
+    subtextType: DropdownSubtextType;
+    selectType: DropdownSelectType;
+    requiredType: DropdownRequiredType;
+    selectedTextFormat: boolean | number;
+    width: string;
+    align: DropdownAlign | null;
+    verticalAlign: DropdownVerticalAlign | null;
 }
 
 export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState> {
@@ -65,6 +66,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         groupSelected: false,
         favorite: false,
         noFilter: false,
+        clearButton: false,
         amountListItem: false,
         dropdownWidget: false,
         required: false,
@@ -166,6 +168,10 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         await this.setState({noFilter});
     }
 
+    private async setClearButtonAsync(clearButton: boolean): Promise<void> {
+        await this.setState({clearButton});
+    }
+
     private getDropdownSubtextTypeName(item: DropdownSubtextType): string {
         switch (item) {
             case DropdownSubtextType.Row: return "Row";
@@ -234,6 +240,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                           multiple={this.state.multiple}
                           groupSelected={this.state.groupSelected}
                           noFilter={this.state.noFilter}
+                          clearButton={this.state.clearButton}
                           favorite={this.state.favorite}
                           required={this.state.required}
                           requiredType={this.state.requiredType}
@@ -317,6 +324,11 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                         <Checkbox label="No filter" inline
                                   value={this.state.noFilter}
                                   onChange={async (sender, value) => await this.setNoFilterAsync(value)}
+                        />
+
+                        <Checkbox label="Clear Button" inline
+                                  value={this.state.clearButton}
+                                  onChange={async (sender, value) => await this.setClearButtonAsync(value)}
                         />
 
                         <Checkbox label="Required" inline
