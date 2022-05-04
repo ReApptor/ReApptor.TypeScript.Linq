@@ -295,10 +295,11 @@
             flex-direction: row;
             align-items: center;
             
-            i {
+            > div {
                 margin-left: 6px;
                 
                 &.clearButton {
+                    display: flex;
                     padding: 4px;
 
                     &:not(:hover) {
@@ -307,6 +308,7 @@
                 }
 
                 &.toggleButton {
+                    display: flex;
                 }
             }
             
