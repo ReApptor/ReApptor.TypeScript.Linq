@@ -140,6 +140,12 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     noDataText?: string;
     absoluteListItems?: boolean;
     addButton?: boolean | string | RenderCallback;
+    
+    /**
+     * The 'X' button in the select item to unselect the selected element(s) (only if the 'required' property is false)
+     */
+    clearButton?: boolean;
+    
     transform?(item: TItem): SelectListItem;
     selectedTextTransform?(sender: Dropdown<TItem>): string;
     onChange?(sender: Dropdown<TItem>, item: TItem | null, userInteraction: boolean): Promise<void>;
@@ -200,7 +206,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private onFilterInputClick(): void {
         if ((this.desktop) && (this._filterInputRef.current)) {
-            this._filterInputRef.current!.focus();
+            this._filterInputRef.current.focus();
         }
     }
 
@@ -660,11 +666,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.invokeOnItemClickAsync(item);
     }
 
+    private async clearSelectedAsync(): Promise<void> {
+        return this.unselectAllAsync();
+    }
+
     private async cleanFilterAsync(): Promise<void> {
         this._filterInputRef.current!.value = "";
         await this.filterHandlerAsync();
     }
-
+    
     private async initializeItemsAsync(items: TItem[], selectedItem: TItem | string | number | null | undefined, selectedItems: TItem[] | string[] | number[] | null | undefined): Promise<void> {
 
         const prevSelectedItem: SelectListItem | null = this.selectedListItem;
@@ -906,6 +916,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             : DropdownRequiredType.Manual;
     }
 
+    public get clearButton(): boolean {
+        return (this.props.clearButton === true) && (this.requiredType == DropdownRequiredType.Manual);
+    }
+
     public get favorite(): boolean {
         return (this.props.favorite || false);
     }
@@ -1041,9 +1055,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     public get noSubtext(): boolean {
         return (this.props.noSubtext === true);
     }
+    
+    public get hasSelected(): boolean {
+        return (this.multiple)
+            ? (this.selectedListItems.length > 0)
+            : (this.selectedListItem != null);
+    }
 
     public async unselectAllAsync(): Promise<void> {
-        if ((this.multiple) && (this.selectedListItems)) {
+        if ((this.multiple) && (this.selectedListItems.length > 0)) {
             await this.invokeSelectListItemsAsync([], true);
         } else if (this.selectedListItem) {
             await this.invokeSelectListItemAsync(null, true);
@@ -1222,7 +1242,20 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
+    private renderClearIcon(): React.ReactNode {
+        return (
+            <Icon stopPropagation
+                  name="fa fa-times"
+                  size={IconSize.Normal}
+                  className={this.css(styles.clearButton)}
+                  onClick={() => this.clearSelectedAsync()}
+            />
+        );
+    }
+
     private renderToggleIcon(className?: string): React.ReactNode {
+        const clearButton: boolean = (this.clearButton) && (this.hasSelected);
+        
         let iconProps: IIconProps = { name: "fa-caret-down", style: IconStyle.Solid }
 
         if (this.styleSchema === DropdownSchema.Widget) {
@@ -1237,7 +1270,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <Icon {...iconProps} size={IconSize.Normal} className={this.css(className)} />
+            <div className={this.css(className)}>
+                
+                {
+                    (clearButton) && (this.renderClearIcon())
+                }
+
+                <Icon {...iconProps} size={IconSize.Normal} />
+            </div>
         );
     }
 
@@ -1313,7 +1353,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                  onClick={async () => await this.toggleAsync()}>
 
                 <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
-
+                
                 {
                     this.renderToggleIcon(transparentStyle)
                 }
@@ -1470,10 +1510,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
-                                       onKeyUp={async () => await this.filterHandlerAsync()}
+                                       onKeyUp={() => this.filterHandlerAsync()}
                                 />
 
-                                { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={async () => await this.cleanFilterAsync()} /> }
+                                { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={() => this.cleanFilterAsync()} /> }
 
                             </div>
                         )

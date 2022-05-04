@@ -1,4 +1,4 @@
-import React from "react";
+import React, {SyntheticEvent} from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
@@ -54,6 +54,7 @@ export interface IIconProps {
     dismissModal?: boolean;
     customStyle?: React.CSSProperties;
     disabled?: boolean;
+    stopPropagation?: boolean;
     confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
     onClick?(sender: Icon): Promise<void>;
 }
@@ -287,8 +288,12 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         return this.hasActions && this.state.isOpen;
     }
 
-    private async onClickAsync(confirmed: boolean): Promise<void> {
+    private async onClickAsync(confirmed: boolean, e: SyntheticEvent | null = null): Promise<void> {
 
+        if ((e != null) && (this.props.stopPropagation === true)) {
+            e.stopPropagation();
+        }
+        
         if (this.hasActions) {
             return await this.toggleActions();
         }
@@ -354,7 +359,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                    data-toggle={this.dataToggleModal}
                    data-dismiss={this.dataDismissModal}
                    data-modal={this.dataModal}
-                   onClick={async () => await this.onClickAsync(false)}
+                   onClick={(e: SyntheticEvent) => this.onClickAsync(false, e)}
                 >
                     {
                         (this.children.length > 0) &&
