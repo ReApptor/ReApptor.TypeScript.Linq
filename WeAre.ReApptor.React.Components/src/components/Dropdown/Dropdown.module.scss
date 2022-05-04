@@ -283,9 +283,17 @@
         &:hover {
             @extend .hovered;
         }
-        
+
         i {
             margin-left: 6px;
+        }
+
+        .clearButton {
+            padding: 4px;
+
+            &:not(:hover) {
+                opacity: 0.3;
+            }
         }
         
         span {
