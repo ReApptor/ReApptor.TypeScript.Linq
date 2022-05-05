@@ -14,8 +14,8 @@
     &.separator {
       border: 0;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
-      margin-top: $baseline/2;
-      margin-bottom: $baseline/2;
+      margin-top: 0.5*$baseline;
+      margin-bottom: 0.5*$baseline;
     }
 
     &:not(.separator) {

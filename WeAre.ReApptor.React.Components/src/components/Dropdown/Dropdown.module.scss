@@ -293,10 +293,11 @@
             
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: stretch;
             
             > div {
                 margin-left: 6px;
+                align-items: center;
                 
                 &.clearButton {
                     display: flex;
