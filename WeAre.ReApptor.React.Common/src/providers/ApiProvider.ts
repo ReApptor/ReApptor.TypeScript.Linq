@@ -24,7 +24,10 @@ export default class ApiProvider {
     }
 
     private static get offline(): boolean {
-        return (navigator) && (!navigator.onLine);
+        return (
+            ((navigator) && (!navigator.onLine)) ||
+            ((window.navigator) && (!window.navigator.onLine))
+        );
     }
 
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
@@ -176,8 +179,8 @@ export default class ApiProvider {
             if (isMaintenanceOrBlocked) {
                 ch.refresh();
             } else if (!this.offline) {
-                const offlineOrRequestIsTooBif: boolean = (endpoint.endsWith("offline.html")) && (httpResponse.status == 200);
-                const debugDetails: string = (offlineOrRequestIsTooBif)
+                const offlineOrRequestIsTooBig: boolean = (endpoint.endsWith("offline.html")) && (httpResponse.status == 200);
+                const debugDetails: string = (offlineOrRequestIsTooBig)
                     ? `Server returned HTML instead of JSON response, probably server is offline or request body is too big.`
                     : `Server returned HTML instead of JSON response, probably requested api action not found.`;
 
