@@ -199,6 +199,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
                 <LocationPickerModal ref={this._locationPickerModalRef} infoWindow
                                      id={this.locationPickerId}
                                      location={this.state.location || undefined}
+                                     required={this.props.required}
                                      readonly={this.readonly}
                                      onClose={() => this.onLocationCloseAsync()}
                                      onSubmit={(sender, location) => this.onLocationSetAsync(location)}
