@@ -1,7 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import {MarkerClusterer} from "@googlemaps/markerclusterer";
-import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import {GeoCoordinate, GeoLocation} from "@weare/reapptor-toolkit";
 import {AddressHelper} from "../../index";
