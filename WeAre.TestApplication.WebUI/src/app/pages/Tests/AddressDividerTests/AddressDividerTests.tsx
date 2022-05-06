@@ -21,7 +21,7 @@ export default class AddressDividerTests extends BaseComponent {
         columns: null,
         required: true,
         locationPicker: false,
-        readonly: false,
+        readonly: false
     }
 
     private readonly _formRef: React.RefObject<Form> = React.createRef();
