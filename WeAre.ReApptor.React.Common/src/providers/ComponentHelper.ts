@@ -495,6 +495,14 @@ export default class ch {
         return Utility.getComponentId();
     }
 
+    public static get offline(): boolean {
+        return ApiProvider.offline;
+    }
+
+    public static get online(): boolean {
+        return (!this.offline);
+    }
+
     public static get debug(): boolean {
         return this._debug;
     }
