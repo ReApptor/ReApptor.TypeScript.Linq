@@ -23,13 +23,6 @@ export default class ApiProvider {
         }
     }
 
-    private static get offline(): boolean {
-        return (
-            ((navigator) && (!navigator.onLine)) ||
-            ((window.navigator) && (!window.navigator.onLine))
-        );
-    }
-
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
@@ -299,6 +292,13 @@ export default class ApiProvider {
         if (index !== -1) {
             this._loadingCallbacks.splice(index, 1);
         }
+    }
+
+    public static get offline(): boolean {
+        return (
+            ((navigator) && (!navigator.onLine)) ||
+            ((window.navigator) && (!window.navigator.onLine))
+        );
     }
 
     public static get isLoading(): boolean {
