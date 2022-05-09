@@ -283,14 +283,36 @@
         &:hover {
             @extend .hovered;
         }
-        
-        i {
-            margin-left: 6px;
-        }
-        
+
         span {
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        
+        .toggleButtonContainer {
+            
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            
+            > div {
+                margin-left: 6px;
+                align-items: center;
+                
+                &.clearButton {
+                    display: flex;
+                    padding: 4px;
+
+                    &:not(:hover) {
+                        opacity: 0.3;
+                    }
+                }
+
+                &.toggleButton {
+                    display: flex;
+                }
+            }
+            
         }
     }
     

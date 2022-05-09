@@ -23,10 +23,6 @@ export default class ApiProvider {
         }
     }
 
-    private static get offline(): boolean {
-        return (navigator) && (!navigator.onLine);
-    }
-
     private static async setAutoIsSpinningAsync(isSpinning: boolean, caller: IBaseComponent | null): Promise<void> {
         if (!this._manualSpinning) {
             const isLoading: boolean = this.isLoading;
@@ -176,8 +172,8 @@ export default class ApiProvider {
             if (isMaintenanceOrBlocked) {
                 ch.refresh();
             } else if (!this.offline) {
-                const offlineOrRequestIsTooBif: boolean = (endpoint.endsWith("offline.html")) && (httpResponse.status == 200);
-                const debugDetails: string = (offlineOrRequestIsTooBif)
+                const offlineOrRequestIsTooBig: boolean = (endpoint.endsWith("offline.html")) && (httpResponse.status == 200);
+                const debugDetails: string = (offlineOrRequestIsTooBig)
                     ? `Server returned HTML instead of JSON response, probably server is offline or request body is too big.`
                     : `Server returned HTML instead of JSON response, probably requested api action not found.`;
 
@@ -296,6 +292,13 @@ export default class ApiProvider {
         if (index !== -1) {
             this._loadingCallbacks.splice(index, 1);
         }
+    }
+
+    public static get offline(): boolean {
+        return (
+            ((navigator) && (!navigator.onLine)) ||
+            ((window.navigator) && (!window.navigator.onLine))
+        );
     }
 
     public static get isLoading(): boolean {

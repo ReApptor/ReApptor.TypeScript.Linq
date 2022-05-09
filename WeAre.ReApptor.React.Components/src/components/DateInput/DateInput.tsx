@@ -34,8 +34,10 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     expanded?: boolean;
     rentaStyle?: boolean;
     popup?: boolean;
-    maxDate?: Date | null;
     minDate?: Date | null;
+    maxDate?: Date | null;
+    minTime?: Date | null;
+    maxTime?: Date | null;
     showMonthDropdown?: boolean;
     showMonthYearPicker?: boolean;
     showYearDropdown?: boolean;
@@ -175,6 +177,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
                             maxDate={this.props.maxDate}
+                            minTime={this.props.minTime || undefined}
+                            maxTime={this.props.maxTime || undefined}
                             selected={this.selected}
                             className="form-control"
                             calendarClassName={this.css("datepicker", this.calendarClassName)}
