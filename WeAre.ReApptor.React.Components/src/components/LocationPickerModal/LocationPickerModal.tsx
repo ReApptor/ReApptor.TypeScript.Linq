@@ -18,6 +18,7 @@ interface ILocationPickerModalProps {
     location?: GeoLocation;
     infoWindow?: boolean;
     readonly?: boolean;
+    required?: boolean;
 
     /**
      * True to disable modal responsiveness (full window in mobile view).
@@ -48,10 +49,10 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
     private readonly _modalRef: React.RefObject<Modal> = React.createRef();
     
     private async onSubmitAsync(): Promise<void> {
-        if (this.props.onSubmit && this.locationPicker && this.location && !this.readonly) {
+        if (!this.readonly && this.props.onSubmit && this.locationPicker && this.location) {
             await this.props.onSubmit(this, this.location);
         }
-        
+
         if (this.modal) {
             await this.modal.closeAsync();
         }
@@ -115,6 +116,14 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
         return !!this.props.readonly;
     }
 
+    public get required(): boolean {
+        return (this.props.required === true);
+    }
+
+    public get hasLocation(): boolean {
+        return (this.location != null) && (!!this.location.formattedAddress);
+    }
+
     public get isOpen(): boolean {
         return !!this.modal && this.modal.isOpen;
     }
@@ -161,7 +170,8 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                             (
                                 <Button type={ButtonType.Orange}
                                         label={LocationPickerModalLocalizer.setLocation}
-                                        onClick={async () => await this.onSubmitAsync()}
+                                        disabled={this.required && !this.hasLocation}
+                                        onClick={() => this.onSubmitAsync()}
                                 />
                             )
                             :
