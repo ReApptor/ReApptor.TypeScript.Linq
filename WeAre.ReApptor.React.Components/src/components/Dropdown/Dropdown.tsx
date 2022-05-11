@@ -1262,9 +1262,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         );
     }
 
-    private renderToggleIcon(className?: string): React.ReactNode {
-        const clearButton: boolean = (this.clearButton) && (this.hasSelected);
-        
+    private renderToggleIcon(clearButtonVisible: boolean, className?: string): React.ReactNode {
         let iconProps: IIconProps = { name: "fa-caret-down", style: IconStyle.Solid }
 
         if (this.styleSchema === DropdownSchema.Widget) {
@@ -1281,7 +1279,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         return (
             <div className={this.css(styles.toggleButtonContainer, className)}>
                 
-                { (clearButton) && (this.renderClearIcon()) }
+                { (clearButtonVisible) && (this.renderClearIcon()) }
 
                 <div className={styles.toggleButton}>
                     <Icon {...iconProps} size={IconSize.Normal} />
@@ -1319,8 +1317,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private renderSelectedItem(): React.ReactNode {
+
+        const clearButtonVisible: boolean = (this.clearButton) && (this.hasSelected);
+
         const expandedStyle = ((this.styleSchema === DropdownSchema.Widget) && (this.state.expanded)) && (this.css(styles.hovered, styles.focused));
         const transparentStyle: any = (this.styleSchema === DropdownSchema.Transparent) && (styles.transparent);
+        const clearButtonVisibleStyle: any = (clearButtonVisible) && (styles.clearButtonVisible);
 
         const inlineStyles: React.CSSProperties = {};
         if (this.props.textAlign) {
@@ -1358,14 +1360,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, "selected-item")}
+            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, clearButtonVisibleStyle, "selected-item")}
                  title={title}
                  onClick={async () => await this.toggleAsync()}>
 
                 <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
                 
                 {
-                    this.renderToggleIcon(transparentStyle)
+                    this.renderToggleIcon(clearButtonVisible, transparentStyle)
                 }
 
             </div>
