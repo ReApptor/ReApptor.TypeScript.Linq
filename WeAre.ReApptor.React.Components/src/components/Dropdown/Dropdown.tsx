@@ -115,7 +115,7 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     favorite?: boolean;
     groupSelected?: boolean;
     toggleButtonId?: string;
-    toggleIcon?: string | IIconProps;
+    toggleIcon?: string | IIconProps | false;
     noWrap?: boolean;
     orderBy?: DropdownOrderBy;
     items: TItem[];
@@ -1250,19 +1250,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private renderClearIcon(): React.ReactNode {
-        return (
-            <div className={this.css(styles.clearButton)}>
-                <Icon stopPropagation
-                      name="fa fa-times"
-                      size={IconSize.Normal}
-                      onClick={() => this.clearSelectedAsync()}
-                />
-            </div>
-        );
-    }
-
-    private renderToggleIcon(clearButtonVisible: boolean, className?: string): React.ReactNode {
+    private renderToggleButton(): React.ReactNode {
         let iconProps: IIconProps = { name: "fa-caret-down", style: IconStyle.Solid }
 
         if (this.styleSchema === DropdownSchema.Widget) {
@@ -1277,13 +1265,32 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
+            <div className={styles.toggleButton}>
+                <Icon {...iconProps} size={IconSize.Normal} />
+            </div>
+        );
+    }
+
+    private renderClearIcon(): React.ReactNode {
+        return (
+            <div className={this.css(styles.clearButton)}>
+                <Icon stopPropagation
+                      name="fa fa-times"
+                      size={IconSize.Normal}
+                      onClick={() => this.clearSelectedAsync()}
+                />
+            </div>
+        );
+    }
+
+    private renderToggleContainer(toggleButtonVisible: boolean, clearButtonVisible: boolean, className?: string): React.ReactNode {
+
+        return (
             <div className={this.css(styles.toggleButtonContainer, className)}>
                 
                 { (clearButtonVisible) && (this.renderClearIcon()) }
 
-                <div className={styles.toggleButton}>
-                    <Icon {...iconProps} size={IconSize.Normal} />
-                </div>
+                { (toggleButtonVisible) && (this.renderToggleButton()) }
                 
             </div>
         );
@@ -1318,10 +1325,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private renderSelectedItem(): React.ReactNode {
 
+        const toggleButtonVisible: boolean = (this.props.toggleIcon !== false);
         const clearButtonVisible: boolean = (this.clearButton) && (this.hasSelected);
 
         const expandedStyle = ((this.styleSchema === DropdownSchema.Widget) && (this.state.expanded)) && (this.css(styles.hovered, styles.focused));
         const transparentStyle: any = (this.styleSchema === DropdownSchema.Transparent) && (styles.transparent);
+        const toggleButtonVisibleStyle: any = (toggleButtonVisible) && (styles.toggleButtonVisible);
         const clearButtonVisibleStyle: any = (clearButtonVisible) && (styles.clearButtonVisible);
 
         const inlineStyles: React.CSSProperties = {};
@@ -1360,14 +1369,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, clearButtonVisibleStyle, "selected-item")}
+            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, toggleButtonVisibleStyle, clearButtonVisibleStyle, "selected-item")}
                  title={title}
-                 onClick={async () => await this.toggleAsync()}>
+                 onClick={() => this.toggleAsync()}>
 
                 <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
                 
                 {
-                    this.renderToggleIcon(clearButtonVisible, transparentStyle)
+                    this.renderToggleContainer(toggleButtonVisible, clearButtonVisible, transparentStyle)
                 }
 
             </div>

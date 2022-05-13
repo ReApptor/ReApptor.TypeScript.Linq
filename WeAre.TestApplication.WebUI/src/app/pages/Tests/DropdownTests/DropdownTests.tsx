@@ -43,7 +43,7 @@ export interface IDropdownTestsState {
     required: boolean;
     disabled: boolean;
     autoCollapse: boolean;
-    toggleButton: boolean;
+    hideToggleButton: boolean;
     withToggleIconName: boolean;
     withToggleIconProps: boolean;
     noSubtext: boolean;
@@ -71,7 +71,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         dropdownWidget: false,
         required: false,
         disabled: false,
-        toggleButton: false,
+        hideToggleButton: false,
         autoCollapse: true,
         withToggleIconName: false,
         withToggleIconProps: false,
@@ -253,11 +253,13 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                           selectedTextFormat={this.state.selectedTextFormat}
                           align={this.state.align || undefined}
                           verticalAlign={this.state.verticalAlign ?? undefined}
-                          toggleIcon={(this.state.withToggleIconName && !this.state.withToggleIconProps)
-                              ? this._toggleIconNameModel.value
-                              : (!this.state.withToggleIconName && this.state.withToggleIconProps)
-                                  ? this._customToggleIcon
-                                  : undefined
+                          toggleIcon={(this.state.hideToggleButton)
+                              ? false
+                              : (this.state.withToggleIconName && !this.state.withToggleIconProps)
+                                  ? this._toggleIconNameModel.value
+                                  : (!this.state.withToggleIconName && this.state.withToggleIconProps)
+                                      ? this._customToggleIcon
+                                      : undefined
                           }
                           onAdd={() => this.addAsync()}
                 />)
@@ -407,18 +409,25 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
                         <div>
 
+                            <Checkbox label="Hide toggle button" inline
+                                      value={this.state.hideToggleButton}
+                                      onChange={async (sender, value) => await this.setState({hideToggleButton: value} )}
+                            />
+                            
                             <Checkbox label="WithToggleIconProps" inline
+                                      readonly={this.state.hideToggleButton}
                                       value={this.state.withToggleIconProps}
                                       onChange={async (sender, value) => await this.setState({withToggleIconProps: value, withToggleIconName: false})}
                             />
 
                             <Checkbox label="WithToggleIconName" inline
+                                      readonly={this.state.hideToggleButton}
                                       value={this.state.withToggleIconName}
                                       onChange={async (sender, value) => await this.setState({withToggleIconName: value, withToggleIconProps: false})}
                             />
 
                             {
-                                (this.state.withToggleIconName) &&
+                                ((this.state.withToggleIconName) && (!this.state.hideToggleButton)) &&
                                 (
                                     <TextInput label={"Toggle icon name"} inline
                                                width={"200px"}
