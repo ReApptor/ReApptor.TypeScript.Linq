@@ -279,6 +279,10 @@
         justify-content: space-between;
         align-items: center;
         white-space: nowrap;
+
+        &.toggleButtonVisible {
+            visibility: visible;
+        }
         
         &.clearButtonVisible {
             visibility: visible;
