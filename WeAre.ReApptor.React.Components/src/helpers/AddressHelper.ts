@@ -170,6 +170,10 @@ export default class AddressHelper {
             center = center && this.hasCoordinates(center) && center || await Utility.getLocationAsync() || AthenaeumComponentsConstants.defaultLocation;
             options.center = new this.google.maps.LatLng(center!.lat, center!.lon);
         }
+        
+        if (!options.gestureHandling) {
+            options.gestureHandling = "cooperative";
+        }
 
         return new this.google.maps.Map(element, options);
     }
@@ -571,10 +575,11 @@ export default class AddressHelper {
         // The math module contains a function
         // named toRadians which converts from
         // degrees to radians.
-        const lon1: number = xCoordinate.lon * Math.PI / 180;
-        const lon2: number = yCoordinate.lon * Math.PI / 180;
-        const lat1: number = xCoordinate.lat * Math.PI / 180;
-        const lat2: number = yCoordinate.lat * Math.PI / 180;
+        const toRadiansK: number = Math.PI / 180;
+        const lon1: number = xCoordinate.lon * toRadiansK;
+        const lon2: number = yCoordinate.lon * toRadiansK;
+        const lat1: number = xCoordinate.lat * toRadiansK;
+        const lat2: number = yCoordinate.lat * toRadiansK;
 
         // Haversine formula
         const dLon: number = lon2 - lon1;
@@ -583,8 +588,7 @@ export default class AddressHelper {
 
         const c: number = 2 * Math.asin(Math.sqrt(a));
 
-        // Radius of earth in kilometers. Use 3956
-        // for miles
+        // Radius of Earth in kilometers. Use 3956 for miles
         const r: number = 6371;
 
         // calculate the result
