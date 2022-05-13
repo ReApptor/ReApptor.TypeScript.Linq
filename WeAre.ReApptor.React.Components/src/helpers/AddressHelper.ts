@@ -4,6 +4,7 @@ import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
 import {IGoogleMapInfoWindow, IGoogleMapMarker, TGoogleMapMarkerCallback} from "../components/GoogleMap/GoogleMap";
 
 export type GoogleApiResult = google.maps.GeocoderResult | google.maps.places.PlaceResult;
+export type GoogleAddressComponentType = "country" | "establishment" | "locality" | "political" | "postal_code" | "postal_town" | "route" | "street_number" | "plus_code";
 
 export interface IGoogleApiSettings {
     googleMapApiUrl: string;
@@ -250,9 +251,9 @@ export default class AddressHelper {
         return 0;
     }
 
-    public static findAddressComponent(place: GoogleApiResult, name: string): string {
+    public static findAddressComponent(place: GoogleApiResult, componentType: GoogleAddressComponentType): string {
         if (place.address_components) {
-            const component: google.maps.GeocoderAddressComponent | undefined = place.address_components.find(component => (component.types != null) && (component.types.some(type => type === name)));
+            const component: google.maps.GeocoderAddressComponent | undefined = place.address_components.find(component => (component.types != null) && (component.types.some(type => type === componentType)));
             if (component) {
                 return component.long_name || component.short_name;
             }
@@ -495,9 +496,9 @@ export default class AddressHelper {
         const lat: number = this.findLat(result);
         const lon: number = this.findLon(result);
 
-        let address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
         let country: string = this.findAddressComponent(result, "country");
-        const town: string = this.findAddressComponent(result, "locality");
+        let address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
+        const town: string = this.findAddressComponent(result, "locality") || this.findAddressComponent(result, "postal_town") || this.findAddressComponent(result, "political");
         const postalCode: string = this.findAddressComponent(result, "postal_code");
         const streetNumber: string = this.findAddressComponent(result, "street_number");
         if (!address) {
