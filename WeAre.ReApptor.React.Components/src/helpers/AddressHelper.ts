@@ -587,8 +587,7 @@ export default class AddressHelper {
 
         const c: number = 2 * Math.asin(Math.sqrt(a));
 
-        // Radius of earth in kilometers. Use 3956
-        // for miles
+        // Radius of earth in kilometers. Use 3956 for miles
         const r: number = 6371;
 
         // calculate the result
