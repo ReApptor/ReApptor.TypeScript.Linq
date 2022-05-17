@@ -171,9 +171,9 @@ export default class AddressHelper {
             options.center = new this.google.maps.LatLng(center!.lat, center!.lon);
         }
         
-        if (!options.gestureHandling) {
-            options.gestureHandling = "cooperative";
-        }
+        // if (!options.gestureHandling) {
+        //     options.gestureHandling = "cooperative";
+        // }
 
         return new this.google.maps.Map(element, options);
     }
