@@ -735,6 +735,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                             <TakePicture ref={this._takePictureRef} />
                             
                             <a ref={this._downloadLink}
+                               id={`${this.id}_downloadAnchor`}
                                style={{display: "none"}}
                             />
                             
