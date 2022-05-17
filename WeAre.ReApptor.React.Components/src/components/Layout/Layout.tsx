@@ -542,12 +542,16 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public download(file: FileModel): void {
-        const link: HTMLAnchorElement = this._downloadLink.current!;
-        link.href = file.src;
-        link.download = file.name;
-        link.target = "_self";
-        link.type = file.type;
-        link.click();
+        const link: HTMLAnchorElement | null = this._downloadLink.current;
+        if (link) {
+            link.href = file.src;
+            link.download = file.name;
+            link.target = "_self";
+            link.type = file.type;
+            // Fix for Apple PWA iPhone 
+            setTimeout(() => link.click(), 500);
+            //link.click();
+        }
     }
     
     public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
