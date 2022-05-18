@@ -302,6 +302,9 @@ export {default as ImageModal} from "./components/ImageModal/ImageModal";
 export * from "./components/Accordion/Accordion";
 export {default as Accordion} from "./components/Accordion/Accordion";
 
+export * from "./components/Expander/Expander";
+export {default as Expander} from "./components/Expander/Expander";
+
 export {default as FooterLocalizer} from './components/Footer/FooterLocalizer';
 export {default as AthenaeumComponentsConstants} from "./AthenaeumComponentsConstants";
 
