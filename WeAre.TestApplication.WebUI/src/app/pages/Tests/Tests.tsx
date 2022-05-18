@@ -41,6 +41,7 @@ import QrInputTests from "./QrInputTests/QrInputTests";
 import JQueryUtilityTests from "./JQueryUtilityTests/JQueryUtilityTests";
 import LeftNavTests from "./LeftNavTests/LeftNavTests";
 import InlineImageTests from "./InlineImageTests/InlineImageTests";
+import ExpanderTests from "./ExpanderTests/ExpanderTests";
 import Localizer from "../../../localization/Localizer";
 
 interface ITestsState {
@@ -98,6 +99,10 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
 
                         <Tab id="accordionTests" title="Accordion" count={() => 32}>
                             <AccordionTests/>
+                        </Tab>
+
+                        <Tab id="expanderTests" title="Expander">
+                            <ExpanderTests />
                         </Tab>
 
                         <Tab id="addressDividerTests" title="AddressDivider">

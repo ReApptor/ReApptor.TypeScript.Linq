@@ -84,7 +84,7 @@ interface ITopNavProps {
     logoText?: string;
     applicationName?: string;
     searchPlaceHolder?: () => string;
-    languages?: () => ILanguage[];
+    languages?: (() => ILanguage[] | boolean) | boolean;
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
     notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
     leftNavRef?: React.RefObject<LeftNav>;
@@ -210,12 +210,18 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return "";
     }
 
-    private get languages(): ILanguage[] {
-        if (this.props.languages) {
-            return this.props.languages();
-        }
+    private get languages(): ILanguage[] | null {
+        const languages: ILanguage[] | boolean | null = (this.props.languages != null)
+            ? (typeof this.props.languages === "function")
+                ? this.props.languages()
+                : this.props.languages
+            : null;
 
-        return TopNavLocalizer.supportedLanguages;
+        return ((languages == null) || (languages === true))
+            ? TopNavLocalizer.supportedLanguages
+            : (languages !== false)
+                ? languages
+                : null;
     }
 
     private get leftNav(): LeftNav | null {
@@ -294,6 +300,8 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         const leftNav: LeftNav | null = this.leftNav;
         const hasLeftNav: boolean = (leftNav != null);
         
+        const languages: ILanguage[] | null = this.languages;
+
         const notifications: ITopNavNotifications | null = TopNav.resolveNotifications(this.props.notifications);
         const notificationsVisible: boolean = (notifications != null) && (TopNav.isNotificationsVisible(notifications));
         const notificationsCount: number = ((notifications != null) && (notificationsVisible != null)) ? TopNav.getNotificationsCount(notifications) : 0;
@@ -434,11 +442,16 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             )
                         }
 
-                        <LanguageDropdown className={this.props.languageClassName}
-                                          languages={this.languages}
-                                          currentLanguage={TopNavLocalizer.language}
-                                          changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
-                        />
+                        {
+                            (languages) &&
+                            (
+                                <LanguageDropdown className={this.props.languageClassName}
+                                                  languages={languages}
+                                                  currentLanguage={TopNavLocalizer.language}
+                                                  changeLanguageCallback={(language) => this.onLanguageChangeAsync(language)}
+                                />
+                            )
+                        }
 
                     </div>
 

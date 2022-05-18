@@ -123,6 +123,11 @@ export interface IBasePage extends IBaseComponent {
     readonly hasFooter: boolean;
 
     /**
+     * Does the TopNav have a Language selector.
+     */
+    readonly hasLanguageSelector: boolean;
+
+    /**
      * The alert currently being displayed in the {@link IBasePage}.
      */
     readonly alert: AlertModel | null;
@@ -255,6 +260,11 @@ export interface ILayoutPage extends IAsyncComponent {
      * Does the {@link ILayoutPage} have a Footer.
      */
     readonly hasFooter: boolean;
+
+    /**
+     * Does the TopNav have a Language selector.
+     */
+    readonly hasLanguageSelector: boolean;
 
     /**
      * The {@link AlertModel} currently being displayed in the {@link ILayoutPage}.
@@ -548,9 +558,19 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     /**
      * @inheritDoc
+     * Can be overridden in a page class to show/hide footer.
      * @return true
      */
     public get hasFooter(): boolean {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     * Can be overridden in a page class to show/hide top nav language selector.
+     * @return true
+     */
+    public get hasLanguageSelector(): boolean {
         return true;
     }
 

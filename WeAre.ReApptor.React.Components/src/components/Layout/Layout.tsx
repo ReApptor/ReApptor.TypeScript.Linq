@@ -69,6 +69,11 @@ export interface ILayoutProps {
     noFooter?: boolean;
 
     /**
+     * If true, {@link LanguageDropdown} is not displayed.
+     */
+    noLanguageSelector?: boolean;
+
+    /**
      * Should routing functionalities be enabled application-wide.
      *
      * @default false
@@ -83,7 +88,7 @@ export interface ILayoutProps {
 
     searchPlaceHolder?: () => string;
 
-    languages?: () => ILanguage[];
+    languages?: (() => ILanguage[] | boolean) | boolean;
 
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
 
@@ -622,6 +627,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
     }
 
+    public get hasLanguageSelector(): boolean {
+        return ((this.props.noLanguageSelector !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasLanguageSelector));
+    }
+
     /**
      * @inheritDoc
      * @see IPageContainer.alert
@@ -658,7 +667,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 applicationName={this.applicationName}
                                 leftNavRef={hasLeftNav ? this._leftNavRef : undefined}
                                 fetchItems={this.props.fetchTopNavItems}
-                                languages={this.props.languages}
+                                languages={this.hasLanguageSelector ? this.props.languages : false}
                                 logo={this.props.topNavLogo}
                                 notifications={this.props.notifications}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
