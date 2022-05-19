@@ -13,14 +13,14 @@ class LocationPickerModalLocalizer extends BaseComponentLocalizer {
 
         super(
             [
-                { code: "en", label: "English" },
-                { code: "da", label: "Dansk" },
-                { code: "fi", label: "Suomi" },
-                { code: "nb", label: "Norsk bokmål" },
-                { code: "pl", label: "Polski" },
-                { code: "ru", label: "Русский" },
-                { code: "sv", label: "Svenska" },
-                { code: "uk", label: "Українська" }
+                { code: "en", label: "English", isLanguage: true },
+                { code: "da", label: "Dansk", isLanguage: true },
+                { code: "fi", label: "Suomi", isLanguage: true },
+                { code: "nb", label: "Norsk bokmål", isLanguage: true },
+                { code: "pl", label: "Polski", isLanguage: true },
+                { code: "ru", label: "Русский", isLanguage: true },
+                { code: "sv", label: "Svenska", isLanguage: true },
+                { code: "uk", label: "Українська", isLanguage: true }
             ],
             "en");
         
