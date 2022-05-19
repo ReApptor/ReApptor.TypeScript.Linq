@@ -80,8 +80,4 @@
       <None Remove="dist\**" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="src\providers\flags" />
-    </ItemGroup>
-
 </Project>
