@@ -322,7 +322,7 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
             var languages = new StringBuilder();
             foreach (CultureInfo culture in cultures)
             {
-                languages.Append($"                {{ code: \"{culture.TwoLetterISOLanguageName}\", label: \"{GetNativeName(culture)}\" }},");
+                languages.Append($"                {{ code: \"{culture.TwoLetterISOLanguageName}\", label: \"{GetNativeName(culture)}\", isLanguage: true }},");
                 languages.Append(NewLine);
             }
 

@@ -16,6 +16,8 @@ export interface ILanguage {
      * @example en, nb, uk
      */
     readonly code: string;
+    
+    readonly isLanguage: true;
 }
 
 export interface ILocalizer {
