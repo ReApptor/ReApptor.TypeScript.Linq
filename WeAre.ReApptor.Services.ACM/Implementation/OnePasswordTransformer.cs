@@ -39,15 +39,15 @@ namespace WeAre.ReApptor.Services.ACM.Implementation
 
             return to;
         }
-        
+
         public static Credential[] Transform(this VaultItem from)
         {
-            return from?.Fields?.Where(item => item != null).Select(item => item.Transform(from)).ToArray();
+            return from?.Fields?.Select(item => item.Transform(from)).Where(item => item != null).ToArray();
         }
-        
+
         public static Credential[] Transform(this IEnumerable<VaultItem> from)
         {
-            return from?.Where(item => item != null).SelectMany(Transform).ToArray();
+            return from?.SelectMany(Transform).Where(item => item != null).ToArray();
         }
     }
 }
