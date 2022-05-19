@@ -1,7 +1,6 @@
 import React, {CSSProperties, Fragment, ReactElement, ReactNode} from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
-import {Button, Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, FourColumns, InlineType, NumberInput, SelectListItem, ThreeColumns} from "@weare/reapptor-react-components";
-import { assert } from '@weare/reapptor-toolkit';
+import {Button, Carousel, CarouselNavigation, CarouselPagination, Checkbox, Dropdown, DropdownOrderBy, Form, FourColumns, InlineType, NumberInput, SelectListItem} from "@weare/reapptor-react-components";
 
 interface ICarouselTestsState {
     background: boolean;
@@ -93,7 +92,7 @@ export default class CarouselTests extends BaseComponent {
     }
 
     private get carousel(): Carousel {
-        return assert(this._carouselRef.current).isObject.isNotNull.getValue as Carousel;
+        return this._carouselRef.current!;
     }
 
     public render(): ReactNode {
