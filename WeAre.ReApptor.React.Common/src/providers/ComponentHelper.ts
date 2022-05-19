@@ -332,17 +332,18 @@ export default class ch {
     public static async setLanguageAsync(language: string): Promise<void> {
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
         if ((localizer) && (localizer.setLanguage(language))) {
-            //update context
+            // update context
             if (this._context != null) {
                 this._context.language = language;
             }
 
-            //do not await, just notification event
+            // do not await, just notification event
             // noinspection ES6MissingAwait
             ch.onOnSetLanguageAsync(language);
 
-            //re-render layout
+            // re-render layout
             const layout: ILayoutPage = this.getLayout();
+            
             await layout.reRenderAsync();
         }
     }
