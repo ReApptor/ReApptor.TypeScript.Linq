@@ -170,8 +170,9 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                 (icon)
                                     ?
                                     (
-
-                                        action.actions ? (
+                                        action.actions
+                                            ? 
+                                            (
                                                 <Icon id={this.id}
                                                       {...icon!}
                                                       tooltip={action.title || undefined}
@@ -184,12 +185,12 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                 >
                                                     {action.actions.map((value, index: number) => {
                                                         return (
-                                                            <Icon.Action key={index} title={value} onClick={async () => this.invokeActionCallbackAsync(cell, cellAction, value)}/>
+                                                            <Icon.Action key={index} title={value} onClick={() => this.invokeActionCallbackAsync(cell, cellAction, value)} />
                                                         )
-
                                                     })}
                                                 </Icon>
-                                            ) :
+                                            )
+                                            :
                                             (
                                                 <Icon id={this.id}
                                                       {...icon!}
@@ -207,7 +208,8 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                     )
                                     :
                                     (
-                                        action.actions ?
+                                        action.actions
+                                            ?
                                             (
                                                 <Button id={this.id}
                                                         label={action.title!}
@@ -227,7 +229,9 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                     })}
 
                                                 </Button>
-                                            ) : (
+                                            ) 
+                                            : 
+                                            (
                                                 <Button id={this.id}
                                                         label={action.title!}
                                                         className={this.css(actionColorClassName, rightStyle)}
