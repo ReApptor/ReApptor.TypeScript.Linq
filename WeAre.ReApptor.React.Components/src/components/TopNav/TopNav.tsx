@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
-import Link from "../Link/Link";
+import Link, {TLinkRoute} from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -8,6 +8,7 @@ import Search from "./Search/Search";
 import {ILanguage, FileModel} from "@weare/reapptor-toolkit";
 import LeftNav from "../LeftNav/LeftNav";
 import Profile from "./Profile/Profile";
+import Comparator from "../../helpers/Comparator";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
@@ -294,6 +295,18 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
             ? page.getManualProps()
             : {};
     }
+    
+    public renderMenuItem(item: IMenuItem, index: number): React.ReactNode {
+        const linkRoute: TLinkRoute | null = Link.toRoute(item);
+        const pageRoute: PageRoute | null = (typeof linkRoute === "object") ? linkRoute as PageRoute | null : null;
+        const active: boolean = (pageRoute != null) && (Comparator.isEqualPageRoute(pageRoute, ch.findPageRoute()));
+        const activeStyle: any = active && styles.active;
+        return (
+            <Link key={index} className={this.css(styles.link, activeStyle)} route={linkRoute}>
+                {TopNavLocalizer.get(item.label)}
+            </Link>
+        );
+    }
 
     public render(): React.ReactNode {
 
@@ -344,13 +357,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             (!hasLeftNav) &&
                             (
-                                this.items.map((item, index) =>
-                                    (
-                                        <Link key={index} className={this.css(styles.middle_link)} route={Link.toRoute(item)}>
-                                            {TopNavLocalizer.get(item.label)}
-                                        </Link>
-                                    )
-                                )
+                                this.items.map((item, index) => this.renderMenuItem(item, index))
                             )
                         }
                     </div>

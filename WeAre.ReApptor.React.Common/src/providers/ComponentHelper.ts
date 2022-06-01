@@ -11,6 +11,7 @@ import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPrevi
 import DescriptionModel from "../models/DescriptionModel";
 import {AlertType, CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
+import PageRoute from "../models/PageRoute";
 
 /**
  * {@link BaseComponent} helper.
@@ -407,6 +408,10 @@ export default class ch {
 
     public static findRouteName(): string {
         return (this._page != null) ? this._page.routeName : "";
+    }
+
+    public static findPageRoute(): PageRoute | null {
+        return (this._page != null) ? this._page.route : null;
     }
 
     public static async swipeLeftAsync(): Promise<void> {
