@@ -95,8 +95,8 @@
     .middle {
         display: flex;
         height: inherit;
-
-        &_link {
+        
+        .link {
             padding: 0 $baseline * 2;
             height: inherit;
             display: flex;
@@ -106,12 +106,12 @@
                 background-color: $dark-orange;
             }
 
-            &.active {
-                text-decoration: underline;
-            }
-
             @media screen and (max-width: $break-xxlg) {
                 display: none;
+            }
+
+            &.active {
+                visibility: visible;
             }
         }
     }
