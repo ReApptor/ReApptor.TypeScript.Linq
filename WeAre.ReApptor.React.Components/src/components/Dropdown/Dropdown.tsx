@@ -1354,7 +1354,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             text = (selectedListItem !== null)
                 ? (noSubtext)
                     ? DropdownLocalizer.get(selectedListItem.text)
-                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${ReactUtility.toSingleLine(DropdownLocalizer.get(selectedListItem.subtext))}</small>`
+                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${DropdownLocalizer.get(selectedListItem.subtext)}</small>`
                 : (this.selectedListItems.length !== 0)
                     ? (this.props.multipleSelectedText)
                         ? DropdownLocalizer.multipleSelected
@@ -1373,7 +1373,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                  title={title}
                  onClick={() => this.toggleAsync()}>
 
-                <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
+                <span style={inlineStyles}>{ReactUtility.toTags(text)}</span>
                 
                 {
                     this.renderToggleContainer(toggleButtonVisible, clearButtonVisible, transparentStyle)
