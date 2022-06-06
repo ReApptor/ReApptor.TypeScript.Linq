@@ -109,7 +109,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         return {
             name: "{0:00}th item".format(index),
             group: group ? "Group #{0:00}".format(group) : null,
-            description: description ? "Description for item \"{0}\", group \"{1}\"".format(index, group ? group : "no group") : null,
+            description: description ? "Description for item <i>\"{0}\"</i>, <b>group</b> \"{1}\"".format(index, group ? group : "no group") : null,
             completed: statusIcon
         };
     }
