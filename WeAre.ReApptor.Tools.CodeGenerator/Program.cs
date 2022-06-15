@@ -27,7 +27,10 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
         
         private static int GenerateEnumProvider(EnumProviderSettings settings)
         {
-            Console.WriteLine($"{Name}: targetPath=\"{settings.TargetPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{string.Join("; ", (settings.Exclude ?? new string[0]))}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
+            string exclude = string.Join("; ", (settings.Exclude ?? Array.Empty<string>()));
+            string include = string.Join("; ", (settings.Include ?? Array.Empty<string>()));
+            
+            Console.WriteLine($"{Name}: targetPath=\"{settings.TargetPath}\", destinationPath=\"{settings.DestinationPath}\" exclude=\"{exclude}\" include=\"{include}\" enumsImport=\"{settings.EnumsImport}\" selectListItemImport=\"{settings.SelectListItemImport}\".");
 
             EnumProviderManager.Generate(settings);
 
