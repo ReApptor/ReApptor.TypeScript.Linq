@@ -5,6 +5,8 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
         public string DestinationPath  { get; set; }
         
         public string[] Exclude { get; set; }
+        
+        public string[] Include { get; set; }
 
         public string EnumsImport { get; set; }
         
