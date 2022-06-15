@@ -204,10 +204,12 @@ export class StatusListItem extends SelectListItem {
         this.lineThrough = lineThrough;
         this.completed = completed;
     }
-
+    
     public completed: boolean | string | IIconProps | FileModel = false;
 
     public lineThrough: boolean = false;
+    
+    public className: string | null = null;
 
     public isStatusListItem: boolean = true;
 }
