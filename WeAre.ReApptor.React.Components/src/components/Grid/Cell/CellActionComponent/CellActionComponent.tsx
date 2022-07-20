@@ -144,7 +144,11 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
 
         if (isDescription) {
             icon = {
-                name: (cell.description) ? "far comment-alt-dots" : "far comment-alt"
+                name: (cell.descriptionIcon)
+                    ? cell.descriptionIcon
+                    : (cell.description)
+                        ? "far comment-alt-dots"
+                        : "far comment-alt"
             };
         }
 
