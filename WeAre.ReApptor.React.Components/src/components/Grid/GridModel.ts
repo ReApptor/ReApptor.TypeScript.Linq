@@ -1434,8 +1434,9 @@ export class CellModel<TItem = {}> {
                 const rowsLength: number = rows.length;
                 const firstIndex: number = this.rowIndex + 1;
                 const lastIndex: number = firstIndex + ((spanned) ? value : this._rowSpan) - 2;
+                const columnIndex: number = this.columnIndex;
                 for (let index: number = firstIndex; index <= lastIndex && index < rowsLength; index++) {
-                    const cell: CellModel<TItem> = rows[index].cells[this.columnIndex];
+                    const cell: CellModel<TItem> = rows[index].cells[columnIndex];
                     cell._spannedRow = spanned ? this.row : null;
                     if (spanned) {
                         cell.rowSpan = 0;
