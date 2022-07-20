@@ -21,12 +21,6 @@ interface IGridProps<TItem = {}> extends IGridDefinition {
     classNames?: IGridClassNames;
     data?: TItem[] | null;
 
-    /**
-     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
-     * @default false
-     */
-    stickyHeader?: boolean;
-
     fetchData?(sender: Grid<TItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<TGridData<TItem>>;
 
     /**
@@ -186,7 +180,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
                 this._overflowData = overflowData;
 
-                this.reRenderAsync();
+                await this.reRenderAsync();
 
                 return;
             }
@@ -404,7 +398,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
         await this.processResponsiveAsync();
-        await this.processResponsiveAsync();
+        //await this.processResponsiveAsync();
     }
 
     private renderHeader(column: ColumnModel<TItem>, hasHeaderGroups: boolean, top: boolean,  colSpanLeft: boolean, tableHeadRowIndex: number): React.ReactNode {
@@ -415,7 +409,6 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                         top={top}
                         colSpanLeft={colSpanLeft}
                         tableHeadFirstRowRef={this._tableHeadFirstRowRef}
-                        stickyHeader={this.props.stickyHeader}
                         tableHeadRowIndex={tableHeadRowIndex}
             />
         )
@@ -426,7 +419,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             <Row key={row.key}
                  row={row}
                  init={this.props.initRow}
-                 onCheck={async () => await this.onCheckRowAsync()}
+                 onCheck={() => this.onCheckRowAsync()}
                  onSelect={async (row) => await this.props.onSelect?.(this.model, row)}
                  onToggle={async (row) => await this.props.onRowToggle?.(row)}
             />

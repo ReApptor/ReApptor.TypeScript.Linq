@@ -91,16 +91,22 @@ export interface IGridDefinition {
 
     className?: string;
 
+    columns: ColumnDefinition[];
+
     /**
      * The class name for inner responsive collapsible columns (it applies only if responsive is enable and there are collapsed columns)
      */
     responsiveRowClassName?: string;
 
-    columns: ColumnDefinition[];
-
     headerMinHeight?: number;
 
     noDataNoHeader?: boolean;
+
+    /**
+     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
+     * @default false
+     */
+    stickyHeader?: boolean;
 
     minWidth?: string | number;
 
@@ -292,6 +298,8 @@ export class GridModel<TItem = {}> {
     public headerMinHeight: number | null = null;
 
     public noDataNoHeader: boolean = false;
+
+    public stickyHeader: boolean = false;
 
     public minWidth: string | number | null = null;
 
@@ -1868,6 +1876,7 @@ export class GridTransformer {
         to.responsiveRowClassName = from.responsiveRowClassName || null;
         to.headerMinHeight = from.headerMinHeight || null;
         to.noDataNoHeader = from.noDataNoHeader || false;
+        to.stickyHeader = from.stickyHeader || false;
         to.minWidth = from.minWidth || null;
         to.cellPadding = from.cellPadding || CellPaddingType.Large;
         to.noDataText = from.noDataText || null;
