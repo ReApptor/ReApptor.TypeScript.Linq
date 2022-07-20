@@ -108,7 +108,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
         const rowHoveringStyle: any = (grid.hovering === GridHoveringType.Row) && styles.rowHovering;
         const selectedStyle: any = (row.selected) && styles.selected;
         const detailsVisibleStyle: any = (row.expanded) && (styles.visible);
-        const colSpan: number = (row.detailsColEnd - row.detailsColStart + 1);
+        const detailsColSpan: number = (row.detailsColEnd - row.detailsColStart + 1);
         const checkRowSpan = (row.expanded) ? 2 : 1;
 
         const checkDisabledStyle: any = (grid.checkable) && (!row.checkable) && (gridStyles.disabled);
@@ -172,7 +172,7 @@ export default class Row<TItem = {}> extends BaseComponent<IRowProps<TItem>> imp
                 </tr>
 
                 <tr className={this.css(styles.gridRow, styles.details, detailsVisibleStyle, oddStyle)}>
-                    <td colSpan={colSpan}>
+                    <td colSpan={detailsColSpan}>
                         {
                             (renderDetails) &&
                             (

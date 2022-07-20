@@ -29,6 +29,7 @@ export interface IGridTestsState {
     headerGroups: boolean;
     search: string | null;
     stickyHeader: boolean;
+    colSpan: boolean;
 }
 
 enum GridEnum {
@@ -74,6 +75,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         headerGroups: true,
         search: null,
         stickyHeader: false,
+        colSpan: false,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -110,7 +112,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             minWidth: 90,
             noWrap: true,
-            textAlign: TextAlign.Center
+            textAlign: TextAlign.Center,
+            init: (cell: CellModel<GridItem>) => this.initFloat(cell)
         } as ColumnDefinition,
         {
             header: "Int",
@@ -283,6 +286,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this._items!;
     }
 
+    private initFloat(cell: CellModel<GridItem>): void {
+        cell.columnSpan = (this.state.colSpan) ? 2 : 0;
+    }
+
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
 
         let items: GridItem[] = (sortColumnName)
@@ -331,6 +338,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         await this._gridRef.current!.reloadAsync();
     }
 
+    private async reloadAsync(): Promise<void> {
+        if (this._gridRef.current) {
+            await this._gridRef.current.reloadAsync();
+        }
+    }
+
     public renderDetailsContent() {
         return (
             <div>
@@ -373,6 +386,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               label="Sticky header"
                               value={this.state.stickyHeader}
                               onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
+                    />
+
+                    <Checkbox inline
+                              label="Col span"
+                              value={this.state.colSpan}
+                              onChange={async (sender, value) => { this.state.colSpan = value; await this.reloadAsync(); }}
                     />
 
                     {

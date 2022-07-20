@@ -608,6 +608,8 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         const rowSpan: number | null = cell.calcRowSpan();
+        const colSpan: number = (this.props.colSpan ?? cell.columnSpan);
+
         const rowSpanStyle: any = (rowSpan) && gridStyles.rowSpan;
         const noActionsStyle: any = ((!deleted) && (cell.actions.filter(action => action.visible).length === 0)) && (gridStyles.noActions);
         const notValidStyle: any = (editable && !readonly && !cell.valid) && (gridStyles.notValid);
@@ -625,7 +627,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     className={this.css(rowSpanStyle, column.className, cell.className, cellHoveringStyle, notValidStyle, deletedStyle, deletedFirstCellStyle, deletedLastCellStyle, this.cellPaddingClassName, noWrapClass, wordBreakClass, checkedStyle, selectedStyle)}
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
-                    colSpan={this.props.colSpan}
+                    colSpan={colSpan}
                     onClick={() => this.props.onClick?.(cell)}
                 >
 
