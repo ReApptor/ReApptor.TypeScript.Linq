@@ -91,16 +91,22 @@ export interface IGridDefinition {
 
     className?: string;
 
+    columns: ColumnDefinition[];
+
     /**
      * The class name for inner responsive collapsible columns (it applies only if responsive is enable and there are collapsed columns)
      */
     responsiveRowClassName?: string;
 
-    columns: ColumnDefinition[];
-
     headerMinHeight?: number;
 
     noDataNoHeader?: boolean;
+
+    /**
+     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
+     * @default false
+     */
+    stickyHeader?: boolean;
 
     minWidth?: string | number;
 
@@ -264,6 +270,18 @@ export class ColumnModel<TItem = {}> {
     public get isVisible(): boolean {
         return (this.visible) && (!this.collapsed);
     }
+
+    public get nextColumn(): ColumnModel<TItem> {
+        return (this.index < this.grid.columns.length - 1)
+            ? this.grid.columns[this.index + 1]
+            : this.grid.columns[0];
+    }
+
+    public get prevColumn(): ColumnModel<TItem> {
+        return (this.index > 0)
+            ? this.grid.columns[this.index - 1]
+            : this.grid.columns[this.grid.columns.length - 1];
+    }
 }
 
 export class GridModel<TItem = {}> {
@@ -280,6 +298,8 @@ export class GridModel<TItem = {}> {
     public headerMinHeight: number | null = null;
 
     public noDataNoHeader: boolean = false;
+
+    public stickyHeader: boolean = false;
 
     public minWidth: string | number | null = null;
 
@@ -638,6 +658,12 @@ export class ColumnSettingsDefinition {
     public descriptionJustify?: Justify;
 
     /**
+     * Custom icon for the description. If no value is specified default icon will be used
+     * See {@link Description}
+     */
+    public descriptionIcon?: string;
+
+    /**
      * Max length for the description text. If no value is specified defaults to 250
      * See {@link Description}
      */
@@ -730,6 +756,8 @@ export class ColumnSettings<TItem = {}> {
     public descriptionMaxLength: number | null = null;
 
     public descriptionJustify: Justify = Justify.Left;
+    
+    public descriptionIcon: string | null = null;
 
     public descriptionAlight: Align = Align.Bottom;
 
@@ -1311,7 +1339,9 @@ export class CellModel<TItem = {}> {
     private _initialValue: any = null;
     private _valueInitialized: boolean = false;
     private _rowSpan: number = 0;
+    private _columnSpan: number = 0;
     private _spannedRow: RowModel<TItem> | null = null;
+    private _spannedColumn: ColumnModel<TItem> | null = null;
     private _descriptionAction: DescriptionCellAction<TItem> | null = null;
     private _description: string | null = null;
 
@@ -1399,6 +1429,10 @@ export class CellModel<TItem = {}> {
         return this._rowSpan;
     }
 
+    public get columnSpan(): number {
+        return this._columnSpan;
+    }
+
     public set rowSpan(value: number) {
         value = (value === 1) ? 0 : value;
         if (this._rowSpan !== value) {
@@ -1408,8 +1442,9 @@ export class CellModel<TItem = {}> {
                 const rowsLength: number = rows.length;
                 const firstIndex: number = this.rowIndex + 1;
                 const lastIndex: number = firstIndex + ((spanned) ? value : this._rowSpan) - 2;
+                const columnIndex: number = this.columnIndex;
                 for (let index: number = firstIndex; index <= lastIndex && index < rowsLength; index++) {
-                    const cell: CellModel<TItem> = rows[index].cells[this.columnIndex];
+                    const cell: CellModel<TItem> = rows[index].cells[columnIndex];
                     cell._spannedRow = spanned ? this.row : null;
                     if (spanned) {
                         cell.rowSpan = 0;
@@ -1420,8 +1455,36 @@ export class CellModel<TItem = {}> {
         }
     }
 
+    public set columnSpan(value: number) {
+        value = (value === 1) ? 0 : value;
+        if (this._columnSpan !== value) {
+            if ((!this.spanned) && (value >= 0)) {
+                const spanned: boolean = (value > 0);
+                const columns: ColumnModel<TItem>[] = this.grid.columns;
+                const columnsLength: number = columns.length;
+                const firstIndex: number = this.columnIndex + 1;
+                const lastIndex: number = firstIndex + ((spanned) ? value : this._columnSpan) - 2;
+                //const rowIndex: number = this.rowIndex;
+                const row: RowModel<TItem> = this.row;
+                for (let index: number = firstIndex; index <= lastIndex && index < columnsLength; index++) {
+                    //const cell: CellModel<TItem> = columns[index].cells[rowIndex];
+                    const cell: CellModel<TItem> = row.cells[index];
+                    cell._spannedColumn = spanned ? this.column : null;
+                    if (spanned) {
+                        cell.columnSpan = 0;
+                    }
+                }
+            }
+            this._columnSpan = value;
+        }
+    }
+
     public get descriptionAction(): DescriptionCellAction<TItem> | null {
         return this._descriptionAction || (this._descriptionAction = this.actions.find(action => action instanceof DescriptionCellAction) as DescriptionCellAction<TItem> | null);
+    }
+
+    public get descriptionIcon(): string | null {
+        return this.column.settings.descriptionIcon;
     }
 
     public get description(): string {
@@ -1457,11 +1520,15 @@ export class CellModel<TItem = {}> {
     }
 
     public get spanned(): boolean {
-        return (this._spannedRow != null);
+        return (this._spannedRow != null) || (this._spannedColumn != null);
     }
 
     public get spannedRow(): RowModel<TItem> | null {
         return this._spannedRow;
+    }
+
+    public get spannedColumn(): ColumnModel<TItem> | null {
+        return this._spannedColumn;
     }
 
     public get spannedRows(): RowModel<TItem>[] {
@@ -1476,6 +1543,20 @@ export class CellModel<TItem = {}> {
             }
         }
         return spannedRows;
+    }
+
+    public get spannedColumns(): ColumnModel<TItem>[] {
+        const spannedColumns: ColumnModel<TItem>[] = [];
+        if (!this.spanned) {
+            const column: ColumnModel<TItem> = this.column;
+            const rowIndex = this.rowIndex;
+            let spannedColumn: ColumnModel<TItem> | null = column;
+            while ((spannedColumn != null) && ((spannedColumn === column) || (spannedColumn.cells[rowIndex].spannedColumn === column))) {
+                spannedColumns.push(spannedColumn);
+                spannedColumn = (!spannedColumn.isLast) ? spannedColumn.nextColumn : null;
+            }
+        }
+        return spannedColumns;
     }
 
     public get value(): any {
@@ -1795,6 +1876,7 @@ export class GridTransformer {
         to.responsiveRowClassName = from.responsiveRowClassName || null;
         to.headerMinHeight = from.headerMinHeight || null;
         to.noDataNoHeader = from.noDataNoHeader || false;
+        to.stickyHeader = from.stickyHeader || false;
         to.minWidth = from.minWidth || null;
         to.cellPadding = from.cellPadding || CellPaddingType.Large;
         to.noDataText = from.noDataText || null;
@@ -1926,6 +2008,7 @@ export class GridTransformer {
         to.infoFormat = from.infoFormat || null;
         to.descriptionAccessor = from.descriptionAccessor || null;
         to.descriptionJustify = from.descriptionJustify || Justify.Left;
+        to.descriptionIcon = from.descriptionIcon || null;
         to.descriptionMaxLength = from.descriptionMaxLength || null;
         to.descriptionAlight = from.descriptionAlight || Align.Bottom;
         to.descriptionCallback = from.descriptionCallback;

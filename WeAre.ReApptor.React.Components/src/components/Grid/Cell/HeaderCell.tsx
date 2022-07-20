@@ -14,14 +14,6 @@ interface IHeaderCellProps<TItem = {}> {
     hasHeaderGroups: boolean;
 
     /**
-     * For sticky header in view while scrolling.
-     * Sets th position to sticky.
-     * Uses {@link var(--app-navbar-height)} to add top padding while scrolling.
-     * @default false
-     */
-    stickyHeader?: boolean;
-
-    /**
      * To get the height of first row in thead and calculate "top".
      * {@link stickyHeader} should be enabled.
      * @default null
@@ -97,6 +89,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             }
         }
 
+        const stickyHeader: boolean = grid.stickyHeader;
         const groupHeaderCell: boolean = (top) && (colSpan != null) && (colSpan > 1);
         const sortable: boolean = (!groupHeaderCell) && (column.sortable);
         const sortDirection: SortDirection | null = (sortable) && (grid.sortColumn == column)
@@ -112,7 +105,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
             height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
             minWidth: column.minWidth || undefined,
-            ...(this.props.stickyHeader) ? {top: topCssProperty} : {}
+            ...(stickyHeader) ? {top: topCssProperty} : {}
         };
 
         if (column.stretch) {
@@ -123,7 +116,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             ? styles.rotateHeader
             : "";
 
-        const stickyHeaderClassName: string = (this.props.stickyHeader)
+        const stickyHeaderClassName: string = (stickyHeader)
             ? styles.stickyHeader
             : "";
 
