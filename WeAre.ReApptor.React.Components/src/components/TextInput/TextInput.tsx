@@ -15,7 +15,7 @@ export interface ITextInputProps extends IBaseInputProps<string> {
     hideInput?: boolean;
     inline?: boolean;
     small?: boolean;
-    width?: string | null;
+    width?: string | number | null;
     placeholder?: string;
     autoSuggestItems?: AutoSuggestItem[];
     autoFocus?: boolean;
