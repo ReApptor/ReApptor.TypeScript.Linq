@@ -63,6 +63,26 @@ namespace WeAre.ReApptor.Toolkit.Extensions
                 : from;
         }
 
+        public static DateTime EndOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
+        }
+
+        public static DateTime? EndOfDay(this DateTime? date)
+        {
+            return (date != null) ? EndOfDay(date.Value) : (DateTime?)null;
+        }
+
+        public static DateTime StartOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, 0, date.Kind);
+        }
+
+        public static DateTime? StartOfDay(this DateTime? date)
+        {
+            return (date != null) ? StartOfDay(date.Value) : (DateTime?)null;
+        }
+
         public static DateTime FirstDayOfMonth(this DateTime value)
         {
             return new DateTime(value.Year, value.Month, 1, 0, 0, 0, value.Kind);
