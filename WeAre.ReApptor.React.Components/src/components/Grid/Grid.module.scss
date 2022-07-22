@@ -19,6 +19,10 @@
 
   thead {
 
+    &.noHeader {
+      visibility: collapse;
+    }
+
     th.th {
       cursor: default;
 
