@@ -103,6 +103,11 @@ export interface IGridDefinition {
     noDataNoHeader?: boolean;
 
     /**
+     * Hides header (thead)
+     */
+    noHeader?: boolean;
+
+    /**
      * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
      * @default false
      */
@@ -298,6 +303,8 @@ export class GridModel<TItem = {}> {
     public headerMinHeight: number | null = null;
 
     public noDataNoHeader: boolean = false;
+
+    public noHeader: boolean = false;
 
     public stickyHeader: boolean = false;
 
@@ -1876,6 +1883,7 @@ export class GridTransformer {
         to.responsiveRowClassName = from.responsiveRowClassName || null;
         to.headerMinHeight = from.headerMinHeight || null;
         to.noDataNoHeader = from.noDataNoHeader || false;
+        to.noHeader = from.noHeader || false;
         to.stickyHeader = from.stickyHeader || false;
         to.minWidth = from.minWidth || null;
         to.cellPadding = from.cellPadding || CellPaddingType.Large;
