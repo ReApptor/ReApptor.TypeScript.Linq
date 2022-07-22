@@ -86,6 +86,10 @@ export enum BorderType {
     DarkSeparators
 }
 
+export interface ITag {
+    tag: object | null;
+}
+
 export interface IGridDefinition {
     id?: string;
 
@@ -172,7 +176,7 @@ export interface ITotalRow extends IBaseComponent {
 export interface ICellAction extends IBaseComponent {
 }
 
-export class ColumnModel<TItem = {}> {
+export class ColumnModel<TItem = {}> implements ITag {
 
     private _lastOuterWidth: number = 0;
 
@@ -237,6 +241,8 @@ export class ColumnModel<TItem = {}> {
     public headerCellInstance: IHeaderCell = {} as IHeaderCell;
 
     public collapsed: boolean = false;
+    
+    public tag: object | null = null;
 
     public init?(cell: CellModel<any>): void;
 
@@ -289,7 +295,7 @@ export class ColumnModel<TItem = {}> {
     }
 }
 
-export class GridModel<TItem = {}> {
+export class GridModel<TItem = {}> implements ITag {
     public id: string = "";
 
     public className: string | null = null;
@@ -357,6 +363,8 @@ export class GridModel<TItem = {}> {
     public totalItemCount: number = 0;
 
     public generation: number = 0;
+    
+    public tag: object | null = null;
 
     public onCheck?(sender: GridModel<any>): Promise<void>;
 
@@ -1057,7 +1065,7 @@ export class ColumnDefinition {
     public callback?(cell: CellModel<any>, action: CellAction<any> | null): Promise<void>;
 }
 
-export class RowModel<TItem = {}> {
+export class RowModel<TItem = {}> implements ITag {
 
     private _initialKey: string | null = null;
     private _key: string | null = null;
@@ -1103,6 +1111,8 @@ export class RowModel<TItem = {}> {
     public selected: boolean = false;
 
     public responsiveContainerExpanded: boolean = false;
+
+    public tag: object | null = null;
 
     public get model(): TItem {
         return this._model;
@@ -1341,7 +1351,7 @@ export class RowModel<TItem = {}> {
     }
 }
 
-export class CellModel<TItem = {}> {
+export class CellModel<TItem = {}> implements ITag {
     private _value: any = null;
     private _initialValue: any = null;
     private _valueInitialized: boolean = false;
@@ -1387,6 +1397,8 @@ export class CellModel<TItem = {}> {
     public asyncContentInstance: IAsyncComponent | null = null;
 
     public inputContentInstance: IInput | null = null;
+
+    public tag: object | null = null;
 
     public get key(): string {
         return `${this.row.key}_cell_${this.columnIndex}`;
