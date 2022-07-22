@@ -29,6 +29,7 @@ export interface IGridTestsState {
     headerGroups: boolean;
     search: string | null;
     stickyHeader: boolean;
+    noHeader: boolean;
     colSpan: boolean;
 }
 
@@ -75,6 +76,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         headerGroups: true,
         search: null,
         stickyHeader: false,
+        noHeader: false,
         colSpan: false,
     };
 
@@ -382,18 +384,6 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               onChange={async (sender, value) => {await this.setState({selectable: value})}}
                     />
 
-                    <Checkbox inline
-                              label="Sticky header"
-                              value={this.state.stickyHeader}
-                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
-                    />
-
-                    <Checkbox inline
-                              label="Col span"
-                              value={this.state.colSpan}
-                              onChange={async (sender, value) => { this.state.colSpan = value; await this.reloadAsync(); }}
-                    />
-
                     {
                         (this.state.selectable) &&
                         (
@@ -406,6 +396,24 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                             />
                         )
                     }
+
+                    <Checkbox inline
+                              label="Sticky header"
+                              value={this.state.stickyHeader}
+                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
+                    />
+
+                    <Checkbox inline
+                              label="Col span"
+                              value={this.state.colSpan}
+                              onChange={async (sender, value) => { this.state.colSpan = value; await this.reloadAsync(); }}
+                    />
+
+                    <Checkbox inline
+                              label="No header"
+                              value={this.state.noHeader}
+                              onChange={async (sender, value) => {await this.setState({noHeader: value})}}
+                    />
 
                     <Checkbox inline
                               label="Checkable"
@@ -426,6 +434,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       selectable={this.state.selectable ? this.state.selectableType : undefined}
                       checkable={this.state.checkable}
                       stickyHeader={this.state.stickyHeader}
+                      noHeader={this.state.noHeader}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
