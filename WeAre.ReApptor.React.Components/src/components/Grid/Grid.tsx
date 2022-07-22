@@ -385,10 +385,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const newLanguage: boolean = (this._language !== GridLocalizer.language);
         const newCheckable: boolean = (this.props.checkable !== nextProps.checkable);
         const newSelectable: boolean = (this.props.selectable !== nextProps.selectable);
+        const newNoHeader: boolean = (this.props.noHeader !== nextProps.noHeader);
 
         await super.componentWillReceiveProps(nextProps);
 
-        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable)) {
+        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable) || (newNoHeader)) {
             await this.buildModelAsync();
         }
 
@@ -445,6 +446,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const visible: boolean = (this.hasData) || (!model.noDataNoHeader);
         const outerSpinner: boolean = (model.noDataNoHeader);
         const rowHoveringStyle: any = (model.hovering === GridHoveringType.Row) ? "table-hover" : styles.noRowHovering;
+        const noHeaderStyleStyle: any = (model.noHeader) && styles.noHeader;
 
         const inlineStyles: React.CSSProperties = {};
 
@@ -477,37 +479,36 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                     (columns.length > 0) &&
                                     (
                                         <React.Fragment>
-                                            <thead>
-                                            {
-                                                <React.Fragment>
-                                                    <tr ref={this._tableHeadFirstRowRef}>
-                                                        {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
-                                                        {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0), 0))}
-                                                    </tr>
-                                                    {
-                                                        (hasHeaderGroups) &&
-                                                        (
-                                                            <tr>
-                                                                {
-                                                                    columns.map((column, index) =>
-                                                                        this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0), 1))
-                                                                }
-                                                            </tr>
-                                                        )
-                                                    }
-                                                </React.Fragment>
-                                            }
+                                            
+                                            <thead className={this.css(noHeaderStyleStyle)}>
+                                                <tr ref={this._tableHeadFirstRowRef}>
+                                                    {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
+                                                    {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0), 0))}
+                                                </tr>
+                                                {
+                                                    (hasHeaderGroups) &&
+                                                    (
+                                                        <tr>
+                                                            {
+                                                                columns.map((column, index) =>
+                                                                    this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0), 1))
+                                                            }
+                                                        </tr>
+                                                    )
+                                                }
                                             </thead>
+
                                             <tbody>
-                                            {
-                                                ((model.noDataText) && (rows.length === 0))
-                                                    ? this.renderEmptyRow()
-                                                    : rows.map((item, rowIndex) => this.renderDataRow(rows[rowIndex]))
-                                            }
-                                            {
-                                                ((rows.length > 0) && (model.total)) && (<TotalRow grid={model} />)
-                                            }
+                                                {
+                                                    ((model.noDataText) && (rows.length === 0))
+                                                        ? this.renderEmptyRow()
+                                                        : rows.map((item, rowIndex) => this.renderDataRow(rows[rowIndex]))
+                                                }
+                                                {
+                                                    ((rows.length > 0) && (model.total)) && (<TotalRow grid={model}/>)
+                                                }
                                             </tbody>
+
                                         </React.Fragment>
                                     )
                                 }
