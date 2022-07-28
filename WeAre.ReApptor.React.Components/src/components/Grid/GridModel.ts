@@ -81,9 +81,9 @@ export enum CellPaddingType {
 }
 
 export enum BorderType {
-    Default,
-
-    DarkSeparators
+    DarkSeparators,
+    
+    NoSeparators,
 }
 
 export interface IGridDefinition {
