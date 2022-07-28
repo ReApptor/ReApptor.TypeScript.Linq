@@ -240,13 +240,13 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
-        const name: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
+        const id: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
         return (
-            <label htmlFor={name} title={cell.title}>
+            <label htmlFor={id} title={cell.title}>
                 <input type="checkbox"
-                       id={name}
+                       id={id}
                        checked={cellValue}
-                       onChange={async (e: React.ChangeEvent<HTMLInputElement>) => await this.onBooleanCellChangeAsync(cell, e.target.checked)}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.onBooleanCellChangeAsync(cell, e.target.checked)}
                 />
             </label>
         );
