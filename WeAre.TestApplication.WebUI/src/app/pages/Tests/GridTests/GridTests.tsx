@@ -2,7 +2,6 @@ import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
 import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/reapptor-react-common";
 import {
-    BorderType,
     CellModel,
     Checkbox,
     ColumnActionDefinition,
@@ -26,11 +25,12 @@ export interface IGridTestsState {
     responsive: boolean;
     selectable: boolean;
     selectableType: GridSelectableType;
-    borderType: BorderType;
     checkable: boolean;
     headerGroups: boolean;
     search: string | null;
     stickyHeader: boolean;
+    noHeader: boolean;
+    colSpan: boolean;
 }
 
 enum GridEnum {
@@ -72,11 +72,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         responsive: true,
         selectable: false,
         selectableType: GridSelectableType.Single,
-        borderType: BorderType.DarkSeparators,
         checkable: false,
         headerGroups: true,
         search: null,
         stickyHeader: false,
+        noHeader: false,
+        colSpan: false,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -113,7 +114,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             minWidth: 90,
             noWrap: true,
-            textAlign: TextAlign.Center
+            textAlign: TextAlign.Center,
+            init: (cell: CellModel<GridItem>) => this.initFloat(cell)
         } as ColumnDefinition,
         {
             header: "Int",
@@ -286,6 +288,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this._items!;
     }
 
+    private initFloat(cell: CellModel<GridItem>): void {
+        cell.columnSpan = (this.state.colSpan) ? 2 : 0;
+    }
+
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
 
         let items: GridItem[] = (sortColumnName)
@@ -324,30 +330,20 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
 
     private static getGridSelectableTypeName(item: GridSelectableType): string {
         switch (item) {
-            case GridSelectableType.Single:
-                return "Single";
-            case GridSelectableType.Multiple:
-                return "Multiple";
+            case GridSelectableType.Single: return "Single";
+            case GridSelectableType.Multiple: return "Multiple";
         }
-    }
-
-    private static getBorderTypeName(item: BorderType): string {
-        switch (item) {
-            case BorderType.NoSeparators:
-                return "No Separators";
-            case BorderType.DarkSeparators:
-                return "Dark Separators";
-        }
-    }
-
-    private async reloadAsync(): Promise<void> {
-        await this._gridRef.current!.reloadAsync();
     }
 
     private async searchAsync(search: string | null): Promise<void> {
         await this.setState({search});
+        await this._gridRef.current!.reloadAsync();
+    }
 
-        await this.reloadAsync();
+    private async reloadAsync(): Promise<void> {
+        if (this._gridRef.current) {
+            await this._gridRef.current.reloadAsync();
+        }
     }
 
     public renderDetailsContent() {
@@ -364,6 +360,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
     }
 
     public render(): React.ReactNode {
+
         return (
             <React.Fragment>
 
@@ -372,33 +369,19 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     <Checkbox inline
                               label="BE pagination"
                               value={this.state.bePagination}
-                              onChange={async (sender, value) => {
-                                  await this.setState({bePagination: value})
-                              }}
+                              onChange={async (sender, value) => {await this.setState({bePagination: value})}}
                     />
 
                     <Checkbox inline
                               label="Responsive"
                               value={this.state.responsive}
-                              onChange={async (sender, value) => {
-                                  await this.setState({responsive: value})
-                              }}
+                              onChange={async (sender, value) => {await this.setState({responsive: value})}}
                     />
 
                     <Checkbox inline
                               label="Selectable"
                               value={this.state.selectable}
-                              onChange={async (sender, value) => {
-                                  await this.setState({selectable: value})
-                              }}
-                    />
-
-                    <Checkbox inline
-                              label="Sticky header"
-                              value={this.state.stickyHeader}
-                              onChange={async (sender, value) => {
-                                  await this.setState({stickyHeader: value})
-                              }}
+                              onChange={async (sender, value) => {await this.setState({selectable: value})}}
                     />
 
                     {
@@ -409,19 +392,33 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                                       transform={(item) => new SelectListItem(item.toString(), GridTests.getGridSelectableTypeName(item), null, item)}
                                       items={[GridSelectableType.Single, GridSelectableType.Multiple]}
                                       selectedItem={this.state.selectableType}
-                                      onChange={async (sender, value) => {
-                                          await this.setState({selectableType: value!})
-                                      }}
+                                      onChange={async (sender, value) => {await this.setState({ selectableType: value! })}}
                             />
                         )
                     }
 
                     <Checkbox inline
+                              label="Sticky header"
+                              value={this.state.stickyHeader}
+                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
+                    />
+
+                    <Checkbox inline
+                              label="Col span"
+                              value={this.state.colSpan}
+                              onChange={async (sender, value) => { this.state.colSpan = value; await this.reloadAsync(); }}
+                    />
+
+                    <Checkbox inline
+                              label="No header"
+                              value={this.state.noHeader}
+                              onChange={async (sender, value) => {await this.setState({noHeader: value})}}
+                    />
+
+                    <Checkbox inline
                               label="Checkable"
                               value={this.state.checkable}
-                              onChange={async (sender, value) => {
-                                  await this.setState({checkable: value})
-                              }}
+                              onChange={async (sender, value) => {await this.setState({checkable: value})}}
                     />
 
                     <TextInput inline
@@ -430,13 +427,6 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                                onChange={async (_, value) => await this.searchAsync(value)}
                     />
 
-                    <Dropdown label="Border Type" inline required noValidate noWrap noFilter
-                              orderBy={DropdownOrderBy.None}
-                              transform={(item) => new SelectListItem(item.toString(), GridTests.getBorderTypeName(item), null, item)}
-                              items={[BorderType.DarkSeparators, BorderType.NoSeparators]}
-                              selectedItem={this.state.borderType}
-                              onChange={async (sender, value) => { await this.setState({borderType: value!}); }}
-                    />
                 </Form>
 
                 <Grid ref={this._gridRef}
@@ -444,11 +434,11 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       selectable={this.state.selectable ? this.state.selectableType : undefined}
                       checkable={this.state.checkable}
                       stickyHeader={this.state.stickyHeader}
+                      noHeader={this.state.noHeader}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.Row}
-                      borderType={this.state.borderType}
                       renderDetails={() => this.renderDetailsContent()}
                       fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(pageNumber, pageSize, sortColumnName, sortDirection)}
                       onRowToggle={async (row) => console.log("onRowToggle", row)}

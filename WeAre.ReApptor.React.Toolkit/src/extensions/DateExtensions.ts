@@ -20,6 +20,20 @@ declare global {
         date(): Date;
 
         /**
+         * Returns a new Date that adds the specified number of milliseconds to the value of this instance.
+         * @param value - A number of milliseconds. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of milliseconds represented by value.
+         */
+        addMilliseconds(value: number): Date;
+
+        /**
+         * Returns a new Date that adds the specified number of seconds to the value of this instance.
+         * @param value - A number of seconds. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of seconds represented by value.
+         */
+        addSeconds(value: number): Date;
+
+        /**
          * Returns a new Date that adds the specified number of minutes to the value of this instance.
          * @param value - A number of minutes. The value parameter can be negative or positive.
          * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of minutes represented by value.
@@ -145,6 +159,18 @@ export const DateExtensions = function () {
     //         return DateUtility.time(this);
     //     };
     // }
+
+    if (Date.prototype.addMilliseconds == null) {
+        Date.prototype.addMilliseconds = function(value: number): Date {
+            return Utility.addMilliseconds(this, value);
+        };
+    }
+
+    if (Date.prototype.addSeconds == null) {
+        Date.prototype.addSeconds = function(value: number): Date {
+            return Utility.addSeconds(this, value);
+        };
+    }
 
     if (Date.prototype.addMinutes == null) {
         Date.prototype.addMinutes = function(value: number): Date {

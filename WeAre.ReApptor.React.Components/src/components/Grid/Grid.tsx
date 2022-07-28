@@ -21,12 +21,6 @@ interface IGridProps<TItem = {}> extends IGridDefinition {
     classNames?: IGridClassNames;
     data?: TItem[] | null;
 
-    /**
-     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
-     * @default false
-     */
-    stickyHeader?: boolean;
-
     fetchData?(sender: Grid<TItem>, pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<TGridData<TItem>>;
 
     /**
@@ -186,7 +180,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
 
                 this._overflowData = overflowData;
 
-                this.reRenderAsync();
+                await this.reRenderAsync();
 
                 return;
             }
@@ -391,11 +385,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const newLanguage: boolean = (this._language !== GridLocalizer.language);
         const newCheckable: boolean = (this.props.checkable !== nextProps.checkable);
         const newSelectable: boolean = (this.props.selectable !== nextProps.selectable);
-        const newBorderType: boolean = (this.props.borderType !== nextProps.borderType);
+        const newNoHeader: boolean = (this.props.noHeader !== nextProps.noHeader);
 
         await super.componentWillReceiveProps(nextProps);
 
-        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable) || (newBorderType)) {
+        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable) || (newNoHeader)) {
             await this.buildModelAsync();
         }
 
@@ -405,7 +399,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
         await this.processResponsiveAsync();
-        await this.processResponsiveAsync();
+        //await this.processResponsiveAsync();
     }
 
     private renderHeader(column: ColumnModel<TItem>, hasHeaderGroups: boolean, top: boolean,  colSpanLeft: boolean, tableHeadRowIndex: number): React.ReactNode {
@@ -416,7 +410,6 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                         top={top}
                         colSpanLeft={colSpanLeft}
                         tableHeadFirstRowRef={this._tableHeadFirstRowRef}
-                        stickyHeader={this.props.stickyHeader}
                         tableHeadRowIndex={tableHeadRowIndex}
             />
         )
@@ -427,7 +420,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             <Row key={row.key}
                  row={row}
                  init={this.props.initRow}
-                 onCheck={async () => await this.onCheckRowAsync()}
+                 onCheck={() => this.onCheckRowAsync()}
                  onSelect={async (row) => await this.props.onSelect?.(this.model, row)}
                  onToggle={async (row) => await this.props.onRowToggle?.(row)}
             />
@@ -453,6 +446,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const visible: boolean = (this.hasData) || (!model.noDataNoHeader);
         const outerSpinner: boolean = (model.noDataNoHeader);
         const rowHoveringStyle: any = (model.hovering === GridHoveringType.Row) ? "table-hover" : styles.noRowHovering;
+        const noHeaderStyleStyle: any = (model.noHeader) && styles.noHeader;
 
         const inlineStyles: React.CSSProperties = {};
 
@@ -485,37 +479,36 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
                                     (columns.length > 0) &&
                                     (
                                         <React.Fragment>
-                                            <thead>
-                                            {
-                                                <React.Fragment>
-                                                    <tr ref={this._tableHeadFirstRowRef}>
-                                                        {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
-                                                        {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0), 0))}
-                                                    </tr>
-                                                    {
-                                                        (hasHeaderGroups) &&
-                                                        (
-                                                            <tr>
-                                                                {
-                                                                    columns.map((column, index) =>
-                                                                        this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0), 1))
-                                                                }
-                                                            </tr>
-                                                        )
-                                                    }
-                                                </React.Fragment>
-                                            }
+                                            
+                                            <thead className={this.css(noHeaderStyleStyle)}>
+                                                <tr ref={this._tableHeadFirstRowRef}>
+                                                    {(model.checkable) && (<CheckHeaderCell model={model} hasHeaderGroups={hasHeaderGroups} colSpanLeft={responsive}/>)}
+                                                    {columns.map((column, index) => this.renderHeader(column, hasHeaderGroups, true, (responsive) && (index == 0), 0))}
+                                                </tr>
+                                                {
+                                                    (hasHeaderGroups) &&
+                                                    (
+                                                        <tr>
+                                                            {
+                                                                columns.map((column, index) =>
+                                                                    this.renderHeader(column, hasHeaderGroups, false, (responsive) && (index == 0), 1))
+                                                            }
+                                                        </tr>
+                                                    )
+                                                }
                                             </thead>
+
                                             <tbody>
-                                            {
-                                                ((model.noDataText) && (rows.length === 0))
-                                                    ? this.renderEmptyRow()
-                                                    : rows.map((item, rowIndex) => this.renderDataRow(rows[rowIndex]))
-                                            }
-                                            {
-                                                ((rows.length > 0) && (model.total)) && (<TotalRow grid={model} />)
-                                            }
+                                                {
+                                                    ((model.noDataText) && (rows.length === 0))
+                                                        ? this.renderEmptyRow()
+                                                        : rows.map((item, rowIndex) => this.renderDataRow(rows[rowIndex]))
+                                                }
+                                                {
+                                                    ((rows.length > 0) && (model.total)) && (<TotalRow grid={model}/>)
+                                                }
                                             </tbody>
+
                                         </React.Fragment>
                                     )
                                 }
