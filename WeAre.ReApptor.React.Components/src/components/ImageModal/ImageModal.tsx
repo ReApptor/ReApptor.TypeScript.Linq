@@ -11,6 +11,8 @@ import styles from "./ImageModal.module.scss";
 
 interface IImageModalProps {
     id?: string;
+    className?: string;
+    bodyClassName?: string;
     title?: string;
     subtitle?: string;
     picture?: FileModel;
@@ -19,12 +21,13 @@ interface IImageModalProps {
     notResponsive?: boolean;
     noHeader?: boolean;
     closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
-    
     imageUrl?(file: FileModel): string;
 }
 
 interface IImageModalState {
     picture: FileModel | null;
+    title: string | null;
+    subtitle: string | null;
 }
 
 export class ImageProvider {
@@ -45,7 +48,9 @@ export class ImageProvider {
 export default class ImageModal extends BaseComponent<IImageModalProps, IImageModalState> {
     
     state: IImageModalState = {
-        picture: this.props.picture || null
+        picture: this.props.picture || null,
+        title: this.props.title || null,
+        subtitle: this.props.subtitle || null,
     };
     
     private readonly _modalRef: React.RefObject<Modal> = React.createRef();
@@ -65,14 +70,6 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
         return this.state.picture;
     }
     
-    private get subtitle(): string {
-        return (this.props.subtitle) 
-            ? this.props.subtitle
-            : (this.picture)
-                ? this.picture.name 
-                : "";
-    }
-    
     private get previewSupported(): boolean {
         return (this.picture) 
             ? (AthenaeumComponentsConstants.imageFileTypes.includes(this.picture.type))
@@ -89,32 +86,46 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
         }
     }
 
-    public async openAsync(picture: FileModel | null = null): Promise<void> {
-        if (picture) {
-            await this.setState({picture});
-        }
+    public async openAsync(picture: FileModel | null = null, title: string | null = null, subtitle: string | null = null): Promise<void> {
+        
+        const newState: boolean = (picture != null) || (title != null) || (subtitle != null);
+        
+        if (newState) {
 
+            picture = picture ?? this.state.picture;
+            title = title ?? this.state.title;
+            subtitle = subtitle ?? this.state.subtitle;
+            
+            await this.setState({picture, title: title, subtitle});
+        }
+        
         await this._modalRef.current!.openAsync();
     }
 
     public async componentWillReceiveProps(nextProps: IImageModalProps): Promise<void> {
-        if(nextProps.picture && (nextProps.picture !== this.props.picture)) {
+        if (nextProps.picture && (nextProps.picture !== this.props.picture)) {
             await this.setState({picture: nextProps.picture});
         }
     }
     
+    public get title(): string {
+        return this.state.title ?? this.props.title ?? "";
+    }
+
+    private get subtitle(): string {
+        return this.state.subtitle ?? this.props.subtitle ?? this.picture?.name ?? "";
+    }
+    
     public render() {        
         const mobileStyle = (this.mobile) && (styles.mobile);
-        const biggerStyle = (this.props.size !== undefined)
-                            && (this.props.size !== ModalSize.Default)
-                            && (this.props.size !== ModalSize.Small)
-                            && (styles.bigger);
+        const biggerStyle = (this.props.size !== undefined) && (this.props.size !== ModalSize.Default) && (this.props.size !== ModalSize.Small) && (styles.bigger);
         
         return (
             <Modal id={this.id}
                    ref={this._modalRef}
-                   bodyClassName={styles.imageModal}
-                   title={this.props.title}
+                   className={this.props.className}
+                   bodyClassName={this.css(this.props.bodyClassName, styles.imageModal)}
+                   title={this.title}
                    subtitle={this.subtitle}
                    size={this.props.size}
                    notResponsive={this.props.notResponsive}
@@ -122,25 +133,28 @@ export default class ImageModal extends BaseComponent<IImageModalProps, IImageMo
                    closeConfirm={this.props.closeConfirm}
             >
                 <div>
+                    
                     {
                         (this.picture && this.previewSupported) &&
                         (
                             <div className={this.css(styles.image, mobileStyle, biggerStyle)} style={this.getImageStyle(this.picture)} />
                         )
                     }
+                    
                     {
                         (this.picture && !this.previewSupported) && 
                         (
                             <span>{ImageModalLocalizer.previewNotSupported}</span>
                         )
                     }
+                    
                 </div>
 
                 {
                     (this.props.download && this.picture) &&
                     (
                         <Button type={ButtonType.Orange}
-                                onClick={async () => await this.download()}
+                                onClick={() => this.download()}
                                 label={ImageModalLocalizer.download}
                         />
                     )
