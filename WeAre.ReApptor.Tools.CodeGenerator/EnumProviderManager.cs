@@ -69,7 +69,7 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
             return assembly;
         }
 
-        private static Type[] GetEnums(string solutionDirectory, string targetPath, string[] exclude = null)
+        private static Type[] GetEnums(string solutionDirectory, string targetPath, string[] exclude = null, string[] include = null)
         {
             LoadAssemblies(solutionDirectory);
 
@@ -81,15 +81,22 @@ namespace WeAre.ReApptor.Tools.CodeGenerator
                 .GetTypes()
                 .Where(type => (type.IsEnum) && (type.GetCustomAttribute<FlagsAttribute>() == null))
                 .ToArray();
-            
+
             if ((exclude != null) && (exclude.Length > 0))
             {
                 enums = enums
                     .Where(@enum => !exclude.Any(item => (!string.IsNullOrWhiteSpace(item)) && (item.Equals(@enum.Name, StringComparison.InvariantCultureIgnoreCase))))
                     .ToArray();
             }
-            
-            return enums;
+
+            Type[] additionalEnums = ((include != null) && (include.Length > 0))
+                ? include
+                    .Select(Type.GetType)
+                    .Where(item => ((item != null) && (item.IsEnum) && (item.GetCustomAttribute<FlagsAttribute>() == null)))
+                    .ToArray()
+                : Type.EmptyTypes;
+
+            return enums.Union(additionalEnums).Distinct().ToArray();
         }
 
         private static string ProcessEnumsImport(string enumsImport, string names)
@@ -213,7 +220,7 @@ export default new EnumProvider();", selectListItemImport, enumsImport, quotedNa
             
             try
             {
-                Type[] enums = GetEnums(settings.SolutionDir, settings.TargetPath, settings.Exclude);
+                Type[] enums = GetEnums(settings.SolutionDir, settings.TargetPath, settings.Exclude, settings.Include);
 
                 string content = GenerateTypeScriptContent(enums, settings.EnumsImport, settings.SelectListItemImport);
 

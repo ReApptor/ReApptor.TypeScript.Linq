@@ -569,7 +569,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private async selectItemHandler(item: SelectListItem): Promise<void> {
+    private async selectItemHandlerAsync(item: SelectListItem): Promise<void> {
 
         const autoCollapse: boolean = this.autoCollapse;
 
@@ -846,7 +846,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private async favoriteItemHandler(e: React.MouseEvent, item: SelectListItem): Promise<void> {
+    private async favoriteItemHandlerAsync(e: React.MouseEvent, item: SelectListItem): Promise<void> {
 
         e.stopPropagation();
 
@@ -1354,7 +1354,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             text = (selectedListItem !== null)
                 ? (noSubtext)
                     ? DropdownLocalizer.get(selectedListItem.text)
-                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${ReactUtility.toSingleLine(DropdownLocalizer.get(selectedListItem.subtext))}</small>`
+                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${DropdownLocalizer.get(selectedListItem.subtext)}</small>`
                 : (this.selectedListItems.length !== 0)
                     ? (this.props.multipleSelectedText)
                         ? DropdownLocalizer.multipleSelected
@@ -1373,7 +1373,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                  title={title}
                  onClick={() => this.toggleAsync()}>
 
-                <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
+                <span style={inlineStyles}>{ReactUtility.toTags(text)}</span>
                 
                 {
                     this.renderToggleContainer(toggleButtonVisible, clearButtonVisible, transparentStyle)
@@ -1385,15 +1385,20 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private renderSelectListItem(item: SelectListItem, index: number): React.ReactNode {
         const isSeparator: boolean = (item as any).isSelectListSeparator;
-        const hasVisibleGroup: boolean = (!isSeparator) && (this.hasVisibleGroup(item));
-        const needGroupSeparator: boolean = (!isSeparator) && (this.firstInGroup(item, index, hasVisibleGroup));
-        const selected: boolean = (!isSeparator) && (item.selected);
-        const favorite: boolean = (!isSeparator) && (this.props.favorite === true);
-        const checkbox: boolean = (!isSeparator) && (this.selectType == DropdownSelectType.Checkbox);
+        const isListItem: boolean = (!isSeparator);
+        const hasVisibleGroup: boolean = (isListItem) && (this.hasVisibleGroup(item));
+        const needGroupSeparator: boolean = (isListItem) && (this.firstInGroup(item, index, hasVisibleGroup));
+        const selected: boolean = (isListItem) && (item.selected);
+        const favorite: boolean = (isListItem) && (this.props.favorite === true);
+        const checkbox: boolean = (isListItem) && (this.selectType == DropdownSelectType.Checkbox);
 
         const listItemStyle: any = ((this.isListType) && (this.props.styleSchema !== DropdownSchema.Widget)) && styles.listItem;
         const inlineSubtextStyle: any = (this.subtextType == DropdownSubtextType.Inline) && styles.inlineSubtext;
         const selectedStyle: any = ((selected) && (!checkbox)) && styles.selectedItem;
+        
+        const customClassName: string | null = ((isListItem) && ((item as any).isStatusListItem))
+            ? (item as StatusListItem).className
+            : null;
 
         return (
             <React.Fragment key={index}>
@@ -1430,13 +1435,13 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                     (!isSeparator)
                         ?
                         (
-                            <div className={this.css(styles.item, listItemStyle, inlineSubtextStyle, selectedStyle, hasVisibleGroup && styles.itemGroupIdent)}
-                                 onClick={async () => await this.selectItemHandler(item)}>
+                            <div className={this.css(styles.item, customClassName, listItemStyle, inlineSubtextStyle, selectedStyle, hasVisibleGroup && styles.itemGroupIdent)}
+                                 onClick={() => this.selectItemHandlerAsync(item)}>
 
                                 {
                                     (favorite) &&
                                     (
-                                        <div className={styles.iconContainer} onClick={async (e: React.MouseEvent) => await this.favoriteItemHandler(e, item)}>
+                                        <div className={styles.iconContainer} onClick={(e: React.MouseEvent) => this.favoriteItemHandlerAsync(e, item)}>
                                             <Icon name="star" style={(item.favorite) ? IconStyle.Solid : IconStyle.Regular} size={IconSize.Large} />
                                         </div>
                                     )
@@ -1445,7 +1450,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                 <DropdownListItem item={item}
                                                   subtextHidden={this.subtextType == DropdownSubtextType.Hidden}
                                                   noWrap={this.props.noWrap}
-                                                  onChangeAmount={async (sender, item) => await this.onChangeAmountAsync(item)}
+                                                  onChangeAmount={(sender, item) => this.onChangeAmountAsync(item)}
                                 />
 
                                 {

@@ -56,7 +56,8 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
         return (
             <React.Fragment>
 
-                <div className={this.css(styles.minus, !this.canDecrease(item) && styles.amountDisabled)} onClick={async (e) => await this.decreaseAsync(e, item)}>
+                <div className={this.css(styles.minus, !this.canDecrease(item) && styles.amountDisabled)}
+                     onClick={(e) => this.decreaseAsync(e, item)}>
                     <Icon name={icon}/>
                 </div>
 
@@ -65,7 +66,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small className={styles.amountUnit}>{DropdownLocalizer.get(item.subtext)}</small>
+                            <small className={styles.amountUnit}>{ReactUtility.toTags(DropdownLocalizer.get(item.subtext))}</small>
                         )
                     }
                 </div>
@@ -99,7 +100,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) &&
                         (
-                            <small>{DropdownLocalizer.get(item.subtext)}</small>
+                            <small>{ReactUtility.toTags(DropdownLocalizer.get(item.subtext))}</small>
                         )
                     }
                 </div>
@@ -128,7 +129,7 @@ export default class DropdownListItem extends BaseComponent<IDropdownListItemPro
                     {
                         (!this.props.subtextHidden) && 
                         (
-                            <small>{ReactUtility.toSmalls(DropdownLocalizer.get(item.subtext))}</small>
+                            <small>{ReactUtility.toTags(DropdownLocalizer.get(item.subtext))}</small>
                         )
                     }
                 </div>
