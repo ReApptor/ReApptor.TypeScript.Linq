@@ -2,6 +2,7 @@ import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
 import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/reapptor-react-common";
 import {
+    BorderType,
     CellModel,
     Checkbox,
     ColumnActionDefinition,
@@ -25,6 +26,7 @@ export interface IGridTestsState {
     responsive: boolean;
     selectable: boolean;
     selectableType: GridSelectableType;
+    borderType: BorderType;
     checkable: boolean;
     headerGroups: boolean;
     search: string | null;
@@ -72,6 +74,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         responsive: true,
         selectable: false,
         selectableType: GridSelectableType.Single,
+        borderType: BorderType.DarkSeparators,
         checkable: false,
         headerGroups: true,
         search: null,
@@ -335,6 +338,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         }
     }
 
+    private static getBorderTypeName(item: BorderType): string {
+        switch (item) {
+            case BorderType.DarkSeparators: return "Dark Separators";
+            case BorderType.NoSeparators: return "No Separators";
+        }
+    }
+
     private async searchAsync(search: string | null): Promise<void> {
         await this.setState({search});
         await this._gridRef.current!.reloadAsync();
@@ -427,6 +437,14 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                                onChange={async (_, value) => await this.searchAsync(value)}
                     />
 
+                    <Dropdown label="Border Type" inline required noValidate noWrap noFilter
+                              orderBy={DropdownOrderBy.None}
+                              transform={(item) => new SelectListItem(item.toString(), GridTests.getBorderTypeName(item), null, item)}
+                              items={[BorderType.DarkSeparators, BorderType.NoSeparators]}
+                              selectedItem={this.state.selectableType}
+                              onChange={async (sender, value) => {await this.setState({ borderType: value! })}}
+                    />
+                    
                 </Form>
 
                 <Grid ref={this._gridRef}
@@ -439,6 +457,7 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.Row}
+                      borderType={this.state.borderType}
                       renderDetails={() => this.renderDetailsContent()}
                       fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(pageNumber, pageSize, sortColumnName, sortDirection)}
                       onRowToggle={async (row) => console.log("onRowToggle", row)}
