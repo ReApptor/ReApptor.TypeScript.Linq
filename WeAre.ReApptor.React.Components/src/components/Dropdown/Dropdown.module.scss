@@ -79,7 +79,7 @@
             overflow-x: auto;
             overflow-y: unset;
             
-            @media screen and(max-width: $break-md) {
+            @media screen and (max-width: $break-md) {
                 position: unset !important;
             }
         }
