@@ -391,10 +391,11 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
         const newLanguage: boolean = (this._language !== GridLocalizer.language);
         const newCheckable: boolean = (this.props.checkable !== nextProps.checkable);
         const newSelectable: boolean = (this.props.selectable !== nextProps.selectable);
+        const newBorderType: boolean = (this.props.borderType !== nextProps.borderType);
 
         await super.componentWillReceiveProps(nextProps);
 
-        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable)) {
+        if ((newReadonly) || (newLanguage) || (newResponsive) || (newCheckable) || (newSelectable) || (newBorderType)) {
             await this.buildModelAsync();
         }
 
