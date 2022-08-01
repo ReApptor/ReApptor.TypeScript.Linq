@@ -1122,16 +1122,17 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
         await super.componentWillReceiveProps(nextProps);
 
-        if ((newExpanded) || (newDisabled) || (newLanguage)) {
+        if ((newExpanded) || (newDisabled)) {
             this.state.expanded = nextProps.expanded || false;
             this.state.readonly = nextProps.disabled || false;
-            this._language = DropdownLocalizer.language;
 
             await this.setState(this.state);
         }
         
-        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired)) {
+        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired) || (newLanguage)) {
 
+            this._language = DropdownLocalizer.language;
+            
             const selectedItem: TItem | string | number | null | undefined = (newSelectedListItem)
                 ? nextProps.selectedItem
                 : (nextProps.selectedItem || this.getSelectedListItem(nextProps.items) || this.selectedItem);
