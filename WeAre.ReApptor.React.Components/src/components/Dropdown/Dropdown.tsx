@@ -10,7 +10,6 @@ import Button, {ButtonType} from "../Button/Button";
 import DropdownLocalizer from "./DropdownLocalizer";
 
 import styles from "./Dropdown.module.scss";
-import GridLocalizer from "../Grid/GridLocalizer";
 
 const FILTER_MIN_LENGTH = 6;
 const FILTER_MAX_LENGTH = 1000;
@@ -193,7 +192,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private readonly _listContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _itemsListRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    private _language: string = GridLocalizer.language;
+    private _language: string = DropdownLocalizer.language;
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
