@@ -192,6 +192,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private readonly _listContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _itemsListRef: React.RefObject<HTMLDivElement> = React.createRef();
 
+    private _language: string = DropdownLocalizer.language;
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
@@ -1117,6 +1118,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newItems: boolean = (!Comparator.isEqual(props.items, nextProps.items));
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
+        const newLanguage: boolean = (this._language !== DropdownLocalizer.language);
 
         await super.componentWillReceiveProps(nextProps);
 
@@ -1127,8 +1129,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             await this.setState(this.state);
         }
         
-        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired)) {
+        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired) || (newLanguage)) {
 
+            this._language = DropdownLocalizer.language;
+            
             const selectedItem: TItem | string | number | null | undefined = (newSelectedListItem)
                 ? nextProps.selectedItem
                 : (nextProps.selectedItem || this.getSelectedListItem(nextProps.items) || this.selectedItem);
