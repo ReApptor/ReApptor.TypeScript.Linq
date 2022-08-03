@@ -78,6 +78,10 @@ export default class VirtualAddressDivider extends BaseComponent<IVirtualAddress
         return this.state.readonly;
     }
 
+    public get edit(): boolean {
+        return true;
+    }
+
     public async setReadonlyAsync(value: boolean): Promise<void> {
         if (value !== this.state.readonly) {
             await this.setState({ readonly: value });
