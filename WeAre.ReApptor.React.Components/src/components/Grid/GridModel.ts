@@ -1444,6 +1444,13 @@ export class CellModel<TItem = {}> implements ITag {
         return (this.isVisible) && (!this.isDeleted) && ((this.isReadonly) || (this.type == ColumnType.Custom) || (this.type == ColumnType.Icon)) && (this.actions.length == 0);
     }
 
+    /**
+     * The cell input is in the editable mode (input is visible).
+     */
+    public get edit(): boolean {
+        return (this.inputContentInstance != null) && (this.inputContentInstance.edit);
+    }
+
     public get rowSpan(): number {
         return this._rowSpan;
     }
