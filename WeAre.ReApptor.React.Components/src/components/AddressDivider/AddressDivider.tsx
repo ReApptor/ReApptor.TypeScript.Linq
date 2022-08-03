@@ -80,6 +80,10 @@ export default class AddressDivider extends BaseComponent<IAddressDividerProps, 
         return this.state.readonly;
     }
 
+    public get edit(): boolean {
+        return true
+    }
+
     public get columns(): AddressDividerColumns {
         return this.props.columns ?? AddressDividerColumns.Two;
     }
