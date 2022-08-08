@@ -177,7 +177,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         ?
                         (
                             <div className={gridStyles.twoLines}>
-                                <span className={this.css(linkStyle, valueBoldStyle)} style={inlineStyles} onClick={async () => await this.invokeCallback(cell)} title={GridLocalizer.get(title)}>
+                                <span className={this.css(linkStyle, valueBoldStyle)} style={inlineStyles}  title={GridLocalizer.get(title)} onClick={() => this.invokeCallback(cell)}>
                                     {ReactUtility.toMultiLines(cellValue)}
                                 </span>
                                 <span style={inlineStyles} className={this.css(infoValueBold)} title={GridLocalizer.get(infoTitle)}>
@@ -187,7 +187,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         )
                         :
                         (
-                            <span className={this.css(linkStyle)} style={inlineStyles} onClick={async () => await this.invokeCallback(cell)} title={GridLocalizer.get(title)}>
+                            <span className={this.css(linkStyle)} style={inlineStyles} title={GridLocalizer.get(title)} onClick={() => this.invokeCallback(cell)}>
                                 {ReactUtility.toMultiLines(cellValue)}
                             </span>
                         )
@@ -207,7 +207,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                            value={cellValue || ""}
                            title={cell.title}
                            maxLength={settings.maxLength || undefined}
-                           onChange={async (sender, value, userInteraction, done) => await this.onTextCellChangeAsync(cell, value, userInteraction, done)}
+                           onChange={(sender, value, userInteraction, done) => this.onTextCellChangeAsync(cell, value, userInteraction, done)}
                 />
             </div>
         );
@@ -233,7 +233,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
         
         return (
-            <div className={this.css(alignCenter)} title={cell.title}>
+            <div className={this.css(alignCenter)} title={cell.title} onClick={() => this.invokeCallback(cell)}>
                 {(icon) && (<Icon {...icon} size={size}/>)}
             </div>
         );
@@ -302,7 +302,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                              max={max || undefined}
                              step={settings.step || undefined}
                              value={cellValue || 0}
-                             onChange={async (sender, value, userInteraction, done) => await this.onNumberCellChangeAsync(cell, value, userInteraction, done)}
+                             onChange={(sender, value, userInteraction, done) => this.onNumberCellChangeAsync(cell, value, userInteraction, done)}
                 />
             </div>
         );
@@ -353,7 +353,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                                            minDate={minDate}
                                            maxDate={maxDate}
                                            value={cellValue}
-                                           onChange={async (date: Date) => await this.onDateCellChangeAsync(cell, date)}
+                                           onChange={(date: Date) => this.onDateCellChangeAsync(cell, date)}
                                 />
                                 <span title={GridLocalizer.get(settings.infoTitle)}>
                                     {infoValue}
@@ -368,7 +368,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                                        minDate={minDate}
                                        maxDate={maxDate}
                                        value={cellValue}
-                                       onChange={async (date: Date) => await this.onDateCellChangeAsync(cell, date)}
+                                       onChange={(date: Date) => this.onDateCellChangeAsync(cell, date)}
                             />
                         )
                 }
