@@ -725,7 +725,6 @@
         }
 
         > i {
-          cursor: pointer;
           padding: 4px;
           font-size: 1rem;
           margin: 0 1px;
@@ -737,9 +736,13 @@
           &:last-child {
             margin-right: 0;
           }
+          
+          &:not(.actionDisabled) {
+            cursor: pointer;
+          }
 
-          &:hover {
-            box-shadow: 0px 0px 0px 1px #adadad;
+          &:hover:not(.actionDisabled) {
+            box-shadow: 0 0 0 1px #adadad;
             border-radius: 3px;
             background-color: $orange;
             color: white !important;
@@ -748,6 +751,10 @@
 
         .actionRight {
           float: right;
+        }
+
+        .actionDisabled {
+          visibility: visible;
         }
       }
 
