@@ -728,6 +728,12 @@
           padding: 4px;
           font-size: 1rem;
           margin: 0 1px;
+          cursor: pointer;
+
+          &.actionDisabled {
+            cursor: default;
+            opacity: 0.5;
+          }
 
           &:first-child {
             margin-left: 0;
@@ -735,10 +741,6 @@
 
           &:last-child {
             margin-right: 0;
-          }
-          
-          &:not(.actionDisabled) {
-            cursor: pointer;
           }
 
           &:hover:not(.actionDisabled) {
