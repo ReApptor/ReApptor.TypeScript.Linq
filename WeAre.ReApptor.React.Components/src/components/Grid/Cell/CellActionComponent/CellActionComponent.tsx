@@ -180,8 +180,8 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                 <Icon id={this.id}
                                                       {...icon!}
                                                       tooltip={action.title || undefined}
-                                                      className={this.css(actionColorClassName, rightStyle)}
-                                                      onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                      className={this.css(actionColorClassName, rightStyle, action.className)}
+                                                      onClick={() => this.invokeActionCallbackAsync(cell, cellAction)}
                                                       dataTarget={action.toggleModal || undefined}
                                                       dataModal={dataModal}
                                                       toggleModal={!!action.toggleModal}
@@ -199,16 +199,14 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                 <Icon id={this.id}
                                                       {...icon!}
                                                       tooltip={action.title || undefined}
-                                                      className={this.css(actionColorClassName, rightStyle)}
-                                                      onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                      className={this.css(actionColorClassName, rightStyle, action.className)}
+                                                      onClick={() => this.invokeActionCallbackAsync(cell, cellAction)}
                                                       dataTarget={action.toggleModal || undefined}
                                                       dataModal={dataModal}
                                                       toggleModal={!!action.toggleModal}
                                                       confirm={confirm || undefined}
                                                 />
                                             )
-
-
                                     )
                                     :
                                     (
@@ -217,7 +215,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                             (
                                                 <Button id={this.id}
                                                         label={action.title!}
-                                                        className={this.css(actionColorClassName, rightStyle)}
+                                                        className={this.css(actionColorClassName, rightStyle, action.className)}
                                                         onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
                                                         dataTarget={action.toggleModal || undefined}
                                                         dataModal={dataModal}
@@ -238,7 +236,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                             (
                                                 <Button id={this.id}
                                                         label={action.title!}
-                                                        className={this.css(actionColorClassName, rightStyle)}
+                                                        className={this.css(actionColorClassName, rightStyle, action.className)}
                                                         onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
                                                         dataTarget={action.toggleModal || undefined}
                                                         dataModal={dataModal}
@@ -246,7 +244,6 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                         confirm={confirm || undefined}
                                                 />
                                             )
-
                                     )
                             }
                         </React.Fragment>
