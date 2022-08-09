@@ -823,6 +823,8 @@ export class ColumnActionDefinition {
 
     public title?: string;
 
+    public className?: string
+
     public icon?: IIconProps | string;
 
     public type?: ActionType | ColumnActionType;
@@ -853,6 +855,8 @@ export class ColumnAction<TItem = {}> {
     public name: string | null = null;
 
     public title: string | null = null;
+
+    public className: string | null = null;
 
     public icon: IIconProps | null = null;
 
@@ -2063,6 +2067,7 @@ export class GridTransformer {
         const to = new ColumnAction<TItem>();
         to.column = column;
         to.title = from.title || null;
+        to.className = from.className || null;
         to.toggleModal = from.toggleModal || null;
         to.confirm = from.confirm || null;
         to.callback = from.callback;
@@ -2079,6 +2084,7 @@ export class GridTransformer {
                 case ColumnActionType.Details:
                     to.alwaysAvailable = (from.alwaysAvailable !== false);
                     to.name = from.name || "details";
+                    to.className = from.className || null;
                     to.type = ActionType.Secondary;
                     to.icon = this.toIcon(from.icon || "far info-square");
                     break;
@@ -2086,6 +2092,7 @@ export class GridTransformer {
                 case ColumnActionType.Download:
                     to.alwaysAvailable = (from.alwaysAvailable !== false);
                     to.name = from.name || "download";
+                    to.className = from.className || null;
                     to.type = ActionType.Create;
                     to.icon = this.toIcon(from.icon || "far download");
                     break;
@@ -2093,6 +2100,7 @@ export class GridTransformer {
                 case ColumnActionType.Preview:
                     to.alwaysAvailable = (from.alwaysAvailable !== false);
                     to.name = from.name || "preview";
+                    to.className = from.className || null;
                     to.type = ActionType.Blue;
                     to.icon = this.toIcon(from.icon || "far search");
                     break;
