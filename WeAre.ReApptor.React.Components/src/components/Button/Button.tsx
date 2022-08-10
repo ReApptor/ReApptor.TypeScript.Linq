@@ -65,8 +65,8 @@ export interface IButtonProps {
      */
     submit?: boolean;
 
-    dataTarget?: string;
-    dataModal?: string;
+    dataTarget?: string | null;
+    dataModal?: string | null;
     toggleModal?: boolean;
     dismissModal?: boolean;
 
@@ -83,7 +83,7 @@ export interface IButtonProps {
      */
     style?: React.CSSProperties;
 
-    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
+    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback | null;
 
     /**
      * The button will aligned to the right in the ButtonContainer

@@ -48,14 +48,14 @@ export interface IIconProps {
     style?: IconStyle | null;
     size?: IconSize | null;
     className?: string;
-    dataTarget?: string;
-    dataModal?: string;
+    dataTarget?: string | null;
+    dataModal?: string | null;
     toggleModal?: boolean;
     dismissModal?: boolean;
     customStyle?: React.CSSProperties;
     disabled?: boolean;
     stopPropagation?: boolean;
-    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
+    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback | null;
     onClick?(sender: Icon): Promise<void>;
 }
 

@@ -866,8 +866,6 @@ export class ColumnAction<TItem = {}> {
 
     public right: boolean = false;
 
-    public disabled: boolean = false;
-
     public toggleModal: string | null = null;
 
     public alwaysAvailable: boolean = false;
@@ -888,7 +886,7 @@ export class CellAction<TItem = {}> {
 
     public visible: boolean = true;
 
-    //public enabled: boolean = true;
+    public disabled: boolean = false;
 
     public instance: ICellAction = {} as ICellAction;
 }
@@ -2077,7 +2075,6 @@ export class GridTransformer {
         to.callback = from.callback;
         to.render = from.render;
         to.right = from.right || false;
-        to.disabled = from.disabled || false;
         to.actions = from.actions;
 
         to.alwaysAvailable = from.alwaysAvailable || false;
