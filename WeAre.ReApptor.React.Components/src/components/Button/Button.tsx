@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
+import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility} from "@weare/reapptor-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ButtonAction, {IButtonActionProps} from "./ButtonAction/ButtonAction";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
@@ -380,13 +380,13 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
 
                     {leftSideIcon && <Icon {...leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
-                    {<span>{this.label}</span>}
+                    {<span>{ReactUtility.toTags(this.label)}</span>}
 
                     {rightSideIcon && <Icon {...rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
 
                     {showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
 
-                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}> {this.children}</div>}
+                    {this.children.length > 0 && <div id={this.actionsId} className={this.css(styles.actions, this.getStyleColor(), "actions-container", !this.showActions && "invisible")}>{this.children}</div>}
                     
                     {
                         (count != null) &&
