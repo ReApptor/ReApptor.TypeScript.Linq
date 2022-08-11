@@ -201,7 +201,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
-    private _itemsHash: number = HashCodeUtility.emptyHashCode;
+    private _itemsHashCode: number = HashCodeUtility.emptyHashCode;
 
     state: IDropdownState = {
         items: [],
@@ -1123,10 +1123,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         if (this.trackChanges) {
-            const hash: number = HashCodeUtility.getHashCode(items);
-            if (this._itemsHash !== hash) {
-                this._itemsHash = hash;
-                const isFirstCall: boolean = (this._itemsHash === HashCodeUtility.emptyHashCode);
+            const hashCode: number = HashCodeUtility.getHashCode(items);
+            if (this._itemsHashCode !== hashCode) {
+                this._itemsHashCode = hashCode;
+                const isFirstCall: boolean = (this._itemsHashCode === HashCodeUtility.emptyHashCode);
                 if (!isFirstCall) {
                     return true;
                 }
