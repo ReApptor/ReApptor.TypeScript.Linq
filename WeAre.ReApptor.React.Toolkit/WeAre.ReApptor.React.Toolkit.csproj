@@ -56,6 +56,7 @@
       <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.getFileExtension.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.getHashCode.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.newGuid.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.round.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
