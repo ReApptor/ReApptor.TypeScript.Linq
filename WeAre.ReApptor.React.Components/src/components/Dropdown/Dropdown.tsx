@@ -201,7 +201,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
-    private _itemsHash: number = -1;
+    private _itemsHash: number = HashCodeUtility.emptyHashCode;
 
     state: IDropdownState = {
         items: [],
@@ -1117,16 +1117,23 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
     
     private isItemsModified(prevItems: TItem[], items: TItem[]): boolean {
-        let isModified: boolean = (!Comparator.isEqual(prevItems, items));
-        if ((!isModified) && (this.trackChanges)) {
-            const prevHash: number = this._itemsHash;
+        const isModified: boolean = (!Comparator.isEqual(prevItems, items));
+        if (isModified) {
+            return true;
+        }
+
+        if (this.trackChanges) {
             const hash: number = HashCodeUtility.getHashCode(items);
-            if (prevHash !== hash) {
+            if (this._itemsHash !== hash) {
                 this._itemsHash = hash;
-                isModified = (prevHash !== -1);
+                const isFirstCall: boolean = (this._itemsHash === HashCodeUtility.emptyHashCode);
+                if (!isFirstCall) {
+                    return true;
+                }
             }
         }
-        return isModified;
+
+        return false;
     }
 
     public async componentWillReceiveProps(nextProps: IDropdownProps<TItem>): Promise<void> {

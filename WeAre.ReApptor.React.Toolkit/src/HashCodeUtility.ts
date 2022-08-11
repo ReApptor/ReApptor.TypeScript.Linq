@@ -126,4 +126,6 @@ export default class HashCodeUtility {
     public static isEqual(x: any | string | null | undefined, y: any | string | null | undefined): boolean {
         return (this.getHashCode(x) === this.getHashCode(y));
     }
+    
+    public static readonly emptyHashCode: number = Number.NaN;
 }
