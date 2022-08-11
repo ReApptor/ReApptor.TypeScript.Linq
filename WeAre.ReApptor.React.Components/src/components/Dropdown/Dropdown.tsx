@@ -1,5 +1,5 @@
 import React from "react";
-import {FileModel, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
+import {FileModel, HashCodeUtility, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
 import {BaseInputType, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -150,6 +150,11 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
      * The 'X' button in the select item to unselect the selected element(s) (only if the 'required' property is false)
      */
     clearButton?: boolean;
+
+    /**
+     * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
+     */
+    trackChanges?: boolean;
     
     transform?(item: TItem): SelectListItem;
     selectedTextTransform?(sender: Dropdown<TItem>): string;
@@ -196,6 +201,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
+    private _itemsHash: number = -1;
 
     state: IDropdownState = {
         items: [],
@@ -1070,6 +1076,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             ? (this.selectedListItems.length > 0)
             : (this.selectedListItem != null);
     }
+    
+    public get trackChanges(): boolean {
+        return (this.props.trackChanges === true);
+    }
 
     public async unselectAllAsync(): Promise<void> {
         if ((this.multiple) && (this.selectedListItems.length > 0)) {
@@ -1105,6 +1115,19 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     public async initializeAsync(): Promise<void> {
         await this.initializeItemsAsync(this.props.items, this.props.selectedItem, this.props.selectedItems);
     }
+    
+    private isItemsModified(prevItems: TItem[], items: TItem[]): boolean {
+        let isModified: boolean = (!Comparator.isEqual(prevItems, items));
+        if ((!isModified) && (this.trackChanges)) {
+            const prevHash: number = this._itemsHash;
+            const hash: number = HashCodeUtility.getHashCode(items);
+            if (prevHash !== hash) {
+                this._itemsHash = hash;
+                isModified = (prevHash !== -1);
+            }
+        }
+        return isModified;
+    }
 
     public async componentWillReceiveProps(nextProps: IDropdownProps<TItem>): Promise<void> {
 
@@ -1115,7 +1138,8 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newGroupSelected: boolean = (props.groupSelected !== nextProps.groupSelected);
         const newFavorite: boolean = (props.favorite !== nextProps.favorite);
         const newRequired: boolean = (props.required !== nextProps.required);
-        const newItems: boolean = (!Comparator.isEqual(props.items, nextProps.items));
+        //const newItems: boolean = (!Comparator.isEqual(props.items, nextProps.items));
+        const newItems: boolean = this.isItemsModified(props.items, nextProps.items);
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
         const newLanguage: boolean = (this._language !== DropdownLocalizer.language);
