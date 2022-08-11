@@ -142,7 +142,7 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
     }
 
     public get items(): TItem[] {
-        return this.state.data || [];
+        return this.props.items ?? (this.state.data || []);
     }
     
     render(): React.ReactNode {
