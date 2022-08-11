@@ -25,6 +25,12 @@ interface IListProps<TItem = {}> {
     absoluteListItems?: boolean;
     noDataText?: string;
     noGrouping?: boolean;
+
+    /**
+     * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
+     */
+    trackChanges?: boolean;
+
     transform?(item: TItem): SelectListItem;
     fetchItems?(sender: List<TItem>): Promise<TItem[]>;
     onChange?(sender: List<TItem>, value: TItem | null, userInteraction: boolean): Promise<void>;
@@ -167,6 +173,7 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           className={this.css(styles.list, this.props.className)}
                           orderBy={this.props.orderBy}
                           subtextType={this.props.subtextType}
+                          trackChanges={this.props.trackChanges}
                           items={this.items}
                           selectedItem={this.props.selectedItem}
                           selectedItems={this.props.selectedItems}
