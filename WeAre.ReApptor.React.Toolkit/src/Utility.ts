@@ -16,6 +16,7 @@ import ServiceProvider from "./providers/ServiceProvider";
 
 export default class Utility {
 
+    private static readonly _newGuidLut: string[] = [];
     private static _geoEnabled: boolean | null = null;
     private static _number: number = 1;
 
@@ -34,7 +35,7 @@ export default class Utility {
 
     public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
         if (this.geoEnabled) {
-            options = options || { maximumAge: 30000, timeout: 1000 };
+            options = options || {maximumAge: 30000, timeout: 1000};
             return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;
@@ -282,7 +283,7 @@ export default class Utility {
 
                 const sunday: Date = new Date(Date.UTC(2017, 0, 1));
                 const dayOfWeek: Date = sunday.addDays(dayOfWeekOrDate);
-                name = dayOfWeek.toLocaleString(language, { weekday: "long" });
+                name = dayOfWeek.toLocaleString(language, {weekday: "long"});
 
                 return name;
 
@@ -491,7 +492,7 @@ export default class Utility {
         }
         return count;
     }
-    
+
     public static digits(value: number): number {
         value = Math.abs(value);
         value = Math.trunc(value);
@@ -510,7 +511,7 @@ export default class Utility {
                     return Math.round(value);
                 }
             }
-            
+
             const k = Math.pow(10, digits);
             value *= k;
             value = Math.round(value);
@@ -576,8 +577,7 @@ export default class Utility {
             for (let i: number = 0; i < length; i++) {
                 Utility.remove(items, item[i]);
             }
-        }
-        else {
+        } else {
             const index: number = items.indexOf(item);
             if (index !== -1) {
                 items.splice(index, 1);
@@ -638,7 +638,7 @@ export default class Utility {
     }
 
     public static getWeekNumber(date: Date): number {
-        const beginningOfTheYear: Date  = new Date(date.getFullYear(), 0, 1);
+        const beginningOfTheYear: Date = new Date(date.getFullYear(), 0, 1);
         const days: number = Math.floor((date.getTime() - beginningOfTheYear.getTime()) / (24 * 60 * 60 * 1000));
         return Math.ceil(days / 7);
     }
@@ -1251,6 +1251,29 @@ export default class Utility {
      */
     public static getComponentId(): string {
         return `_${this.getId()}`;
+    }
+    
+    /**
+     * @returns A new instance of the GUID string (a globally unique identifier).
+     */
+    public static newGuid(): string {
+        const d0: number = Math.random() * 0xffffffff | 0;
+        const d1: number = Math.random() * 0xffffffff | 0;
+        const d2: number = Math.random() * 0xffffffff | 0;
+        const d3: number = Math.random() * 0xffffffff | 0;
+        const lut: string[] = this._newGuidLut;
+        if (lut.length == 0) {
+            //initialize:
+            for (let i = 0; i < 256; i++) {
+                lut[i] = (i < 16 ? "0" : "") + i.toString(16);
+            }
+        }
+        return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + "-" +
+            lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + "-" +
+            lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + "-" +
+            lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + "-" +
+            lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
+            lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
     }
 }
 
