@@ -112,7 +112,7 @@ export default class ArrayUtility {
         return result;
     }
     
-    public static firstOrDefault<T>(items: readonly T[], callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+    public static firstOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
             for (let i: number = 0; i < length; i++) {
@@ -127,7 +127,7 @@ export default class ArrayUtility {
         return defaultValue ?? null;
     }
     
-    public static lastOrDefault<T>(items: readonly T[], callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+    public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
             for (let i: number = length - 1; i >= 0; i--) {

@@ -565,7 +565,7 @@ export default class Utility {
         return Array.from(map.values());
     }
 
-    public static distinct<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[] {
+    public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
         const dict = new Dictionary<any, T>();
         items.forEach(item => dict.setValue(callback ? callback(item) : item, item));
         return dict.values();
