@@ -71,7 +71,7 @@ declare global {
          * @param callback - A callback function to get comparable value.
          * @returns Array<T> - An Array<T> that contains distinct elements from the source sequence.
          */
-        distinct(callback: ((item: T) => any) | null | undefined): T[];
+        distinct(callback?: ((item: T) => any) | null): T[];
 
         order<TKey1, TKey2, TKey3, TKey4, TKey5>(keySelector1: ((item: T) => TKey1), keySelector2?: ((item: T) => TKey2), keySelector3?: ((item: T) => TKey3), keySelector4?: ((item: T) => TKey4), keySelector5?: ((item: T) => TKey5)): void;
 
@@ -85,7 +85,7 @@ declare global {
          * @param defaultValue - The default value to return if the sequence is empty.
          * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the first element in source that passes the test specified by predicate.
          */
-        firstOrDefault(callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null;
+        firstOrDefault(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
 
         /**
          * Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
@@ -93,7 +93,7 @@ declare global {
          * @param defaultValue - The default value to return if the sequence is empty.
          * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
          */
-        lastOrDefault(callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null;
+        lastOrDefault(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
     }
 }
 
@@ -190,7 +190,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.distinct == null) {
-        Array.prototype.distinct = function <T>(callback: ((item: T) => any) | null | undefined = null): T[] {
+        Array.prototype.distinct = function <T>(callback?: ((item: T) => any) | null): T[] {
             return Utility.distinct(this, callback);
         };
     }
@@ -214,13 +214,13 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.firstOrDefault == null) {
-        Array.prototype.firstOrDefault = function <T>(callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+        Array.prototype.firstOrDefault = function <T>(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
             return ArrayUtility.firstOrDefault(this, callback, defaultValue);
         };
     }
 
     if (Array.prototype.lastOrDefault == null) {
-        Array.prototype.lastOrDefault = function <T>(callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+        Array.prototype.lastOrDefault = function <T>(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
             return ArrayUtility.lastOrDefault(this, callback, defaultValue);
         };
     }
