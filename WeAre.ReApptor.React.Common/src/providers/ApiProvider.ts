@@ -9,13 +9,71 @@ import IUser from "../models/IUser";
 import IResponseContainer from "../models/IResponseContainer";
 import PageRouteProvider from "./PageRouteProvider";
 import ch from "./ComponentHelper";
+import {Mutex} from "async-mutex";
+import Dictionary from "typescript-collections/dist/lib/Dictionary";
+
+class ApiProviderSyncContainer {
+    public readonly lock: Mutex = new Mutex();
+    public readonly queue: (() => Promise<void>)[] = [];
+}
 
 export default class ApiProvider {
 
     private static _isSpinning: number = 0;
     private static _manualSpinning: boolean = false;
     private static readonly _loadingCallbacks: ((isLoading: boolean) => Promise<void>)[] = [];
+    private static readonly _synchronousItems: Dictionary<string, ApiProviderSyncContainer> = new Dictionary<string, ApiProviderSyncContainer>();
+    private static readonly _synchronousLock: Mutex = new Mutex();
+    
+    private static getSynchronousContainerAsync(key: string): Promise<ApiProviderSyncContainer> {
+        return this._synchronousLock.runExclusive<ApiProviderSyncContainer>(async () => {
+            let container: ApiProviderSyncContainer | undefined = this._synchronousItems.getValue(key);
+            if (!container) {
+                container = new ApiProviderSyncContainer();
+                this._synchronousItems.setValue(key, container);
+            }
+            return container;
+        });
+    }
 
+    private static async processSynchronouslyAsync(container: ApiProviderSyncContainer): Promise<void> {
+        let actionToInvoke: (() => Promise<void>) | null = null;
+
+        await container.lock.runExclusive(async () => {
+            if (container.queue.length > 0) {
+                actionToInvoke = container.queue[0];
+                container.queue.removeAt(0);
+            }
+        });
+
+        if (actionToInvoke != null) {
+            try {
+                await actionToInvoke!();
+            } catch (error) {
+                await PageRouteProvider.exception(error);
+            }
+
+            await this.processSynchronouslyAsync(container);
+        }
+    }
+
+    private static async invokeSynchronouslyAsync(key: string, action: () => Promise<void>, replace: boolean = false): Promise<void> {
+
+        const container: ApiProviderSyncContainer = await this.getSynchronousContainerAsync(key);
+
+        await container.lock.runExclusive(async () => {
+            const length: number = container.queue.length;
+            replace = replace && (length > 0);
+            if (replace) {
+                container.queue[length - 1] = action;
+            } else {
+                container.queue.push(action);
+            }
+        });
+
+        await this.processSynchronouslyAsync(container);
+    }
+    
     private static async invokeLoadingCallbacksAsync(obsolete: boolean): Promise<void> {
         const isLoading: boolean = this.isLoading;
         if (isLoading != obsolete) {
@@ -124,7 +182,7 @@ export default class ApiProvider {
             }
             if ((jsonResponse.errors) && (typeof jsonResponse.errors === "object")) {
                 let errors: any = jsonResponse.errors;
-                for (var propertyName in errors) {
+                for (let propertyName in errors) {
                     if (errors.hasOwnProperty(propertyName)) {
                         let property: any | null = errors[propertyName];
                         if ((property != null) && (property.length != null)) {
@@ -345,7 +403,7 @@ export default class ApiProvider {
     }
 
     /**
-     * Make an HTTP POST-request.
+     * Makes an HTTP POST-request.
      *
      * @param endpoint Address where to send the POST request.
      * @param request Body of the POST-request.
@@ -368,6 +426,19 @@ export default class ApiProvider {
         const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
 
         return response;
+    }
+
+    /**
+     * Makes an HTTP POST-request on background. Cannot return any data. Multiple requests to the same endpoint execute in sequence.
+     *
+     * @param endpoint Address where to send the POST request.
+     * @param request Body of the POST-request.
+     * @param caller {@link IBaseComponent} making the POST-request. A spinner will be automatically set to this component,
+     *               unless its {@link IBaseComponent.hasSpinner} returns false, in which case the spinner will be set to the current {@link ILayoutPage}.
+     * @param replace The latest request has priority, the last request overrides the previous request in a queue if parameter is true (false by default).
+     */
+    public static async backgroundPostAsync(endpoint: string, request: any | null = null, caller: IBaseComponent | null = null, replace: boolean = false): Promise<void> {
+        await this.invokeSynchronouslyAsync(endpoint, () => this.postAsync(endpoint, request, caller), replace);
     }
 
     public static isApiError(error: Error): boolean {
