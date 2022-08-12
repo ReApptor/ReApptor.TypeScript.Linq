@@ -111,4 +111,34 @@ export default class ArrayUtility {
         }
         return result;
     }
+    
+    public static firstOrDefault<T>(items: readonly T[], callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+        const length: number = items.length;
+        if (callback) {
+            for (let i: number = 0; i < length; i++) {
+                const item: T = items[i];
+                if (callback(item)) {
+                    return item;
+                }
+            }
+        } else if (length > 0) {
+            return items[0];
+        }
+        return defaultValue ?? null;
+    }
+    
+    public static lastOrDefault<T>(items: readonly T[], callback: ((item: T) => boolean) | null | undefined, defaultValue?: T | null): T | null {
+        const length: number = items.length;
+        if (callback) {
+            for (let i: number = length - 1; i >= 0; i--) {
+                const item: T = items[i];
+                if (callback(item)) {
+                    return item;
+                }
+            }
+        } else if (length > 0) {
+            return items[length - 1];
+        }
+        return defaultValue ?? null;
+    }
 }
