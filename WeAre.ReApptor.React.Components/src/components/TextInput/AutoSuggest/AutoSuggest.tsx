@@ -86,19 +86,18 @@ export default class AutoSuggest extends BaseComponent<IAutoSuggestProps, IAutoS
         }
     }
 
-    private groupBy(data: AutoSuggestItem[]): AutoSuggestItemGroup[]
-    {
+    private groupBy(data: AutoSuggestItem[]): AutoSuggestItemGroup[] {
         const dictionary = new Dictionary<string, AutoSuggestItemGroup>();
-        data.forEach( item => {
+        data.forEach(item => {
             let group: AutoSuggestItemGroup | undefined = dictionary.getValue(item.group);
             if (!group) {
                 group = new AutoSuggestItemGroup(item.group);
                 dictionary.setValue(item.group, group)
             }
             group.items.push(item);
-        });  
+        });
         return dictionary.values();
-    };
+    }
 
     public get isOpen(): boolean {
         return this.state.isOpen;
@@ -128,7 +127,7 @@ export default class AutoSuggest extends BaseComponent<IAutoSuggestProps, IAutoS
         }
     }
 
-    render() {
+    public render(): React.ReactNode {
         const groups: AutoSuggestItemGroup[] = this.groupBy(this.items);
         
         return (
@@ -136,10 +135,19 @@ export default class AutoSuggest extends BaseComponent<IAutoSuggestProps, IAutoS
                 {
                     (this.items.length > 0) && groups.map((group, index: number) => (
                             <div key={index} className={styles.container}>
-                                <span className={styles.group}>{group.name}</span>
+                                
+                                {
+                                    (group.name) &&
+                                    (
+                                        <span className={styles.group}>{group.name}</span>
+                                    )
+                                }
+                                
                                 {
                                     group.items.map((item: any, index: number) => (
-                                        <div key={index} className={styles.groupItem} onClick={async() => await this.onSelectAsync(item)}>{item.value}</div>
+                                        <div key={index}
+                                             className={styles.groupItem}
+                                             onClick={() => this.onSelectAsync(item)}>{item.value}</div>
                                     ))
                                 }
                                 
@@ -149,6 +157,7 @@ export default class AutoSuggest extends BaseComponent<IAutoSuggestProps, IAutoS
                                         <hr className={styles.groupSeparator} />
                                     )
                                 }
+                                
                             </div>
                         )
                     )
