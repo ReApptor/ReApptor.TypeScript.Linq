@@ -1,6 +1,6 @@
 @import "../../variables";
 
-.textInput {
+input.textInput {
 
     &.small {
         font-size: 0.8rem;
@@ -13,11 +13,52 @@
     &.autoSuggest {
         padding-right: 1.5rem;
     }
+    
+    &.clearButton {
+        padding-right: 1.5rem;
+    }
+    
+    &.autoSuggest.clearButton {
+        padding-right: 2.5rem;
+    }
 }
 
-.icon {
+.autoSuggestIcon {
     position: absolute;
-    top: 0.8rem;
-    right: 0.8rem;
-    cursor: pointer;
+    top: 5px;
+    bottom: 4px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+
+    > i {
+        padding: 4px;
+        cursor: pointer;
+    }
+
+    &:not(:hover) {
+        opacity: 0.3;
+    }
+}
+
+.clearButtonIcon {
+    position: absolute;
+    top: 5px;
+    bottom: 4px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+
+    &:not(:hover) {
+        opacity: 0.3;
+    }
+    
+    > i {
+        padding: 4px;
+        cursor: pointer;
+    }
+    
+    &.autoSuggest {
+        right: 20px;
+    }
 }
