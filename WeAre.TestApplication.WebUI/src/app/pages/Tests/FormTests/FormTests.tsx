@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch, DocumentPreviewSize, PasswordValidationRule} from "@weare/reapptor-react-common";
-import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow, PasswordFormLocalizer} from "@weare/reapptor-react-components";
+import {Button, ButtonContainer, ButtonType, Checkbox, DateInput, Form, ThreeColumns, TwoColumns, TextAreaInput, TextInput, FourColumns, UrlInput, ValidationRow, PasswordFormLocalizer, AutoSuggestItem} from "@weare/reapptor-react-components";
 import Localizer from "../../../../localization/Localizer";
 
 interface IModalTestsState {
@@ -44,7 +44,7 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
 
                     <ThreeColumns>
 
-                        <TextInput autoComplete={false} label={"Text input #1 (NoAutoComplete)"} />
+                        <TextInput noAutoComplete clearButton label={"Text input #1 (NoAutoComplete, ClearButton)"} />
 
                         <TextInput required label={Localizer.textInput2LabelLanguageItemName} placeholder={Localizer.textInput2PlaceholderLanguageItemName} />
 
@@ -55,6 +55,10 @@ export default class FormTests extends BaseComponent<{}, IModalTestsState> {
                     <ThreeColumns>
 
                         <TextInput trim required label={"Text input #4 (trim, required)"} />
+
+                        <TextInput autoSuggestItems={[new AutoSuggestItem("-1-"), new AutoSuggestItem("-2-")]} label={"Text input #5 (Autosuggestion)"} />
+
+                        <TextInput clearButton autoSuggestItems={[new AutoSuggestItem("-1-"), new AutoSuggestItem("-2-")]} label={"Text input #5 (Autosuggestion, ClearButton)"} />
                         
                     </ThreeColumns>
 
