@@ -48,14 +48,18 @@ export interface ITextInputState extends IBaseInputState<string> {
 export default class TextInput extends BaseInput<string, ITextInputProps, ITextInputState> {
     
     private readonly _autoSuggestRef: React.RefObject<AutoSuggest> = React.createRef();
+    
+    private async invokeOnChangeAsync(): Promise<void> {
+        if (this.props.onChange) {
+            await this.props.onChange(this, this.value, true, false);
+        }
+    }
 
     private async onChangeAsync(event: React.FormEvent<HTMLInputElement>): Promise<void> {
         
         await this.valueChangeHandlerAsync(event);
         
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.value, true, false);
-        }
+        await this.invokeOnChangeAsync();
     }
 
     private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<any>): Promise<void> {
@@ -79,13 +83,22 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
     }
     
     private async setValueFromAutoSuggest(value: string): Promise<void> {
-        await this.updateValueAsync(value);
+        if (value != this.str) {
+            await this.updateValueAsync(value);
+
+            this.focus();
+
+            await this.invokeOnChangeAsync();
+        }
     }
     
     private async clearAsync(): Promise<void> {
         if (this.str) {
             await this.updateValueAsync("");
+
             this.focus();
+
+            await this.invokeOnChangeAsync();
         }
     }
     
