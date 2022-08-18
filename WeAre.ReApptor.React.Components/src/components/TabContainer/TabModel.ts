@@ -83,6 +83,16 @@ export class TabContainerModel {
     private saveActiveTabIndex(): void {
         UserInteractionDataStorage.set(this.id, this.activeIndex, this.dataStorageType);
     }
+
+    private findTab(tabOrIndexOrId: TabModel | number | string): TabModel | null {
+        return (typeof tabOrIndexOrId === "number")
+            ? ((tabOrIndexOrId >= 0) && (tabOrIndexOrId < this.tabs.length))
+                ? this.tabs[tabOrIndexOrId]
+                : null
+            : (typeof tabOrIndexOrId === "string")
+                ? this.tabs.find(tab => tab.id == tabOrIndexOrId) || null
+                : tabOrIndexOrId;
+    }
     
     public id: string = "";
     
@@ -136,13 +146,7 @@ export class TabContainerModel {
     
     public async activateTabAsync(tabOrIndexOrId: TabModel | number | string): Promise<void> {
 
-        const tab: TabModel | null = (typeof tabOrIndexOrId == "number")
-            ? ((tabOrIndexOrId >= 0) && (tabOrIndexOrId < this.tabs.length))
-                ? this.tabs[tabOrIndexOrId]
-                : null
-            : (typeof tabOrIndexOrId == "string")
-                ? this.tabs.find(tab => tab.id == tabOrIndexOrId) || null
-                : tabOrIndexOrId;
+        const tab: TabModel | null = this.findTab(tabOrIndexOrId);
         
         if ((tab) && (!tab.active) && (!tab.closed)) {
             
@@ -171,8 +175,10 @@ export class TabContainerModel {
         }
     }
     
-    public async closeTabAsync(tab: TabModel, confirmed: boolean, data: string): Promise<void> {
-        if (!tab.closed) {
+    public async closeTabAsync(tabOrIndexOrId: TabModel | number | string, confirmed: boolean, data: string): Promise<void> {
+        const tab: TabModel | null = this.findTab(tabOrIndexOrId);
+
+        if ((tab) && (!tab.closed)) {
 
             const confirmNeeded: boolean = (!!tab.closeConfirm) && (!confirmed);
 

@@ -84,7 +84,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         return (
             <li id={this.props.id} className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle, this.classNames.headerTab)} title={TabContainerLocalizer.get(model.tooltip)}>
 
-                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink, typedHeaderStyle)} onClick={async () => await this.onClickAsync()}>
+                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink, typedHeaderStyle)} onClick={() => this.onClickAsync()}>
                     
                     {
                         (model.icon) &&
@@ -98,7 +98,10 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                     {
                         (model.onClose) &&
                         (
-                            <Icon className={this.css(styles.close, this.classNames.headerClose)} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
+                            <Icon className={this.css(styles.close, this.classNames.headerClose)}
+                                  name="fa fa-times"
+                                  onClick={()=> this.onCloseAsync()}
+                            />
                         )
                     }
 
