@@ -3,6 +3,7 @@ import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/reapptor-toolkit";
 import {RenderCallback} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
+import Icon, {IconSize} from "../Icon/Icon";
 import DateInputLocalizer from "./DateInputLocalizer";
 
 import formStyles from "../Form/Form.module.scss";
@@ -17,8 +18,6 @@ import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
 import nb from "date-fns/locale/nb";
 import da from "date-fns/locale/da";
-import {DropdownRequiredType} from "../Dropdown/Dropdown";
-import Icon, {IconSize} from "../Icon/Icon";
 
 registerLocale("fi", fi);
 registerLocale("en", en);
