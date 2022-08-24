@@ -17,6 +17,8 @@ import pl from "date-fns/locale/pl";
 import sv from "date-fns/locale/sv";
 import nb from "date-fns/locale/nb";
 import da from "date-fns/locale/da";
+import {DropdownRequiredType} from "../Dropdown/Dropdown";
+import Icon, {IconSize} from "../Icon/Icon";
 
 registerLocale("fi", fi);
 registerLocale("en", en);
@@ -48,6 +50,12 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     customInput?: RenderCallback;
     showTime?: boolean;
     showOnlyTime?: boolean;
+    
+    /**
+     * The 'X' button to clear the date
+     */
+    clearButton?: boolean;
+    
     timeIntervals?: number;
     timeFormat?: string;
     excludeDates?: Date[];
@@ -132,6 +140,10 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         e.preventDefault()
     }
 
+    public get clearButton(): boolean {
+        return (this.props.clearButton === true);
+    }
+    
     public async openAsync(): Promise<void> {
         this.click();
     }
@@ -166,6 +178,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     public renderInput(): React.ReactNode {
         const smallStyle: any = (this.props.small) && styles.small;
         const readonlyStyle: any = (this.readonly) && styles.readonly;
+        const clearButton: boolean = (this.clearButton) && (!!this.state.model.value);
 
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
@@ -200,6 +213,20 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             onChangeRaw={(e) => this.handleRawChangeAsync(e)}
                             onBlur={() => this.valueBlurHandlerAsync()}
                 />
+
+                {
+                    (clearButton) &&
+                    (
+                        <div className={this.css(styles.clearButtonIcon)}>
+                            <Icon stopPropagation
+                                  name="fa fa-times"
+                                  size={IconSize.Normal}
+                                  onClick={() => this.clearAsync()}
+                            />
+                        </div>
+                    )
+                }
+                
             </div>
         );
     }
