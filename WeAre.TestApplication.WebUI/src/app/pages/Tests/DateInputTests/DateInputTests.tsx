@@ -8,6 +8,7 @@ export interface IDateInputTestsState {
     maxDate: null | Date;
     minDateActive: boolean;
     maxDateActive: boolean;
+    clearButton: boolean;
     todayButton: boolean;
     inline: boolean;
     popup: boolean;
@@ -30,6 +31,7 @@ export default class DateInputTests extends BaseComponent {
         maxDate: null,
         minDateActive: false,
         maxDateActive: false,
+        clearButton: false,
         showYearDropdown: false,
         todayButton: false,
         inline: false,
@@ -80,6 +82,8 @@ export default class DateInputTests extends BaseComponent {
                     
                     <Checkbox inline className="pt-1 pb-1" label="maxDate" value={this.state.maxDateActive} onChange={async (sender, maxDateActive) => {await this.setState({maxDateActive})}} />
                     
+                    <Checkbox inline className="pt-1 pb-1" label="clearButton" value={this.state.clearButton} onChange={async (sender, clearButton) => {await this.setState({clearButton})}} />
+                    
                     {
                         this.state.minDateActive && <DateInput className="pt-1 pb-1" value={this.state.minDate || undefined} inline label="minDate" onChange={async (minDate)=>{ await this.setState({minDate})}}/>
                     }
@@ -97,6 +101,7 @@ export default class DateInputTests extends BaseComponent {
                                    popup={this.state.popup}
                                    showTime={this.state.showTime}
                                    showOnlyTime={this.state.showOnlyTime}
+                                   clearButton={this.state.clearButton}
                                    small={this.state.small}
                                    showMonthDropdown={this.state.showMonthDropdown}
                                    showMonthYearPicker={this.state.showMonthYearPicker}

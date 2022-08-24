@@ -132,6 +132,8 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         {
             header: "Date",
             accessor: "date",
+            editable: true,
+            type: ColumnType.Date,
             format: "D",
             sorting: true,
             minWidth: 90,
