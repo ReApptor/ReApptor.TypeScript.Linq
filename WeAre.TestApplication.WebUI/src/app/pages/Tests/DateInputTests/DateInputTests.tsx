@@ -116,9 +116,14 @@ export default class DateInputTests extends BaseComponent {
                         
                     </OneColumn>
 
-                    <h4 className="pt-1 pb-1">{this.state.normalDateInputValue.toDateString()} - {this.state.normalDateInputValue.toTimeString()}</h4>
+                    {
+                        (this.state.normalDateInputValue) &&
+                        (
+                            <h4 className="pt-1 pb-1">{this.state.normalDateInputValue.toDateString()} - {this.state.normalDateInputValue.toTimeString()}</h4>
+                        )
+                    }
 
-                    <h4 className="pt-1 pb-1">{JSON.stringify(this.state.normalDateInputValue)}</h4>
+                    <h4 className="pt-1 pb-1">{(this.state.normalDateInputValue) ? JSON.stringify(this.state.normalDateInputValue) : "Date has been cleared"}</h4>
 
                     <Button label={"Open"} onClick={async () => { await this._ref.current?.openAsync(); }}/>
 
