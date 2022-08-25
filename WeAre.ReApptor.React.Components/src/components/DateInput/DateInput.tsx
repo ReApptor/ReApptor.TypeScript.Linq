@@ -151,6 +151,11 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         const model = this.state.model as any;
         model.value = null;
         await this.setState({model});
+        
+        if (this.props.onChange) {
+            console.log("onChange, model = ", this.state.model.value);
+            await this.props.onChange(this.state.model.value);
+        }
     }
 
     public clear(): void {
