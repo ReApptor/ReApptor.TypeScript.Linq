@@ -2018,10 +2018,10 @@ export class GridTransformer {
         to.editable = column.editable;
         to.accessor = column.accessor;
         to.actions = column.actions.map((columnAction) => this.toCellAction<TItem>(columnAction));
+        to.title = column.title;
         if (column.settings.descriptionAccessor) {
             to.actions.push(this.toDescriptionCellAction(column));
         }
-        to.title = column.title;
         return to;
     }
 

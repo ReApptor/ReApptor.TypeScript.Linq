@@ -205,7 +205,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                            ref={this._inputRef as React.RefObject<TextInput>}
                            className={this.css(gridStyles.textInput, noWrapStyle)}
                            value={cellValue || ""}
-                           title={cell.title}
+                           title={GridLocalizer.get(cell.title)}
                            maxLength={settings.maxLength || undefined}
                            onChange={(sender, value, userInteraction, done) => this.onTextCellChangeAsync(cell, value, userInteraction, done)}
                 />
@@ -233,7 +233,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
         
         return (
-            <div className={this.css(alignCenter)} title={cell.title} onClick={() => this.invokeCallback(cell)}>
+            <div className={this.css(alignCenter)} title={GridLocalizer.get(cell.title)} onClick={() => this.invokeCallback(cell)}>
                 {(icon) && (<Icon {...icon} size={size}/>)}
             </div>
         );
@@ -242,7 +242,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
         const id: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
         return (
-            <label htmlFor={id} title={cell.title}>
+            <label htmlFor={id} title={GridLocalizer.get(cell.title)}>
                 <input type="checkbox"
                        id={id}
                        checked={cellValue}
@@ -348,7 +348,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         (
                             <div className={gridStyles.twoLines}>
                                 <DateInput className={this.css(shortDateStyle)}
-                                           title={cell.title}
+                                           title={GridLocalizer.get(cell.title)}
                                            shortDate={shortDate}
                                            minDate={minDate}
                                            maxDate={maxDate}
@@ -363,7 +363,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         :
                         (
                             <DateInput className={this.css(shortDateStyle)}
-                                       title={cell.title}
+                                       title={GridLocalizer.get(cell.title)}
                                        shortDate={shortDate}
                                        minDate={minDate}
                                        maxDate={maxDate}
