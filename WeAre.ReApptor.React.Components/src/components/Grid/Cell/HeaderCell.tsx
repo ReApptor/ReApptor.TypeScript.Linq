@@ -147,6 +147,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             (
                 <th id={this.id}
                     style={inlineStyles}
+                    title={GridLocalizer.get(column.title)}
                     rowSpan={rowSpan || undefined}
                     colSpan={colSpan || undefined}
                     className={this.css(styles.th, sortableClassName, sortDirectionClassName, stickyHeaderClassName)}
