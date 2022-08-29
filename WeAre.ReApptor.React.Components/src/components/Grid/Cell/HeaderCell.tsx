@@ -70,8 +70,11 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                 } else {
                     colSpan = 0;
                     for (let i: number = columnIndex; i < grid.columns.length; i++) {
-                        if (grid.columns[i].group === column.group) {
-                            colSpan++;
+                        const nextColumn: ColumnModel<TItem> = grid.columns[i];
+                        if (nextColumn.group === column.group) {
+                            if (nextColumn.visible) {
+                                colSpan++;
+                            }
                         } else {
                             break;
                         }
@@ -144,6 +147,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             (
                 <th id={this.id}
                     style={inlineStyles}
+                    title={GridLocalizer.get(column.title)}
                     rowSpan={rowSpan || undefined}
                     colSpan={colSpan || undefined}
                     className={this.css(styles.th, sortableClassName, sortDirectionClassName, stickyHeaderClassName)}
