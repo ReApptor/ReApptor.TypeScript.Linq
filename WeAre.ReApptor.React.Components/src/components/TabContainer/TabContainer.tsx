@@ -15,6 +15,7 @@ export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClas
 }
 
 interface ITabContainerProps extends ITabContainerDefinition {
+    id?: string;
     classNames?: ITabContainerClassNames;
 
     /**
@@ -107,7 +108,7 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
         return classNamesCopy;
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
 
         const model: TabContainerModel = this.model;
         model.instance = this;
