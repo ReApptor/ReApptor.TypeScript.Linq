@@ -15,7 +15,6 @@ export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClas
 }
 
 interface ITabContainerProps extends ITabContainerDefinition {
-    id?: string;
     classNames?: ITabContainerClassNames;
 
     /**
