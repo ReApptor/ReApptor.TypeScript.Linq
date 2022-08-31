@@ -921,7 +921,7 @@ export default class Utility {
             fileReader.readAsArrayBuffer(inputFile)
         });
     }
-
+    
     public static getFileExtension(name?: string | null): string {
         if (name) {
             const index: number = name.lastIndexOf(".");
@@ -932,6 +932,30 @@ export default class Utility {
         return "";
     }
 
+    public static toBlob(file: FileModel, sliceSize: number = 512): Blob {
+        const byteCharacters: string = atob(file.src);
+        const byteArrays: Uint8Array[] = [];
+
+        for (let offset: number = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice: string = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers: number[] = new Array(slice.length);
+            for (let i: number = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        return new Blob(byteArrays, {type: file.type});
+    }
+
+    public static toObjectUrl(file: FileModel, sliceSize: number = 512): string {
+        const blob = Utility.toBlob(file, sliceSize);
+        return URL.createObjectURL(blob);
+    }
+    
     /**
      * @param mimeType mimeType to update
      * @return if mimeType is known then it will return the new version otherwise it will return the given mimeType
@@ -943,7 +967,6 @@ export default class Utility {
 
         return mimeType;
     }
-
 
     /**
      * some browsers returns some deprecated mimeTypes as part of DataUrl, this method will try to update the known ones.
