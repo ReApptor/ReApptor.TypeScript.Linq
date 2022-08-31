@@ -921,7 +921,7 @@ export default class Utility {
             fileReader.readAsArrayBuffer(inputFile)
         });
     }
-    
+
     public static getFileExtension(name?: string | null): string {
         if (name) {
             const index: number = name.lastIndexOf(".");
@@ -933,7 +933,11 @@ export default class Utility {
     }
 
     public static toBlob(file: FileModel, sliceSize: number = 512): Blob {
-        const byteCharacters: string = atob(file.src);
+        const src: string = (file.src.includes(","))
+            ? file.src.split(",")[1].trim()
+            : file.src;
+        
+        const byteCharacters: string = atob(src);
         const byteArrays: Uint8Array[] = [];
 
         for (let offset: number = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -955,7 +959,7 @@ export default class Utility {
         const blob = Utility.toBlob(file, sliceSize);
         return URL.createObjectURL(blob);
     }
-    
+
     /**
      * @param mimeType mimeType to update
      * @return if mimeType is known then it will return the new version otherwise it will return the given mimeType
@@ -1275,7 +1279,7 @@ export default class Utility {
     public static getComponentId(): string {
         return `_${this.getId()}`;
     }
-    
+
     /**
      * @returns A new instance of the GUID string (a globally unique identifier).
      */
