@@ -227,7 +227,6 @@ export interface ILayoutPage extends IAsyncComponent {
      */
     download(file: FileModel): void;
 
-
     /**
      * Take a picture (file) from camera of file storage.
      * @param camera True to take a picture from camera (outward-facing camera, "capture:environment").
