@@ -87,6 +87,11 @@ namespace WeAre.ReApptor.Toolkit.Extensions
         {
             return new DateTime(value.Year, value.Month, 1, 0, 0, 0, value.Kind);
         }
+        
+        public static DateTime FirstDayOfYear(this DateTime value)
+        {
+            return new DateTime(value.Year, 1, 1, 0, 0, 0, value.Kind);
+        }
 
         public static DateTime FirstDayOfNextMonth(this DateTime value)
         {
