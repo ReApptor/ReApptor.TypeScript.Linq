@@ -87,6 +87,29 @@ namespace WeAre.ReApptor.Toolkit.Extensions
         {
             return new DateTime(value.Year, value.Month, 1, 0, 0, 0, value.Kind);
         }
+        
+        public static int GetQuarter(this DateTime value)
+        {
+            return (value.Month - 1) / 3 + 1;
+        }
+
+        /// <summary>
+        /// Returns first day of quarter based on quarter number. Quarter number starts from 1, can be 1, 2, 3, 4 and if null returns first day of quarter of provided date. 
+        /// </summary>
+        public static DateTime FirstDayOfQuarter(this DateTime value, int? quarterNumber = null)
+        {
+            if ((quarterNumber != null) && (quarterNumber < 1 || quarterNumber > 4))
+                throw new ArgumentOutOfRangeException(nameof(quarterNumber), $"Invalid quarter number \"{quarterNumber}\", must be in range of 1-4.");
+
+            quarterNumber ??= GetQuarter(value);
+
+            return new DateTime(value.Year, 3 * (quarterNumber.Value - 1) + 1, 1, 0, 0, 0, value.Kind);
+        }
+        
+        public static DateTime FirstDayOfYear(this DateTime value)
+        {
+            return new DateTime(value.Year, 1, 1, 0, 0, 0, value.Kind);
+        }
 
         public static DateTime FirstDayOfNextMonth(this DateTime value)
         {
