@@ -1,5 +1,5 @@
 import React from "react";
-import {FileModel} from "@weare/reapptor-toolkit";
+import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
@@ -24,10 +24,10 @@ class DocumentSize {
     public zoom: number;
 
     public getSrc(data: FileModel | null): string {
-        return (data) && (data.src)
+        return ((data) && (data.src))
             ? (this.zoom > 0)
-                ? `${data.src}#zoom=${this.zoom}`
-                : data.src
+                ? `${Utility.toObjectUrl(data)}#zoom=${this.zoom}`
+                : Utility.toObjectUrl(data)
             : "";
     }
 
