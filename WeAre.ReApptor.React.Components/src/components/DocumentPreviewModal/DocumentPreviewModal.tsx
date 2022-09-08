@@ -106,10 +106,10 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     }
     
     private download(): void {
-        const document = this.state.data;
-        
-        if(document) {
-            return ch.getLayout().download(document);
+        const document: FileModel | null = this.state.data;
+
+        if (document) {
+            return ch.download(document);
         }
     }
     
@@ -118,7 +118,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
             <Icon name="far download"
                   className="blue"
                   size={IconSize.X2}
-                  onClick={async () => await this.download()} 
+                  onClick={async () => this.download()} 
                   tooltip={DocumentPreviewModalLocalizer.download}
             />
         );
@@ -181,15 +181,16 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
         const documentSize: DocumentSize = this.geDocumentSize();
         
         return (
-            <Modal id={this.id} ref={this._modalRef}
+            <Modal info
+                   id={this.id}
+                   ref={this._modalRef} 
                    className={styles.documentPreviewModal}
                    bodyClassName={styles.body}
                    title={this.title || DocumentPreviewModalLocalizer.preview}
                    subtitle={this.subtitle || "..."}
-                   info
                    size={ModalSize.Auto}
                    toolbar={() => this.renderToolbar()}
-                   onToggle={async (sender: Modal, isOpen) => await this.onToggleAsync(isOpen)}
+                   onToggle={(sender: Modal, isOpen) => this.onToggleAsync(isOpen)}
             >
                 
                 <div className={styles.contentA4}>
