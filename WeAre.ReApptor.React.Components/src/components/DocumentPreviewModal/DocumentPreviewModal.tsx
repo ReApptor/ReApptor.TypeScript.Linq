@@ -142,7 +142,10 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     
     public async openAsync(model: DocumentPreviewModel): Promise<void> {
         await this.setState({ model });
-        await this._modalRef.current!.toggleAsync();
+        
+        if (this._modalRef.current) {
+            await this._modalRef.current.toggleAsync();
+        }
     }
     
     public get isOpen(): boolean {
