@@ -3,10 +3,10 @@ import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
+import Icon, { IconSize } from "../Icon/Icon";
+import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
 
 import styles from "./DocumentPreviewModal.module.scss";
-import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
-import Icon, { IconSize } from "../Icon/Icon";
 
 const A4 = { width: 595, height: 842 };
 
