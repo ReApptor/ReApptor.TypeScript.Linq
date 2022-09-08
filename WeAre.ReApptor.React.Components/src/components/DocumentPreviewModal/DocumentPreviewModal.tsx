@@ -1,12 +1,12 @@
 import React from "react";
-import {FileModel} from "@weare/reapptor-toolkit";
+import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
+import Icon, { IconSize } from "../Icon/Icon";
+import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
 
 import styles from "./DocumentPreviewModal.module.scss";
-import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
-import Icon, { IconSize } from "../Icon/Icon";
 
 const A4 = { width: 595, height: 842 };
 
@@ -24,10 +24,10 @@ class DocumentSize {
     public zoom: number;
 
     public getSrc(data: FileModel | null): string {
-        return (data) && (data.src)
+        return ((data) && (data.src))
             ? (this.zoom > 0)
-                ? `${data.src}#zoom=${this.zoom}`
-                : data.src
+                ? `${Utility.toObjectUrl(data)}#zoom=${this.zoom}`
+                : Utility.toObjectUrl(data)
             : "";
     }
 
@@ -142,7 +142,10 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     
     public async openAsync(model: DocumentPreviewModel): Promise<void> {
         await this.setState({ model });
-        await this._modalRef.current!.toggleAsync();
+        
+        if (this._modalRef.current) {
+            await this._modalRef.current.toggleAsync();
+        }
     }
     
     public get isOpen(): boolean {
