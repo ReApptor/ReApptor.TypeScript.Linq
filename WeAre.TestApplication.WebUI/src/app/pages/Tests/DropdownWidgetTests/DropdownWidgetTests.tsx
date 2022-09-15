@@ -10,7 +10,10 @@ export interface IDropdownWidgetTestsState {
     required: boolean,
     expanded: boolean,
     amountListItem: boolean,
-    noDescription: boolean
+    noDescription: boolean,
+    icon: boolean,
+    minimized: boolean,
+    autoCollapse: boolean,
 }
 
 export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidgetTestsState> {
@@ -22,7 +25,10 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
         required: false,
         expanded: false,
         amountListItem: false,
-        noDescription: false
+        noDescription: false,
+        icon: false,
+        minimized: false,
+        autoCollapse: false,
     };
 
     private readonly _listRef: React.RefObject<List> = React.createRef();
@@ -132,6 +138,24 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
                                   onChange={async (sender, value) => await this.setState({noDescription:value})}
                         />
 
+                        <Checkbox label="Icon"
+                                  inline
+                                  value={this.state.icon}
+                                  onChange={async (sender, value) => await this.setState({icon: value})}
+                        />
+
+                        <Checkbox label="Minimized"
+                                  inline
+                                  value={this.state.minimized}
+                                  onChange={async (sender, value) => await this.setState({minimized: value})}
+                        />
+
+                        <Checkbox label="AutoCollapse"
+                                  inline
+                                  value={this.state.autoCollapse}
+                                  onChange={async (sender, value) => await this.setState({autoCollapse: value})}
+                        />
+
                     </Form>
                     <div>
                         <WidgetContainer>
@@ -144,6 +168,9 @@ export default class DropdownWidgetTests extends BaseComponent<{}, IDropdownWidg
                                             favorite={this.state.favorite}
                                             required={this.state.required}
                                             expanded={this.state.expanded}
+                                            minimized={this.state.minimized}
+                                            autoCollapse={this.state.autoCollapse}
+                                            icon={this.state.icon ? {name: "far fa-atom-alt"} : undefined}
                                             onChange={async (sender, item: AmountListItem) => await ch.flyoutMessageAsync(sender.id + ".onChange:" + item + " " + item.amount)}
                             />
 
