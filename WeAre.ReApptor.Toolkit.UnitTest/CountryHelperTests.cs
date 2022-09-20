@@ -12,6 +12,8 @@ namespace WeAre.ReApptor.Toolkit.UnitTest
             var testData = new[]
             {
                 (Code: "fi", StandardName: "GMT+02:00", SupportsDaylightSavingTime: true),
+                (Code: "de", StandardName: "GMT+01:00", SupportsDaylightSavingTime: true),
+                (Code: "fr", StandardName: "GMT+01:00", SupportsDaylightSavingTime: true),
             };
 
             foreach (var item in testData)

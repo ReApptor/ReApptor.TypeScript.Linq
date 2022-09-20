@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace WeAre.ReApptor.Toolkit.Extensions
 {
@@ -63,16 +64,6 @@ namespace WeAre.ReApptor.Toolkit.Extensions
                 : from;
         }
 
-        public static DateTime EndOfDay(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
-        }
-
-        public static DateTime? EndOfDay(this DateTime? date)
-        {
-            return (date != null) ? EndOfDay(date.Value) : (DateTime?)null;
-        }
-
         public static DateTime StartOfDay(this DateTime date)
         {
             return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, 0, date.Kind);
@@ -83,9 +74,59 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             return (date != null) ? StartOfDay(date.Value) : (DateTime?)null;
         }
 
+        public static DateTime EndOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
+        }
+
+        public static DateTime? EndOfDay(this DateTime? date)
+        {
+            return (date != null) ? EndOfDay(date.Value) : (DateTime?)null;
+        }
+
         public static DateTime FirstDayOfMonth(this DateTime value)
         {
             return new DateTime(value.Year, value.Month, 1, 0, 0, 0, value.Kind);
+        }
+
+        public static DateTime LastDayOfMonth(this DateTime value)
+        {
+            return new DateTime(value.Year, value.Month, DateTime.DaysInMonth(value.Year, value.Month), 0, 0, 0, value.Kind);
+        }
+
+        public static DateTime FirstDayOfNextMonth(this DateTime value)
+        {
+            return value.LastDayOfMonth().AddDays(1);
+        }
+        
+        public static DateTime FirstDayOfWeek(DateTime value, DayOfWeek? firstDayOfWeek = null)
+        {
+            firstDayOfWeek ??= Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            while (value.DayOfWeek != firstDayOfWeek)
+            {
+                value = value.AddDays(-1);
+            }
+            return value;
+        }
+
+        public static DateTime LastDayOfWeek(DateTime value, DayOfWeek? firstDayOfWeek = null)
+        {
+            firstDayOfWeek ??= Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            DayOfWeek lastDayOfWeek = (firstDayOfWeek == DayOfWeek.Sunday)
+                ? DayOfWeek.Saturday
+                : DayOfWeek.Monday;
+
+            while (value.DayOfWeek != lastDayOfWeek)
+            {
+                value = value.AddDays(+1);
+            }
+
+            return value;
+        }
+        
+        public static DateTime FirstDayOfYear(this DateTime value)
+        {
+            return new DateTime(value.Year, 1, 1, 0, 0, 0, value.Kind);
         }
         
         public static int GetQuarter(this DateTime value)
@@ -104,28 +145,6 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             quarterNumber ??= GetQuarter(value);
 
             return new DateTime(value.Year, 3 * (quarterNumber.Value - 1) + 1, 1, 0, 0, 0, value.Kind);
-        }
-        
-        public static DateTime FirstDayOfYear(this DateTime value)
-        {
-            return new DateTime(value.Year, 1, 1, 0, 0, 0, value.Kind);
-        }
-
-        public static DateTime FirstDayOfNextMonth(this DateTime value)
-        {
-            return value.LastDayOfMonth().AddDays(1);
-        }
-
-        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
-        {
-            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
-            return dt.AddDays(-1 * diff).Date;
-        }
-
-        public static DateTime LastDayOfMonth(this DateTime value)
-        {
-            //return value.FirstDayOfMonth().AddMonths(1).AddDays(-1);
-            return new DateTime(value.Year, value.Month, DateTime.DaysInMonth(value.Year, value.Month), 0, 0, 0, value.Kind);
         }
 
         public static bool IsDateOnly(this DateTime value)
