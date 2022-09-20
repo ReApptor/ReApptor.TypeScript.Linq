@@ -99,7 +99,7 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             return value.LastDayOfMonth().AddDays(1);
         }
         
-        public static DateTime FirstDayOfWeek(DateTime value, DayOfWeek? firstDayOfWeek = null)
+        public static DateTime FirstDayOfWeek(this DateTime value, DayOfWeek? firstDayOfWeek = null)
         {
             firstDayOfWeek ??= Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             while (value.DayOfWeek != firstDayOfWeek)
@@ -109,7 +109,7 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             return value;
         }
 
-        public static DateTime LastDayOfWeek(DateTime value, DayOfWeek? firstDayOfWeek = null)
+        public static DateTime LastDayOfWeek(this DateTime value, DayOfWeek? firstDayOfWeek = null)
         {
             firstDayOfWeek ??= Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             DayOfWeek lastDayOfWeek = (firstDayOfWeek == DayOfWeek.Sunday)
