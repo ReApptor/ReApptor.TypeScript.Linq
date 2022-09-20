@@ -30,8 +30,10 @@ namespace WeAre.ReApptor.Common.Helpers
             new CountryInfo("pl", "Polska", "Poland", "pl-pl", new[] { "Europe/Warsaw", "Central European Standard Time" }),
             new CountryInfo("ru", "Россия", "Russia", "ru-ru", new[] { "Europe/Moscow", "Russian Standard Time", "Moscow Standard Time" }),
             new CountryInfo("ua", "Україна", "Ukraine", "uk-ua", new[] { "Europe/Kiev", "Eastern European Time" }, "uk"),
-            new CountryInfo("gb", "United Kingdom", "United Kingdom", "en-GB", new[] { "Europe/London", "GMT Standard Time" }, "en"),
-            new CountryInfo("us", "United States", "United States", "en-US", new[] { "America/Los_Angeles", "Pacific Standard Time" }),
+            new CountryInfo("de", "Deutschland", "Germany", "de-de", new[] { "Europe/Berlin", "Central European Time" }),
+            new CountryInfo("fr", "France", "France", "fr-fr", new[] { "Europe/Paris", "Central European Time" }),
+            new CountryInfo("gb", "United Kingdom", "United Kingdom", "en-gb", new[] { "Europe/London", "GMT Standard Time" }, "en"),
+            new CountryInfo("us", "United States", "United States", "en-us", new[] { "America/Los_Angeles", "Pacific Standard Time" }),
         };
 
         public static readonly CountryInfo DefaultCountry = Countries[0];
