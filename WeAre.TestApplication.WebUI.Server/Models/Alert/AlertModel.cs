@@ -12,9 +12,9 @@
 
         public bool AutoClose { get; set; }
 
-        public int AutoCloseDelay { get; set; } = 5000;
+        public int? AutoCloseDelay { get; set; }
 
-        public bool Flyout { get; set; } = false;
+        public bool Flyout { get; set; }
 
         public AlertModel()
         {
