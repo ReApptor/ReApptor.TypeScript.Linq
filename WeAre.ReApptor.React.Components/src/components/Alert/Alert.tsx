@@ -1,6 +1,7 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
 import {AlertModel, AlertType, BaseComponent} from "@weare/reapptor-react-common";
+import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import AlertLocalizer from "./AlertLocalizer";
 
 import styles from "./Alert.module.scss";
@@ -21,7 +22,9 @@ export default class Alert extends BaseComponent<IAlertProps> {
 
     private async closeWithDelayAsync(): Promise<void> {
         
-        await Utility.wait(this.model.autoCloseDelay);
+        const autoCloseDelay: number = this.model.autoCloseDelay ?? AthenaeumComponentsConstants.alertAutoCloseDelay;
+        
+        await Utility.wait(autoCloseDelay);
         
         this.fadeOut();
         
