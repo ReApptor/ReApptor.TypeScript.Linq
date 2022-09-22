@@ -1,6 +1,5 @@
 import {AlertType} from "../Enums";
 import {Utility} from "@weare/reapptor-toolkit";
-import {AthenaeumComponentsConstants} from "@weare/reapptor-react-components";
 
 export default class AlertModel {
 
@@ -9,7 +8,7 @@ export default class AlertModel {
         this.alertType = alertType;
         this.autoClose = autoClose;
         this.flyout = flyout;
-        this.autoCloseDelay = autoCloseDelay || AthenaeumComponentsConstants.alertCloseDelay;
+        this.autoCloseDelay = autoCloseDelay ?? null;
     }
 
     /**
@@ -50,7 +49,7 @@ export default class AlertModel {
      *
      * @default 5000
      */
-    public autoCloseDelay: number = AthenaeumComponentsConstants.alertCloseDelay;
+    public autoCloseDelay: number | null = null;
 
     /**
      * Should the alert fly out from the side of the screen instead of being contained within the main PageContainer.
