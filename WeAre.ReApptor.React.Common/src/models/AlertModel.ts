@@ -8,10 +8,7 @@ export default class AlertModel {
         this.alertType = alertType;
         this.autoClose = autoClose;
         this.flyout = flyout;
-        
-        if (autoCloseDelay) {
-            this.autoCloseDelay = autoCloseDelay;
-        }
+        this.autoCloseDelay = autoCloseDelay ?? null;
     }
 
     /**
@@ -52,10 +49,10 @@ export default class AlertModel {
      *
      * @default 5000
      */
-    public autoCloseDelay: number = 5000;
+    public autoCloseDelay: number | null = null;
 
     /**
-     * Should the alert fly out from the side of the sceen instead of being contained within the main PageContainer.
+     * Should the alert fly out from the side of the screen instead of being contained within the main PageContainer.
      *
      * @default false
      */

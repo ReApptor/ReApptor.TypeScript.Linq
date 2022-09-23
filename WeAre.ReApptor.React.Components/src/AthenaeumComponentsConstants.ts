@@ -12,7 +12,7 @@ export default class AthenaeumComponentsConstants extends AthenaeumConstants {
 
     public static readonly imageFileTypes: string[] = ["image/gif", "image/jpeg", "image/png"];
     
-    public static readonly alertCloseDelay = 5000;
+    public static readonly alertAutoCloseDelay = 5000;
     
     public static readonly alertAnimationDelay = 500;
     
