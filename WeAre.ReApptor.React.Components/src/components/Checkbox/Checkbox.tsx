@@ -46,7 +46,7 @@ export default class Checkbox<TProps extends ICheckboxProps = ICheckboxProps> ex
         await this.toggleAsync();
     }
     
-    protected getContainerClassname(): string {
+    protected getContainerClassName(): string {
         return (this.props.inline && this.props.inlineType && this.props.inlineType === InlineType.Right) ? styles.inlineRight : "";
     }
 

@@ -760,7 +760,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         return BaseInputType.Text;
     }
 
-    protected getContainerClassname(): string {
+    protected getContainerClassName(): string {
         return "";
     }
 
@@ -832,7 +832,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const inlineStyle: any = (this.inline) && ("d-flex flex-row align-items-center " + styles.inlineInputGroup);
 
         return (
-            <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassname(), this.props.className)} hidden={this.props.hidden}>
+            <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassName(), this.props.className)} hidden={this.props.hidden}>
 
                 {
                     (this.props.label) &&
