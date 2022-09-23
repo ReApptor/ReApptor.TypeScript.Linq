@@ -114,6 +114,10 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
         return BaseInputType.Text;
     }
 
+    protected getContainerClassName(): string {
+        return styles.textInput;
+    }
+
     protected async onHideEditAsync(): Promise<void> {
         if (this.props.onChange) {
             await this.props.onChange(this, this.value, true, true);
