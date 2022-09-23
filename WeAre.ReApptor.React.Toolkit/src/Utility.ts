@@ -1099,7 +1099,6 @@ export default class Utility {
     public static findValueByAccessor(instance: any, accessor: string | readonly string[]): any | null | undefined {
         if (typeof accessor == "string") {
             const tuple: [any, string] | undefined = this.findInstanceByAccessor(instance, accessor);
-
             if (tuple) {
                 instance = tuple[0];
                 accessor = tuple[1];
@@ -1123,7 +1122,7 @@ export default class Utility {
     public static findStringValueByAccessor(instance: any, accessor: string | ReadonlyArray<string>): string | null {
         if (typeof accessor == "string") {
             const value: any | null | undefined = Utility.findValueByAccessor(instance, accessor);
-
+            
             if ((value != null) && (typeof value == "string") && (value.length > 0)) {
                 return value as string;
             }
@@ -1301,6 +1300,10 @@ export default class Utility {
             lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + "-" +
             lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
             lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
+    }
+    
+    public static isGuid(value: string | null | undefined): boolean {
+        return (!!value) && (!!value.match(AthenaeumConstants.guidRegex));
     }
 }
 
