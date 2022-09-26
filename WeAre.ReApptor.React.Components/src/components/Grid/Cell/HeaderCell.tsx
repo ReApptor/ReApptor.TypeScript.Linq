@@ -103,10 +103,14 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
         const navbarDefaultHeight = '45px';
         const topCssProperty = `calc(var(--app-navbar-height, ${navbarDefaultHeight}) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`;
 
+        const minHeight: string | undefined = ((!top) && (!column.group) && (grid.headerMinHeight))
+            ? `${grid.headerMinHeight}px`
+            : undefined;
+        
         const inlineStyles: React.CSSProperties = {
             textAlign: StylesUtility.textAlign(textAlign),
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
-            height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
+            height: minHeight,
             minWidth: column.minWidth || undefined,
             ...(stickyHeader) ? {top: topCssProperty} : {}
         };
