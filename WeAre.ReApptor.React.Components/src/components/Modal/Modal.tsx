@@ -567,7 +567,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                         {
                             // If the Modal will receive children (most likely Form) instead of text content(this.props.content)
                             // Modal footer does not need to be displayed therefore Form will contain it's own control buttons
-                            ((!this.props.info) && (!this.props.children)) &&
+                            ((!this.isInfo) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
                                     

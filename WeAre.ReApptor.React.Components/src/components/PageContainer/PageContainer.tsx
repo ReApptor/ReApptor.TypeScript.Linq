@@ -190,6 +190,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                     (
                         <Modal info
                                id="page-help-info"
+                               className={this.props.className}
                                title={manual.title || PageContainerLocalizer.pageHelp}
                                content={manual.manual}
                         >
