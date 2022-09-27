@@ -33,17 +33,17 @@ interface IModalProps<TData = {}> {
     /**
      * Text displayed in the header of the {@link Modal}.
      */
-    title?: string;
+    title?: string | null;
 
     /**
      * Secondary text displayed in the header of the {@link Modal}.
      */
-    subtitle?: string;
+    subtitle?: string | null;
 
     /**
      * Text displayed in the {@link Modal}'s body.
      */
-    content?: string;
+    content?: string | null;
 
     /**
      * True to disable modal responsiveness (full window in mobile view).
