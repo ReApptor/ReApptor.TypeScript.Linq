@@ -1,3 +1,4 @@
+import React from "react";
 import {FileModel, ILocalizer, ServiceProvider} from "@weare/reapptor-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
@@ -18,12 +19,13 @@ import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
-    title?: string;
-    manual?: string;
-    icon?: string;
-
+    title?: string | null;
+    manual?: string | null;
+    icon?: string | null;
+    
+    render?(manual: IManualProps): React.ReactNode;
     onClick?(): Promise<void>;
-}
+}   
 
 /**
  * A page contained in an {@link ILayoutPage}.
