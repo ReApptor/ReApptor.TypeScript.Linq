@@ -314,6 +314,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         const hasLeftNav: boolean = (leftNav != null);
         
         const languages: ILanguage[] | null = this.languages;
+        const manual: IManualProps = this.manual;
 
         const notifications: ITopNavNotifications | null = TopNav.resolveNotifications(this.props.notifications);
         const notificationsVisible: boolean = (notifications != null) && (TopNav.isNotificationsVisible(notifications));
@@ -365,15 +366,15 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                     <div className={styles.right}>
 
                         {
-                            ((this.manual.manual) || (this.manual.onClick)) &&
+                            ((manual.manual) || (manual.onClick)) &&
                             (
-                                <Icon name={this.manual.icon || "question-circle"}
+                                <Icon name={manual.icon || "question-circle"}
                                       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
                                       style={IconStyle.Regular}
                                       size={IconSize.X2}
-                                      toggleModal={!this.manual.onClick}
+                                      toggleModal={!manual.onClick}
                                       dataTarget="page-help-info"
-                                      onClick={this.manual.onClick}
+                                      onClick={manual.onClick}
                                 />
                             )
                         }
