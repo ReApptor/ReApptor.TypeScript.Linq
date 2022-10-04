@@ -1601,12 +1601,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                         (
                             <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
 
-                                <input id={"filter_input" + this.id}
+                                <input id={"filter_input_" + this.id}
                                        ref={this._filterInputRef}
+                                       autoComplete={"off"}
+                                       role={"presentation"}
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
                                        onKeyUp={() => this.filterHandlerAsync()}
+                                       onPaste={() => this.filterHandlerAsync()}
                                 />
 
                                 { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={() => this.cleanFilterAsync()} /> }
