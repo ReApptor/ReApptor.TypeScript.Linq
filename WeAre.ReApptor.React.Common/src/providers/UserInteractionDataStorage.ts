@@ -19,7 +19,7 @@ class UserInteractionDataStorage {
     private _key: string | null = null;
 
     private get key(): string {
-        if (this._key !== null && this._key !== undefined) {
+        if (this._key != null) {
             return this._key;
         }
 
@@ -62,9 +62,9 @@ class UserInteractionDataStorage {
 
     private getKey(type: DataStorageType, id: string): string {
         const page: IBasePage | null = ch.findPage();
-        return ((page === null) || (type === DataStorageType.Session))
+        return ((page == null) || (type == DataStorageType.Session))
             ? id
-            : (type === DataStorageType.Route)
+            : (type == DataStorageType.Route)
                 ? `${page.routeName}:${page.routeIndex}:${page.routeId}:${id}`
                 : `${page.routeName}:${id}`;
     }
