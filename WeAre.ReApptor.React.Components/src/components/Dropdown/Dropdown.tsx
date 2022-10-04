@@ -363,8 +363,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             if (this._isLongList) {
                 items = [];
             }
-        } else if ((this._isLongList) && (this.favorite)) {
-            items = items.filter(item => item.favorite);
+        } else if (this._isLongList) {
+            items = (this.favorite)
+                ? items.filter(item => item.favorite)
+                : [];
         }
 
         return items;
