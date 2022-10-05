@@ -1,4 +1,6 @@
-﻿namespace WeAre.ReApptor.Toolkit.Extensions
+﻿using System.Threading.Tasks;
+
+namespace WeAre.ReApptor.Toolkit.Extensions
 {
     public static class ByteArrayExtensions
     {
@@ -39,6 +41,16 @@
         public static byte[] Copy(this byte[] from)
         {
             return Utility.Copy(from);
+        }
+        
+        public static Task<byte[]> CompressAsync(this byte[] from, bool deflate = true)
+        {
+            return Utility.CompressAsync(from, deflate);
+        }
+        
+        public static Task<byte[]> DecompressAsync(this byte[] from, bool deflate = true)
+        {
+            return Utility.DecompressAsync(from, deflate);
         }
 
         public static bool IsEqual(this byte[] x, byte[] y)
