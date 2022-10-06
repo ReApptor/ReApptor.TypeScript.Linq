@@ -449,12 +449,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public async reRenderLeftNavAsync(): Promise<void> {
-        if (this._leftNavRef.current != null) {
-            await this._leftNavRef.current.reRenderAsync();
-        }
-    }
-
     public async reloadLeftNavAsync(): Promise<void> {
         if (this.hasLeftNav) {
             if (this._leftNavRef.current != null) {
@@ -462,6 +456,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             }
             await this.reRenderAsync();
             await this.reRenderTopNavAsync();
+        }
+    }
+
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this._leftNavRef.current != null) {
+            await this._leftNavRef.current.reRenderAsync();
         }
     }
 
