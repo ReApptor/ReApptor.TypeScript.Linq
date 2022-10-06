@@ -184,9 +184,19 @@ export interface ILayoutPage extends IAsyncComponent {
     reloadTopNavAsync(): Promise<void>;
 
     /**
+     * ReRender the {@link ILayoutPage}'s TopNav.
+     */
+    reRenderTopNavAsync(): Promise<void>;
+
+    /**
      * Reload the {@link ILayoutPage}'s LeftNav.
      */
     reloadLeftNavAsync(): Promise<void>;
+
+    /**
+     * ReRender the {@link ILayoutPage}'s LeftNav.
+     */
+    reRenderLeftNavAsync(): Promise<void>;
 
     /**
      * Perform a swipe to the left on the {@link ILayoutPage}.
@@ -315,12 +325,6 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return null;
     }
 
-    protected constructor(props: IBasePageProps<TParams> | null = null) {
-        super(props || ({} as IBasePageProps<TParams>));
-
-        this._asIsLoading = this.asIsLoading();
-    }
-
     private async setPageUrlAsync(): Promise<void> {
 
         const page: IBasePage = this.getPage();
@@ -332,6 +336,36 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         document.title = page.getTitle();
 
         await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(page.route);
+    }
+
+    protected constructor(props: IBasePageProps<TParams> | null = null) {
+        super(props || ({} as IBasePageProps<TParams>));
+
+        this._asIsLoading = this.asIsLoading();
+    }
+    
+    public async reloadTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reloadTopNavAsync();
+        }
+    }
+    
+    public async reRenderTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderTopNavAsync();
+        }
+    }
+    
+    public async reloadLeftNavAsync(): Promise<void> {
+        if (this.hasLeftNav) {
+            await ch.reloadLeftNavAsync();
+        }
+    }
+    
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderLeftNavAsync();
+        }
     }
 
     /**
