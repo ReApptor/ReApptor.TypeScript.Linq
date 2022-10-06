@@ -434,18 +434,18 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public async reRenderTopNavAsync(): Promise<void> {
-        const topNav: IAsyncComponent | null = TopNav.mountedInstance;
-        if (topNav != null) {
-            await topNav.reRenderAsync();
-        }
-    }
-
     public async reloadTopNavAsync(): Promise<void> {
         const topNav: IAsyncComponent | null = TopNav.mountedInstance;
         if (topNav != null) {
             await topNav.reloadAsync();
             await this.reRenderLeftNavAsync();
+        }
+    }
+
+    public async reRenderTopNavAsync(): Promise<void> {
+        const topNav: IAsyncComponent | null = TopNav.mountedInstance;
+        if (topNav != null) {
+            await topNav.reRenderAsync();
         }
     }
 

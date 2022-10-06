@@ -356,6 +356,12 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         }
     }
     
+    public reRenderTopNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderTopNav();
+        }
+    }
+    
     public async reloadLeftNavAsync(): Promise<void> {
         if (this.hasLeftNav) {
             await ch.reloadLeftNavAsync();
@@ -365,6 +371,12 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     public async reRenderLeftNavAsync(): Promise<void> {
         if (this.hasTopNav) {
             await ch.reRenderLeftNavAsync();
+        }
+    }
+
+    public reRenderLeftNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderLeftNav();
         }
     }
 
