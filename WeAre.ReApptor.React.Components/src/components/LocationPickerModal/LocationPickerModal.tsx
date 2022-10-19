@@ -19,6 +19,7 @@ interface ILocationPickerModalProps {
     infoWindow?: boolean;
     readonly?: boolean;
     required?: boolean;
+    country?: string | string[];
 
     /**
      * True to disable modal responsiveness (full window in mobile view).
@@ -143,6 +144,7 @@ export default class LocationPickerModal extends BaseComponent<ILocationPickerMo
                 <div className={styles.map}>
                     <LocationPicker ref={this._locationPickerRef} 
                                     location={this.location || undefined}
+                                    country={this.props.country}
                                     infoWindow={this.props.infoWindow}
                                     readonly={this.readonly}
                                     onChange={(sender, location) => this.onChangeAsync(location)}
