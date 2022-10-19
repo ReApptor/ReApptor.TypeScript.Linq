@@ -154,7 +154,7 @@ export default class AddressHelper {
     }
 
     public static hasCoordinates(location: GeoCoordinate): boolean {
-        return (location.lat > 0 && location.lon > 0);
+        return (location.lat != 0 && location.lon != 0);
     }
 
     public static async createMapAsync(element: HTMLDivElement, center?: GeoLocation | GeoCoordinate | null, zoom?: number | null, options?: google.maps.MapOptions | null): Promise<google.maps.Map> {
@@ -241,18 +241,18 @@ export default class AddressHelper {
         map.setCenter(position);
     }
 
-    public static findLat(place: GoogleApiResult): number {
+    public static findLat(place: GoogleApiResult): number | null {
         if (place.geometry && place.geometry.location && place.geometry.location.lat) {
             return place.geometry!.location!.lat!();
         }
-        return 0;
+        return null;
     }
 
-    public static findLon(place: GoogleApiResult): number {
+    public static findLon(place: GoogleApiResult): number | null {
         if (place.geometry && place.geometry.location && place.geometry.location.lng) {
             return place.geometry!.location!.lng();
         }
-        return 0;
+        return null;
     }
 
     public static findAddressComponent(place: GoogleApiResult, componentType: GoogleAddressComponentType): string {
@@ -491,14 +491,14 @@ export default class AddressHelper {
     }
 
     public static getCoordinateFromGeocodeResult(result: GoogleApiResult): GeoCoordinate {
-        const lat: number = this.findLat(result);
-        const lon: number = this.findLon(result);
-        return new GeoCoordinate(lat, lon);
+        const lat: number | null = this.findLat(result);
+        const lon: number | null = this.findLon(result);
+        return new GeoCoordinate(lat ?? 0, lon ?? 0);
     }
     
     public static getLocationFromGeocodeResult(result: GoogleApiResult): GeoLocation {
-        const lat: number = this.findLat(result);
-        const lon: number = this.findLon(result);
+        const lat: number | null = this.findLat(result);
+        const lon: number | null  = this.findLon(result);
 
         let country: string = this.findAddressComponent(result, "country");
         let address: string = this.findAddressComponent(result, "route") || this.findAddressComponent(result, "establishment");
@@ -515,10 +515,10 @@ export default class AddressHelper {
             }
         }
         const googleFormattedAddress: string = this.improveGoogleFormattedAddress(result.formatted_address || "", address, streetNumber);
-        const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat, lon);
+        const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat ?? 0, lon ?? 0);
 
-        const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat > 0) && (lon > 0);
-
+        const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat != null) && (lon != null);
+        
         const geoLocation: GeoLocation = new GeoLocation();
 
         if (isValidLocation) {
@@ -526,8 +526,8 @@ export default class AddressHelper {
             geoLocation.address = (address + " " + streetNumber).trim();
             geoLocation.city = town;
             geoLocation.country = country;
-            geoLocation.lat = lat;
-            geoLocation.lon = lon;
+            geoLocation.lat = lat!;
+            geoLocation.lon = lon!;
             geoLocation.postalCode = postalCode;
         }
 

@@ -85,7 +85,7 @@ export default class AddressInput extends BaseInput<string, IAddressInputProps, 
 
     private async onPlaceSelectedAsync(place: GoogleApiResult): Promise<void> {
         if (place.formatted_address !== AddressHelper.removeLatLon(this.value)) {
-
+            
             const geoLocation: GeoLocation = AddressHelper.getLocationFromGeocodeResult(place);
 
             this.state.location = geoLocation;
