@@ -314,10 +314,15 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         const hasLeftNav: boolean = (leftNav != null);
         
         const languages: ILanguage[] | null = this.languages;
+        
+        const manual: IManualProps = this.manual;
+        const hasManual: boolean = ((!!manual.manual) || (!!manual.render) || (!!manual.onClick));
 
         const notifications: ITopNavNotifications | null = TopNav.resolveNotifications(this.props.notifications);
         const notificationsVisible: boolean = (notifications != null) && (TopNav.isNotificationsVisible(notifications));
         const notificationsCount: number = ((notifications != null) && (notificationsVisible != null)) ? TopNav.getNotificationsCount(notifications) : 0;
+        
+        const shoppingCart: IShoppingCart | null = this.shoppingCart;
 
         return (
             <nav className={this.css(styles.navigation, this.props.className)}>
@@ -345,8 +350,8 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             (this.props.logo) &&
                             (
                                 <img src={this.props.logo}
-                                     alt={this.props.logoText || "renta"}
-                                     onClick={async () => await this.onLogoClick()}
+                                     alt={this.props.logoText || "Logo"}
+                                     onClick={() => this.onLogoClick()}
                                 />
                             )
                         }
@@ -365,21 +370,21 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                     <div className={styles.right}>
 
                         {
-                            ((this.manual.manual) || (this.manual.onClick)) &&
+                            (hasManual) &&
                             (
-                                <Icon name={this.manual.icon || "question-circle"}
+                                <Icon name={manual.icon || "question-circle"}
                                       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
                                       style={IconStyle.Regular}
                                       size={IconSize.X2}
-                                      toggleModal={!this.manual.onClick}
+                                      toggleModal={!manual.onClick}
                                       dataTarget="page-help-info"
-                                      onClick={this.manual.onClick}
+                                      onClick={manual.onClick}
                                 />
                             )
                         }
 
                         {
-                            (this.shoppingCart) &&
+                            (shoppingCart) &&
                             (
                                 <>
 
@@ -390,9 +395,9 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                                     />
 
                                     {
-                                        (this.shoppingCart.productsCount > 0) &&
+                                        (shoppingCart.productsCount > 0) &&
                                         (
-                                            <span className={styles.right_shoppingCartCount}>{this.shoppingCart.productsCount}</span>
+                                            <span className={styles.right_shoppingCartCount}>{shoppingCart.productsCount}</span>
                                         )
                                     }
 
