@@ -161,8 +161,6 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
 
     private async onInputChange(location: GeoLocation): Promise<void> {
         this.state.searchLocation = location.formattedAddress;
-        
-        console.log("this.state.searchLocation = ", this.state.searchLocation);
 
         await this.setLocationAsync(location, true);
 
@@ -206,7 +204,6 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     }
 
     public render(): React.ReactElement {
-        console.log(this.props.country)
         return (
             <div className={this.css(styles.locationPicker, this.props.fullWidth && styles.fullWidth)}>
 

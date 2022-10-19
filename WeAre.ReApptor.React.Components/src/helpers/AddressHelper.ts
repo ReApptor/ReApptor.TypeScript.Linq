@@ -518,8 +518,6 @@ export default class AddressHelper {
         const formattedAddress: string = this.getFormattedAddress(googleFormattedAddress, lat ?? 0, lon ?? 0);
 
         const isValidLocation: boolean = ((address.length > 0) || (formattedAddress.length > 0)) && (lat != null) && (lon != null);
-
-        console.log("isValidLocation", isValidLocation, "address", address, "formattedAddress", formattedAddress, "lat", lat, "lon", lon);
         
         const geoLocation: GeoLocation = new GeoLocation();
 
