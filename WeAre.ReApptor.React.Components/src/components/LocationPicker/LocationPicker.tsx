@@ -11,7 +11,7 @@ interface ILocationPickerProps {
     id?: string;
     className?: string;
     location?: GeoLocation;
-    
+    country?: string | string[];
     /**
      * Zoom level of the map view. 
      * 0 = Whole world
@@ -114,13 +114,14 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     }
 
     private async onMapClickAsync(latLng: google.maps.LatLng): Promise<void> {
+        
         if (!this.readonly) {
             const location: GeoLocation | null = await AddressHelper.findLocationByLatLngAsync(latLng);
-
+            
             if (location) {
                 location.lat = latLng.lat();
                 location.lon = latLng.lng();
-
+                
                 this.state.searchLocation = "";
 
                 await this.setLocationAsync(location);
@@ -133,7 +134,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     private async setMarkerAsync(setCenter: boolean = false): Promise<void> {
         if (this.location && this.isValidLocation) {
             const latLng = new AddressHelper.google.maps.LatLng(this.location.lat, this.location.lon);
-
+            
             if (this._marker) {
                 this._marker.setPosition(latLng);
             } else {
@@ -160,6 +161,8 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
 
     private async onInputChange(location: GeoLocation): Promise<void> {
         this.state.searchLocation = location.formattedAddress;
+        
+        console.log("this.state.searchLocation = ", this.state.searchLocation);
 
         await this.setLocationAsync(location, true);
 
@@ -203,6 +206,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
     }
 
     public render(): React.ReactElement {
+        console.log(this.props.country)
         return (
             <div className={this.css(styles.locationPicker, this.props.fullWidth && styles.fullWidth)}>
 
@@ -213,6 +217,7 @@ export default class LocationPicker extends BaseComponent<ILocationPickerProps, 
                                       readonly={this.readonly}
                                       ref={this._addressInputRef}
                                       value={this.state.searchLocation}
+                                      country={this.props.country}
                                       onChange={(location: GeoLocation) => this.onInputChange(location)}
                         />
                     )

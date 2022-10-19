@@ -28,6 +28,7 @@ export default class LocationPickerTests extends BaseComponent<{}, LocationPicke
                 </div>
                 <LocationPicker fullWidth={this.fullWidth}
                                 zoomLevel={10}
+                                country={["us", "fi"]}
                 />
             </React.Fragment>
         );
