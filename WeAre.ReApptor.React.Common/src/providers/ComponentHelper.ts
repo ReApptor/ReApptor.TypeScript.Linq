@@ -117,6 +117,15 @@ export default class ch {
     }
 
     /**
+     * @see ILayoutPage.reRenderTopNavAsync
+     */
+    public static async reRenderTopNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reRenderTopNavAsync();
+        }
+    }
+
+    /**
      * @see ILayoutPage.reloadLeftNavAsync
      */
     public static async reloadLeftNavAsync(): Promise<void> {
@@ -126,11 +135,44 @@ export default class ch {
     }
 
     /**
+     * @see ILayoutPage.reRenderTopNavAsync
+     */
+    public static async reRenderLeftNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reRenderLeftNavAsync();
+        }
+    }
+
+    /**
      * Calls {@link reloadTopNavAsync} without awaiting.
      */
     public static reloadTopNav(): void {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadTopNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadTopNavAsync} without awaiting.
+     */
+    public static reRenderTopNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reRenderTopNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadLeftNavAsync} without awaiting.
+     */
+    public static reloadLeftNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reloadLeftNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadTopNavAsync} without awaiting.
+     */
+    public static reRenderLeftNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reRenderLeftNavAsync();
     }
 
     /**

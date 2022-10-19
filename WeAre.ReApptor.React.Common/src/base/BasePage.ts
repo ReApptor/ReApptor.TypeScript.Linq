@@ -1,3 +1,4 @@
+import React from "react";
 import {FileModel, ILocalizer, ServiceProvider} from "@weare/reapptor-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
@@ -18,12 +19,13 @@ import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
-    title?: string;
-    manual?: string;
-    icon?: string;
-
+    title?: string | null;
+    manual?: string | null;
+    icon?: string | null;
+    
+    render?(manual: IManualProps): React.ReactNode;
     onClick?(): Promise<void>;
-}
+}   
 
 /**
  * A page contained in an {@link ILayoutPage}.
@@ -182,9 +184,19 @@ export interface ILayoutPage extends IAsyncComponent {
     reloadTopNavAsync(): Promise<void>;
 
     /**
+     * ReRender the {@link ILayoutPage}'s TopNav.
+     */
+    reRenderTopNavAsync(): Promise<void>;
+
+    /**
      * Reload the {@link ILayoutPage}'s LeftNav.
      */
     reloadLeftNavAsync(): Promise<void>;
+
+    /**
+     * ReRender the {@link ILayoutPage}'s LeftNav.
+     */
+    reRenderLeftNavAsync(): Promise<void>;
 
     /**
      * Perform a swipe to the left on the {@link ILayoutPage}.
@@ -313,12 +325,6 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return null;
     }
 
-    protected constructor(props: IBasePageProps<TParams> | null = null) {
-        super(props || ({} as IBasePageProps<TParams>));
-
-        this._asIsLoading = this.asIsLoading();
-    }
-
     private async setPageUrlAsync(): Promise<void> {
 
         const page: IBasePage = this.getPage();
@@ -330,6 +336,48 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         document.title = page.getTitle();
 
         await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(page.route);
+    }
+
+    protected constructor(props: IBasePageProps<TParams> | null = null) {
+        super(props || ({} as IBasePageProps<TParams>));
+
+        this._asIsLoading = this.asIsLoading();
+    }
+    
+    public async reloadTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reloadTopNavAsync();
+        }
+    }
+    
+    public async reRenderTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderTopNavAsync();
+        }
+    }
+    
+    public reRenderTopNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderTopNav();
+        }
+    }
+    
+    public async reloadLeftNavAsync(): Promise<void> {
+        if (this.hasLeftNav) {
+            await ch.reloadLeftNavAsync();
+        }
+    }
+    
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderLeftNavAsync();
+        }
+    }
+
+    public reRenderLeftNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderLeftNav();
+        }
     }
 
     /**

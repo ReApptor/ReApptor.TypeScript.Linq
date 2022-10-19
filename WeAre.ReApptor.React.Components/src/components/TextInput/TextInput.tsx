@@ -115,7 +115,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
     }
 
     protected getContainerClassName(): string {
-        return styles.textInput;
+        return styles.textInputContainer;
     }
 
     protected async onHideEditAsync(): Promise<void> {

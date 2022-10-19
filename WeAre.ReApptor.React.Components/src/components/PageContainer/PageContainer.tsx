@@ -158,6 +158,9 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
 
     public render(): React.ReactNode {
 
+        const manual: IManualProps = this.manual;
+        const hasManual: boolean = ((!!manual.manual) || (!!manual.render) || (!!manual.onClick));
+
         const transparentStyle = this.props.transparent ? { backgroundColor: "transparent" } : {};
 
         return (
@@ -183,11 +186,20 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
                 </div>
 
                 {
-                    (this.manual.manual) &&
+                    (hasManual) &&
                     (
-                        <Modal id="page-help-info" title={this.manual.title || PageContainerLocalizer.pageHelp} content={this.manual.manual} info />
+                        <Modal info
+                               id="page-help-info"
+                               className={this.props.className}
+                               title={manual.title || PageContainerLocalizer.pageHelp}
+                               content={manual.manual}
+                        >
+                            {
+                                (manual.render) && manual.render(manual)
+                            }
+                        </Modal>
                     )
-                }
+                }   
 
                 <DocumentPreviewModal ref={this._documentPreviewModalRef} />
 

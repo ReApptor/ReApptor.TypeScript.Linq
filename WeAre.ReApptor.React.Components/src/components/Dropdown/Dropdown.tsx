@@ -112,7 +112,17 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     multiple?: boolean;
     required?: boolean;
     requiredType?: DropdownRequiredType;
+
+    /**
+     * Enables clickable "Favorite" start in a list item, "{@link onFavoriteChange}" callback fires on star toggling;.
+     */
     favorite?: boolean;
+
+    /**
+     * Filters out favorite items from the list if they don't match the filter, "{@link favorite}" should be enabled.
+     */
+    filterFavorite?: boolean;
+    
     groupSelected?: boolean;
     toggleButtonId?: string;
     toggleIcon?: string | IIconProps | false;
@@ -220,6 +230,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const filterAutoFocus: boolean = (this.desktop)
             ? (this.props.filterAutoFocus !== false)
             : (this.props.filterAutoFocus == true);
+        
         if ((filterAutoFocus) && (this._filterInputRef.current)) {
             this._filterInputRef.current.focus();
         }
@@ -315,7 +326,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private noItemsFound(): boolean {
-        return (this.filterValue.length > 0) && (!this._isLongList) && (this.filteredItems.every(item => item.favorite));
+        return (
+            (this.filterValue.length > 0) &&
+            (!this._isLongList) &&
+            (
+                (this.filteredItems.length == 0) ||
+                ((this.favorite) && (!this.filterFavorite) && (this.filteredItems.every(item => item.favorite)))
+            )
+        );
     }
 
     private isLongList(items: SelectListItem[] | null = null): boolean {
@@ -328,10 +346,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         this._isLongList = this.isLongList(items);
 
         let filter: string = this.filterValue;
+
         if (filter) {
+            const showFavorite: boolean = (this.favorite) && (!this.filterFavorite);
+
             filter = filter.toLowerCase();
+
             items = items.filter(item =>
-                (item.favorite) ||
+                ((showFavorite) && (item.favorite)) ||
                 (item.lowerText.includes(filter)) ||
                 (item.lowerSubtext.includes(filter)) ||
                 ((item.group != null) && (item.group.lowerName.includes(filter))));
@@ -342,7 +364,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 items = [];
             }
         } else if (this._isLongList) {
-            items = items.filter(item => item.favorite);
+            items = (this.favorite)
+                ? items.filter(item => item.favorite)
+                : [];
         }
 
         return items;
@@ -487,28 +511,34 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private firstInGroup(item: SelectListItem, index: number, hasVisibleGroup: boolean): boolean {
         if (hasVisibleGroup) {
+            
             const firstGroup: boolean = (index == 0);
             if (firstGroup) {
                 return true;
             }
+            
             const previousItem: SelectListItem = this.filteredItems[index - 1];
             const newGroup: boolean = (!SelectListGroup.isEqual(previousItem.group, item.group));
             if (newGroup) {
                 return true;
             }
+            
             if (this.favorite) {
                 const firstNotFavorite: boolean = previousItem.favorite;
                 if (firstNotFavorite) {
                     return true;
                 }
             }
+            
             if (this.groupSelected) {
                 const firstNotSelected: boolean = previousItem.selected;
                 if (firstNotSelected) {
                     return true;
                 }
+                
             }
         }
+        
         return false;
     }
 
@@ -858,6 +888,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         e.stopPropagation();
 
         if (this.favorite) {
+            
             item.favorite = !item.favorite;
 
             if (this.props.onFavoriteChange) {
@@ -936,7 +967,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     public get favorite(): boolean {
-        return (this.props.favorite || false);
+        return (this.props.favorite ?? false);
+    }
+
+    public get filterFavorite(): boolean {
+        return (this.props.filterFavorite ?? false);
     }
 
     public get grouping(): boolean {
@@ -1566,12 +1601,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                         (
                             <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
 
-                                <input id={"filter_input" + this.id}
+                                <input id={"filter_input_" + this.id}
                                        ref={this._filterInputRef}
+                                       autoComplete={"off"}
+                                       role={"presentation"}
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
                                        onKeyUp={() => this.filterHandlerAsync()}
+                                       onPaste={() => this.filterHandlerAsync()}
                                 />
 
                                 { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={() => this.cleanFilterAsync()} /> }
