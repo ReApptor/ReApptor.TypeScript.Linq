@@ -44,6 +44,7 @@
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.takeLast.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getService.spec.ts" />

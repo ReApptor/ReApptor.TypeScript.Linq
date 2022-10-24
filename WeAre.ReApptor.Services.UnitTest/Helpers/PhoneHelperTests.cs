@@ -18,6 +18,19 @@ namespace WeAre.ReApptor.Services.UnitTest.Helpers
             Assert.True(isValid);
         }
         
+       [Fact]
+        public void ParseInternationalUnitedStateNumberTest()
+        {
+            const string value = @"+12025886500";
+
+            string international = value.ToInternationalNumber("us");
+           
+            bool isValid = value.IsPhoneNumberValid("us");
+            
+            Assert.Equal("+12025886500", international);
+            Assert.True(isValid);
+        }
+        
         [Fact]
         public void ParseInternationalFinNumberFormattedTest()
         {

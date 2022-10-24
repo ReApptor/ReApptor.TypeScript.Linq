@@ -23,6 +23,13 @@ declare global {
         take(count: number): T[];
 
         /**
+         * Returns a new array that contains the last count elements from source.
+         * @param count - The number of elements to take from the end of the collection.
+         * @returns Array<T> - A new array that contains the last count elements from source.
+         */
+        takeLast(count: number): T[];
+
+        /**
          * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
          * @param count - A function to test each element for a condition.
          * @returns Array<T> - An Array<T> that contains the elements that occur after the specified index in the input sequence.
@@ -114,6 +121,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.take == null) {
         Array.prototype.take = function <T>(count: number): T[] {
             return ArrayUtility.take(this, count);
+        };
+    }
+
+    if (Array.prototype.takeLast == null) {
+        Array.prototype.takeLast = function <T>(count: number): T[] {
+            return ArrayUtility.takeLast(this, count);
         };
     }
 
