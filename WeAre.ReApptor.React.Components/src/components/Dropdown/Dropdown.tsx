@@ -144,6 +144,8 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
      */
     filterAutoFocus?: boolean;
     minWidth?: number | string;
+    maxWidth?: number | string;
+    width?: number | string;
     autoCollapse?: boolean;
     small?: boolean;
     noSubtext?: boolean;
@@ -1558,8 +1560,17 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const smallStyle: any = (this.props.small) && styles.small;
 
         const inlineStyles: React.CSSProperties = {};
-        if (this.props.minWidth) {
-            inlineStyles.minWidth = this.props.minWidth;
+        
+        if (this.props.width) {
+            inlineStyles.width = this.props.width;
+        }
+        else {
+            if (this.props.minWidth) {
+                inlineStyles.minWidth = this.props.minWidth;
+            }
+            if (this.props.maxWidth) {
+                inlineStyles.maxWidth = this.props.maxWidth;
+            }
         }
 
         const longListPlaceholder: string = (this.isLongList())
