@@ -154,7 +154,7 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     nothingSelectedText?: string;
     multipleSelectedText?: string;
     selectedTextFormat?: boolean | number;
-    noDataText?: string;
+    noDataText?: string | null;
     absoluteListItems?: boolean;
     addButton?: boolean | string | RenderCallback;
     
