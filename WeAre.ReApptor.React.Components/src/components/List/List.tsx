@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/reapptor-react-common";
 import { SelectListItem } from "../Dropdown/SelectListItem";
-import Dropdown, {DropdownOrderBy, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownSelectType, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import ListLocalizer from "./ListLocalizer";
 
 import styles from "./List.module.scss";
@@ -13,6 +13,7 @@ interface IListProps<TItem = {}> {
     items?: TItem[];
     orderBy?: DropdownOrderBy;
     subtextType?: DropdownSubtextType;
+    selectType?: DropdownSelectType;
     selectedItem?: TItem | string | number;
     selectedItems?: TItem[] | string[] | number[];
     required?: boolean;
@@ -25,6 +26,7 @@ interface IListProps<TItem = {}> {
     absoluteListItems?: boolean;
     noDataText?: string;
     noGrouping?: boolean;
+    groupSelected?: boolean;
 
     /**
      * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
@@ -155,11 +157,10 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
         return (
             <div className={styles.listWrapper} style={{maxWidth: this.maxWidth}}>
                 
-                <Dropdown id={`${this.id}_dropdown`}
+                <Dropdown id={`${this.id}_dropdown`} noSubtext noWrap
                           ref={this._dropdownRef}
                           absoluteListItems={this.props.absoluteListItems}
-                          noSubtext noWrap
-                          noDataText={this.noDataOrLoadingText || undefined}
+                          noDataText={this.noDataOrLoadingText}
                           noGrouping={this.props.noGrouping}
                           maxHeight={this.props.maxHeight}
                           multiple={this.props.multiple}
@@ -173,11 +174,13 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           className={this.css(styles.list, this.props.className)}
                           orderBy={this.props.orderBy}
                           subtextType={this.props.subtextType}
+                          selectType={this.props.selectType}
                           trackChanges={this.props.trackChanges}
                           items={this.items}
                           selectedItem={this.props.selectedItem}
                           selectedItems={this.props.selectedItems}
                           transform={this.props.transform}
+                          groupSelected={this.props.groupSelected}
                           onChange={async (sender, item: TItem, userInteraction: boolean) => await this.onChangeAsync(item, userInteraction) }
                 />
                 
