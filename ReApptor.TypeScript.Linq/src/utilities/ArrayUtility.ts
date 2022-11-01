@@ -1,4 +1,3 @@
-import {Dictionary} from "typescript-collections";
 
 export default class ArrayUtility {
 
@@ -7,7 +6,7 @@ export default class ArrayUtility {
     }
 
     public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
-        return items.filter(async item => await callback(item));
+        return items.filter(item => callback(item));
     }
 
     public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
@@ -188,7 +187,7 @@ export default class ArrayUtility {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
 
-        callback = callback || ((item) => (item as any) as TValue);
+        callback = callback || ((item: T) => (item as any) as TValue);
 
         let minItem: T = items[0];
         let minValue: TValue = callback(minItem);
@@ -229,9 +228,20 @@ export default class ArrayUtility {
     }
 
     public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
-        const dict = new Dictionary<any, T>();
-        items.forEach(item => dict.setValue(callback ? callback(item) : item, item));
-        return dict.values();
+        const result: T[] = [];
+        const length: number = items.length;
+        if (length > 0) {
+            const set = new Set<T>();
+            for (let i: number = 0; i < length; i++) {
+                const item: T = items[i];
+                const key: any = callback ? callback(item) : item;
+                if (!set.has(key)) {
+                    set.add(key);
+                    result.push(items[i]);
+                }
+            }
+        }
+        return result;
     }
 
     public static sortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
