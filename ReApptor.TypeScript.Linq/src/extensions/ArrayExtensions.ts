@@ -1,5 +1,4 @@
-import ArrayUtility from "../ArrayUtility";
-import IPagedList from "../models/IPagedList";
+import ArrayUtility from "../utilities/ArrayUtility";
 
 /* eslint-disable no-extend-native */
 
@@ -162,10 +161,13 @@ declare global {
          */
         distinct(callback?: ((item: T) => any) | null): T[];
 
-        order<TKey1, TKey2, TKey3, TKey4, TKey5>(keySelector1: ((item: T) => TKey1), keySelector2?: ((item: T) => TKey2), keySelector3?: ((item: T) => TKey3), keySelector4?: ((item: T) => TKey4), keySelector5?: ((item: T) => TKey5)): void;
-
-        toPagedList(pageNumber: number, pageSize: number): IPagedList<T>;
-
+        sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null, 
+                                                         keySelector2?: ((item: T) => TKey2) | null,
+                                                         keySelector3?: ((item: T) => TKey3) | null,
+                                                         keySelector4?: ((item: T) => TKey4) | null,
+                                                         keySelector5?: ((item: T) => TKey5) | null,
+                                                         keySelector6?: ((item: T) => TKey6) | null): void;
+        
         forEachAsync(callback: (item: T) => Promise<void>): Promise<void>;
 
         /**
@@ -296,15 +298,14 @@ export const ArrayExtensions = function () {
         };
     }
 
-    if (Array.prototype.order == null) {
-        Array.prototype.order = function <T, TKey1, TKey2, TKey3, TKey4, TKey5>(keySelector1: ((item: T) => TKey1), keySelector2?: ((item: T) => TKey2), keySelector3?: ((item: T) => TKey3), keySelector4?: ((item: T) => TKey4), keySelector5?: ((item: T) => TKey5)): void {
-            ArrayUtility.order(this, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5);
-        };
-    }
-
-    if (Array.prototype.toPagedList == null) {
-        Array.prototype.toPagedList = function <T>(pageNumber: number, pageSize: number): IPagedList<T> {
-            return ArrayUtility.toPagedList(this, pageNumber, pageSize);
+    if (Array.prototype.sortBy == null) {
+        Array.prototype.sortBy = function <T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
+                                                                                        keySelector2?: ((item: T) => TKey2) | null,
+                                                                                        keySelector3?: ((item: T) => TKey3) | null,
+                                                                                        keySelector4?: ((item: T) => TKey4) | null,
+                                                                                        keySelector5?: ((item: T) => TKey5) | null,
+                                                                                        keySelector6?: ((item: T) => TKey6) | null): void {
+            ArrayUtility.sortBy(this, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
         };
     }
 

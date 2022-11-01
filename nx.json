@@ -41,6 +41,12 @@
     },
     "WeAre.ReApptor.React.Toolkit": {
       "tags": []
+    },
+    "ReApptor.TypeScript.Linq": {
+      "tags": []
+    },
+    "ReApptor.TypeScript.PagedList": {
+      "tags": []
     }
   }
 }
