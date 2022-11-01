@@ -71,13 +71,13 @@ export default class ArrayUtility {
         source.sort(comparator);
     }
 
-    public static chunk<TItem>(givenArray: TItem[], chunkSize: number): TItem[][] {
-        const result: TItem[][] = [];
+    public static chunk<T>(items: readonly T[], size: number): T[][] {
+        const result: T[][] = [];
 
-        const givenArrayCopy: TItem[] = [...givenArray];
+        const copy: T[] = [...items];
 
-        while (givenArrayCopy.length) {
-            result.push(givenArrayCopy.splice(0, chunkSize));
+        while (copy.length) {
+            result.push(copy.splice(0, size));
         }
 
         return result;

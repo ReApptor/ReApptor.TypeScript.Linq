@@ -4,6 +4,72 @@ import IPagedList from "../models/IPagedList";
 
 /* eslint-disable no-extend-native */
 
+// MS Linq (System.Linq, Enumerable):
+// Aggregate
+// All
+// Any
+// Append
+// AsEnumerable
+// Average
+// Cast
+// Chunk                        *
+// Concat
+// Contains
+// Count                        *
+// DefaultIfEmpty
+// Distinct                     *
+// DistinctBy
+// ElementAt
+// ElementAtOrDefault
+// Empty                                Returns an empty IEnumerable<T> that has the specified type argument.                                  
+// Except
+// ExceptBy
+// First
+// FirstOrDefault                *
+// GroupBy
+// GroupJoin
+// Intersect
+// IntersectBy
+// Join
+// Last
+// LastOrDefault                *
+// LongCount
+// Max                          *
+// MaxBy
+// Min
+// MinBy
+// OfType
+// Order
+// OrderBy
+// OrderByDescending
+// OrderDescending
+// Prepend
+// Range
+// Repeat
+// Reverse
+// Select
+// SelectMany
+// SequenceEqual
+// Skip                     *
+// SkipLast
+// SkipWhile
+// Sum                      *
+// Take                     *
+// TakeLast                 *
+// TakeWhile                *
+// ThenBy
+// ThenByDescending
+// ToArray
+// ToDictionary
+// ToHashSet
+// ToList
+// ToLookup
+// TryGetNonEnumeratedCount
+// Union
+// UnionBy
+// Where
+// Zip                                  Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
+
 declare global {
     interface Array<T> {
         /**
@@ -76,9 +142,19 @@ declare global {
 
         sum(callback: (item: T) => number | null | undefined): number;
 
-        count(callback: (item: T, index: number) => boolean): number;
+        /**
+         * Returns the number of elements in a sequence.
+         * @param predicate - A function to test each element for a condition.
+         * @returns number - The number of elements in the input sequence if the predicate is not specified or, otherwise, the number of elements source that passes the test, specified by the predicate.
+         */
+        count(predicate?: ((item: T, index: number) => boolean) | null): number;
 
-        chunk(chunkSize: number): T[][];
+        /**
+         * Splits the elements of a sequence into chunks of size at most size.
+         * @param size - The maximum size of each chunk.
+         * @returns Array<T>[] - An Array<T> that contains the elements the input sequence split into chunks of size size.
+         */
+        chunk(size: number): T[][];
 
         /**
          * Returns distinct elements from a sequence.
@@ -204,14 +280,14 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.count == null) {
-        Array.prototype.count = function <T>(callback: (item: T, index: number) => boolean): number {
-            return Utility.count(this, callback);
+        Array.prototype.count = function <T>(predicate?: ((item: T, index: number) => boolean) | null): number {
+            return Utility.count(this, predicate);
         };
     }
 
     if (Array.prototype.chunk == null) {
-        Array.prototype.chunk = function <T>(chunkSize: number): T[][] {
-            return ArrayUtility.chunk(this, chunkSize);
+        Array.prototype.chunk = function <T>(size: number): T[][] {
+            return ArrayUtility.chunk(this, size);
         };
     }
 
