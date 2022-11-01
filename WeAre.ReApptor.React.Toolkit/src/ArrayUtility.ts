@@ -114,6 +114,19 @@ export default class ArrayUtility {
         return result;
     }
 
+    public static takeWhile<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
+        const result: T[] = [];
+        const length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: T = items[i];
+            const valid: boolean = predicate(items[i], i);
+            if (valid) {
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
     public static skip<T>(items: readonly T[], count: number): T[] {
         if (count < 0) {
             count = 0;
