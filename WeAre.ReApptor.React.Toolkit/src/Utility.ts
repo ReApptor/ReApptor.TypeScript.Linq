@@ -480,15 +480,19 @@ export default class Utility {
     public static sum<T>(items: readonly T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
         let sum: number = 0;
         if (items) {
-            items.forEach(item => sum += callback(item) || 0);
+            items.forEach(item => sum += callback(item) ?? 0);
         }
         return sum;
     }
 
-    public static count<T>(items: readonly T[] | null | undefined, callback: (item: T, index: number) => boolean): number {
+    public static count<T>(items: readonly T[] | null | undefined, predicate?: ((item: T, index: number) => boolean) | null): number {
         let count: number = 0;
         if (items) {
-            items.forEach((item, index) => count += callback(item, index) ? 1 : 0);
+            if (predicate) {
+                items.forEach((item, index) => count += predicate(item, index) ? 1 : 0);
+            } else {
+                count = items.length;
+            }
         }
         return count;
     }
