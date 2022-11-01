@@ -30,6 +30,13 @@ declare global {
         takeLast(count: number): T[];
 
         /**
+         * Returns elements from an array as long as a specified condition is true.
+         * @param predicate - A function to test each element for a condition.
+         * @returns Array<T> - An new array that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+         */
+        takeWhile(predicate: (item: T, index: number) => boolean): T[];
+
+        /**
          * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
          * @param count - A function to test each element for a condition.
          * @returns Array<T> - An Array<T> that contains the elements that occur after the specified index in the input sequence.
@@ -127,6 +134,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.takeLast == null) {
         Array.prototype.takeLast = function <T>(count: number): T[] {
             return ArrayUtility.takeLast(this, count);
+        };
+    }
+
+    if (Array.prototype.takeWhile == null) {
+        Array.prototype.takeWhile = function <T>(predicate: (item: T, index: number) => boolean): T[] {
+            return ArrayUtility.takeWhile(this, predicate);
         };
     }
 
