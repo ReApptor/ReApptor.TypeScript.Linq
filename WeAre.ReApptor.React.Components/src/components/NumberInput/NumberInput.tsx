@@ -92,7 +92,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
         }
     }
 
-    private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<any>): Promise<void> {
+    private async onKeyDownAsync(e: React.KeyboardEvent<any>): Promise<void> {
         const enter: boolean = (e.keyCode === 13);
         const esc: boolean = (e.keyCode === 27);
 
@@ -325,7 +325,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                        onChange={(e: React.FormEvent<HTMLInputElement>) => this.onChangeAsync(e)}
                        onFocus={() => this.valueFocusHandlerAsync()}
                        onBlur={() => this.valueBlurHandlerAsync()}
-                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
+                       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.onKeyDownAsync(e)}
                 />
 
                 {

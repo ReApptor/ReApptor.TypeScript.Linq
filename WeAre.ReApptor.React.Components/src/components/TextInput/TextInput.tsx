@@ -62,10 +62,12 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
         await this.invokeOnChangeAsync();
     }
 
-    private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<any>): Promise<void> {
+    private async onKeyDownAsync(e: React.KeyboardEvent<any>): Promise<void> {
         const enter: boolean = (e.keyCode === 13);
+        const esc: boolean = (e.keyCode === 27);
+
         if (this.props.clickToEdit) {
-            if ((enter) || (e.keyCode === 27)) {
+            if ((enter) || (esc)) {
                 e.preventDefault();
                 await this.hideEditAsync();
             }
@@ -210,7 +212,7 @@ export default class TextInput extends BaseInput<string, ITextInputProps, ITextI
                        onChange={(e: React.FormEvent<HTMLInputElement>) => this.onChangeAsync(e)}
                        onBlur={() => this.valueBlurHandlerAsync()}
                        onClick={() => this.clickHandlerAsync()}
-                       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.onInputKeyDownHandlerAsync(e)}
+                       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.onKeyDownAsync(e)}
                 />
 
                 {
