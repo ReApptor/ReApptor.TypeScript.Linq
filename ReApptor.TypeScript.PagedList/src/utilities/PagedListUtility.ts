@@ -1,4 +1,5 @@
 import IPagedList from "../interfaces/IPagedList";
+import PagedList from "../models/PagedList";
 
 export default class PagedListUtility {
 
@@ -36,13 +37,13 @@ export default class PagedListUtility {
 
         const pageItems: T[] = items.slice(firstIndex, firstIndex + pageSize);
 
-        return {
-            items: pageItems,
-            pageCount: pageCount,
-            pageSize: pageSize,
-            totalItemCount: totalItemCount,
-            pageNumber: pageNumber
-        }
+        const pagedList = new PagedList<T>();
+        pagedList.items = pageItems;
+        pagedList.pageSize = pageSize;
+        pagedList.totalItemCount = totalItemCount;
+        pagedList.pageNumber = pageNumber;
+        
+        return pagedList;
     }
 
 }
