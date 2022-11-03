@@ -32,8 +32,8 @@ export default class TextAreaWidget extends TextInputWidget<IBaseInputWidgetProp
                                 ref={this.refObject._inputRef}
                                 value={this.value}
                                 maxLength={this.props.maxLength}
-                                onChange={async (e: React.FormEvent<HTMLTextAreaElement>) => await this.onInputChangeHandlerAsync(e)}
-                                onKeyUp={async (e: React.KeyboardEvent<HTMLTextAreaElement>) => await this.onInputKeyUpHandlerAsync(e)}
+                                onChange={(e: React.FormEvent<HTMLTextAreaElement>) => this.onInputChangeHandlerAsync(e)}
+                                onKeyUp={(e: React.KeyboardEvent<HTMLTextAreaElement>) => this.onInputKeyUpHandlerAsync(e)}
                                 className="form-control"
                                 rows={this.props.rows || 3}/>
                         </div>

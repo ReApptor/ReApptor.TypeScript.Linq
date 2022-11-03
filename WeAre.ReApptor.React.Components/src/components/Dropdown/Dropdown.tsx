@@ -1149,6 +1149,16 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
+    public async hideEditAsync(): Promise<void> {
+        await super.hideEditAsync();
+        await this.collapseAsync();
+    }
+
+    public async showEditAsync(select?: boolean): Promise<void> {
+        await super.showEditAsync(select);
+        await this.expandAsync();
+    }
+
     public async initializeAsync(): Promise<void> {
         await this.initializeItemsAsync(this.props.items, this.props.selectedItem, this.props.selectedItems);
     }
