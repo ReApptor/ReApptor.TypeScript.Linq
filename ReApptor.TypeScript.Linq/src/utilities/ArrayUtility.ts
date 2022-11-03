@@ -1,22 +1,12 @@
-import Utility from "./Utility";
-import DateUtility from "./DateUtility";
-import {Dictionary} from "typescript-collections";
-import IPagedList from "./models/IPagedList";
-
-export enum SortDirection {
-    Asc,
-
-    Desc
-}
 
 export default class ArrayUtility {
-    
+
     public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
         return items.filter(predicate);
     }
 
     public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
-        return items.filter(async item => await callback(item));
+        return items.filter(item => callback(item));
     }
 
     public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
@@ -98,7 +88,7 @@ export default class ArrayUtility {
         }
         return result;
     }
-    
+
     public static firstOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
@@ -113,7 +103,7 @@ export default class ArrayUtility {
         }
         return defaultValue ?? null;
     }
-    
+
     public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
@@ -197,7 +187,7 @@ export default class ArrayUtility {
         if (items.length === 0)
             throw Error("Array cannot be empty.");
 
-        callback = callback || ((item) => (item as any) as TValue);
+        callback = callback || ((item: T) => (item as any) as TValue);
 
         let minItem: T = items[0];
         let minValue: TValue = callback(minItem);
@@ -238,74 +228,33 @@ export default class ArrayUtility {
     }
 
     public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
-        const dict = new Dictionary<any, T>();
-        items.forEach(item => dict.setValue(callback ? callback(item) : item, item));
-        return dict.values();
-    }
-
-    public static toPagedList<T>(items: readonly T[], pageNumber: number, pageSize: number): IPagedList<T> {
-        const firstIndex: number = (pageNumber - 1) * pageSize;
-        const totalItemCount: number = items.length;
-
-        let pageCount: number = Math.trunc(totalItemCount / pageSize);
-        if (pageCount === 0) {
-            pageCount = 1;
-        } else if (totalItemCount > pageCount * pageSize) {
-            pageCount++;
+        const result: T[] = [];
+        const length: number = items.length;
+        if (length > 0) {
+            const set = new Set<T>();
+            for (let i: number = 0; i < length; i++) {
+                const item: T = items[i];
+                const key: any = callback ? callback(item) : item;
+                if (!set.has(key)) {
+                    set.add(key);
+                    result.push(items[i]);
+                }
+            }
         }
-
-        const pageItems: T[] = items.slice(firstIndex, firstIndex + pageSize);
-
-        return {
-            items: pageItems,
-            pageCount: pageCount,
-            pageSize: pageSize,
-            totalItemCount: totalItemCount,
-            pageNumber: pageNumber
-        }
-    }
-    
-    public static sortByProperty<T>(propertyName: string, sortDirection: SortDirection | null = SortDirection.Asc): (a: T , b: T) => number {
-        const direction: number = (sortDirection == SortDirection.Desc) ? -1 : 1;
-
-        return (firstItem: T | any , secondItem: T | any) => {
-            const x: any = firstItem[propertyName];
-            const y: any = secondItem[propertyName];
-            const result: number = (x < y)
-                ? -1
-                : (x > y)
-                    ? 1
-                    : 0;
-            return result * direction;
-        }
+        return result;
     }
 
-    public static sort<T>(first: T | any , second: T | any, sortingType: SortDirection | null = SortDirection.Asc): number {
-        const direction: number = (sortingType == SortDirection.Desc) ? -1 : 1;
+    public static sortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
+                                                                      keySelector1?: ((item: T) => TKey1) | null,
+                                                                      keySelector2?: ((item: T) => TKey2) | null,
+                                                                      keySelector3?: ((item: T) => TKey3) | null,
+                                                                      keySelector4?: ((item: T) => TKey4) | null,
+                                                                      keySelector5?: ((item: T) => TKey5) | null,
+                                                                      keySelector6?: ((item: T) => TKey6) | null): void {
 
-        const result: number = (first < second)
-            ? -1
-            : (first > second)
-                ? 1
-                : 0;
-
-        return result * direction;
-    }
-
-    public static order<TSource, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: TSource[],
-                                                                           keySelector1?: ((item: TSource) => TKey1) | null,
-                                                                           keySelector2?: ((item: TSource) => TKey2) | null,
-                                                                           keySelector3?: ((item: TSource) => TKey3) | null,
-                                                                           keySelector4?: ((item: TSource) => TKey4) | null,
-                                                                           keySelector5?: ((item: TSource) => TKey5) | null,
-                                                                           keySelector6?: ((item: TSource) => TKey6) | null): void {
-
-        const compare = (keySelector: ((item: TSource) => any) | null | undefined, x: TSource, y: TSource): number => {
+        const compare = (keySelector: ((item: T) => any) | null | undefined, x: T, y: T): number => {
             const xKey: any = keySelector ? keySelector(x) : x;
             const yKey: any = keySelector ? keySelector(y) : y;
-            if (Utility.isDateType(xKey)) {
-                return DateUtility.compare(xKey, yKey);
-            }
             return (xKey > yKey)
                 ? 1
                 : (xKey < yKey)
@@ -313,7 +262,7 @@ export default class ArrayUtility {
                     : 0;
         }
 
-        const comparator = (x: TSource, y: TSource): number => {
+        const comparator = (x: T, y: T): number => {
             let value: number = compare(keySelector1, x, y);
             if ((value === 0) && (keySelector2)) {
                 value = compare(keySelector2, x, y);
@@ -330,7 +279,6 @@ export default class ArrayUtility {
                     }
                 }
             }
-            
             return value;
         }
 

@@ -485,7 +485,7 @@ export class GridModel<TItem = {}> implements ITag {
     public async reloadComponentsAsync(): Promise<void> {
         const components: IAsyncComponent[] = this.rows.selectMany(row => row.cells.where(cell => (cell.asyncContentInstance != null)).map(cell => cell.asyncContentInstance!));
         if (components) {
-            await Utility.forEachAsync(components, async component => await component.reloadAsync());
+            await Utility.forEachAsync(components, component => component.reloadAsync());
         }
     }
 
@@ -498,7 +498,7 @@ export class GridModel<TItem = {}> implements ITag {
     public async reRenderInputsAsync(): Promise<void> {
         const inputs: IInput[] = this.rows.selectMany(row => row.cells.where(cell => (cell.inputContentInstance != null)).map(cell => cell.inputContentInstance!));
         if (inputs) {
-            await Utility.forEachAsync(inputs, async input => await input.reRenderAsync());
+            await Utility.forEachAsync(inputs, input => input.reRenderAsync());
         }
     }
 
@@ -1286,7 +1286,7 @@ export class RowModel<TItem = {}> implements ITag {
         await this.reRenderAsync();
         //await this.instance.updateStateAsync();
 
-        await Utility.forEachAsync(this.spannedRows, async (row) => await row.reRenderAsync());
+        await Utility.forEachAsync(this.spannedRows, (row) => row.reRenderAsync());
     }
 
     public bind(): boolean {
@@ -1336,14 +1336,14 @@ export class RowModel<TItem = {}> implements ITag {
 
     public async cancelAsync(): Promise<void> {
         if (this.modified) {
-            await Utility.forEachAsync(this.cells, async (cell) => await cell.cancelAsync());
+            await Utility.forEachAsync(this.cells, (cell) => cell.cancelAsync());
             await this.reRenderAsync();
         }
     }
 
     public async reRenderAsync(withSpannedRows: boolean = false): Promise<void> {
         if (withSpannedRows) {
-            await Utility.forEachAsync(this.spannedRows, async (row) => row.reRenderAsync());
+            await Utility.forEachAsync(this.spannedRows, (row) => row.reRenderAsync());
         }
 
         await this.instance.reRenderAsync();
