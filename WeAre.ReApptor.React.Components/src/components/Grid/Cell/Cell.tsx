@@ -26,7 +26,46 @@ interface ICellProps<TItem = {}> {
 export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> implements ICell {
 
     private readonly _inputRef: React.RefObject<IInput> = React.createRef();
+    
+    private findNextInputCell(cell: CellModel<TItem>): CellModel<TItem> | null {
+        
+        do {
+            cell = (cell.isLastRow)
+                ? cell.nextRow.cells[0]
+                : cell.next;
 
+            if ((cell.isVisible) && (!cell.isReadonly) && (cell.inputContentInstance) && (cell.edit)) {
+                return cell;
+            }
+
+        } while ((!cell.isLastColumn) && (!cell.isLastRow));
+
+        return null;
+    }
+
+    private async onKeyDownAsync(e: React.KeyboardEvent): Promise<void> {
+
+        const tab: boolean = (e.keyCode == 9);
+        
+        if (tab) {
+            const cell: CellModel<TItem> = this.cell;
+
+            if ((cell.inputContentInstance) && (cell.inputContentInstance.edit)) {
+                e.preventDefault();
+
+                await cell.inputContentInstance.hideEditAsync();
+
+                const nextCell: CellModel<TItem> | null = this.findNextInputCell(cell);
+                
+                console.log("");
+
+                if ((nextCell) && (nextCell.inputContentInstance)) {
+                    await nextCell.inputContentInstance.showEditAsync();
+                }
+            }
+        }
+    }
+    
     private findValueByGridAccessor(model: TItem, accessor: string | GridAccessorCallback<any> | null = null): any {
         return (accessor)
             ? (typeof accessor === "function")
@@ -629,6 +668,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     rowSpan={rowSpan || undefined}
                     colSpan={colSpan}
                     onClick={() => this.props.onClick?.(cell)}
+                    onKeyDown={(e: React.KeyboardEvent) => this.onKeyDownAsync(e)}
                 >
 
                     {

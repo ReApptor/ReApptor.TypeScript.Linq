@@ -68,7 +68,6 @@ class TypeResolver implements ITypeResolver, IService {
         return `type:${hashCode}`;
     }
 
-
     /**
      * @return Do the values have equal {@link ServiceType}'s.
      */
@@ -78,10 +77,8 @@ class TypeResolver implements ITypeResolver, IService {
             : false;
     }
 
-
     // ITypeResolver
-
-
+    
     public resolve(value: TType): ServiceType {
         switch (typeof value) {
             case "string":
@@ -111,9 +108,7 @@ class TypeResolver implements ITypeResolver, IService {
         }
     }
 
-
     // IService
-
 
     public getType(): ServiceType {
         return nameof<ITypeResolver>();

@@ -13,6 +13,7 @@ import {StringExtensions} from "./extensions/StringExtensions";
 import {ArrayExtensions} from "./extensions/ArrayExtensions";
 import {NumberExtensions} from "./extensions/NumberExtensions";
 import ServiceProvider from "./providers/ServiceProvider";
+import ArrayUtility, {SortDirection} from "./ArrayUtility";
 
 export default class Utility {
 
@@ -429,70 +430,6 @@ export default class Utility {
         return [31, (this.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     };
 
-    public static max<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
-        if (items.length === 0)
-            throw Error("Array cannot be empty.");
-
-        callback = callback || ((item) => (item as any) as number);
-
-        let maxItem: T = items[0];
-        let maxValue: number = callback(maxItem);
-        const length: number = items.length;
-        for (let i: number = 1; i < length; i++) {
-            const item: T = items[i];
-            const value: number = callback(item);
-            if (value > maxValue) {
-                maxValue = value;
-                maxItem = item;
-            }
-        }
-        return maxItem;
-    }
-
-    public static maxValue<T>(items: readonly T[], callback: (item: T) => number): number {
-        return callback(Utility.max(items, callback));
-    }
-
-    public static min<T, TValue = number | Date>(items: readonly T[], callback: ((item: T) => TValue) | null = null): T {
-        if (items.length === 0)
-            throw Error("Array cannot be empty.");
-
-        callback = callback || ((item) => (item as any) as TValue);
-
-        let minItem: T = items[0];
-        let minValue: TValue = callback(minItem);
-        const length: number = items.length;
-        for (let i: number = 1; i < length; i++) {
-            const item: T = items[i];
-            const value: TValue = callback(item);
-            if (value < minValue) {
-                minValue = value;
-                minItem = item;
-            }
-        }
-        return minItem;
-    }
-
-    public static minValue<T, TValue = number | Date>(items: readonly T[], callback: (item: T) => TValue): TValue {
-        return callback(Utility.min(items, callback));
-    }
-
-    public static sum<T>(items: readonly T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
-        let sum: number = 0;
-        if (items) {
-            items.forEach(item => sum += callback(item) || 0);
-        }
-        return sum;
-    }
-
-    public static count<T>(items: readonly T[] | null | undefined, callback: (item: T, index: number) => boolean): number {
-        let count: number = 0;
-        if (items) {
-            items.forEach((item, index) => count += callback(item, index) ? 1 : 0);
-        }
-        return count;
-    }
-
     public static digits(value: number): number {
         value = Math.abs(value);
         value = Math.trunc(value);
@@ -526,70 +463,6 @@ export default class Utility {
 
     public static roundHalf(value: number): number {
         return Math.round(value * 2) / 2;
-    }
-
-    public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
-        const promises: Promise<void>[] = items.map(item => callback(item));
-        await Promise.all(promises);
-    }
-
-    public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
-        return items.filter(predicate);
-    }
-
-    public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
-        const result: TOut[] = [];
-        const length: number = items.length;
-        for (let i: number = 0; i < length; i++) {
-            const subItems: TOut[] = collectionSelector(items[i]);
-            result.push(...subItems);
-        }
-        return result;
-    }
-
-    public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
-        return items.filter(async item => await callback(item));
-    }
-
-    public static groupBy<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[][] {
-        const map = new Map<any, T[]>();
-        items.forEach((item) => {
-            const key: any = callback ? callback(item) : null;
-            const collection: T[] | undefined = map.get(key);
-            if (!collection) {
-                map.set(key, [item]);
-            } else {
-                collection.push(item);
-            }
-        });
-        return Array.from(map.values());
-    }
-
-    public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
-        const dict = new Dictionary<any, T>();
-        items.forEach(item => dict.setValue(callback ? callback(item) : item, item));
-        return dict.values();
-    }
-
-    public static remove<T>(items: T[], item: T | []): void {
-        if (Array.isArray(item)) {
-            const length: number = item.length;
-            for (let i: number = 0; i < length; i++) {
-                Utility.remove(items, item[i]);
-            }
-        } else {
-            const index: number = items.indexOf(item);
-            if (index !== -1) {
-                items.splice(index, 1);
-            }
-        }
-    }
-
-    public static removeAt<T>(items: T[], index: number): void {
-        if ((index < 0) || (index >= items.length))
-            throw Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
-
-        items.splice(index, 1);
     }
 
     /**
@@ -1043,28 +916,6 @@ export default class Utility {
         return dataUrl.split("base64,")[1];
     }
 
-    public static toPagedList<T>(items: readonly T[], pageNumber: number, pageSize: number): IPagedList<T> {
-        const firstIndex: number = (pageNumber - 1) * pageSize;
-        const totalItemCount: number = items.length;
-
-        let pageCount: number = Math.trunc(totalItemCount / pageSize);
-        if (pageCount === 0) {
-            pageCount = 1;
-        } else if (totalItemCount > pageCount * pageSize) {
-            pageCount++;
-        }
-
-        const pageItems: T[] = items.slice(firstIndex, firstIndex + pageSize);
-
-        return {
-            items: pageItems,
-            pageCount: pageCount,
-            pageSize: pageSize,
-            totalItemCount: totalItemCount,
-            pageNumber: pageNumber
-        }
-    }
-
     private static findInstanceByAccessor(instance: any, accessor: string): [any, string] | undefined {
 
         if ((instance == null) || (accessor == null) || (typeof instance !== "object")) {
@@ -1304,6 +1155,110 @@ export default class Utility {
     
     public static isGuid(value: string | null | undefined): boolean {
         return (!!value) && (!!value.match(AthenaeumConstants.guidRegex));
+    }
+    
+    // ArrayUtility
+
+    public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
+        return ArrayUtility.where(items, predicate);
+    }
+
+    public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
+        return ArrayUtility.whereAsync(items, callback);
+    }
+
+    public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
+        return ArrayUtility.selectMany(items, collectionSelector);
+    }
+
+    public static chunk<T>(items: readonly T[], size: number): T[][] {
+        return ArrayUtility.chunk(items, size);
+    }
+
+    public static take<T>(items: readonly T[], count: number): T[] {
+        return ArrayUtility.take(items, count);
+    }
+
+    public static takeLast<T>(items: readonly T[], count: number): T[] {
+        return ArrayUtility.takeLast(items, count);
+    }
+
+    public static takeWhile<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
+        return ArrayUtility.takeWhile(items, predicate);
+    }
+
+    public static skip<T>(items: readonly T[], count: number): T[] {
+        return ArrayUtility.skip(items, count);
+    }
+
+    public static firstOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+        return ArrayUtility.firstOrDefault(items, callback, defaultValue);
+    }
+
+    public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+        return ArrayUtility.lastOrDefault(items, callback, defaultValue);
+    }
+
+    public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
+        return ArrayUtility.forEachAsync(items, callback);
+    }
+
+    public static groupBy<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[][] {
+        return ArrayUtility.groupBy(items, callback);
+    }
+
+    public static remove<T>(items: T[], item: T | []): void {
+        ArrayUtility.remove(items, item);
+    }
+
+    public static removeAt<T>(items: T[], index: number): void {
+        ArrayUtility.removeAt(items, index);
+    }
+
+    public static max<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
+        return ArrayUtility.max(items, callback);
+    }
+
+    public static maxValue<T>(items: readonly T[], callback: (item: T) => number): number {
+        return ArrayUtility.maxValue(items, callback);
+    }
+
+    public static min<T, TValue = number | Date>(items: readonly T[], callback: ((item: T) => TValue) | null = null): T {
+        return ArrayUtility.min(items, callback);
+    }
+
+    public static minValue<T, TValue = number | Date>(items: readonly T[], callback: (item: T) => TValue): TValue {
+        return ArrayUtility.minValue(items, callback);
+    }
+
+    public static sum<T>(items: readonly T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
+        return ArrayUtility.sum(items, callback);
+    }
+
+    public static count<T>(items: readonly T[] | null | undefined, predicate?: ((item: T, index: number) => boolean) | null): number {
+        return ArrayUtility.count(items, predicate);
+    }
+
+    public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
+        return ArrayUtility.distinct(items, callback);
+    }
+
+    public static toPagedList<T>(items: readonly T[], pageNumber: number, pageSize: number): IPagedList<T> {
+        return ArrayUtility.toPagedList(items, pageNumber, pageSize);
+    }
+
+    public static sort<T>(first: T | any , second: T | any, sortingType: SortDirection | null = SortDirection.Asc): number {
+        return ArrayUtility.sort(first, second, sortingType);
+    }
+
+    public static order<TSource, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: TSource[], 
+                                                                    keySelector1?: ((item: TSource) => TKey1) | null, 
+                                                                    keySelector2?: ((item: TSource) => TKey2) | null,
+                                                                    keySelector3?: ((item: TSource) => TKey3) | null,
+                                                                    keySelector4?: ((item: TSource) => TKey4) | null,
+                                                                    keySelector5?: ((item: TSource) => TKey5) | null,
+                                                                    keySelector6?: ((item: TSource) => TKey6) | null): void {
+        return ArrayUtility.order(source, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
     }
 }
 

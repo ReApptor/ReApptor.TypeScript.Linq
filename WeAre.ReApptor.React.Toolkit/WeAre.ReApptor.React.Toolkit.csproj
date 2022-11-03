@@ -8,11 +8,29 @@
     <PropertyGroup>
         <Version>1.0.0.0</Version>
         <PackageVersion>1.0.0.0</PackageVersion>
-        <Copyright>Copyright © 2020, WeAre Solutions Oy</Copyright>
+        <Copyright>Copyright © 2022, ReApptor Oy</Copyright>
         <Product>ReApptor Components</Product>
-        <Authors>WeAre Solutions Oy</Authors>
-        <Company>WeAre Solutions Oy</Company>
+        <Authors>ReApptor Oy</Authors>
+        <Company>ReApptor Oy</Company>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="lib\**" />
+        <Compile Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="lib\**" />
+        <EmbeddedResource Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="lib\**" />
+        <None Remove="package-lock.json" />
+        <None Remove=".babelrc" />
+        <None Remove=".eslintrc.json" />
+        <None Remove="dist\**" />
+    </ItemGroup>
 
     <ItemGroup>
       <TypeScriptCompile Include="src\ArrayUtility.ts" />
@@ -63,24 +81,6 @@
       <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="lib\**" />
-      <Compile Remove="dist\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="lib\**" />
-      <EmbeddedResource Remove="dist\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="lib\**" />
-      <None Remove="package-lock.json" />
-      <None Remove=".babelrc" />
-      <None Remove=".eslintrc.json" />
-      <None Remove="dist\**" />
     </ItemGroup>
 
 </Project>
