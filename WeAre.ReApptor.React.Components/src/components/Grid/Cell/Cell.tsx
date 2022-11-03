@@ -30,15 +30,15 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     private findNextInputCell(cell: CellModel<TItem>): CellModel<TItem> | null {
         
         do {
-            cell = (cell.isLastRow)
+            cell = (cell.isLastColumn)
                 ? cell.nextRow.cells[0]
                 : cell.next;
-
-            if ((cell.isVisible) && (!cell.isReadonly) && (cell.inputContentInstance) && (cell.edit)) {
+            
+            if ((cell.isVisible) && (!cell.isReadonly) && (cell.inputContentInstance)) {
                 return cell;
             }
 
-        } while ((!cell.isLastColumn) && (!cell.isLastRow));
+        } while ((!cell.isLastColumn) || (!cell.isLastRow));
 
         return null;
     }
@@ -57,8 +57,6 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
                 const nextCell: CellModel<TItem> | null = this.findNextInputCell(cell);
                 
-                console.log("");
-
                 if ((nextCell) && (nextCell.inputContentInstance)) {
                     await nextCell.inputContentInstance.showEditAsync();
                 }
@@ -252,45 +250,6 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         );
     }
 
-    private renderAddressCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: string | null): React.ReactNode {
-        return (
-            <div className={this.css(gridStyles.textContainer)}>
-                <AddressInput clickToEdit
-                              className={this.css(gridStyles.addressInput)}
-                              value={cellValue || ""}
-                              locationPicker={settings.locationPicker}
-                              append={settings.locationPicker}
-                              onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
-                />
-            </div>
-        );
-    }
-
-    private renderIconCellContent(cell: CellModel<TItem>, cellValue: string | IIconProps | null): React.ReactNode {
-        const icon: IIconProps | null = GridTransformer.toIcon(cellValue);
-        const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
-        const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
-        
-        return (
-            <div className={this.css(alignCenter)} title={GridLocalizer.get(cell.title)} onClick={() => this.invokeCallback(cell)}>
-                {(icon) && (<Icon {...icon} size={size}/>)}
-            </div>
-        );
-    }
-
-    private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
-        const id: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
-        return (
-            <label htmlFor={id} title={GridLocalizer.get(cell.title)}>
-                <input type="checkbox"
-                       id={id}
-                       checked={cellValue}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.onBooleanCellChangeAsync(cell, e.target.checked)}
-                />
-            </label>
-        );
-    }
-
     private renderNumberCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: number | null): React.ReactNode {
 
         let hasInfo: boolean = (!!settings.infoAccessor);
@@ -324,6 +283,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
         return (
             <div className={this.css(gridStyles.numberContainer, numberInfoStyle)}>
+                
                 {
                     (hasInfo) &&
                     (
@@ -332,7 +292,9 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         </span>
                     )
                 }
+                
                 <NumberInput clickToEdit
+                             ref={this._inputRef as React.RefObject<NumberInput>}
                              title={GridLocalizer.get(cell.title)}
                              hideArrows={!settings.arrows}
                              className={this.css(gridStyles.numberInput, hideZeroStyle, valueBoldStyle, withArrowsStyle)}
@@ -343,7 +305,48 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                              value={cellValue || 0}
                              onChange={(sender, value, userInteraction, done) => this.onNumberCellChangeAsync(cell, value, userInteraction, done)}
                 />
+                
             </div>
+        );
+    }
+
+    private renderAddressCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: string | null): React.ReactNode {
+        return (
+            <div className={this.css(gridStyles.textContainer)}>
+                <AddressInput clickToEdit
+                              ref={this._inputRef as React.RefObject<AddressInput>}
+                              className={this.css(gridStyles.addressInput)}
+                              value={cellValue || ""}
+                              locationPicker={settings.locationPicker}
+                              append={settings.locationPicker}
+                              onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
+                />
+            </div>
+        );
+    }
+
+    private renderIconCellContent(cell: CellModel<TItem>, cellValue: string | IIconProps | null): React.ReactNode {
+        const icon: IIconProps | null = GridTransformer.toIcon(cellValue);
+        const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
+        const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
+        
+        return (
+            <div className={this.css(alignCenter)} title={GridLocalizer.get(cell.title)} onClick={() => this.invokeCallback(cell)}>
+                {(icon) && (<Icon {...icon} size={size}/>)}
+            </div>
+        );
+    }
+
+    private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
+        const id: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
+        return (
+            <label htmlFor={id} title={GridLocalizer.get(cell.title)}>
+                <input type="checkbox"
+                       id={id}
+                       checked={cellValue}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.onBooleanCellChangeAsync(cell, e.target.checked)}
+                />
+            </label>
         );
     }
 

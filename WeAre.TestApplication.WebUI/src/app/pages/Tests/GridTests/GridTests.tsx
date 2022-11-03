@@ -121,11 +121,24 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             init: (cell: CellModel<GridItem>) => this.initFloat(cell)
         } as ColumnDefinition,
         {
-            header: "Int",
+            group: "Int",
+            header: "Int1",
             accessor: "int",
             sorting: true,
             minWidth: 90,
             noWrap: true,
+            type: ColumnType.Number,
+            isDefaultSorting: true,
+            textAlign: TextAlign.Center
+        } as ColumnDefinition,
+        {
+            group: "Int",
+            header: "Int2",
+            accessor: "int",
+            sorting: true,
+            minWidth: 90,
+            noWrap: true,
+            type: ColumnType.Number,
             isDefaultSorting: true,
             textAlign: TextAlign.Center
         } as ColumnDefinition,
