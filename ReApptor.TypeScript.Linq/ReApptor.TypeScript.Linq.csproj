@@ -35,12 +35,19 @@
     <ItemGroup>
       <TypeScriptCompile Include="src\extensions\ArrayExtensions.ts" />
       <TypeScriptCompile Include="src\index.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.takeLast.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.takeWhile.spec.ts" />
       <TypeScriptCompile Include="src\utilities\ArrayUtility.ts" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="src\models" />
-      <Folder Include="src\tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="README.md" />
     </ItemGroup>
 
 </Project>

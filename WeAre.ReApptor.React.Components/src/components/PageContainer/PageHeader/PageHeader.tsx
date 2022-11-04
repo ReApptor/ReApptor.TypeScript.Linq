@@ -34,16 +34,23 @@ export default class PageHeader extends BaseComponent<IPageHeaderProps> {
         );
     }
     
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <div className={this.css(styles.header, styles.row, "row", this.props.className)}>
                 <div className={styles.content}>
                     
                     <div>
 
-                        <h4 onClick={async () => await this.onClickAsync()}>{this.renderTitle()}</h4>
-                        
-                        {this.props.subtitle && <p className={this.props.withTabs ? styles.noMargin : ""}>{this.props.subtitle}</p>}
+                        <h4 onClick={() => this.onClickAsync()}>{this.renderTitle()}</h4>
+
+                        {
+                            (this.props.subtitle) &&
+                            (
+                                <p className={this.props.withTabs ? styles.noMargin : ""}>
+                                    {this.toMultiLines(this.props.subtitle)}
+                                </p>
+                            )
+                        }
                         
                     </div>
                     
