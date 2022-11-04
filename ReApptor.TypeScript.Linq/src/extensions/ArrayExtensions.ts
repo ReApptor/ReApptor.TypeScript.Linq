@@ -7,7 +7,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // All
 // Any
 // Append
-// AsEnumerable
+// AsEnumerable                 -
 // Average
 // Cast
 // Chunk                        *
@@ -34,7 +34,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // LongCount
 // Max                          *
 // MaxBy
-// Min
+// Min                          *
 // MinBy
 // OfType
 // Order
@@ -60,7 +60,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // ToArray
 // ToDictionary
 // ToHashSet
-// ToList
+// ToList                   -
 // ToLookup
 // TryGetNonEnumeratedCount
 // Union
