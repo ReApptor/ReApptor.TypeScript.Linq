@@ -1,6 +1,16 @@
 
 export default class ArrayUtility {
 
+    public static all<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): boolean {
+        return items.every(predicate);
+    }
+
+    public static any<T>(items: readonly T[], predicate?: (item: T, index: number) => boolean): boolean {
+        return (predicate)
+            ? items.some(predicate)
+            : items.length > 0;
+    }
+
     public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
         return items.filter(predicate);
     }

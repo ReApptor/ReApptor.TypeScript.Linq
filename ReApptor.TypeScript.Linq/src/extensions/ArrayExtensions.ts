@@ -4,8 +4,8 @@ import ArrayUtility from "../utilities/ArrayUtility";
 
 // MS Linq (System.Linq, Enumerable):
 // Aggregate
-// All
-// Any
+// All                          *
+// Any                          *   
 // Append
 // AsEnumerable                 -
 // Average
@@ -70,6 +70,21 @@ import ArrayUtility from "../utilities/ArrayUtility";
 
 declare global {
     interface Array<T> {
+        
+        /**
+         * Determines whether all elements of a sequence satisfy a condition.
+         * @param predicate - A function to test each element for a condition.
+         * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+         */
+        all(predicate: (item: T, index: number) => boolean): boolean;
+        
+        /**
+         * Determines whether a sequence contains any elements.
+         * @param predicate - A function to test each element for a condition.
+         * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+         */
+        any(predicate?: (item: T, index: number) => boolean): boolean;
+        
         /**
          * Filters a sequence of values based on a predicate.
          * @param predicate - A function to test each element for a condition.
@@ -205,6 +220,18 @@ declare global {
 }
 
 export const ArrayExtensions = function () {
+
+    if (Array.prototype.all == null) {
+        Array.prototype.all = function <T>(predicate: (item: T, index: number) => boolean): boolean {
+            return ArrayUtility.all(this, predicate);
+        };
+    }
+
+    if (Array.prototype.any == null) {
+        Array.prototype.any = function <T>(predicate?: (item: T, index: number) => boolean): boolean {
+            return ArrayUtility.any(this, predicate);
+        };
+    }
 
     if (Array.prototype.where == null) {
         Array.prototype.where = function <T>(predicate: (item: T) => boolean): T[] {
