@@ -43,7 +43,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // OrderDescending
 // Prepend
 // Range
-// Repeat
+// Repeat                   *
 // Reverse
 // Select
 // SelectMany               *
