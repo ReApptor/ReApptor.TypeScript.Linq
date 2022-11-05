@@ -281,6 +281,14 @@ export default class ArrayUtility {
         }
         return result;
     }
+    
+    public static repeat<T>(element: T, count: number): T[] {
+        const items = new Array<T>(count);
+        for (let i = 0; i < count; i++) {
+            items[i] = element;
+        }
+        return items;
+    }
 
     public static sortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
                                                                       keySelector1?: ((item: T) => TKey1) | null,

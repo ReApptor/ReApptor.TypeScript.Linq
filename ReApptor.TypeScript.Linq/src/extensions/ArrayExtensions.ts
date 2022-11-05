@@ -216,6 +216,14 @@ declare global {
          * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
          */
         lastOrDefault(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
+
+        /**
+         * Generates a sequence that contains one repeated value.
+         * @param element - The value to be repeated.
+         * @param count - The number of times to repeat the value in the generated sequence.
+         * @returns T[] - An Array<T> that contains a repeated value.
+         */
+        repeat(element: T, count: number): T[];
     }
 }
 
@@ -379,6 +387,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.lastOrDefault == null) {
         Array.prototype.lastOrDefault = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
             return ArrayUtility.lastOrDefault(this, predicate, defaultValue);
+        };
+    }
+
+    if (Array.prototype.repeat == null) {
+        Array.prototype.repeat = function <T>(element: T, count: number): T[] {
+            return ArrayUtility.repeat(element, count);
         };
     }
 }
