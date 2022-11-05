@@ -77,7 +77,7 @@ declare global {
          */
         where(predicate: (item: T) => boolean): T[];
 
-        whereAsync(callback: (item: T) => Promise<boolean>): Promise<T[]>;
+        whereAsync(predicate: (item: T) => Promise<boolean>): Promise<T[]>;
 
         /**
          * Returns a specified number of contiguous elements from the start of a sequence.
@@ -114,7 +114,7 @@ declare global {
          */
         selectMany<TOut>(collectionSelector: (item: T) => TOut[]): TOut[];
 
-        groupBy(callback: ((item: T) => any) | null | undefined): T[][];
+        groupBy(predicate: ((item: T) => any) | null | undefined): T[][];
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -130,15 +130,15 @@ declare global {
          */
         removeAt(index: number): void;
 
-        max(callback: ((item: T) => number) | null): T;
+        max(predicate: ((item: T) => number) | null): T;
 
-        maxValue(callback: (item: T) => number): number;
+        maxValue(predicate: (item: T) => number): number;
 
-        min(callback: ((item: T) => number) | null): T;
+        min(predicate: ((item: T) => number) | null): T;
 
-        minValue(callback: (item: T) => number): number;
+        minValue(predicate: (item: T) => number): number;
 
-        sum(callback: (item: T) => number | null | undefined): number;
+        sum(predicate: (item: T) => number | null | undefined): number;
 
         /**
          * Returns the number of elements in a sequence.
@@ -156,10 +156,10 @@ declare global {
 
         /**
          * Returns distinct elements from a sequence.
-         * @param callback - A callback function to get comparable value.
+         * @param predicate - A predicate function to get comparable value.
          * @returns Array<T> - An Array<T> that contains distinct elements from the source sequence.
          */
-        distinct(callback?: ((item: T) => any) | null): T[];
+        distinct(predicate?: ((item: T) => any) | null): T[];
 
         sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null, 
                                                          keySelector2?: ((item: T) => TKey2) | null,
@@ -168,23 +168,39 @@ declare global {
                                                          keySelector5?: ((item: T) => TKey5) | null,
                                                          keySelector6?: ((item: T) => TKey6) | null): void;
         
-        forEachAsync(callback: (item: T) => Promise<void>): Promise<void>;
+        forEachAsync(predicate: (item: T) => Promise<void>): Promise<void>;
 
         /**
-         * Returns the first element of a sequence, or a default value if no element is found.
-         * @param callback - A function to test each element for a condition.
+         * Returns the first element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
+         * @param predicate - A function to test each element for a condition.
          * @param defaultValue - The default value to return if the sequence is empty.
          * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the first element in source that passes the test specified by predicate.
          */
-        firstOrDefault(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
+        first(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
 
         /**
-         * Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
-         * @param callback - A function to test each element for a condition.
+         * Returns the first element of a sequence, or a default value if no element is found.
+         * @param predicate - A function to test each element for a condition.
+         * @param defaultValue - The default value to return if the sequence is empty.
+         * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the first element in source that passes the test specified by predicate.
+         */
+        firstOrDefault(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
+
+        /**
+         * Returns the last element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
+         * @param predicate - A function to test each element for a condition.
          * @param defaultValue - The default value to return if the sequence is empty.
          * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
          */
-        lastOrDefault(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
+        last(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
+
+        /**
+         * Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
+         * @param predicate - A function to test each element for a condition.
+         * @param defaultValue - The default value to return if the sequence is empty.
+         * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
+         */
+        lastOrDefault(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
     }
 }
 
@@ -197,8 +213,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.whereAsync == null) {
-        Array.prototype.whereAsync = function <T>(callback: (item: T) => Promise<boolean>): Promise<T[]> {
-            return ArrayUtility.whereAsync(this, callback);
+        Array.prototype.whereAsync = function <T>(predicate: (item: T) => Promise<boolean>): Promise<T[]> {
+            return ArrayUtility.whereAsync(this, predicate);
         };
     }
 
@@ -233,8 +249,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T>(callback: ((item: T) => any) | null | undefined): T[][] {
-            return ArrayUtility.groupBy(this, callback);
+        Array.prototype.groupBy = function <T>(predicate: ((item: T) => any) | null | undefined): T[][] {
+            return ArrayUtility.groupBy(this, predicate);
         };
     }
 
@@ -251,32 +267,32 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.max == null) {
-        Array.prototype.max = function <T>(callback: ((item: T) => number) | null = null): T {
-            return ArrayUtility.max(this, callback);
+        Array.prototype.max = function <T>(predicate: ((item: T) => number) | null = null): T {
+            return ArrayUtility.max(this, predicate);
         };
     }
 
     if (Array.prototype.maxValue == null) {
-        Array.prototype.maxValue = function <T>(callback: (item: T) => number): number {
-            return ArrayUtility.maxValue(this, callback);
+        Array.prototype.maxValue = function <T>(predicate: (item: T) => number): number {
+            return ArrayUtility.maxValue(this, predicate);
         };
     }
 
     if (Array.prototype.min == null) {
-        Array.prototype.min = function <T>(callback: ((item: T) => number) | null = null): T {
-            return ArrayUtility.min(this, callback);
+        Array.prototype.min = function <T>(predicate: ((item: T) => number) | null = null): T {
+            return ArrayUtility.min(this, predicate);
         };
     }
 
     if (Array.prototype.minValue == null) {
-        Array.prototype.minValue = function <T>(callback: (item: T) => number): number {
-            return ArrayUtility.minValue(this, callback);
+        Array.prototype.minValue = function <T>(predicate: (item: T) => number): number {
+            return ArrayUtility.minValue(this, predicate);
         };
     }
 
     if (Array.prototype.sum == null) {
-        Array.prototype.sum = function <T>(callback: (item: T) => number | null | undefined): number {
-            return ArrayUtility.sum(this, callback);
+        Array.prototype.sum = function <T>(predicate: (item: T) => number | null | undefined): number {
+            return ArrayUtility.sum(this, predicate);
         };
     }
 
@@ -293,8 +309,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.distinct == null) {
-        Array.prototype.distinct = function <T>(callback?: ((item: T) => any) | null): T[] {
-            return ArrayUtility.distinct(this, callback);
+        Array.prototype.distinct = function <T>(predicate?: ((item: T) => any) | null): T[] {
+            return ArrayUtility.distinct(this, predicate);
         };
     }
 
@@ -310,20 +326,32 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.forEachAsync == null) {
-        Array.prototype.forEachAsync = function <T>(callback: (item: T) => Promise<void>): Promise<void> {
-            return ArrayUtility.forEachAsync(this, callback);
+        Array.prototype.forEachAsync = function <T>(predicate: (item: T) => Promise<void>): Promise<void> {
+            return ArrayUtility.forEachAsync(this, predicate);
+        };
+    }
+
+    if (Array.prototype.first == null) {
+        Array.prototype.first = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+            return ArrayUtility.first(this, predicate, defaultValue);
         };
     }
 
     if (Array.prototype.firstOrDefault == null) {
-        Array.prototype.firstOrDefault = function <T>(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
-            return ArrayUtility.firstOrDefault(this, callback, defaultValue);
+        Array.prototype.firstOrDefault = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+            return ArrayUtility.firstOrDefault(this, predicate, defaultValue);
+        };
+    }
+
+    if (Array.prototype.last == null) {
+        Array.prototype.last = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+            return ArrayUtility.last(this, predicate, defaultValue);
         };
     }
 
     if (Array.prototype.lastOrDefault == null) {
-        Array.prototype.lastOrDefault = function <T>(callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
-            return ArrayUtility.lastOrDefault(this, callback, defaultValue);
+        Array.prototype.lastOrDefault = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+            return ArrayUtility.lastOrDefault(this, predicate, defaultValue);
         };
     }
 }
