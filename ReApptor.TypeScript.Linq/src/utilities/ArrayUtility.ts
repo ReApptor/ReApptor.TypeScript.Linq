@@ -89,12 +89,26 @@ export default class ArrayUtility {
         return result;
     }
 
-    public static firstOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+    public static first<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+        const item: T | null = ArrayUtility.firstOrDefault(items, predicate, defaultValue);
+
+        if (item == null) {
+            const error: string = (predicate)
+                ? "No item found matching the specified predicate."
+                : "The source sequence is empty.";
+
+            throw Error(error);
+        }
+
+        return item;
+    }
+
+    public static firstOrDefault<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
-        if (callback) {
+        if (predicate) {
             for (let i: number = 0; i < length; i++) {
                 const item: T = items[i];
-                if (callback(item)) {
+                if (predicate(item)) {
                     return item;
                 }
             }
@@ -102,6 +116,20 @@ export default class ArrayUtility {
             return items[0];
         }
         return defaultValue ?? null;
+    }
+
+    public static last<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+        const item: T | null = ArrayUtility.lastOrDefault(items, predicate, defaultValue);
+
+        if (item == null) {
+            const error: string = (predicate)
+                ? "No item found matching the specified predicate."
+                : "The source sequence is empty.";
+
+            throw Error(error);
+        }
+
+        return item;
     }
 
     public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
