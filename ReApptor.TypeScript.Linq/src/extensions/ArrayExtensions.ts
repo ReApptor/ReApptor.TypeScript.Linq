@@ -22,14 +22,14 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Empty                                Returns an empty IEnumerable<T> that has the specified type argument.                                  
 // Except
 // ExceptBy
-// First
-// FirstOrDefault                *
+// First                        *
+// FirstOrDefault               *
 // GroupBy
 // GroupJoin
 // Intersect
 // IntersectBy
 // Join
-// Last
+// Last                         *
 // LastOrDefault                *
 // LongCount
 // Max                          *
@@ -46,7 +46,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Repeat
 // Reverse
 // Select
-// SelectMany
+// SelectMany               *
 // SequenceEqual
 // Skip                     *
 // SkipLast
