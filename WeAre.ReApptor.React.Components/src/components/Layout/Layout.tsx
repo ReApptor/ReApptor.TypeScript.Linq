@@ -252,6 +252,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
             const contactSupport: boolean = ((hash == "#contact") || (hash == "#support"));
             if (contactSupport) {
+                await PageRouteProvider.changeUrlWithoutReload();
+                
                 await PageRouteProvider.redirectAsync(BasePageDefinitions.contactSupportRoute, true, true);
             }
         }
