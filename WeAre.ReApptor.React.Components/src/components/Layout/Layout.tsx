@@ -4,7 +4,7 @@ import {FileModel, ILanguage, Utility, ServiceProvider} from "@weare/reapptor-to
 import {
     AlertModel,
     ApplicationContext,
-    BaseAsyncComponent, CameraType,
+    BaseAsyncComponent, BasePageDefinitions, CameraType,
     ch,
     IAsyncComponent,
     IBaseAsyncComponentState,
@@ -233,12 +233,26 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         const pathname: string = window.location.pathname;
 
-        if (!!pathname && pathname !== "/") {
+        if ((!!pathname) && (pathname !== "/")) {
 
             const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(pathname);
 
             if (pageRoute) {
                 await PageRouteProvider.redirectAsync(pageRoute)
+            }
+        }
+    }
+
+    private static async processContactUrlAsync(): Promise<void> {
+
+        let hash: string = window.location.hash;
+
+        if (hash) {
+            hash = hash.toLowerCase();
+
+            const contactSupport: boolean = ((hash == "#contact") || (hash == "#support"));
+            if (contactSupport) {
+                await PageRouteProvider.redirectAsync(BasePageDefinitions.contactSupportRoute, true, true);
             }
         }
     }
@@ -380,6 +394,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
 
         await this.processTokenAsync();
+        
+        await Layout.processContactUrlAsync();
 
         if (this.useRouting) {
             await Layout.processUrlRouteAsync();

@@ -63,6 +63,10 @@ export default abstract class BasePageDefinitions implements IPageDefinitions, I
 
     public static readonly logoutRoute: PageRoute = new PageRoute(BasePageDefinitions.logoutRouteName);
 
+    public static readonly contactSupportRouteName: string = "ContactSupport";
+
+    public static readonly contactSupportRoute: PageRoute = new PageRoute(BasePageDefinitions.contactSupportRouteName);
+
     public static readonly dummyRouteName: string = "Dummy";
 
     public static readonly dummyRoute: PageRoute = new PageRoute(BasePageDefinitions.dummyRouteName);
