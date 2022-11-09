@@ -14,10 +14,15 @@ export enum QrWidgetType {
 
 export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     type?: QrWidgetType;
+    width?: string;
+    scale?: number;
+    borderWidth?: number;
     onQr?(code: string): Promise<void>;
 }
 
 export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
+    
+    private readonly _ref: React.RefObject<HTMLDivElement> = React.createRef();
 
     private async onScanAsync(code: string | null): Promise<void> {
         if (code) {
@@ -33,10 +38,28 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         await ch.alertErrorAsync(QrWidgetLocalizer.scanError, true);
         await super.hideContentAsync();
     }
+    
+    private setCustomerStyles(): void {
+        if (this._ref.current) {
+            
+            if (this.props.scale) {
+                const video: JQuery = this.JQuery(this._ref.current).find("video");
+
+                video.css("transform", `scale(${this.props.scale})`);
+            }
+            
+            if (this.props.borderWidth) {
+                const container: JQuery = this.JQuery(this._ref.current).find("div");
+
+                container.css("border-width", `${this.props.borderWidth}px`);
+            }
+        }
+    }
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
-        this.setState({icon: {name: "far camera"}});
+
+        await this.setState({icon: {name: "far camera"}});
     }
 
     public async componentWillReceiveProps(nextProps: Readonly<IQrWidgetProps>): Promise<void> {
@@ -49,19 +72,30 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         return this.props.type ?? QrWidgetType.QrCode;
     }
 
-    protected renderExpanded(): React.ReactNode {
-        const qrStyle = this.mobile ? {width: "100%"} : {width: "50%"};
+    public async componentDidMount(): Promise<void> {
+        await super.componentDidMount();
+    }
 
+    protected renderExpanded(): React.ReactNode {
+        const qrStyle: React.CSSProperties = {};
+
+        qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
+
+        setTimeout(() => this.setCustomerStyles(), 0);
+        
         return (
-            <div className={styles.qr}>
+            <div ref={this._ref} className={styles.qr}>
                 {
                     (this.type == QrWidgetType.QrCode)
                         ?
                         (
                             <QrReader delay={300}
-                                      onScan={async (data) => await this.onScanAsync(data)}
-                                      onError={async (error) => await this.onScanErrorAsync(error)}
-                                      style={qrStyle}/>
+                                      style={qrStyle}
+                                      resolution={1900}
+                                      showViewFinder
+                                      onScan={(data) => this.onScanAsync(data)}
+                                      onError={(error) => this.onScanErrorAsync(error)}
+                            />
                         )
                         :
                         (
