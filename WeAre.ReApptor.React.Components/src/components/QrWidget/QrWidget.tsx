@@ -17,6 +17,8 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     width?: string;
     scale?: number;
     borderWidth?: number;
+    delay?: number;
+    resolution?: number;
     onQr?(code: string): Promise<void>;
 }
 
@@ -42,16 +44,37 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private setCustomerStyles(): void {
         if (this._ref.current) {
             
+            const node: JQuery = this.JQuery(this._ref.current);
+
+            const container: JQuery = node.find("div");
+            
             if (this.props.scale) {
-                const video: JQuery = this.JQuery(this._ref.current).find("video");
+                const video: JQuery = node.find("video");
 
                 video.css("transform", `scale(${this.props.scale})`);
             }
-            
-            if (this.props.borderWidth) {
-                const container: JQuery = this.JQuery(this._ref.current).find("div");
 
+            if (this.props.borderWidth) {
                 container.css("border-width", `${this.props.borderWidth}px`);
+                
+                const width: number = container.width() ?? 0;
+                const height: number = container.height() ?? 0;
+                
+                if (width != height) {
+                    if (height > width) {
+                        const delta = (height - width) / 2;
+                        const border: number = this.props.borderWidth + delta;
+
+                        container.css("border-top-width", `${border}px`);
+                        container.css("border-bottom-width", `${border}px`);
+                    } else {
+                        const delta = (width - height) / 2;
+                        const border: number = this.props.borderWidth + delta;
+
+                        container.css("border-left-width", `${border}px`);
+                        container.css("border-right-width", `${border}px`);
+                    }
+                }
             }
         }
     }
@@ -89,10 +112,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     (this.type == QrWidgetType.QrCode)
                         ?
                         (
-                            <QrReader delay={300}
-                                      style={qrStyle}
-                                      resolution={1900}
-                                      showViewFinder
+                            <QrReader style={qrStyle}
+                                      delay={this.props.delay || 300}
+                                      resolution={this.props.resolution}
                                       onScan={(data) => this.onScanAsync(data)}
                                       onError={(error) => this.onScanErrorAsync(error)}
                             />
