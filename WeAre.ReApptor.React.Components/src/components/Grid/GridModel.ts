@@ -848,7 +848,7 @@ export class ColumnActionDefinition {
 
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
 
-    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
 }
@@ -892,7 +892,6 @@ export class CellAction<TItem = {}> {
 }
 
 export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
-
     public readonly: boolean | null = null;
 
     public justify: Justify = Justify.Left;
