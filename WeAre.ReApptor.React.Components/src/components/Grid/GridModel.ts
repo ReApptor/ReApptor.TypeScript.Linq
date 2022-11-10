@@ -1815,18 +1815,27 @@ export class CellModel<TItem = {}> implements ITag {
         return modified;
     }
 
-    public bind(): boolean {
+    public bindDescription(): boolean {
+        // bind description
+        const description: string = this.description;
+        this._description = null;
+        const newDescription: string = this.description;
+        return (description != newDescription);
+    }
+
+    public bind(): boolean {        
         if (this.accessor) {
             const value: any = (typeof this.accessor === "string")
                 ? Utility.findValueByAccessor(this.model, this.accessor)
                 : this.accessor(this.model);
             this.setValue(value);
             if (this.modified) {
+                this._description = null;
                 this.save();
                 return true;
             }
         }
-        return false;
+        return this.bindDescription();
     }
 
     public async bindAsync(forceRender: boolean = true): Promise<void> {
