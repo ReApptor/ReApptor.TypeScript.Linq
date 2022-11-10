@@ -248,7 +248,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                     <Button block
                             id={"confirmation-dialog-confirm-" + this.id}
-                            label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButtonLanguageItemName}
+                            label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButton}
                             type={ButtonType.Orange}
                             disabled={this.processing || !this.canConfirm}
                             onClick={() => this.invokeCloseAsync(true)}
@@ -256,7 +256,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                     <Button block
                             id={"confirmation-dialog-cancel-" + this.id}
-                            label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButtonLanguageItemName}
+                            label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButton}
                             type={ButtonType.Default}
                             disabled={this.processing}
                             onClick={() => this.invokeCloseAsync()}
