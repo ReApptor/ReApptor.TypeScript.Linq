@@ -237,18 +237,18 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                             <TextAreaInput ref={this._commentRef}
                                            required noValidate
                                            rows={3}
-                                           placeholder={this.model.placeholder || ConfirmationDialogLocalizer.comment}
+                                           placeholder={this.model.placeholder ? ConfirmationDialogLocalizer.get(this.model.placeholder) : ConfirmationDialogLocalizer.comment}
                                            className={styles.commentInput}
                                            value={this.state.comment}
                                            readonly={this.processing}
-                                           onChange={async (sender, value) => await this.setCommentAsync(value)}
+                                           onChange={(sender, value) => this.setCommentAsync(value)}
                             />
                         )
                     }
 
                     <Button block
                             id={"confirmation-dialog-confirm-" + this.id}
-                            label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButton}
+                            label={this.props.confirmButtonLabel || ConfirmationDialogLocalizer.confirmButtonLanguageItemName}
                             type={ButtonType.Orange}
                             disabled={this.processing || !this.canConfirm}
                             onClick={() => this.invokeCloseAsync(true)}
@@ -256,7 +256,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
 
                     <Button block
                             id={"confirmation-dialog-cancel-" + this.id}
-                            label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButton}
+                            label={this.props.declineButtonLabel || ConfirmationDialogLocalizer.closeButtonLanguageItemName}
                             type={ButtonType.Default}
                             disabled={this.processing}
                             onClick={() => this.invokeCloseAsync()}
