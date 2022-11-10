@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/reapptor-react-common";
 import { SelectListItem } from "../Dropdown/SelectListItem";
-import Dropdown, {DropdownOrderBy, DropdownSelectType, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownSelectType, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import ListLocalizer from "./ListLocalizer";
 
 import styles from "./List.module.scss";
@@ -17,6 +17,7 @@ interface IListProps<TItem = {}> {
     selectedItem?: TItem | string | number;
     selectedItems?: TItem[] | string[] | number[];
     required?: boolean;
+    requiredType?: DropdownRequiredType;
     multiple?: boolean;
     filterMinLength?: number;
     filterMaxLength?: number;
@@ -27,6 +28,7 @@ interface IListProps<TItem = {}> {
     noDataText?: string;
     noGrouping?: boolean;
     groupSelected?: boolean;
+    filterFavorite?: boolean;
 
     /**
      * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
@@ -171,6 +173,7 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           disabled={this.props.disabled || this.isLoading}
                           type={DropdownType.List}
                           required={this.props.required}
+                          requiredType={this.props.requiredType}
                           className={this.css(styles.list, this.props.className)}
                           orderBy={this.props.orderBy}
                           subtextType={this.props.subtextType}
@@ -181,7 +184,8 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           selectedItems={this.props.selectedItems}
                           transform={this.props.transform}
                           groupSelected={this.props.groupSelected}
-                          onChange={async (sender, item: TItem, userInteraction: boolean) => await this.onChangeAsync(item, userInteraction) }
+                          filterFavorite={this.props.filterFavorite}
+                          onChange={(sender, item: TItem, userInteraction: boolean) => this.onChangeAsync(item, userInteraction) }
                 />
                 
             </div>
