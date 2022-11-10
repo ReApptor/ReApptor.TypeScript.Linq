@@ -207,7 +207,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                       dataModal={dataModal}
                                                       toggleModal={!!action.toggleModal}
                                                       confirm={confirm}
-                                                      onClick={() => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                      onClick={(sender, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 />
                                             )
                                     )
@@ -224,12 +224,12 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                         toggleModal={!!action.toggleModal}
                                                         disabled={disabled}
                                                         confirm={confirm}
-                                                        onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                        onClick={(sender: Button, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 >
                                                     {action.actions.map((value, index: number) => {
 
                                                         return (
-                                                            <Button.Action key={index} title={value} onClick={async () => this.invokeActionCallbackAsync(cell, cellAction, value)}/>
+                                                            <Button.Action key={index} title={value} onClick={() => this.invokeActionCallbackAsync(cell, cellAction, value)} />
                                                         )
 
                                                     })}
@@ -246,7 +246,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                         toggleModal={!!action.toggleModal}
                                                         disabled={disabled}
                                                         confirm={confirm}
-                                                        onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                        onClick={(sender: Button, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 />
                                             )
                                     )
