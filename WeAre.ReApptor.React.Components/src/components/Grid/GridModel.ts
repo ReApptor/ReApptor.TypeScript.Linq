@@ -876,7 +876,7 @@ export class ColumnAction<TItem = {}> {
 
     public column: ColumnModel<TItem> = new ColumnModel<TItem>();
 
-    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string | null, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<TItem>, action: CellAction<TItem>): React.ReactNode;
 }

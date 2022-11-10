@@ -16,13 +16,14 @@ interface ICellActionComponentState<TItem> {
 
 export default class CellActionComponent<TItem = {}> extends BaseComponent<ICellActionComponentProps<TItem>, ICellActionComponentState<TItem>> implements ICellAction {
 
-    state: ICellActionComponentState<TItem> = {};
+    state: ICellActionComponentState<TItem> = {
+    };
 
-    private async invokeActionCallbackAsync(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void> {
+    private async invokeActionCallbackAsync(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string | null, data?: string | null): Promise<void> {
         if (this.descriptionCellAction) {
             await this.toggleDescriptionAsync(cell, action as DescriptionCellAction<TItem>);
         } else if ((action.action.callback) && (!action.disabled)) {
-            await action.action.callback(cell, action, selectedAction);
+            await action.action.callback(cell, action, selectedAction, data);
         }
     }
 
@@ -187,7 +188,7 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                                       dataModal={dataModal}
                                                       toggleModal={!!action.toggleModal}
                                                       confirm={confirm}
-                                                      onClick={() => this.invokeActionCallbackAsync(cell, cellAction)}
+                                                      onClick={(sender, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 >
                                                     {action.actions.map((value, index: number) => {
                                                         return (
