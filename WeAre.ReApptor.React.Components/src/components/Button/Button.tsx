@@ -273,6 +273,10 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         return this._actionProps?.title || this.props.label;
     }
 
+    private get title(): string | undefined {
+        return this.props.title;
+    }
+
     // overriding children's onClick
     protected extendChildProps(element: React.ReactElement): any | null {
         return {
@@ -368,7 +372,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                 <button id={this.id}
                         type={this.props.submit ? "submit" : "button"}
                         disabled={this.props.disabled}
-                        title={ButtonLocalizer.get(this.props.title)}
+                        title={ButtonLocalizer.get(this.title)}
                         className={this.css("btn btn-default", this.getStyleColor(), blockStyle, smallStyle, labelRightPaddingStyle, labelLeftPaddingStyle, hoverStyle, styles.button, this.props.disabled && styles.disabled, this.props.className, this.hasActions && styles.withActions)}
                         style={inlineStyles}
                         data-target={`#${this.dataTarget}`}
@@ -378,11 +382,11 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
                         onClick={() => this.onClickAsync(false)}
                 >
 
-                    {leftSideIcon && <Icon {...leftSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
+                    {leftSideIcon && <Icon {...leftSideIcon} tooltip={ButtonLocalizer.get(this.title)}/>}
 
-                    {<span>{ReactUtility.toTags(this.label)}</span>}
+                    {<span>{ReactUtility.toTags(ButtonLocalizer.get(this.label))}</span>}
 
-                    {rightSideIcon && <Icon {...rightSideIcon} tooltip={ButtonLocalizer.get(this.props.title)}/>}
+                    {rightSideIcon && <Icon {...rightSideIcon} tooltip={ButtonLocalizer.get(this.title)}/>}
 
                     {showCaret && (<Icon className={this.css(styles.icon, "actions-icon")} name={"fa-caret-down"} style={IconStyle.Solid} />)}
 
