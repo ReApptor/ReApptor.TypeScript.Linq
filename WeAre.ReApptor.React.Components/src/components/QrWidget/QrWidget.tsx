@@ -84,7 +84,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
-    private initializeReader(): void {
+    private async initializeReaderAsync(): Promise<void> {
 
         if (this._ref.current) {
             const node: JQuery = this.JQuery(this._ref.current);
@@ -94,9 +94,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             const videoContainerNode: JQuery = viewportNode.find("." + styles.container);
 
             const videoNode: JQuery = videoContainerNode.find("video");
-            
+
             const viewportWidth: number = viewportNode.width()!;
-            
+
             const viewportHeight: number = viewportNode.height()!;
 
             const scale: number = this.scale;
@@ -126,7 +126,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
             const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
 
-            this._reader.initialize(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), this.delay, this.debug);
+            await this._reader.initializeAsync(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), this.delay, this.debug);
         }
     }
 
@@ -173,7 +173,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         const qrStyle: React.CSSProperties = {};
 
         if (this.extended) {
-            setTimeout(() => this.initializeReader(), 0);
+            setTimeout(async () => await this.initializeReaderAsync(), 0);
         } else {
             qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
 
