@@ -1,5 +1,5 @@
 import LuminanceSource from "./LuminanceSource";
-import LqCodeSystem from "./LqCodeSystem";
+import System from "./System";
 
 
 export default class PlanarYUVLuminanceSource extends LuminanceSource {
@@ -37,7 +37,7 @@ export default class PlanarYUVLuminanceSource extends LuminanceSource {
             }
 
             const offset: number = (y + this.top) * this.dataWidth + this.left;
-            LqCodeSystem.arraycopy(this.yuvData, offset, row, 0, width);
+            System.arraycopy(this.yuvData, offset, row, 0, width);
 
             return row;
         } else {
@@ -55,14 +55,14 @@ export default class PlanarYUVLuminanceSource extends LuminanceSource {
             const matrix: number[] = [area];
             let inputOffset: number = this.top * this.dataWidth + this.left;
             if (width == this.dataWidth) {
-                LqCodeSystem.arraycopy(this.yuvData, inputOffset, matrix, 0, area);
+                System.arraycopy(this.yuvData, inputOffset, matrix, 0, area);
                 return matrix;
             } else {
                 const yuv: number[] = this.yuvData;
 
                 for (let y: number = 0; y < height; ++y) {
                     let outputOffset: number = y * width;
-                    LqCodeSystem.arraycopy(yuv, inputOffset, matrix, outputOffset, width);
+                    System.arraycopy(yuv, inputOffset, matrix, outputOffset, width);
                     inputOffset += this.dataWidth;
                 }
 

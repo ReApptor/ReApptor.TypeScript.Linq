@@ -6,6 +6,7 @@ interface QrWidgetTestsState {
     scale: number;
     border: number;
     extended: boolean;
+    maximizeZoom: boolean;
     stretchContent: boolean;
     noAutoCollapse: boolean;
     debug: boolean;
@@ -19,6 +20,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
         extended: true,
         stretchContent: false,
         noAutoCollapse: true,
+        maximizeZoom: true,
         debug: false,
     }
     
@@ -75,6 +77,13 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
 
                         <Checkbox inline
                                   inlineType={InlineType.Right}
+                                  label={"maximizeZoom"}
+                                  value={this.state.maximizeZoom}
+                                  onChange={async (sender, maximizeZoom) => await this.setState({ maximizeZoom })}
+                        />
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
                                   label={"DEBUG"}
                                   value={this.state.debug}
                                   onChange={async (sender, debug) => await this.setState({ debug })}
@@ -87,6 +96,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                 <WidgetContainer>
 
                     <QrWidget id="QrCode"
+                              maximizeZoom={this.state.maximizeZoom}
                               debug={this.state.debug}
                               noAutoCollapse={this.state.noAutoCollapse}
                               extended={this.state.extended}
