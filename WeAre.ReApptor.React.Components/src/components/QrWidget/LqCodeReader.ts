@@ -106,6 +106,7 @@ export default class LqCodeReader {
     }
 
     private setWebCam1(): void {
+        const generation: number = this._generation;
         let options: boolean | MediaTrackConstraints = true;
         if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
             try {
@@ -124,7 +125,7 @@ export default class LqCodeReader {
                                 self.log("device kind = " + device.kind + " label = " + device.label + " id = " + device.deviceId);
                             }
                         });
-                        self.setWebCam2(options);
+                        self.setWebCam2(generation, options);
                     });
             } catch (e) {
                 if (this.debug) {
@@ -135,11 +136,11 @@ export default class LqCodeReader {
             if (this.debug) {
                 this.log("no navigator.mediaDevices.enumerateDevices");
             }
-            this.setWebCam2(options);
+            this.setWebCam2(generation, options);
         }
     }
 
-    private setWebCam2(options: boolean | MediaTrackConstraints): void
+    private setWebCam2(generation: number, options: boolean | MediaTrackConstraints): void
     {
         const self: LqCodeReader = this;
         const nav: Navigator = navigator;
@@ -147,28 +148,32 @@ export default class LqCodeReader {
         if (nav.mediaDevices.getUserMedia) {
             nav.mediaDevices
                 .getUserMedia({video: options, audio: false})
-                .then(function (stream) {
-                    self.setWebCam2Success(stream);
+                .then(function (stream: MediaStream) {
+                    self.setWebCam2Success(generation, stream);
                 }).catch(function (error) {
                     self.setWebCam2Error(error)
                 });
         }
         else if (nav.getUserMedia)
         {
-            nav.getUserMedia({video: options, audio: false}, this.setWebCam2Success, this.setWebCam2Error);
+            nav.getUserMedia({video: options, audio: false}, (stream: MediaStream) => this.setWebCam2Success(generation, stream), this.setWebCam2Error);
         }
         else if ((nav as any).webkitGetUserMedia)
         {
-            (nav as any).webkitGetUserMedia({video:options, audio: false}, this.setWebCam2Success, this.setWebCam2Error);
+            (nav as any).webkitGetUserMedia({video:options, audio: false}, (stream: MediaStream) => this.setWebCam2Success(generation, stream), this.setWebCam2Error);
         }
 
         this._initialized = true;
     }
 
-    private setWebCam2Success(stream: MediaStream): void {
+    private setWebCam2Success(generation: number, stream: MediaStream): void {
+        if ((!this._initialized) || (generation != this._generation)) {
+            return;
+        }
+        
         this.video.srcObject = stream;
         this.video.play();
-        this.invokeCapture(this._generation);
+        this.invokeCapture(generation);
     }
 
     private setWebCam2Error(error: Error | MediaStreamError): void {
