@@ -86,7 +86,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
     
-    private async logAsync(message: string): Promise<void> {
+    private async logAsync(message: string, param?: any): Promise<void> {
+        if (param != null) {
+            message = message + " " + JSON.stringify(param);
+        }
         this._logs = message + "\n" + this._logs;
         if (this._logsRef.current) {
             this._logsRef.current.value = this._logs;
@@ -141,13 +144,16 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 (code) => this.onScanAsync((code as any) as string),
                 this.delay,
                 this.debug,
-                async (message) => this.logAsync(message)
+                async (message, param) => this.logAsync(message, param)
             );
         }
     }
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
+        
+        
+        console.log("supported: ", navigator.mediaDevices.getSupportedConstraints());
         
         await this.setState({icon: {name: "far camera"}});
     }

@@ -19,7 +19,7 @@ export default class LqCodeReader {
     private _video: HTMLVideoElement | null = null;
     private _videoContext: CanvasRenderingContext2D | null = null;
     private _qrContext: CanvasRenderingContext2D | null = null;
-    private _log?: ((message: string) => void) | null = null;
+    private _log?: ((message: string, param?: any) => void) | null = null;
     private _dx: number = 0;
     private _dy: number = 0;
     private _width: number = 0;
@@ -44,7 +44,7 @@ export default class LqCodeReader {
         }
         
         if (this._log) {
-            this._log(message);
+            this._log(message, param);
         }
     }
 
@@ -98,11 +98,11 @@ export default class LqCodeReader {
                 qrCode.decode();
 
             } catch (e) {
-                if (this.debug) {
-                    const endTime: number = performance.now();
-                    const processing: number = (endTime - startTime);
-                    this.log(`${e} (${processing.toFixed(0)} mlsec, G${generation})`);
-                }
+                // if (this.debug) {
+                //     const endTime: number = performance.now();
+                //     const processing: number = (endTime - startTime);
+                //     this.log(`${e} (${processing.toFixed(0)} mlsec, G${generation})`);
+                // }
 
                 this.invokeCapture(generation);
             }
@@ -136,16 +136,20 @@ export default class LqCodeReader {
                 const mediaOptions = {
                     facingMode: "environment",
                     width: {
-                        ideal: 800
+                        ideal: OutputWidth
                     },
                     height: {
-                        ideal: 600
+                        ideal: OutputHeight
+                    },
+                    sampleRate: {
+                        ideal: 44100
                     }
                 } as MediaTrackConstraints;
 
                 const backCamera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
 
                 if (backCamera) {
+
                     mediaOptions.deviceId = {
                         exact: backCamera.deviceId
                     };
@@ -197,13 +201,39 @@ export default class LqCodeReader {
         this._initialized = true;
     }
 
-    private setWebCam2Success(generation: number, stream: MediaStream): void {
+    private async setWebCam2Success(generation: number, mediaStream: MediaStream): Promise<void> {
         if ((!this._initialized) || (generation != this._generation)) {
             return;
         }
+
+        const tracks: MediaStreamTrack[] = mediaStream.getVideoTracks();
+
+        for (let i: number = 0; i < tracks.length; i++) {
+            this.log("track=", tracks[i]);
+            this.log("track.capabilities=", tracks[i].getCapabilities());
+        }
+
+        const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
+
+        this.log("zoomableTrack=", zoomableTrack);
+
+        if (zoomableTrack) {
+            const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
+
+            this.log("zoom.max=", max);
+
+            if (max) {
+                const constraints: MediaTrackConstraints = {
+                    advanced: [{zoom: max} as MediaTrackConstraintSet]
+                };
+                await zoomableTrack.applyConstraints(constraints);
+            }
+        }
+
+        this.video.srcObject = mediaStream;
         
-        this.video.srcObject = stream;
-        this.video.play();
+        await this.video.play();
+
         this.invokeCapture(generation);
     }
 
@@ -219,7 +249,8 @@ export default class LqCodeReader {
                                  callback: (result: object) => void,
                                  timeout: number = 500,
                                  debug: boolean = false, 
-                                 log?: ((message: string) => void) | null): Promise<void> {
+                                 log?: ((message: string, param?: any) => void) | null): Promise<void> {
+        
         this._initialized = false;
         this._generation++;
 
