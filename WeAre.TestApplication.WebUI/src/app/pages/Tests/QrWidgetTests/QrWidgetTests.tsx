@@ -38,7 +38,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
 
                 <WidgetContainer>
 
-                    <QrWidget id="QrCode" noAutoCollapse
+                    <QrWidget id="QrCode" noAutoCollapse extended
                               type={QrWidgetType.QrCode}
                               label="QR"
                               scale={this.state.scale}
