@@ -8,6 +8,7 @@ interface QrWidgetTestsState {
     extended: boolean;
     stretchContent: boolean;
     noAutoCollapse: boolean;
+    debug: boolean;
 }
 
 export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState> {
@@ -18,6 +19,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
         extended: true,
         stretchContent: false,
         noAutoCollapse: true,
+        debug: false,
     }
     
     private async onScanAsync(name: string, code: string): Promise<void> {
@@ -69,6 +71,13 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                                   onChange={async (sender, noAutoCollapse) => await this.setState({ noAutoCollapse })}
                         />
 
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label={"DEBUG"}
+                                  value={this.state.debug}
+                                  onChange={async (sender, debug) => await this.setState({ debug })}
+                        />
+
                     </div>
 
                 </ThreeColumns>
@@ -76,6 +85,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                 <WidgetContainer>
 
                     <QrWidget id="QrCode"
+                              debug={this.state.debug}
                               noAutoCollapse={this.state.noAutoCollapse}
                               extended={this.state.extended}
                               stretchContent={this.state.stretchContent}
