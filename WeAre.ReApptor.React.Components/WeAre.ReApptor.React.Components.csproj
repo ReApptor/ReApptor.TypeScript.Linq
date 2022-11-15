@@ -57,6 +57,11 @@
       <TypeScriptCompile Include="src\components\Popover\Popover.tsx" />
       <TypeScriptCompile Include="src\components\QrWidget\BarcodeReader.d.ts" />
       <TypeScriptCompile Include="src\components\QrWidget\LqCodeReader.ts" />
+      <TypeScriptCompile Include="src\components\QrWidget\LqCode\Empty.ts" />
+      <TypeScriptCompile Include="src\components\QrWidget\LqCode\InvertedLuminanceSource.ts" />
+      <TypeScriptCompile Include="src\components\QrWidget\LqCode\LqCodeSystem.ts" />
+      <TypeScriptCompile Include="src\components\QrWidget\LqCode\LuminanceSource.ts" />
+      <TypeScriptCompile Include="src\components\QrWidget\LqCode\PlanarYUVLuminanceSource.ts" />
       <TypeScriptCompile Include="src\components\Spinner\Spinner.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabContainer.tsx" />
       <TypeScriptCompile Include="src\components\TabContainer\TabHeader\TabHeader.tsx" />
