@@ -19,6 +19,7 @@ export default class LqCodeReader {
     private _video: HTMLVideoElement | null = null;
     private _videoContext: CanvasRenderingContext2D | null = null;
     private _qrContext: CanvasRenderingContext2D | null = null;
+    private _log?: ((message: string) => void) | null = null;
     private _dx: number = 0;
     private _dy: number = 0;
     private _width: number = 0;
@@ -40,6 +41,10 @@ export default class LqCodeReader {
             console.log(message, param);
         } else {
             console.log(message);
+        }
+        
+        if (this._log) {
+            this._log(message);
         }
     }
 
@@ -129,7 +134,13 @@ export default class LqCodeReader {
             if (cameras.length > 0) {
 
                 const mediaOptions = {
-                    facingMode: "environment"
+                    facingMode: "environment",
+                    width: {
+                        ideal: 800
+                    },
+                    height: {
+                        ideal: 600
+                    }
                 } as MediaTrackConstraints;
 
                 const backCamera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
@@ -202,7 +213,13 @@ export default class LqCodeReader {
         }
     }
 
-    public async initializeAsync(video: HTMLVideoElement, qrCanvas: HTMLCanvasElement, videoCanvas: HTMLCanvasElement, dx: number, dy: number, width: number, height: number, callback: (result: object) => void, timeout: number = 500, debug: boolean = false): Promise<void> {
+    public async initializeAsync(video: HTMLVideoElement,
+                                 qrCanvas: HTMLCanvasElement, videoCanvas: HTMLCanvasElement, 
+                                 dx: number, dy: number, width: number, height: number,
+                                 callback: (result: object) => void,
+                                 timeout: number = 500,
+                                 debug: boolean = false, 
+                                 log?: ((message: string) => void) | null): Promise<void> {
         this._initialized = false;
         this._generation++;
 
@@ -210,6 +227,7 @@ export default class LqCodeReader {
         this._dy = dy;
         this._width = width;
         this._height = height;
+        this._log = log;
 
         qrCanvas.style.width = OutputWidth + "px";
         qrCanvas.style.height = OutputHeight + "px";

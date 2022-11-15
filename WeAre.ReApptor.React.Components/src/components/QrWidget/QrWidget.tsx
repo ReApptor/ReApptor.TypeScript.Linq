@@ -30,6 +30,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     
     private readonly _ref: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _reader: LqCodeReader = new LqCodeReader();
+    private _logsRef: React.RefObject<HTMLTextAreaElement> = React.createRef();
+    private _logs: string = "";
     
     private async onScanAsync(code: string | null): Promise<void> {
         if (code) {
@@ -83,6 +85,13 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             }
         }
     }
+    
+    private async logAsync(message: string): Promise<void> {
+        this._logs = message + "\n" + this._logs;
+        if (this._logsRef.current) {
+            this._logsRef.current.value = this._logs;
+        }
+    }
 
     private async initializeReaderAsync(): Promise<void> {
 
@@ -126,7 +135,14 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
             const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
 
-            await this._reader.initializeAsync(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), this.delay, this.debug);
+            await this._reader.initializeAsync(video,
+                qrCanvas, videoCanvas,
+                dx, dy, viewportWidth, viewportHeight, 
+                (code) => this.onScanAsync((code as any) as string),
+                this.delay,
+                this.debug,
+                async (message) => this.logAsync(message)
+            );
         }
     }
 
@@ -189,14 +205,27 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                         <div id="main" className={styles.extended}>
 
                             <div className={styles.viewport}>
+                                
                                 <div className={styles.container}>
-                                    <video autoPlay id="video" ></video>
+                                    <video id="video"></video>
                                 </div>
+
+                                <canvas id="qr-canvas" className={this.css(styles.canvas)} />
+
+                                <canvas id="video-canvas" className={this.css(styles.canvas)} />
+
+                                {
+                                    (this.debug) &&
+                                    (
+                                        <textarea readOnly
+                                                  ref={this._logsRef}
+                                                  className={styles.logs}
+                                                  value={this._logs}
+                                        />
+                                    )
+                                }
+                                
                             </div>
-
-                            <canvas id="qr-canvas" className={styles.canvas} />
-
-                            <canvas id="video-canvas" className={styles.canvas} />
 
                         </div>
                     )
