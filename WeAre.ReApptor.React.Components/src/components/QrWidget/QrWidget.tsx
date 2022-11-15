@@ -2,9 +2,11 @@ import React from "react";
 import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
+import LqCodeReader from "./LqCodeReader";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
 
-import styles from "../WidgetContainer/WidgetContainer.module.scss";
+import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
+import styles from "./QrWidget.module.scss";
 
 export enum QrWidgetType {
     QrCode,
@@ -19,13 +21,15 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     borderWidth?: number;
     delay?: number;
     resolution?: number;
+    extended?: boolean;
     onQr?(code: string): Promise<void>;
 }
 
 export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     
     private readonly _ref: React.RefObject<HTMLDivElement> = React.createRef();
-
+    private readonly _reader: LqCodeReader = new LqCodeReader();
+    
     private async onScanAsync(code: string | null): Promise<void> {
         if (code) {
             if (this.props.onQr) {
@@ -79,9 +83,57 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
+    private initializeReader(): void {
+
+        if (this._ref.current) {
+            const node: JQuery = this.JQuery(this._ref.current);
+
+            const viewportNode: JQuery = node.find("." + styles.viewport);
+
+            const videoContainerNode: JQuery = viewportNode.find("." + styles.container);
+
+            const videoNode: JQuery = videoContainerNode.find("video");
+            
+            const viewportWidth: number = viewportNode.width()!;
+            
+            const viewportHeight: number = viewportNode.height()!;
+
+            const scale: number = this.scale;
+
+            const videoWidth: number = scale * viewportWidth;
+
+            const videoHeight: number = scale * viewportHeight;
+
+            const dx: number = (videoWidth - viewportWidth) / 2;
+
+            const dy: number = (videoHeight - viewportHeight) / 2;
+
+            videoContainerNode.css("width", videoWidth);
+            videoContainerNode.css("height", videoHeight);
+            videoContainerNode.css("left", `-${dx}px`);
+            videoContainerNode.css("top", `-${dy}px`);
+
+            const qrCanvasNode: JQuery = node.find("#qr-canvas");
+
+            const videoCanvasNode: JQuery = node.find("#video-canvas");
+
+            const video: HTMLVideoElement = videoNode.get(0) as HTMLVideoElement;
+
+            video.width = videoWidth;
+            video.height = videoHeight;
+
+            const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
+            const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
+            
+            const debug: boolean = true;
+
+            this._reader.initialize(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), 500, debug);
+        }
+    }
+
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
-
+        
         await this.setState({icon: {name: "far camera"}});
     }
 
@@ -94,36 +146,77 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     public get type(): QrWidgetType {
         return this.props.type ?? QrWidgetType.QrCode;
     }
+    
+    public get scale(): number {
+        return ((this.props.scale) && (this.props.scale > 1))
+            ? this.props.scale
+            : 1;
+    }
+
+    
+    public get extended(): boolean {
+        return (this.props.extended == true);
+    }
 
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
     }
 
     protected renderExpanded(): React.ReactNode {
+
         const qrStyle: React.CSSProperties = {};
 
-        qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
+        if (this.extended) {
+            setTimeout(() => this.initializeReader(), 0);
+        } else {
+            qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
 
-        setTimeout(() => this.setCustomerStyles(), 0);
+            setTimeout(() => this.setCustomerStyles(), 0);
+        }
         
         return (
-            <div ref={this._ref} className={styles.qr}>
+            <div ref={this._ref} className={this.css(widgetStyles.qr, styles.qrWidget)}>
+
                 {
-                    (this.type == QrWidgetType.QrCode)
-                        ?
-                        (
-                            <QrReader style={qrStyle}
-                                      delay={this.props.delay || 300}
-                                      resolution={this.props.resolution}
-                                      onScan={(data) => this.onScanAsync(data)}
-                                      onError={(error) => this.onScanErrorAsync(error)}
-                            />
-                        )
-                        :
-                        (
-                            <div>NOT SUPPORTED</div>
-                        )
+                    (this.extended) &&
+                    (
+                        <div id="main" className={styles.extended}>
+
+                            <div className={styles.viewport}>
+                                <div className={styles.container}>
+                                    <video autoPlay id="video" ></video>
+                                </div>
+                            </div>
+
+                            <canvas id="qr-canvas" className={styles.canvas} />
+
+                            <canvas id="video-canvas" className={styles.canvas} />
+
+                        </div>
+                    )
                 }
+
+                {
+                    (!this.extended) &&
+                    (
+                        (this.type == QrWidgetType.QrCode)
+                            ?
+                            (
+                                <QrReader style={qrStyle}
+                                          delay={this.props.delay || 300}
+                                          resolution={this.props.resolution}
+                                          onScan={(data) => this.onScanAsync(data)}
+                                          onError={(error) => this.onScanErrorAsync(error)}
+                                />
+                            )
+                            :
+                            (
+                                <div>NOT SUPPORTED</div>
+                            )
+                    )
+                }
+                
+
             </div>
         );
     }
