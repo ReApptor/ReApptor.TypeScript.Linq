@@ -1,10 +1,13 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/reapptor-react-common";
-import {NumberInput, QrWidget, QrWidgetType, WidgetContainer} from "@weare/reapptor-react-components";
+import {Checkbox, InlineType, NumberInput, QrWidget, QrWidgetType, ThreeColumns, WidgetContainer} from "@weare/reapptor-react-components";
 
 interface QrWidgetTestsState {
     scale: number;
     border: number;
+    extended: boolean;
+    stretchContent: boolean;
+    noAutoCollapse: boolean;
 }
 
 export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState> {
@@ -12,6 +15,9 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
     state: QrWidgetTestsState = {
         scale: 1.0,
         border: 50,
+        extended: true,
+        stretchContent: false,
+        noAutoCollapse: true,
     }
     
     private async onScanAsync(name: string, code: string): Promise<void> {
@@ -21,24 +27,58 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
     public render(): React.ReactNode {        
         return (
             <React.Fragment>
-                
-                <NumberInput min={1}
-                             max={5}
-                             value={this.state.scale}
-                             step={0.1}
-                             onChange={async (sender, scale) => await this.setState({ scale })}
-                />
-                
-                <NumberInput min={1}
-                             max={50}
-                             value={this.state.border}
-                             step={1}
-                             onChange={async (sender, border) => await this.setState({ border })}
-                />
+
+                <ThreeColumns>
+
+                    <div className={"mb-3"}>
+
+                        <NumberInput label={"Scale"}
+                                     min={1}
+                                     max={5}
+                                     value={this.state.scale}
+                                     step={0.1}
+                                     onChange={async (sender, scale) => await this.setState({ scale })}
+                        />
+
+                        <NumberInput label={"Border"}
+                                     min={1}
+                                     max={50}
+                                     value={this.state.border}
+                                     step={1}
+                                     onChange={async (sender, border) => await this.setState({ border })}
+                        />
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label={"Extended"}
+                                  value={this.state.extended}
+                                  onChange={async (sender, extended) => await this.setState({ extended })}
+                        />
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label={"StretchContent"}
+                                  value={this.state.stretchContent}
+                                  onChange={async (sender, stretchContent) => await this.setState({ stretchContent })}
+                        />
+
+                        <Checkbox inline
+                                  inlineType={InlineType.Right}
+                                  label={"NoAutoCollapse"}
+                                  value={this.state.noAutoCollapse}
+                                  onChange={async (sender, noAutoCollapse) => await this.setState({ noAutoCollapse })}
+                        />
+
+                    </div>
+
+                </ThreeColumns>
 
                 <WidgetContainer>
 
-                    <QrWidget id="QrCode" noAutoCollapse extended
+                    <QrWidget id="QrCode"
+                              noAutoCollapse={this.state.noAutoCollapse}
+                              extended={this.state.extended}
+                              stretchContent={this.state.stretchContent}
                               type={QrWidgetType.QrCode}
                               label="QR"
                               scale={this.state.scale}
