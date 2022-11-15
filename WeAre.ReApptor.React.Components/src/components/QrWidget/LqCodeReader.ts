@@ -135,15 +135,15 @@ export default class LqCodeReader {
 
                 const mediaOptions = {
                     facingMode: "environment",
-                    width: {
-                        ideal: OutputWidth
-                    },
-                    height: {
-                        ideal: OutputHeight
-                    },
-                    sampleRate: {
-                        ideal: 44100
-                    }
+                    // width: {
+                    //     ideal: OutputWidth
+                    // },
+                    // height: {
+                    //     ideal: OutputHeight
+                    // },
+                    // sampleRate: {
+                    //     ideal: 44100
+                    // }
                 } as MediaTrackConstraints;
 
                 const backCamera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
@@ -208,10 +208,10 @@ export default class LqCodeReader {
 
         const tracks: MediaStreamTrack[] = mediaStream.getVideoTracks();
 
-        for (let i: number = 0; i < tracks.length; i++) {
-            this.log("track=", tracks[i]);
-            this.log("track.capabilities=", tracks[i].getCapabilities());
-        }
+        // for (let i: number = 0; i < tracks.length; i++) {
+        //     this.log("track=", tracks[i]);
+        //     this.log("track.capabilities=", tracks[i].getCapabilities());
+        // }
 
         const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
 
@@ -220,7 +220,8 @@ export default class LqCodeReader {
         if (zoomableTrack) {
             const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
 
-            this.log("zoom.max=", max);
+            this.log("zoomableTrack.capabilities=", zoomableTrack.getCapabilities());
+            this.log("zoomableTrack.zoom.max=", max);
 
             if (max) {
                 const constraints: MediaTrackConstraints = {
