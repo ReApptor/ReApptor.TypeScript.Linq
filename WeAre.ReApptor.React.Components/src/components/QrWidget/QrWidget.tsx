@@ -22,6 +22,7 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     delay?: number;
     resolution?: number;
     extended?: boolean;
+    debug?: boolean;
     onQr?(code: string): Promise<void>;
 }
 
@@ -124,10 +125,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
             const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
-            
-            const debug: boolean = true;
 
-            this._reader.initialize(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), 500, debug);
+            this._reader.initialize(video, qrCanvas, videoCanvas, dx, dy, viewportWidth, viewportHeight, (code) => this.onScanAsync((code as any) as string), this.delay, this.debug);
         }
     }
 
@@ -152,10 +151,17 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             ? this.props.scale
             : 1;
     }
-
+    
+    public get delay(): number {
+        return this.props.delay || 300;
+    }
     
     public get extended(): boolean {
         return (this.props.extended == true);
+    }
+    
+    public get debug(): boolean {
+        return (this.props.debug == true);
     }
 
     public async componentDidMount(): Promise<void> {
@@ -203,7 +209,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                             ?
                             (
                                 <QrReader style={qrStyle}
-                                          delay={this.props.delay || 300}
+                                          delay={this.delay}
                                           resolution={this.props.resolution}
                                           onScan={(data) => this.onScanAsync(data)}
                                           onError={(error) => this.onScanErrorAsync(error)}
