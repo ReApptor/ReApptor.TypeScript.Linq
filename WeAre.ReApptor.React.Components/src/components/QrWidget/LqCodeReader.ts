@@ -136,10 +136,10 @@ export default class LqCodeReader {
                 const mediaOptions = {
                     facingMode: "environment",
                     width: {
-                        ideal: 800
+                        ideal: OutputWidth
                     },
                     height: {
-                        ideal: 600
+                        ideal: OutputHeight
                     }
                 } as MediaTrackConstraints;
 
