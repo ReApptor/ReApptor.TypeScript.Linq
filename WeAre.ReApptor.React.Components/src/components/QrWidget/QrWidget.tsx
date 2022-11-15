@@ -23,6 +23,7 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     resolution?: number;
     extended?: boolean;
     debug?: boolean;
+    maximizeZoom?: boolean;
     onQr?(code: string): Promise<void>;
 }
 
@@ -137,6 +138,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
             const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
+            
+            await this.assignAutoZoomAsync();
 
             await this._reader.initializeAsync(video,
                 qrCanvas, videoCanvas,
@@ -185,9 +188,51 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     public get debug(): boolean {
         return (this.props.debug == true);
     }
+    
+    public get maximizeZoom(): boolean {
+        return (this.props.maximizeZoom == true);
+    }
 
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
+    }
+    
+    private async autoZoomAsync(video: HTMLVideoElement): Promise<void> {
+        const mediaStream = video.srcObject as MediaStream;
+
+        if (mediaStream) {
+
+            const tracks: MediaStreamTrack[] = mediaStream.getVideoTracks();
+
+            const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
+
+            console.log("tracks: ", tracks.length, " zoomableTrack: ", zoomableTrack);
+
+            if (zoomableTrack) {
+                const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
+
+                console.log("zoom.max: ", zoomableTrack);
+
+                if (max) {
+                    const constraints: MediaTrackConstraints = {
+                        advanced: [{zoom: max} as MediaTrackConstraintSet]
+                    };
+                    await zoomableTrack.applyConstraints(constraints);
+                }
+            }
+        }
+    }
+    
+    private async assignAutoZoomAsync(): Promise<void> {
+        if ((this.maximizeZoom) && (this._ref.current)) {
+            const node: JQuery = this.JQuery(this._ref.current);
+
+            const videoNode: JQuery = node.find("video");
+
+            const video: HTMLVideoElement = videoNode.get(0) as HTMLVideoElement;
+
+            video.addEventListener("loadedmetadata", () => this.autoZoomAsync(video));
+        }
     }
 
     protected renderExpanded(): React.ReactNode {
