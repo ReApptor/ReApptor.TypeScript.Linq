@@ -201,11 +201,9 @@ export default class LqCodeReader {
         videoCanvas.width = video.width;
         videoCanvas.height = video.height;
 
-        const contextOptions: CanvasRenderingContext2DSettings = { willReadFrequently: true } as CanvasRenderingContext2DSettings;
+        const qrContext: CanvasRenderingContext2D | null = qrCanvas.getContext("2d");
 
-        const qrContext: CanvasRenderingContext2D | null = qrCanvas.getContext("2d", contextOptions);
-
-        const videoContext: CanvasRenderingContext2D | null = videoCanvas.getContext("2d", contextOptions);
+        const videoContext: CanvasRenderingContext2D | null = videoCanvas.getContext("2d");
 
         if ((qrContext == null) || (videoContext == null))
             throw Error("LrCodeReader: CanvasRendering context cannot be created. QR code scanner for HTML5 capable browsers only.");
