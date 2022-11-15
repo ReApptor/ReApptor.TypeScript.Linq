@@ -29,10 +29,12 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
     public render(): React.ReactNode {        
         return (
             <React.Fragment>
+                
+                <div style={{minHeight: "200px"}} />
 
                 <ThreeColumns>
 
-                    <div className={"mb-3"}>
+                    <div className={"mb-3"} style={{maxWidth: "300px"}}>
 
                         <NumberInput label={"Scale"}
                                      min={1}
@@ -98,12 +100,12 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                               onQr={(code) => this.onScanAsync("Qr", code)}
                     />
                     
-                    <QrWidget id="BarCode"
-                              type={QrWidgetType.BarCode}
-                              label="Bar"
-                              description={"Bar code scanner..."}
-                              onQr={(code) => this.onScanAsync("Bar", code)}
-                    />
+                    {/*<QrWidget id="BarCode"*/}
+                    {/*          type={QrWidgetType.BarCode}*/}
+                    {/*          label="Bar"*/}
+                    {/*          description={"Bar code scanner..."}*/}
+                    {/*          onQr={(code) => this.onScanAsync("Bar", code)}*/}
+                    {/*/>*/}
 
                 </WidgetContainer>
 
