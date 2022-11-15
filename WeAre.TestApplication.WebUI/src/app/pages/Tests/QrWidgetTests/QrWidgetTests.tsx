@@ -10,7 +10,7 @@ interface QrWidgetTestsState {
 export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState> {
     
     state: QrWidgetTestsState = {
-        scale: 1,
+        scale: 1.0,
         border: 50,
     }
     
