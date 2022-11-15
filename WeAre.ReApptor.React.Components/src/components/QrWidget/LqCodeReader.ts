@@ -35,7 +35,12 @@ export default class LqCodeReader {
     }
 
     private log(message: string, param?: any): void {
-        console.log(`LqCodeReader: ${message}`, param);
+        message = `LqCodeReader: ${message}`;
+        if (param != null) {
+            console.log(message, param);
+        } else {
+            console.log(message);
+        }
     }
 
     private get videoContext(): CanvasRenderingContext2D {
