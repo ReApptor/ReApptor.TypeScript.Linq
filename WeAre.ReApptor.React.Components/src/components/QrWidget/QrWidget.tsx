@@ -133,11 +133,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
         const newType: boolean = (this.props.type !== nextProps.type);
         const newMaximizeZoom: boolean = (this.props.maximizeZoom !== nextProps.maximizeZoom);
+        const newExtended: boolean = (this.props.extended !== nextProps.extended);
         const newDelay: boolean = (this.props.delay !== nextProps.delay);
         const newDebug: boolean = (this.props.debug !== nextProps.debug);
         const newScale: boolean = (this.props.scale !== nextProps.scale);
         const newBorderWidth: boolean = (this.props.borderWidth !== nextProps.borderWidth);
-        const newProps: boolean = (newType || newMaximizeZoom || newDelay || newDebug || newScale || newBorderWidth);
+        const newProps: boolean = (newType || newMaximizeZoom || newExtended || newDelay || newDebug || newScale || newBorderWidth);
 
         if (newProps) {
             await this.stopReaderAsync();
@@ -236,7 +237,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     private async initializeReaderAsync(): Promise<void> {
-
+        
         if (this._qrCodeReaderControls == null) {
             
             const video: HTMLVideoElement | null = this._videoRef.current;
