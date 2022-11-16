@@ -251,7 +251,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 //     return;
                 // }
 
-                await this.assignAutoZoomAsync(video);
+                //await this.assignAutoZoomAsync(video);
 
                 const constraints: MediaStreamConstraints = {
                     video: {
@@ -259,12 +259,28 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     }
                 };
 
-                try {
-                    this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
+                try {                    
+                    const controls: IScannerControls = await this._qrCodeReader.decodeFromConstraints(
                         constraints,
                         video,
                         async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
                     );
+                    
+                    if ((this.maximizeZoom) && (controls.streamVideoCapabilitiesGet) && (controls.streamVideoConstraintsApply)) {
+                        const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet!((track: MediaStreamTrack)  => [track])
+
+                        const max: number = (capabilities as any).zoom?.max || 0;
+
+                        if (max) {
+                            const constraints: MediaTrackConstraints = {
+                                advanced: [{zoom: max} as MediaTrackConstraintSet]
+                            };
+                            
+                            await controls.streamVideoConstraintsApply(constraints);
+                        }
+                    }
+
+                    this._qrCodeReaderControls = controls;
 
                     // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
                     //     camera.deviceId,
