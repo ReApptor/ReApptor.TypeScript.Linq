@@ -1,14 +1,15 @@
 import React from "react";
-import {ch, IReactComponent} from "@weare/reapptor-react-common";
+import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import {BrowserCodeReader, BrowserQRCodeReader, HTMLVisualMediaElement, IScannerControls} from "@zxing/browser";
-import {Exception, Result} from "@zxing/library";
+import {ArgumentException, Exception, Result} from "@zxing/library";
+import {Utility} from "@weare/reapptor-toolkit";
+import {IBrowserCodeReaderOptions} from "@zxing/browser/esm/readers/IBrowserCodeReaderOptions";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
 import styles from "./QrWidget.module.scss";
-import {Utility} from "@weare/reapptor-toolkit";
 
 export enum QrWidgetType {
     QrCode,
@@ -36,7 +37,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private _initializing: boolean = false;
     private _logsRef: React.RefObject<HTMLTextAreaElement> = React.createRef();
     private _logs: string = "";
-    private _qrCodeReader: BrowserQRCodeReader = new BrowserQRCodeReader();
+    private _qrCodeReader: BrowserQRCodeReader = new BrowserQRCodeReader(undefined, { delayBetweenScanAttempts: this.delay } as IBrowserCodeReaderOptions);
     private _qrCodeReaderControls: IScannerControls | null = null;
 
     private async invokeOnAutoZoomAsync(zoom?: number): Promise<void> {
@@ -48,7 +49,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     protected async setContentAsync(visible: boolean): Promise<void> {
-        await this.stopReaderAsync();
+        if (!visible) {
+            await this.stopReaderAsync();
+        }
+        
         await super.setContentAsync(visible);
     }
     
@@ -239,7 +243,45 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         if (this._qrCodeReaderControls) {
             this._qrCodeReaderControls.stop();
             this._qrCodeReaderControls = null;
+            this._initializing = false;
         }
+    }
+
+    /**
+     * 🖌 Prepares the canvas for capture and scan frames.
+     */
+    private static createCaptureCanvas(mediaElement: HTMLVisualMediaElement): HTMLCanvasElement {
+
+        if (!mediaElement) {
+            throw new ArgumentException("Cannot create a capture canvas without a media element.");
+        }
+
+        if (typeof document === "undefined") {
+            throw new Error("The page \"Document\" is undefined, make sure you're running in a browser.");
+        }
+
+        const canvasElement = document.createElement("canvas");
+        
+        const { width, height } = BrowserCodeReader.getMediaElementDimensions(mediaElement);
+
+        canvasElement.style.width = width + "px";
+        canvasElement.style.height = height + "px";
+        canvasElement.width = width;
+        canvasElement.height = height;
+
+        /**
+         * The HTML canvas element context.
+         */
+
+        const options = {
+            willReadFrequently: true
+        } as CanvasRenderingContext2DSettings;
+        
+        const context = canvasElement.getContext("2d", options);
+
+        (canvasElement as any).getContext = () => context;
+
+        return canvasElement;
     }
 
     private static drawImageOnCanvas(canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement, video: HTMLVideoElement, scale: number) {
@@ -280,6 +322,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
                 await this.setInitializingAsync(true);
 
+                BrowserCodeReader.createCaptureCanvas = (mediaElement: HTMLVisualMediaElement) => QrWidget.createCaptureCanvas(mediaElement);
                 BrowserCodeReader.drawImageOnCanvas = (canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement) => QrWidget.drawImageOnCanvas(canvasElementContext, srcElement, video, this.scale);
 
                 // WebRTC is currently limited to 640x480
@@ -320,6 +363,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     }
 
                     this._qrCodeReaderControls = controls;
+
+                    await Utility.wait(500);
+                    
                 } catch (e) {
                     await this.onScanErrorAsync(e.message);
                     return;

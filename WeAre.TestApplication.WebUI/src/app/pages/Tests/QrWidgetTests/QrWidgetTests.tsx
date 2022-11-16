@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseComponent, ch} from "@weare/reapptor-react-common";
-import {Checkbox, InlineType, NumberInput, QrWidget, QrWidgetType, ThreeColumns, WidgetContainer} from "@weare/reapptor-react-components";
+import {Button, Checkbox, InlineType, NumberInput, QrWidget, QrWidgetType, ThreeColumns, WidgetContainer} from "@weare/reapptor-react-components";
 
 interface QrWidgetTestsState {
     scale: number;
@@ -23,6 +23,8 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
         autoZoom: false,
         debug: false,
     }
+    
+    private readonly _ref: React.RefObject<QrWidget> = React.createRef();
     
     private async onScanAsync(name: string, code: string): Promise<void> {
         await ch.alertMessageAsync("{0} scan result: {1}".format(name, code), true);
@@ -89,6 +91,10 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                                   value={this.state.debug}
                                   onChange={async (sender, debug) => await this.setState({ debug })}
                         />
+                        
+                        <Button label={"Show content"}
+                                onClick={async () => this._ref.current?.showContentAsync()}
+                        />
 
                     </div>
 
@@ -97,6 +103,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                 <WidgetContainer>
 
                     <QrWidget id="QrCode"
+                              ref={this._ref}
                               autoZoom={this.state.autoZoom}
                               debug={this.state.debug}
                               noAutoCollapse={this.state.noAutoCollapse}
