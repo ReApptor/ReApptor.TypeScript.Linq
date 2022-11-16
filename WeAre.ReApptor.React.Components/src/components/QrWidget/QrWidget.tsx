@@ -2,7 +2,8 @@ import React from "react";
 import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
-import LqCodeReader from "./LqCodeReader";
+import {BrowserCodeReader, BrowserQRCodeReader, IScannerControls} from "@zxing/browser";
+import {Exception, Result} from "@zxing/library";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
 
 import widgetStyles from "../WidgetContainer/WidgetContainer.module.scss";
@@ -28,11 +29,23 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
 }
 
 export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
-    
+
+    private static _camera: MediaDeviceInfo | null | false;
     private readonly _ref: React.RefObject<HTMLDivElement> = React.createRef();
-    private readonly _reader: LqCodeReader = new LqCodeReader();
+    private readonly _videoRef: React.RefObject<HTMLVideoElement> = React.createRef();
     private _logsRef: React.RefObject<HTMLTextAreaElement> = React.createRef();
     private _logs: string = "";
+    private _qrCodeReader: BrowserQRCodeReader = new BrowserQRCodeReader();
+    private _qrCodeReaderControls: IScannerControls | null = null;
+
+    private static async getCameraAsync(): Promise<MediaDeviceInfo | false> {
+        if (QrWidget._camera == null) {
+            const cameras: MediaDeviceInfo[] = await BrowserCodeReader.listVideoInputDevices();
+            const camera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
+            QrWidget._camera = camera ?? cameras.firstOrDefault() ?? false;
+        }
+        return QrWidget._camera!
+    }
     
     private async onScanAsync(code: string | null): Promise<void> {
         if (code) {
@@ -44,8 +57,13 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
-    private async onScanErrorAsync(error: string): Promise<void> {
+    private async onScanErrorAsync(error?: string): Promise<void> {
+        if ((error) && (this.debug)) {
+            await this.logAsync("onScanErrorAsync", error);
+        }
+        
         await ch.alertErrorAsync(QrWidgetLocalizer.scanError, true);
+        
         await super.hideContentAsync();
     }
     
@@ -56,10 +74,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             const container: JQuery = node.find("div");
 
-            if (this.props.scale) {
-                const video: JQuery = node.find("video");
+            const videoNode: JQuery = node.find("video");
 
-                video.css("transform", `scale(${this.props.scale})`);
+            const video = videoNode.get(0) as HTMLVideoElement;
+
+            if (this.props.scale) {
+                videoNode.css("transform", `scale(${this.props.scale})`);
             }
 
             if (this.props.borderWidth) {
@@ -85,7 +105,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 }
             }
 
-            await this.assignAutoZoomAsync();
+            await this.assignAutoZoomAsync(video);
         }
     }
     
@@ -99,64 +119,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
-    private async initializeReaderAsync(): Promise<void> {
-
-        if (this._ref.current) {
-            const node: JQuery = this.JQuery(this._ref.current);
-
-            const viewportNode: JQuery = node.find("." + styles.viewport);
-
-            const videoContainerNode: JQuery = viewportNode.find("." + styles.container);
-
-            const videoNode: JQuery = videoContainerNode.find("video");
-
-            const viewportWidth: number = viewportNode.width()!;
-
-            const viewportHeight: number = viewportNode.height()!;
-
-            const scale: number = this.scale;
-
-            const videoWidth: number = scale * viewportWidth;
-
-            const videoHeight: number = scale * viewportHeight;
-
-            const dx: number = (videoWidth - viewportWidth) / 2;
-
-            const dy: number = (videoHeight - viewportHeight) / 2;
-
-            videoContainerNode.css("width", videoWidth);
-            videoContainerNode.css("height", videoHeight);
-            videoContainerNode.css("left", `-${dx}px`);
-            videoContainerNode.css("top", `-${dy}px`);
-
-            const qrCanvasNode: JQuery = node.find("#qr-canvas");
-
-            const videoCanvasNode: JQuery = node.find("#video-canvas");
-
-            const video: HTMLVideoElement = videoNode.get(0) as HTMLVideoElement;
-
-            video.width = videoWidth;
-            video.height = videoHeight;
-
-            const qrCanvas: HTMLCanvasElement = qrCanvasNode.get(0) as HTMLCanvasElement;
-            const videoCanvas: HTMLCanvasElement = videoCanvasNode.get(0) as HTMLCanvasElement;
-            
-            await this.assignAutoZoomAsync();
-
-            await this._reader.initializeAsync(video,
-                qrCanvas, videoCanvas,
-                dx, dy, viewportWidth, viewportHeight, 
-                (code) => this.onScanAsync((code as any) as string),
-                this.delay,
-                this.debug,
-                async (message, param) => this.logAsync(message, param)
-            );
-        }
-    }
-
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
-        //console.log("supported: ", navigator.mediaDevices.getSupportedConstraints());
         
         await this.setState({icon: {name: "far camera"}});
     }
@@ -200,7 +164,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private async autoZoomAsync(video: HTMLVideoElement): Promise<void> {
         const mediaStream = video.srcObject as MediaStream;
 
-        await this.logAsync("autoZoomAsync: hasMediaStream=" + (mediaStream != null));
+        if (this.debug) {
+            await this.logAsync("autoZoomAsync: hasMediaStream=" + (mediaStream != null));
+        }
 
         if (mediaStream) {
 
@@ -209,7 +175,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
 
             if (this.debug) {
-                await this.logAsync("tracks: " + tracks.length);
+                //await this.logAsync("tracks: " + tracks.length);
                 await this.logAsync("zoomableTrack: " + zoomableTrack ?? "NULL");
             }
 
@@ -230,16 +196,62 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
     
-    private async assignAutoZoomAsync(): Promise<void> {
-        if ((this.maximizeZoom) && (this._ref.current)) {
-            const node: JQuery = this.JQuery(this._ref.current);
-
-            const videoNode: JQuery = node.find("video");
-
-            const video: HTMLVideoElement = videoNode.get(0) as HTMLVideoElement;
-
+    private async assignAutoZoomAsync(video: HTMLVideoElement): Promise<void> {
+        if (this.maximizeZoom) {
             video.addEventListener("loadedmetadata", () => this.autoZoomAsync(video));
         }
+    }
+    
+    private async onReaderDecodeAsync(result: Result | undefined, error: Exception | undefined, controls: IScannerControls): Promise<void> {
+        if (result) {
+            const text: string = result.getText();
+            await this.onScanAsync(text);
+            controls.stop();
+        }
+    }
+
+    private async initializeReaderAsync(): Promise<void> {
+
+        if (this._qrCodeReaderControls) {
+            this._qrCodeReaderControls.stop();
+            this._qrCodeReaderControls = null;
+        }
+
+        const video: HTMLVideoElement | null = this._videoRef.current;
+
+        //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
+
+        //if ((!camera) || (!video)) {
+        if (!video) {
+            await this.onScanErrorAsync();
+            return;
+        }
+
+        await this.assignAutoZoomAsync(video);
+        
+        const constraints: MediaStreamConstraints = {
+            video: {
+                facingMode: "environment",
+            }
+        };
+        
+        try {
+            this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
+                constraints,
+                video,
+                async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+            );
+        }
+        catch (e) {
+            await this.onScanErrorAsync(e.message);
+            return;
+        }
+
+        // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
+        //     camera.deviceId,
+        //     video,
+        //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+        // );
     }
 
     protected renderExpanded(): React.ReactNode {
@@ -265,12 +277,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                             <div className={styles.viewport}>
                                 
                                 <div className={styles.container}>
-                                    <video id="video"></video>
+                                    <video id="video" ref={this._videoRef}></video>
                                 </div>
-
-                                <canvas id="qr-canvas" className={this.css(styles.canvas, this.debug && styles.debug)} />
-
-                                <canvas id="video-canvas" className={this.css(styles.canvas)} />
                                 
                             </div>
 
