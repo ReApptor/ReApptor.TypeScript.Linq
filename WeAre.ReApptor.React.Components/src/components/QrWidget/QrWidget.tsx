@@ -253,14 +253,14 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private static createCaptureCanvas(mediaElement: HTMLVisualMediaElement): HTMLCanvasElement {
 
         if (!mediaElement) {
-            throw new ArgumentException('Cannot create a capture canvas without a media element.');
+            throw new ArgumentException("Cannot create a capture canvas without a media element.");
         }
 
-        if (typeof document === 'undefined') {
-            throw new Error('The page "Document" is undefined, make sure you\'re running in a browser.');
+        if (typeof document === "undefined") {
+            throw new Error("The page \"Document\" is undefined, make sure you're running in a browser.");
         }
 
-        const canvasElement = document.createElement('canvas');
+        const canvasElement = document.createElement("canvas");
         
         const { width, height } = BrowserCodeReader.getMediaElementDimensions(mediaElement);
 
