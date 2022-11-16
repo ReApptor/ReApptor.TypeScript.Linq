@@ -6,6 +6,11 @@ export default class BitArray {
     private bits: number[];
     private size: number;
     
+    public static new(size: number): BitArray {
+        const bits: number[] = BitArray.makeArray(size);
+        return new BitArray(bits, size);
+    }
+    
     constructor(bits: number[], size: number) {
         this.bits = bits;
         this.size = size;
