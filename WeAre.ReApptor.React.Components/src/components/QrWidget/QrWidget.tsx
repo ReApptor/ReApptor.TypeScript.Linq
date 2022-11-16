@@ -242,7 +242,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
-    public static drawImageOnCanvas(canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement, video: HTMLVideoElement, scale: number) {
+    private static drawImageOnCanvas(canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement, video: HTMLVideoElement, scale: number) {
         const dw: number = canvasElementContext.canvas.width;
         const dh: number = canvasElementContext.canvas.height;
         
@@ -282,11 +282,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
                 BrowserCodeReader.drawImageOnCanvas = (canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement) => QrWidget.drawImageOnCanvas(canvasElementContext, srcElement, video, this.scale);
 
+                // WebRTC is currently limited to 640x480
                 const constraints: MediaStreamConstraints = {
                     video: {
                         facingMode: "environment",
                         width: {min: 640, ideal: 1080, max: 1920},
-                        height: {min: 480, ideal: 1080, max: 1920}
+                        height: {min: 480, ideal: 1080, max: 1920},
                     }
                 };
 
