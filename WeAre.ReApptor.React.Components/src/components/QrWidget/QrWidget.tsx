@@ -46,6 +46,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
         return QrWidget._camera!
     }
+
+    protected async setContentAsync(visible: boolean): Promise<void> {
+        await this.stopReaderAsync();
+        await super.setContentAsync(visible);
+    }
     
     private async onScanAsync(code: string | null): Promise<void> {
         if (code) {
@@ -131,6 +136,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         await this.setState({icon: {name: "far camera"}});
     }
 
+    public async componentWillUnmount(): Promise<void> {
+        await this.stopReaderAsync();
+        await super.componentWillUnmount();
+    }
+
     public get type(): QrWidgetType {
         return this.props.type ?? QrWidgetType.QrCode;
     }
@@ -155,10 +165,6 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     
     public get maximizeZoom(): boolean {
         return (this.props.maximizeZoom == true);
-    }
-
-    public async componentDidMount(): Promise<void> {
-        await super.componentDidMount();
     }
     
     private async autoZoomAsync(video: HTMLVideoElement): Promise<void> {
@@ -219,50 +225,47 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
     private async initializeReaderAsync(): Promise<void> {
 
-        await this.stopReaderAsync();
+        if (this._qrCodeReaderControls == null) {
+            
+            const video: HTMLVideoElement | null = this._videoRef.current;
 
-        const video: HTMLVideoElement | null = this._videoRef.current;
+            if (video) {
 
-        if (video) {
+                //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
 
-            //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
+                // if (!camera) {
+                //     await this.onScanErrorAsync();
+                //     return;
+                // }
 
-            // if (!camera) {
-            //     await this.onScanErrorAsync();
-            //     return;
-            // }
+                await this.assignAutoZoomAsync(video);
 
-            await this.assignAutoZoomAsync(video);
+                const constraints: MediaStreamConstraints = {
+                    video: {
+                        facingMode: "environment",
+                    }
+                };
 
-            const constraints: MediaStreamConstraints = {
-                video: {
-                    facingMode: "environment",
+                try {
+                    this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
+                        constraints,
+                        video,
+                        async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+                    );
+
+                    // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
+                    //     camera.deviceId,
+                    //     video,
+                    //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+                    // );
                 }
-            };
-
-            try {
-                this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
-                    constraints,
-                    video,
-                    async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
-                );
-
-                // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
-                //     camera.deviceId,
-                //     video,
-                //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
-                // );
+                catch (e) {
+                    await this.onScanErrorAsync(e.message);
+                    return;
+                }
             }
-            catch (e) {
-                await this.onScanErrorAsync(e.message);
-                return;
-            }
+            
         }
-    }
-    
-    public async componentWillUnmount(): Promise<void> {
-        await this.stopReaderAsync();
-        await super.componentWillUnmount();
     }
 
     protected renderExpanded(): React.ReactNode {
