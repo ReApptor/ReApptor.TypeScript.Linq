@@ -227,11 +227,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
 
-            //if ((!camera) || (!video)) {
-            if (!video) {
-                await this.onScanErrorAsync();
-                return;
-            }
+            // if (!camera) {
+            //     await this.onScanErrorAsync();
+            //     return;
+            // }
 
             await this.assignAutoZoomAsync(video);
 
@@ -247,17 +246,17 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     video,
                     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
                 );
+
+                // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
+                //     camera.deviceId,
+                //     video,
+                //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+                // );
             }
             catch (e) {
                 await this.onScanErrorAsync(e.message);
                 return;
             }
-
-            // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
-            //     camera.deviceId,
-            //     video,
-            //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
-            // );
         }
     }
     
