@@ -215,8 +215,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             if (zoomableTrack) {
                 const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
-
-                console.log("zoom.max: ", zoomableTrack);
+                
+                if (this.debug) {
+                    await this.logAsync("zoom.max: ", zoomableTrack);
+                }
 
                 if (max) {
                     const constraints: MediaTrackConstraints = {
@@ -266,7 +268,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                                     <video id="video"></video>
                                 </div>
 
-                                <canvas id="qr-canvas" className={this.css(styles.canvas)} />
+                                <canvas id="qr-canvas" className={this.css(styles.canvas, styles.debug)} />
 
                                 <canvas id="video-canvas" className={this.css(styles.canvas)} />
                                 
