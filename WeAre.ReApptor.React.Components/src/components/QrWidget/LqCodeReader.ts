@@ -134,7 +134,9 @@ export default class LqCodeReader {
             if (cameras.length > 0) {
 
                 const mediaOptions = {
-                    facingMode: "environment",
+                    facingMode: {
+                        ideal: "environment"
+                    },
                     // width: {
                     //     ideal: OutputWidth
                     // },
@@ -149,9 +151,8 @@ export default class LqCodeReader {
                 const backCamera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
 
                 if (backCamera) {
-
                     mediaOptions.deviceId = {
-                        exact: backCamera.deviceId
+                        ideal: backCamera.deviceId
                     };
                 }
 
@@ -207,11 +208,6 @@ export default class LqCodeReader {
         }
 
         const tracks: MediaStreamTrack[] = mediaStream.getVideoTracks();
-
-        // for (let i: number = 0; i < tracks.length; i++) {
-        //     this.log("track=", tracks[i]);
-        //     this.log("track.capabilities=", tracks[i].getCapabilities());
-        // }
 
         const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
 
