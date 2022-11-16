@@ -23,13 +23,13 @@ export interface IQrWidgetProps extends IBaseExpandableWidgetProps {
     delay?: number;
     extended?: boolean;
     debug?: boolean;
-    maximizeZoom?: boolean;
+    autoZoom?: boolean;
     onQr?(code: string): Promise<void>;
+    onAutoZoom?(supported: boolean, zoom: number): Promise<void>;
 }
 
 export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
-    private static _camera: MediaDeviceInfo | null | false;
     private readonly _ref: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _videoRef: React.RefObject<HTMLVideoElement> = React.createRef();
     private _logsRef: React.RefObject<HTMLTextAreaElement> = React.createRef();
@@ -37,13 +37,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private _qrCodeReader: BrowserQRCodeReader = new BrowserQRCodeReader();
     private _qrCodeReaderControls: IScannerControls | null = null;
 
-    private static async getCameraAsync(): Promise<MediaDeviceInfo | false> {
-        if (QrWidget._camera == null) {
-            const cameras: MediaDeviceInfo[] = await BrowserCodeReader.listVideoInputDevices();
-            const camera: MediaDeviceInfo | null = cameras.firstOrDefault(device => /back|rear|environment/gi.test(device.label));
-            QrWidget._camera = camera ?? cameras.firstOrDefault() ?? false;
+    private async invokeOnAutoZoomAsync(zoom?: number): Promise<void> {
+        if ((this.props.onAutoZoom) && (this.autoZoom)) {
+            const supported: boolean = (zoom != null) && (zoom > 1);
+            zoom = (supported) ? zoom : 1;
+            await this.props.onAutoZoom(supported, zoom!);
         }
-        return QrWidget._camera!
     }
 
     protected async setContentAsync(visible: boolean): Promise<void> {
@@ -132,13 +131,13 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     public async componentWillReceiveProps(nextProps: Readonly<IQrWidgetProps>): Promise<void> {
 
         const newType: boolean = (this.props.type !== nextProps.type);
-        const newMaximizeZoom: boolean = (this.props.maximizeZoom !== nextProps.maximizeZoom);
+        const newAutoZoom: boolean = (this.props.autoZoom !== nextProps.autoZoom);
         const newExtended: boolean = (this.props.extended !== nextProps.extended);
         const newDelay: boolean = (this.props.delay !== nextProps.delay);
         const newDebug: boolean = (this.props.debug !== nextProps.debug);
         const newScale: boolean = (this.props.scale !== nextProps.scale);
         const newBorderWidth: boolean = (this.props.borderWidth !== nextProps.borderWidth);
-        const newProps: boolean = (newType || newMaximizeZoom || newExtended || newDelay || newDebug || newScale || newBorderWidth);
+        const newProps: boolean = (newType || newAutoZoom || newExtended || newDelay || newDebug || newScale || newBorderWidth);
 
         if (newProps) {
             await this.stopReaderAsync();
@@ -176,16 +175,14 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         return (this.props.debug == true);
     }
     
-    public get maximizeZoom(): boolean {
-        return (this.props.maximizeZoom == true);
+    public get autoZoom(): boolean {
+        return (this.props.autoZoom == true);
     }
     
     private async autoZoomAsync(video: HTMLVideoElement): Promise<void> {
+        let max: number = 0;
+        
         const mediaStream = video.srcObject as MediaStream;
-
-        if (this.debug) {
-            await this.logAsync("autoZoomAsync: hasMediaStream=" + (mediaStream != null));
-        }
 
         if (mediaStream) {
 
@@ -193,19 +190,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
 
-            if (this.debug) {
-                //await this.logAsync("tracks: " + tracks.length);
-                await this.logAsync("zoomableTrack: " + zoomableTrack ?? "NULL");
-            }
-
             if (zoomableTrack) {
-                const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
-                
-                if (this.debug) {
-                    await this.logAsync("zoom.max: ", zoomableTrack);
-                }
+                max = ((zoomableTrack.getCapabilities() as any).zoom?.max) || 0;
 
-                if (max) {
+                if (max > 1) {
                     const constraints: MediaTrackConstraints = {
                         advanced: [{zoom: max} as MediaTrackConstraintSet]
                     };
@@ -213,10 +201,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 }
             }
         }
+        
+        await this.invokeOnAutoZoomAsync(max);
     }
     
     private async assignAutoZoomAsync(video: HTMLVideoElement): Promise<void> {
-        if (this.maximizeZoom) {
+        if (this.autoZoom) {
             video.addEventListener("loadedmetadata", () => this.autoZoomAsync(video));
         }
     }
@@ -286,7 +276,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
                 const defaultZoom: number = 8;
 
-                const zoomConstraint: MediaTrackConstraintSet = (this.maximizeZoom)
+                const zoomConstraint: MediaTrackConstraintSet = (this.autoZoom)
                     ? {zoom: defaultZoom} as MediaTrackConstraintSet
                     : {};
                 
@@ -306,18 +296,25 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                         async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
                     );
                     
-                    if ((this.maximizeZoom) && (controls.streamVideoCapabilitiesGet) && (controls.streamVideoConstraintsApply)) {
-                        const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet!((track: MediaStreamTrack) => [track])
+                    if (this.autoZoom) {
+                        
+                        let max: number = 0;
+                        
+                        if ((controls.streamVideoCapabilitiesGet) && (controls.streamVideoConstraintsApply)) {
+                            const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet!((track: MediaStreamTrack) => [track])
 
-                        const max: number = (capabilities as any).zoom?.max || 0;
+                            max = ((capabilities as any).zoom?.max) || 0;
 
-                        if ((max) && (max != defaultZoom)) {
-                            const constraints: MediaTrackConstraints = {
-                                advanced: [{zoom: max} as MediaTrackConstraintSet]
-                            };
+                            if ((max > 1) && (max != defaultZoom)) {
+                                const constraints: MediaTrackConstraints = {
+                                    advanced: [{zoom: max} as MediaTrackConstraintSet]
+                                };
 
-                            await controls.streamVideoConstraintsApply(constraints);
+                                await controls.streamVideoConstraintsApply(constraints);
+                            }
                         }
+
+                        await this.invokeOnAutoZoomAsync(max);
                     }
 
                     this._qrCodeReaderControls = controls;
