@@ -231,19 +231,19 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
     
-    private async onReaderDecodeAsync(result: Result | undefined, error: Exception | undefined, controls: IScannerControls): Promise<void> {
+    private async onReaderDecodeAsync(result: Result | undefined): Promise<void> {
         if (result) {
             const text: string = result.getText();
+            
             await this.onScanAsync(text);
-            controls.stop();
         }
     }
     
     private async stopReaderAsync(): Promise<void> {
+        this._initializing = false;
         if (this._qrCodeReaderControls) {
             this._qrCodeReaderControls.stop();
             this._qrCodeReaderControls = null;
-            this._initializing = false;
         }
     }
 
@@ -338,7 +338,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     const controls: IScannerControls = await this._qrCodeReader.decodeFromConstraints(
                         constraints,
                         video,
-                        async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+                        (result) => this.onReaderDecodeAsync(result)
                     );
 
                     if (this.autoZoom) {
@@ -364,7 +364,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
                     this._qrCodeReaderControls = controls;
 
-                    await Utility.wait(500);
+                    await Utility.wait(300);
                     
                 } catch (e) {
                     await this.onScanErrorAsync(e.message);
