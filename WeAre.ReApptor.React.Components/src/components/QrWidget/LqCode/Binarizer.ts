@@ -1,6 +1,6 @@
 import LuminanceSource from "./LuminanceSource";
 import BitArray from "./BitArray";
-
+import BitMatrix from "./BitMatrix";
 
 export default abstract class Binarizer {
     
@@ -16,7 +16,7 @@ export default abstract class Binarizer {
     
     public abstract getBlackRow(var1: number, var2: BitArray): BitArray;
     
-    //public abstract getBlackMatrix(): BitMatrix;
+    public abstract getBlackMatrix(): BitMatrix;
     
     public abstract createBinarizer(var1: LuminanceSource): Binarizer;
     
