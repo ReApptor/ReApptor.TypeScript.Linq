@@ -30,8 +30,7 @@
         
         &.initializing {
           > video {
-            //visibility: hidden;
-            filter: blur(8px);
+            visibility: hidden;
           }
         }
         
