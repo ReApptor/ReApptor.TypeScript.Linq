@@ -49,13 +49,13 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         await super.hideContentAsync();
     }
     
-    private setCustomerStyles(): void {
+    private async setCustomerStylesAsync(): Promise<void> {
         if (this._ref.current) {
-            
+
             const node: JQuery = this.JQuery(this._ref.current);
 
             const container: JQuery = node.find("div");
-            
+
             if (this.props.scale) {
                 const video: JQuery = node.find("video");
 
@@ -64,10 +64,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
             if (this.props.borderWidth) {
                 container.css("border-width", `${this.props.borderWidth}px`);
-                
+
                 const width: number = container.width() ?? 0;
                 const height: number = container.height() ?? 0;
-                
+
                 if (width != height) {
                     if (height > width) {
                         const delta = (height - width) / 2;
@@ -84,6 +84,8 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     }
                 }
             }
+
+            await this.assignAutoZoomAsync();
         }
     }
     
@@ -154,9 +156,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
     public async initializeAsync(): Promise<void> {
         await super.initializeAsync();
-        
-        
-        console.log("supported: ", navigator.mediaDevices.getSupportedConstraints());
+        //console.log("supported: ", navigator.mediaDevices.getSupportedConstraints());
         
         await this.setState({icon: {name: "far camera"}});
     }
@@ -200,13 +200,18 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private async autoZoomAsync(video: HTMLVideoElement): Promise<void> {
         const mediaStream = video.srcObject as MediaStream;
 
+        await this.logAsync("autoZoomAsync: hasMediaStream=" + (mediaStream != null));
+
         if (mediaStream) {
 
             const tracks: MediaStreamTrack[] = mediaStream.getVideoTracks();
 
             const zoomableTrack: MediaStreamTrack | null = tracks.firstOrDefault(track => "zoom" in track.getCapabilities());
 
-            console.log("tracks: ", tracks.length, " zoomableTrack: ", zoomableTrack);
+            if (this.debug) {
+                await this.logAsync("tracks: " + tracks.length);
+                await this.logAsync("zoomableTrack: " + zoomableTrack ?? "NULL");
+            }
 
             if (zoomableTrack) {
                 const max: number = (zoomableTrack.getCapabilities() as any).zoom?.max || 0;
@@ -240,11 +245,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         const qrStyle: React.CSSProperties = {};
 
         if (this.extended) {
-            setTimeout(async () => await this.initializeReaderAsync(), 0);
+            setTimeout(() => this.initializeReaderAsync(), 0);
         } else {
             qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
 
-            setTimeout(() => this.setCustomerStyles(), 0);
+            setTimeout(() => this.setCustomerStylesAsync(), 0);
         }
         
         return (
@@ -264,17 +269,6 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                                 <canvas id="qr-canvas" className={this.css(styles.canvas)} />
 
                                 <canvas id="video-canvas" className={this.css(styles.canvas)} />
-
-                                {
-                                    (this.debug) &&
-                                    (
-                                        <textarea readOnly
-                                                  ref={this._logsRef}
-                                                  className={styles.logs}
-                                                  value={this._logs}
-                                        />
-                                    )
-                                }
                                 
                             </div>
 
@@ -301,7 +295,17 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                             )
                     )
                 }
-                
+
+                {
+                    (this.debug) &&
+                    (
+                        <textarea readOnly
+                                  ref={this._logsRef}
+                                  className={styles.logs}
+                                  value={this._logs}
+                        />
+                    )
+                }                
 
             </div>
         );
