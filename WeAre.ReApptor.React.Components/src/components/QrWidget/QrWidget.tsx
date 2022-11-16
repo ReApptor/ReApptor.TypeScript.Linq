@@ -271,36 +271,36 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     }
 
     private async initializeReaderAsync(): Promise<void> {
-        
+
         if ((this._qrCodeReaderControls == null) && (!this._initializing)) {
-            
+
             const video: HTMLVideoElement | null = this._videoRef.current;
 
             if (video) {
-                
+
                 await this.setInitializingAsync(true);
-                
+
                 BrowserCodeReader.drawImageOnCanvas = (canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement) => QrWidget.drawImageOnCanvas(canvasElementContext, srcElement, video, this.scale);
-                
+
                 const constraints: MediaStreamConstraints = {
                     video: {
                         facingMode: "environment",
-                        width: { min: 640, ideal: 1080, max: 1920 },
-                        height: { min: 480, ideal: 1080, max: 1920 }
+                        width: {min: 640, ideal: 1080, max: 1920},
+                        height: {min: 480, ideal: 1080, max: 1920}
                     }
                 };
 
-                try {                    
+                try {
                     const controls: IScannerControls = await this._qrCodeReader.decodeFromConstraints(
                         constraints,
                         video,
                         async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
                     );
-                    
+
                     if (this.autoZoom) {
-                        
+
                         let max: number = 0;
-                        
+
                         if ((controls.streamVideoCapabilitiesGet) && (controls.streamVideoConstraintsApply)) {
                             const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet((track: MediaStreamTrack) => [track]);
 
@@ -319,12 +319,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     }
 
                     this._qrCodeReaderControls = controls;
-
-                    await this.setInitializingAsync(false);
-                }
-                catch (e) {
+                } catch (e) {
                     await this.onScanErrorAsync(e.message);
                     return;
+                } finally {
+                    await this.setInitializingAsync(false);
                 }
             }
         }
