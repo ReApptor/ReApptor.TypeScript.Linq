@@ -268,7 +268,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                                     <video id="video"></video>
                                 </div>
 
-                                <canvas id="qr-canvas" className={this.css(styles.canvas, styles.debug)} />
+                                <canvas id="qr-canvas" className={this.css(styles.canvas, this.debug && styles.debug)} />
 
                                 <canvas id="video-canvas" className={this.css(styles.canvas)} />
                                 
