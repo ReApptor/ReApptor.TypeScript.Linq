@@ -20,7 +20,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
         extended: true,
         stretchContent: false,
         noAutoCollapse: true,
-        autoZoom: true,
+        autoZoom: false,
         debug: false,
     }
     
@@ -43,6 +43,7 @@ export default class QrWidgetTests extends BaseComponent<{}, QrWidgetTestsState>
                                      max={5}
                                      value={this.state.scale}
                                      step={0.1}
+                                     readonly={this.state.autoZoom}
                                      onChange={async (sender, scale) => await this.setState({ scale })}
                         />
 
