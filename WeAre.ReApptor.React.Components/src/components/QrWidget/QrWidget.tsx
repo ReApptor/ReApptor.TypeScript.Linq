@@ -209,49 +209,61 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
             controls.stop();
         }
     }
-
-    private async initializeReaderAsync(): Promise<void> {
-
+    
+    private async stopReaderAsync(): Promise<void> {
         if (this._qrCodeReaderControls) {
             this._qrCodeReaderControls.stop();
             this._qrCodeReaderControls = null;
         }
+    }
+
+    private async initializeReaderAsync(): Promise<void> {
+
+        await this.stopReaderAsync();
 
         const video: HTMLVideoElement | null = this._videoRef.current;
 
-        //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
+        if (video) {
 
-        //if ((!camera) || (!video)) {
-        if (!video) {
-            await this.onScanErrorAsync();
-            return;
-        }
+            //const camera: MediaDeviceInfo | false = await QrWidget.getCameraAsync();
 
-        await this.assignAutoZoomAsync(video);
-        
-        const constraints: MediaStreamConstraints = {
-            video: {
-                facingMode: "environment",
+            //if ((!camera) || (!video)) {
+            if (!video) {
+                await this.onScanErrorAsync();
+                return;
             }
-        };
-        
-        try {
-            this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
-                constraints,
-                video,
-                async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
-            );
-        }
-        catch (e) {
-            await this.onScanErrorAsync(e.message);
-            return;
-        }
 
-        // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
-        //     camera.deviceId,
-        //     video,
-        //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
-        // );
+            await this.assignAutoZoomAsync(video);
+
+            const constraints: MediaStreamConstraints = {
+                video: {
+                    facingMode: "environment",
+                }
+            };
+
+            try {
+                this._qrCodeReaderControls = await this._qrCodeReader.decodeFromConstraints(
+                    constraints,
+                    video,
+                    async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+                );
+            }
+            catch (e) {
+                await this.onScanErrorAsync(e.message);
+                return;
+            }
+
+            // this._qrCodeReaderControls = await this._qrCodeReader.decodeFromVideoDevice(
+            //     camera.deviceId,
+            //     video,
+            //     async (result, error, controls) => this.onReaderDecodeAsync(result, error, controls)
+            // );
+        }
+    }
+    
+    public async componentWillUnmount(): Promise<void> {
+        await this.stopReaderAsync();
+        await super.componentWillUnmount();
     }
 
     protected renderExpanded(): React.ReactNode {
