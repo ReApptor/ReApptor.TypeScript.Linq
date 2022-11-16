@@ -1,7 +1,7 @@
-import ResultPoint from "./ResultPoint";
-import Decoder from "./Decoder";
+//import ResultPoint from "./ResultPoint";
+//import Decoder from "./Decoder";
 
-// export default class QRCodeReader {
+export default class QRCodeReader {
 //     private static readonly NO_POINTS: ResultPoint[] = [0];
 //     private readonly decoder: Decoder = new Decoder();
 //
@@ -147,4 +147,4 @@ import Decoder from "./Decoder";
 //             throw NotFoundException.getNotFoundInstance();
 //         }
 //     }
-// }
+}
