@@ -2,7 +2,7 @@ import React from "react";
 import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
-import {BrowserCodeReader, BrowserQRCodeReader, IScannerControls} from "@zxing/browser";
+import {BrowserCodeReader, BrowserQRCodeReader, HTMLVisualMediaElement, IScannerControls} from "@zxing/browser";
 import {Exception, Result} from "@zxing/library";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
 
@@ -236,6 +236,34 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         }
     }
 
+    public static drawImageOnCanvas(canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement, video: HTMLVideoElement, scale: number) {
+        const dw: number = canvasElementContext.canvas.width;
+        const dh: number = canvasElementContext.canvas.height;
+        
+        if (scale > 1) {
+            let sw: number = video.videoWidth;
+            let sh: number = video.videoHeight;
+
+            if ((sw > 0) && (sh > 0)) {
+                
+                const croppedWidth: number = Math.trunc(sw / scale);
+                const croppedHeight: number = Math.trunc(sh / scale);
+
+                const sx: number = Math.trunc((sw - croppedWidth) / 2);
+                const sy: number = Math.trunc((sh - croppedHeight) / 2);
+                
+                sw = croppedWidth;
+                sh = croppedHeight;
+
+                canvasElementContext.drawImage(srcElement, sx, sy, sw, sh, 0, 0, dw, dh);
+                
+                return;
+            }
+        }
+        
+        canvasElementContext.drawImage(srcElement, 0, 0, dw, dh);
+    }
+
     private async initializeReaderAsync(): Promise<void> {
         
         if (this._qrCodeReaderControls == null) {
@@ -252,10 +280,22 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 // }
 
                 //await this.assignAutoZoomAsync(video);
+                
+                //BrowserQRCodeReader.drawImageOnCanvas = QrWidget.drawImageOnCanvas;
+                BrowserCodeReader.drawImageOnCanvas = (canvasElementContext: CanvasRenderingContext2D, srcElement: HTMLVisualMediaElement) => QrWidget.drawImageOnCanvas(canvasElementContext, srcElement, video, this.scale);
 
+                const defaultZoom: number = 8;
+
+                const zoomConstraint: MediaTrackConstraintSet = (this.maximizeZoom)
+                    ? {zoom: defaultZoom} as MediaTrackConstraintSet
+                    : {};
+                
                 const constraints: MediaStreamConstraints = {
                     video: {
                         facingMode: "environment",
+                        advanced: [
+                            zoomConstraint
+                        ],
                     }
                 };
 
@@ -267,15 +307,15 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                     );
                     
                     if ((this.maximizeZoom) && (controls.streamVideoCapabilitiesGet) && (controls.streamVideoConstraintsApply)) {
-                        const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet!((track: MediaStreamTrack)  => [track])
+                        const capabilities: MediaTrackCapabilities = controls.streamVideoCapabilitiesGet!((track: MediaStreamTrack) => [track])
 
                         const max: number = (capabilities as any).zoom?.max || 0;
 
-                        if (max) {
+                        if ((max) && (max != defaultZoom)) {
                             const constraints: MediaTrackConstraints = {
                                 advanced: [{zoom: max} as MediaTrackConstraintSet]
                             };
-                            
+
                             await controls.streamVideoConstraintsApply(constraints);
                         }
                     }
@@ -301,6 +341,10 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
         const qrStyle: React.CSSProperties = {};
 
         if (this.extended) {
+            if (this.scale > 1) {
+                qrStyle.transform = `scale(${this.scale.toFixed(1)})`;
+            }
+            
             setTimeout(() => this.initializeReaderAsync(), 0);
         } else {
             qrStyle.width = this.props.width || (this.mobile ? "100%" : "50%");
@@ -319,7 +363,7 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                             <div className={styles.viewport}>
                                 
                                 <div className={styles.container}>
-                                    <video id="video" ref={this._videoRef}></video>
+                                    <video id="video" ref={this._videoRef} style={qrStyle}></video>
                                 </div>
                                 
                             </div>
