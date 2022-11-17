@@ -3,7 +3,7 @@ import {ch} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import {BrowserCodeReader, BrowserQRCodeReader, HTMLVisualMediaElement, IScannerControls} from "@zxing/browser";
-import {ArgumentException, Exception, Result} from "@zxing/library";
+import {ArgumentException, Result} from "@zxing/library";
 import {Utility} from "@weare/reapptor-toolkit";
 import {IBrowserCodeReaderOptions} from "@zxing/browser/esm/readers/IBrowserCodeReaderOptions";
 import QrWidgetLocalizer from "./QrWidgetLocalizer";
@@ -329,8 +329,9 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
                 const constraints: MediaStreamConstraints = {
                     video: {
                         facingMode: "environment",
-                        width: {min: 640, ideal: 1080, max: 1920},
-                        height: {min: 480, ideal: 1080, max: 1920},
+                        width: { min: 640, ideal: 1920 },
+                        height: { min: 400, ideal: 1080 },
+                        aspectRatio: { ideal: 1.7777777778 }
                     }
                 };
 
@@ -364,11 +365,12 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
 
                     this._qrCodeReaderControls = controls;
 
+                    // A time for mobile camera initializing.
                     await Utility.wait(300);
                     
-                } catch (e) {
-                    await this.onScanErrorAsync(e.message);
-                    return;
+                } catch (ex) {
+                    // @ts-ignore
+                    await this.onScanErrorAsync(ex.message);
                 } finally {
                     await this.setInitializingAsync(false);
                 }
