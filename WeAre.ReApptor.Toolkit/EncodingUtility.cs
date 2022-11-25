@@ -1,11 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace WeAre.ReApptor.Toolkit
 {
     public static class EncodingUtility
     {
-        public static string ConvertEncoding(string value, Encoding source, Encoding destination)
+        public static string ConvertEncoding(string value, [NotNull]Encoding source, [NotNull]Encoding destination)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
@@ -23,12 +24,12 @@ namespace WeAre.ReApptor.Toolkit
             return value;
         }
 
-        public static string ConvertEncoding(string value, Encoding destination)
+        public static string ConvertEncoding(string value, [NotNull]Encoding destination)
         {
             return ConvertEncoding(value, Encoding.UTF8, destination);
         }
 
-        public static byte[] GetBytes(string value, Encoding source, Encoding destination, bool bom = false)
+        public static byte[] GetBytes(string value, [NotNull]Encoding source, [NotNull]Encoding destination, bool bom = false)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
@@ -39,6 +40,7 @@ namespace WeAre.ReApptor.Toolkit
             if (value != null)
             {
                 rawData = source.GetBytes(value);
+                
                 if (destination.EncodingName != source.EncodingName)
                 {
                     rawData = Encoding.Convert(source, destination, rawData);
@@ -74,6 +76,11 @@ namespace WeAre.ReApptor.Toolkit
         public static byte[] GetBytes(string value, Encoding destination, bool bom = false)
         {
             return GetBytes(value, Encoding.UTF8, destination, bom);
+        }
+
+        public static byte[] GetBytes(string value, bool bom = false)
+        {
+            return GetBytes(value, Encoding.UTF8, Encoding.UTF8, bom);
         }
     }
 }

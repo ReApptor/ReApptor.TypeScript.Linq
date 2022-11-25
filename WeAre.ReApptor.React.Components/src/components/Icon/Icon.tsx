@@ -56,7 +56,7 @@ export interface IIconProps {
     disabled?: boolean;
     stopPropagation?: boolean;
     confirm?: string | IConfirmation | ConfirmationDialogTitleCallback | null;
-    onClick?(sender: Icon): Promise<void>;
+    onClick?(sender: Icon, data: string | null): Promise<void>;
 }
 
 interface IIconState {
@@ -216,7 +216,6 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
 
         try {
             await actionProps.onClick();
-
         } finally {
             this._actionProps = null;
             this._actionLoading = false;
@@ -288,7 +287,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         return this.hasActions && this.state.isOpen;
     }
 
-    private async onClickAsync(confirmed: boolean, e: SyntheticEvent | null = null): Promise<void> {
+    private async onClickAsync(confirmed: boolean, data: string | null = null, e: SyntheticEvent | null = null): Promise<void> {
 
         if ((e != null) && (this.props.stopPropagation === true)) {
             e.stopPropagation();
@@ -303,7 +302,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
             await this._confirmDialogRef.current!.openAsync();
         } else  {
             if (this.props.onClick) {
-                await this.props.onClick(this);
+                await this.props.onClick(this, data);
             }
         }
     }
@@ -359,7 +358,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                    data-toggle={this.dataToggleModal}
                    data-dismiss={this.dataDismissModal}
                    data-modal={this.dataModal}
-                   onClick={(e: SyntheticEvent) => this.onClickAsync(false, e)}
+                   onClick={(e: SyntheticEvent) => this.onClickAsync(false, null, e)}
                 >
                     {
                         (this.children.length > 0) &&
@@ -375,7 +374,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                     (
                         <ConfirmationDialog ref={this._confirmDialogRef}
                                             title={this.props.confirm}
-                                            callback={() => this.onClickAsync(true)}
+                                            callback={(caller, data) => this.onClickAsync(true, data)}
                         />
                     )
                 }

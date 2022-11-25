@@ -1,6 +1,6 @@
 import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
-import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/reapptor-react-common";
+import {ActionType, BaseComponent, ch, IConfirmation, Justify, TextAlign} from "@weare/reapptor-react-common";
 import {
     BorderType,
     CellModel,
@@ -215,6 +215,32 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         {
             actions: [
                 {
+                    name: "confirm",
+                    title: "confirm",
+                    icon: "fad fa-window-restore",
+                    type: ActionType.Blue,
+                    confirm: {
+                        title: "Are you sure?",
+                        comment: true,
+                        minLength: 3,
+                        placeholder: "Type 'cancel' to confirm",
+                    } as IConfirmation,
+                    callback: (cell, action: any, selectedAction?: string | null, data?: string | null) => GridTests.cellActionCallBack(selectedAction, data),
+                },
+                {
+                    name: "confirm",
+                    title: "confirm",
+                    type: ActionType.Blue,
+                    confirm: {
+                        title: "Are you sure?",
+                        comment: true,
+                        minLength: 3,
+                        placeholder: "Type 'cancel' to confirm",
+                    } as IConfirmation,
+                    callback: (cell, action: any, selectedAction?: string | null, data?: string | null) => GridTests.cellActionCallBack(selectedAction, data),
+                },
+                
+                {
                     name: "cancel",
                     title: "save",
                     type: ActionType.Blue,
@@ -342,8 +368,9 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return value.toString() + " aaaaaa";
     }
 
-    private static cellActionCallBack(selectedAction: string): void {
-        console.log(selectedAction)
+    private static cellActionCallBack(selectedAction?: string | null, data?: string | null): void {
+        console.log("cellActionCallBack: selectedAction=", selectedAction, "data=", data);
+        alert("selectedAction=\"{0}\"\ndata=\"{1}\"".format(selectedAction, data));
     }
 
     private static getGridSelectableTypeName(item: GridSelectableType): string {

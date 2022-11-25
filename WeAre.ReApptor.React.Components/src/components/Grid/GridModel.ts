@@ -848,7 +848,7 @@ export class ColumnActionDefinition {
 
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
 
-    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
 }
@@ -876,7 +876,7 @@ export class ColumnAction<TItem = {}> {
 
     public column: ColumnModel<TItem> = new ColumnModel<TItem>();
 
-    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string | null, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<TItem>, action: CellAction<TItem>): React.ReactNode;
 }
@@ -892,7 +892,6 @@ export class CellAction<TItem = {}> {
 }
 
 export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
-
     public readonly: boolean | null = null;
 
     public justify: Justify = Justify.Left;
@@ -1816,18 +1815,27 @@ export class CellModel<TItem = {}> implements ITag {
         return modified;
     }
 
-    public bind(): boolean {
+    public bindDescription(): boolean {
+        // bind description
+        const description: string = this.description;
+        this._description = null;
+        const newDescription: string = this.description;
+        return (description != newDescription);
+    }
+
+    public bind(): boolean {        
         if (this.accessor) {
             const value: any = (typeof this.accessor === "string")
                 ? Utility.findValueByAccessor(this.model, this.accessor)
                 : this.accessor(this.model);
             this.setValue(value);
             if (this.modified) {
+                this._description = null;
                 this.save();
                 return true;
             }
         }
-        return false;
+        return this.bindDescription();
     }
 
     public async bindAsync(forceRender: boolean = true): Promise<void> {
