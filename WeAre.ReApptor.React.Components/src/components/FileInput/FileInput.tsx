@@ -22,6 +22,10 @@ export interface IFileInputProps extends IBaseInputProps<FileModel | FileModel[]
     fileTypes?: string[];
     removeConfirmation?: string;
     placeholder?: string;
+
+    /**
+     * Set true to hide element
+     */
     hidden?: boolean;
     
     onClick?(sender: FileInput, value: FileModel): Promise<void>;
@@ -259,7 +263,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                         </div>
                     )
                 }
-                
+
                 <input id={this.getInputId()} hidden
                        type={this.getType()}
                        multiple={this.props.multiple}
@@ -273,7 +277,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                 />
                 
                 {
-                    (this.value) &&
+                    (!this.hidden && this.value) &&
                     (
                         this.renderFile()
                     )
