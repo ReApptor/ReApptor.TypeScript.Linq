@@ -111,6 +111,7 @@ class TypeResolver implements ITypeResolver, IService {
     // IService
 
     public getType(): ServiceType {
+        // @ts-ignore
         return nameof<ITypeResolver>();
     }
 }

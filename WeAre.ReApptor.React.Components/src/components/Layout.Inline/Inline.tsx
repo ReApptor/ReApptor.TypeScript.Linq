@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 export enum JustifyContent {
     Start,
@@ -12,9 +12,8 @@ export enum JustifyContent {
 }
 
 
-interface IInlineProps {
+interface IInlineProps extends IBaseContainerComponentProps {
     justify?: JustifyContent;
-    className?: string;
 }
 
 export default class Inline extends BaseComponent<IInlineProps> {

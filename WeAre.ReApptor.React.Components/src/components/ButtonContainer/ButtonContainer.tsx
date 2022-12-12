@@ -1,10 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "./ButtonContainer.module.scss";
 
-export interface IButtonContainerProps {
-    className?: string;
+export interface IButtonContainerProps extends IBaseContainerComponentProps {
 }
 
 export interface IButtonContainerState {
@@ -15,6 +14,7 @@ export default class ButtonContainer extends BaseComponent<IButtonContainerProps
     };
 
     private getButtons(): React.ReactElement[] {
+        // noinspection UnnecessaryLocalVariableJS
         const buttons: React.ReactElement[] = React.Children.map(this.props.children, item => {
             return item as React.ReactElement;
         }) || [];

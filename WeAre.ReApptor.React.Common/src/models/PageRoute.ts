@@ -104,7 +104,7 @@ export default class PageRoute {
             route.id = null;
         }
         
-        if (!route.parameters || route.parameters == {}){
+        if (!route.parameters) {
             route.parameters = null;
         }
     }

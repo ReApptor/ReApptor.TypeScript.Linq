@@ -431,13 +431,13 @@ export default class AddressHelper {
         return geoLocation;
     }
     
-    public static getCoordinate(location: GeoCoordinate | GeoLocation | Position | string | null): GeoCoordinate | null {
+    public static getCoordinate(location: GeoCoordinate | GeoLocation | GeolocationPosition | string | null): GeoCoordinate | null {
         if (location) {
             if (typeof location === "string") {
                 return AddressHelper.extractCoordinate(location);
             }
 
-            const position = location as Position;
+            const position = location as GeolocationPosition;
             if ((position.coords?.latitude != null) && (position.coords?.longitude != null)) {
                 return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
             }
@@ -546,7 +546,7 @@ export default class AddressHelper {
         return `${latitude}${latitudeCardinal} ${longitude}${longitudeCardinal}`
     }
     
-    public static findCenter(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): GeoCoordinate {
+    public static findCenter(x: GeoCoordinate | GeoLocation | GeolocationPosition | string, y: GeoCoordinate | GeoLocation | GeolocationPosition | string): GeoCoordinate {
 
         const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
         const yCoordinate: GeoCoordinate | null = this.getCoordinate(y);
@@ -562,7 +562,7 @@ export default class AddressHelper {
         return new GeoCoordinate(lat, lon);
     }
     
-    public static distance(x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): number {
+    public static distance(x: GeoCoordinate | GeoLocation | GeolocationPosition | string, y: GeoCoordinate | GeoLocation | GeolocationPosition | string): number {
         
         const xCoordinate: GeoCoordinate | null = this.getCoordinate(x);
         const yCoordinate: GeoCoordinate | null = this.getCoordinate(y);
@@ -595,7 +595,7 @@ export default class AddressHelper {
         return (c * r);
     }
 
-    public static findZoom(center: GeoCoordinate | GeoLocation | Position | string, x: GeoCoordinate | GeoLocation | Position | string, y: GeoCoordinate | GeoLocation | Position | string): number {
+    public static findZoom(center: GeoCoordinate | GeoLocation | GeolocationPosition | string, x: GeoCoordinate | GeoLocation | GeolocationPosition | string, y: GeoCoordinate | GeoLocation | GeolocationPosition | string): number {
 
         const xDistance: number = AddressHelper.distance(center, x);
         const yDistance: number = AddressHelper.distance(center, y);

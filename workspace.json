@@ -1,14 +1,329 @@
 {
   "version": 2,
   "projects": {
+    "ReApptor.TypeScript.Linq": {
+      "root": "ReApptor.TypeScript.Linq",
+      "sourceRoot": "ReApptor.TypeScript.Linq/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "ReApptor.TypeScript.Linq/dist",
+            "tsConfig": "ReApptor.TypeScript.Linq/tsconfig.lib.json",
+            "project": "ReApptor.TypeScript.Linq/package.json",
+            "entryFile": "ReApptor.TypeScript.Linq/src/index.ts",
+            "external": [
+              "react/jsx-runtime"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "ReApptor.TypeScript.Linq/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "ReApptor.TypeScript.Linq/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/ReApptor.TypeScript.Linq"
+          ],
+          "options": {
+            "jestConfig": "ReApptor.TypeScript.Linq/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "ReApptor.TypeScript.PagedList": {
+      "root": "ReApptor.TypeScript.PagedList",
+      "sourceRoot": "ReApptor.TypeScript.PagedList/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "ReApptor.TypeScript.PagedList/dist",
+            "tsConfig": "ReApptor.TypeScript.PagedList/tsconfig.lib.json",
+            "project": "ReApptor.TypeScript.PagedList/package.json",
+            "entryFile": "ReApptor.TypeScript.PagedList/src/index.ts",
+            "external": [
+              "react/jsx-runtime"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "ReApptor.TypeScript.PagedList/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "ReApptor.TypeScript.PagedList/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/ReApptor.TypeScript.PagedList"
+          ],
+          "options": {
+            "jestConfig": "ReApptor.TypeScript.PagedList/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Common": {
+      "root": "WeAre.ReApptor.React.Common",
+      "sourceRoot": "WeAre.ReApptor.React.Common/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "WeAre.ReApptor.React.Common/dist",
+            "tsConfig": "WeAre.ReApptor.React.Common/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Common/package.json",
+            "entryFile": "WeAre.ReApptor.React.Common/src/index.ts",
+            "external": [
+              "react/jsx-runtime"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "WeAre.ReApptor.React.Common/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "WeAre.ReApptor.React.Common/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/WeAre.ReApptor.React.Common"
+          ],
+          "options": {
+            "jestConfig": "WeAre.ReApptor.React.Common/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Components": {
+      "root": "WeAre.ReApptor.React.Components",
+      "sourceRoot": "WeAre.ReApptor.React.Components/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "WeAre.ReApptor.React.Components/dist",
+            "tsConfig": "WeAre.ReApptor.React.Components/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Components/package.json",
+            "entryFile": "WeAre.ReApptor.React.Components/src/index.ts",
+            "external": [
+              "react/jsx-runtime",
+              "swiper/react"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "WeAre.ReApptor.React.Components/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "WeAre.ReApptor.React.Components/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/WeAre.ReApptor.React.Components"
+          ],
+          "options": {
+            "jestConfig": "WeAre.ReApptor.React.Components/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Components.Localization": {
+      "root": "WeAre.ReApptor.React.Components.Localization",
+      "sourceRoot": "WeAre.ReApptor.React.Components.Localization/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "WeAre.ReApptor.React.Components.Localization/dist",
+            "tsConfig": "WeAre.ReApptor.React.Components.Localization/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Components.Localization/package.json",
+            "entryFile": "WeAre.ReApptor.React.Components.Localization/src/index.ts",
+            "external": [
+              "react/jsx-runtime"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "WeAre.ReApptor.React.Components.Localization/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "WeAre.ReApptor.React.Components.Localization/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/WeAre.ReApptor.React.Components.Localization"
+          ],
+          "options": {
+            "jestConfig": "WeAre.ReApptor.React.Components.Localization/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "WeAre.ReApptor.React.Toolkit": {
+      "root": "WeAre.ReApptor.React.Toolkit",
+      "sourceRoot": "WeAre.ReApptor.React.Toolkit/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/rollup:rollup",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "WeAre.ReApptor.React.Toolkit/dist",
+            "tsConfig": "WeAre.ReApptor.React.Toolkit/tsconfig.lib.json",
+            "project": "WeAre.ReApptor.React.Toolkit/package.json",
+            "entryFile": "WeAre.ReApptor.React.Toolkit/src/index.ts",
+            "external": [
+              "react/jsx-runtime"
+            ],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "WeAre.ReApptor.React.Toolkit/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "WeAre.ReApptor.React.Toolkit/**/*.{ts,tsx,js,jsx}"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "{workspaceRoot}/coverage/WeAre.ReApptor.React.Toolkit"
+          ],
+          "options": {
+            "jestConfig": "WeAre.ReApptor.React.Toolkit/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "WeAre.TestApplication.WebUI": {
       "root": "WeAre.TestApplication.WebUI",
       "sourceRoot": "WeAre.TestApplication.WebUI/src",
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "executor": "@nrwl/webpack:webpack",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "WeAre.TestApplication.WebUI/dist",
             "index": "WeAre.TestApplication.WebUI/src/index.html",
@@ -52,7 +367,7 @@
           }
         },
         "serve": {
-          "executor": "@nrwl/web:dev-server",
+          "executor": "@nrwl/webpack:dev-server",
           "options": {
             "buildTarget": "WeAre.TestApplication.WebUI:build",
             "hmr": true
@@ -61,8 +376,12 @@
             "production": {
               "buildTarget": "WeAre.TestApplication.WebUI:build:production",
               "hmr": false
+            },
+            "development": {
+              "buildTarget": "WeAre.TestApplication.WebUI:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
@@ -70,292 +389,24 @@
             "lintFilePatterns": [
               "WeAre.TestApplication.WebUI/**/*.{ts,tsx,js,jsx}"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.TestApplication.WebUI"],
+          "outputs": [
+            "{workspaceRoot}/coverage/WeAre.TestApplication.WebUI"
+          ],
           "options": {
-            "jestConfig": "WeAre.TestApplication.WebUI/jest.config.js",
+            "jestConfig": "WeAre.TestApplication.WebUI/jest.config.ts",
             "passWithNoTests": true
           }
         }
-      }
-    },
-    "WeAre.ReApptor.React.Components.Localization": {
-      "root": "WeAre.ReApptor.React.Components.Localization",
-      "sourceRoot": "WeAre.ReApptor.React.Components.Localization/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "WeAre.ReApptor.React.Components.Localization/dist",
-            "tsConfig": "WeAre.ReApptor.React.Components.Localization/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Components.Localization/package.json",
-            "entryFile": "WeAre.ReApptor.React.Components.Localization/src/index.ts",
-            "external": ["react/jsx-runtime"],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "WeAre.ReApptor.React.Components.Localization/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "WeAre.ReApptor.React.Components.Localization/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.ReApptor.React.Components.Localization"],
-          "options": {
-            "jestConfig": "WeAre.ReApptor.React.Components.Localization/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "WeAre.ReApptor.React.Components": {
-      "root": "WeAre.ReApptor.React.Components",
-      "sourceRoot": "WeAre.ReApptor.React.Components/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "WeAre.ReApptor.React.Components/dist",
-            "tsConfig": "WeAre.ReApptor.React.Components/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Components/package.json",
-            "entryFile": "WeAre.ReApptor.React.Components/src/index.ts",
-            "external": [
-              "react/jsx-runtime",
-              "swiper/react"
-            ],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "WeAre.ReApptor.React.Components/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "WeAre.ReApptor.React.Components/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.ReApptor.React.Components"],
-          "options": {
-            "jestConfig": "WeAre.ReApptor.React.Components/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "WeAre.ReApptor.React.Common": {
-      "root": "WeAre.ReApptor.React.Common",
-      "sourceRoot": "WeAre.ReApptor.React.Common/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "WeAre.ReApptor.React.Common/dist",
-            "tsConfig": "WeAre.ReApptor.React.Common/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Common/package.json",
-            "entryFile": "WeAre.ReApptor.React.Common/src/index.ts",
-            "external": ["react/jsx-runtime"],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "WeAre.ReApptor.React.Common/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "WeAre.ReApptor.React.Common/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.ReApptor.React.Common"],
-          "options": {
-            "jestConfig": "WeAre.ReApptor.React.Common/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "WeAre.ReApptor.React.Toolkit": {
-      "root": "WeAre.ReApptor.React.Toolkit",
-      "sourceRoot": "WeAre.ReApptor.React.Toolkit/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "WeAre.ReApptor.React.Toolkit/dist",
-            "tsConfig": "WeAre.ReApptor.React.Toolkit/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Toolkit/package.json",
-            "entryFile": "WeAre.ReApptor.React.Toolkit/src/index.ts",
-            "external": ["react/jsx-runtime"],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "WeAre.ReApptor.React.Toolkit/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "WeAre.ReApptor.React.Toolkit/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/WeAre.ReApptor.React.Toolkit"],
-          "options": {
-            "jestConfig": "WeAre.ReApptor.React.Toolkit/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "ReApptor.TypeScript.Linq": {
-      "root": "ReApptor.TypeScript.Linq",
-      "sourceRoot": "ReApptor.TypeScript.Linq/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "ReApptor.TypeScript.Linq/dist",
-            "tsConfig": "ReApptor.TypeScript.Linq/tsconfig.lib.json",
-            "project": "ReApptor.TypeScript.Linq/package.json",
-            "entryFile": "ReApptor.TypeScript.Linq/src/index.ts",
-            "external": ["react/jsx-runtime"],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "ReApptor.TypeScript.Linq/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "ReApptor.TypeScript.Linq/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/ReApptor.TypeScript.Linq"],
-          "options": {
-            "jestConfig": "ReApptor.TypeScript.Linq/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "ReApptor.TypeScript.PagedList": {
-      "root": "ReApptor.TypeScript.PagedList",
-      "sourceRoot": "ReApptor.TypeScript.PagedList/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "ReApptor.TypeScript.PagedList/dist",
-            "tsConfig": "ReApptor.TypeScript.PagedList/tsconfig.lib.json",
-            "project": "ReApptor.TypeScript.PagedList/package.json",
-            "entryFile": "ReApptor.TypeScript.PagedList/src/index.ts",
-            "external": ["react/jsx-runtime"],
-            "rollupConfig": "./extra-rollup",
-            "assets": [
-              {
-                "glob": "ReApptor.TypeScript.PagedList/README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "ReApptor.TypeScript.PagedList/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/ReApptor.TypeScript.PagedList"],
-          "options": {
-            "jestConfig": "ReApptor.TypeScript.PagedList/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
+      },
+      "tags": []
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "WeAre.TestApplication.WebUI"
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

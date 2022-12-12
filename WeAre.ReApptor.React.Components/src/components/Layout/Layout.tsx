@@ -26,6 +26,7 @@ import LeftNav, {ILeftNavProps} from "../LeftNav/LeftNav";
 import TakePicture from "./TakePicture/TakePicture";
 
 import styles from "./Layout.module.scss";
+import {FileInput} from "../../index";
 
 export interface ILayoutProps {
 

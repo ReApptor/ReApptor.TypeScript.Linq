@@ -1,7 +1,7 @@
 import React, {SyntheticEvent} from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
-import {BaseComponent} from "@weare/reapptor-react-common";
-import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
+import IconAction, {IIconActionProps} from "./IconAction/IconAction";
 import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import IconLocalizer from "./IconLocalizer";
 
@@ -41,13 +41,11 @@ export enum IconStyle {
     Duotone
 }
 
-export interface IIconProps {
-    id?: string;
+export interface IIconProps extends IBaseContainerComponentProps {
     name: string;
     tooltip?: string | null;
     style?: IconStyle | null;
     size?: IconSize | null;
-    className?: string;
     dataTarget?: string | null;
     dataModal?: string | null;
     toggleModal?: boolean;
@@ -88,7 +86,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         return className;
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
         if (this.hasActions) {
