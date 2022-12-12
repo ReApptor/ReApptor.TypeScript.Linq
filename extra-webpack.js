@@ -6,7 +6,7 @@ const tsNameOf = require("ts-nameof");
 
 function getWebpackConfig(config) {
     
-    console.log("getWebpackConfig: config = ", config);
+    console.log("--- extra-webpack.js ---");
 
     config.module.rules.push(
         {
