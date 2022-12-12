@@ -55,7 +55,6 @@ export default class TitleWidget extends BaseWidget<ITitleWidgetProps> {
 
     protected async processDataAsync(state: IBaseWidgetState<any>, data: any | null): Promise<void> {
         if (data != null) {
-            // @ts-ignore
             const title: ITitleModel | null = TypeConverter.convert(data, nameof<ITitleModel>());
             if (title != null) {
                 state.description = title.description;

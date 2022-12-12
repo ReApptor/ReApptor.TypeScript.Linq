@@ -30,7 +30,6 @@ export abstract class BaseComponentsLocalizer extends BaseLocalizer implements I
     }
     
     public getType(): ServiceType {
-        // @ts-ignore
         return nameof<IComponentsLocalizer>();
     }
 }
@@ -48,12 +47,10 @@ export abstract class BaseComponentLocalizer extends BaseLocalizer implements IC
     }
 
     protected getApplicationLocalizer(): ILocalizer | null {
-        // @ts-ignore
         return this._applicationLocalizer || (this._applicationLocalizer = ServiceProvider.getService(nameof<ILocalizer>()));
     }
 
     protected getComponentsLocalizer(): IComponentsLocalizer | null {
-        // @ts-ignore
         return this._componentsLocalizer || (this._componentsLocalizer = ServiceProvider.getService(nameof<IComponentsLocalizer>()));
     }
 

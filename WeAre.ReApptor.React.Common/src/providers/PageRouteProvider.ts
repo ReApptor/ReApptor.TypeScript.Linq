@@ -176,8 +176,6 @@ export default class PageRouteProvider {
     }
 
     public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
-
-        // @ts-ignore
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
 
         return await pageDefinitions.createPageAsync(route);
@@ -264,7 +262,6 @@ export default class PageRouteProvider {
      */
     public static resolveRoute(path: string): PageRoute | null {
 
-        // @ts-ignore
         const pageDefinitions: IPageDefinitions | null = ServiceProvider.getService(nameof<IPageDefinitions>());
 
         const routes: Dictionary<string, PageRoute> | undefined = pageDefinitions?.getRoutes?.();
@@ -366,7 +363,6 @@ export default class PageRouteProvider {
     }
 
     public static render(page: IBasePage, ref: React.RefObject<IBasePage>): React.ReactElement {
-        // @ts-ignore
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
 
         return pageDefinitions.render(page, ref);

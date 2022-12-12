@@ -54,7 +54,6 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
     };
 
     public getTitle(): string {
-        // @ts-ignore
         return nameof(Tests);
     }
 
@@ -63,7 +62,6 @@ export default class Tests extends AnonymousPage<{}, ITestsState> {
         const localizerKey: string = "PageRoutes.Tests2";
 
         console.log(
-            // @ts-ignore
             [this.getTitle(), nameof(this.render)].join("."),
             this.route,
             "en",

@@ -420,7 +420,6 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
     }
 
     private renderEnumCellContent(cell: CellModel<TItem>, cellValue: any, enumName: string): React.ReactNode {
-        // @ts-ignore
         const enumProvider: IEnumProvider = ServiceProvider.getRequiredService(nameof<IEnumProvider>());
         return (
             <Dropdown required noSubtext noWrap

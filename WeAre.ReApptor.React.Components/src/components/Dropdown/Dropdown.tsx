@@ -253,7 +253,6 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             return selectListItem;
         }
         
-        // @ts-ignore
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
 
         if (provider != null) {
@@ -263,7 +262,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const anyItem = item as any;
-        // @ts-ignore
+
         const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(anyItem, nameof<ISelectListItem>()) ??
                                                                   TypeConverter.getConverter(anyItem, SelectListItem);
 
