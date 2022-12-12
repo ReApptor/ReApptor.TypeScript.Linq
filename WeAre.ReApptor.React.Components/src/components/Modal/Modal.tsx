@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BaseAsyncComponent, IBaseAsyncComponentState, RenderCallback} from "@weare/reapptor-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseContainerComponentProps, RenderCallback} from "@weare/reapptor-react-common";
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
@@ -26,7 +26,7 @@ export enum ModalSize {
     Auto
 }
 
-interface IModalProps<TData = {}> {
+interface IModalProps<TData = {}> extends IBaseContainerComponentProps {
     id?: string;
     size?: ModalSize;
 
@@ -186,7 +186,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return this.JQuery(`#${this.id}_body`);
     }
 
-    public get body(): React.ReactNode {
+    public get body(): HTMLDivElement {
         return this._modalBodyRef.current!;
     }
 

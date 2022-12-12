@@ -272,8 +272,8 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                        style={(this.props.dropZone) ? {display: "none"} : {}}
                        disabled={this.readonly}
                        accept={this.acceptedTypes}
-                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.valueChangeHandlerAsync(e)}
-                       onBlur={async () => await this.valueBlurHandlerAsync()}
+                       onChange={(e: React.FormEvent<HTMLInputElement>) => this.valueChangeHandlerAsync(e)}
+                       onBlur={() => this.valueBlurHandlerAsync()}
                 />
                 
                 {

@@ -1,10 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "../PageContainer.module.scss";
 
-export interface IPageRowProps {
-    className?: string;
+export interface IPageRowProps extends IBaseContainerComponentProps {
 }
 
 export default class PageRow extends BaseComponent<IPageRowProps> {

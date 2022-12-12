@@ -36,6 +36,7 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
         // object to string converters:
         StringConverter.addObjectConverter((item: any, format?: TFormat | null) => this.toString(item, format));
         // object to ISelectListItem and SelectListItem converters
+        // @ts-ignore
         TypeConverter.addObjectConverter(nameof<ISelectListItem>(), (item: any) => this.toSelectListItem(item));
         TypeConverter.addObjectConverter(this.selectListItemType, (item: any) => this.toSelectListItem(item));
     }
@@ -46,6 +47,7 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
     }
     
     public getType(): ServiceType {
+        // @ts-ignore
         return nameof<ITransformProvider>();
     }
 
@@ -78,6 +80,7 @@ export default abstract class BaseTransformProvider<TSelectListItem extends ISel
             return this.createSelectListItem(item, item, "");
         }
 
+        // @ts-ignore
         const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(item, nameof<ISelectListItem>()) ?? TypeConverter.getConverter(item, this.selectListItemType);
 
         if ((converter != null) && (converter !== this.toSelectListItem)) {

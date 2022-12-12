@@ -1,6 +1,21 @@
 import React from "react";
 import {ServiceProvider, Utility} from "@weare/reapptor-toolkit";
-import {ch, IBasePage, IManualProps, AlertModel, DescriptionModel, DocumentPreviewModel, IPageContainer, IBaseAsyncComponentState, BaseAsyncComponent, IContainer, IGlobalResize, IConfirmation, ConfirmationDialogTitleCallback} from "@weare/reapptor-react-common";
+import {
+    ch,
+    IBasePage,
+    IManualProps,
+    AlertModel,
+    DescriptionModel,
+    DocumentPreviewModel,
+    IPageContainer,
+    IBaseAsyncComponentState,
+    BaseAsyncComponent,
+    IContainer,
+    IGlobalResize,
+    IConfirmation,
+    ConfirmationDialogTitleCallback,
+    IBaseContainerComponentProps
+} from "@weare/reapptor-react-common";
 import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
@@ -14,10 +29,8 @@ import PageContainerLocalizer from "./PageContainerLocalizer";
 
 import styles from "./PageContainer.module.scss";
 
-interface IPageContainerProps {
-    id?: string;
+interface IPageContainerProps extends IBaseContainerComponentProps {
     transparent?: boolean;
-    className?: string;
     alertClassName?: string;
     endpoint?: string;
     scale?: boolean;

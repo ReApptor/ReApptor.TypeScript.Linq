@@ -9,8 +9,13 @@
 
       > div {
 
-        > div:last-child {
-          padding: 30px;
+        > div {
+          
+          > div:last-child {
+            padding: 30px;
+            height: 100%;
+          }
+          
         }
 
       }

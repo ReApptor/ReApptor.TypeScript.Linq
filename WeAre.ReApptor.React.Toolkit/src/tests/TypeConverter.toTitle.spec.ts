@@ -24,6 +24,7 @@ describe("TypeConverter.toTitle", function() {
 
     class TransformProvider {
         constructor() {
+            // @ts-ignore
             TypeConverter.addObjectConverter(nameof<ITitleModel>(), item => this.toTitle(item));
         }
 
@@ -56,6 +57,7 @@ describe("TypeConverter.toTitle", function() {
 
     class TransformProviderWithAttribute {
 
+        // @ts-ignore
         @ObjectConverter(nameof<ITitleModel>())
         // @ts-ignore
         public toTitle(item: any): ITitleModel {
@@ -89,6 +91,7 @@ describe("TypeConverter.toTitle", function() {
         new TransformProvider();
 
         const item = new MyTitle();
+        // @ts-ignore
         const title: ITitleModel | null = TypeConverter.convert(item, nameof<ITitleModel>());
 
         expect(title).not.toBeNull();
@@ -100,6 +103,7 @@ describe("TypeConverter.toTitle", function() {
         new TransformProvider();
 
         const item = new MyEntity();
+        // @ts-ignore
         const title: ITitleModel | null = TypeConverter.convert(item, nameof<ITitleModel>());
 
         expect(title).not.toBeNull();
@@ -111,6 +115,7 @@ describe("TypeConverter.toTitle", function() {
         new TransformProviderWithAttribute();
 
         const item = new MyEntity();
+        // @ts-ignore
         const title: ITitleModel | null = TypeConverter.convert(item, nameof<ITitleModel>());
 
         expect(title).not.toBeNull();

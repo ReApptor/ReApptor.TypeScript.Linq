@@ -34,10 +34,10 @@ export default class Utility {
         return this._geoEnabled || (this._geoEnabled = !!navigator.geolocation);
     }
 
-    public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
+    public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<GeolocationPosition | null> {
         if (this.geoEnabled) {
             options = options || {maximumAge: 30000, timeout: 1000};
-            return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
+            return new Promise<GeolocationPosition | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;
                 })
@@ -49,12 +49,12 @@ export default class Utility {
                     return null;
                 });
         } else {
-            return new Promise<Position | null>((resolve) => resolve(null));
+            return new Promise<GeolocationPosition | null>((resolve) => resolve(null));
         }
     }
 
     public static async getLocationAsync(options: PositionOptions | null | undefined = null): Promise<GeoCoordinate | null> {
-        const position: Position | null = await this.getPositionAsync(options);
+        const position: GeolocationPosition | null = await this.getPositionAsync(options);
         if (position) {
             return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
         }

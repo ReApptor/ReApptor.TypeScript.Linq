@@ -2,12 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const original = require("@nrwl/react/plugins/bundle-rollup");
+//const typescript = require("rollup-plugin-typescript2");
+//const tsNameOf = require("ts-nameof");
 const postcss = require("rollup-plugin-postcss");
 
-function getRollupOptions(options) {
-  let originalProcessed = original(options);
+// const tsNameOfTransformer = () => ({
+//   before: [tsNameOf],
+//   after: []
+// });
+//const tsNameOfRollupOptions = [() => ({ before: [ tsNameOf ], after: [  ] })];
 
-  const postcssPlugin = postcss({
+function getRollupOptions(options) {
+
+  // console.log("--- extra-rollup.js ---");
+  // //console.log("--- options: ", options);
+  //
+  // //options.plugins.push(typescript({ transformers: [nameOfTransformer] }));
+  //
+  // const typescriptPluginIndex = options.plugins.findIndex(plugin => plugin.name === "rpt2");
+  //
+  // //plugins[typescriptPluginIndex] = typescriptPlugin;
+  //
+  // let typescriptPlugin = options.plugins[typescriptPluginIndex];
+  //
+  // typescriptPlugin.transfomers = [tsNameOfTransformer];
+  //
+  // typescriptPlugin = typescript(typescriptPlugin);
+  //
+  // options.plugins[typescriptPluginIndex] = typescriptPlugin;
+  //
+  // console.log("--- typescriptPlugin: ", typescriptPlugin);
+  // //console.log("--- plugins: ", plugins);
+  
+  const processed = original(options);
+  
+  const plugins = processed.plugins;
+
+  const postCssPlugin = postcss({
     autoModules: true,
     extract: false,
     modules: {
@@ -32,11 +63,15 @@ function getRollupOptions(options) {
     },
   });
 
-  const postcssPluginOldIndex = originalProcessed.plugins.findIndex(x => x.name === 'postcss');
+  const postcssPluginIndex = plugins.findIndex(plugin => plugin.name === "postcss");
 
-  originalProcessed.plugins[postcssPluginOldIndex] = postcssPlugin;
+  plugins[postcssPluginIndex] = postCssPlugin;
+  
+  // tsNameOff:
 
-  return originalProcessed;
+  //const typescriptPlugin = typescript({ transformers: tsNameOfRollupOptions });
+
+  return processed;
 }
 
 module.exports = getRollupOptions;

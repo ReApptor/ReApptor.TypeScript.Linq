@@ -6,6 +6,7 @@ ArrayExtensions();
 describe("getService", function() {
     
     test("ITypeResolver", function () {
+        // @ts-ignore
         const result: ITypeResolver | null = ServiceProvider.getService(nameof<ITypeResolver>());
 
         expect(result).toBe(TypeResolver);
