@@ -1,12 +1,12 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseClassNames, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 import {ITab, ITabContainer, ITabContainerDefinition, TabContainerModel, TabModel, TabTransformer} from "./TabModel";
 import TabHeader, {ITabHeaderClassNames, TabContainerHeaderStyleType} from "./TabHeader/TabHeader";
 
 import "./BootstrapOverride.scss";
 import styles from "./TabContainer.module.scss";
 
-export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClassNames {
+export interface ITabContainerClassNames extends ITabHeaderClassNames {
     readonly tabContainer?: string;
     readonly navigationContainer?: string;
     readonly scrollableContainer?: string;
@@ -14,7 +14,7 @@ export interface ITabContainerClassNames extends IBaseClassNames, ITabHeaderClas
     readonly tabContent?: string;
 }
 
-interface ITabContainerProps extends ITabContainerDefinition {
+interface ITabContainerProps extends ITabContainerDefinition, IBaseContainerComponentProps {
     classNames?: ITabContainerClassNames;
 
     /**

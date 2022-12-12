@@ -1,6 +1,6 @@
 import React, {SyntheticEvent} from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
-import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps, JQueryNode} from "@weare/reapptor-react-common";
 import IconAction, {IIconActionProps} from "./IconAction/IconAction";
 import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import IconLocalizer from "./IconLocalizer";
@@ -90,7 +90,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         await super.componentDidMount();
 
         if (this.hasActions) {
-            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
+            const actionsDiv: JQueryNode = this.JQuery(`#${this.actionsId}`);
 
             const buttonWidth: number = this.outerWidth();
             const actionsWidth: number = actionsDiv.outerWidth() || 0;

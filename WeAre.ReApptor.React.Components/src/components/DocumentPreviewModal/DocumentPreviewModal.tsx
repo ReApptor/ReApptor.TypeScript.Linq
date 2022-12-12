@@ -1,6 +1,6 @@
 import React from "react";
 import {FileModel, Utility} from "@weare/reapptor-toolkit";
-import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
+import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent, JQueryNode} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
 import Icon, { IconSize } from "../Icon/Icon";
@@ -97,7 +97,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     }
 
     private geDocumentSize(): DocumentSize {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
 
         const width: number = node.width() || 0;
         const height: number = node.height() || 0;

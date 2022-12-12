@@ -112,7 +112,6 @@ class ServiceProvider implements IService {
      * @return An {@link ITypeResolver}.
      */
     public getTypeResolver(): ITypeResolver {
-        // @ts-ignore
         const serviceType: string = nameof<ITypeResolver>();
         const service: ITypeResolver | null = this.get(serviceType) as ITypeResolver;
         if (service != null) {
@@ -126,7 +125,6 @@ class ServiceProvider implements IService {
      * @return An {@link ILocalizer}, or null if no {@link ILocalizer} service is registered.
      */
     public findLocalizer(): ILocalizer | null {
-        // @ts-ignore
         return this.getService(nameof<ILocalizer>());
     }
 
@@ -135,7 +133,6 @@ class ServiceProvider implements IService {
      * @throws No {@link ILocalizer} service is registered.
      */
     public getLocalizer(): ILocalizer {
-        // @ts-ignore
         return this.getRequiredService(nameof<ILocalizer>());
     }
 
@@ -143,7 +140,6 @@ class ServiceProvider implements IService {
      * @return An {@link IEnumProvider}, or null if no {@link IEnumProvider} service is registered.
      */
     public findEnumProvider(): IEnumProvider | null {
-        // @ts-ignore
         return this.getService(nameof<IEnumProvider>());
     }
 
@@ -151,17 +147,14 @@ class ServiceProvider implements IService {
      * @return An {@link ITransformProvider}, or null if no {@link ITransformProvider} service is registered.
      */
     public findTransformProvider(): ITransformProvider | null {
-        // @ts-ignore
         return this.getService(nameof<ITransformProvider>());
     }
 
     // IService
 
     public getType(): ServiceType {
-        // @ts-ignore
         return nameof(ServiceProvider);
     }
 }
 
-// @ts-ignore
 export default Singleton.get(nameof(ServiceProvider), new ServiceProvider());

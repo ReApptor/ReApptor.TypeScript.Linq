@@ -1,5 +1,7 @@
 import $ from "jquery";
 
+export type JQueryNode = JQuery<HTMLElement | {} | any>;
+
 export default class JQueryUtility {
 
     private static _jQuery: JQueryStatic | null;
@@ -8,30 +10,30 @@ export default class JQueryUtility {
         return this._jQuery || (this._jQuery = (window as any).$ || $);
     }
 
-    public static getNode(id: string | JQuery<{}>): JQuery<{}> {
+    public static getNode(id: string | JQueryNode): JQueryNode {
         return (typeof id === "string")
             ? this.$(`#${id}`)
             : id;
     }
 
-    public static outerWidth(id: string | JQuery<{}>, includeMargin: boolean = true): number {
+    public static outerWidth(id: string | JQueryNode, includeMargin: boolean = true): number {
         return this.getNode(id).outerWidth(includeMargin) ?? 0;
     }
 
-    public static innerWidth(id: string | JQuery<{}>): number {
+    public static innerWidth<T = {} | any>(id: string | JQueryNode): number {
         return this.getNode(id).innerWidth() ?? 0;
     }
 
-    public static outerHeight(id: string | JQuery<{}>, includeMargin: boolean = true): number {
+    public static outerHeight(id: string | JQueryNode, includeMargin: boolean = true): number {
         return this.getNode(id).outerHeight(includeMargin) ?? 0;
     }
 
-    public static innerHeight(id: string | JQuery<{}>): number {
+    public static innerHeight(id: string | JQueryNode): number {
         return this.getNode(id).innerHeight() ?? 0;
     }
 
-    public static offsetLeft(id: string | JQuery<{}>, includeMargin: boolean = true): number {
-        const node: JQuery<{}> = this.getNode(id);
+    public static offsetLeft(id: string | JQueryNode, includeMargin: boolean = true): number {
+        const node: JQueryNode = this.getNode(id);
         let offsetLeft: number = node.offset()?.left ?? 0;
         if (includeMargin) {
             const marginLeft = parseInt(node.css("margin-left")) || 0;
@@ -40,12 +42,12 @@ export default class JQueryUtility {
         return offsetLeft;
     }
 
-    public static offsetRight(id: string | JQuery<{}>, includeMargin: boolean = true): number {
+    public static offsetRight(id: string | JQueryNode, includeMargin: boolean = true): number {
         return JQueryUtility.viewportWidth() - this.offsetLeft(id, includeMargin) - this.outerWidth(id, includeMargin);
     }
 
-    public static offsetTop(id: string | JQuery<{}>, includeMargin?: boolean): number {
-        const node: JQuery<{}> = this.getNode(id);
+    public static offsetTop(id: string | JQueryNode, includeMargin?: boolean): number {
+        const node: JQueryNode = this.getNode(id);
         let offsetTop: number = node.offset()?.top ?? 0;
         if (includeMargin) {
             const marginTop = parseInt(node.css("margin-top")) || 0;
@@ -58,35 +60,35 @@ export default class JQueryUtility {
     //     return this.documentHeight() - this.offsetTop(id);
     // }
 
-    public static positionLeft(id: string | JQuery): number {
+    public static positionLeft(id: string | JQueryNode): number {
         return this.getNode(id).position()?.left;
     }
 
-    public static positionRight(id: string | JQuery): number {
+    public static positionRight(id: string | JQueryNode): number {
         return this.documentWidth() - this.positionLeft(id);
     }
 
-    public static positionTop(id: string | JQuery): number {
+    public static positionTop(id: string | JQueryNode): number {
         return this.getNode(id).position()?.top;
     }
 
-    public static positionBottom(id: string | JQuery): number {
+    public static positionBottom(id: string | JQueryNode): number {
         return this.documentHeight() - this.positionTop(id);
     }
 
-    public static viewportLeft(id: string | JQuery): number {
+    public static viewportLeft(id: string | JQueryNode): number {
         return this.positionLeft(id) - this.viewportScrollLeft();
     }
 
-    public static viewportRight(id: string | JQuery): number {
+    public static viewportRight(id: string | JQueryNode): number {
         return this.viewportWidth() - this.positionLeft(id);
     }
 
-    public static viewportTop(id: string | JQuery): number {
+    public static viewportTop(id: string | JQueryNode): number {
         return this.positionTop(id) - this.viewportScrollTop();
     }
 
-    public static viewportBottom(id: string | JQuery): number {
+    public static viewportBottom(id: string | JQueryNode): number {
         return this.viewportHeight() - this.positionTop(id);
     }
 

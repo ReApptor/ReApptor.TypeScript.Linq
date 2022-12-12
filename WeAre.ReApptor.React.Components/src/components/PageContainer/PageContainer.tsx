@@ -14,7 +14,7 @@ import {
     IGlobalResize,
     IConfirmation,
     ConfirmationDialogTitleCallback,
-    IBaseContainerComponentProps
+    IBaseContainerComponentProps, JQueryNode
 } from "@weare/reapptor-react-common";
 import {IMessageBox, IMessageBoxButtons, MessageBoxModelCallback, DialogResult, MessageBoxButtons, MessageBoxIcon} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
@@ -60,6 +60,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
 
     private _height: number = 0;
 
+    // @ts-ignore
     // noinspection JSUnusedLocalSymbols
     private static initialize = (() => ServiceProvider.addSingleton(nameof<IPageContainer>(), () => PageContainer.instance))();
 
@@ -109,7 +110,7 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
     public height(): number {
 
         if (this._height === 0) {
-            const node: JQuery = this.getNode();
+            const node: JQueryNode = this.getNode();
             this._height = node.children().first().height() || 0;
         }
 

@@ -12,7 +12,7 @@ import {
     IBasePage,
     IGlobalResize,
     ILayoutPage,
-    IPageContainer,
+    IPageContainer, JQueryNode,
     PageRoute,
     PageRouteProvider,
     SwipeDirection,
@@ -509,6 +509,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             this._alert = null;
@@ -520,6 +521,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async hideAlertAsync(): Promise<void> {
         this._alert = null;
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.hideAlertAsync();
@@ -533,6 +535,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public isLayout(): boolean {
         return true;
     }
+    
+    private get tooltips(): JQueryNode | any {
+        return this.JQuery('[data-toggle="tooltip"]');
+    }
 
     /**
      * @inheritDoc
@@ -540,9 +546,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * NOTE: handles only Bootstrap tooltips.
      */
     public initializeTooltips(): void {
-        const tooltip = this.JQuery('[data-toggle="tooltip"]');
+        const tooltip: JQueryNode | any = this.tooltips;
 
-        if (tooltip.length > 0) {
+        if ((tooltip.length > 0) && (typeof tooltip.tooltip === "function")) {
             tooltip.tooltip({
                 trigger: "click",
                 placement: "top",
@@ -560,7 +566,11 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * NOTE: handles only Bootstrap tooltips.
      */
     public reinitializeTooltips(): void {
-        this.JQuery('[data-toggle="tooltip"]').tooltip("dispose");
+        const tooltip: JQueryNode | any = this.tooltips;
+
+        if ((tooltip.length > 0) && (typeof tooltip.tooltip === "function")) {
+            tooltip.tooltip("dispose");
+        }
 
         this.initializeTooltips();
     }
@@ -655,6 +665,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * @see IPageContainer.alert
      */
     public get alert(): AlertModel | null {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return pageContainer?.alert ?? this._alert;
     }

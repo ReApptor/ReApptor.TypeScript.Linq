@@ -6,7 +6,7 @@ import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
-import JQueryUtility from "../JQueryUtility";
+import JQueryUtility, {JQueryNode} from "../JQueryUtility";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
@@ -48,7 +48,7 @@ export interface IReactComponent {
 }
 
 export interface IReactChildrenProps {
-    children?: Readonly<React.ReactNode> | Readonly<React.ReactNode[]>;
+    readonly children?: Readonly<React.ReactNode> | Readonly<React.ReactNode[]>;
 }
 
 /**
@@ -315,7 +315,7 @@ export default abstract class BaseComponent<TProps = IBaseComponentProps | IBase
     /**
      * @return The {@link BaseComponent}'s node in DOM as {@link jQuery}.
      */
-    protected getNode(): JQuery {
+    protected getNode(): JQueryNode {
         return this.JQuery(`#${this.id}`);
     }
 
@@ -577,12 +577,12 @@ export default abstract class BaseComponent<TProps = IBaseComponentProps | IBase
     public isComponent(): boolean { return true; }
 
     public outerHeight(includeMargin: boolean = true): number {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
         return node.outerHeight(includeMargin) || 0;
     }
 
     public outerWidth(includeMargin: boolean = true): number {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
         return node.outerWidth(includeMargin) || 0;
     }
 

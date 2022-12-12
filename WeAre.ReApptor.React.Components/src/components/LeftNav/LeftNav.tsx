@@ -179,7 +179,7 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
         //         const expanding: boolean = !this.expanded;
         //         const collapsing: boolean = !expanding;
         //
-        //         const node: JQuery = this.getNode();
+        //         const node: JQueryNode = this.getNode();
         //
         //         // check current state
         //         const originalMaxWidth: string = node.css("max-width");

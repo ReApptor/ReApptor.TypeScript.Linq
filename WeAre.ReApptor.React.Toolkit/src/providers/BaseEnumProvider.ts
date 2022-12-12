@@ -64,7 +64,6 @@ export default abstract class BaseEnumProvider<TSelectListItem extends ISelectLi
     }
 
     public getType(): ServiceType {
-        // @ts-ignore
         return nameof<IEnumProvider>();
     }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {FileModel, HashCodeUtility, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
-import {BaseInputType, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
+import {BaseInputType, IGlobalClick, IGlobalKeydown, JQueryNode, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
 import {SelectListGroup, SelectListItem, SelectListSeparator, StatusListItem} from "./SelectListItem";
@@ -252,7 +252,8 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             selectListItem.ref = item;
             return selectListItem;
         }
-
+        
+        // @ts-ignore
         const provider: ITransformProvider | null = ServiceProvider.getService(nameof<ITransformProvider>());
 
         if (provider != null) {
@@ -262,6 +263,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         const anyItem = item as any;
+        // @ts-ignore
         const converter: ITypeConverter | TTypeConverter | null = TypeConverter.getConverter(anyItem, nameof<ISelectListItem>()) ??
                                                                   TypeConverter.getConverter(anyItem, SelectListItem);
 
@@ -452,7 +454,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             return align;
         }
 
-        const dropdownNode: JQuery = this.getNode();
+        const dropdownNode: JQueryNode = this.getNode();
 
         if (!dropdownNode.length) {
             align = DropdownVerticalAlign.Bottom;

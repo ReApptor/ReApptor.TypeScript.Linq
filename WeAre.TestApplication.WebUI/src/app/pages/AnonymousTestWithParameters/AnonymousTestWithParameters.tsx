@@ -4,16 +4,16 @@ import {BasePageParameters, ch, PageRouteProvider} from "@weare/reapptor-react-c
 import AnonymousPage from "../AnonymousPage";
 import Localizer from "../../../localization/Localizer";
 
-
 export interface IAnonymousParameters extends BasePageParameters {
     hello: string;
     world: object;
 }
 
 export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymousParameters> {
-
+    
     public getTitle(): string {
-        return nameof(AnonymousTestWithParameters);
+        // @ts-ignore
+        return nameof<AnonymousTestWithParameters>(this);
     }
 
     private async updateIdAsync(): Promise<void> {
@@ -40,9 +40,11 @@ export default class AnonymousTestWithParameters extends AnonymousPage<IAnonymou
 
     public render(): React.ReactNode {
 
+        // @ts-ignore
         const localizerKey: string = `PageRoutes.${nameof(AnonymousTestWithParameters)}`;
-
+        
         console.log(
+            // @ts-ignore
             [this.getTitle(), nameof(this.render)].join("."),
             this.route,
             "nb",
