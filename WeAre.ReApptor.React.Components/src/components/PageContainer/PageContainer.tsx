@@ -60,7 +60,6 @@ export default class PageContainer extends BaseAsyncComponent<IPageContainerProp
 
     private _height: number = 0;
 
-    // @ts-ignore
     // noinspection JSUnusedLocalSymbols
     private static initialize = (() => ServiceProvider.addSingleton(nameof<IPageContainer>(), () => PageContainer.instance))();
 

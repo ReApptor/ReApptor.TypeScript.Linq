@@ -509,7 +509,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public async alertAsync(alert: AlertModel): Promise<void> {
-        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             this._alert = null;
@@ -521,7 +520,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async hideAlertAsync(): Promise<void> {
         this._alert = null;
-        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.hideAlertAsync();
@@ -665,7 +663,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * @see IPageContainer.alert
      */
     public get alert(): AlertModel | null {
-        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return pageContainer?.alert ?? this._alert;
     }
