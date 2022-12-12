@@ -393,7 +393,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         }
 
         const node: JQueryNode = this.JQuery(this.modal);
-        node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
+        node.on("shown.bs.modal", async (event: any) => await this.onOpenHandlerAsync(event));
         node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
     }
 
