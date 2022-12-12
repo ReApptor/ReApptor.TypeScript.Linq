@@ -512,11 +512,13 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
      * @see IPageContainer.confirmAsync
      */
     public async confirmAsync(title: string | IConfirmation | ConfirmationDialogTitleCallback): Promise<boolean> {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null) && (await pageContainer.confirmAsync(title));
     }
 
     public async messageBoxAsync(titleOrModel: string | IMessageBox | MessageBoxModelCallback, caption?: string, buttons?: MessageBoxButtons | IMessageBoxButtons, icon?: MessageBoxIcon): Promise<DialogResult> {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         return (pageContainer != null)
             ? await pageContainer.messageBoxAsync(titleOrModel, caption, buttons, icon)
@@ -524,6 +526,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async documentPreviewAsync(model: DocumentPreviewModel): Promise<void> {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.documentPreviewAsync(model);
@@ -531,6 +534,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
     }
 
     public async descriptionAsync(containerId: string, model: DescriptionModel): Promise<void> {
+        // @ts-ignore
         const pageContainer: IPageContainer | null = ServiceProvider.getService(nameof<IPageContainer>());
         if (pageContainer != null) {
             await pageContainer.descriptionAsync(containerId, model);

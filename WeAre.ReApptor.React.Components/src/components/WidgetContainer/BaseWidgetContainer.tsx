@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBaseComponent} from "@weare/reapptor-react-common";
+import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 import {Dictionary} from "typescript-collections";
 import IBaseWidget from "./BaseWidget";
 
@@ -11,8 +11,7 @@ export interface IWidgetContainer extends IBaseComponent {
     readonly controller: string | null;
 }
 
-export interface IBaseWidgetContainerProps {
-    className?: string;
+export interface IBaseWidgetContainerProps extends IBaseContainerComponentProps {
     controller?: string;
     async?: boolean;
     noToggle?: boolean;
