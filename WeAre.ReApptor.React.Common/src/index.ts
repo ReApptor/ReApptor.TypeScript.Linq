@@ -4,7 +4,6 @@ export * from "./Enums";
 //Models:
 export {default as CountryInfo} from "./models/CountryInfo";
 export {default as AlertModel} from "./models/AlertModel";
-export {default as BasePageParameters} from "./models/BasePageParameters";
 export {default as ApplicationContext} from "./models/ApplicationContext";
 export {default as DescriptionModel} from "./models/DescriptionModel";
 export * from "./models/DocumentPreviewModel";
@@ -34,8 +33,11 @@ export * from "./base/BaseAsyncComponent";
 export {default as BaseAsyncComponent} from "./base/BaseAsyncComponent";
 
 //Utilities:
+export * from "./JQueryUtility";
 export {default as JQueryUtility} from "./JQueryUtility";
+export * from "./ReactUtility";
 export {default as ReactUtility} from "./ReactUtility";
+export * from "./StylesUtility";
 export {default as StylesUtility} from "./StylesUtility";
 
 //Providers:

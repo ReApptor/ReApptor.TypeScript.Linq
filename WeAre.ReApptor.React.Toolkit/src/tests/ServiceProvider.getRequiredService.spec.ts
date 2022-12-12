@@ -42,10 +42,8 @@ describe("getRequiredService", function() {
     
     test("byServiceNameUsingNameOf", function () {
         const service: object = {};
-        // @ts-ignore
         const serviceName: string = nameof<ITestService>();
         ServiceProvider.addSingleton(serviceName, service);
-        // @ts-ignore
         const result: object = ServiceProvider.getRequiredService(nameof<ITestService>());
         expect(result).toEqual(service);
         expect("ITestService").toEqual(serviceName);

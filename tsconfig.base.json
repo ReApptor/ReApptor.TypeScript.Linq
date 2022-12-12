@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "googlemaps", "ts-nameof"],
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,

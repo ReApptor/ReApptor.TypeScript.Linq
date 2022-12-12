@@ -1,4 +1,4 @@
-import {GeoCoordinate, GeoLocation, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
+import {GeoCoordinate, GeoLocation, ILocalizer, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import {ApplicationContext, ch} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../AthenaeumComponentsConstants";
 import {IGoogleMapInfoWindow, IGoogleMapMarker, TGoogleMapMarkerCallback} from "../components/GoogleMap/GoogleMap";
@@ -243,14 +243,14 @@ export default class AddressHelper {
 
     public static findLat(place: GoogleApiResult): number | null {
         if (place.geometry && place.geometry.location && place.geometry.location.lat) {
-            return place.geometry!.location!.lat!();
+            return place.geometry.location.lat();
         }
         return null;
     }
 
     public static findLon(place: GoogleApiResult): number | null {
         if (place.geometry && place.geometry.location && place.geometry.location.lng) {
-            return place.geometry!.location!.lng();
+            return place.geometry.location.lng();
         }
         return null;
     }

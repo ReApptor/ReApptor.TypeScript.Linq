@@ -1,5 +1,5 @@
-import BasePageParameters from "./BasePageParameters";
 import {ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
+import {BasePageParameters} from "../base/BasePage";
 
 export default class PageRoute {
 

@@ -271,7 +271,6 @@ export default abstract class BaseLocalizer implements ILocalizer, IService {
 
 
     public getType(): ServiceType {
-        // @ts-ignore
         return nameof<ILocalizer>();
     }
 }

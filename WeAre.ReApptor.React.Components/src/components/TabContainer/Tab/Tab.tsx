@@ -1,10 +1,10 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 import {ITab, ITabDefinition, TabContainerModel, TabModel, TabRenderType, TabTransformer} from "../TabModel";
 
 import styles from "../TabContainer.module.scss";
 
-export interface ITabProps extends ITabDefinition {
+export interface ITabProps extends ITabDefinition, IBaseContainerComponentProps {
     id: string;
 }
 

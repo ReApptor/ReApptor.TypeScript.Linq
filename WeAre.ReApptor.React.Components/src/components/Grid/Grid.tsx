@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility, IPagedList, SortDirection} from "@weare/reapptor-toolkit";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize} from "@weare/reapptor-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalResize, JQueryNode} from "@weare/reapptor-react-common";
 import {ColumnModel, GridAccessorCallback, GridHoveringType, GridModel, GridTransformer, IGrid, IGridDefinition, RowModel, TGridData} from "./GridModel";
 import HeaderCell from "./Cell/HeaderCell";
 import Row from "./Row/Row";
@@ -100,7 +100,7 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
     }
 
     public width(): number {
-        const gridNode: JQuery = this.JQuery(`#table_${this.id}`);
+        const gridNode: JQueryNode = this.JQuery(`#table_${this.id}`);
 
         const width: number | undefined = gridNode.width();
 
@@ -109,14 +109,14 @@ export default class Grid<TItem = {}> extends BaseAsyncComponent<IGridProps<TIte
             : 0;
     }
 
-    public getNode(): JQuery {
+    public getNode(): JQueryNode {
         return this.JQuery(`#table_${this.id}`);
     }
 
     public containerWidth(): number {
-        const gridNode: JQuery = this.getNode();
+        const gridNode: JQueryNode = this.getNode();
 
-        const parentNode: JQuery = gridNode.parent();
+        const parentNode: JQueryNode = gridNode.parent();
 
         return parentNode.innerWidth() || gridNode.outerWidth() || 0;
     }

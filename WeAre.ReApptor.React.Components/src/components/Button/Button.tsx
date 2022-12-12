@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility} from "@weare/reapptor-react-common";
+import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility, JQueryNode} from "@weare/reapptor-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ButtonAction, {IButtonActionProps} from "./ButtonAction/ButtonAction";
 import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
@@ -320,7 +320,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         await super.componentDidMount();
 
         if (this.hasActions) {
-            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
+            const actionsDiv: JQueryNode = this.JQuery(`#${this.actionsId}`);
 
             const buttonWidth: number = this.outerWidth();
             const actionsWidth: number = actionsDiv.outerWidth() || 0;

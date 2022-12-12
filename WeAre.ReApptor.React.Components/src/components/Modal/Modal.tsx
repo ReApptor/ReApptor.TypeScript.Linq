@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseContainerComponentProps, RenderCallback} from "@weare/reapptor-react-common";
+import {BaseAsyncComponent, IBaseAsyncComponentState, IBaseContainerComponentProps, JQueryNode, RenderCallback} from "@weare/reapptor-react-common";
 import Icon, { IconSize, IconStyle } from "../Icon/Icon";
 import Button, { ButtonType } from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
@@ -69,11 +69,11 @@ interface IModalProps<TData = {}> extends IBaseContainerComponentProps {
     closeConfirm?: string | boolean | IConfirmation | ModalConfirmationCallback | null;
     
     transform?(data: any): TData;
-    onBeforeOpen?(sender: Modal): Promise<void>;
-    onOpen?(sender: Modal): Promise<void>;
-    onBeforeClose?(sender: Modal): Promise<void>;
-    onClose?(sender: Modal, data: string): Promise<void>;
-    onToggle?(sender: Modal, isOpen: boolean): Promise<void>;
+    onBeforeOpen?(sender: Modal<TData>): Promise<void>;
+    onOpen?(sender: Modal<TData>): Promise<void>;
+    onBeforeClose?(sender: Modal<TData>): Promise<void>;
+    onClose?(sender: Modal<TData>, data: string): Promise<void>;
+    onToggle?(sender: Modal<TData>, isOpen: boolean): Promise<void>;
 }
 
 interface IModalState extends IBaseAsyncComponentState<any> {
@@ -90,7 +90,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         openInstance: null
     };
 
-    private static _openInstance: Modal | null = null;
+    private static _openInstance: Modal<any> | null = null;
     private readonly _closeConfirmDialogRef: React.RefObject<ConfirmationDialog> = React.createRef();
     private _animation: boolean = true;
     private _modalRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -182,7 +182,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         return (this.props.preventEsc === true);
     }
 
-    public getBodyNode(): JQuery {
+    public getBodyNode(): JQueryNode {
         return this.JQuery(`#${this.id}_body`);
     }
 
@@ -392,7 +392,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        const node: JQuery = this.JQuery(this.modal);
+        const node: JQueryNode = this.JQuery(this.modal);
         node.on("shown.bs.modal", async (event) => await this.onOpenHandlerAsync(event));
         node.on("hide.bs.modal", async () => await this.onCloseHandlerAsync());
     }
@@ -402,7 +402,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        const node: JQuery = this.JQuery(this.modal);
+        const node: JQueryNode = this.JQuery(this.modal);
 
         node.off("shown.bs.modal");
         node.off("hide.bs.modal");
@@ -413,7 +413,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        const modal = this.JQuery(this.modal);
+        const modal: any = this.JQuery(this.modal);
 
         if ((modal) && (typeof modal.modal === "function")) {
             modal.modal("show");
@@ -425,7 +425,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
             return;
         }
 
-        const modal = this.JQuery(this.modal);
+        const modal: any = this.JQuery(this.modal);
 
         if ((modal) && (typeof modal.modal === "function")) {
             modal.modal("hide");
