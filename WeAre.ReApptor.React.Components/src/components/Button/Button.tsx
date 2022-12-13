@@ -54,7 +54,7 @@ export interface IButtonProps {
     /**
      * Props for an {@link Icon} displayed inside the {@link Button}.
      */
-    icon?: IIconProps;
+    icon?: IIconProps | string;
 
     iconPosition?: Justify;
 
@@ -178,7 +178,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
 
         if ((this.props.icon) && (this.iconPosition == Justify.Left)) {
-            return this.props.icon;
+            return (typeof this.props.icon === "string")
+                ? { name: this.props.icon }
+                : this.props.icon;
         }
 
         return null;
@@ -194,7 +196,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
 
         if ((this.props.icon) && (this.iconPosition == Justify.Right)) {
-            return this.props.icon;
+            return (typeof this.props.icon === "string")
+                ? { name: this.props.icon }
+                : this.props.icon;
         }
 
         return null;
