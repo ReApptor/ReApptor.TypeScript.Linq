@@ -47,6 +47,7 @@
           ],
           "options": {
             "jestConfig": "ReApptor.TypeScript.Linq/jest.config.ts",
+            "rollupConfig": "./extra-rollup",
             "passWithNoTests": true
           }
         }
@@ -123,7 +124,6 @@
             "external": [
               "react/jsx-runtime"
             ],
-            "rollupConfig": "./extra-rollup",
             "assets": [
               {
                 "glob": "WeAre.ReApptor.React.Common/README.md",

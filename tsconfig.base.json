@@ -42,7 +42,8 @@
       "@reapptor/paged-list": [
         "ReApptor.TypeScript.PagedList/src/index.ts"
       ]
-    }
+    },
+    "plugins": [{ "transform": "ts-nameof", "type": "raw" }]
   },
   "exclude": [
     "node_modules",
