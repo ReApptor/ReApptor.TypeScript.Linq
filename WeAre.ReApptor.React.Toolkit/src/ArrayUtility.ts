@@ -81,9 +81,12 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(items[i], i);
-            if (valid) {
-                result.push(item);
+            
+            if (!valid) {
+                break;
             }
+            
+            result.push(item);
         }
         return result;
     }
@@ -131,7 +134,7 @@ export default class ArrayUtility {
         }
         return defaultValue ?? null;
     }
-
+    
     public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
         const promises: Promise<void>[] = items.map(item => callback(item));
         await Promise.all(promises);

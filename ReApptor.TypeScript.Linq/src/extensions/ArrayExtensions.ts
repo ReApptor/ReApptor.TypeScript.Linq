@@ -145,14 +145,29 @@ declare global {
          */
         removeAt(index: number): void;
 
+        /**
+         * Returns the maximum value in a sequence of values.
+         * @param predicate - A function to test each element for a condition.
+         * @returns T - The maximum value in the sequence.
+         */
         max(predicate: ((item: T) => number) | null): T;
 
         maxValue(predicate: (item: T) => number): number;
 
+        /**
+         * Returns the minimum value in a sequence of values.
+         * @param predicate - A function to test each element for a condition.
+         * @returns T - The minimum value in the sequence.
+         */
         min(predicate: ((item: T) => number) | null): T;
 
         minValue(predicate: (item: T) => number): number;
 
+        /**
+         * Computes the sum of a sequence of numeric values.
+         * @param predicate - A function to test each element for a condition.
+         * @returns number - The sum of the values in the sequence.
+         */
         sum(predicate: (item: T) => number | null | undefined): number;
 
         /**
