@@ -1,11 +1,13 @@
 /* eslint-disable */
 
+console.log("--- jest.config.ts ---");
+
 export default {
   displayName: "ReApptor.TypeScript.Linq",
   preset: "../jest.preset.js",
-  // transform: {
-  //   "^.+\\.[tj]sx?$": ["babel-jest", { presets: ["@nrwl/react/babel"] }],
-  // },
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
-  coverageDirectory: "../coverage/libs/ReApptor.TypeScript.Linq"
+  coverageDirectory: "../coverage/libs/ReApptor.TypeScript.Linq",
+  // TS only (without REACT):
+  transform: {
+    "^.+\\.[tj]sx?$": ["babel-jest", { presets: ["@nrwl/react/babel"] }],
+  }
 };
