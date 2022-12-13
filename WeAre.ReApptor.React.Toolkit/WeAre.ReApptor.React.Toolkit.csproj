@@ -61,6 +61,7 @@
       <TypeScriptCompile Include="src\providers\TypeResolver.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
+      <TypeScriptCompile Include="src\tests\System.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />
     </ItemGroup>

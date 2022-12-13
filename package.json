@@ -20,7 +20,6 @@
     "Test:ReApptor.TypeScript.PagedList": "nx test ReApptor.TypeScript.PagedList",
     "Build:All": "npm run Build:ReApptor.TypeScript.PagedList && npm run Build:ReApptor.TypeScript.Linq && npm run Build:WeAre.ReApptor.React.Toolkit && npm run Build:WeAre.ReApptor.React.Common && npm run Build:WeAre.ReApptor.React.Components && npm run Build:WeAre.ReApptor.React.Components.Localization && npm run Build:WeAre.TestApplication.WebUI",
     "Test:All": "npm run Test:ReApptor.TypeScript.PagedList && npm run Test:ReApptor.TypeScript.Linq && npm run Test:WeAre.ReApptor.React.Toolkit && npm run Test:WeAre.ReApptor.React.Common && npm run Test:WeAre.ReApptor.React.Components && npm run Test:WeAre.ReApptor.React.Components.Localization && npm run Test:WeAre.TestApplication.WebUI",
-    "prepare": "ts-patch install -s",
     "postinstall": "node post-install.js",
     "dep-graph": "nx dep-graph"
   },
