@@ -8,6 +8,7 @@ import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
 import AuthorizedTestWithParameters from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
 
 import styles from "./../App.module.scss"
+import SystemTests from "./SystemTests/SystemTests";
 
 class TestApplicationController {
     private _applicationContext: ApplicationContext | null = null;
@@ -98,6 +99,7 @@ class TestApplicationController {
     public async fetchTopNavItems(): Promise<IMenuItem[]> {
         return [
             {route: PageDefinitions.anonymous, label: nameof(Tests)},
+            {route: PageDefinitions.systemTests, label: nameof(SystemTests)},
             {route: PageDefinitions.authorized, label: nameof(AuthorizedTest)},
             {route: PageDefinitions.anonymousWithParams({hello: "world!", world: { key: "hello!" }}), label: nameof(AnonymousTestWithParameters)},
             {route: PageDefinitions.authorizedWithParams({object: {key: "value", another: {hello: true, world: new Date()}}}), label: nameof(AuthorizedTestWithParameters)},

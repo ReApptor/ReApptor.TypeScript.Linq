@@ -111,7 +111,7 @@ export default class Profile extends BaseComponent<IProfileProps, IProfileState>
         return (
             <div id={this.id} className={this.css(styles.profile, this.props.className, expandedStyle)}>
                 
-                <div className={styles.icon} onClick={async () => await this.toggleAsync()}>
+                <div className={styles.icon} onClick={() => this.toggleAsync()}>
                     {
                         Icon.renderIcon(this.props.icon || "far user-circle", null, IconSize.X2)
                     }
