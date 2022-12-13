@@ -1,12 +1,9 @@
 import {ReactElement} from "react";
 import ReactUtility from "../ReactUtility";
-import {ServiceProvider} from "@weare/reapptor-toolkit";
 
 describe("toBolds", function() {
 
     test("emptyString", function () {
-        const x = nameof(ReactUtility);
-        const y = ServiceProvider.findLocalizer();
         const input: string = "";
         const output: (ReactElement | string)[] = ReactUtility.toBolds(input);
         expect(output).toEqual([]);
