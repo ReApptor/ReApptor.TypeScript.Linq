@@ -3,7 +3,6 @@ import {ArrayExtensions} from "../index";
 ArrayExtensions();
 
 describe("skip", function() {
-    
     test("skip0from0", function () {
         const result: number[] = [].skip(0);
         expect(result).toEqual([]);

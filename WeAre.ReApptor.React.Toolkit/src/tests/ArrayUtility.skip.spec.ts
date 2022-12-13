@@ -2,7 +2,26 @@ import {ArrayExtensions} from "../index";
 
 ArrayExtensions();
 
+class PetOwner
+{
+    constructor(name: string, pets: string[]) {
+        this.name = name;
+        this.pets = pets;
+    }
+    
+    public name: string;
+    public pets: string[];
+}
+
+
 describe('skip', function() {
+    test("skip01from01", function () {
+        const fruits: string[] = [ "apple", "banana", "mango", "orange", "passionfruit", "grape" ];
+
+        const query = fruits.takeWhile(fruit => fruit != "orange");
+        
+        console.log(query);
+    });
     
     test('skip0from0', function () {
         const result: number[] = [].skip(0);

@@ -117,7 +117,6 @@ hasEmptyAnyNumber = false;
 ```
 ***
 
-***
 ### Chunk
 Splits the elements of a sequence into chunks of the parameter size at most size.
 ```typescript
@@ -200,7 +199,6 @@ console.log(`There are ${count} numbers in the collection`);
 ```
 There are 10 numbers in the collection
 ```
-***
 
 ***
 ### Distinct
@@ -272,11 +270,11 @@ distinctAgeHumans =  [
 Returns the first element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
 ```typescript
 /**
- * 
  * @param predicate - A function to test each element for a condition.
  * @param defaultValue - The default value to return if the sequence is empty.
  * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the first element in source that passes the test specified by predicate.
  */
+first(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
 ```
 #### Example
 The following code examples demonstrates how to use First
@@ -364,7 +362,7 @@ console.log("None of the items matching the predicate. The return value = ", def
 ```typescript
 const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
 const defaultProvidedIfNotFound: number = numbers.firstOrDefault(item => item > 1000, -1);
-console.log("Return -1 if none of the elements matching the predicate. The return value = ", defaultProvidedIfNotFound);
+console.log("Default value is -1 if none of the elements matching the predicate. The return value = ", defaultProvidedIfNotFound);
 ```
 #### Code produces the following output:
 ```
@@ -382,6 +380,7 @@ Returns the last element of a sequence, or a default value if no element is foun
  * @param defaultValue - The default value to return if the sequence is empty.
  * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
  */
+last(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
 ```
 #### Example
 The following code example demonstrates how to use Last to return 
@@ -437,6 +436,7 @@ Returns the last element of a sequence, or a specified default value if the sequ
  * @param defaultValue - The default value to return if the sequence is empty.
  * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
  */
+lastOrDefault(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
 ```
 #### Example
 The following code examples demonstrates how to use LastOrDefault
@@ -466,7 +466,7 @@ console.log("None of the items matching the predicate. The return value = ", def
 ```typescript
 const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
 const defaultProvidedIfNotFound: number = numbers.lastOrDefault(item => item > 1000, -1);
-console.log("Return -1 if none of the elements matching the predicate. The return value = ", defaultProvidedIfNotFound);
+console.log("Default value is -1 if none of the elements matching the predicate. The return value = ", defaultProvidedIfNotFound);
 ```
 #### Code produces the following output:
 ```
@@ -474,4 +474,258 @@ Last in the sequence = 19
 Last in the sequence that is greater than 400 = 435
 None of the items matching the predicate. The return value = null
 Return -1 if none of the elements matching the predicate. The return value = -1
+```
+***
+### Max
+Returns the maximum value in a sequence of values.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @returns T - The maximum value in the sequence.
+ */
+max(predicate: ((item: T) => number) | null): T;
+```
+#### Example
+The following code example demonstrates how to use Max to determine the maximum value in a sequence.
+
+```typescript
+const values: any[] = [null, 1.5E+104, 9E+103, -2E+103];
+
+const max = values.max();
+
+console.log(`The largest number is ${max}`);
+```
+#### Code produces the following output:
+```
+The largest number is 1.5e+104
+```
+***
+### Min
+Returns the minimum value in a sequence of values.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @returns T - The minimum value in the sequence.
+ */
+min(predicate: ((item: T) => number) | null): T;
+```
+#### Example
+The following code example demonstrates how to use Min to determine the minimum value in a sequence.
+
+```typescript
+const grades: any[] = [78, 92, null, 99, 37, 81];
+
+const min = values.min();
+
+console.log(`The lowest grade is ${min}`);
+```
+#### Code produces the following output:
+```
+The lowest grade is 37
+```
+
+***
+### Repeat
+Generates a sequence that contains one repeated value.
+```typescript
+/**
+ * @param element - The value to be repeated.
+ * @param count - The number of times to repeat the value in the generated sequence.
+ * @returns T[] - An Array<T> that contains a repeated value.
+ */
+repeat(element: T, count: number): T[];
+```
+#### Example
+The following code example demonstrates how to use Repeat to generate a sequence of a repeated value.
+
+```typescript
+const values: string[] = Array.prototype.repeat("I like programming.", 5);
+
+for (let i = 0; i < values.length; i ++) {
+    console.log(values[i]);
+}
+```
+#### Code produces the following output:
+```
+I like programming.
+I like programming.
+I like programming.
+I like programming.
+I like programming.
+```
+***
+### SelectMany
+Projects each element of a sequence to an Array<T> and flattens the resulting sequences into one sequence.
+```typescript
+/**
+ * @param collectionSelector - A transform function to apply to each element of the input sequence.
+ * @returns Array<TOut> - An Array<TOut> whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of source and then mapping each of those sequence elements and their corresponding source element to a result element.
+ */
+selectMany<TOut>(collectionSelector: (item: T) => TOut[]): TOut[];
+```
+#### Example
+The following code example demonstrates how to use SelectMany
+to perform a one-to-many projection over an array.
+
+```typescript
+class PetOwner
+{
+    constructor(name: string, pets: string[]) {
+        this.name = name;
+        this.pets = pets;
+    }
+
+    public name: string;
+    public pets: string[];
+}
+
+const higa = new PetOwner("Higa", ["Scruffy", "Sam"]);
+const ashkenazi = new PetOwner("Ashkenazi", ["Walker", "Sugar"]);
+const price = new PetOwner("Price", ["Scratches", "Diesel"]);
+const hines = new PetOwner("Hines", ["Dusty"]);
+
+const petOwners: PetOwner[] = [higa, ashkenazi, price, hines];
+
+const query = petOwners
+    .selectMany(petOwner => petOwner.pets)
+    .where(ownerAndPet => ownerAndPet.startsWith("S"));
+
+console.log(query);
+```
+#### Code produces the following output:
+```
+[ 'Scruffy', 'Sam', 'Sugar', 'Scratches' ]
+```
+***
+### Skip
+Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+```typescript
+/**
+ * @param count - A function to test each element for a condition.
+ * @returns Array<T> - An Array<T> that contains the elements that occur after the specified index in the input sequence.
+ */
+skip(count: number): T[];
+```
+#### Example
+The following code example demonstrates how to use Skip to skip a 
+specified number of elements in a sorted array and return the remaining 
+elements.
+
+```typescript
+const grades: number[] = [ 59, 82, 70, 56, 92, 98, 85 ];
+
+grades.order(item => item);
+
+const skipped3Grades: number[] = grades.skip(3);
+
+console.log("All grades except the top three are:", skippedGrades);
+```
+#### Code produces the following output:
+```
+All grades except the top three are: [ 82, 85, 92, 98 ]
+```
+***
+### Sum
+Computes the sum of a sequence of numeric values.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @returns number - The sum of the values in the sequence.
+ */
+sum(predicate: (item: T) => number | null | undefined): number;
+```
+#### Example
+The following code example demonstrates how to use Sum
+to sum the values of a sequence.
+
+```typescript
+const grades: number[] = [ 43.68, 1.25, 583.7, 6.5 ];
+
+const sum: number = grades.sum(item => item);
+
+console.log(`The sum of the numbers is ${sum}.`);
+```
+#### Code produces the following output:
+```
+The sum of the numbers is 635.13.
+```
+***
+### Take
+Returns a specified number of contiguous elements from the start of a sequence.
+```typescript
+/**
+ * @param count - The number of elements to return.
+ * @returns Array<T> - An Array<T> that contains the specified number of elements from the start of the input sequence.
+ */
+take(count: number): T[];
+```
+#### Example
+The following code example demonstrates how to use Take to 
+return elements from the start of a sequence.
+
+```typescript
+const grades: number[] = [ 59, 82, 70, 56, 92, 98, 85 ];
+
+grades.sort((a, b) => b - a);
+
+const top3Grades: number[] = grades.take(3);
+
+console.log(`The top three grades are:${top3Grades}`);
+```
+#### Code produces the following output:
+```
+The top three grades are:98,92,85
+```
+***
+### TakeLast
+Returns a new array that contains the last count elements from source.
+```typescript
+/**
+ * @param count - The number of elements to take from the end of the collection.
+ * @returns Array<T> - A new array that contains the last count elements from source.
+ */
+takeLast(count: number): T[];
+```
+#### Example
+The following code example demonstrates how to use TakeLast to
+return elements from the start of a sequence.
+
+```typescript
+const grades: number[] = [ 59, 82, 70, 56, 92, 98, 85 ];
+
+grades.sort((a, b) => b - a);
+
+const worst3Grades: number[] = grades.takeLast(3);
+
+console.log(`The worst three grades are:${worst3Grades}`);
+```
+#### Code produces the following output:
+```
+The worst three grades are:70,59,56
+```
+***
+### TakeWhile
+Returns elements from an array as long as a specified condition is true.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @returns Array<T> - An new array that contains the elements from the input sequence that occur before the element at which the test no longer passes.
+ */
+takeWhile(predicate: (item: T, index: number) => boolean): T[];
+```
+#### Example
+The following code example demonstrates how to use TakeWhile
+to return elements from the start of a sequence as long as a condition 
+is true.
+
+```typescript
+const fruits: string[] = [ "apple", "banana", "mango", "orange", "passionfruit", "grape" ];
+
+const query = fruits.takeWhile(fruit => fruit != "orange");
+
+console.log(query);
+```
+#### Code produces the following output:
+```
+[ 'apple', 'banana', 'mango' ]
 ```
