@@ -1,12 +1,9 @@
 /* eslint-disable */
 
+console.log("--- jest.config.ts ---");
+
 export default {
   displayName: "WeAre.TestApplication.WebUI",
   preset: "../jest.preset.js",
-  // transform: {
-  //   "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@nrwl/react/plugins/jest",
-  //   "^.+\\.[tj]sx?$": ["babel-jest", { presets: ["@nrwl/react/babel"] }],
-  // },
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   coverageDirectory: "../coverage/WeAre.TestApplication.WebUI",
 };
