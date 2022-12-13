@@ -155,8 +155,6 @@ console.log("[] chunk with size of 10 = ", chunkedOnEmpty);
 [1, 2, 3, 4] chunk with size of 10 =  [ [ 1, 2, 3, 4 ] ]
 
 [] chunk with size of 10 =  []
-
-hasEmptyAnyNumber = false;
 ```
 ***
 
@@ -341,7 +339,7 @@ firstOrDefault(callback?: ((item: T) => boolean) | null, defaultValue?: T | null
 #### Example
 The following code examples demonstrates how to use FirstOrDefault
 to return the first element of an array that satisfies
-a condition or a default value if the defaultValue has a value and not.
+a condition or a default value if the defaultValue parameter is specified, otherwise null.
 
 ###### Return first element in the sequence
 ```typescript
@@ -372,6 +370,108 @@ console.log("Return -1 if none of the elements matching the predicate. The retur
 ```
 First in the sequence = 9
 First in the sequence that is greater than 400 = 435
+None of the items matching the predicate. The return value = null
+Return -1 if none of the elements matching the predicate. The return value = -1
+```
+***
+### Last
+Returns the last element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @param defaultValue - The default value to return if the sequence is empty.
+ * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
+ */
+```
+#### Example
+The following code example demonstrates how to use Last to return 
+the last element of an array that satisfies a condition, last or default.
+
+###### Return last element in the sequence
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const last: number = numbers.last();
+console.log("Last = ", last);
+```
+###### Return last element in the sequence that satisfies a condition
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const lastGreaterThan80: number = numbers.last(item => item > 80);
+console.log("Last number in the sequence greater than 80 = ", last);
+```
+###### Return a default value if none of the elements in the sequence satisfies a condition
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const defaultValue: number = numbers.last(item => item == 1, -1);
+console.log("Default value = ", defaultValue);
+```
+#### Code produces the following output:
+```
+Last = 19
+Last number in the sequence greater than 80 = 435
+Default value = -1
+```
+
+#### Exceptions
+Sequence has none elements matching the predicate.
+
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+
+try {
+    const lastGreaterThan80: number = numbers.last(item => item == 1);
+} catch (e: any) {
+    console.log(e.message);
+}
+```
+#### Code produces the following output:
+```
+No item found matching the specified predicate.
+```
+***
+### LastOrDefault
+Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
+```typescript
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @param defaultValue - The default value to return if the sequence is empty.
+ * @returns T - defaultValue if source is empty or if no element passes the test specified by predicate; otherwise, the last element in source that passes the test specified by predicate.
+ */
+```
+#### Example
+The following code examples demonstrates how to use LastOrDefault
+to return the last element of an array that satisfies
+a condition or a default value if the defaultValue parameter is specified, otherwise null.
+
+###### Return last element in the sequence
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const lastInSequence: number | null = numbers.lastOrDefault();
+console.log("Last in the sequence = ", lastInSequence);
+```
+###### Return last element in the sequence that satisfies a condition
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const lastMatching: number | null = numbers.lastOrDefault(item => item > 435);
+console.log("Last in the sequence that is greater than 400 = ", lastMatching);
+```
+###### None of the elements in the sequence satisfies a condition
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const defaultIfNotFound: number = numbers.lastOrDefault(item => item == -1);
+console.log("None of the items matching the predicate. The return value = ", defaultIfNotFound);
+```
+
+###### Specified default value if none of the elements in the sequence satisfies a condition
+```typescript
+const numbers: number[] = [ 9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const defaultProvidedIfNotFound: number = numbers.lastOrDefault(item => item > 1000, -1);
+console.log("Return -1 if none of the elements matching the predicate. The return value = ", defaultProvidedIfNotFound);
+```
+#### Code produces the following output:
+```
+Last in the sequence = 19
+Last in the sequence that is greater than 400 = 435
 None of the items matching the predicate. The return value = null
 Return -1 if none of the elements matching the predicate. The return value = -1
 ```
