@@ -1,6 +1,6 @@
 // Interfaces:
 export * from "./interfaces/IPagedList";
-export {default as IPagedList} from "./interfaces/IPagedList";
+export type {default as IPagedList} from "./interfaces/IPagedList";
 
 // Models:
 export * from "./models/PagedList";

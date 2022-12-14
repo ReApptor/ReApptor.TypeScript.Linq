@@ -1,6 +1,6 @@
 import React, {SyntheticEvent} from "react";
-import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
-import {BaseComponent, IBaseContainerComponentProps, JQueryNode} from "@weare/reapptor-react-common";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
+import {BaseComponent, IBaseContainerComponentProps, JQueryNode, ConfirmationDialogTitleCallback, IConfirmation} from "@weare/reapptor-react-common";
 import IconAction, {IIconActionProps} from "./IconAction/IconAction";
 import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import IconLocalizer from "./IconLocalizer";

@@ -13,22 +13,29 @@ export {default as ServerError} from "./models/ServerError";
 export {default as ArrayScope} from "./models/ArrayScope";
 
 //Interfaces:
-export * from "./models/IApplicationSettings";
-export {default as IApplicationSettings} from "./models/IApplicationSettings";
-export * from "./models/IConfirmation";
-export {default as IConfirmation} from "./models/IConfirmation";
 export * from "./models/IMessageBox";
-export {default as IMessageBox} from "./models/IMessageBox";
+export type {default as IMessageBox} from "./models/IMessageBox";
+
+export * from "./models/IConfirmation";
+    export type {default as IConfirmation} from "./models/IConfirmation";
+
+export * from "./models/IApplicationSettings";
+export type {default as IApplicationSettings} from "./models/IApplicationSettings";
+
 export * from "./models/IErrorPageParameters";
-export {default as IErrorPageParameters} from "./models/IErrorPageParameters";
+export type {default as IErrorPageParameters} from "./models/IErrorPageParameters";
+
 export * from "./models/IPageContainer";
-export {default as IPageContainer} from "./models/IPageContainer";
+export type {default as IPageContainer} from "./models/IPageContainer";
+
 export * from "./models/IResponseContainer";
-export {default as IResponseContainer} from "./models/IResponseContainer";
+export type {default as IResponseContainer} from "./models/IResponseContainer";
+
 export * from "./models/IUser";
-export {default as IUser} from "./models/IUser";
+export type {default as IUser} from "./models/IUser";
+
 export * from "./models/IUserContext";
-export {default as IUserContext} from "./models/IUserContext";
+export type {default as IUserContext} from "./models/IUserContext";
 
 //Base:
 export * from "./base/BasePage";
