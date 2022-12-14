@@ -95,7 +95,6 @@
     <ItemGroup>
       <None Remove="build\**" />
       <None Remove="src\@weare\**" />
-      <None Remove=".babelrc" />
       <None Remove=".gitignore" />
       <None Remove=".browserslistrc" />
       <None Remove="dist\**" />
