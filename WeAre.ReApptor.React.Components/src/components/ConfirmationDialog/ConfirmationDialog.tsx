@@ -15,6 +15,7 @@ export interface IConfirmation {
     placeholder?: string;
     minLength?: number;
     comment?: boolean;
+    className?: string;
 }
 
 interface IConfirmationDialogProps {
@@ -222,7 +223,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         const processingStyle: any = (this.processing) && styles.processing;
 
         return (
-            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle)}>
+            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle, this.model.className)}>
 
                 <div className={styles.dialogOverlay} />
 
@@ -236,11 +237,11 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
                             <TextAreaInput ref={this._commentRef}
                                            required noValidate
                                            rows={3}
-                                           placeholder={this.model.placeholder || ConfirmationDialogLocalizer.comment}
+                                           placeholder={this.model.placeholder ? ConfirmationDialogLocalizer.get(this.model.placeholder) : ConfirmationDialogLocalizer.comment}
                                            className={styles.commentInput}
                                            value={this.state.comment}
                                            readonly={this.processing}
-                                           onChange={async (sender, value) => await this.setCommentAsync(value)}
+                                           onChange={(sender, value) => this.setCommentAsync(value)}
                             />
                         )
                     }

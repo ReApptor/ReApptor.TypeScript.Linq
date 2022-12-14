@@ -20,6 +20,34 @@ declare global {
         date(): Date;
 
         /**
+         * Returns a new Date that adds the specified number of milliseconds to the value of this instance.
+         * @param value - A number of milliseconds. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of milliseconds represented by value.
+         */
+        addMilliseconds(value: number): Date;
+
+        /**
+         * Returns a new Date that adds the specified number of seconds to the value of this instance.
+         * @param value - A number of seconds. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of seconds represented by value.
+         */
+        addSeconds(value: number): Date;
+
+        /**
+         * Returns a new Date that adds the specified number of minutes to the value of this instance.
+         * @param value - A number of minutes. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of minutes represented by value.
+         */
+        addMinutes(value: number): Date;
+
+        /**
+         * Returns a new Date that adds the specified number of hours to the value of this instance.
+         * @param value - A number of hours. The value parameter can be negative or positive.
+         * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of hours represented by value.
+         */
+        addHours(value: number): Date;
+
+        /**
          * Returns a new Date that adds the specified number of days to the value of this instance.
          * @param value - A number of whole and fractional days. The value parameter can be negative or positive.
          * @returns Date - An object whose value is the sum of the date and time represented by this instance and the number of days represented by value.
@@ -64,9 +92,9 @@ declare global {
          */
         getHashCode(): number;
 
-        inFuture(): boolean;
+        inFuture(dateOnly?: boolean): boolean;
 
-        inPast(): boolean;
+        inPast(dateOnly?: boolean): boolean;
 
         isSunday(): boolean;
 
@@ -131,6 +159,30 @@ export const DateExtensions = function () {
     //         return DateUtility.time(this);
     //     };
     // }
+
+    if (Date.prototype.addMilliseconds == null) {
+        Date.prototype.addMilliseconds = function(value: number): Date {
+            return Utility.addMilliseconds(this, value);
+        };
+    }
+
+    if (Date.prototype.addSeconds == null) {
+        Date.prototype.addSeconds = function(value: number): Date {
+            return Utility.addSeconds(this, value);
+        };
+    }
+
+    if (Date.prototype.addMinutes == null) {
+        Date.prototype.addMinutes = function(value: number): Date {
+            return Utility.addMinutes(this, value);
+        };
+    }
+
+    if (Date.prototype.addHours == null) {
+        Date.prototype.addHours = function(value: number): Date {
+            return Utility.addHours(this, value);
+        };
+    }
     
     if (Date.prototype.addDays == null) {
         Date.prototype.addDays = function(value: number): Date {
@@ -181,14 +233,14 @@ export const DateExtensions = function () {
     }
     
     if (Date.prototype.inFuture == null) {
-        Date.prototype.inFuture = function(): boolean {
-            return Utility.inFuture(this);
+        Date.prototype.inFuture = function(dateOnly: boolean = false): boolean {
+            return Utility.inFuture(this, dateOnly);
         };
     }
     
     if (Date.prototype.inPast == null) {
-        Date.prototype.inPast = function(): boolean {
-            return Utility.inPast(this);
+        Date.prototype.inPast = function(dateOnly: boolean = false): boolean {
+            return Utility.inPast(this, dateOnly);
         };
     }
     

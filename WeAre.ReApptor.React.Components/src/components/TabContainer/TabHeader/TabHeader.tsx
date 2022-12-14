@@ -57,7 +57,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
     public get model(): TabModel {
         return this.props.model;
     }
-
+    
     private get classNames(): ITabHeaderClassNames {
         const classNamesCopy: ITabHeaderClassNames = {...this.props.classNames} ?? {};
 
@@ -71,6 +71,8 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         const model: TabModel = this.model;
         model.headerInstance = this;
 
+        const count: number | null = model.getCount();
+
         const closedStyle: string = (model.closed) && (styles.closed) || "";
         const activeStyle: string = (model.active) && ("active") || "";
         const activeCustomStyle: string = (model.active) && (model.activeClassName) || "";
@@ -82,7 +84,7 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
         return (
             <li id={this.props.id} className={this.css("nav-item", styles.tab, closedStyle, model.className, activeCustomStyle, this.classNames.headerTab)} title={TabContainerLocalizer.get(model.tooltip)}>
 
-                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink, typedHeaderStyle)} onClick={async () => await this.onClickAsync()}>
+                <a className={this.css("nav-link", activeStyle, this.classNames.headerLink, typedHeaderStyle)} onClick={() => this.onClickAsync()}>
                     
                     {
                         (model.icon) &&
@@ -96,10 +98,22 @@ export default class TabHeader extends BaseComponent<ITabHeaderProps, ITabHeader
                     {
                         (model.onClose) &&
                         (
-                            <Icon className={this.css(styles.close, this.classNames.headerClose)} name="fa fa-times" onClick={async ()=> await this.onCloseAsync()} />
+                            <Icon className={this.css(styles.close, this.classNames.headerClose)}
+                                  name="fa fa-times"
+                                  onClick={()=> this.onCloseAsync()}
+                            />
                         )
                     }
-                    
+
+                    {
+                        (count != null) &&
+                        (
+                            <div className={this.css(styles.count, model.countClassName)}>
+                                <span>{count}</span>
+                            </div>
+                        )
+                    }
+
                     {
                         (model.closeConfirm) &&
                         (

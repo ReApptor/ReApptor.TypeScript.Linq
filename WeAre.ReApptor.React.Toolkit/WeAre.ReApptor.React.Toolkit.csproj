@@ -8,11 +8,29 @@
     <PropertyGroup>
         <Version>1.0.0.0</Version>
         <PackageVersion>1.0.0.0</PackageVersion>
-        <Copyright>Copyright © 2020, WeAre Solutions Oy</Copyright>
+        <Copyright>Copyright © 2022, ReApptor Oy</Copyright>
         <Product>ReApptor Components</Product>
-        <Authors>WeAre Solutions Oy</Authors>
-        <Company>WeAre Solutions Oy</Company>
+        <Authors>ReApptor Oy</Authors>
+        <Company>ReApptor Oy</Company>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="lib\**" />
+        <Compile Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="lib\**" />
+        <EmbeddedResource Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="lib\**" />
+        <None Remove="package-lock.json" />
+        <None Remove=".babelrc" />
+        <None Remove=".eslintrc.json" />
+        <None Remove="dist\**" />
+    </ItemGroup>
 
     <ItemGroup>
       <TypeScriptCompile Include="src\ArrayUtility.ts" />
@@ -24,18 +42,6 @@
       <TypeScriptCompile Include="src\extensions\NumberExtensions.ts" />
       <TypeScriptCompile Include="src\extensions\StringExtensions.ts" />
       <TypeScriptCompile Include="src\HashCodeUtility.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\Assert.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IArrayAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IBaseAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IBigIntAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IBooleanAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyArrayAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeEmptyStringAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IUnknownAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\INumberAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IMaybeNullObjectAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IObjectAsserter.ts" />
-      <TypeScriptCompile Include="src\helpers\Asserter\IStringAsserter.ts" />
       <TypeScriptCompile Include="src\helpers\PwaHelper.ts" />
       <TypeScriptCompile Include="src\localization\BaseLocalizer.ts" />
       <TypeScriptCompile Include="src\models\FileModel.ts" />
@@ -56,6 +62,8 @@
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.takeLast.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.takeWhile.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.spec.ts" />
       <TypeScriptCompile Include="src\tests\ServiceProvider.getService.spec.ts" />
@@ -64,30 +72,15 @@
       <TypeScriptCompile Include="src\tests\TypeConverter.toTitle.spec.ts" />
       <TypeScriptCompile Include="src\tests\TypeResolver.resove.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.copyTo.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.digits.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.getFileExtension.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.getHashCode.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.newGuid.spec.ts" />
+      <TypeScriptCompile Include="src\tests\Utility.round.spec.ts" />
       <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="lib\**" />
-      <Compile Remove="dist\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="lib\**" />
-      <EmbeddedResource Remove="dist\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="lib\**" />
-      <None Remove="package-lock.json" />
-      <None Remove=".babelrc" />
-      <None Remove=".eslintrc.json" />
-      <None Remove="dist\**" />
     </ItemGroup>
 
 </Project>

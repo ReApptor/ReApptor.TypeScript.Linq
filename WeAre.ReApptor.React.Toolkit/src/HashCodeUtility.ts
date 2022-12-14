@@ -1,17 +1,40 @@
 
+class ObjectHashItem {
+    public object: object;
+    
+    public hash: number | null;
+    
+    constructor(object: object) {
+        this.object = object;
+        this.hash = null;
+    }
+}
+
 export default class HashCodeUtility {
     
     private static inc(hash: number, value: number): number {
         return (((hash << 5) - hash) + value) & 0xFFFFFFFF;
     }
 
-    private static object(object: any): number {
+    private static object(object: any, cache: ObjectHashItem[]): number {
 
         if (object instanceof Date)
         {
             return this.getDateHashCode(object);
         }
+        
+        const index: number = cache.findIndex(item => item.object === object);
+        
+        if (index !== -1) {
+            const hash: number | null = cache[index].hash;
+            return (hash !== null)
+                ? hash
+                : index;
+        }
 
+        const cacheItem = new ObjectHashItem(object);
+        cache.push(cacheItem);
+        
         const hasOwnProperty = Object.prototype.hasOwnProperty;
 
         let hash: number = 0;
@@ -29,7 +52,7 @@ export default class HashCodeUtility {
             for (let i: number = 0; i < length; i++) {
                 const property: string = properties[i];
                 hash = this.inc(hash, this.getStringHashCode(property));
-                hash = this.inc(hash, this.getHashCode(object[property]));
+                hash = this.inc(hash, this.invokeGetHashCode(object[property], cache));
             }
         }
         
@@ -37,11 +60,26 @@ export default class HashCodeUtility {
         //     if (hasOwnProperty.call(object, property)) {
         //         //hash += HashCodeUtility.hash(property + HashCodeUtility.getHashCode(object[property]));
         //         hash = this.inc(hash, this.getStringHashCode(property));
-        //         hash = this.inc(hash, this.getHashCode(object[property]));
+        //         hash = this.inc(hash, this.invokeGetHashCode(object[property], cache));
         //     }
         // }
 
+        cacheItem.hash = hash;
+
         return hash;
+    }
+
+    private static invokeGetHashCode(value: any | null | undefined, cache: ObjectHashItem[]): number {
+        if (value != null) {
+            switch (typeof value) {
+                case "string": return this.getStringHashCode(value);
+                case "number": return this.getNumberHashCode(value);
+                case "boolean": return this.getBooleanHashCode(value);
+                case "object": return this.object(value, cache);
+            }
+        }
+
+        return 0;
     }
 
     public static getStringHashCode(value: string): number {
@@ -81,20 +119,13 @@ export default class HashCodeUtility {
      * @returns Number - A hash code for the current object.
      */
     public static getHashCode(value: any | null | undefined): number {
-        
-        if (value != null) {
-            switch (typeof value) {
-                case "string": return this.getStringHashCode(value);
-                case "number": return this.getNumberHashCode(value);
-                case "boolean": return this.getBooleanHashCode(value);
-                case "object": return this.object(value);
-            }
-        }
-
-        return 0;
+        const cache: ObjectHashItem[] = [];
+        return this.invokeGetHashCode(value, cache);
     }
     
     public static isEqual(x: any | string | null | undefined, y: any | string | null | undefined): boolean {
         return (this.getHashCode(x) === this.getHashCode(y));
     }
+    
+    public static readonly emptyHashCode: number = Number.NaN;
 }

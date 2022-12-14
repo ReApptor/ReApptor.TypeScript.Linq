@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -96,6 +97,21 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             
             return value;
         }
+        
+        /// <summary>
+        /// Remove all space and dashes.
+        /// </summary>
+        public static string RemoveAllSpacesAndDashes(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            var reg = new Regex(@"\s|[-]", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            
+            return reg.Replace(value, string.Empty);
+        }
 
         /// <summary>
         /// Removes UTF file preamble (BOM)
@@ -121,19 +137,24 @@ namespace WeAre.ReApptor.Toolkit.Extensions
             return EncodingUtility.ConvertEncoding(value, source, destination);
         }
 
-        public static string ConvertEncoding(this string value, Encoding destination)
+        public static string ConvertEncoding(this string value, [NotNull]Encoding destination)
         {
             return EncodingUtility.ConvertEncoding(value, destination);
         }
 
-        public static byte[] GetBytes(this string value, Encoding source, Encoding destination, bool bom = false)
+        public static byte[] GetBytes(this string value, [NotNull]Encoding source, [NotNull]Encoding destination, bool bom = false)
         {
             return EncodingUtility.GetBytes(value, source, destination, bom);
         }
 
-        public static byte[] GetBytes(this string value, Encoding destination, bool bom = false)
+        public static byte[] GetBytes(this string value, [NotNull]Encoding destination, bool bom = false)
         {
             return EncodingUtility.GetBytes(value, destination, bom);
+        }
+
+        public static byte[] GetBytes(this string value, bool bom = false)
+        {
+            return EncodingUtility.GetBytes(value, bom);
         }
 
         #endregion
@@ -159,7 +180,12 @@ namespace WeAre.ReApptor.Toolkit.Extensions
         {
             return Utility.TryToDecimal(value, out result);
         }
-
+        
         #endregion
+        
+        public static bool IsBase64Src(this string src)
+        {
+            return Utility.IsBase64Src(src);
+        }
     }
 }

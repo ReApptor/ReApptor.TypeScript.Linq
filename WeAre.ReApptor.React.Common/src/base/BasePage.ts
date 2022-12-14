@@ -1,3 +1,4 @@
+import React from "react";
 import {FileModel, ILocalizer, ServiceProvider} from "@weare/reapptor-toolkit";
 import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
@@ -6,7 +7,7 @@ import ApplicationContext from "../models/ApplicationContext";
 import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
-import {DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
+import {CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
 import DocumentPreviewModel from "../models/DocumentPreviewModel";
@@ -18,12 +19,13 @@ import PageRouteProvider from "../providers/PageRouteProvider";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export interface IManualProps {
-    title?: string;
-    manual?: string;
-    icon?: string;
-
+    title?: string | null;
+    manual?: string | null;
+    icon?: string | null;
+    
+    render?(manual: IManualProps): React.ReactNode;
     onClick?(): Promise<void>;
-}
+}   
 
 /**
  * A page contained in an {@link ILayoutPage}.
@@ -123,6 +125,11 @@ export interface IBasePage extends IBaseComponent {
     readonly hasFooter: boolean;
 
     /**
+     * Does the TopNav have a Language selector.
+     */
+    readonly hasLanguageSelector: boolean;
+
+    /**
      * The alert currently being displayed in the {@link IBasePage}.
      */
     readonly alert: AlertModel | null;
@@ -177,9 +184,19 @@ export interface ILayoutPage extends IAsyncComponent {
     reloadTopNavAsync(): Promise<void>;
 
     /**
+     * ReRender the {@link ILayoutPage}'s TopNav.
+     */
+    reRenderTopNavAsync(): Promise<void>;
+
+    /**
      * Reload the {@link ILayoutPage}'s LeftNav.
      */
     reloadLeftNavAsync(): Promise<void>;
+
+    /**
+     * ReRender the {@link ILayoutPage}'s LeftNav.
+     */
+    reRenderLeftNavAsync(): Promise<void>;
 
     /**
      * Perform a swipe to the left on the {@link ILayoutPage}.
@@ -222,12 +239,23 @@ export interface ILayoutPage extends IAsyncComponent {
      */
     download(file: FileModel): void;
 
-
     /**
      * Take a picture (file) from camera of file storage.
      * @param camera True to take a picture from camera (outward-facing camera, "capture:environment").
      */
-    takePictureAsync(camera?: boolean): Promise<FileModel | null>;
+    takePictureAsync(camera?: boolean | CameraType): Promise<FileModel | null>;
+
+    /**
+     * Activates default "call-to" behaviour
+     * @param phone The phone number
+     */
+    callTo(phone: string): void;
+
+    /**
+     * Activates default "mail-to" behaviour
+     * @param email The email address
+     */
+    mailTo(email: string): void;
 
     /**
      * Does the {@link ILayoutPage} have a TopNav.
@@ -243,6 +271,11 @@ export interface ILayoutPage extends IAsyncComponent {
      * Does the {@link ILayoutPage} have a Footer.
      */
     readonly hasFooter: boolean;
+
+    /**
+     * Does the TopNav have a Language selector.
+     */
+    readonly hasLanguageSelector: boolean;
 
     /**
      * The {@link AlertModel} currently being displayed in the {@link ILayoutPage}.
@@ -292,12 +325,6 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         return null;
     }
 
-    protected constructor(props: IBasePageProps<TParams> | null = null) {
-        super(props || ({} as IBasePageProps<TParams>));
-
-        this._asIsLoading = this.asIsLoading();
-    }
-
     private async setPageUrlAsync(): Promise<void> {
 
         const page: IBasePage = this.getPage();
@@ -309,6 +336,48 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
         document.title = page.getTitle();
 
         await PageRouteProvider.changeUrlWithRouteWithoutReloadAsync(page.route);
+    }
+
+    protected constructor(props: IBasePageProps<TParams> | null = null) {
+        super(props || ({} as IBasePageProps<TParams>));
+
+        this._asIsLoading = this.asIsLoading();
+    }
+    
+    public async reloadTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reloadTopNavAsync();
+        }
+    }
+    
+    public async reRenderTopNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderTopNavAsync();
+        }
+    }
+    
+    public reRenderTopNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderTopNav();
+        }
+    }
+    
+    public async reloadLeftNavAsync(): Promise<void> {
+        if (this.hasLeftNav) {
+            await ch.reloadLeftNavAsync();
+        }
+    }
+    
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this.hasTopNav) {
+            await ch.reRenderLeftNavAsync();
+        }
+    }
+
+    public reRenderLeftNav(): void {
+        if (this.hasTopNav) {
+            ch.reRenderLeftNav();
+        }
     }
 
     /**
@@ -536,9 +605,19 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
 
     /**
      * @inheritDoc
+     * Can be overridden in a page class to show/hide footer.
      * @return true
      */
     public get hasFooter(): boolean {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     * Can be overridden in a page class to show/hide top nav language selector.
+     * @return true
+     */
+    public get hasLanguageSelector(): boolean {
         return true;
     }
 

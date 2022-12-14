@@ -1,4 +1,4 @@
-import {AthenaeumConstants, FileModel, ILocalizer, ServiceProvider, Utility} from "@weare/reapptor-toolkit";
+import {AthenaeumConstants, FileModel, ILocalizer, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import ApplicationContext from "../models/ApplicationContext";
 import {IBasePage, ILayoutPage} from "../base/BasePage";
 import ApiProvider from "./ApiProvider";
@@ -9,8 +9,9 @@ import IUserContext from "../models/IUserContext";
 import IConfirmation, {ConfirmationDialogTitleCallback} from "../models/IConfirmation";
 import DocumentPreviewModel, {DocumentPreviewSize} from "../models/DocumentPreviewModel";
 import DescriptionModel from "../models/DescriptionModel";
-import {AlertType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
+import {AlertType, CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon} from "../Enums";
 import IMessageBox, {IMessageBoxButtons, MessageBoxModelCallback} from "../models/IMessageBox";
+import PageRoute from "../models/PageRoute";
 
 /**
  * {@link BaseComponent} helper.
@@ -116,6 +117,15 @@ export default class ch {
     }
 
     /**
+     * @see ILayoutPage.reRenderTopNavAsync
+     */
+    public static async reRenderTopNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reRenderTopNavAsync();
+        }
+    }
+
+    /**
      * @see ILayoutPage.reloadLeftNavAsync
      */
     public static async reloadLeftNavAsync(): Promise<void> {
@@ -125,11 +135,44 @@ export default class ch {
     }
 
     /**
+     * @see ILayoutPage.reRenderTopNavAsync
+     */
+    public static async reRenderLeftNavAsync(): Promise<void> {
+        if (this._layout != null) {
+            await this._layout.reRenderLeftNavAsync();
+        }
+    }
+
+    /**
      * Calls {@link reloadTopNavAsync} without awaiting.
      */
     public static reloadTopNav(): void {
         // noinspection JSIgnoredPromiseFromCall
         this.reloadTopNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadTopNavAsync} without awaiting.
+     */
+    public static reRenderTopNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reRenderTopNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadLeftNavAsync} without awaiting.
+     */
+    public static reloadLeftNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reloadLeftNavAsync();
+    }
+
+    /**
+     * Calls {@link reloadTopNavAsync} without awaiting.
+     */
+    public static reRenderLeftNav(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.reRenderLeftNavAsync();
     }
 
     /**
@@ -153,8 +196,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout);
+    public static async alertErrorAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Danger, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -163,8 +206,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutErrorAsync(message: string): Promise<void> {
-        await this.alertErrorAsync(message, true, true);
+    public static async flyoutErrorAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertErrorAsync(message, true, true, autoCloseDelay);
     }
 
     /**
@@ -172,8 +215,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout);
+    public static async alertMessageAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Success, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -182,8 +225,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutMessageAsync(message: string): Promise<void> {
-        await this.alertMessageAsync(message, true, true);
+    public static async flyoutMessageAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertMessageAsync(message, true, true, autoCloseDelay);
     }
 
     /**
@@ -191,8 +234,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false): Promise<void> {
-        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout);
+    public static async alertWarningAsync(message: string, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null): Promise<void> {
+        const alert = new AlertModel(message, AlertType.Warning, autoClose, flyout, autoCloseDelay);
         await this.alertAsync(alert);
     }
 
@@ -201,8 +244,8 @@ export default class ch {
      *
      * NOTE: Only one alert can be displayed at the same time. If a previous alert exists, it will be overwritten by the new one.
      */
-    public static async flyoutWarningAsync(message: string): Promise<void> {
-        await this.alertWarningAsync(message, true, true);
+    public static async flyoutWarningAsync(message: string, autoCloseDelay?: number | null): Promise<void> {
+        await this.alertWarningAsync(message, true, true, autoCloseDelay);
     }
 
     /**
@@ -332,17 +375,18 @@ export default class ch {
     public static async setLanguageAsync(language: string): Promise<void> {
         const localizer: ILocalizer | null = ServiceProvider.findLocalizer();
         if ((localizer) && (localizer.setLanguage(language))) {
-            //update context
+            // update context
             if (this._context != null) {
                 this._context.language = language;
             }
 
-            //do not await, just notification event
+            // do not await, just notification event
             // noinspection ES6MissingAwait
             ch.onOnSetLanguageAsync(language);
 
-            //re-render layout
+            // re-render layout
             const layout: ILayoutPage = this.getLayout();
+            
             await layout.reRenderAsync();
         }
     }
@@ -408,6 +452,10 @@ export default class ch {
         return (this._page != null) ? this._page.routeName : "";
     }
 
+    public static findPageRoute(): PageRoute | null {
+        return (this._page != null) ? this._page.route : null;
+    }
+
     public static async swipeLeftAsync(): Promise<void> {
         if (this._layout != null) {
             await this._layout.swipeLeftAsync();
@@ -429,8 +477,11 @@ export default class ch {
         return (!!user);
     }
 
+    /**
+     * Is the current application mobile (located under "/mobile" domain) or PWA application ("display-mode: standalone" or referrer has "android-app://"))
+     */
     public static get mobileApp(): boolean {
-        return (this._context != null) && (this._context.mobileApp);
+        return (this._context != null) && ((this._context.mobileApp) || (this._context.pwaApp));
     }
 
     /**
@@ -457,11 +508,28 @@ export default class ch {
         }
     }
 
-    public static async takePictureAsync(camera: boolean = true): Promise<FileModel | null> {
+    public static print(file: FileModel, target?: string, features?: string, replace?: boolean): void {
+        const objectUrl: string = Utility.toObjectUrl(file);
+        window.open(objectUrl, target, features, replace);
+    }
+
+    public static async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
         if (this._layout != null) {
             return this._layout.takePictureAsync(camera);
         }
         return null;
+    }
+
+    public static callTo(phone: string): void {
+        if (this._layout != null) {
+            return this._layout.callTo(phone);
+        }
+    }
+
+    public static mailTo(email: string): void {
+        if (this._layout != null) {
+            return this._layout.mailTo(email);
+        }
     }
 
     /**
@@ -478,6 +546,14 @@ export default class ch {
      */
     public static getComponentId(): string {
         return Utility.getComponentId();
+    }
+
+    public static get offline(): boolean {
+        return ApiProvider.offline;
+    }
+
+    public static get online(): boolean {
+        return (!this.offline);
     }
 
     public static get debug(): boolean {

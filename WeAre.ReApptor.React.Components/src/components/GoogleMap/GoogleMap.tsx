@@ -1,7 +1,6 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import {MarkerClusterer} from "@googlemaps/markerclusterer";
-import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Comparator from "../../helpers/Comparator";
 import {GeoCoordinate, GeoLocation} from "@weare/reapptor-toolkit";
 import {AddressHelper} from "../../index";
@@ -156,13 +155,7 @@ export default class GoogleMap extends BaseComponent<IGoogleMapProps, IGoogleMap
     }
     
     private get center(): google.maps.LatLngLiteral {
-        const center: google.maps.LatLngLiteral | GeoLocation | GeoCoordinate = this.props.center;
-        if ((center instanceof GeoLocation) || ((center as any).isGeoLocation) ||
-            (center instanceof GeoCoordinate) || ((center as any).isGeoCoordinate)) {
-            const coordinate: GeoCoordinate | null = AddressHelper.getCoordinate(center as GeoLocation) || AthenaeumComponentsConstants.defaultLocation;
-            return {lat: coordinate.lat, lng: coordinate.lon} as google.maps.LatLngLiteral;
-        }
-        return center;
+        return AddressHelper.toGoogleLatLon(this.props.center);
     }
 
     // Methods

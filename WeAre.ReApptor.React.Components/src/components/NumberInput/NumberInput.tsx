@@ -29,7 +29,9 @@ export interface INumberInputProps extends IBaseInputProps<number> {
     hideArrows?: boolean;
     increaseIcon?: string | IIconProps;
     decreaseIcon?: string | IIconProps;
+    hideZero?: boolean;
     onChange?(sender: NumberInput, value: number, userInteraction: boolean, done: boolean): Promise<void>;
+    onFocus?(sender: NumberInput): Promise<void>;
     onBlur?(sender: NumberInput): Promise<void>;
 }
 
@@ -40,6 +42,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
     private _ref: React.RefObject<HTMLInputElement> | null = null;
     private _acceptableStr: string | null = null;
+    private _focused: boolean = false;
 
     private async onChangeAsync(e: React.FormEvent<HTMLInputElement>): Promise<void> {
         const str: string = e.currentTarget.value;
@@ -89,7 +92,7 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
         }
     }
 
-    private async onInputKeyDownHandlerAsync(e: React.KeyboardEvent<any>): Promise<void> {
+    private async onKeyDownAsync(e: React.KeyboardEvent<any>): Promise<void> {
         const enter: boolean = (e.keyCode === 13);
         const esc: boolean = (e.keyCode === 27);
 
@@ -148,9 +151,12 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
     }
 
     private getStr(): string {
-        return (this._acceptableStr !== null)
-            ? this._acceptableStr
-            : this.str;
+        const hideZero: boolean = (this.hideZero) && (!this.focused) && (this.value == 0);
+        return (hideZero)
+            ? ""
+            : (this._acceptableStr !== null)
+                ? this._acceptableStr
+                : this.str;
     }
 
     private get ref(): React.RefObject<HTMLInputElement> {
@@ -162,10 +168,20 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
         return numberFormat.format;
     }
 
+    protected async valueFocusHandlerAsync(): Promise<void> {
+        this._focused = true;
+
+        if (this.props.onFocus) {
+            await this.props.onFocus(this);
+        }
+    }
+
     protected async valueBlurHandlerAsync(): Promise<void> {
+        this._focused = false;
+        
         await this.saveChangesAsync();
 
-        await super.validateAsync();
+        await super.valueBlurHandlerAsync();
 
         if (this.props.onBlur) {
             await this.props.onBlur(this);
@@ -201,6 +217,10 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
         return (this.props.clickToEdit)
             ? NumberInputBehaviour.Restricted
             : this.props.behaviour || NumberInputBehaviour.ValidationOnChange;
+    }
+
+    public get focused(): boolean {
+        return this._focused;
     }
 
     public get value(): number {
@@ -253,6 +273,10 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
 
         return decreaseIconProp;
     }
+    
+    public get hideZero(): boolean {
+        return (this.props.hideZero === true);
+    }
 
     protected get allowFloat(): boolean {
         return (this.step < 1.0);
@@ -298,9 +322,10 @@ export default class NumberInput extends BaseInput<number, INumberInputProps, IN
                        className="form-control"
                        title={this.props.title}
                        placeholder={this.props.placeholder}
-                       onChange={async (e: React.FormEvent<HTMLInputElement>) => await this.onChangeAsync(e)}
-                       onBlur={async () => await this.valueBlurHandlerAsync()}
-                       onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => await this.onInputKeyDownHandlerAsync(e)}
+                       onChange={(e: React.FormEvent<HTMLInputElement>) => this.onChangeAsync(e)}
+                       onFocus={() => this.valueFocusHandlerAsync()}
+                       onBlur={() => this.valueBlurHandlerAsync()}
+                       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.onKeyDownAsync(e)}
                 />
 
                 {

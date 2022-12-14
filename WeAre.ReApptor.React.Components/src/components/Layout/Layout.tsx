@@ -1,10 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import queryString, {ParsedQuery} from "query-string";
 import {FileModel, ILanguage, Utility, ServiceProvider} from "@weare/reapptor-toolkit";
 import {
     AlertModel,
     ApplicationContext,
-    BaseAsyncComponent,
+    BaseAsyncComponent, BasePageDefinitions, CameraType,
     ch,
     IAsyncComponent,
     IBaseAsyncComponentState,
@@ -18,11 +18,12 @@ import {
     SwipeDirection,
     WebApplicationType
 } from "@weare/reapptor-react-common";
-import TopNav, {IMenuItem, IShoppingCart, ITopNavProfile} from "../TopNav/TopNav";
+import TopNav, {IMenuItem, IShoppingCart, ITopNavNotifications, ITopNavProfile} from "../TopNav/TopNav";
 import Footer, {IFooterLink} from "../Footer/Footer";
 import Spinner from "../Spinner/Spinner";
 import CookieConsent, {ICookieConsentProps} from "../CookieConsent/CookieConsent";
 import LeftNav, {ILeftNavProps} from "../LeftNav/LeftNav";
+import TakePicture from "./TakePicture/TakePicture";
 
 import styles from "./Layout.module.scss";
 
@@ -68,6 +69,11 @@ export interface ILayoutProps {
     noFooter?: boolean;
 
     /**
+     * If true, {@link LanguageDropdown} is not displayed.
+     */
+    noLanguageSelector?: boolean;
+
+    /**
      * Should routing functionalities be enabled application-wide.
      *
      * @default false
@@ -82,9 +88,11 @@ export interface ILayoutProps {
 
     searchPlaceHolder?: () => string;
 
-    languages?: () => ILanguage[];
+    languages?: (() => ILanguage[] | boolean) | boolean;
 
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+
+    notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
 
     leftNav?: ILeftNavProps | (() => ILeftNavProps | null) | null;
 
@@ -128,29 +136,16 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     private readonly _topNavRef: React.RefObject<TopNav> = React.createRef();
     private readonly _leftNavRef: React.RefObject<LeftNav> = React.createRef();
     private readonly _downloadLink: React.RefObject<HTMLAnchorElement> = React.createRef();
-    private readonly _imageInputRef: React.RefObject<HTMLInputElement> = React.createRef();
-    private readonly _cameraInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+    private readonly _takePictureRef: React.RefObject<TakePicture> = React.createRef();
+    private readonly _callToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
+    private readonly _emailToAnchorRef: React.RefObject<HTMLAnchorElement> = React.createRef();
 
     private _mobile: boolean = this.mobile;
+    private _tokenProcessing: boolean = false;
     private _touch: React.Touch | null = null;
     private _startTouch: React.Touch | null = null;
     private _swiping: boolean = false;
     private _alert: AlertModel | null = null;
-    private _leftNav: ILeftNavProps | null = null;
-    private _imageInputResolver: ((file: FileModel | null) => void) | null = null;
-
-    private async onImageInputChangeAsync(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-        event.preventDefault();
-
-        if (this._imageInputResolver) {
-            const fileModel: FileModel | null = ((event.target.files) && (event.target.files.length > 0))
-                ? await Utility.transformFileAsync(event.target.files[0])
-                : null;
-
-            this._imageInputResolver(fileModel);
-            this._imageInputResolver = null;
-        }
-    }
     
     private async onTouchStartHandlerAsync(e: React.TouchEvent): Promise<void> {
         this._touch = e.touches[0];
@@ -238,12 +233,28 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
         const pathname: string = window.location.pathname;
 
-        if (!!pathname && pathname !== "/") {
+        if ((!!pathname) && (pathname !== "/")) {
 
             const pageRoute: PageRoute | null = await PageRouteProvider.resolveRoute(pathname);
 
             if (pageRoute) {
                 await PageRouteProvider.redirectAsync(pageRoute)
+            }
+        }
+    }
+
+    private static async processContactUrlAsync(): Promise<void> {
+
+        let hash: string = window.location.hash;
+
+        if (hash) {
+            hash = hash.toLowerCase();
+
+            const contactSupport: boolean = ((hash == "#contact") || (hash == "#support"));
+            if (contactSupport) {
+                await PageRouteProvider.changeUrlWithoutReload();
+                
+                await PageRouteProvider.redirectAsync(BasePageDefinitions.contactSupportRoute, true, true);
             }
         }
     }
@@ -261,14 +272,25 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
 
         if (token) {
-            if (this.props.tokenLogin) {
-                await this.props.tokenLogin(this, token);
-            } else {
-                await this.postAsync("/api/Application/TokenLogin", token);
-            }
+            try {
+                this._tokenProcessing = true;
+                
+                if (this.props.tokenLogin) {
+                    await this.props.tokenLogin(this, token);
+                } else {
+                    await this.postAsync("/api/Application/TokenLogin", token);
+                }
 
-            await PageRouteProvider.changeUrlWithoutReload();
+                await PageRouteProvider.changeUrlWithoutReload();
+                
+            } finally {
+                if (this._tokenProcessing) {
+                    this._tokenProcessing = false;
+                    await this.reRenderAsync();
+                }
+            }
         }
+        
     }
 
     private isMobileApp(): boolean {
@@ -280,12 +302,23 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     private isPwaApp(): boolean {
+        // TODO:
+        // "device-detector-js" can be used to analyze UserAgent to define device type properly!
+        // https://www.npmjs.com/package/device-detector-js
+        // For example:
+        // const deviceDetector = new DeviceDetector();
+        // const device: DeviceDetectorResult = deviceDetector.parse(window.navigator.userAgent);
+        // const deviceType: DeviceType = device.device?.type ?? "";
+        // const isMobileApp: boolean = (deviceType === "smartphone") || (deviceType === "tablet");
+        
         return (
+            // 1) Main check: is device is in standalone mode ("display": "standalone" in manifest.json);
             (window.matchMedia("(display-mode: standalone)").matches) ||
-            //(window.matchMedia('(display-mode: fullscreen)').matches) ||
-            //(window.matchMedia('(display-mode: minimal-ui)').matches) ||
             ((window.navigator as any).standalone) ||
-            (document.referrer.includes("android-app://"))
+            // 2) Android app with PWA application can fill referrer
+            (document.referrer.includes("android-app://")) ||
+            // 3) Exception: samsung devices (some tablets don't process "(display-mode: standalone)" right):
+            (!!navigator.userAgent.match(/SAMSUNG|Samsung|SGH-[I|N|T]|GT-[I|N]|SM-[A|N|P|T|Z]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))
         );
     }
 
@@ -318,7 +351,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public get applicationName(): string {
         return (this.state.data != null) ? this.state.data.applicationName : "";
     }
-
 
     // React.Component
 
@@ -364,6 +396,8 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
 
         await this.processTokenAsync();
+        
+        await Layout.processContactUrlAsync();
 
         if (this.useRouting) {
             await Layout.processUrlRouteAsync();
@@ -408,18 +442,13 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public async setPageAsync(page: IBasePage): Promise<void> {
 
+        this._tokenProcessing = false;
+        
         await this.setState({page: page});
 
         if (this.mobile) {
             this.removeTooltip();
             this.initializeTooltips();
-        }
-    }
-
-    public async reRenderTopNavAsync(): Promise<void> {
-        const topNav: IAsyncComponent | null = TopNav.mountedInstance;
-        if (topNav != null) {
-            await topNav.reRenderAsync();
         }
     }
 
@@ -431,20 +460,26 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         }
     }
 
-    public async reRenderLeftNavAsync(): Promise<void> {
-        if (this._leftNavRef.current != null) {
-            await this._leftNavRef.current.reRenderAsync();
+    public async reRenderTopNavAsync(): Promise<void> {
+        const topNav: IAsyncComponent | null = TopNav.mountedInstance;
+        if (topNav != null) {
+            await topNav.reRenderAsync();
         }
     }
 
     public async reloadLeftNavAsync(): Promise<void> {
-        this._leftNav = null;
         if (this.hasLeftNav) {
             if (this._leftNavRef.current != null) {
                 await this._leftNavRef.current.reloadAsync();
             }
             await this.reRenderAsync();
             await this.reRenderTopNavAsync();
+        }
+    }
+
+    public async reRenderLeftNavAsync(): Promise<void> {
+        if (this._leftNavRef.current != null) {
+            await this._leftNavRef.current.reRenderAsync();
         }
     }
 
@@ -530,28 +565,42 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     }
 
     public download(file: FileModel): void {
-        const link: HTMLAnchorElement = this._downloadLink.current!;
-        link.href = file.src;
-        link.download = file.name;
-        link.target = "_self";
-        link.click();
+        const link: HTMLAnchorElement | null = this._downloadLink.current;
+        if (link) {
+            link.href = file.src;
+            link.download = file.name;
+            link.target = "_self";
+            link.type = file.type;
+            // Fix for Apple PWA iPhone 
+            setTimeout(() => link.click(), 500);
+            //link.click();
+        }
     }
     
-    public takePictureAsync(camera: boolean = true): Promise<FileModel | null> {
-
-        const input: HTMLInputElement | null = (camera)
-            ? this._cameraInputRef.current
-            : this._imageInputRef.current;
+    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
+        return (this._takePictureRef.current)
+            ? this._takePictureRef.current.takePictureAsync(camera)
+            : null;
+    }
+    
+    public callTo(phone: string): void {
+        const anchor: HTMLAnchorElement | null = this._callToAnchorRef.current;
         
-        if (input) {
-            input.click();
-
-            return new Promise((resolve) => {
-                this._imageInputResolver = resolve;
-            });
+        if (anchor) {
+            anchor.href = `tel:${phone}`;
+            anchor.text = phone;
+            anchor.click();
         }
-
-        return new Promise(() => null);
+    }
+    
+    public mailTo(email: string): void {
+        const anchor: HTMLAnchorElement | null = this._callToAnchorRef.current;
+        
+        if (anchor) {
+            anchor.href = `mailto:${email}`;
+            anchor.text = email;
+            anchor.click();
+        }
     }
 
     public get leftNav(): ILeftNavProps | null {
@@ -579,11 +628,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 const profile: ITopNavProfile | null = TopNav.resolveProfile(this.props.profile);
                 leftNav.userProfile = profile?.userProfile;
             }
-
-            this._leftNav = leftNav;
         }
 
-        return this._leftNav;
+        return leftNav;
     }
 
     public get hasTopNav(): boolean {
@@ -596,6 +643,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
 
     public get hasFooter(): boolean {
         return ((this.props.noFooter !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasFooter));
+    }
+
+    public get hasLanguageSelector(): boolean {
+        return ((this.props.noLanguageSelector !== true) && (this.hasData) && (this.state.page != null) && (this.state.page.hasLanguageSelector));
     }
 
     /**
@@ -614,15 +665,17 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     // IReactComponent
 
     public render(): React.ReactNode {
-        
-        const hasTopNav: boolean = (this.hasTopNav);
-        const hasLeftNav: boolean = (this.hasLeftNav);
+
+        const contextVisible: boolean = (!this._tokenProcessing);
+        const hasTopNav: boolean = (contextVisible) && (this.hasTopNav);
+        const hasLeftNav: boolean = (contextVisible) && (this.hasLeftNav);
+        const leftNav: ILeftNavProps | null = (hasLeftNav) ? this.leftNav : null;
         
         return (
             <div className={this.css(styles.layout, this.props.className)}
-                 onTouchStart={async (e: React.TouchEvent) => await this.onTouchStartHandlerAsync(e)}
-                 onTouchEnd={async (e: React.TouchEvent) => await this.onTouchEndHandlerAsync(e)}
-                 onTouchMove={async (e: React.TouchEvent) => await this.onTouchMoveHandlerAsync(e)}>
+                 onTouchStart={(e: React.TouchEvent) => this.onTouchStartHandlerAsync(e)}
+                 onTouchEnd={(e: React.TouchEvent) => this.onTouchEndHandlerAsync(e)}
+                 onTouchMove={(e: React.TouchEvent) => this.onTouchMoveHandlerAsync(e)}>
 
                 {
                     (hasTopNav) &&
@@ -632,8 +685,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                                 applicationName={this.applicationName}
                                 leftNavRef={hasLeftNav ? this._leftNavRef : undefined}
                                 fetchItems={this.props.fetchTopNavItems}
-                                languages={this.props.languages}
+                                languages={this.hasLanguageSelector ? this.props.languages : false}
                                 logo={this.props.topNavLogo}
+                                notifications={this.props.notifications}
                                 fetchShoppingCart={this.props.fetchShoppingCartAsync}
                                 onShoppingCartClick={this.props.onShoppingCartClick}
                                 onSearchClick={this.props.onSearchClick}
@@ -646,27 +700,31 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     )
                 }
 
+                {
+                    (contextVisible) &&
+                    (
+                        <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
 
-                <main className={this.css(styles.main, hasLeftNav && styles.leftNav)}>
+                            {
+                                (leftNav) &&
+                                (
+                                    <LeftNav ref={this._leftNavRef} {...leftNav}
+                                             className={this.css(styles.leftNav, leftNav.className)}
+                                             onToggle={() => this.reRenderTopNavAsync()}
+                                    />
+                                )
+                            }
 
-                    {
-                        (hasLeftNav) &&
-                        (
-                            <LeftNav ref={this._leftNavRef} {...this.leftNav}
-                                     className={this.css(styles.leftNav, this.leftNav?.className)}
-                                     onToggle={() => this.reRenderTopNavAsync()}
-                            />
-                        )
-                    }
+                            {
+                                ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
+                            }
 
-                    {
-                        ((!this.state.error) && (!this.isLoading) && (this.state.page != null)) && (PageRouteProvider.render(this.state.page, this._pageRef))
-                    }
-
-                </main>
+                        </main>
+                    )
+                }
 
                 {
-                    ((this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
+                    ((contextVisible) && (this.hasFooter) && (!this.state.error) && (!this.isLoading)) &&
                     (
                         <Footer version={ch.version}
                                 links={this.props.footerLinks}
@@ -677,14 +735,14 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                 }
 
                 {
-                    ((this.state.error) || (this.state.isSpinning)) &&
+                    ((this.state.error) || (this.state.isSpinning) || (this._tokenProcessing)) &&
                     (
                         <Spinner global />
                     )
                 }
 
                 {
-                    ((!this.isLoading) && (this.props.cookieConsent)) &&
+                    ((contextVisible) && (!this.isLoading) && (this.props.cookieConsent)) &&
                     (
                         <CookieConsent description={this.props.cookieConsent().description}
                                        title={this.props.cookieConsent().title}
@@ -696,28 +754,33 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
                     )
                 }
 
-                <a ref={this._downloadLink}
-                   style={{display: "none"}}
-                />
-                
-                <input ref={this._imageInputRef}
-                       id={`${this.id}_imageInput`}
-                       style={{display: "none"}}
-                       type="file"
-                       accept="image/*"
-                       multiple={false}
-                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                />
+                {
+                    (contextVisible) &&
+                    (
+                        <>
+                            
+                            <TakePicture ref={this._takePictureRef} />
+                            
+                            <a ref={this._downloadLink}
+                               id={`${this.id}_downloadAnchor`}
+                               style={{display: "none"}}
+                            />
+                            
+                            <a ref={this._callToAnchorRef}
+                               id={`${this.id}_callToAnchor`}
+                               style={{display: "none"}}
+                               href={""}
+                            />
 
-                <input ref={this._cameraInputRef}
-                       id={`${this.id}_cameraInput`}
-                       style={{display: "none"}}
-                       type="file"
-                       capture="environment"
-                       accept="image/*"
-                       multiple={false}
-                       onChange={(event: ChangeEvent<HTMLInputElement>) => this.onImageInputChangeAsync(event)}
-                />
+                            <a ref={this._emailToAnchorRef}
+                               id={`${this.id}_emailToAnchor`}
+                               style={{display: "none"}}
+                               href={""}
+                            />
+                            
+                        </>
+                    )
+                }
 
             </div>
         );

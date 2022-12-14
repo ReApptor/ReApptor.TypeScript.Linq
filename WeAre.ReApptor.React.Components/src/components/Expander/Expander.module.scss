@@ -1,0 +1,58 @@
+@import "../../variables";
+
+.expander {
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+    &.expanded {
+        //anchor
+    }
+    
+    &.collapsed {
+        //anchor
+    }
+    
+    &.processing {
+        //anchor
+    }
+
+    .content {
+        height: auto;
+        overflow: hidden;
+        transition-timing-function: ease-in-out;
+        
+        &.vertical {
+            transition-property: max-height;
+        }
+        
+        &.horizontal {
+            transition-property: max-width;
+        }
+        
+        &.processing {
+            display: block;
+            z-index: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin-top: -100%;
+            margin-left: -100%;
+        }
+        
+        &.animation {
+            white-space: nowrap;
+        }
+
+        &.collapsed {
+            &:not(.animation) {
+                display: none;
+            }
+        }
+
+        &.expanded {
+        }
+    }
+
+}

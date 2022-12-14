@@ -19,6 +19,10 @@
 
   thead {
 
+    &.noHeader {
+      visibility: collapse;
+    }
+
     th.th {
       cursor: default;
 
@@ -721,10 +725,15 @@
         }
 
         > i {
-          cursor: pointer;
           padding: 4px;
           font-size: 1rem;
           margin: 0 1px;
+          cursor: pointer;
+
+          &.actionDisabled {
+            cursor: default;
+            opacity: 0.5;
+          }
 
           &:first-child {
             margin-left: 0;
@@ -734,8 +743,8 @@
             margin-right: 0;
           }
 
-          &:hover {
-            box-shadow: 0px 0px 0px 1px #adadad;
+          &:hover:not(.actionDisabled) {
+            box-shadow: 0 0 0 1px #adadad;
             border-radius: 3px;
             background-color: $orange;
             color: white !important;
@@ -744,6 +753,10 @@
 
         .actionRight {
           float: right;
+        }
+
+        .actionDisabled {
+          visibility: visible;
         }
       }
 

@@ -81,9 +81,13 @@ export enum CellPaddingType {
 }
 
 export enum BorderType {
-    Default,
+    DarkSeparators,
+    
+    NoSeparators,
+}
 
-    DarkSeparators
+export interface ITag {
+    tag: object | null;
 }
 
 export interface IGridDefinition {
@@ -91,16 +95,27 @@ export interface IGridDefinition {
 
     className?: string;
 
+    columns: ColumnDefinition[];
+
     /**
      * The class name for inner responsive collapsible columns (it applies only if responsive is enable and there are collapsed columns)
      */
     responsiveRowClassName?: string;
 
-    columns: ColumnDefinition[];
-
     headerMinHeight?: number;
 
     noDataNoHeader?: boolean;
+
+    /**
+     * Hides header (thead)
+     */
+    noHeader?: boolean;
+
+    /**
+     * @description keep table header in view while scrolling. remember to set a minHeight or height to see the effect.
+     * @default false
+     */
+    stickyHeader?: boolean;
 
     minWidth?: string | number;
 
@@ -161,7 +176,7 @@ export interface ITotalRow extends IBaseComponent {
 export interface ICellAction extends IBaseComponent {
 }
 
-export class ColumnModel<TItem = {}> {
+export class ColumnModel<TItem = {}> implements ITag {
 
     private _lastOuterWidth: number = 0;
 
@@ -226,6 +241,8 @@ export class ColumnModel<TItem = {}> {
     public headerCellInstance: IHeaderCell = {} as IHeaderCell;
 
     public collapsed: boolean = false;
+    
+    public tag: object | null = null;
 
     public init?(cell: CellModel<any>): void;
 
@@ -264,9 +281,21 @@ export class ColumnModel<TItem = {}> {
     public get isVisible(): boolean {
         return (this.visible) && (!this.collapsed);
     }
+
+    public get nextColumn(): ColumnModel<TItem> {
+        return (this.index < this.grid.columns.length - 1)
+            ? this.grid.columns[this.index + 1]
+            : this.grid.columns[0];
+    }
+
+    public get prevColumn(): ColumnModel<TItem> {
+        return (this.index > 0)
+            ? this.grid.columns[this.index - 1]
+            : this.grid.columns[this.grid.columns.length - 1];
+    }
 }
 
-export class GridModel<TItem = {}> {
+export class GridModel<TItem = {}> implements ITag {
     public id: string = "";
 
     public className: string | null = null;
@@ -280,6 +309,10 @@ export class GridModel<TItem = {}> {
     public headerMinHeight: number | null = null;
 
     public noDataNoHeader: boolean = false;
+
+    public noHeader: boolean = false;
+
+    public stickyHeader: boolean = false;
 
     public minWidth: string | number | null = null;
 
@@ -330,6 +363,8 @@ export class GridModel<TItem = {}> {
     public totalItemCount: number = 0;
 
     public generation: number = 0;
+    
+    public tag: object | null = null;
 
     public onCheck?(sender: GridModel<any>): Promise<void>;
 
@@ -450,7 +485,7 @@ export class GridModel<TItem = {}> {
     public async reloadComponentsAsync(): Promise<void> {
         const components: IAsyncComponent[] = this.rows.selectMany(row => row.cells.where(cell => (cell.asyncContentInstance != null)).map(cell => cell.asyncContentInstance!));
         if (components) {
-            await Utility.forEachAsync(components, async component => await component.reloadAsync());
+            await Utility.forEachAsync(components, component => component.reloadAsync());
         }
     }
 
@@ -463,7 +498,7 @@ export class GridModel<TItem = {}> {
     public async reRenderInputsAsync(): Promise<void> {
         const inputs: IInput[] = this.rows.selectMany(row => row.cells.where(cell => (cell.inputContentInstance != null)).map(cell => cell.inputContentInstance!));
         if (inputs) {
-            await Utility.forEachAsync(inputs, async input => await input.reRenderAsync());
+            await Utility.forEachAsync(inputs, input => input.reRenderAsync());
         }
     }
 
@@ -638,6 +673,12 @@ export class ColumnSettingsDefinition {
     public descriptionJustify?: Justify;
 
     /**
+     * Custom icon for the description. If no value is specified default icon will be used
+     * See {@link Description}
+     */
+    public descriptionIcon?: string;
+
+    /**
      * Max length for the description text. If no value is specified defaults to 250
      * See {@link Description}
      */
@@ -730,6 +771,8 @@ export class ColumnSettings<TItem = {}> {
     public descriptionMaxLength: number | null = null;
 
     public descriptionJustify: Justify = Justify.Left;
+    
+    public descriptionIcon: string | null = null;
 
     public descriptionAlight: Align = Align.Bottom;
 
@@ -780,11 +823,15 @@ export class ColumnActionDefinition {
 
     public title?: string;
 
+    public className?: string;
+
     public icon?: IIconProps | string;
 
     public type?: ActionType | ColumnActionType;
 
     public right?: boolean;
+
+    public disabled?: boolean;
 
     /*
      * If true - ignores "grid.readonly" prop when hides actions;
@@ -801,7 +848,7 @@ export class ColumnActionDefinition {
 
     public confirm?: string | IConfirmation | GridConfirmationDialogTitleCallback<any>;
 
-    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<any>, action: CellAction<any>, selectedAction?: string, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<any>, action: CellAction<any>): React.ReactNode;
 }
@@ -810,6 +857,8 @@ export class ColumnAction<TItem = {}> {
     public name: string | null = null;
 
     public title: string | null = null;
+
+    public className: string | null = null;
 
     public icon: IIconProps | null = null;
 
@@ -827,7 +876,7 @@ export class ColumnAction<TItem = {}> {
 
     public column: ColumnModel<TItem> = new ColumnModel<TItem>();
 
-    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void>;
+    public callback?(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string | null, data?: string | null): Promise<void>;
 
     public render?(cell: CellModel<TItem>, action: CellAction<TItem>): React.ReactNode;
 }
@@ -837,13 +886,12 @@ export class CellAction<TItem = {}> {
 
     public visible: boolean = true;
 
-    //public enabled: boolean = true;
+    public disabled: boolean = false;
 
     public instance: ICellAction = {} as ICellAction;
 }
 
 export class DescriptionCellAction<TItem = {}> extends CellAction<TItem> {
-
     public readonly: boolean | null = null;
 
     public justify: Justify = Justify.Left;
@@ -1022,7 +1070,7 @@ export class ColumnDefinition {
     public callback?(cell: CellModel<any>, action: CellAction<any> | null): Promise<void>;
 }
 
-export class RowModel<TItem = {}> {
+export class RowModel<TItem = {}> implements ITag {
 
     private _initialKey: string | null = null;
     private _key: string | null = null;
@@ -1068,6 +1116,8 @@ export class RowModel<TItem = {}> {
     public selected: boolean = false;
 
     public responsiveContainerExpanded: boolean = false;
+
+    public tag: object | null = null;
 
     public get model(): TItem {
         return this._model;
@@ -1235,7 +1285,7 @@ export class RowModel<TItem = {}> {
         await this.reRenderAsync();
         //await this.instance.updateStateAsync();
 
-        await Utility.forEachAsync(this.spannedRows, async (row) => await row.reRenderAsync());
+        await Utility.forEachAsync(this.spannedRows, (row) => row.reRenderAsync());
     }
 
     public bind(): boolean {
@@ -1285,14 +1335,14 @@ export class RowModel<TItem = {}> {
 
     public async cancelAsync(): Promise<void> {
         if (this.modified) {
-            await Utility.forEachAsync(this.cells, async (cell) => await cell.cancelAsync());
+            await Utility.forEachAsync(this.cells, (cell) => cell.cancelAsync());
             await this.reRenderAsync();
         }
     }
 
     public async reRenderAsync(withSpannedRows: boolean = false): Promise<void> {
         if (withSpannedRows) {
-            await Utility.forEachAsync(this.spannedRows, async (row) => row.reRenderAsync());
+            await Utility.forEachAsync(this.spannedRows, (row) => row.reRenderAsync());
         }
 
         await this.instance.reRenderAsync();
@@ -1306,12 +1356,14 @@ export class RowModel<TItem = {}> {
     }
 }
 
-export class CellModel<TItem = {}> {
+export class CellModel<TItem = {}> implements ITag {
     private _value: any = null;
     private _initialValue: any = null;
     private _valueInitialized: boolean = false;
     private _rowSpan: number = 0;
+    private _columnSpan: number = 0;
     private _spannedRow: RowModel<TItem> | null = null;
+    private _spannedColumn: ColumnModel<TItem> | null = null;
     private _descriptionAction: DescriptionCellAction<TItem> | null = null;
     private _description: string | null = null;
 
@@ -1350,6 +1402,8 @@ export class CellModel<TItem = {}> {
     public asyncContentInstance: IAsyncComponent | null = null;
 
     public inputContentInstance: IInput | null = null;
+
+    public tag: object | null = null;
 
     public get key(): string {
         return `${this.row.key}_cell_${this.columnIndex}`;
@@ -1395,8 +1449,19 @@ export class CellModel<TItem = {}> {
         return (this.isVisible) && (!this.isDeleted) && ((this.isReadonly) || (this.type == ColumnType.Custom) || (this.type == ColumnType.Icon)) && (this.actions.length == 0);
     }
 
+    /**
+     * The cell input is in the editable mode (input is visible).
+     */
+    public get edit(): boolean {
+        return (this.inputContentInstance != null) && (this.inputContentInstance.edit);
+    }
+
     public get rowSpan(): number {
         return this._rowSpan;
+    }
+
+    public get columnSpan(): number {
+        return this._columnSpan;
     }
 
     public set rowSpan(value: number) {
@@ -1408,8 +1473,9 @@ export class CellModel<TItem = {}> {
                 const rowsLength: number = rows.length;
                 const firstIndex: number = this.rowIndex + 1;
                 const lastIndex: number = firstIndex + ((spanned) ? value : this._rowSpan) - 2;
+                const columnIndex: number = this.columnIndex;
                 for (let index: number = firstIndex; index <= lastIndex && index < rowsLength; index++) {
-                    const cell: CellModel<TItem> = rows[index].cells[this.columnIndex];
+                    const cell: CellModel<TItem> = rows[index].cells[columnIndex];
                     cell._spannedRow = spanned ? this.row : null;
                     if (spanned) {
                         cell.rowSpan = 0;
@@ -1420,8 +1486,36 @@ export class CellModel<TItem = {}> {
         }
     }
 
+    public set columnSpan(value: number) {
+        value = (value === 1) ? 0 : value;
+        if (this._columnSpan !== value) {
+            if ((!this.spanned) && (value >= 0)) {
+                const spanned: boolean = (value > 0);
+                const columns: ColumnModel<TItem>[] = this.grid.columns;
+                const columnsLength: number = columns.length;
+                const firstIndex: number = this.columnIndex + 1;
+                const lastIndex: number = firstIndex + ((spanned) ? value : this._columnSpan) - 2;
+                //const rowIndex: number = this.rowIndex;
+                const row: RowModel<TItem> = this.row;
+                for (let index: number = firstIndex; index <= lastIndex && index < columnsLength; index++) {
+                    //const cell: CellModel<TItem> = columns[index].cells[rowIndex];
+                    const cell: CellModel<TItem> = row.cells[index];
+                    cell._spannedColumn = spanned ? this.column : null;
+                    if (spanned) {
+                        cell.columnSpan = 0;
+                    }
+                }
+            }
+            this._columnSpan = value;
+        }
+    }
+
     public get descriptionAction(): DescriptionCellAction<TItem> | null {
         return this._descriptionAction || (this._descriptionAction = this.actions.find(action => action instanceof DescriptionCellAction) as DescriptionCellAction<TItem> | null);
+    }
+
+    public get descriptionIcon(): string | null {
+        return this.column.settings.descriptionIcon;
     }
 
     public get description(): string {
@@ -1457,11 +1551,15 @@ export class CellModel<TItem = {}> {
     }
 
     public get spanned(): boolean {
-        return (this._spannedRow != null);
+        return (this._spannedRow != null) || (this._spannedColumn != null);
     }
 
     public get spannedRow(): RowModel<TItem> | null {
         return this._spannedRow;
+    }
+
+    public get spannedColumn(): ColumnModel<TItem> | null {
+        return this._spannedColumn;
     }
 
     public get spannedRows(): RowModel<TItem>[] {
@@ -1476,6 +1574,20 @@ export class CellModel<TItem = {}> {
             }
         }
         return spannedRows;
+    }
+
+    public get spannedColumns(): ColumnModel<TItem>[] {
+        const spannedColumns: ColumnModel<TItem>[] = [];
+        if (!this.spanned) {
+            const column: ColumnModel<TItem> = this.column;
+            const rowIndex = this.rowIndex;
+            let spannedColumn: ColumnModel<TItem> | null = column;
+            while ((spannedColumn != null) && ((spannedColumn === column) || (spannedColumn.cells[rowIndex].spannedColumn === column))) {
+                spannedColumns.push(spannedColumn);
+                spannedColumn = (!spannedColumn.isLast) ? spannedColumn.nextColumn : null;
+            }
+        }
+        return spannedColumns;
     }
 
     public get value(): any {
@@ -1703,18 +1815,27 @@ export class CellModel<TItem = {}> {
         return modified;
     }
 
-    public bind(): boolean {
+    public bindDescription(): boolean {
+        // bind description
+        const description: string = this.description;
+        this._description = null;
+        const newDescription: string = this.description;
+        return (description != newDescription);
+    }
+
+    public bind(): boolean {        
         if (this.accessor) {
             const value: any = (typeof this.accessor === "string")
                 ? Utility.findValueByAccessor(this.model, this.accessor)
                 : this.accessor(this.model);
             this.setValue(value);
             if (this.modified) {
+                this._description = null;
                 this.save();
                 return true;
             }
         }
-        return false;
+        return this.bindDescription();
     }
 
     public async bindAsync(forceRender: boolean = true): Promise<void> {
@@ -1795,6 +1916,8 @@ export class GridTransformer {
         to.responsiveRowClassName = from.responsiveRowClassName || null;
         to.headerMinHeight = from.headerMinHeight || null;
         to.noDataNoHeader = from.noDataNoHeader || false;
+        to.noHeader = from.noHeader || false;
+        to.stickyHeader = from.stickyHeader || false;
         to.minWidth = from.minWidth || null;
         to.cellPadding = from.cellPadding || CellPaddingType.Large;
         to.noDataText = from.noDataText || null;
@@ -1903,10 +2026,10 @@ export class GridTransformer {
         to.editable = column.editable;
         to.accessor = column.accessor;
         to.actions = column.actions.map((columnAction) => this.toCellAction<TItem>(columnAction));
+        to.title = column.title;
         if (column.settings.descriptionAccessor) {
             to.actions.push(this.toDescriptionCellAction(column));
         }
-        to.title = column.title;
         return to;
     }
 
@@ -1926,6 +2049,7 @@ export class GridTransformer {
         to.infoFormat = from.infoFormat || null;
         to.descriptionAccessor = from.descriptionAccessor || null;
         to.descriptionJustify = from.descriptionJustify || Justify.Left;
+        to.descriptionIcon = from.descriptionIcon || null;
         to.descriptionMaxLength = from.descriptionMaxLength || null;
         to.descriptionAlight = from.descriptionAlight || Align.Bottom;
         to.descriptionCallback = from.descriptionCallback;
@@ -1953,6 +2077,7 @@ export class GridTransformer {
         const to = new ColumnAction<TItem>();
         to.column = column;
         to.title = from.title || null;
+        to.className = from.className || null;
         to.toggleModal = from.toggleModal || null;
         to.confirm = from.confirm || null;
         to.callback = from.callback;

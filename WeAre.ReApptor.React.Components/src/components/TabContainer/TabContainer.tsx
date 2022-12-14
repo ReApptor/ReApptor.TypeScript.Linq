@@ -87,6 +87,14 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
         return model;
     }
 
+    public activateTabAsync(tabOrIndexOrId: TabModel | number | string): Promise<void> {
+        return this.model.activateTabAsync(tabOrIndexOrId);
+    }
+
+    public async closeTabAsync(tabOrIndexOrId: TabModel | number | string, confirmed: boolean, data: string): Promise<void> {
+        return this.model.closeTabAsync(tabOrIndexOrId, confirmed, data);
+    }
+
     private get tabContainerStyleType(): TabContainerHeaderStyleType {
         return this.props.headerStyleType ?? TabContainerHeaderStyleType.Default;
     }
@@ -99,7 +107,7 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
         return classNamesCopy;
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
 
         const model: TabContainerModel = this.model;
         model.instance = this;
@@ -117,7 +125,12 @@ export default class TabContainer extends BaseComponent<ITabContainerProps, ITab
                             {
                                 model.tabs.map((tab: TabModel) =>
                                     (
-                                        <TabHeader id={"tab_" + tab.id} model={tab} key={"tab_header_" + tab.id} classNames={this.classNames} headerStyleType={this.tabContainerStyleType} />
+                                        <TabHeader id={"tab_" + tab.id}
+                                                   model={tab}
+                                                   key={"tab_header_" + tab.id}
+                                                   classNames={this.classNames}
+                                                   headerStyleType={this.tabContainerStyleType}
+                                        />
                                     )
                                 )
                             }

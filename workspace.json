@@ -252,6 +252,90 @@
           }
         }
       }
+    },
+    "ReApptor.TypeScript.Linq": {
+      "root": "ReApptor.TypeScript.Linq",
+      "sourceRoot": "ReApptor.TypeScript.Linq/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "ReApptor.TypeScript.Linq/dist",
+            "tsConfig": "ReApptor.TypeScript.Linq/tsconfig.lib.json",
+            "project": "ReApptor.TypeScript.Linq/package.json",
+            "entryFile": "ReApptor.TypeScript.Linq/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "ReApptor.TypeScript.Linq/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "ReApptor.TypeScript.Linq/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/ReApptor.TypeScript.Linq"],
+          "options": {
+            "jestConfig": "ReApptor.TypeScript.Linq/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ReApptor.TypeScript.PagedList": {
+      "root": "ReApptor.TypeScript.PagedList",
+      "sourceRoot": "ReApptor.TypeScript.PagedList/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "ReApptor.TypeScript.PagedList/dist",
+            "tsConfig": "ReApptor.TypeScript.PagedList/tsconfig.lib.json",
+            "project": "ReApptor.TypeScript.PagedList/package.json",
+            "entryFile": "ReApptor.TypeScript.PagedList/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "./extra-rollup",
+            "assets": [
+              {
+                "glob": "ReApptor.TypeScript.PagedList/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "ReApptor.TypeScript.PagedList/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/ReApptor.TypeScript.PagedList"],
+          "options": {
+            "jestConfig": "ReApptor.TypeScript.PagedList/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

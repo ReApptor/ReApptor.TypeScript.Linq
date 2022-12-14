@@ -1,4 +1,4 @@
-import React from "react";
+import React, {SyntheticEvent} from "react";
 import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
 import {BaseComponent} from "@weare/reapptor-react-common";
 import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
@@ -48,14 +48,15 @@ export interface IIconProps {
     style?: IconStyle | null;
     size?: IconSize | null;
     className?: string;
-    dataTarget?: string;
-    dataModal?: string;
+    dataTarget?: string | null;
+    dataModal?: string | null;
     toggleModal?: boolean;
     dismissModal?: boolean;
     customStyle?: React.CSSProperties;
     disabled?: boolean;
-    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback;
-    onClick?(sender: Icon): Promise<void>;
+    stopPropagation?: boolean;
+    confirm?: string | IConfirmation | ConfirmationDialogTitleCallback | null;
+    onClick?(sender: Icon, data: string | null): Promise<void>;
 }
 
 interface IIconState {
@@ -215,7 +216,6 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
 
         try {
             await actionProps.onClick();
-
         } finally {
             this._actionProps = null;
             this._actionLoading = false;
@@ -287,8 +287,12 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         return this.hasActions && this.state.isOpen;
     }
 
-    private async onClickAsync(confirmed: boolean): Promise<void> {
+    private async onClickAsync(confirmed: boolean, data: string | null = null, e: SyntheticEvent | null = null): Promise<void> {
 
+        if ((e != null) && (this.props.stopPropagation === true)) {
+            e.stopPropagation();
+        }
+        
         if (this.hasActions) {
             return await this.toggleActions();
         }
@@ -298,7 +302,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
             await this._confirmDialogRef.current!.openAsync();
         } else  {
             if (this.props.onClick) {
-                await this.props.onClick(this);
+                await this.props.onClick(this, data);
             }
         }
     }
@@ -354,7 +358,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                    data-toggle={this.dataToggleModal}
                    data-dismiss={this.dataDismissModal}
                    data-modal={this.dataModal}
-                   onClick={async () => await this.onClickAsync(false)}
+                   onClick={(e: SyntheticEvent) => this.onClickAsync(false, null, e)}
                 >
                     {
                         (this.children.length > 0) &&
@@ -370,7 +374,7 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
                     (
                         <ConfirmationDialog ref={this._confirmDialogRef}
                                             title={this.props.confirm}
-                                            callback={() => this.onClickAsync(true)}
+                                            callback={(caller, data) => this.onClickAsync(true, data)}
                         />
                     )
                 }

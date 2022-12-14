@@ -6,6 +6,7 @@ import BaseWidget, { IBaseWidgetProps } from "./BaseWidget";
 import styles from "./WidgetContainer.module.scss";
 
 export interface IBaseExpandableWidgetProps extends IBaseWidgetProps {
+    noAutoCollapse?: boolean;
 }
 
 export default abstract class BaseExpandableWidget<TProps extends IBaseExpandableWidgetProps = {}, TWidgetData = {}> extends BaseWidget<TProps, TWidgetData> implements IGlobalClick {
@@ -42,6 +43,10 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
         return this._contentVisible;
     }
 
+    public get noAutoCollapse(): boolean {
+        return (this.props.noAutoCollapse == true);
+    }
+
     public isAsync(): boolean {
         return false;
     }
@@ -50,7 +55,7 @@ export default abstract class BaseExpandableWidget<TProps extends IBaseExpandabl
         if (!this.isSpinning()) {
             const target = e.target as Node;
             const outside = Utility.clickedOutside(target, this.id);
-            if (outside) {
+            if ((outside) && (!this.noAutoCollapse)) {
                 await this.hideContentAsync();
             }
         }

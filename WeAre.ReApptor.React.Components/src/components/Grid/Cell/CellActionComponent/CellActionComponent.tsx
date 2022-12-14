@@ -16,13 +16,14 @@ interface ICellActionComponentState<TItem> {
 
 export default class CellActionComponent<TItem = {}> extends BaseComponent<ICellActionComponentProps<TItem>, ICellActionComponentState<TItem>> implements ICellAction {
 
-    state: ICellActionComponentState<TItem> = {};
+    state: ICellActionComponentState<TItem> = {
+    };
 
-    private async invokeActionCallbackAsync(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string): Promise<void> {
+    private async invokeActionCallbackAsync(cell: CellModel<TItem>, action: CellAction<TItem>, selectedAction?: string | null, data?: string | null): Promise<void> {
         if (this.descriptionCellAction) {
             await this.toggleDescriptionAsync(cell, action as DescriptionCellAction<TItem>);
-        } else if (action.action.callback) {
-            await action.action.callback(cell, action, selectedAction);
+        } else if ((action.action.callback) && (!action.disabled)) {
+            await action.action.callback(cell, action, selectedAction, data);
         }
     }
 
@@ -115,9 +116,11 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
         const isDescription: boolean = (this.descriptionCellAction != null);
         const alwaysAvailable: boolean = (isDescription) || (action.alwaysAvailable);
         const visible: boolean = (cellAction.visible) && ((alwaysAvailable) || (!cell.grid.readonly));
+        const disabled: boolean = (cellAction.disabled);
 
         const actionColorClassName: string = this.getActionColor(action.type);
         const rightStyle: any = (action.right) && gridStyles.actionRight;
+        const disabledStyle: any = (disabled) && gridStyles.actionDisabled;
 
         const hasToggleModal: boolean = (action.toggleModal != null);
         let dataModal: string | undefined = undefined;
@@ -144,7 +147,11 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
 
         if (isDescription) {
             icon = {
-                name: (cell.description) ? "far comment-alt-dots" : "far comment-alt"
+                name: (cell.descriptionIcon)
+                    ? cell.descriptionIcon
+                    : (cell.description)
+                        ? "far comment-alt-dots"
+                        : "far comment-alt"
             };
         }
 
@@ -170,75 +177,78 @@ export default class CellActionComponent<TItem = {}> extends BaseComponent<ICell
                                 (icon)
                                     ?
                                     (
-
-                                        action.actions ? (
-                                                <Icon id={this.id}
-                                                      {...icon!}
-                                                      tooltip={action.title || undefined}
-                                                      className={this.css(actionColorClassName, rightStyle)}
-                                                      onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
-                                                      dataTarget={action.toggleModal || undefined}
-                                                      dataModal={dataModal}
-                                                      toggleModal={!!action.toggleModal}
-                                                      confirm={confirm || undefined}
-                                                >
-                                                    {action.actions.map((value, index: number) => {
-                                                        return (
-                                                            <Icon.Action key={index} title={value} onClick={async () => this.invokeActionCallbackAsync(cell, cellAction, value)}/>
-                                                        )
-
-                                                    })}
-                                                </Icon>
-                                            ) :
+                                        action.actions
+                                            ? 
                                             (
                                                 <Icon id={this.id}
                                                       {...icon!}
-                                                      tooltip={action.title || undefined}
-                                                      className={this.css(actionColorClassName, rightStyle)}
-                                                      onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
-                                                      dataTarget={action.toggleModal || undefined}
+                                                      tooltip={action.title}
+                                                      className={this.css(actionColorClassName, rightStyle, disabledStyle, action.className)}
+                                                      dataTarget={action.toggleModal}
                                                       dataModal={dataModal}
                                                       toggleModal={!!action.toggleModal}
-                                                      confirm={confirm || undefined}
+                                                      confirm={confirm}
+                                                      onClick={(sender, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
+                                                >
+                                                    {action.actions.map((value, index: number) => {
+                                                        return (
+                                                            <Icon.Action key={index} title={value} onClick={() => this.invokeActionCallbackAsync(cell, cellAction, value)} />
+                                                        )
+                                                    })}
+                                                </Icon>
+                                            )
+                                            :
+                                            (
+                                                <Icon id={this.id}
+                                                      {...icon!}
+                                                      tooltip={action.title}
+                                                      className={this.css(actionColorClassName, rightStyle, disabledStyle, action.className)}
+                                                      dataTarget={action.toggleModal}
+                                                      dataModal={dataModal}
+                                                      toggleModal={!!action.toggleModal}
+                                                      confirm={confirm}
+                                                      onClick={(sender, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 />
                                             )
-
-
                                     )
                                     :
                                     (
-                                        action.actions ?
+                                        action.actions
+                                            ?
                                             (
                                                 <Button id={this.id}
                                                         label={action.title!}
-                                                        className={this.css(actionColorClassName, rightStyle)}
-                                                        onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
-                                                        dataTarget={action.toggleModal || undefined}
+                                                        className={this.css(actionColorClassName, rightStyle, disabledStyle, action.className)}
+                                                        dataTarget={action.toggleModal}
                                                         dataModal={dataModal}
                                                         toggleModal={!!action.toggleModal}
-                                                        confirm={confirm || undefined}
+                                                        disabled={disabled}
+                                                        confirm={confirm}
+                                                        onClick={(sender: Button, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 >
                                                     {action.actions.map((value, index: number) => {
 
                                                         return (
-                                                            <Button.Action key={index} title={value} onClick={async () => this.invokeActionCallbackAsync(cell, cellAction, value)}/>
+                                                            <Button.Action key={index} title={value} onClick={() => this.invokeActionCallbackAsync(cell, cellAction, value)} />
                                                         )
 
                                                     })}
 
                                                 </Button>
-                                            ) : (
+                                            ) 
+                                            : 
+                                            (
                                                 <Button id={this.id}
                                                         label={action.title!}
-                                                        className={this.css(actionColorClassName, rightStyle)}
-                                                        onClick={async () => this.invokeActionCallbackAsync(cell, cellAction)}
-                                                        dataTarget={action.toggleModal || undefined}
+                                                        className={this.css(actionColorClassName, rightStyle, disabledStyle, action.className)}
+                                                        dataTarget={action.toggleModal}
                                                         dataModal={dataModal}
                                                         toggleModal={!!action.toggleModal}
-                                                        confirm={confirm || undefined}
+                                                        disabled={disabled}
+                                                        confirm={confirm}
+                                                        onClick={(sender: Button, data: string | null) => this.invokeActionCallbackAsync(cell, cellAction, null, data)}
                                                 />
                                             )
-
                                     )
                             }
                         </React.Fragment>
