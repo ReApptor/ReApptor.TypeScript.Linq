@@ -1,25 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
+import {BaseComponent, ConfirmationDialogTitleCallback, IBaseComponentProps, IConfirmation, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
 import Button, { ButtonType } from "../Button/Button";
 import TextAreaInput from "../TextAreaInput/TextAreaInput";
 import ConfirmationDialogLocalizer from "./ConfirmationDialogLocalizer";
 
 import styles from "./ConfirmationDialog.module.scss";
 
-export type ConfirmationDialogTitleCallback = () => string | IConfirmation;
-
-export interface IConfirmation {
-    title: string;
-    placeholder?: string;
-    minLength?: number;
-    comment?: boolean;
-    className?: string;
-}
-
-interface IConfirmationDialogProps {
-    id?: string;
+interface IConfirmationDialogProps extends IBaseComponentProps {
     minLength?: number;
     title?: string | IConfirmation | ConfirmationDialogTitleCallback;
     confirmButtonLabel?: string;
@@ -223,7 +212,7 @@ export default class ConfirmationDialog extends BaseComponent<IConfirmationDialo
         const processingStyle: any = (this.processing) && styles.processing;
 
         return (
-            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle, this.model.className)}>
+            <div id={this.id} className={this.css(styles.confirmDialog, openedStyle, processingStyle, this.props.className, this.model.className)}>
 
                 <div className={styles.dialogOverlay} />
 

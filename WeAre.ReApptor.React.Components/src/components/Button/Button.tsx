@@ -1,9 +1,9 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility, JQueryNode} from "@weare/reapptor-react-common";
+import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility, JQueryNode, ConfirmationDialogTitleCallback, IConfirmation} from "@weare/reapptor-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ButtonAction, {IButtonActionProps} from "./ButtonAction/ButtonAction";
-import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 import ButtonLocalizer from "./ButtonLocalizer";
 
 import styles from "./Button.module.scss";

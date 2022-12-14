@@ -8,9 +8,12 @@ export {default as GeoLocation} from "./models/GeoLocation";
 export * from "./models/TimeSpan";
 export {default as TimeSpan} from "./models/TimeSpan";
 export * from "./models/IPagedList";
-export {default as IPagedList} from "./models/IPagedList";
+
+// Interfaces:
+export * from "./models/IPagedList";
+export type {default as IPagedList} from "./models/IPagedList";
 export * from "./models/ISelectListItem";
-export {default as ISelectListItem} from "./models/ISelectListItem";
+export type {default as ISelectListItem} from "./models/ISelectListItem";
 
 // Utilities:
 export * from "./ArrayUtility";
