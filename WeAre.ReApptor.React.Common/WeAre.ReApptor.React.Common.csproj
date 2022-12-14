@@ -74,7 +74,6 @@
       <None Remove="package-lock.json" />
       <None Remove="dist\**" />
       <None Remove=".eslintrc.json" />
-      <None Remove=".babelrc" />
       <None Remove="temp\**" />
       <None Remove="etc\**" />
       <None Remove="tsdoc-metadata.json" />
