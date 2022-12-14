@@ -52,7 +52,6 @@
       <TypeScriptCompile Include="src\tests\ReactUtility.toMarks.spec.ts" />
       <TypeScriptCompile Include="src\tests\ReactUtility.toMultilines.spec.ts" />
       <TypeScriptCompile Include="src\tests\ReactUtility.toTags.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
       <TypeScriptCompile Include="src\tests\System.spec.ts" />
     </ItemGroup>
 

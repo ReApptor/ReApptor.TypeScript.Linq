@@ -101,7 +101,6 @@
       <None Remove="coverage\**" />
       <None Remove="package-lock.json" />
       <None Remove="dist\**" />
-      <None Remove=".babelrc" />
       <None Remove=".eslintrc.json" />
       <None Remove="etc\**" />
       <None Remove="temp\**" />
