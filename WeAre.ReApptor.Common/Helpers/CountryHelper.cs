@@ -8,6 +8,11 @@ namespace WeAre.ReApptor.Common.Helpers
 {
     public static class CountryHelper
     {
+        /// <summary>
+        /// "XZ" (Internation waters county code: ISO 3166-1 alpha-2.)
+        /// </summary>
+        public const string InternationalWatersCode = "XZ";
+        
         public static readonly CountryInfo[] Countries =
         {
             //Cultures:
@@ -25,11 +30,18 @@ namespace WeAre.ReApptor.Common.Helpers
             new CountryInfo("pl", "Polska", "Poland", "pl-pl", new[] { "Europe/Warsaw", "Central European Standard Time" }),
             new CountryInfo("ru", "Россия", "Russia", "ru-ru", new[] { "Europe/Moscow", "Russian Standard Time", "Moscow Standard Time" }),
             new CountryInfo("ua", "Україна", "Ukraine", "uk-ua", new[] { "Europe/Kiev", "Eastern European Time" }, "uk"),
-            new CountryInfo("gb", "United Kingdom", "United Kingdom", "en-GB", new[] { "Europe/London", "GMT Standard Time" }, "en"),
-            new CountryInfo("us", "United States", "United States", "en-US", new[] { "America/Los_Angeles", "Pacific Standard Time" }),
+            new CountryInfo("de", "Deutschland", "Germany", "de-de", new[] { "Europe/Berlin", "Central European Time" }),
+            new CountryInfo("fr", "France", "France", "fr-fr", new[] { "Europe/Paris", "Central European Time" }),
+            new CountryInfo("gb", "United Kingdom", "United Kingdom", "en-gb", new[] { "Europe/London", "GMT Standard Time" }, "en"),
+            new CountryInfo("us", "United States", "United States", "en-us", new[] { "America/Los_Angeles", "Pacific Standard Time" }),
         };
 
         public static readonly CountryInfo DefaultCountry = Countries[0];
+
+        public static bool IsInternationalWaters(this string country)
+        {
+            return (!string.IsNullOrWhiteSpace(country) && country.Equals(InternationalWatersCode, StringComparison.InvariantCultureIgnoreCase));
+        }
 
         public static CountryInfo FindCountryInfo(this string country)
         {
@@ -64,16 +76,21 @@ namespace WeAre.ReApptor.Common.Helpers
             return countryInfo?.Code ?? country;
         }
 
-        public static string GetCountryName(this string country)
+        public static string GetCountryName(this string country, bool excludeInternationalWaters = true)
         {
+            if ((excludeInternationalWaters) && (country.IsInternationalWaters()))
+            {
+                return "";
+            }
+
             CountryInfo countryInfo = country.FindCountryInfo();
 
             return countryInfo?.Name ?? country;
         }
 
-        public static string GetCountryName(this CultureInfo culture)
+        public static string GetCountryName(this CultureInfo culture, bool excludeInternationalWaters = true)
         {
-            return GetCountryName(culture?.TwoLetterISOLanguageName);
+            return GetCountryName(culture?.TwoLetterISOLanguageName, excludeInternationalWaters);
         }
 
         public static TimeZoneInfo GetDefaultCountyTimeZone(this string country)

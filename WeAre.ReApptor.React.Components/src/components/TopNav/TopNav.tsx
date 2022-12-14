@@ -1,6 +1,6 @@
 import React from "react";
 import {BaseAsyncComponent, ch, IBaseAsyncComponentState, IBasePage, IGlobalClick, IManualProps, PageRoute, PageRouteProvider} from "@weare/reapptor-react-common";
-import Link from "../Link/Link";
+import Link, {TLinkRoute} from "../Link/Link";
 import Hamburger from "./Hamburger/Hamburger";
 import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -8,6 +8,7 @@ import Search from "./Search/Search";
 import {ILanguage, FileModel} from "@weare/reapptor-toolkit";
 import LeftNav from "../LeftNav/LeftNav";
 import Profile from "./Profile/Profile";
+import Comparator from "../../helpers/Comparator";
 import TopNavLocalizer from "./TopNavLocalizer";
 
 import styles from "./TopNav.module.scss";
@@ -20,7 +21,13 @@ export interface IMenuItem {
     icon?: IIconProps | string | null;
     className?: string;
     bottom?: boolean;
+    /**
+     * The number is displayed in the upper right corner.
+     */
     count?: number | (() => number | null);
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
     countClassName?: string;
     items?: IMenuItem[];
     visible?: boolean | (() => boolean);
@@ -49,6 +56,27 @@ export interface IShoppingCart {
     productsCount: number;
 }
 
+export interface ITopNavNotifications {
+    /**
+     * Custom styles (class name).
+     */
+    className?: string;
+    
+    /**
+     * The number is displayed in the upper right corner.
+     */
+    count?: number | (() => number | null);
+    
+    /**
+     * Custom styles (class name) for the "count" property.
+     */
+    countClassName?: string;
+
+    visible?: boolean | (() => boolean);
+    
+    onClick?(sender: TopNav): Promise<void>;
+}
+
 interface ITopNavProps {
     className?: string | (() => string | null | undefined);
     languageClassName?: string;
@@ -57,13 +85,15 @@ interface ITopNavProps {
     logoText?: string;
     applicationName?: string;
     searchPlaceHolder?: () => string;
-    languages?: () => ILanguage[];
+    languages?: (() => ILanguage[] | boolean) | boolean;
     profile?: ITopNavProfile | (() => ITopNavProfile | null) | null;
+    notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null;
     leftNavRef?: React.RefObject<LeftNav>;
 
     fetchShoppingCart?(sender: TopNav): Promise<IShoppingCart>;
     fetchItems?(sender: TopNav): Promise<IMenuItem[]>;
     onShoppingCartClick?(sender: TopNav): Promise<void>;
+    onNotificationsClick?(sender: TopNav): Promise<void>;
     onSearchClick?(searchTerm: string): Promise<void>;
     onLogoClick?(sender: TopNav): Promise<void>;
     onLeftNavToggle?(sender: TopNav): Promise<void>;
@@ -105,6 +135,15 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
     private async onShoppingCartClickAsync(): Promise<void> {
         if (this.props.onShoppingCartClick) {
             await this.props.onShoppingCartClick(this);
+        }
+    }
+
+    private async onNotificationsClickAsync(notifications: ITopNavNotifications): Promise<void> {
+        if (notifications.onClick) {
+            await notifications.onClick(this);
+        }
+        if (this.props.onNotificationsClick) {
+            await this.props.onNotificationsClick(this);
         }
     }
 
@@ -172,12 +211,18 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
         return "";
     }
 
-    private get languages(): ILanguage[] {
-        if (this.props.languages) {
-            return this.props.languages();
-        }
+    private get languages(): ILanguage[] | null {
+        const languages: ILanguage[] | boolean | null = (this.props.languages != null)
+            ? (typeof this.props.languages === "function")
+                ? this.props.languages()
+                : this.props.languages
+            : null;
 
-        return TopNavLocalizer.supportedLanguages;
+        return ((languages == null) || (languages === true))
+            ? TopNavLocalizer.supportedLanguages
+            : (languages !== false)
+                ? languages
+                : null;
     }
 
     private get leftNav(): LeftNav | null {
@@ -203,6 +248,42 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                 : profile
             : null
     }
+    
+    public static resolveNotifications(notifications?: ITopNavNotifications | (() => ITopNavNotifications | null) | number | (() => number | null) | null): ITopNavNotifications | null {
+        if (notifications != null) {
+            if (typeof notifications === "function") {
+                const data: ITopNavNotifications | number | null = notifications();
+                if (data != null) {
+                    if (typeof data === "number") {
+                        return {
+                            count: data
+                        } as ITopNavNotifications;
+                    } else {
+                        return data;
+                    }
+                }
+            } else if (typeof notifications === "number") {
+                return {
+                    count: notifications
+                } as ITopNavNotifications;
+            } else {
+                return notifications;
+            }
+        }
+        return null;
+    }
+    
+    public static isNotificationsVisible(notifications: ITopNavNotifications): boolean {
+        return ((notifications.visible == null) || (notifications.visible == true) || ((typeof notifications.visible === "function") && (notifications.visible())));
+    }
+    
+    public static getNotificationsCount(notifications: ITopNavNotifications): number {
+        return (notifications.count != null)
+            ? (typeof notifications.count === "function")
+                ? notifications.count() ?? 0
+                : notifications.count
+            : 0;
+    }
 
     public get profile(): ITopNavProfile | null {
         return this._profile ?? (this._profile = TopNav.resolveProfile(this.props.profile));
@@ -214,11 +295,34 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
             ? page.getManualProps()
             : {};
     }
+    
+    public renderMenuItem(item: IMenuItem, index: number): React.ReactNode {
+        const linkRoute: TLinkRoute | null = Link.toRoute(item);
+        const pageRoute: PageRoute | null = (typeof linkRoute === "object") ? linkRoute as PageRoute | null : null;
+        const active: boolean = (pageRoute != null) && (Comparator.isEqualPageRoute(pageRoute, ch.findPageRoute()));
+        const activeStyle: any = active && styles.active;
+        return (
+            <Link key={index} className={this.css(styles.link, activeStyle)} route={linkRoute}>
+                {TopNavLocalizer.get(item.label)}
+            </Link>
+        );
+    }
 
     public render(): React.ReactNode {
 
         const leftNav: LeftNav | null = this.leftNav;
         const hasLeftNav: boolean = (leftNav != null);
+        
+        const languages: ILanguage[] | null = this.languages;
+        
+        const manual: IManualProps = this.manual;
+        const hasManual: boolean = ((!!manual.manual) || (!!manual.render) || (!!manual.onClick));
+
+        const notifications: ITopNavNotifications | null = TopNav.resolveNotifications(this.props.notifications);
+        const notificationsVisible: boolean = (notifications != null) && (TopNav.isNotificationsVisible(notifications));
+        const notificationsCount: number = ((notifications != null) && (notificationsVisible != null)) ? TopNav.getNotificationsCount(notifications) : 0;
+        
+        const shoppingCart: IShoppingCart | null = this.shoppingCart;
 
         return (
             <nav className={this.css(styles.navigation, this.props.className)}>
@@ -246,8 +350,8 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             (this.props.logo) &&
                             (
                                 <img src={this.props.logo}
-                                     alt={this.props.logoText || "renta"}
-                                     onClick={async () => await this.onLogoClick()}
+                                     alt={this.props.logoText || "Logo"}
+                                     onClick={() => this.onLogoClick()}
                                 />
                             )
                         }
@@ -258,13 +362,7 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                         {
                             (!hasLeftNav) &&
                             (
-                                this.items.map((item, index) =>
-                                    (
-                                        <Link key={index} className={this.css(styles.middle_link)} route={Link.toRoute(item)}>
-                                            {TopNavLocalizer.get(item.label)}
-                                        </Link>
-                                    )
-                                )
+                                this.items.map((item, index) => this.renderMenuItem(item, index))
                             )
                         }
                     </div>
@@ -272,21 +370,21 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                     <div className={styles.right}>
 
                         {
-                            ((this.manual.manual) || (this.manual.onClick)) &&
+                            (hasManual) &&
                             (
-                                <Icon name={this.manual.icon || "question-circle"}
+                                <Icon name={manual.icon || "question-circle"}
                                       className={this.css(styles.right_infoIcon, this.desktop && styles.hover)}
                                       style={IconStyle.Regular}
                                       size={IconSize.X2}
-                                      toggleModal={!this.manual.onClick}
+                                      toggleModal={!manual.onClick}
                                       dataTarget="page-help-info"
-                                      onClick={this.manual.onClick}
+                                      onClick={manual.onClick}
                                 />
                             )
                         }
 
                         {
-                            (this.shoppingCart) &&
+                            (shoppingCart) &&
                             (
                                 <>
 
@@ -297,9 +395,9 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                                     />
 
                                     {
-                                        (this.shoppingCart.productsCount > 0) &&
+                                        (shoppingCart.productsCount > 0) &&
                                         (
-                                            <span className={styles.right_shoppingCartCount}>{this.shoppingCart.productsCount}</span>
+                                            <span className={styles.right_shoppingCartCount}>{shoppingCart.productsCount}</span>
                                         )
                                     }
 
@@ -313,6 +411,28 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                                 <Search searchPlaceHolder={this.searchPlaceHolder}
                                         onSearch={searchTerm => this.props.onSearchClick!(searchTerm)}
                                 />
+                            )
+                        }
+
+                        {
+                            ((notifications != null) && (notificationsVisible)) &&
+                            (
+                                <>
+
+                                    <Icon name={"fal fa-bell"}
+                                          size={IconSize.X2}
+                                          className={this.css(styles.right_notifications, notifications.className)}
+                                          onClick={() => this.onNotificationsClickAsync(notifications)}
+                                    />
+
+                                    {
+                                        (notificationsCount > 0) &&
+                                        (
+                                            <span className={this.css(styles.right_notificationsCount, notifications.countClassName)}>{notificationsCount}</span>
+                                        )
+                                    }
+
+                                </>
                             )
                         }
 
@@ -334,11 +454,16 @@ export default class TopNav extends BaseAsyncComponent<ITopNavProps, ITopNavStat
                             )
                         }
 
-                        <LanguageDropdown className={this.props.languageClassName}
-                                          languages={this.languages}
-                                          currentLanguage={TopNavLocalizer.language}
-                                          changeLanguageCallback={async (language) => await this.onLanguageChangeAsync(language)}
-                        />
+                        {
+                            (languages) &&
+                            (
+                                <LanguageDropdown className={this.props.languageClassName}
+                                                  languages={languages}
+                                                  currentLanguage={TopNavLocalizer.language}
+                                                  changeLanguageCallback={(language) => this.onLanguageChangeAsync(language)}
+                                />
+                            )
+                        }
 
                     </div>
 

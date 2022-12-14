@@ -8,7 +8,7 @@ using WeAre.ReApptor.Common.Models;
 
 namespace WeAre.ReApptor.Common.Middlewares
 {
-    public class HttpStatusCodeExceptionMiddleware
+    public sealed class HttpStatusCodeExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<HttpStatusCodeExceptionMiddleware> _logger;

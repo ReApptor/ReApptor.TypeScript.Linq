@@ -10,13 +10,12 @@ namespace WeAre.Apps.Common.Extensions
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            
-            using (var stream = new MemoryStream())
-            {
-                image.SaveAsPng(stream);
 
-                return stream.ToArray();
-            }
+            using var stream = new MemoryStream();
+            
+            image.SaveAsPng(stream);
+
+            return stream.ToArray();
         }
     }
 }

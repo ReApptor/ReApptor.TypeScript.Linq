@@ -7,6 +7,10 @@
             background-color: white;
         }
     }
+    
+    &.clearButton {
+        padding-right: 1.5rem;
+    }
 
     &.readonly {
         input {
@@ -24,5 +28,27 @@
             width: 5rem;
             background-color: white !important;
         }
+    }
+}
+
+.clearButtonIcon {
+    position: absolute;
+    top: 5px;
+    bottom: 4px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+
+    &:not(:hover) {
+        opacity: 0.3;
+    }
+
+    > i {
+        padding: 4px;
+        cursor: pointer;
+    }
+
+    &.autoSuggest {
+        right: 20px;
     }
 }

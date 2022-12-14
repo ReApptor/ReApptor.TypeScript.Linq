@@ -31,29 +31,30 @@ import enFlag from "./flags/en.png";
 import fiFlag from "./flags/fi.png";
 
 export interface IDropdownTestsState {
-    generateGroups: boolean,
-    icons: boolean,
-    multiple: boolean,
-    groupSelected: boolean,
-    favorite: boolean,
-    noFilter: boolean,
-    amountListItem: boolean,
-    dropdownWidget: boolean,
-    required: boolean,
-    disabled: boolean,
-    autoCollapse: boolean,
-    toggleButton: boolean,
-    withToggleIconName: boolean,
-    withToggleIconProps: boolean,
-    noSubtext: boolean,
-    addButton: boolean,
-    subtextType: DropdownSubtextType,
-    selectType: DropdownSelectType,
-    requiredType: DropdownRequiredType,
-    selectedTextFormat: boolean | number,
-    width: string,
-    align: DropdownAlign | null,    
-    verticalAlign: DropdownVerticalAlign | null,    
+    generateGroups: boolean;
+    icons: boolean;
+    multiple: boolean;
+    groupSelected: boolean;
+    favorite: boolean;
+    noFilter: boolean;
+    clearButton: boolean;
+    amountListItem: boolean;
+    dropdownWidget: boolean;
+    required: boolean;
+    disabled: boolean;
+    autoCollapse: boolean;
+    hideToggleButton: boolean;
+    withToggleIconName: boolean;
+    withToggleIconProps: boolean;
+    noSubtext: boolean;
+    addButton: boolean;
+    subtextType: DropdownSubtextType;
+    selectType: DropdownSelectType;
+    requiredType: DropdownRequiredType;
+    selectedTextFormat: boolean | number;
+    width: string;
+    align: DropdownAlign | null;
+    verticalAlign: DropdownVerticalAlign | null;
 }
 
 export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState> {
@@ -65,11 +66,12 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         groupSelected: false,
         favorite: false,
         noFilter: false,
+        clearButton: false,
         amountListItem: false,
         dropdownWidget: false,
         required: false,
         disabled: false,
-        toggleButton: false,
+        hideToggleButton: false,
         autoCollapse: true,
         withToggleIconName: false,
         withToggleIconProps: false,
@@ -107,7 +109,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
         return {
             name: "{0:00}th item".format(index),
             group: group ? "Group #{0:00}".format(group) : null,
-            description: description ? "Description for item \"{0}\", group \"{1}\"".format(index, group ? group : "no group") : null,
+            description: description ? "Description for item <i>\"{0}\"</i>, <b>group</b> \"{1}\"".format(index, group ? group : "no group") : null,
             completed: statusIcon
         };
     }
@@ -164,6 +166,10 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
     private async setNoFilterAsync(noFilter: boolean): Promise<void> {
         await this.setState({noFilter});
+    }
+
+    private async setClearButtonAsync(clearButton: boolean): Promise<void> {
+        await this.setState({clearButton});
     }
 
     private getDropdownSubtextTypeName(item: DropdownSubtextType): string {
@@ -234,6 +240,7 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                           multiple={this.state.multiple}
                           groupSelected={this.state.groupSelected}
                           noFilter={this.state.noFilter}
+                          clearButton={this.state.clearButton}
                           favorite={this.state.favorite}
                           required={this.state.required}
                           requiredType={this.state.requiredType}
@@ -246,11 +253,13 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                           selectedTextFormat={this.state.selectedTextFormat}
                           align={this.state.align || undefined}
                           verticalAlign={this.state.verticalAlign ?? undefined}
-                          toggleIcon={(this.state.withToggleIconName && !this.state.withToggleIconProps)
-                              ? this._toggleIconNameModel.value
-                              : (!this.state.withToggleIconName && this.state.withToggleIconProps)
-                                  ? this._customToggleIcon
-                                  : undefined
+                          toggleIcon={(this.state.hideToggleButton)
+                              ? false
+                              : (this.state.withToggleIconName && !this.state.withToggleIconProps)
+                                  ? this._toggleIconNameModel.value
+                                  : (!this.state.withToggleIconName && this.state.withToggleIconProps)
+                                      ? this._customToggleIcon
+                                      : undefined
                           }
                           onAdd={() => this.addAsync()}
                 />)
@@ -317,6 +326,11 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
                         <Checkbox label="No filter" inline
                                   value={this.state.noFilter}
                                   onChange={async (sender, value) => await this.setNoFilterAsync(value)}
+                        />
+
+                        <Checkbox label="Clear Button" inline
+                                  value={this.state.clearButton}
+                                  onChange={async (sender, value) => await this.setClearButtonAsync(value)}
                         />
 
                         <Checkbox label="Required" inline
@@ -395,18 +409,25 @@ export default class DropdownTests extends BaseComponent<{}, IDropdownTestsState
 
                         <div>
 
+                            <Checkbox label="Hide toggle button" inline
+                                      value={this.state.hideToggleButton}
+                                      onChange={async (sender, value) => await this.setState({hideToggleButton: value} )}
+                            />
+                            
                             <Checkbox label="WithToggleIconProps" inline
+                                      readonly={this.state.hideToggleButton}
                                       value={this.state.withToggleIconProps}
                                       onChange={async (sender, value) => await this.setState({withToggleIconProps: value, withToggleIconName: false})}
                             />
 
                             <Checkbox label="WithToggleIconName" inline
+                                      readonly={this.state.hideToggleButton}
                                       value={this.state.withToggleIconName}
                                       onChange={async (sender, value) => await this.setState({withToggleIconName: value, withToggleIconProps: false})}
                             />
 
                             {
-                                (this.state.withToggleIconName) &&
+                                ((this.state.withToggleIconName) && (!this.state.hideToggleButton)) &&
                                 (
                                     <TextInput label={"Toggle icon name"} inline
                                                width={"200px"}

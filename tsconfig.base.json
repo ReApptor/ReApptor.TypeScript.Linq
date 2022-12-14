@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "allowJs": true,
     "paths": {
       "@weare/reapptor-react-common": [
         "WeAre.ReApptor.React.Common/src/index.ts"
@@ -23,6 +24,12 @@
       ],
       "@weare/reapptor-toolkit": [
         "WeAre.ReApptor.React.Toolkit/src/index.ts"
+      ],
+      "@weare/reapptor-linq": [
+        "ReApptor.TypeScript.Linq/src/index.ts"
+      ],
+      "@weare/reapptor-paged-list": [
+        "ReApptor.TypeScript.PagedList/src/index.ts"
       ]
     }
   },

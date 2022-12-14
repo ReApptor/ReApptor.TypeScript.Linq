@@ -1,5 +1,5 @@
 import React from "react";
-import {FileModel, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
+import {FileModel, HashCodeUtility, ISelectListItem, ITransformProvider, ITypeConverter, ServiceProvider, TTypeConverter, TypeConverter, Utility} from "@weare/reapptor-toolkit";
 import {BaseInputType, IGlobalClick, IGlobalKeydown, ReactUtility, RenderCallback, StylesUtility, TextAlign} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState, ValidatorCallback} from "../BaseInput/BaseInput";
 import Icon, {IconSize, IconStyle, IIconProps} from "../Icon/Icon";
@@ -112,10 +112,20 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     multiple?: boolean;
     required?: boolean;
     requiredType?: DropdownRequiredType;
+
+    /**
+     * Enables clickable "Favorite" start in a list item, "{@link onFavoriteChange}" callback fires on star toggling;.
+     */
     favorite?: boolean;
+
+    /**
+     * Filters out favorite items from the list if they don't match the filter, "{@link favorite}" should be enabled.
+     */
+    filterFavorite?: boolean;
+    
     groupSelected?: boolean;
     toggleButtonId?: string;
-    toggleIcon?: string | IIconProps;
+    toggleIcon?: string | IIconProps | false;
     noWrap?: boolean;
     orderBy?: DropdownOrderBy;
     items: TItem[];
@@ -127,19 +137,37 @@ export interface IDropdownProps<TItem = {}> extends IBaseInputProps<DropdownValu
     textAlign?: TextAlign;
     filterMinLength?: number;
     filterMaxLength?: number;
+    noFilter?: boolean;
+
+    /**
+     * Focuses filter search input on expanding for mobile application or disable for desktop. 
+     */
+    filterAutoFocus?: boolean;
     minWidth?: number | string;
+    maxWidth?: number | string;
+    width?: number | string;
     autoCollapse?: boolean;
     small?: boolean;
-    noFilter?: boolean;
     noSubtext?: boolean;
     noGrouping?: boolean;
     subtextType?: DropdownSubtextType;
     nothingSelectedText?: string;
     multipleSelectedText?: string;
     selectedTextFormat?: boolean | number;
-    noDataText?: string;
+    noDataText?: string | null;
     absoluteListItems?: boolean;
     addButton?: boolean | string | RenderCallback;
+    
+    /**
+     * The 'X' button in the select item to unselect the selected element(s) (only if the 'required' property is false)
+     */
+    clearButton?: boolean;
+
+    /**
+     * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
+     */
+    trackChanges?: boolean;
+    
     transform?(item: TItem): SelectListItem;
     selectedTextTransform?(sender: Dropdown<TItem>): string;
     onChange?(sender: Dropdown<TItem>, item: TItem | null, userInteraction: boolean): Promise<void>;
@@ -181,9 +209,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     private readonly _listContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private readonly _itemsListRef: React.RefObject<HTMLDivElement> = React.createRef();
 
+    private _language: string = DropdownLocalizer.language;
     private _maxHeight: number | string | null = null;
     private _isLongList: boolean = false;
     private _autoScroll: boolean = true;
+    private _itemsHashCode: number = HashCodeUtility.emptyHashCode;
 
     state: IDropdownState = {
         items: [],
@@ -199,8 +229,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     };
 
     private onFilterInputClick(): void {
-        if ((this.desktop) && (this._filterInputRef.current)) {
-            this._filterInputRef.current!.focus();
+        const filterAutoFocus: boolean = (this.desktop)
+            ? (this.props.filterAutoFocus !== false)
+            : (this.props.filterAutoFocus == true);
+        
+        if ((filterAutoFocus) && (this._filterInputRef.current)) {
+            this._filterInputRef.current.focus();
         }
     }
 
@@ -294,7 +328,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private noItemsFound(): boolean {
-        return (this.filterValue.length > 0) && (!this._isLongList) && (this.filteredItems.every(item => item.favorite));
+        return (
+            (this.filterValue.length > 0) &&
+            (!this._isLongList) &&
+            (
+                (this.filteredItems.length == 0) ||
+                ((this.favorite) && (!this.filterFavorite) && (this.filteredItems.every(item => item.favorite)))
+            )
+        );
     }
 
     private isLongList(items: SelectListItem[] | null = null): boolean {
@@ -307,10 +348,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         this._isLongList = this.isLongList(items);
 
         let filter: string = this.filterValue;
+
         if (filter) {
+            const showFavorite: boolean = (this.favorite) && (!this.filterFavorite);
+
             filter = filter.toLowerCase();
+
             items = items.filter(item =>
-                (item.favorite) ||
+                ((showFavorite) && (item.favorite)) ||
                 (item.lowerText.includes(filter)) ||
                 (item.lowerSubtext.includes(filter)) ||
                 ((item.group != null) && (item.group.lowerName.includes(filter))));
@@ -321,7 +366,9 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                 items = [];
             }
         } else if (this._isLongList) {
-            items = items.filter(item => item.favorite);
+            items = (this.favorite)
+                ? items.filter(item => item.favorite)
+                : [];
         }
 
         return items;
@@ -466,28 +513,34 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private firstInGroup(item: SelectListItem, index: number, hasVisibleGroup: boolean): boolean {
         if (hasVisibleGroup) {
+            
             const firstGroup: boolean = (index == 0);
             if (firstGroup) {
                 return true;
             }
+            
             const previousItem: SelectListItem = this.filteredItems[index - 1];
             const newGroup: boolean = (!SelectListGroup.isEqual(previousItem.group, item.group));
             if (newGroup) {
                 return true;
             }
+            
             if (this.favorite) {
                 const firstNotFavorite: boolean = previousItem.favorite;
                 if (firstNotFavorite) {
                     return true;
                 }
             }
+            
             if (this.groupSelected) {
                 const firstNotSelected: boolean = previousItem.selected;
                 if (firstNotSelected) {
                     return true;
                 }
+                
             }
         }
+        
         return false;
     }
 
@@ -555,7 +608,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private async selectItemHandler(item: SelectListItem): Promise<void> {
+    private async selectItemHandlerAsync(item: SelectListItem): Promise<void> {
 
         const autoCollapse: boolean = this.autoCollapse;
 
@@ -660,11 +713,15 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         await this.invokeOnItemClickAsync(item);
     }
 
+    private async clearSelectedAsync(): Promise<void> {
+        return this.unselectAllAsync();
+    }
+
     private async cleanFilterAsync(): Promise<void> {
         this._filterInputRef.current!.value = "";
         await this.filterHandlerAsync();
     }
-
+    
     private async initializeItemsAsync(items: TItem[], selectedItem: TItem | string | number | null | undefined, selectedItems: TItem[] | string[] | number[] | null | undefined): Promise<void> {
 
         const prevSelectedItem: SelectListItem | null = this.selectedListItem;
@@ -828,11 +885,12 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private async favoriteItemHandler(e: React.MouseEvent, item: SelectListItem): Promise<void> {
+    private async favoriteItemHandlerAsync(e: React.MouseEvent, item: SelectListItem): Promise<void> {
 
         e.stopPropagation();
 
         if (this.favorite) {
+            
             item.favorite = !item.favorite;
 
             if (this.props.onFavoriteChange) {
@@ -906,8 +964,16 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             : DropdownRequiredType.Manual;
     }
 
+    public get clearButton(): boolean {
+        return (this.props.clearButton === true) && (this.requiredType == DropdownRequiredType.Manual);
+    }
+
     public get favorite(): boolean {
-        return (this.props.favorite || false);
+        return (this.props.favorite ?? false);
+    }
+
+    public get filterFavorite(): boolean {
+        return (this.props.filterFavorite ?? false);
     }
 
     public get grouping(): boolean {
@@ -1041,9 +1107,19 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     public get noSubtext(): boolean {
         return (this.props.noSubtext === true);
     }
+    
+    public get hasSelected(): boolean {
+        return (this.multiple)
+            ? (this.selectedListItems.length > 0)
+            : (this.selectedListItem != null);
+    }
+    
+    public get trackChanges(): boolean {
+        return (this.props.trackChanges === true);
+    }
 
     public async unselectAllAsync(): Promise<void> {
-        if ((this.multiple) && (this.selectedListItems)) {
+        if ((this.multiple) && (this.selectedListItems.length > 0)) {
             await this.invokeSelectListItemsAsync([], true);
         } else if (this.selectedListItem) {
             await this.invokeSelectListItemAsync(null, true);
@@ -1073,8 +1149,38 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
+    public async hideEditAsync(): Promise<void> {
+        await super.hideEditAsync();
+        await this.collapseAsync();
+    }
+
+    public async showEditAsync(select?: boolean): Promise<void> {
+        await super.showEditAsync(select);
+        await this.expandAsync();
+    }
+
     public async initializeAsync(): Promise<void> {
         await this.initializeItemsAsync(this.props.items, this.props.selectedItem, this.props.selectedItems);
+    }
+    
+    private isItemsModified(prevItems: TItem[], items: TItem[]): boolean {
+        const isModified: boolean = (!Comparator.isEqual(prevItems, items));
+        if (isModified) {
+            return true;
+        }
+
+        if (this.trackChanges) {
+            const hashCode: number = HashCodeUtility.getHashCode(items);
+            if (this._itemsHashCode !== hashCode) {
+                this._itemsHashCode = hashCode;
+                const isFirstCall: boolean = (this._itemsHashCode === HashCodeUtility.emptyHashCode);
+                if (!isFirstCall) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public async componentWillReceiveProps(nextProps: IDropdownProps<TItem>): Promise<void> {
@@ -1086,9 +1192,11 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const newGroupSelected: boolean = (props.groupSelected !== nextProps.groupSelected);
         const newFavorite: boolean = (props.favorite !== nextProps.favorite);
         const newRequired: boolean = (props.required !== nextProps.required);
-        const newItems: boolean = (!Comparator.isEqual(props.items, nextProps.items));
+        //const newItems: boolean = (!Comparator.isEqual(props.items, nextProps.items));
+        const newItems: boolean = this.isItemsModified(props.items, nextProps.items);
         const newSelectedListItem: boolean = (!Comparator.isEqual(props.selectedItem, nextProps.selectedItem));
         const newSelectedListItems: boolean = (!Comparator.isEqual(props.selectedItems, nextProps.selectedItems));
+        const newLanguage: boolean = (this._language !== DropdownLocalizer.language);
 
         await super.componentWillReceiveProps(nextProps);
 
@@ -1099,8 +1207,10 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             await this.setState(this.state);
         }
         
-        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired)) {
+        if ((newItems) || (newSelectedListItem) || (newSelectedListItems) || (newGroupSelected) || (newFavorite) || (newRequired) || (newLanguage)) {
 
+            this._language = DropdownLocalizer.language;
+            
             const selectedItem: TItem | string | number | null | undefined = (newSelectedListItem)
                 ? nextProps.selectedItem
                 : (nextProps.selectedItem || this.getSelectedListItem(nextProps.items) || this.selectedItem);
@@ -1222,7 +1332,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
     }
 
-    private renderToggleIcon(className?: string): React.ReactNode {
+    private renderToggleButton(): React.ReactNode {
         let iconProps: IIconProps = { name: "fa-caret-down", style: IconStyle.Solid }
 
         if (this.styleSchema === DropdownSchema.Widget) {
@@ -1237,7 +1347,34 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <Icon {...iconProps} size={IconSize.Normal} className={this.css(className)} />
+            <div className={styles.toggleButton}>
+                <Icon {...iconProps} size={IconSize.Normal} />
+            </div>
+        );
+    }
+
+    private renderClearIcon(): React.ReactNode {
+        return (
+            <div className={this.css(styles.clearButton)}>
+                <Icon stopPropagation
+                      name="fa fa-times"
+                      size={IconSize.Normal}
+                      onClick={() => this.clearSelectedAsync()}
+                />
+            </div>
+        );
+    }
+
+    private renderToggleContainer(toggleButtonVisible: boolean, clearButtonVisible: boolean, className?: string): React.ReactNode {
+
+        return (
+            <div className={this.css(styles.toggleButtonContainer, className)}>
+                
+                { (clearButtonVisible) && (this.renderClearIcon()) }
+
+                { (toggleButtonVisible) && (this.renderToggleButton()) }
+                
+            </div>
         );
     }
 
@@ -1269,8 +1406,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
     }
 
     private renderSelectedItem(): React.ReactNode {
+
+        const toggleButtonVisible: boolean = (this.props.toggleIcon !== false);
+        const clearButtonVisible: boolean = (this.clearButton) && (this.hasSelected);
+
         const expandedStyle = ((this.styleSchema === DropdownSchema.Widget) && (this.state.expanded)) && (this.css(styles.hovered, styles.focused));
         const transparentStyle: any = (this.styleSchema === DropdownSchema.Transparent) && (styles.transparent);
+        const toggleButtonVisibleStyle: any = (toggleButtonVisible) && (styles.toggleButtonVisible);
+        const clearButtonVisibleStyle: any = (clearButtonVisible) && (styles.clearButtonVisible);
 
         const inlineStyles: React.CSSProperties = {};
         if (this.props.textAlign) {
@@ -1293,7 +1436,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
             text = (selectedListItem !== null)
                 ? (noSubtext)
                     ? DropdownLocalizer.get(selectedListItem.text)
-                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${ReactUtility.toSingleLine(DropdownLocalizer.get(selectedListItem.subtext))}</small>`
+                    : `${DropdownLocalizer.get(selectedListItem.text)} <small>${DropdownLocalizer.get(selectedListItem.subtext)}</small>`
                 : (this.selectedListItems.length !== 0)
                     ? (this.props.multipleSelectedText)
                         ? DropdownLocalizer.multipleSelected
@@ -1308,14 +1451,14 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         }
 
         return (
-            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, "selected-item")}
+            <div className={this.css(styles.selected, "form-control", expandedStyle, transparentStyle, toggleButtonVisibleStyle, clearButtonVisibleStyle, "selected-item")}
                  title={title}
-                 onClick={async () => await this.toggleAsync()}>
+                 onClick={() => this.toggleAsync()}>
 
-                <span style={inlineStyles}>{ReactUtility.toSmalls(text)}</span>
-
+                <span style={inlineStyles}>{ReactUtility.toTags(text)}</span>
+                
                 {
-                    this.renderToggleIcon(transparentStyle)
+                    this.renderToggleContainer(toggleButtonVisible, clearButtonVisible, transparentStyle)
                 }
 
             </div>
@@ -1324,15 +1467,20 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
 
     private renderSelectListItem(item: SelectListItem, index: number): React.ReactNode {
         const isSeparator: boolean = (item as any).isSelectListSeparator;
-        const hasVisibleGroup: boolean = (!isSeparator) && (this.hasVisibleGroup(item));
-        const needGroupSeparator: boolean = (!isSeparator) && (this.firstInGroup(item, index, hasVisibleGroup));
-        const selected: boolean = (!isSeparator) && (item.selected);
-        const favorite: boolean = (!isSeparator) && (this.props.favorite === true);
-        const checkbox: boolean = (!isSeparator) && (this.selectType == DropdownSelectType.Checkbox);
+        const isListItem: boolean = (!isSeparator);
+        const hasVisibleGroup: boolean = (isListItem) && (this.hasVisibleGroup(item));
+        const needGroupSeparator: boolean = (isListItem) && (this.firstInGroup(item, index, hasVisibleGroup));
+        const selected: boolean = (isListItem) && (item.selected);
+        const favorite: boolean = (isListItem) && (this.props.favorite === true);
+        const checkbox: boolean = (isListItem) && (this.selectType == DropdownSelectType.Checkbox);
 
         const listItemStyle: any = ((this.isListType) && (this.props.styleSchema !== DropdownSchema.Widget)) && styles.listItem;
         const inlineSubtextStyle: any = (this.subtextType == DropdownSubtextType.Inline) && styles.inlineSubtext;
         const selectedStyle: any = ((selected) && (!checkbox)) && styles.selectedItem;
+        
+        const customClassName: string | null = ((isListItem) && ((item as any).isStatusListItem))
+            ? (item as StatusListItem).className
+            : null;
 
         return (
             <React.Fragment key={index}>
@@ -1369,13 +1517,13 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                     (!isSeparator)
                         ?
                         (
-                            <div className={this.css(styles.item, listItemStyle, inlineSubtextStyle, selectedStyle, hasVisibleGroup && styles.itemGroupIdent)}
-                                 onClick={async () => await this.selectItemHandler(item)}>
+                            <div className={this.css(styles.item, customClassName, listItemStyle, inlineSubtextStyle, selectedStyle, hasVisibleGroup && styles.itemGroupIdent)}
+                                 onClick={() => this.selectItemHandlerAsync(item)}>
 
                                 {
                                     (favorite) &&
                                     (
-                                        <div className={styles.iconContainer} onClick={async (e: React.MouseEvent) => await this.favoriteItemHandler(e, item)}>
+                                        <div className={styles.iconContainer} onClick={(e: React.MouseEvent) => this.favoriteItemHandlerAsync(e, item)}>
                                             <Icon name="star" style={(item.favorite) ? IconStyle.Solid : IconStyle.Regular} size={IconSize.Large} />
                                         </div>
                                     )
@@ -1384,7 +1532,7 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                                 <DropdownListItem item={item}
                                                   subtextHidden={this.subtextType == DropdownSubtextType.Hidden}
                                                   noWrap={this.props.noWrap}
-                                                  onChangeAmount={async (sender, item) => await this.onChangeAmountAsync(item)}
+                                                  onChangeAmount={(sender, item) => this.onChangeAmountAsync(item)}
                                 />
 
                                 {
@@ -1422,8 +1570,17 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
         const smallStyle: any = (this.props.small) && styles.small;
 
         const inlineStyles: React.CSSProperties = {};
-        if (this.props.minWidth) {
-            inlineStyles.minWidth = this.props.minWidth;
+        
+        if (this.props.width) {
+            inlineStyles.width = this.props.width;
+        }
+        else {
+            if (this.props.minWidth) {
+                inlineStyles.minWidth = this.props.minWidth;
+            }
+            if (this.props.maxWidth) {
+                inlineStyles.maxWidth = this.props.maxWidth;
+            }
         }
 
         const longListPlaceholder: string = (this.isLongList())
@@ -1465,15 +1622,18 @@ export default class Dropdown<TItem> extends BaseInput<DropdownValue, IDropdownP
                         (
                             <div className={styles.filter} onClick={async () => this.onFilterInputClick()}>
 
-                                <input id={"filter_input" + this.id}
+                                <input id={"filter_input_" + this.id}
                                        ref={this._filterInputRef}
+                                       autoComplete={"off"}
+                                       role={"presentation"}
                                        className="form-control filter"
                                        type="text"
                                        placeholder={longListPlaceholder}
-                                       onKeyUp={async () => await this.filterHandlerAsync()}
+                                       onKeyUp={() => this.filterHandlerAsync()}
+                                       onPaste={() => this.filterHandlerAsync()}
                                 />
 
-                                { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={async () => await this.cleanFilterAsync()} /> }
+                                { this.filterValue && <span className={this.css("fa fa-times", styles.clean)} onClick={() => this.cleanFilterAsync()} /> }
 
                             </div>
                         )

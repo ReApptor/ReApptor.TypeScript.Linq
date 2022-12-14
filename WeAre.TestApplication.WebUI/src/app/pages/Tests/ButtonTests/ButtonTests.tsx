@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {BaseComponent, ch, Justify} from "@weare/reapptor-react-common";
 import {Button, ButtonType, Form, FourColumns} from "@weare/reapptor-react-components";
 
 interface IButtonTestsState {
@@ -29,7 +29,19 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
 
                     </FourColumns>
 
-                    <FourColumns>
+                    <FourColumns className={"mt-3"}>
+
+                        <Button label={"Count (block)"} type={ButtonType.Default} block count={1} />
+
+                        <Button label={"Count (icon, block)"} type={ButtonType.Orange} icon={{name: "far plus"}}  block count={2} />
+
+                        <Button label={"Count (icon)"} type={ButtonType.Blue} icon={{name: "far plus"}} count={() => 3} />
+
+                        <Button label={"Count"} type={ButtonType.Primary} count={() => 4} />
+
+                    </FourColumns>
+
+                    <FourColumns className={"mt-3"}>
 
                         <Button label={"Default (block, icon)"} type={ButtonType.Default} icon={{name: "far plus"}} block />
 
@@ -38,6 +50,18 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         <Button label={"Blue (block, icon)"} type={ButtonType.Blue} icon={{name: "far plus"}} block />
 
                         <Button label={"Primary (block, icon)"} type={ButtonType.Primary} icon={{name: "far plus"}} block />
+
+                    </FourColumns>
+
+                    <FourColumns className={"mt-3"}>
+
+                        <Button label={"Default (block, right icon)"} type={ButtonType.Default} icon={{name: "far plus"}} iconPosition={Justify.Right} block />
+
+                        <Button label={"Orange (block, right icon)"} type={ButtonType.Orange} icon={{name: "far plus"}} iconPosition={Justify.Right} block />
+
+                        <Button label={"Blue (block, right icon)"} type={ButtonType.Blue} icon={{name: "far plus"}} iconPosition={Justify.Right} block />
+
+                        <Button label={"Primary (block, right icon)"} type={ButtonType.Primary} icon={{name: "far plus"}} iconPosition={Justify.Right} block />
 
                     </FourColumns>
 
@@ -136,6 +160,8 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         <Button label={"Orange (icon)"} icon={{name: "fal plus"}} type={ButtonType.Orange} />
                         
                         <Button icon={{name: "fal plus"}} type={ButtonType.Orange} />
+                        
+                        <Button icon={{name: "fal plus"}} iconPosition={Justify.Right} type={ButtonType.Orange} />
 
                     </FourColumns>
 
@@ -144,8 +170,8 @@ export default class ButtonTests extends BaseComponent<{}, IButtonTestsState> {
                         <Button small label={"Orange (small)"} type={ButtonType.Orange} />
 
                         <Button small label={"Orange (small, icon)"} icon={{name: "fal plus"}} type={ButtonType.Orange} />
-                        
-                        <Button small icon={{name: "fal plus"}} type={ButtonType.Orange} />
+
+                        <Button small label={"Orange (small, right icon)"} icon={{name: "fal plus"}} iconPosition={Justify.Right} type={ButtonType.Orange} />
 
                     </FourColumns>
 

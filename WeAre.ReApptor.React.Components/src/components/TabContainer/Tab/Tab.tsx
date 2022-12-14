@@ -32,13 +32,15 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
         const newClassName: boolean = (nextProps.className !== this.model.className);
         const newTitle: boolean = (nextProps.title !== this.model.title);
         const newTooltip: boolean = (nextProps.tooltip !== this.model.tooltip);
+        const newCount: boolean = (nextProps.count !== this.model.count);
 
-        if (newClose || newIcon || newClassName || newTitle || newTooltip) {
+        if (newClose || newIcon || newClassName || newTitle || newTooltip || newCount) {
             this.model.onClose = nextProps.onClose;
-            this.model.icon = nextProps.icon || null;
-            this.model.className = nextProps.className || null;
+            this.model.icon = nextProps.icon ?? null;
+            this.model.className = nextProps.className ?? null;
             this.model.title = nextProps.title || "";
             this.model.tooltip = nextProps.tooltip || "";
+            this.model.count = nextProps.count ?? null;
 
             await this.model.reRenderAsync();
         }
@@ -54,11 +56,10 @@ export default class Tab extends BaseComponent<ITabProps, ITabState> implements 
     public readonly isTab: boolean = true;
 
     public render(): React.ReactNode {
-
         const model: TabModel = this.model;
         const container: TabContainerModel = model.container;
         model.instance = this;
-
+        
         const activeStyle: any = (model.active) && "active";
         const scaleStyle: any = (container.scale) && "h-100";
 

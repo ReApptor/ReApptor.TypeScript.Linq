@@ -21,7 +21,10 @@ export default class Alert extends BaseComponent<IAlertProps> {
     }
 
     private async closeWithDelayAsync(): Promise<void> {
-        await Utility.wait(AthenaeumComponentsConstants.alertCloseDelay);
+        
+        const autoCloseDelay: number = this.model.autoCloseDelay ?? AthenaeumComponentsConstants.alertAutoCloseDelay;
+        
+        await Utility.wait(autoCloseDelay);
         
         this.fadeOut();
         
@@ -78,7 +81,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
                     {
                         (this.model.dismissible) &&
                         (
-                            <div className={this.css(styles.close)} onClick={async () => await this.closeAlertAsync(true)}>
+                            <div className={this.css(styles.close)} onClick={() => this.closeAlertAsync(true)}>
                               <span>&times;</span>
                             </div>
                         )

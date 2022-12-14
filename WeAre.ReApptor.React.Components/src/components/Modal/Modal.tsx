@@ -9,6 +9,8 @@ import ModalLocalizer from "./ModalLocalizer";
 
 import "./BootstrapOverride.scss";
 
+export type ModalConfirmationCallback = () => string | IConfirmation | null | undefined;
+
 export enum ModalSize {
     Default,
 
@@ -31,17 +33,17 @@ interface IModalProps<TData = {}> {
     /**
      * Text displayed in the header of the {@link Modal}.
      */
-    title?: string;
+    title?: string | null;
 
     /**
      * Secondary text displayed in the header of the {@link Modal}.
      */
-    subtitle?: string;
+    subtitle?: string | null;
 
     /**
      * Text displayed in the {@link Modal}'s body.
      */
-    content?: string;
+    content?: string | null;
 
     /**
      * True to disable modal responsiveness (full window in mobile view).
@@ -64,7 +66,7 @@ interface IModalProps<TData = {}> {
     bodyClassName?: string;
     toolbar?: RenderCallback;
     keepTextFormatting?: boolean;
-    closeConfirm?: string | boolean | IConfirmation | ConfirmationDialogTitleCallback | null;
+    closeConfirm?: string | boolean | IConfirmation | ModalConfirmationCallback | null;
     
     transform?(data: any): TData;
     onBeforeOpen?(sender: Modal): Promise<void>;
@@ -96,6 +98,16 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     private _data: TData | null = null;
     private _scrollY: number = 0;
     private _confirmed: boolean = false;
+    
+    private resolveCloseConfirm(): string | IConfirmation | ConfirmationDialogTitleCallback | null | undefined {
+        return (this.props.closeConfirm)
+            ? (typeof this.props.closeConfirm === "function")
+                ? this.props.closeConfirm()
+                : (typeof this.props.closeConfirm === "boolean")
+                    ? ""
+                    : this.props.closeConfirm
+            : null;
+    }
 
     //  Getters
 
@@ -212,7 +224,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
     }
 
     private async confirmNeededAsync(): Promise<boolean> {
-        const confirmNeeded: boolean = ((!!this.props.closeConfirm) && (!this._confirmed));
+        const confirmNeeded: boolean = ((!this._confirmed) && (this.resolveCloseConfirm() != null));
         
         if ((confirmNeeded) && (this._closeConfirmDialogRef.current)) {
             await this._closeConfirmDialogRef.current.openAsync();
@@ -491,6 +503,8 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
         const centeredStyle: any = (!this.fullWindow) && "modal-dialog-centered";
         const toolbarStyle: any = (this.fullWindow) ? "mobile-toolbar" : "toolbar";
 
+        const closeConfirm: string | IConfirmation | ConfirmationDialogTitleCallback | null | undefined = this.resolveCloseConfirm();
+
         return (
             <div id={this.id}
                  ref={this._modalRef}
@@ -553,7 +567,7 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                         {
                             // If the Modal will receive children (most likely Form) instead of text content(this.props.content)
                             // Modal footer does not need to be displayed therefore Form will contain it's own control buttons
-                            ((!this.props.info) && (!this.props.children)) &&
+                            ((!this.isInfo) && (!this.props.children)) &&
                             (
                                 <div className="modal-footer">
                                     
@@ -576,10 +590,10 @@ export default class Modal<TData = {}> extends BaseAsyncComponent<IModalProps<TD
                         }
 
                         {
-                            (this.props.closeConfirm) &&
+                            (closeConfirm != null) &&
                             (
                                 <ConfirmationDialog ref={this._closeConfirmDialogRef}
-                                                    title={typeof this.props.closeConfirm !== "boolean" ? this.props.closeConfirm : undefined}
+                                                    title={closeConfirm}
                                                     callback={(caller, data) => this.setModalToCloseAsync(data)}
                                 />
                             )

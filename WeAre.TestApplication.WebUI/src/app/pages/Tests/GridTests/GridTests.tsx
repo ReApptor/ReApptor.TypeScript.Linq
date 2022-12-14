@@ -1,7 +1,8 @@
 import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
-import {ActionType, BaseComponent, ch, Justify, TextAlign} from "@weare/reapptor-react-common";
+import {ActionType, BaseComponent, ch, IConfirmation, Justify, TextAlign} from "@weare/reapptor-react-common";
 import {
+    BorderType,
     CellModel,
     Checkbox,
     ColumnActionDefinition,
@@ -25,10 +26,13 @@ export interface IGridTestsState {
     responsive: boolean;
     selectable: boolean;
     selectableType: GridSelectableType;
+    borderType: BorderType;
     checkable: boolean;
     headerGroups: boolean;
     search: string | null;
     stickyHeader: boolean;
+    noHeader: boolean;
+    colSpan: boolean;
 }
 
 enum GridEnum {
@@ -70,10 +74,13 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         responsive: true,
         selectable: false,
         selectableType: GridSelectableType.Single,
+        borderType: BorderType.DarkSeparators,
         checkable: false,
         headerGroups: true,
         search: null,
         stickyHeader: false,
+        noHeader: false,
+        colSpan: false,
     };
 
     private readonly _gridRef: React.RefObject<Grid<GridItem>> = React.createRef();
@@ -110,20 +117,36 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
             sorting: true,
             minWidth: 90,
             noWrap: true,
-            textAlign: TextAlign.Center
+            textAlign: TextAlign.Center,
+            init: (cell: CellModel<GridItem>) => this.initFloat(cell)
         } as ColumnDefinition,
         {
-            header: "Int",
+            group: "Int",
+            header: "Int1",
             accessor: "int",
             sorting: true,
             minWidth: 90,
             noWrap: true,
+            type: ColumnType.Number,
+            isDefaultSorting: true,
+            textAlign: TextAlign.Center
+        } as ColumnDefinition,
+        {
+            group: "Int",
+            header: "Int2",
+            accessor: "int",
+            sorting: true,
+            minWidth: 90,
+            noWrap: true,
+            type: ColumnType.Number,
             isDefaultSorting: true,
             textAlign: TextAlign.Center
         } as ColumnDefinition,
         {
             header: "Date",
             accessor: "date",
+            editable: true,
+            type: ColumnType.Date,
             format: "D",
             sorting: true,
             minWidth: 90,
@@ -191,6 +214,32 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         } as ColumnDefinition,
         {
             actions: [
+                {
+                    name: "confirm",
+                    title: "confirm",
+                    icon: "fad fa-window-restore",
+                    type: ActionType.Blue,
+                    confirm: {
+                        title: "Are you sure?",
+                        comment: true,
+                        minLength: 3,
+                        placeholder: "Type 'cancel' to confirm",
+                    } as IConfirmation,
+                    callback: (cell, action: any, selectedAction?: string | null, data?: string | null) => GridTests.cellActionCallBack(selectedAction, data),
+                },
+                {
+                    name: "confirm",
+                    title: "confirm",
+                    type: ActionType.Blue,
+                    confirm: {
+                        title: "Are you sure?",
+                        comment: true,
+                        minLength: 3,
+                        placeholder: "Type 'cancel' to confirm",
+                    } as IConfirmation,
+                    callback: (cell, action: any, selectedAction?: string | null, data?: string | null) => GridTests.cellActionCallBack(selectedAction, data),
+                },
+                
                 {
                     name: "cancel",
                     title: "save",
@@ -283,6 +332,10 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return this._items!;
     }
 
+    private initFloat(cell: CellModel<GridItem>): void {
+        cell.columnSpan = (this.state.colSpan) ? 2 : 0;
+    }
+
     private async fetchDataAsync(pageNumber: number, pageSize: number, sortColumnName: string | null, sortDirection: SortDirection | null): Promise<IPagedList<GridItem> | GridItem[]> {
 
         let items: GridItem[] = (sortColumnName)
@@ -315,8 +368,9 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         return value.toString() + " aaaaaa";
     }
 
-    private static cellActionCallBack(selectedAction: string): void {
-        console.log(selectedAction)
+    private static cellActionCallBack(selectedAction?: string | null, data?: string | null): void {
+        console.log("cellActionCallBack: selectedAction=", selectedAction, "data=", data);
+        alert("selectedAction=\"{0}\"\ndata=\"{1}\"".format(selectedAction, data));
     }
 
     private static getGridSelectableTypeName(item: GridSelectableType): string {
@@ -326,9 +380,22 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
         }
     }
 
+    private static getBorderTypeName(item: BorderType): string {
+        switch (item) {
+            case BorderType.DarkSeparators: return "Dark Separators";
+            case BorderType.NoSeparators: return "No Separators";
+        }
+    }
+
     private async searchAsync(search: string | null): Promise<void> {
         await this.setState({search});
         await this._gridRef.current!.reloadAsync();
+    }
+
+    private async reloadAsync(): Promise<void> {
+        if (this._gridRef.current) {
+            await this._gridRef.current.reloadAsync();
+        }
     }
 
     public renderDetailsContent() {
@@ -369,12 +436,6 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                               onChange={async (sender, value) => {await this.setState({selectable: value})}}
                     />
 
-                    <Checkbox inline
-                              label="Sticky header"
-                              value={this.state.stickyHeader}
-                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
-                    />
-
                     {
                         (this.state.selectable) &&
                         (
@@ -389,6 +450,24 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                     }
 
                     <Checkbox inline
+                              label="Sticky header"
+                              value={this.state.stickyHeader}
+                              onChange={async (sender, value) => {await this.setState({stickyHeader: value})}}
+                    />
+
+                    <Checkbox inline
+                              label="Col span"
+                              value={this.state.colSpan}
+                              onChange={async (sender, value) => { this.state.colSpan = value; await this.reloadAsync(); }}
+                    />
+
+                    <Checkbox inline
+                              label="No header"
+                              value={this.state.noHeader}
+                              onChange={async (sender, value) => {await this.setState({noHeader: value})}}
+                    />
+
+                    <Checkbox inline
                               label="Checkable"
                               value={this.state.checkable}
                               onChange={async (sender, value) => {await this.setState({checkable: value})}}
@@ -400,6 +479,14 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                                onChange={async (_, value) => await this.searchAsync(value)}
                     />
 
+                    <Dropdown label="Border Type" inline required noValidate noWrap noFilter
+                              orderBy={DropdownOrderBy.None}
+                              transform={(item) => new SelectListItem(item.toString(), GridTests.getBorderTypeName(item), null, item)}
+                              items={[BorderType.DarkSeparators, BorderType.NoSeparators]}
+                              selectedItem={this.state.selectableType}
+                              onChange={async (sender, value) => {await this.setState({ borderType: value! })}}
+                    />
+                    
                 </Form>
 
                 <Grid ref={this._gridRef}
@@ -407,10 +494,12 @@ export default class GridTests extends BaseComponent<{}, IGridTestsState> {
                       selectable={this.state.selectable ? this.state.selectableType : undefined}
                       checkable={this.state.checkable}
                       stickyHeader={this.state.stickyHeader}
+                      noHeader={this.state.noHeader}
                       pagination={10}
                       columns={this._columns}
                       hovering={GridHoveringType.Row}
                       odd={GridOddType.Row}
+                      borderType={this.state.borderType}
                       renderDetails={() => this.renderDetailsContent()}
                       fetchData={async (sender, pageNumber, pageSize, sortColumnName, sortDirection) => await this.fetchDataAsync(pageNumber, pageSize, sortColumnName, sortDirection)}
                       onRowToggle={async (row) => console.log("onRowToggle", row)}

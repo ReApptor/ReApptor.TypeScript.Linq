@@ -1,12 +1,12 @@
 import React from "react";
-import {FileModel} from "@weare/reapptor-toolkit";
+import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import {DocumentPreviewModel, DocumentPreviewSize, ch, IBaseAsyncComponentState, BaseAsyncComponent} from "@weare/reapptor-react-common";
 import Spinner from "../Spinner/Spinner";
 import Modal, { ModalSize } from "../Modal/Modal";
+import Icon, { IconSize } from "../Icon/Icon";
+import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
 
 import styles from "./DocumentPreviewModal.module.scss";
-import DocumentPreviewModalLocalizer from "./DocumentPreviewModalLocalizer";
-import Icon, { IconSize } from "../Icon/Icon";
 
 const A4 = { width: 595, height: 842 };
 
@@ -24,10 +24,10 @@ class DocumentSize {
     public zoom: number;
 
     public getSrc(data: FileModel | null): string {
-        return (data) && (data.src)
+        return ((data) && (data.src))
             ? (this.zoom > 0)
-                ? `${data.src}#zoom=${this.zoom}`
-                : data.src
+                ? `${Utility.toObjectUrl(data)}#zoom=${this.zoom}`
+                : Utility.toObjectUrl(data)
             : "";
     }
 
@@ -106,10 +106,10 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     }
     
     private download(): void {
-        const document = this.state.data;
-        
-        if(document) {
-            return ch.getLayout().download(document);
+        const document: FileModel | null = this.state.data;
+
+        if (document) {
+            return ch.download(document);
         }
     }
     
@@ -118,7 +118,7 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
             <Icon name="far download"
                   className="blue"
                   size={IconSize.X2}
-                  onClick={async () => await this.download()} 
+                  onClick={async () => this.download()} 
                   tooltip={DocumentPreviewModalLocalizer.download}
             />
         );
@@ -142,7 +142,10 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
     
     public async openAsync(model: DocumentPreviewModel): Promise<void> {
         await this.setState({ model });
-        await this._modalRef.current!.toggleAsync();
+        
+        if (this._modalRef.current) {
+            await this._modalRef.current.toggleAsync();
+        }
     }
     
     public get isOpen(): boolean {
@@ -181,15 +184,16 @@ export default class DocumentPreviewModal extends BaseAsyncComponent<IDocumentPr
         const documentSize: DocumentSize = this.geDocumentSize();
         
         return (
-            <Modal id={this.id} ref={this._modalRef}
+            <Modal info
+                   id={this.id}
+                   ref={this._modalRef} 
                    className={styles.documentPreviewModal}
                    bodyClassName={styles.body}
                    title={this.title || DocumentPreviewModalLocalizer.preview}
                    subtitle={this.subtitle || "..."}
-                   info
                    size={ModalSize.Auto}
                    toolbar={() => this.renderToolbar()}
-                   onToggle={async (sender: Modal, isOpen) => await this.onToggleAsync(isOpen)}
+                   onToggle={(sender: Modal, isOpen) => this.onToggleAsync(isOpen)}
             >
                 
                 <div className={styles.contentA4}>

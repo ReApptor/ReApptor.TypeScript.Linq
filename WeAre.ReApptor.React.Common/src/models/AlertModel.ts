@@ -3,11 +3,12 @@ import {Utility} from "@weare/reapptor-toolkit";
 
 export default class AlertModel {
 
-    constructor(message: string = "", alertType: AlertType = AlertType.Success, autoClose: boolean = false, flyout: boolean = false) {
+    constructor(message: string = "", alertType: AlertType = AlertType.Success, autoClose: boolean = false, flyout: boolean = false, autoCloseDelay?: number | null) {
         this.message = message;
         this.alertType = alertType;
         this.autoClose = autoClose;
         this.flyout = flyout;
+        this.autoCloseDelay = autoCloseDelay ?? null;
     }
 
     /**
@@ -48,10 +49,10 @@ export default class AlertModel {
      *
      * @default 5000
      */
-    public autoCloseDelay: number = 5000;
+    public autoCloseDelay: number | null = null;
 
     /**
-     * Should the alert fly out from the side of the sceen instead of being contained within the main PageContainer.
+     * Should the alert fly out from the side of the screen instead of being contained within the main PageContainer.
      *
      * @default false
      */

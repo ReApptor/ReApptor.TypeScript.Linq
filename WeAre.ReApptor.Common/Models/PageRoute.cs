@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using WeAre.ReApptor.Toolkit;
@@ -20,6 +19,16 @@ namespace WeAre.ReApptor.Common.Models
         public bool IsPageRoute => true;
 
         public PageRoute()
+        {
+        }
+
+        public PageRoute(string name, string id = null)
+            : this(name, null, id)
+        {
+        }
+
+        public PageRoute(string name, Guid id)
+            : this(name, null, id.ToString())
         {
         }
 

@@ -79,7 +79,7 @@
             overflow-x: auto;
             overflow-y: unset;
             
-            @media screen and(max-width: $break-md) {
+            @media screen and (max-width: $break-md) {
                 position: unset !important;
             }
         }
@@ -279,18 +279,48 @@
         justify-content: space-between;
         align-items: center;
         white-space: nowrap;
+
+        &.toggleButtonVisible {
+            visibility: visible;
+        }
+        
+        &.clearButtonVisible {
+            visibility: visible;
+        }
         
         &:hover {
             @extend .hovered;
         }
-        
-        i {
-            margin-left: 6px;
-        }
-        
+
         span {
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        
+        .toggleButtonContainer {
+            
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            
+            > div {
+                margin-left: 6px;
+                align-items: center;
+                
+                &.clearButton {
+                    display: flex;
+                    padding: 4px;
+
+                    &:not(:hover) {
+                        opacity: 0.3;
+                    }
+                }
+
+                &.toggleButton {
+                    display: flex;
+                }
+            }
+            
         }
     }
     

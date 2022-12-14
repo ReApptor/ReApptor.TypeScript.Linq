@@ -10,7 +10,7 @@ export default class NumberWidgetTests extends BaseComponent {
 
                 <WidgetContainer>
 
-                    <NumberWidget label={"Test (step 0.01)"} step={0.01} />
+                    <NumberWidget label={"Test (step 0.01)"} step={0.01} plusIcon={{name: "plus"}} minusIcon={{name: "minus"}} />
 
                     <NumberWidget label={"Test (step 0.1)"} step={0.1} />
 

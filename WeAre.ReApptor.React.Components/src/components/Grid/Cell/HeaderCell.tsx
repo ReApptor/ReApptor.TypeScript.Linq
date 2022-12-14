@@ -14,14 +14,6 @@ interface IHeaderCellProps<TItem = {}> {
     hasHeaderGroups: boolean;
 
     /**
-     * For sticky header in view while scrolling.
-     * Sets th position to sticky.
-     * Uses {@link var(--app-navbar-height)} to add top padding while scrolling.
-     * @default false
-     */
-    stickyHeader?: boolean;
-
-    /**
      * To get the height of first row in thead and calculate "top".
      * {@link stickyHeader} should be enabled.
      * @default null
@@ -78,8 +70,11 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
                 } else {
                     colSpan = 0;
                     for (let i: number = columnIndex; i < grid.columns.length; i++) {
-                        if (grid.columns[i].group === column.group) {
-                            colSpan++;
+                        const nextColumn: ColumnModel<TItem> = grid.columns[i];
+                        if (nextColumn.group === column.group) {
+                            if (nextColumn.visible) {
+                                colSpan++;
+                            }
                         } else {
                             break;
                         }
@@ -97,6 +92,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             }
         }
 
+        const stickyHeader: boolean = grid.stickyHeader;
         const groupHeaderCell: boolean = (top) && (colSpan != null) && (colSpan > 1);
         const sortable: boolean = (!groupHeaderCell) && (column.sortable);
         const sortDirection: SortDirection | null = (sortable) && (grid.sortColumn == column)
@@ -107,12 +103,16 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
         const navbarDefaultHeight = '45px';
         const topCssProperty = `calc(var(--app-navbar-height, ${navbarDefaultHeight}) + ${(this.props.tableHeadFirstRowRef?.current?.clientHeight || 0) * (this.props.tableHeadRowIndex || 0)}px)`;
 
+        const minHeight: string | undefined = ((!top) && (!column.group) && (grid.headerMinHeight))
+            ? `${grid.headerMinHeight}px`
+            : undefined;
+        
         const inlineStyles: React.CSSProperties = {
             textAlign: StylesUtility.textAlign(textAlign),
             verticalAlign: StylesUtility.verticalAlign(verticalAlign),
-            height: ((!top) && (grid.headerMinHeight)) ? `${grid.headerMinHeight}px` : undefined,
+            height: minHeight,
             minWidth: column.minWidth || undefined,
-            ...(this.props.stickyHeader) ? {top: topCssProperty} : {}
+            ...(stickyHeader) ? {top: topCssProperty} : {}
         };
 
         if (column.stretch) {
@@ -123,7 +123,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             ? styles.rotateHeader
             : "";
 
-        const stickyHeaderClassName: string = (this.props.stickyHeader)
+        const stickyHeaderClassName: string = (stickyHeader)
             ? styles.stickyHeader
             : "";
 
@@ -151,6 +151,7 @@ export default class HeaderCell<TItem = {}> extends BaseComponent<IHeaderCellPro
             (
                 <th id={this.id}
                     style={inlineStyles}
+                    title={GridLocalizer.get(column.title)}
                     rowSpan={rowSpan || undefined}
                     colSpan={colSpan || undefined}
                     className={this.css(styles.th, sortableClassName, sortDirectionClassName, stickyHeaderClassName)}

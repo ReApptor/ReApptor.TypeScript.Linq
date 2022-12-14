@@ -3,6 +3,7 @@ import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/reapptor-toolkit";
 import {RenderCallback} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
+import Icon, {IconSize} from "../Icon/Icon";
 import DateInputLocalizer from "./DateInputLocalizer";
 
 import formStyles from "../Form/Form.module.scss";
@@ -34,8 +35,10 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     expanded?: boolean;
     rentaStyle?: boolean;
     popup?: boolean;
-    maxDate?: Date | null;
     minDate?: Date | null;
+    maxDate?: Date | null;
+    minTime?: Date | null;
+    maxTime?: Date | null;
     showMonthDropdown?: boolean;
     showMonthYearPicker?: boolean;
     showYearDropdown?: boolean;
@@ -46,6 +49,12 @@ interface IDateInputProps extends IBaseInputProps<Date> {
     customInput?: RenderCallback;
     showTime?: boolean;
     showOnlyTime?: boolean;
+    
+    /**
+     * The 'X' button to clear the date
+     */
+    clearButton?: boolean;
+    
     timeIntervals?: number;
     timeFormat?: string;
     excludeDates?: Date[];
@@ -119,7 +128,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     }
 
     protected async valueBlurHandlerAsync(): Promise<void> {
-        await super.validateAsync();
+        await super.valueBlurHandlerAsync();
 
         if (this.props.onBlur) {
             await this.props.onBlur(this);
@@ -130,6 +139,10 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         e.preventDefault()
     }
 
+    public get clearButton(): boolean {
+        return (this.props.clearButton === true);
+    }
+    
     public async openAsync(): Promise<void> {
         this.click();
     }
@@ -138,6 +151,10 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
         const model = this.state.model as any;
         model.value = null;
         await this.setState({model});
+        
+        if (this.props.onChange) {
+            await this.props.onChange(this.state.model.value);
+        }
     }
 
     public clear(): void {
@@ -164,6 +181,7 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
     public renderInput(): React.ReactNode {
         const smallStyle: any = (this.props.small) && styles.small;
         const readonlyStyle: any = (this.readonly) && styles.readonly;
+        const clearButton: boolean = (this.clearButton) && (!!this.state.model.value);
 
         return (
             <div className={this.css(styles.dateInput, smallStyle, readonlyStyle, this.props.className)}>
@@ -175,6 +193,8 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             dateFormat={this.format as string}
                             minDate={this.props.minDate}
                             maxDate={this.props.maxDate}
+                            minTime={this.props.minTime || undefined}
+                            maxTime={this.props.maxTime || undefined}
                             selected={this.selected}
                             className="form-control"
                             calendarClassName={this.css("datepicker", this.calendarClassName)}
@@ -196,6 +216,20 @@ export default class DateInput extends BaseInput<Date, IDateInputProps, IDateInp
                             onChangeRaw={(e) => this.handleRawChangeAsync(e)}
                             onBlur={() => this.valueBlurHandlerAsync()}
                 />
+
+                {
+                    (clearButton) &&
+                    (
+                        <div className={this.css(styles.clearButtonIcon)}>
+                            <Icon stopPropagation
+                                  name="fa fa-times"
+                                  size={IconSize.Normal}
+                                  onClick={() => this.clearAsync()}
+                            />
+                        </div>
+                    )
+                }
+                
             </div>
         );
     }

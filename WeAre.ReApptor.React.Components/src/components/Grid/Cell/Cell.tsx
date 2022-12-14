@@ -26,7 +26,44 @@ interface ICellProps<TItem = {}> {
 export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> implements ICell {
 
     private readonly _inputRef: React.RefObject<IInput> = React.createRef();
+    
+    private findNextInputCell(cell: CellModel<TItem>): CellModel<TItem> | null {
+        
+        do {
+            cell = (cell.isLastColumn)
+                ? cell.nextRow.cells[0]
+                : cell.next;
+            
+            if ((cell.isVisible) && (!cell.isReadonly) && (cell.inputContentInstance)) {
+                return cell;
+            }
 
+        } while ((!cell.isLastColumn) || (!cell.isLastRow));
+
+        return null;
+    }
+
+    private async onKeyDownAsync(e: React.KeyboardEvent): Promise<void> {
+
+        const tab: boolean = (e.keyCode == 9);
+        
+        if (tab) {
+            const cell: CellModel<TItem> = this.cell;
+
+            if ((cell.inputContentInstance) && (cell.inputContentInstance.edit)) {
+                e.preventDefault();
+
+                await cell.inputContentInstance.hideEditAsync();
+
+                const nextCell: CellModel<TItem> | null = this.findNextInputCell(cell);
+                
+                if ((nextCell) && (nextCell.inputContentInstance)) {
+                    await nextCell.inputContentInstance.showEditAsync();
+                }
+            }
+        }
+    }
+    
     private findValueByGridAccessor(model: TItem, accessor: string | GridAccessorCallback<any> | null = null): any {
         return (accessor)
             ? (typeof accessor === "function")
@@ -177,7 +214,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         ?
                         (
                             <div className={gridStyles.twoLines}>
-                                <span className={this.css(linkStyle, valueBoldStyle)} style={inlineStyles} onClick={async () => await this.invokeCallback(cell)} title={GridLocalizer.get(title)}>
+                                <span className={this.css(linkStyle, valueBoldStyle)} style={inlineStyles}  title={GridLocalizer.get(title)} onClick={() => this.invokeCallback(cell)}>
                                     {ReactUtility.toMultiLines(cellValue)}
                                 </span>
                                 <span style={inlineStyles} className={this.css(infoValueBold)} title={GridLocalizer.get(infoTitle)}>
@@ -187,7 +224,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         )
                         :
                         (
-                            <span className={this.css(linkStyle)} style={inlineStyles} onClick={async () => await this.invokeCallback(cell)} title={GridLocalizer.get(title)}>
+                            <span className={this.css(linkStyle)} style={inlineStyles} title={GridLocalizer.get(title)} onClick={() => this.invokeCallback(cell)}>
                                 {ReactUtility.toMultiLines(cellValue)}
                             </span>
                         )
@@ -205,50 +242,11 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                            ref={this._inputRef as React.RefObject<TextInput>}
                            className={this.css(gridStyles.textInput, noWrapStyle)}
                            value={cellValue || ""}
-                           title={cell.title}
+                           title={GridLocalizer.get(cell.title)}
                            maxLength={settings.maxLength || undefined}
-                           onChange={async (sender, value, userInteraction, done) => await this.onTextCellChangeAsync(cell, value, userInteraction, done)}
+                           onChange={(sender, value, userInteraction, done) => this.onTextCellChangeAsync(cell, value, userInteraction, done)}
                 />
             </div>
-        );
-    }
-
-    private renderAddressCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: string | null): React.ReactNode {
-        return (
-            <div className={this.css(gridStyles.textContainer)}>
-                <AddressInput clickToEdit
-                              className={this.css(gridStyles.addressInput)}
-                              value={cellValue || ""}
-                              locationPicker={settings.locationPicker}
-                              append={settings.locationPicker}
-                              onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
-                />
-            </div>
-        );
-    }
-
-    private renderIconCellContent(cell: CellModel<TItem>, cellValue: string | IIconProps | null): React.ReactNode {
-        const icon: IIconProps | null = GridTransformer.toIcon(cellValue);
-        const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
-        const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
-        
-        return (
-            <div className={this.css(alignCenter)} title={cell.title}>
-                {(icon) && (<Icon {...icon} size={size}/>)}
-            </div>
-        );
-    }
-
-    private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
-        const name: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
-        return (
-            <label htmlFor={name} title={cell.title}>
-                <input type="checkbox"
-                       id={name}
-                       checked={cellValue}
-                       onChange={async (e: React.ChangeEvent<HTMLInputElement>) => await this.onBooleanCellChangeAsync(cell, e.target.checked)}
-                />
-            </label>
         );
     }
 
@@ -285,6 +283,7 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
 
         return (
             <div className={this.css(gridStyles.numberContainer, numberInfoStyle)}>
+                
                 {
                     (hasInfo) &&
                     (
@@ -293,7 +292,9 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         </span>
                     )
                 }
+                
                 <NumberInput clickToEdit
+                             ref={this._inputRef as React.RefObject<NumberInput>}
                              title={GridLocalizer.get(cell.title)}
                              hideArrows={!settings.arrows}
                              className={this.css(gridStyles.numberInput, hideZeroStyle, valueBoldStyle, withArrowsStyle)}
@@ -302,9 +303,50 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                              max={max || undefined}
                              step={settings.step || undefined}
                              value={cellValue || 0}
-                             onChange={async (sender, value, userInteraction, done) => await this.onNumberCellChangeAsync(cell, value, userInteraction, done)}
+                             onChange={(sender, value, userInteraction, done) => this.onNumberCellChangeAsync(cell, value, userInteraction, done)}
+                />
+                
+            </div>
+        );
+    }
+
+    private renderAddressCellContent(cell: CellModel<TItem>, settings: ColumnSettings<TItem>, cellValue: string | null): React.ReactNode {
+        return (
+            <div className={this.css(gridStyles.textContainer)}>
+                <AddressInput clickToEdit
+                              ref={this._inputRef as React.RefObject<AddressInput>}
+                              className={this.css(gridStyles.addressInput)}
+                              value={cellValue || ""}
+                              locationPicker={settings.locationPicker}
+                              append={settings.locationPicker}
+                              onChange={(location: GeoLocation) => this.onPlaceSelectedAsync(cell, location)}
                 />
             </div>
+        );
+    }
+
+    private renderIconCellContent(cell: CellModel<TItem>, cellValue: string | IIconProps | null): React.ReactNode {
+        const icon: IIconProps | null = GridTransformer.toIcon(cellValue);
+        const size: IconSize | undefined = (icon != null) ? icon.size || IconSize.Large : undefined;
+        const alignCenter: any = (cell.column.textAlign == TextAlign.Center) && gridStyles.center;
+        
+        return (
+            <div className={this.css(alignCenter)} title={GridLocalizer.get(cell.title)} onClick={() => this.invokeCallback(cell)}>
+                {(icon) && (<Icon {...icon} size={size}/>)}
+            </div>
+        );
+    }
+
+    private renderBooleanCellContent(cell: CellModel<TItem>, cellValue: boolean): React.ReactNode {
+        const id: string = `grid_${cell.grid.id}_${cell.rowIndex}_${cell.columnIndex}_input`;
+        return (
+            <label htmlFor={id} title={GridLocalizer.get(cell.title)}>
+                <input type="checkbox"
+                       id={id}
+                       checked={cellValue}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.onBooleanCellChangeAsync(cell, e.target.checked)}
+                />
+            </label>
         );
     }
 
@@ -348,12 +390,12 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         (
                             <div className={gridStyles.twoLines}>
                                 <DateInput className={this.css(shortDateStyle)}
-                                           title={cell.title}
+                                           title={GridLocalizer.get(cell.title)}
                                            shortDate={shortDate}
                                            minDate={minDate}
                                            maxDate={maxDate}
                                            value={cellValue}
-                                           onChange={async (date: Date) => await this.onDateCellChangeAsync(cell, date)}
+                                           onChange={(date: Date) => this.onDateCellChangeAsync(cell, date)}
                                 />
                                 <span title={GridLocalizer.get(settings.infoTitle)}>
                                     {infoValue}
@@ -363,12 +405,12 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                         :
                         (
                             <DateInput className={this.css(shortDateStyle)}
-                                       title={cell.title}
+                                       title={GridLocalizer.get(cell.title)}
                                        shortDate={shortDate}
                                        minDate={minDate}
                                        maxDate={maxDate}
                                        value={cellValue}
-                                       onChange={async (date: Date) => await this.onDateCellChangeAsync(cell, date)}
+                                       onChange={(date: Date) => this.onDateCellChangeAsync(cell, date)}
                             />
                         )
                 }
@@ -608,6 +650,8 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
         }
 
         const rowSpan: number | null = cell.calcRowSpan();
+        const colSpan: number = (this.props.colSpan ?? cell.columnSpan);
+
         const rowSpanStyle: any = (rowSpan) && gridStyles.rowSpan;
         const noActionsStyle: any = ((!deleted) && (cell.actions.filter(action => action.visible).length === 0)) && (gridStyles.noActions);
         const notValidStyle: any = (editable && !readonly && !cell.valid) && (gridStyles.notValid);
@@ -625,8 +669,9 @@ export default class Cell<TItem = {}> extends BaseComponent<ICellProps<TItem>> i
                     className={this.css(rowSpanStyle, column.className, cell.className, cellHoveringStyle, notValidStyle, deletedStyle, deletedFirstCellStyle, deletedLastCellStyle, this.cellPaddingClassName, noWrapClass, wordBreakClass, checkedStyle, selectedStyle)}
                     style={inlineStyles}
                     rowSpan={rowSpan || undefined}
-                    colSpan={this.props.colSpan}
+                    colSpan={colSpan}
                     onClick={() => this.props.onClick?.(cell)}
+                    onKeyDown={(e: React.KeyboardEvent) => this.onKeyDownAsync(e)}
                 >
 
                     {

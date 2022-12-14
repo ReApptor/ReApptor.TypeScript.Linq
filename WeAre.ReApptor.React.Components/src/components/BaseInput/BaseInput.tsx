@@ -237,7 +237,7 @@ export class RequiredValidator extends BaseValidator {
         if ((str == null) || (str.length === 0)) {
             return this.getMessage();
         }
-        
+
         return null;
     }
 
@@ -423,7 +423,8 @@ export interface IInput extends IBaseComponent {
     hideEditAsync(): Promise<void>;
     showEditAsync(select?: boolean): Promise<void>;
     setReadonlyAsync(value: boolean): Promise<void>;
-    readonly: boolean;
+    readonly readonly: boolean;
+    readonly edit: boolean;
 }
 
 export default abstract class BaseInput<TInputValue extends BaseInputValue, TProps extends IBaseInputProps<TInputValue>, TState extends IBaseInputState<TInputValue>>
@@ -534,6 +535,10 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         return BaseValidator.toString(this.value) || "";
     }
 
+    public get edit(): boolean {
+        return this.state.edit;
+    }
+
     public isValid(): boolean {
         if (this.props.liveValidator) {
             return (!this.state.validationError) && this._liveValidatorRef.current!.isValid;
@@ -542,14 +547,16 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     }
 
     public focus(): void {
-        if (this.inputElement) {
-            this.inputElement.focus();
+        const inputElement: HTMLInputElement | HTMLTextAreaElement | null = this.inputElement;
+        if (inputElement) {
+            inputElement.focus();
         }
     }
-    
+
     public click(): void {
-        if (this.inputElement) {
-            this.inputElement.click();
+        const inputElement: HTMLInputElement | HTMLTextAreaElement | null = this.inputElement;
+        if (inputElement) {
+            inputElement.click();
         }
     }
 
@@ -574,12 +581,14 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
     public async showEditAsync(select?: boolean): Promise<void> {
         await this.setEditAsync(true);
 
-        if (this.inputElement) {
+        const inputElement: HTMLInputElement | HTMLTextAreaElement | null = this.inputElement;
 
-            this.inputElement.focus();
+        if (inputElement) {
+
+            inputElement.focus();
 
             if (select) {
-                this.inputElement.select();
+                inputElement.select();
             }
         }
     }
@@ -751,7 +760,7 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         return BaseInputType.Text;
     }
 
-    protected getContainerClassname(): string {
+    protected getContainerClassName(): string {
         return "";
     }
 
@@ -823,8 +832,8 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
         const inlineStyle: any = (this.inline) && ("d-flex flex-row align-items-center " + styles.inlineInputGroup);
 
         return (
-            <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassname(), this.props.className)} hidden={this.props.hidden}>
-                
+            <div id={this.id} className={this.css(styles.inputGroup, inlineStyle, this.getContainerClassName(), this.props.className)} hidden={this.props.hidden}>
+
                 {
                     (this.props.label) &&
                     (
@@ -832,13 +841,13 @@ export default abstract class BaseInput<TInputValue extends BaseInputValue, TPro
 
                             <label className={this.state.validationError && "validation-error"} htmlFor={this.getInputId()}
                                    onClick={async (e: React.MouseEvent) => await this.onLabelClick(e)}>
-                                
+
                                 {
                                     (this.state.validationError)
                                         ? BaseInputLocalizer.get(this.state.validationError, BaseInputLocalizer.get(this.props.label))
                                         : ReactUtility.toMultiLines(BaseInputLocalizer.get(this.props.label))
                                 }
-                                
+
                             </label>
 
                             {

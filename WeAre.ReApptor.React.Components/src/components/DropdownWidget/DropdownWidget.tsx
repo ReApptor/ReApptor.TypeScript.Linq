@@ -109,8 +109,15 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
     protected async onClickAsync(e: React.MouseEvent): Promise<void> {
         e.stopPropagation();
-
+        
         if ((this.isMounted) && (this.dropdown)) {
+            
+            if ((this.dropdown.collapsed) && (this.state.minimized)) {
+                await this.setState({minimized: false});
+            } else if (this.props.minimized) {
+                await this.setState({minimized: true});
+            }
+            
             await this.dropdown.toggleAsync();
         }
     }
@@ -125,8 +132,8 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
         await this.updateDescriptionAsync();
 
-        if (this.props.autoCollapse) {
-            await sender.collapseAsync();
+        if ((userInteraction) && (this.props.autoCollapse)) {
+            await this.collapseAsync();
         }
 
         if (this.props.onChange) {
@@ -176,14 +183,17 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         const outside = Utility.clickedOutside(target, this.id);
 
         if (outside) {
-            if ((this.isMounted) && (this.dropdown)) {
-                await this.dropdown.collapseAsync();
-            }
+            await this.collapseAsync();
         }
     }
 
     public async collapseAsync(): Promise<void> {
-        if (this.dropdown) {
+        if ((this.isMounted) && (this.dropdown) && (this.dropdown.expanded)) {
+
+            if (this.props.minimized) {
+                await this.setState({minimized: true});
+            }
+
             await this.dropdown.collapseAsync();
         }
     }
@@ -293,7 +303,7 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
         }
     }
 
-    protected renderContent(renderHidden: boolean = false): React.ReactNode {
+    protected renderExtendedContent(): React.ReactNode {
 
         const dropdownType: DropdownType = (this.mobile) ? DropdownType.List : DropdownType.Dropdown;
 
@@ -301,9 +311,6 @@ export default class DropdownWidget<TItem = {}> extends BaseWidget<IDropdownWidg
 
         return (
             <div className={styles.dropdownWidget}>
-                {
-                    super.renderContent(renderHidden)
-                }
                 {
                     (this.state.data) &&
                     (

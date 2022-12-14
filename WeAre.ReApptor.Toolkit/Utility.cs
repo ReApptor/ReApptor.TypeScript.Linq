@@ -709,7 +709,12 @@ namespace WeAre.ReApptor.Toolkit
         {
             return ((data != null) && (data.Length > 0)) ? $"data:{mimeType};base64,{Convert.ToBase64String(data)}" : null;
         }
-
+        
+        public static bool IsBase64Src(this string src)
+        {
+            return (!string.IsNullOrWhiteSpace(src)) && (src.StartsWith("data:"));
+        }
+        
         public static bool IsEqual(string x, string y, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase)
         {
             bool xNull = (x == null);
@@ -961,7 +966,7 @@ namespace WeAre.ReApptor.Toolkit
         }
 
         #endregion
-
+        
         #region Compress
 
         public static async Task<MemoryStream> CompressAsync(Stream data, bool deflate = true)
@@ -1012,35 +1017,35 @@ namespace WeAre.ReApptor.Toolkit
             return result;
         }
 
-        public static async Task<byte[]> CompressAsync(byte[] data)
+        public static async Task<byte[]> CompressAsync(byte[] data, bool deflate = true)
         {
-            data ??= new byte[0];
+            if ((data == null) || (data.Length == 0))
+            {
+                return null;
+            }
 
-            await using var compressed = new MemoryStream();
+            await using var input = new MemoryStream(data);
 
-            await using var deflate = new DeflateStream(compressed, CompressionMode.Compress);
-            
-            await deflate.WriteAsync(data, 0, data.Length);
-
-            return await compressed.ToByteArrayAsync();
-        }
-
-        public static async Task<byte[]> DecompressAsync(byte[] data)
-        {
-            data ??= new byte[0];
-            
-            await using var compressed = new MemoryStream(data);
-            
-            await using var deflate = new DeflateStream(compressed, CompressionMode.Decompress);
-                
-            await using var result = new MemoryStream();
-                    
-            await deflate.CopyToAsync(result);
+            await using MemoryStream result = await input.CompressAsync(deflate);
                         
             return await result.ToByteArrayAsync();
         }
 
-        public static async Task<string> Compress(string data)
+        public static async Task<byte[]> DecompressAsync(byte[] data, bool deflate = true)
+        {
+            if ((data == null) || (data.Length == 0))
+            {
+                return null;
+            }
+
+            await using var input = new MemoryStream(data);
+
+            await using MemoryStream result = await input.DecompressAsync(deflate);
+                        
+            return await result.ToByteArrayAsync();
+        }
+
+        public static async Task<string> CompressAsync(string data)
         {
             if (string.IsNullOrEmpty(data))
             {
@@ -1054,7 +1059,7 @@ namespace WeAre.ReApptor.Toolkit
             return Convert.ToBase64String(rawData);
         }
 
-        public static async Task<string> Decompress(string data)
+        public static async Task<string> DecompressAsync(string data)
         {
             if (String.IsNullOrEmpty(data))
             {
@@ -1068,7 +1073,7 @@ namespace WeAre.ReApptor.Toolkit
         }
 
         #endregion
-        
+
         #region Re-Try
 
         public static async Task InvokeAsync(Func<Task> action, int attempts = 1, int delay = 100)

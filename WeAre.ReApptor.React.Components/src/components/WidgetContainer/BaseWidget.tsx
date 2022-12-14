@@ -217,7 +217,7 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
 
     public async toggleMinimized(): Promise<void> {
-        if(this.minimized) {
+        if (this.minimized) {
             await this.maximizeAsync();
         } else {
             await this.minimizeAsync();
@@ -272,19 +272,26 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             </div>
         );
     }
+    
+    protected renderExtendedContent(): React.ReactNode {
+        return (<React.Fragment/>);
+    }
 
     protected renderMinimized(): React.ReactNode {
+
+        const minimized: boolean = this.minimized;
+        
         return (
             <div className={this.css(styles.compactContainer, this.classNames.compactContainer)}>
                 {
-                    (this.minimized) && this.renderContent()
+                    (minimized) && this.renderContent()
                 }
                 <div className={this.css(styles.labelAndDescription, this.classNames.labelAndDescription)}>
                     {(this.label) && <div className={this.css(styles.label, this.classNames.label)}><span>{this.label}</span></div>}
                     {(this.description) && <div className={this.css(styles.description, this.classNames.description)}><span>{this.description}</span></div>}
                 </div>
                 {
-                    (this.minimized) && this.renderContent(true)
+                    (minimized) && this.renderContent(true)
                 }
             </div>
         );
@@ -312,6 +319,11 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
             newState = newState || {};
             newState.text = nextProps.text;
         }
+        
+        if (this.props.minimized !== nextProps.minimized) {
+            newState = newState || {};
+            newState.minimized = nextProps.minimized;
+        }
 
         if (newState != null) {
             await this.setState(newState);
@@ -321,6 +333,9 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
     }
 
     public render(): React.ReactNode {
+        
+        const minimized: boolean = this.minimized;
+        
         return (
             <div id={this.id}
                  className={this.css(styles.widget, this.props.className, this.getInnerClassName(), (this.wide ? "col-md-12" : "col-md-6"), this.classNames.widget)}
@@ -329,20 +344,24 @@ export default abstract class BaseWidget<TProps extends IBaseWidgetProps = {}, T
                 <a href={this.getHref()}
                    rel="noreferrer"
                    title={this.toSingleLine(this.description || this.label)}
-                   onClick={async (e: React.MouseEvent) => await this.onClickAsync(e)}
                    target={this.getTarget()}
-                   className={this.css(this.minimized && styles.compact, this.transparent && styles.transparent)}
-                   onMouseDown={async (e: React.MouseEvent) => await this.onMouseDownAsync(e)}
+                   className={this.css(minimized && styles.compact, this.transparent && styles.transparent)}
                    draggable={false} // Future note -> change this if drag'n'drop functionality for Widgets are going to be implemented
+                   onMouseDown={(e: React.MouseEvent) => this.onMouseDownAsync(e)}
+                   onClick={(e: React.MouseEvent) => this.onClickAsync(e)}
                 >
 
-                    { (!this.minimized) && this.renderLabel() }
+                    { (!minimized) && this.renderLabel() }
 
                     <div className={this.css(styles.contentContainer, this.classNames.contentContainer)} style={this.contentFlexStyle}>
-                        { (!this.minimized) && this.renderContent() }
+                        
+                        { (!minimized) && this.renderContent() }
+                        
+                        { this.renderExtendedContent() }
+                        
                     </div>
 
-                    { this.hasDescription() && this.renderDescription() }
+                    { (!minimized) && this.hasDescription() && this.renderDescription() }
 
                     { this.renderMinimized() }
 

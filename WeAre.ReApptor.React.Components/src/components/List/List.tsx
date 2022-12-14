@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState} from "@weare/reapptor-react-common";
 import { SelectListItem } from "../Dropdown/SelectListItem";
-import Dropdown, {DropdownOrderBy, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
+import Dropdown, {DropdownOrderBy, DropdownRequiredType, DropdownSelectType, DropdownSubtextType, DropdownType, IDropdown} from "../Dropdown/Dropdown";
 import ListLocalizer from "./ListLocalizer";
 
 import styles from "./List.module.scss";
@@ -13,9 +13,11 @@ interface IListProps<TItem = {}> {
     items?: TItem[];
     orderBy?: DropdownOrderBy;
     subtextType?: DropdownSubtextType;
+    selectType?: DropdownSelectType;
     selectedItem?: TItem | string | number;
     selectedItems?: TItem[] | string[] | number[];
     required?: boolean;
+    requiredType?: DropdownRequiredType;
     multiple?: boolean;
     filterMinLength?: number;
     filterMaxLength?: number;
@@ -25,6 +27,14 @@ interface IListProps<TItem = {}> {
     absoluteListItems?: boolean;
     noDataText?: string;
     noGrouping?: boolean;
+    groupSelected?: boolean;
+    filterFavorite?: boolean;
+
+    /**
+     * Track the items data changes using hash calculation. Warning: might cause performance degradation with big data.
+     */
+    trackChanges?: boolean;
+
     transform?(item: TItem): SelectListItem;
     fetchItems?(sender: List<TItem>): Promise<TItem[]>;
     onChange?(sender: List<TItem>, value: TItem | null, userInteraction: boolean): Promise<void>;
@@ -142,18 +152,17 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
     }
 
     public get items(): TItem[] {
-        return this.state.data || [];
+        return this.props.items ?? (this.state.data || []);
     }
     
     render(): React.ReactNode {
         return (
             <div className={styles.listWrapper} style={{maxWidth: this.maxWidth}}>
                 
-                <Dropdown id={`${this.id}_dropdown`}
+                <Dropdown id={`${this.id}_dropdown`} noSubtext noWrap
                           ref={this._dropdownRef}
                           absoluteListItems={this.props.absoluteListItems}
-                          noSubtext noWrap
-                          noDataText={this.noDataOrLoadingText || undefined}
+                          noDataText={this.noDataOrLoadingText}
                           noGrouping={this.props.noGrouping}
                           maxHeight={this.props.maxHeight}
                           multiple={this.props.multiple}
@@ -164,14 +173,19 @@ export default class List<TItem = {}> extends BaseAsyncComponent<IListProps<TIte
                           disabled={this.props.disabled || this.isLoading}
                           type={DropdownType.List}
                           required={this.props.required}
+                          requiredType={this.props.requiredType}
                           className={this.css(styles.list, this.props.className)}
                           orderBy={this.props.orderBy}
                           subtextType={this.props.subtextType}
+                          selectType={this.props.selectType}
+                          trackChanges={this.props.trackChanges}
                           items={this.items}
                           selectedItem={this.props.selectedItem}
                           selectedItems={this.props.selectedItems}
                           transform={this.props.transform}
-                          onChange={async (sender, item: TItem, userInteraction: boolean) => await this.onChangeAsync(item, userInteraction) }
+                          groupSelected={this.props.groupSelected}
+                          filterFavorite={this.props.filterFavorite}
+                          onChange={(sender, item: TItem, userInteraction: boolean) => this.onChangeAsync(item, userInteraction) }
                 />
                 
             </div>

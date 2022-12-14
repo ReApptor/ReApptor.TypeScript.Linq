@@ -27,9 +27,15 @@
         padding-right: 0;
     }
 
-    &.labelPadding {
+    &.labelRightPadding {
         i {
             padding-right: $baseline;
+        }
+    }
+
+    &.labelLeftPadding {
+        i {
+            padding-left: $baseline;
         }
     }
 
@@ -40,8 +46,12 @@
         min-width: 33px;
         min-height: 33px;
 
-        &.iconPadding.labelPadding {
+        &.labelRightPadding {
             padding-right: 0.7rem;
+        }
+
+        &.labelLeftPadding {
+            padding-left: 0.7rem;
         }
     }
 
@@ -83,12 +93,28 @@
             position: absolute;
             top: 10px;
             right: 0;
+            padding-right: $baseline;
         }
 
         span {
             flex-grow: 1;
         }
         
+    }
+    
+    .count {
+        position: absolute;
+        right: -10px;
+        top: -7px;
+        padding-left: 9px;
+        padding-right: 9px;
+        font-size: 12px;
+        background: #000000;
+        color: #fff;
+        vertical-align: top;
+        border-radius: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
     }
 }
 

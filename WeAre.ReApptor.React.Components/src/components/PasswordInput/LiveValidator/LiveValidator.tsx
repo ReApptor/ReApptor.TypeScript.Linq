@@ -59,18 +59,18 @@ export default class LiveValidator extends BaseComponent<ILiveValidatorProps, IL
     }
     
     public async componentWillReceiveProps(nextProps: ILiveValidatorProps): Promise<void> {
-        if(nextProps.value !== this.props.value) {
+        if (nextProps.value !== this.props.value) {
             await this.validateAsync(nextProps.value);
         }
         
-        if(nextProps.validationRows !== this.props.validationRows) {
+        if (nextProps.validationRows !== this.props.validationRows) {
             await this.setState({validationRows: nextProps.validationRows});
         }
     }
 
     public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
-        await this.validateAsync(this.props.value)
+        await this.validateAsync(this.props.value);
     }
 
     render() {

@@ -1,7 +1,8 @@
 export default class FileModel {
 
-    constructor(src: string | null = null) {
+    constructor(src: string | null = null, type: string | null = null) {
         this.src = src || "";
+        this.type = type || "";
     }
 
     public id: string = "";
@@ -18,5 +19,5 @@ export default class FileModel {
     
     public lastModified: Date = new Date();
     
-    public readonly isFileModel: boolean = true;
+    public readonly isFileModel: true = true;
 }

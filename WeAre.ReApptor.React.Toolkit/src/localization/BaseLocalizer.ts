@@ -18,6 +18,19 @@ export interface ILanguage {
     readonly code: string;
 }
 
+export class Language implements ILanguage {
+    constructor(code: string = "", label: string = "") {
+        this.code = code;
+        this.label = label;
+    }
+
+    public code: string = "";
+    
+    public label: string = "";
+
+    readonly isLanguage: true = true;
+}
+
 export interface ILocalizer {
 
     /**
