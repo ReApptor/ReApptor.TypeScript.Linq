@@ -17,11 +17,13 @@
     <ItemGroup>
         <Compile Remove="lib\**" />
         <Compile Remove="dist\**" />
+        <Compile Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Remove="lib\**" />
         <EmbeddedResource Remove="dist\**" />
+        <EmbeddedResource Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +31,8 @@
         <None Remove="package-lock.json" />
         <None Remove=".eslintrc.json" />
         <None Remove="dist\**" />
+        <None Remove="tsdoc-metadata.json" />
+        <None Remove="temp\**" />
     </ItemGroup>
 
     <ItemGroup>
