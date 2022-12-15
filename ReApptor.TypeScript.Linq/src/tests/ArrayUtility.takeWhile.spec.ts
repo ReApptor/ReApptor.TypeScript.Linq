@@ -15,18 +15,18 @@ describe("takeWhile", function() {
     });
 
     test("take-1-from-2", function () {
-        const result: number[] = [1, 2].takeWhile((item: number) => item == 2);
-        expect(result).toEqual([2]);
+        const result: number[] = [1, 2].takeWhile((item: number) => item != 2);
+        expect(result).toEqual([1]);
     });
-    
+
     test("take-1-from-2-by-index", function () {
-        const result: number[] = [1, 2].takeWhile((item: number, index: number) => index == 1);
-        expect(result).toEqual([2]);
+        const result: number[] = [1, 2].takeWhile((item: number, index: number) => index < 1);
+        expect(result).toEqual([1]);
     });
     
     test("take-2-from-3", function () {
         const result: number[] = [1, 2, 3].takeWhile((item: number) => item >= 2);
-        expect(result).toEqual([2, 3]);
+        expect(result).toEqual([]);
     });
     
     test("take-2-from-2", function () {
