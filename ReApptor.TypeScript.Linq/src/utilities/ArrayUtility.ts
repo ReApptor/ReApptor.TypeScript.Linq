@@ -30,6 +30,9 @@ export default class ArrayUtility {
     }
 
     public static chunk<T>(items: readonly T[], size: number): T[][] {
+        if (size < 1)
+            throw Error(`Size "${size}" out of range, must be at least 1 or greater.`);
+        
         const result: T[][] = [];
 
         const copy: T[] = [...items];
