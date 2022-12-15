@@ -8,7 +8,7 @@ describe("skip", function() {
         expect(result).toEqual([]);
     });
     
-    test("skip-from0", function () {
+    test("skip-1from0", function () {
         const result: number[] = [].skip(-1);
         expect(result).toEqual([]);
     });

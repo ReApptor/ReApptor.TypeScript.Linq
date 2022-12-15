@@ -35,6 +35,8 @@
     <ItemGroup>
       <TypeScriptCompile Include="src\extensions\ArrayExtensions.ts" />
       <TypeScriptCompile Include="src\index.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.count.spec.ts" />
+      <TypeScriptCompile Include="src\tests\ArrayUtility.distinct.spec.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.takeLast.spec.ts" />
