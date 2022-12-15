@@ -573,6 +573,12 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
         this.initializeTooltips();
     }
 
+    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
+        return (this._takePictureRef.current)
+            ? this._takePictureRef.current.takePictureAsync(camera)
+            : null;
+    }
+
     public download(file: FileModel): void {
         const link: HTMLAnchorElement | null = this._downloadLink.current;
         if (link) {
@@ -584,12 +590,6 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             setTimeout(() => link.click(), 500);
             //link.click();
         }
-    }
-    
-    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
-        return (this._takePictureRef.current)
-            ? this._takePictureRef.current.takePictureAsync(camera)
-            : null;
     }
     
     public callTo(phone: string): void {
