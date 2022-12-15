@@ -99,7 +99,7 @@ export default class FileInputTests extends BaseComponent {
                         <FileInput dropZone multiple
                                    ref={this._pdfsFileInputRef}
                                    id={"pdfs"}
-                                   label={"EN: Upload/Remove files test (pdf)."}
+                                   label={"Upload/Remove files test (pdf) (MULTIPLE)."}
                                    placeholder={"Push me!"}
                                    fileTypes={["application/pdf"]}
                                    value={this.state.files}

@@ -76,6 +76,17 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
             await this.props.onBlur(this);
         }
     }
+    
+    private getFileReferences(fileList: FileList | null): File[] {
+        const fileReferences: File[] = [];
+        if (fileList) {
+            const length: number = fileList.length;
+            for (let i: number = 0; i < length; i++) {
+                fileReferences.push(fileList[i]);
+            }
+        }
+        return fileReferences;
+    }
 
     protected async valueChangeHandlerAsync(event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): Promise<void> {
         const changeEvent: React.ChangeEvent<HTMLInputElement> = event as React.ChangeEvent<HTMLInputElement>;
@@ -85,52 +96,55 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
         await this.fileChangeAsync(fileReferences);
     }
     
-    private async onDropHandlerAsync(e: any): Promise<void> {
-        this.preventEventDefaultBehavior(e);
+    private async onDropHandlerAsync(event: any): Promise<void> {
+        this.preventEventDefaultBehavior(event);
         
-        const fileReferences: FileList | null = e.nativeEvent.dataTransfer.files;
+        const fileReferences: FileList | null = event.nativeEvent.dataTransfer.files;
         
         await this.fileChangeAsync(fileReferences);
     }
     
-    private async fileChangeAsync(fileReferences: FileList | null): Promise<void> {
+    private async fileChangeAsync(fileList: FileList | null): Promise<void> {
+        
+        const fileReferences: File[] = this.getFileReferences(fileList);
+        
         if (this.props.multiple) {
             const files: FileModel[] = [];
 
-            if (fileReferences) {
-                for (let i: number = 0; i < fileReferences.length; i++) {
-                    const file: FileModel | null = await Utility.transformFileAsync(fileReferences[i]);
+            for (let i: number = 0; i < fileReferences.length; i++) {
+                const file: FileModel | null = await Utility.transformFileAsync(fileReferences[i]);
 
-                    if (file) {
-                        files.push(file);
-                    }
+                if (file) {
+                    files.push(file);
                 }
             }
 
             if (files.length) {
-                if (this.value instanceof Array && this.value.length > 0) {
-                    const newFiles: FileModel[] = files.filter(file => !(this.value as FileModel[]).map(file => file.name).includes(file.name));
-                    const newValue: FileModel[] = this.value.concat(newFiles);
+                const existingFiles: FileModel[] = (this.value as FileModel[]) || [];
+                
+                const newFiles: FileModel[] = files.where(file => !existingFiles.some(item => item.name == file.name));
+
+                if (newFiles.length > 0) {
+                    
+                    const newValue: FileModel[] = existingFiles.concat(newFiles);
+
+                    await this.updateValueAsync(newValue);
 
                     if (this.props.onChange) {
-                        await this.props.onChange(this, newValue)
+                        await this.props.onChange(this, newFiles);
                     }
-                    
-                    return await this.updateValueAsync(newValue)
                 }
-                
-                await this.updateValueAsync(files);
             }
         } else {
-            const fileReference: File | null = (fileReferences) ? fileReferences[0] : null;
+            const fileReference: File | null = fileReferences.firstOrDefault();
 
             const file: FileModel | null = await Utility.transformFileAsync(fileReference);
 
             await this.updateValueAsync(file);
-        }
-        
-        if (this.props.onChange) {
-            await this.props.onChange(this, this.state.model.value || [])
+
+            if (this.props.onChange) {
+                await this.props.onChange(this, this.state.model.value || []);
+            }
         }
     }
     
