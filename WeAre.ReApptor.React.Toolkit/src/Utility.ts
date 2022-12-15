@@ -833,6 +833,15 @@ export default class Utility {
         return URL.createObjectURL(blob);
     }
 
+    public static isBase64(value: string): boolean {
+        try {
+            window.atob(value);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     /**
      * @param mimeType mimeType to update
      * @return if mimeType is known then it will return the new version otherwise it will return the given mimeType
