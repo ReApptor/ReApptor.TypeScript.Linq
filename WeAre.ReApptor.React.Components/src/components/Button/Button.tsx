@@ -1,9 +1,9 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility} from "@weare/reapptor-react-common";
+import {BaseComponent, IGlobalClick, Justify, PageRoute, PageRouteProvider, ReactUtility, JQueryNode, ConfirmationDialogTitleCallback, IConfirmation} from "@weare/reapptor-react-common";
 import Icon, {IconStyle, IIconProps} from "../Icon/Icon";
 import ButtonAction, {IButtonActionProps} from "./ButtonAction/ButtonAction";
-import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 import ButtonLocalizer from "./ButtonLocalizer";
 
 import styles from "./Button.module.scss";
@@ -54,7 +54,7 @@ export interface IButtonProps {
     /**
      * Props for an {@link Icon} displayed inside the {@link Button}.
      */
-    icon?: IIconProps;
+    icon?: IIconProps | string;
 
     iconPosition?: Justify;
 
@@ -178,7 +178,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
 
         if ((this.props.icon) && (this.iconPosition == Justify.Left)) {
-            return this.props.icon;
+            return (typeof this.props.icon === "string")
+                ? { name: this.props.icon }
+                : this.props.icon;
         }
 
         return null;
@@ -194,7 +196,9 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         }
 
         if ((this.props.icon) && (this.iconPosition == Justify.Right)) {
-            return this.props.icon;
+            return (typeof this.props.icon === "string")
+                ? { name: this.props.icon }
+                : this.props.icon;
         }
 
         return null;
@@ -320,7 +324,7 @@ export default class Button extends BaseComponent<IButtonProps, IButtonState> im
         await super.componentDidMount();
 
         if (this.hasActions) {
-            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
+            const actionsDiv: JQueryNode = this.JQuery(`#${this.actionsId}`);
 
             const buttonWidth: number = this.outerWidth();
             const actionsWidth: number = actionsDiv.outerWidth() || 0;

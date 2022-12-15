@@ -1,9 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "../Layout/Layout.module.scss";
 
-interface IThreeColumnsProps {
+interface IThreeColumnsProps extends IBaseContainerComponentProps {
 }
 
 export default class ThreeColumns extends BaseComponent<IThreeColumnsProps> {
@@ -24,7 +24,7 @@ export default class ThreeColumns extends BaseComponent<IThreeColumnsProps> {
         );
     }
     
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
                 {

@@ -32,7 +32,7 @@ export default class ArrayUtility {
     public static chunk<T>(items: readonly T[], size: number): T[][] {
         if (size < 1)
             throw Error(`Size "${size}" out of range, must be at least 1 or greater.`);
-        
+
         const result: T[][] = [];
 
         const copy: T[] = [...items];
@@ -81,11 +81,11 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(items[i], i);
-            
+
             if (!valid) {
                 break;
             }
-            
+
             result.push(item);
         }
         return result;
@@ -134,7 +134,7 @@ export default class ArrayUtility {
         }
         return defaultValue ?? null;
     }
-    
+
     public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
         const promises: Promise<void>[] = items.map(item => callback(item));
         await Promise.all(promises);

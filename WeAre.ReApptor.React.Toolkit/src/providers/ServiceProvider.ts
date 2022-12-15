@@ -1,7 +1,8 @@
 import {Dictionary} from "typescript-collections";
-import {IEnumProvider, ILocalizer, ITypeResolver} from "..";
 import {ITransformProvider} from "./BaseTransformProvider";
-import TypeResolver, {TDecoratorConstructor} from "./TypeResolver";
+import {ILocalizer} from "../localization/BaseLocalizer";
+import {IEnumProvider} from "./BaseEnumProvider";
+import TypeResolver, {ITypeResolver, TDecoratorConstructor} from "./TypeResolver";
 import Singleton from "./Singleton";
 
 /**
@@ -150,9 +151,7 @@ class ServiceProvider implements IService {
         return this.getService(nameof<ITransformProvider>());
     }
 
-
     // IService
-
 
     public getType(): ServiceType {
         return nameof(ServiceProvider);

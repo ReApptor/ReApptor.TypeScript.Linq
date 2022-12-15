@@ -1,4 +1,6 @@
-import {ServiceProvider, IService, ServiceType, ILocalizer, ISelectListItem } from "..";
+import ISelectListItem from "../models/ISelectListItem";
+import {ILocalizer} from "../localization/BaseLocalizer";
+import ServiceProvider, {IService, ServiceType} from "./ServiceProvider";
 
 export interface IEnumProvider {
     isEnum(typeName: string): boolean;

@@ -3,50 +3,80 @@
   "affected": {
     "defaultBase": "master"
   },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
-  },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "M2ZjMmQ0NTAtZTc3My00ZDcxLTk2NjgtZmQyZGE3Mjk5MTg3fHJlYWQtd3JpdGU=",
+        "parallel": 1
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
       }
+    }
+  },
+  "defaultProject": "WeAre.TestApplication.WebUI",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
+    },
+    "test": {
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ]
+    },
+    "lint": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
+      ]
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/babel.config.json"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/.eslintrc.json"
     ]
-  },
-  "projects": {
-    "WeAre.TestApplication.WebUI": {
-      "tags": []
-    },
-    "WeAre.ReApptor.React.Components.Localization": {
-      "tags": []
-    },
-    "WeAre.ReApptor.React.Components": {
-      "tags": []
-    },
-    "WeAre.ReApptor.React.Common": {
-      "tags": []
-    },
-    "WeAre.ReApptor.React.Toolkit": {
-      "tags": []
-    },
-    "ReApptor.TypeScript.Linq": {
-      "tags": []
-    },
-    "ReApptor.TypeScript.PagedList": {
-      "tags": []
-    }
   }
 }

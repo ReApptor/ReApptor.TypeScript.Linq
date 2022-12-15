@@ -1,6 +1,6 @@
 import React from "react";
 import {ArrayUtility, IPagedList, SortDirection, Utility} from "@weare/reapptor-toolkit";
-import {ActionType, BaseComponent, ch, IConfirmation, Justify, TextAlign} from "@weare/reapptor-react-common";
+import {ActionType, BaseComponent, ch, Justify, TextAlign, IConfirmation} from "@weare/reapptor-react-common";
 import {
     BorderType,
     CellModel,

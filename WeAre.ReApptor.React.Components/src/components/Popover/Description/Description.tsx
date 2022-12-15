@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, DescriptionModel} from "@weare/reapptor-react-common";
+import {BaseComponent, DescriptionModel, IBaseComponentProps} from "@weare/reapptor-react-common";
 import Form from "../../Form/Form";
 import ButtonContainer from "../../ButtonContainer/ButtonContainer";
 import Button, {ButtonType} from "../../Button/Button";
@@ -10,7 +10,7 @@ import {IconSize} from "../../Icon/Icon";
 import styles from "./Description.module.scss";
 import TextAreaInput from "../../TextAreaInput/TextAreaInput";
 
-interface IDescriptionProps {
+interface IDescriptionProps extends IBaseComponentProps {
     model?: DescriptionModel;
 }
 
@@ -65,14 +65,16 @@ export default class Description extends BaseComponent<IDescriptionProps, IDescr
         return this.state.model;
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
-            <Popover ref={this._popoverRef}
-                     className={this.css(styles.description, this.model.className)}
+            <Popover id={this.id}
+                     ref={this._popoverRef}
+                     className={this.css(styles.description, this.model.className, this.props.className)}
                      justify={this.model.justify}
                      align={this.model.align}
             >
-                <Form onSubmit={async (sender, data) => await this.onChangeAsync(data)}>
+                <Form onSubmit={(sender, data) => this.onChangeAsync(data)}>
+                    
                     <TextAreaInput autoFocus
                                    id="description" className="mb-2"
                                    cols={50}
@@ -81,6 +83,7 @@ export default class Description extends BaseComponent<IDescriptionProps, IDescr
                                    readonly={this.model.readonly}
                                    value={this.model.description}
                     />
+                    
                     {
                         (!this.model.readonly) &&
                         (
@@ -92,6 +95,7 @@ export default class Description extends BaseComponent<IDescriptionProps, IDescr
                             </ButtonContainer>
                         )
                     }
+                    
                 </Form>
             </Popover>
         )

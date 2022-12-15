@@ -1,9 +1,9 @@
-import { TextAlignProperty, VerticalAlignProperty } from "csstype";
+import {Property} from "csstype";
 import {TextAlign, VerticalAlign} from "./Enums";
 
 export default class StylesUtility {
     
-    public static textAlign(value: TextAlign | null | undefined): TextAlignProperty {
+    public static textAlign(value: TextAlign | null | undefined): Property.TextAlign {
         switch(value) {
             case TextAlign.Left:
                 return "left";
@@ -19,7 +19,7 @@ export default class StylesUtility {
         }
     }
     
-    public static verticalAlign(value: VerticalAlign | null | undefined): VerticalAlignProperty<0> {
+    public static verticalAlign(value: VerticalAlign | null | undefined): Property.VerticalAlign<0> {
         switch(value) {
             case VerticalAlign.Top:
                 return "top";

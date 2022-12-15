@@ -6,14 +6,10 @@ import ApiProvider from "../providers/ApiProvider";
 import PageCacheProvider from "../providers/PageCacheProvider";
 import {IBasePage} from "./BasePage";
 import ch from "../providers/ComponentHelper";
-import JQueryUtility from "../JQueryUtility";
+import JQueryUtility, {JQueryNode} from "../JQueryUtility";
 import DocumentEventsProvider, {DocumentEventType} from "../providers/DocumentEventsProvider";
 
 export type RenderCallback = (sender: IBaseComponent) => string | React.ReactNode;
-
-export interface IChildrenProps {
-    children?: React.ReactNode;
-}
 
 /**
  * A {@link React} component.
@@ -51,6 +47,10 @@ export interface IReactComponent {
     componentWillUnmount?(): Promise<void>;
 }
 
+export interface IReactChildrenProps {
+    readonly children?: Readonly<React.ReactNode> | Readonly<React.ReactNode[]>;
+}
+
 /**
  * A component which can have a spinner.
  */
@@ -76,6 +76,14 @@ export interface ISpinner {
 
 export interface IBaseClassNames {
     [key: string]: string | undefined;
+}
+
+export interface IBaseComponentProps {
+    id?: string;
+    className?: string;
+}
+
+export interface IBaseContainerComponentProps extends IBaseComponentProps, IReactChildrenProps {
 }
 
 /**
@@ -179,7 +187,7 @@ export interface IContainer {
 /**
  * Base class for all components.
  */
-export default abstract class BaseComponent<TProps = {}, TState = {}>
+export default abstract class BaseComponent<TProps = IBaseComponentProps | IBaseContainerComponentProps | {}, TState = {}>
     extends React.Component<TProps, TState>
     implements IBaseComponent {
 
@@ -307,7 +315,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     /**
      * @return The {@link BaseComponent}'s node in DOM as {@link jQuery}.
      */
-    protected getNode(): JQuery {
+    protected getNode(): JQueryNode {
         return this.JQuery(`#${this.id}`);
     }
 
@@ -322,7 +330,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     public get children(): React.ReactElement[] {
         this._childComponentRefs = [];
 
-        let children: any = this.props.children as any;
+        let children: any = (this.props as IReactChildrenProps).children as any;
         if (children && children.type && children.type.toString && children.type.toString() === "Symbol(react.fragment)") {
             children = children.props.children;
         }
@@ -569,12 +577,12 @@ export default abstract class BaseComponent<TProps = {}, TState = {}>
     public isComponent(): boolean { return true; }
 
     public outerHeight(includeMargin: boolean = true): number {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
         return node.outerHeight(includeMargin) || 0;
     }
 
     public outerWidth(includeMargin: boolean = true): number {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
         return node.outerWidth(includeMargin) || 0;
     }
 

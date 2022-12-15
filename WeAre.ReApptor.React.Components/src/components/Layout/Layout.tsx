@@ -12,7 +12,7 @@ import {
     IBasePage,
     IGlobalResize,
     ILayoutPage,
-    IPageContainer,
+    IPageContainer, JQueryNode,
     PageRoute,
     PageRouteProvider,
     SwipeDirection,
@@ -26,6 +26,7 @@ import LeftNav, {ILeftNavProps} from "../LeftNav/LeftNav";
 import TakePicture from "./TakePicture/TakePicture";
 
 import styles from "./Layout.module.scss";
+import {FileInput} from "../../index";
 
 export interface ILayoutProps {
 
@@ -532,6 +533,10 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
     public isLayout(): boolean {
         return true;
     }
+    
+    private get tooltips(): JQueryNode | any {
+        return this.JQuery('[data-toggle="tooltip"]');
+    }
 
     /**
      * @inheritDoc
@@ -539,9 +544,9 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * NOTE: handles only Bootstrap tooltips.
      */
     public initializeTooltips(): void {
-        const tooltip = this.JQuery('[data-toggle="tooltip"]');
+        const tooltip: JQueryNode | any = this.tooltips;
 
-        if (tooltip.length > 0) {
+        if ((tooltip.length > 0) && (typeof tooltip.tooltip === "function")) {
             tooltip.tooltip({
                 trigger: "click",
                 placement: "top",
@@ -559,28 +564,31 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
      * NOTE: handles only Bootstrap tooltips.
      */
     public reinitializeTooltips(): void {
-        this.JQuery('[data-toggle="tooltip"]').tooltip("dispose");
+        const tooltip: JQueryNode | any = this.tooltips;
+
+        if ((tooltip.length > 0) && (typeof tooltip.tooltip === "function")) {
+            tooltip.tooltip("dispose");
+        }
 
         this.initializeTooltips();
+    }
+
+    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
+        return (this._takePictureRef.current)
+            ? this._takePictureRef.current.takePictureAsync(camera)
+            : null;
     }
 
     public download(file: FileModel): void {
         const link: HTMLAnchorElement | null = this._downloadLink.current;
         if (link) {
-            link.href = file.src;
+            link.href = (Utility.isBase64(file.src))
+                ? Utility.toObjectUrl(file)
+                : file.src;
             link.download = file.name;
             link.target = "_self";
             link.type = file.type;
-            // Fix for Apple PWA iPhone 
-            setTimeout(() => link.click(), 500);
-            //link.click();
         }
-    }
-    
-    public async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {
-        return (this._takePictureRef.current)
-            ? this._takePictureRef.current.takePictureAsync(camera)
-            : null;
     }
     
     public callTo(phone: string): void {

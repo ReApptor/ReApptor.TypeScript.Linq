@@ -1,10 +1,9 @@
 import React from "react";
 import {FileModel} from "@weare/reapptor-toolkit";
-import {BaseComponent, ch} from "@weare/reapptor-react-common";
+import {BaseComponent, ch, ConfirmationDialogTitleCallback, IConfirmation} from "@weare/reapptor-react-common";
 import Modal, {ModalSize} from "../Modal/Modal";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import Button, {ButtonType} from "../Button/Button";
-import {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
 import ImageModalLocalizer from "./ImageModalLocalizer";
 
 import styles from "./ImageModal.module.scss";

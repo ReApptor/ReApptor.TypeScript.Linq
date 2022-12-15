@@ -508,9 +508,9 @@ export default class ch {
         }
     }
 
-    public static print(file: FileModel, target?: string, features?: string, replace?: boolean): void {
+    public static print(file: FileModel, target?: string, features?: string): void {
         const objectUrl: string = Utility.toObjectUrl(file);
-        window.open(objectUrl, target, features, replace);
+        window.open(objectUrl, target, features);
     }
 
     public static async takePictureAsync(camera: boolean | CameraType = true): Promise<FileModel | null> {

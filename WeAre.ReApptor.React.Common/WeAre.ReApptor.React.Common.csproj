@@ -29,7 +29,6 @@
       <TypeScriptCompile Include="src\models\DescriptionModel.ts" />
       <TypeScriptCompile Include="src\models\DocumentPreviewModel.ts" />
       <TypeScriptCompile Include="src\models\IApplicationSettings.ts" />
-      <TypeScriptCompile Include="src\models\BasePageParameters.ts" />
       <TypeScriptCompile Include="src\models\IConfirmation.ts" />
       <TypeScriptCompile Include="src\models\IErrorPageParameters.ts" />
       <TypeScriptCompile Include="src\models\IMessageBox.ts" />
@@ -53,6 +52,7 @@
       <TypeScriptCompile Include="src\tests\ReactUtility.toMarks.spec.ts" />
       <TypeScriptCompile Include="src\tests\ReactUtility.toMultilines.spec.ts" />
       <TypeScriptCompile Include="src\tests\ReactUtility.toTags.spec.ts" />
+      <TypeScriptCompile Include="src\tests\System.spec.ts" />
     </ItemGroup>
 
     <ItemGroup>
@@ -74,7 +74,6 @@
       <None Remove="package-lock.json" />
       <None Remove="dist\**" />
       <None Remove=".eslintrc.json" />
-      <None Remove=".babelrc" />
       <None Remove="temp\**" />
       <None Remove="etc\**" />
       <None Remove="tsdoc-metadata.json" />

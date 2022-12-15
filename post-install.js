@@ -1,17 +1,21 @@
 const fs = require("fs");
+//const pl = require("date-fns/locale/pl");
 
-const fileToEditPath = './node_modules/@nrwl/web/src/executors/package/package.impl.js';
+//const fileToEditPath = './node_modules/@nrwl/web/src/executors/package/package.impl.js';
+const fileToEditPath = './node_modules/@nrwl/rollup/src/executors/rollup/rollup.impl.js';
 
-const indent = '                ';
+const indent = '                    ';
 
-const typescriptImport = 'const typescript = require(\'rollup-plugin-typescript2\');';
+//const typescriptImport = 'const typescript = require(\'rollup-plugin-typescript2\');';
+//const typescriptImport = 'require(\'rollup-plugin-typescript2\')';
 
-const tsNameOfImport = 'const tsNameOf = require(\'ts-nameof\');';
+//const tsNameOfImport = 'const tsNameOf = require(\'ts-nameof\');';
 
-const defaultImport = `${typescriptImport}`
-const replaceImport = `${typescriptImport}\n${tsNameOfImport}`
+const tsNameOfPluginName = `require('ts-nameof')`;
+//const defaultImport = `${typescriptImport}`
+//const replaceImport = `${typescriptImport}\n${tsNameOfImport}`
 
-const tsNameOfRollupOption = 'transformers: [() => ({ before: [ tsNameOf ], after: [  ] })]';
+const tsNameOfRollupOption = `transformers: [() => ({ before: [ ${tsNameOfPluginName} ], after: [  ] })]`;
 
 const defaultCode = `tsconfig: options.tsConfig,\n${indent}tsconfigOverride`;
 const replaceCode = `tsconfig: options.tsConfig,\n${indent}${tsNameOfRollupOption},\n${indent}tsconfigOverride`
@@ -21,31 +25,34 @@ if (!fs.existsSync(fileToEditPath)) {
     return;
 }
 
+console.error(`File = ${fileToEditPath}.`);
+
+
 let fileToEdit = fs.readFileSync(fileToEditPath).toString();
 
-const hasNameOfPlugin = fileToEdit.includes(tsNameOfRollupOption);
-const hasNameOfImport = fileToEdit.includes(tsNameOfImport);
+const hasNameOfPlugin = fileToEdit.includes(tsNameOfPluginName);
+//const hasNameOfImport = fileToEdit.includes(tsNameOfImport);
 
-if (hasNameOfImport) {
-    console.log('ts-nameof import is already in place');
-}
+// if (hasNameOfImport) {
+//     console.log('ts-nameof import is already in place');
+// }
 
-if (!hasNameOfImport) {
-    const hasTypescriptImport = fileToEdit.includes(typescriptImport);
-
-    if (!hasTypescriptImport) {
-        console.warn(`Can not find the import for rollup-plugin-typescript2 to add ts-nameof import, 
-        try reinstalling node_modules and if that didn't work it means this script needs some update`);
-
-        return;
-    }
-
-    fileToEdit = fileToEdit.replace(defaultImport, replaceImport);
-
-    console.log('ts-nameof import added');
-
-    fs.writeFileSync(fileToEditPath, fileToEdit);
-}
+// if (!hasNameOfImport) {
+//     const hasTypescriptImport = fileToEdit.includes(typescriptImport);
+//
+//     if (!hasTypescriptImport) {
+//         console.warn(`Can not find the import for rollup-plugin-typescript2 to add ts-nameof import, 
+//         try reinstalling node_modules and if that didn't work it means this script needs some update`);
+//
+//         return;
+//     }
+//
+//     fileToEdit = fileToEdit.replace(defaultImport, replaceImport);
+//
+//     console.log('ts-nameof import added');
+//
+//     fs.writeFileSync(fileToEditPath, fileToEdit);
+// }
 
 
 if (hasNameOfPlugin) {

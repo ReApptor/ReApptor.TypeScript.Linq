@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, IBaseClassNames, IGlobalClick,} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseClassNames, IBaseContainerComponentProps, IGlobalClick } from "@weare/reapptor-react-common";
 import { Utility } from "@weare/reapptor-toolkit";
 import Icon, {IconSize} from "../Icon/Icon";
 
@@ -22,15 +22,11 @@ export enum TogglerPosition {
     Bottom
 }
 
-export interface IAccordionProps {
-    readonly className?: string;
-
+export interface IAccordionProps extends IBaseContainerComponentProps {
     /**
      * Classnames for specific sections of the {@link Accordion}.
      */
     readonly classNames?: IAccordionClassNames;
-
-    children: React.ReactNode;
 
     /**
      * Text or {@link React.ReactNode} rendered in the {@link Accordion}'s header. Visible also when the {@link Accordion} is collapsed.
@@ -113,7 +109,7 @@ export default class Accordion extends BaseComponent<IAccordionProps, IAccordion
         return classNamesCopy;
     }
 
-    private get contentNode(): React.ReactNode | null {
+    private get contentNode(): HTMLDivElement | null {
         return this._contentRef.current;
     }
 
