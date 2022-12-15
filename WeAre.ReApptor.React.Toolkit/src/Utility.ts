@@ -743,25 +743,25 @@ export default class Utility {
         return outside;
     }
 
-    public static async readUploadedFileAsDataUrl(inputFile: File): Promise<string> {
-        const fileReader: FileReader = new FileReader();
+    public static async readUploadedFileAsDataUrl(file: File): Promise<string> {
+        const reader: FileReader = new FileReader();
 
         return new Promise((resolve, reject) => {
-            fileReader.onerror = () => {
-                fileReader.abort();
+            reader.onerror = () => {
+                reader.abort();
                 reject(new DOMException("Problem parsing input file."));
             };
 
-            fileReader.onload = () => {
-                const result: string = (fileReader.result as string | null) || "";
+            reader.onload = () => {
+                const result: string = (reader.result as string | null) || "";
                 resolve(result);
             };
 
-            fileReader.readAsDataURL(inputFile);
+            reader.readAsDataURL(file);
         });
     }
 
-    public static async readUploadedFileAsBinaryString(inputFile: File): Promise<string> {
+    public static async readUploadedFileAsBinaryString(file: File): Promise<string> {
         const fileReader: FileReader = new FileReader();
 
         return new Promise((resolve, reject) => {
@@ -775,7 +775,7 @@ export default class Utility {
                 resolve(result);
             };
 
-            fileReader.readAsBinaryString(inputFile);
+            fileReader.readAsBinaryString(file);
         });
     }
 
