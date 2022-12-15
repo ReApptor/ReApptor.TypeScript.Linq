@@ -39,6 +39,7 @@ export interface IFileInputState extends IBaseInputState<FileModel | FileModel[]
 }
 
 export default class FileInput extends BaseInput<FileModel | FileModel[] | null, IFileInputProps, IFileInputState> {
+    
     state: IFileInputState = {
         readonly: this.props.disabled || false,
         model: {
@@ -265,6 +266,7 @@ export default class FileInput extends BaseInput<FileModel | FileModel[] | null,
                 }
 
                 <input id={this.getInputId()} hidden
+                       value={""}
                        type={this.getType()}
                        multiple={this.props.multiple}
                        className="form-control-file"
