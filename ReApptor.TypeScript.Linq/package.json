@@ -1,7 +1,8 @@
 {
   "name": "@reapptor/ts-linq",
   "license": "UNLICENSED",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "repository": "https://github.com/ReApptor/ReApptor.TypeScript.Linq.git",
   "scripts": {
     "build": "npm run Build:ReApptor.TypeScript.Linq --prefix ..",
     "test": "npm run Test:ReApptor.TypeScript.Linq --prefix .."
