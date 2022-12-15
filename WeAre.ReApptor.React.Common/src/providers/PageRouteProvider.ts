@@ -176,7 +176,6 @@ export default class PageRouteProvider {
     }
 
     public static async createPageAsync(route: PageRoute): Promise<IBasePage> {
-
         const pageDefinitions: IPageDefinitions = ServiceProvider.getRequiredService(nameof<IPageDefinitions>());
 
         return await pageDefinitions.createPageAsync(route);

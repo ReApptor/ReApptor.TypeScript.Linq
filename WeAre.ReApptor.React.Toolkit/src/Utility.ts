@@ -1,10 +1,10 @@
+import {Dictionary} from "typescript-collections";
 import AthenaeumConstants from "./AthenaeumConstants";
 import GeoCoordinate from "./models/GeoCoordinate";
 import TimeSpan from "./models/TimeSpan";
 import IPagedList from "./models/IPagedList";
 import HashCodeUtility from "./HashCodeUtility";
 import FileModel from "./models/FileModel";
-import {Dictionary} from "typescript-collections";
 import {ILocalizer} from "./localization/BaseLocalizer";
 import {ITransformProvider, TFormat} from "./providers/BaseTransformProvider";
 import {IEnumProvider} from "./providers/BaseEnumProvider";
@@ -34,10 +34,10 @@ export default class Utility {
         return this._geoEnabled || (this._geoEnabled = !!navigator.geolocation);
     }
 
-    public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<Position | null> {
+    public static async getPositionAsync(options: PositionOptions | null | undefined = null): Promise<GeolocationPosition | null> {
         if (this.geoEnabled) {
             options = options || {maximumAge: 30000, timeout: 1000};
-            return new Promise<Position | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
+            return new Promise<GeolocationPosition | null>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options || undefined))
                 .then((position) => {
                     return position;
                 })
@@ -49,12 +49,12 @@ export default class Utility {
                     return null;
                 });
         } else {
-            return new Promise<Position | null>((resolve) => resolve(null));
+            return new Promise<GeolocationPosition | null>((resolve) => resolve(null));
         }
     }
 
     public static async getLocationAsync(options: PositionOptions | null | undefined = null): Promise<GeoCoordinate | null> {
-        const position: Position | null = await this.getPositionAsync(options);
+        const position: GeolocationPosition | null = await this.getPositionAsync(options);
         if (position) {
             return new GeoCoordinate(position.coords.latitude, position.coords.longitude);
         }
@@ -743,25 +743,25 @@ export default class Utility {
         return outside;
     }
 
-    public static async readUploadedFileAsDataUrl(inputFile: File): Promise<string> {
-        const fileReader: FileReader = new FileReader();
+    public static async readUploadedFileAsDataUrl(file: File): Promise<string> {
+        const reader: FileReader = new FileReader();
 
         return new Promise((resolve, reject) => {
-            fileReader.onerror = () => {
-                fileReader.abort();
+            reader.onerror = () => {
+                reader.abort();
                 reject(new DOMException("Problem parsing input file."));
             };
 
-            fileReader.onload = () => {
-                const result: string = (fileReader.result as string | null) || "";
+            reader.onload = () => {
+                const result: string = (reader.result as string | null) || "";
                 resolve(result);
             };
 
-            fileReader.readAsDataURL(inputFile);
+            reader.readAsDataURL(file);
         });
     }
 
-    public static async readUploadedFileAsBinaryString(inputFile: File): Promise<string> {
+    public static async readUploadedFileAsBinaryString(file: File): Promise<string> {
         const fileReader: FileReader = new FileReader();
 
         return new Promise((resolve, reject) => {
@@ -775,7 +775,7 @@ export default class Utility {
                 resolve(result);
             };
 
-            fileReader.readAsBinaryString(inputFile);
+            fileReader.readAsBinaryString(file);
         });
     }
 
@@ -831,6 +831,15 @@ export default class Utility {
     public static toObjectUrl(file: FileModel, sliceSize: number = 512): string {
         const blob = Utility.toBlob(file, sliceSize);
         return URL.createObjectURL(blob);
+    }
+
+    public static isBase64(value: string): boolean {
+        try {
+            window.atob(value);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     /**

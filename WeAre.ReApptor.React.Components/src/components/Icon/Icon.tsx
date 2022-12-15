@@ -1,7 +1,7 @@
 import React, {SyntheticEvent} from "react";
-import ConfirmationDialog, { ConfirmationDialogTitleCallback, IConfirmation } from "../ConfirmationDialog/ConfirmationDialog";
-import {BaseComponent} from "@weare/reapptor-react-common";
-import IconAction, {IIconActionProps} from "./IconAction.tsx/IconAction";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
+import {BaseComponent, IBaseContainerComponentProps, JQueryNode, ConfirmationDialogTitleCallback, IConfirmation} from "@weare/reapptor-react-common";
+import IconAction, {IIconActionProps} from "./IconAction/IconAction";
 import {FileModel, Utility} from "@weare/reapptor-toolkit";
 import IconLocalizer from "./IconLocalizer";
 
@@ -41,13 +41,11 @@ export enum IconStyle {
     Duotone
 }
 
-export interface IIconProps {
-    id?: string;
+export interface IIconProps extends IBaseContainerComponentProps {
     name: string;
     tooltip?: string | null;
     style?: IconStyle | null;
     size?: IconSize | null;
-    className?: string;
     dataTarget?: string | null;
     dataModal?: string | null;
     toggleModal?: boolean;
@@ -88,11 +86,11 @@ export default class Icon extends BaseComponent<IIconProps, IIconState> {
         return className;
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         await super.componentDidMount();
 
         if (this.hasActions) {
-            const actionsDiv: JQuery = this.JQuery(`#${this.actionsId}`);
+            const actionsDiv: JQueryNode = this.JQuery(`#${this.actionsId}`);
 
             const buttonWidth: number = this.outerWidth();
             const actionsWidth: number = actionsDiv.outerWidth() || 0;

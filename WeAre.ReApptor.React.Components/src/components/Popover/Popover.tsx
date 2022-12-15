@@ -1,17 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Utility} from "@weare/reapptor-toolkit";
-import {Justify, Align, BaseComponent, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
+import {Justify, Align, BaseComponent, IGlobalClick, IGlobalKeydown, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "./Popover.module.scss";
 
-interface IPopoverProps {
+interface IPopoverProps extends IBaseContainerComponentProps {
     tooltip?: string;
     align?: Align;
     justify?: Justify;
     center?: boolean;
     controls?: boolean;
-    className?: string;
     onToggle?(sender: Popover, isOpen: boolean): Promise<void>;
 }
 
@@ -116,11 +115,15 @@ export default class Popover extends BaseComponent<IPopoverProps, IPopoverState>
         return this.state.isOpen;
     }
 
-    render(): React.ReactNode {
-        const containerElement: Element | null = this.state.containerId ? document.getElementById(this.state.containerId) : null;
-        
-        if (containerElement && this.state.isOpen) {
-            return ReactDOM.createPortal(this.renderPopover(), containerElement);
+    public render(): React.ReactNode {
+        if (this.state.isOpen) {
+            const containerElement: Element | null = (this.state.containerId)
+                ? document.getElementById(this.state.containerId)
+                : null;
+
+            if (containerElement) {
+                return ReactDOM.createPortal(this.renderPopover(), containerElement);
+            }
         }
         
         return null; 

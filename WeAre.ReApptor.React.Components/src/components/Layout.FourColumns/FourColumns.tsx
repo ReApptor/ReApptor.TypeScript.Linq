@@ -1,10 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import layoutStyles from "../Layout/Layout.module.scss";
 
-interface IFourColumnsProps {
-    className?: string;
+interface IFourColumnsProps extends IBaseContainerComponentProps {
 }
 
 export default class FourColumns extends BaseComponent<IFourColumnsProps> {

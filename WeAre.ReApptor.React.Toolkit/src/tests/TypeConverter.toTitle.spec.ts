@@ -57,7 +57,6 @@ describe("TypeConverter.toTitle", function() {
     class TransformProviderWithAttribute {
 
         @ObjectConverter(nameof<ITitleModel>())
-        // @ts-ignore
         public toTitle(item: any): ITitleModel {
 
             let label: string | null = null;

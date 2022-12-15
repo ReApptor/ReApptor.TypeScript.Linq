@@ -1,13 +1,12 @@
 import React from "react";
-import {BaseComponent, RenderCallback} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps, RenderCallback} from "@weare/reapptor-react-common";
 
 import styles from "../PageContainer.module.scss";
 
-export interface IPageHeaderProps {
+export interface IPageHeaderProps extends IBaseContainerComponentProps {
     title: string | RenderCallback,
     subtitle?: string;
     withTabs?: boolean
-    className?: string;
     onClick?(sender: PageHeader): Promise<void>;
 }
 
@@ -36,7 +35,7 @@ export default class PageHeader extends BaseComponent<IPageHeaderProps> {
     
     public render(): React.ReactNode {
         return (
-            <div className={this.css(styles.header, styles.row, "row", this.props.className)}>
+            <div id={this.id} className={this.css(styles.header, styles.row, "row", this.props.className)}>
                 <div className={styles.content}>
                     
                     <div>

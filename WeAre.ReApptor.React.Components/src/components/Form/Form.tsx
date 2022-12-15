@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {BaseComponent, IBaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 import { Dictionary } from "typescript-collections";
 import Inline from "../Layout.Inline/Inline";
 import { IInput } from "../BaseInput/BaseInput";
@@ -8,10 +8,8 @@ import FormLocalizer from "./FormLocalizer";
 
 import styles from "./Form.module.scss";
 
-interface IFormProps {
-    id?: string;
+interface IFormProps extends IBaseContainerComponentProps {
     inline?: boolean;
-    className?: string;
     noValidate?: boolean;
     readonly?: boolean;
     submitOnEnter?: boolean;

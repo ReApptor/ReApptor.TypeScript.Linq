@@ -1,5 +1,4 @@
-import 'reflect-metadata';
-
+import "reflect-metadata";
 import BaseTransformProvider, {TFormat} from "../providers/BaseTransformProvider";
 import Utility from "../Utility";
 import ISelectListItem from "../models/ISelectListItem";
@@ -26,7 +25,6 @@ describe("StringConverter", function() {
     }
 
     @ToString(toString)
-    // @ts-ignore
     class TestClassWithFunctionConverter {
         public value: string = "";
 
@@ -40,7 +38,6 @@ describe("StringConverter", function() {
     }
     
     @ToString(new TestClassTransformer())
-    // @ts-ignore
     class TestClassWithInterface {
         public value: string = "";
 

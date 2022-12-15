@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["jest", "node", "googlemaps", "ts-nameof"],
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
@@ -10,12 +11,22 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "allowJs": true,
     "paths": {
+      "@weare/reapptor-linq": [
+        "ReApptor.TypeScript.Linq/src/index.ts"
+      ],
+      "@weare/reapptor-paged-list": [
+        "ReApptor.TypeScript.PagedList/src/index.ts"
+      ],
       "@weare/reapptor-react-common": [
         "WeAre.ReApptor.React.Common/src/index.ts"
       ],
@@ -25,13 +36,17 @@
       "@weare/reapptor-toolkit": [
         "WeAre.ReApptor.React.Toolkit/src/index.ts"
       ],
-      "@weare/reapptor-linq": [
+      "@reapptor/linq": [
         "ReApptor.TypeScript.Linq/src/index.ts"
       ],
-      "@weare/reapptor-paged-list": [
+      "@reapptor/paged-list": [
         "ReApptor.TypeScript.PagedList/src/index.ts"
       ]
-    }
+    },
+    "plugins": [{ "transform": "ts-nameof", "type": "raw" }]
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

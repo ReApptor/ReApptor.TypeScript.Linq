@@ -1,11 +1,12 @@
 import React from "react";
 import {BaseAsyncComponent, IBaseAsyncComponentState, IGlobalClick, IGlobalKeydown} from "@weare/reapptor-react-common";
-import {IMenuItem, IUserProfile} from "@weare/reapptor-react-components";
+import {ExpanderType, IMenuItem, IUserProfile} from "@weare/reapptor-react-components";
 import {Utility} from "@weare/reapptor-toolkit";
 import {MenuItem} from "../TopNav/MenuItem/MenuItem";
 import {UserProfile} from "../TopNav/Profile/UserProfile/UserProfile";
 import Profile from "../TopNav/Profile/Profile";
 import Comparator from "../../helpers/Comparator";
+import Expander from "../Expander/Expander";
 
 import styles from "./LeftNav.module.scss";
 
@@ -40,6 +41,8 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
         maxWidth: null,
         toggling: false
     };
+    
+    private readonly _expanderRef: React.RefObject<Expander> = React.createRef();
 
     private getUserProfile(): IUserProfile | null {
         return (this.props.userProfile != null)
@@ -150,91 +153,99 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
     }
 
     public async collapseAsync(animation: boolean = true): Promise<void> {
-        if ((this.expandable) && (this.expanded)) {
-            await this.toggleAsync(animation);
-        }
+        await this._expanderRef.current!.collapseAsync();
+        // if ((this.expandable) && (this.expanded)) {
+        //     await this.toggleAsync(animation);
+        // }
     }
 
     public async expandAsync(animation: boolean = true): Promise<void> {
-        if ((this.expandable) && (this.collapsed)) {
-            await this.toggleAsync(animation);
-        }
+        await this._expanderRef.current!.expandAsync();
+        // if ((this.expandable) && (this.collapsed)) {
+        //     await this.toggleAsync(animation);
+        // }
     }
     
     public async toggleAsync(animation: boolean = true): Promise<void> {
-        if ((this.expandable) && (!this.toggling)) {
-
-            if (animation) {
-                const expanding: boolean = !this.expanded;
-                const collapsing: boolean = !expanding;
-
-                const node: JQuery = this.getNode();
-
-                // check current state
-                const originalMaxWidth: string = node.css("max-width");
-                const originalWhiteSpace: string = node.css("white-space");
-
-                let maxWidth: number = 0;
-                if (collapsing) {
-                    maxWidth = node.width()!;
-                }
-
-                // override state
-                node.css("max-width", maxWidth);
-                node.css("white-space", "nowrap");
-
-                this.state.toggling = true;
-
-                if (expanding) {
-                    await this.setState({expanded: true});
-                }
-
-                const step: number = 15;
-                const delay: number = 5;
-
-                while (true) {
-
-                    if (expanding) {
-
-                        maxWidth += step;
-
-                        node.css("max-width", maxWidth);
-
-                        const newWidth: number = node.width()!;
-
-                        if (newWidth < maxWidth) {
-                            break;
-                        }
-                    } else {
-                        maxWidth -= step;
-
-                        if (maxWidth <= 0) {
-                            break;
-                        }
-
-                        node.css("max-width", maxWidth);
-                    }
-
-                    await Utility.wait(delay);
-                }
-
-                // restore state
-                node.css("max-width", originalMaxWidth);
-                node.css("white-space", originalWhiteSpace);
-
-                this.state.toggling = false;
-
-                if (collapsing) {
-                    await this.setState({expanded: false});
-                }
-            } else {
-                await this.setState({expanded: !this.expanded});
-            }
+        await this._expanderRef.current!.toggleAsync();
 
             if (this.props.onToggle) {
                 await this.props.onToggle(this, this.expanded);
             }
-        }
+
+        // if ((this.expandable) && (!this.toggling)) {
+        //
+        //     if (animation) {
+        //         const expanding: boolean = !this.expanded;
+        //         const collapsing: boolean = !expanding;
+        //
+        //         const node: JQueryNode = this.getNode();
+        //
+        //         // check current state
+        //         const originalMaxWidth: string = node.css("max-width");
+        //         const originalWhiteSpace: string = node.css("white-space");
+        //
+        //         let maxWidth: number = 0;
+        //         if (collapsing) {
+        //             maxWidth = node.width()!;
+        //         }
+        //
+        //         // override state
+        //         node.css("max-width", maxWidth);
+        //         node.css("white-space", "nowrap");
+        //
+        //         this.state.toggling = true;
+        //
+        //         if (expanding) {
+        //             await this.setState({expanded: true});
+        //         }
+        //
+        //         const step: number = 15;
+        //         const delay: number = 5;
+        //
+        //         while (true) {
+        //
+        //             if (expanding) {
+        //
+        //                 maxWidth += step;
+        //
+        //                 node.css("max-width", maxWidth);
+        //
+        //                 const newWidth: number = node.width()!;
+        //
+        //                 if (newWidth < maxWidth) {
+        //                     break;
+        //                 }
+        //             } else {
+        //                 maxWidth -= step;
+        //
+        //                 if (maxWidth <= 0) {
+        //                     break;
+        //                 }
+        //
+        //                 node.css("max-width", maxWidth);
+        //             }
+        //
+        //             await Utility.wait(delay);
+        //         }
+        //
+        //         // restore state
+        //         node.css("max-width", originalMaxWidth);
+        //         node.css("white-space", originalWhiteSpace);
+        //
+        //         this.state.toggling = false;
+        //
+        //         if (collapsing) {
+        //             await this.setState({expanded: false});
+        //         }
+        //     } else {
+        //         await this.setState({expanded: !this.expanded});
+        //     }
+        //
+        //     if (this.props.onToggle) {
+        //         await this.props.onToggle(this, this.expanded);
+        //     }
+        // }
     }
     
     public async componentWillReceiveProps(nextProps: ILeftNavProps): Promise<void> {
@@ -289,34 +300,36 @@ export default class LeftNav extends BaseAsyncComponent<ILeftNavProps, ILeftNavS
             minWidth: this.props.minWidth || undefined
         };
         
-        const expandedStyle: any = (this.expanded) && (styles.expanded);
-        const collapsedStyle: any = (this.collapsed) && (styles.collapsed);
+        //const expandedStyle: any = (this.expanded) && (styles.expanded);
+        //const collapsedStyle: any = (this.collapsed) && (styles.collapsed);
         const fixedStyle: any = (this.fixed) && (styles.fixed);
         const absoluteStyle: any = (this.absolute) && (styles.absolute);
         
         return (
-            <nav id={this.id} className={this.css(styles.leftNav, this.props.className, expandedStyle, collapsedStyle, fixedStyle, absoluteStyle)} style={inlineStyles}>
+            <nav id={this.id} className={this.css(styles.leftNav, this.props.className, fixedStyle, absoluteStyle)} style={inlineStyles}>
 
                 {
-                    (this.expanded) &&
+                    //(this.expanded) &&
                     (
-                        <div className={this.css(styles.container, expandedStyle, collapsedStyle)}>
-                            
-                            <div className={styles.userProfileContainer}>
+                        <Expander ref={this._expanderRef} type={ExpanderType.Horizontal}>
+                            <div className={this.css(styles.container)}>
                                 
-                                { (userProfile) && (<UserProfile {...userProfile}/>) }
-                                
+                                <div className={styles.userProfileContainer}>
+                                    
+                                    { (userProfile) && (<UserProfile {...userProfile}/>) }
+                                    
+                                </div>
+    
+                                <div className={styles.itemsContainer}>
+    
+                                    {
+                                        (items.length > 0) && (this.renderItems(items))
+                                    }
+                                    
+                                </div>
+    
                             </div>
-
-                            <div className={styles.itemsContainer}>
-
-                                {
-                                    (items.length > 0) && (this.renderItems(items))
-                                }
-                                
-                            </div>
-
-                        </div>
+                        </Expander>
                     )
                 }
                 
