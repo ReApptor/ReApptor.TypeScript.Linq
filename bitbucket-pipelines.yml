@@ -32,7 +32,7 @@ pipelines:
                 - npm run build
                 # Create documentation
                 - mkdir ./etc
-                - api-extractor run --local
+#                - api-extractor run --local
                 # Create .npmrc file
                 - cd dist
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
@@ -72,7 +72,7 @@ pipelines:
                 - npm run build
                 # Create documentation
                 - mkdir ./etc
-                - api-extractor run --local
+#                - api-extractor run --local
                 # Create .npmrc file
                 - cd dist
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
