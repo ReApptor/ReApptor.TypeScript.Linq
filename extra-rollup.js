@@ -5,9 +5,14 @@ const original = require("@nrwl/react/plugins/bundle-rollup");
 const postcss = require("rollup-plugin-postcss");
 
 function getRollupOptions(options) {
-  let originalProcessed = original(options);
+  
+  console.log("--- extra-rollup.js ---");
+  
+  const processed = original(options);
+  
+  const plugins = processed.plugins;
 
-  const postcssPlugin = postcss({
+  const postCssPlugin = postcss({
     autoModules: true,
     extract: false,
     modules: {
@@ -32,11 +37,11 @@ function getRollupOptions(options) {
     },
   });
 
-  const postcssPluginOldIndex = originalProcessed.plugins.findIndex(x => x.name === 'postcss');
+  const postcssPluginIndex = plugins.findIndex(plugin => plugin.name === "postcss");
 
-  originalProcessed.plugins[postcssPluginOldIndex] = postcssPlugin;
+  plugins[postcssPluginIndex] = postCssPlugin;
 
-  return originalProcessed;
+  return processed;
 }
 
 module.exports = getRollupOptions;

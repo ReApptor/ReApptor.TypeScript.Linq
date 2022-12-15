@@ -1,9 +1,8 @@
-import {PageRouteProvider} from "@weare/reapptor-react-common";
+import {PageRouteProvider, TBasePageParameters} from "@weare/reapptor-react-common";
 import AnonymousPage from "./AnonymousPage";
 import PageDefinitions from "./PageDefinitions";
 
-
-export default abstract class AuthorizedPage<TParams = {}, TState = {}>
+export default abstract class AuthorizedPage<TParams extends TBasePageParameters = {}, TState = {}>
     extends AnonymousPage<TParams, TState> {
 
     public async initializeAsync(): Promise<void> {

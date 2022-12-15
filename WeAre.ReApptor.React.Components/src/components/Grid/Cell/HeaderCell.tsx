@@ -1,13 +1,13 @@
 import React from "react";
 import {SortDirection} from "@weare/reapptor-toolkit";
-import {BaseComponent, StylesUtility, TextAlign, VerticalAlign} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps, StylesUtility, TextAlign, VerticalAlign} from "@weare/reapptor-react-common";
 import {ColumnModel, ColumnType, GridModel, GridTransformer, IHeaderCell} from "../GridModel";
 import Icon, {IconSize, IIconProps} from "../../Icon/Icon";
 import GridLocalizer from "../GridLocalizer";
 
 import styles from "../Grid.module.scss";
 
-interface IHeaderCellProps<TItem = {}> {
+interface IHeaderCellProps<TItem = {}> extends IBaseContainerComponentProps {
     column: ColumnModel<TItem>;
     top: boolean;
     colSpanLeft: boolean;

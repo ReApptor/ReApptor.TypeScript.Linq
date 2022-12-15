@@ -70,21 +70,21 @@ import ArrayUtility from "../utilities/ArrayUtility";
 
 declare global {
     interface Array<T> {
-        
+
         /**
          * Determines whether all elements of a sequence satisfy a condition.
          * @param predicate - A function to test each element for a condition.
          * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
          */
         all(predicate: (item: T, index: number) => boolean): boolean;
-        
+
         /**
          * Determines whether a sequence contains any elements.
          * @param predicate - A function to test each element for a condition.
          * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
          */
         any(predicate?: (item: T, index: number) => boolean): boolean;
-        
+
         /**
          * Filters a sequence of values based on a predicate.
          * @param predicate - A function to test each element for a condition.
@@ -191,13 +191,13 @@ declare global {
          */
         distinct(predicate?: ((item: T) => any) | null): T[];
 
-        sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null, 
+        sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
                                                          keySelector2?: ((item: T) => TKey2) | null,
                                                          keySelector3?: ((item: T) => TKey3) | null,
                                                          keySelector4?: ((item: T) => TKey4) | null,
                                                          keySelector5?: ((item: T) => TKey5) | null,
                                                          keySelector6?: ((item: T) => TKey6) | null): void;
-        
+
         forEachAsync(predicate: (item: T) => Promise<void>): Promise<void>;
 
         /**

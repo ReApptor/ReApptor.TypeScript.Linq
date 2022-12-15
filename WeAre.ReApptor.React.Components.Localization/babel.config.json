@@ -1,0 +1,4 @@
+{
+  "babelrcRoots": ["./../*"],
+  "plugins": [ "babel-plugin-ts-nameof" ]
+}

@@ -5,7 +5,6 @@ import AnonymousPage from "../AnonymousPage";
 
 import styles from "./Error.module.scss";
 
-
 export interface IErrorPageParameters extends BasePageParameters {
     error: ServerError | null;
 }
@@ -13,8 +12,8 @@ export interface IErrorPageParameters extends BasePageParameters {
 export default class ErrorPage extends AnonymousPage<IErrorPageParameters> {
 
     private get error(): ServerError | null {
-        return (this.props.parameters != null) && (this.props.parameters.error != null)
-            ? this.props.parameters.error
+        return ((this.parameters) && (this.parameters.error))
+            ? this.parameters.error
             : null;
     }
 

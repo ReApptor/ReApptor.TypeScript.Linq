@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, DataStorageType, UserInteractionDataStorage} from "@weare/reapptor-react-common";
+import {BaseComponent, DataStorageType, IBaseContainerComponentProps, UserInteractionDataStorage} from "@weare/reapptor-react-common";
 
 import styles from "./Panel.module.scss";
 
@@ -9,13 +9,11 @@ export enum PanelCollapseType {
     Horizontal
 }
 
-interface IPanelProps {
-    id?: string;
+interface IPanelProps extends IBaseContainerComponentProps {
     collapsible?: PanelCollapseType;
     collapsed?: boolean;
     title?: string;
     customHeading?: React.ReactNode;
-    className?: string;
     dataStorageType?: DataStorageType;
 }
 

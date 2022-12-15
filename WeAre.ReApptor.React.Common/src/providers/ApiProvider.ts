@@ -12,9 +12,11 @@ import ch from "./ComponentHelper";
 import {Mutex} from "async-mutex";
 import Dictionary from "typescript-collections/dist/lib/Dictionary";
 
+type TAction = (() => Promise<void>);
+
 class ApiProviderSyncContainer {
     public readonly lock: Mutex = new Mutex();
-    public readonly queue: (() => Promise<void>)[] = [];
+    public readonly queue: TAction[] = [];
 }
 
 export default class ApiProvider {
@@ -37,7 +39,7 @@ export default class ApiProvider {
     }
 
     private static async processSynchronouslyAsync(container: ApiProviderSyncContainer): Promise<void> {
-        let actionToInvoke: (() => Promise<void>) | null = null;
+        let actionToInvoke: TAction | null = null;
 
         await container.lock.runExclusive(async () => {
             if (container.queue.length > 0) {
@@ -48,9 +50,10 @@ export default class ApiProvider {
 
         if (actionToInvoke != null) {
             try {
-                await actionToInvoke!();
+                // @ts-ignore
+                await actionToInvoke();
             } catch (error) {
-                await PageRouteProvider.exception(error);
+                await PageRouteProvider.exception(error as Error);
             }
 
             await this.processSynchronouslyAsync(container);
@@ -138,19 +141,18 @@ export default class ApiProvider {
 
             const apiResponse: any | null = await this.processServerResponseAsync(httpResponse);
 
-            //const dataResponse: TResponse = ((apiResponse != null) ? apiResponse : {}) as TResponse;
-            const dataResponse: TResponse = apiResponse as TResponse;
-
-            return dataResponse;
+            // const dataResponse: TResponse = ((apiResponse != null) ? apiResponse : {}) as TResponse;
+            return apiResponse as TResponse;
         }
         catch (error) {
 
             if (this.offline) {
                 await PageRouteProvider.offline();
             } else {
-                const ignore: boolean = (ApiProvider.isApiError(error)) || (ApiProvider.ignoreException(endpoint));
+                const e = error as Error;
+                const ignore: boolean = (ApiProvider.isApiError(e)) || (ApiProvider.ignoreException(endpoint));
                 if (!ignore) {
-                    await PageRouteProvider.exception(error);
+                    await PageRouteProvider.exception(e);
                 }
             }
 
@@ -197,12 +199,10 @@ export default class ApiProvider {
             }
         }
 
-        const serverError: ServerError = {
+        return {
             requestId: requestId,
             debugDetails: debugDetails
         };
-
-        return serverError;
     }
 
     private static async processServerResponseAsync(httpResponse: Response): Promise<any | null> {
@@ -378,9 +378,7 @@ export default class ApiProvider {
 
         this.setHeaders(httpRequest);
 
-        const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-
-        return response;
+        return await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
     }
 
     public static async postFileAsync<TResponse>(endpoint: string, request: any | null = null, caller: IBaseComponent | null = null): Promise<TResponse> {
@@ -397,9 +395,7 @@ export default class ApiProvider {
 
         this.setHeaders(httpRequest, false);
 
-        const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-
-        return response;
+        return await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
     }
 
     /**
@@ -423,9 +419,7 @@ export default class ApiProvider {
 
         this.setHeaders(httpRequest);
 
-        const response: TResponse = await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
-
-        return response;
+        return await this.fetchAsync<TResponse>(endpoint, httpRequest, caller);
     }
 
     /**

@@ -27,7 +27,6 @@
     <ItemGroup>
         <None Remove="lib\**" />
         <None Remove="package-lock.json" />
-        <None Remove=".babelrc" />
         <None Remove=".eslintrc.json" />
         <None Remove="dist\**" />
     </ItemGroup>
@@ -61,24 +60,7 @@
       <TypeScriptCompile Include="src\providers\TypeResolver.ts" />
       <TypeScriptCompile Include="src\StringUtility.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.skip.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ArrayUtility.take.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ArrayUtility.takeLast.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ArrayUtility.takeWhile.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getLocalizer.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getRequiredService.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.getService.spec.ts" />
-      <TypeScriptCompile Include="src\tests\ServiceProvider.resolveServiceType.spec.ts" />
-      <TypeScriptCompile Include="src\tests\StringConverter.toString.spec.ts" />
-      <TypeScriptCompile Include="src\tests\TypeConverter.toTitle.spec.ts" />
-      <TypeScriptCompile Include="src\tests\TypeResolver.resove.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.copyTo.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.digits.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.format.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.getFileExtension.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.getHashCode.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.newGuid.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.round.spec.ts" />
-      <TypeScriptCompile Include="src\tests\Utility.spec.ts" />
+      <TypeScriptCompile Include="src\tests\System.spec.ts" />
       <TypeScriptCompile Include="src\Utility.ts" />
       <TypeScriptCompile Include="src\index.ts" />
     </ItemGroup>

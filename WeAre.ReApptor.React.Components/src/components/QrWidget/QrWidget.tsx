@@ -1,5 +1,5 @@
 import React from "react";
-import {ch} from "@weare/reapptor-react-common";
+import {ch, JQueryNode} from "@weare/reapptor-react-common";
 import QrReader from "react-qr-reader";
 import BaseExpandableWidget, { IBaseExpandableWidgetProps } from "../WidgetContainer/BaseExpandableWidget";
 import {BrowserCodeReader, BrowserQRCodeReader, HTMLVisualMediaElement, IScannerControls} from "@zxing/browser";
@@ -79,11 +79,11 @@ export default class QrWidget extends BaseExpandableWidget<IQrWidgetProps> {
     private async setCustomerStylesAsync(): Promise<void> {
         if (this._ref.current) {
 
-            const node: JQuery = this.JQuery(this._ref.current);
+            const node: JQueryNode = this.JQuery(this._ref.current);
 
-            const container: JQuery = node.find("div");
+            const container: JQueryNode = node.find("div");
 
-            const videoNode: JQuery = node.find("video");
+            const videoNode: JQueryNode = node.find("video");
 
             const video = videoNode.get(0) as HTMLVideoElement;
 

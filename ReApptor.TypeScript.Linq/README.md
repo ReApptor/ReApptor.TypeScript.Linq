@@ -1,12 +1,12 @@
 ![alt text](https://www.reapptor.com/wp-content/uploads/2021/09/ReApptor-logo-pink-l.png)
 # ReApptor TypeScript LINQ
 
-It is a complete, fully tested analog of C# Language-Integrated Query (LINQ) 
-written in TypeScript. 
+It is a complete, fully tested analog of C# Language-Integrated Query (LINQ)
+written in TypeScript.
 
-LINQ package generally operates on the collection types and comes as 
-extension methods serving a variety of 
-purposes in working with collections of types. 
+LINQ package generally operates on the collection types and comes as
+extension methods serving a variety of
+purposes in working with collections of types.
 
 The original idea behind this package is to make TypeScript syntax look
 like C# to ease the work for developers using both C# and TypeScript
@@ -45,8 +45,8 @@ Determines whether all elements of a sequence satisfy a condition.
     all(predicate: (item: T, index: number) => boolean): boolean;
 ```
 #### Example
-The following code examples demonstrates how to use All to determine whether all the elements in 
-a sequence satisfy a condition. The result is true if every element of the source sequence 
+The following code examples demonstrates how to use All to determine whether all the elements in
+a sequence satisfy a condition. The result is true if every element of the source sequence
 passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
 ```typescript
 const numbers: number[] = [1, 2, 3];
@@ -75,8 +75,8 @@ hasAllFive = true;
 ```
 ***
 ### Any
-Determines whether a sequence contains any elements in the collection, 
-which satisfies an optional condition. If no condition is provided, 
+Determines whether a sequence contains any elements in the collection,
+which satisfies an optional condition. If no condition is provided,
 the method just returns if the collection is empty or not.
 ```typescript
     /**
@@ -127,8 +127,8 @@ Splits the elements of a sequence into chunks of the parameter size at most size
 chunk(size: number): T[][];
 ```
 #### Example
-The following code example demonstrates how to use Chunk on a sequence. 
-Each chunk except the last one will be of size size. 
+The following code example demonstrates how to use Chunk on a sequence.
+Each chunk except the last one will be of size size.
 The last chunk will contain the remaining elements and may be of a smaller size.
 ```typescript
 const numbers: number[] = [1, 2, 3, 4];
@@ -158,7 +158,7 @@ console.log("[] chunk with size of 10 = ", chunkedOnEmpty);
 ***
 
 #### Exceptions
-Parameter size is below 1. 
+Parameter size is below 1.
 
 ```typescript
 const numbers: number[] = [1, 2, 3, 4];
@@ -383,7 +383,7 @@ Returns the last element of a sequence, or a default value if no element is foun
 last(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
 ```
 #### Example
-The following code example demonstrates how to use Last to return 
+The following code example demonstrates how to use Last to return
 the last element of an array that satisfies a condition, last or default.
 
 ###### Return last element in the sequence
@@ -607,8 +607,8 @@ Bypasses a specified number of elements in a sequence and then returns the remai
 skip(count: number): T[];
 ```
 #### Example
-The following code example demonstrates how to use Skip to skip a 
-specified number of elements in a sorted array and return the remaining 
+The following code example demonstrates how to use Skip to skip a
+specified number of elements in a sorted array and return the remaining
 elements.
 
 ```typescript
@@ -660,7 +660,7 @@ Returns a specified number of contiguous elements from the start of a sequence.
 take(count: number): T[];
 ```
 #### Example
-The following code example demonstrates how to use Take to 
+The following code example demonstrates how to use Take to
 return elements from the start of a sequence.
 
 ```typescript
@@ -715,7 +715,7 @@ takeWhile(predicate: (item: T, index: number) => boolean): T[];
 ```
 #### Example
 The following code example demonstrates how to use TakeWhile
-to return elements from the start of a sequence as long as a condition 
+to return elements from the start of a sequence as long as a condition
 is true.
 
 ```typescript

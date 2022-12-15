@@ -28,7 +28,6 @@
         <None Remove="lib\**" />
         <None Remove="dist\**" />
         <None Remove="package-lock.json" />
-        <None Remove=".babelrc" />
         <None Remove=".eslintrc.json" />
     </ItemGroup>
 

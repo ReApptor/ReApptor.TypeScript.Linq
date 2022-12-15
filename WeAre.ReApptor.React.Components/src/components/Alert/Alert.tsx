@@ -1,6 +1,6 @@
 import React from "react";
 import {Utility} from "@weare/reapptor-toolkit";
-import {AlertModel, AlertType, BaseComponent} from "@weare/reapptor-react-common";
+import {AlertModel, AlertType, BaseComponent, JQueryNode} from "@weare/reapptor-react-common";
 import AthenaeumComponentsConstants from "../../AthenaeumComponentsConstants";
 import AlertLocalizer from "./AlertLocalizer";
 
@@ -32,7 +32,7 @@ export default class Alert extends BaseComponent<IAlertProps> {
     }
     
     private fadeOut(): void {
-        const alertNode: JQuery = this.getNode();
+        const alertNode: JQueryNode = this.getNode();
         alertNode.addClass(styles.fadeOut);
     }
 

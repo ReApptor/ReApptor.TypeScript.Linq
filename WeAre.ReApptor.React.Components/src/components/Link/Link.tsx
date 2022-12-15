@@ -1,14 +1,13 @@
 import React from "react";
-import {PageRoute, PageRouteProvider, BaseComponent} from "@weare/reapptor-react-common";
+import {PageRoute, PageRouteProvider, BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 import {IMenuItem, TMenuItemRoute} from "../TopNav/TopNav";
 
 import styles from "./Link.module.scss";
 
 export type TLinkRoute = PageRoute | ((sender: Link) => Promise<void>);
 
-export interface ILinkProps {
+export interface ILinkProps extends IBaseContainerComponentProps {
     route?: TLinkRoute | null;
-    className?: string;
 }
 
 export default class Link extends BaseComponent<ILinkProps> {
@@ -52,9 +51,10 @@ export default class Link extends BaseComponent<ILinkProps> {
 
     public render(): React.ReactNode {
         return (
-            <a className={this.css(styles.link, this.props.className)}
+            <a id={this.id}
+               className={this.css(styles.link, this.props.className)}
                href={this.href}
-               onClick={async (e: React.MouseEvent<HTMLAnchorElement>) => await this.handleClickAsync(e)}
+               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => this.handleClickAsync(e)}
             >
                 {this.props.children}
             </a>
