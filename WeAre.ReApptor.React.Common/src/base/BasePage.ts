@@ -4,7 +4,6 @@ import BaseComponent, {IBaseComponent} from "./BaseComponent";
 import {IAsyncComponent} from "./BaseAsyncComponent";
 import AlertModel from "../models/AlertModel";
 import ApplicationContext from "../models/ApplicationContext";
-import BasePageParameters from "../models/BasePageParameters";
 import PageRoute from "../models/PageRoute";
 import ch from "../providers/ComponentHelper";
 import {CameraType, DialogResult, MessageBoxButtons, MessageBoxIcon, SwipeDirection} from "../Enums";
@@ -298,7 +297,12 @@ export interface IBasePageConstructor {
     new(props: any | null): IBasePage;
 }
 
-export interface IBasePageProps<TParams extends BasePageParameters> {
+export class BasePageParameters {
+}
+
+export type TBasePageParameters = BasePageParameters | {};
+
+export interface IBasePageProps<TParams extends TBasePageParameters> {
     routeName: string;
     routeIndex?: number;
     routeId?: string;
@@ -313,7 +317,8 @@ export interface IIsLoading {
 /**
  * Base class for pages.
  */
-export default abstract class BasePage<TParams extends BasePageParameters, TState, TContext extends ApplicationContext> extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
+export default abstract class BasePage<TParams extends TBasePageParameters, TState, TContext extends ApplicationContext> 
+    extends BaseComponent<IBasePageProps<TParams>, TState> implements IBasePage {
 
     private readonly _asIsLoading: IIsLoading | null;
 
@@ -641,7 +646,7 @@ export default abstract class BasePage<TParams extends BasePageParameters, TStat
             : null;
     }
 
-    public get parameters(): BasePageParameters | null {
+    public get parameters(): TParams | null {
         return this.props.parameters || null;
     }
 

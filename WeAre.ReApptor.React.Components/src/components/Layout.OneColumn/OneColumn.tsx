@@ -1,11 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "../Layout/Layout.module.scss";
 
-interface IOneColumnProps {
-    id?: string;
-    className?: string;
+interface IOneColumnProps extends IBaseContainerComponentProps {
 }
 
 export default class OneColumn extends BaseComponent<IOneColumnProps> {

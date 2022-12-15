@@ -1,8 +1,7 @@
 import React from "react";
 import {IIconProps} from "../Icon/Icon";
-import {DataStorageType, IBaseComponent, UserInteractionDataStorage} from "@weare/reapptor-react-common";
-import ConfirmationDialog, {ConfirmationDialogTitleCallback, IConfirmation} from "../ConfirmationDialog/ConfirmationDialog";
-
+import {DataStorageType, IBaseComponent, ConfirmationDialogTitleCallback, IConfirmation, UserInteractionDataStorage} from "@weare/reapptor-react-common";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 export enum TabRenderType {
     /**
      * Tab content will be always rendered

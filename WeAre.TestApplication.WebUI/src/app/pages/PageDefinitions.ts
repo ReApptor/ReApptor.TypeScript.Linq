@@ -4,7 +4,7 @@ import Tests from "./Tests/Tests";
 import AuthorizedTest from "./AuthorizedTest/AuthorizedTest";
 import AnonymousTestWithParameters, {IAnonymousParameters} from "./AnonymousTestWithParameters/AnonymousTestWithParameters";
 import AuthorizedTestWithParameters, {IAuthorizedParameters} from "./AuthorizedTestWithParameters/AuthorizedTestWithParameters";
-
+import SystemTests from "./SystemTests/SystemTests";
 
 export default class PageDefinitions extends BasePageDefinitions {
 
@@ -33,6 +33,8 @@ export default class PageDefinitions extends BasePageDefinitions {
     public static readonly tests: PageRoute = new PageRoute(nameof(Tests));
 
     public static readonly authorized: PageRoute = new PageRoute(nameof(AuthorizedTest));
+
+    public static readonly systemTests: PageRoute = new PageRoute(nameof(SystemTests));
 
     public static readonly anonymous: PageRoute = PageDefinitions.tests;
 

@@ -1,10 +1,9 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps} from "@weare/reapptor-react-common";
 
 import styles from "../Layout/Layout.module.scss";
 
-interface ITwoColumnsProps {
-    className?: string;
+interface ITwoColumnsProps extends IBaseContainerComponentProps {
     leftClassName?: string;
     rightClassName?: string;
 }
@@ -32,7 +31,7 @@ export default class TwoColumns extends BaseComponent<ITwoColumnsProps> {
         );
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
             <React.Fragment>
                 {

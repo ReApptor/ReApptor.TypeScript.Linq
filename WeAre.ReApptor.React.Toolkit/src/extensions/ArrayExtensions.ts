@@ -123,7 +123,7 @@ declare global {
          * @returns boolean - true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the Array<T>.
          */
         remove(item: T | readonly T[]): void;
-
+        
         /**
          * Removes the element at the specified index of the Array<T>.
          * @param index - The zero-based index of the element to remove.

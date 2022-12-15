@@ -95,7 +95,6 @@
     <ItemGroup>
       <None Remove="build\**" />
       <None Remove="src\@weare\**" />
-      <None Remove=".babelrc" />
       <None Remove=".gitignore" />
       <None Remove=".browserslistrc" />
       <None Remove="dist\**" />
@@ -109,6 +108,7 @@
       <TypeScriptCompile Include="src\app\pages\Error\Error.tsx" />
       <TypeScriptCompile Include="src\app\pages\PageDefinitions.ts" />
       <TypeScriptCompile Include="src\app\pages\AuthorizedTest\AuthorizedTest.tsx" />
+      <TypeScriptCompile Include="src\app\pages\SystemTests\SystemTests.tsx" />
       <TypeScriptCompile Include="src\app\pages\TestApplicationController.ts" />
       <TypeScriptCompile Include="src\app\pages\AnonymousTestWithParameters\AnonymousTestWithParameters.tsx" />
       <TypeScriptCompile Include="src\app\pages\Tests\FileInputTests\FileInputTests.tsx" />

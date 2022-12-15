@@ -1,16 +1,15 @@
 import React from "react";
-import {BaseComponent} from "@weare/reapptor-react-common";
+import {BaseComponent, IBaseContainerComponentProps, JQueryNode} from "@weare/reapptor-react-common";
 
 import styles from "../PageContainer.module.scss";
 
-export interface IPageRowProps {
-    className?: string;
+export interface IPageRowProps extends IBaseContainerComponentProps {
 }
 
 export default class PageRow extends BaseComponent<IPageRowProps> {
     
     public minimize(duration: number | null | undefined = undefined): void {
-        const node: JQuery = this.getNode();
+        const node: JQueryNode = this.getNode();
         const properties = {
             opacity: 0,
             height: 0,
