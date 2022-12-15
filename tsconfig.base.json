@@ -21,10 +21,10 @@
     "baseUrl": ".",
     "allowJs": true,
     "paths": {
-      "@weare/reapptor-linq": [
+      "@reapptor/ts-linq": [
         "ReApptor.TypeScript.Linq/src/index.ts"
       ],
-      "@weare/reapptor-paged-list": [
+      "@reapptor/ts-paged-list": [
         "ReApptor.TypeScript.PagedList/src/index.ts"
       ],
       "@weare/reapptor-react-common": [
@@ -35,12 +35,6 @@
       ],
       "@weare/reapptor-toolkit": [
         "WeAre.ReApptor.React.Toolkit/src/index.ts"
-      ],
-      "@reapptor/linq": [
-        "ReApptor.TypeScript.Linq/src/index.ts"
-      ],
-      "@reapptor/paged-list": [
-        "ReApptor.TypeScript.PagedList/src/index.ts"
       ]
     },
     "plugins": [{ "transform": "ts-nameof", "type": "raw" }]
