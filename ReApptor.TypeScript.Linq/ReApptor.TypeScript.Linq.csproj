@@ -44,10 +44,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\models" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include="README.md" />
     </ItemGroup>
 
