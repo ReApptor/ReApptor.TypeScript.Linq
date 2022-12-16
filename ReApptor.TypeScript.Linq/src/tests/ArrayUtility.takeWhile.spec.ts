@@ -1,6 +1,4 @@
-import {Linq} from "../index";
-
-Linq.init();
+import "@reapptor/ts-linq";
 
 describe("takeWhile", function() {
     

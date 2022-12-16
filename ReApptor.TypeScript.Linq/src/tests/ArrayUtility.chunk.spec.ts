@@ -1,6 +1,4 @@
-import {Linq} from "../index";
-
-Linq.init();
+import "@reapptor/ts-linq";
 
 describe("chunk", function () {
     test("chunk-size1-from0", function () {

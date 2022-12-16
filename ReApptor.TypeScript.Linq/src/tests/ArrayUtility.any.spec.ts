@@ -1,6 +1,4 @@
-import {Linq} from "../index";
-
-Linq.init();
+import "@reapptor/ts-linq";
 
 describe("any", function() {
     test("any-false-from0", function () {

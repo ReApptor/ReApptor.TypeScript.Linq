@@ -1,6 +1,4 @@
-import {Linq} from "../index";
-
-Linq.init();
+import "@reapptor/ts-linq";
 
 describe("all", function() {
     test("all-true-from0", function () {

@@ -1,6 +1,4 @@
-import {Linq} from "../index";
-
-Linq.init();
+import "@reapptor/ts-linq";
 
 describe("distinct", function() {
     test("distinct9-from12", function () {
