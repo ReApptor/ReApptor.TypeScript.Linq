@@ -1,6 +1,6 @@
-import {ArrayExtensions} from "../index";
+import {Linq} from "../index";
 
-ArrayExtensions();
+Linq.init();
 
 describe("take", function() {
     

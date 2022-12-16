@@ -412,4 +412,8 @@ export const ArrayExtensions = function () {
     }
 }
 
-ArrayExtensions();
+export default class Linq {
+    public static init() {
+        ArrayExtensions();
+    }
+}
