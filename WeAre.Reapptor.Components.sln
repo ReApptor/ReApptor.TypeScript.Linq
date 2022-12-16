@@ -70,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		extra-webpack.js = extra-webpack.js
 		extra-rollup.js = extra-rollup.js
 		babel.config.json = babel.config.json
+		ReApptor-logo-pink.png = ReApptor-logo-pink.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApplication", "TestApplication", "{A06D1722-93C1-40F3-A18D-A054513E61B4}"
