@@ -1,6 +1,4 @@
-import {ArrayExtensions} from "../index";
-
-ArrayExtensions();
+import "@reapptor/ts-linq";
 
 describe("chunk", function () {
     test("chunk-size1-from0", function () {
