@@ -35,7 +35,7 @@ export interface ICookieConsentProps {
     /**
      *  Text shown in the {@link CookieConsent}'s title.
      */
-    title: string;
+    title: string | string[];
 
     /**
      * In how many days from today should the cookie expire.
