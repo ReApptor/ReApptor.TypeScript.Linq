@@ -1,5 +1,5 @@
 import {Utility} from "@weare/reapptor-toolkit";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import {Dictionary} from "typescript-collections";
 import ApplicationContext from "../models/ApplicationContext";
 import {IBasePage} from "../base/BasePage";
 import ch from "./ComponentHelper";
