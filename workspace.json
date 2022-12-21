@@ -170,8 +170,8 @@
           "options": {
             "outputPath": "WeAre.ReApptor.React.Components/dist",
             "tsConfig": "WeAre.ReApptor.React.Components/tsconfig.lib.json",
-            "project": "WeAre.ReApptor.React.Components/package.json",
             "entryFile": "WeAre.ReApptor.React.Components/src/index.ts",
+            "project": "WeAre.ReApptor.React.Components/src/package.json",
             "external": [
               "react/jsx-runtime",
               "swiper/react"
