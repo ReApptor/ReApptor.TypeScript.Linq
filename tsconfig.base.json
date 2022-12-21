@@ -5,16 +5,16 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
+    "target": "ES2015",
+    "module": "ESNext",
     "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
     ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
