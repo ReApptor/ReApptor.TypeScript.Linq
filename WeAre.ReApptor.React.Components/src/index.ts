@@ -93,6 +93,7 @@ export {default as CheckboxNullable} from "./components/CheckboxNullable/Checkbo
 
 export * from "./components/DateInput/DateInput";
 export {default as DateInput} from "./components/DateInput/DateInput";
+export {fiLocale, enLocale} from "./components/DateInput/DateInput";
 
 export * from "./components/Dropdown/Dropdown";
 export {default as Dropdown} from "./components/Dropdown/Dropdown";
