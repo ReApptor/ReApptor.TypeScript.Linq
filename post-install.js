@@ -1,5 +1,4 @@
 const fs = require("fs");
-//const pl = require("date-fns/locale/pl");
 
 //const fileToEditPath = './node_modules/@nrwl/web/src/executors/package/package.impl.js';
 const fileToEditPath = './node_modules/@nrwl/rollup/src/executors/rollup/rollup.impl.js';
