@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
+import { fi, enGB, sv, nb, da, pl } from "date-fns/locale";
 import {Utility, TFormat} from "@weare/reapptor-toolkit";
 import {RenderCallback} from "@weare/reapptor-react-common";
 import BaseInput, {IBaseInputProps, IBaseInputState} from "../BaseInput/BaseInput";
@@ -12,19 +13,19 @@ import styles from "./DateInput.module.scss";
 import "./BootstrapOverride.scss";
 
 // Locale imports
-import fi from "date-fns/locale/fi";
-import en from "date-fns/locale/en-GB";
-import pl from "date-fns/locale/pl";
-import sv from "date-fns/locale/sv";
-import nb from "date-fns/locale/nb";
-import da from "date-fns/locale/da";
+// import fi from "date-fns/locale/fi";
+// import en from "date-fns/locale/en-GB";
+// import pl from "date-fns/locale/pl";
+// import sv from "date-fns/locale/sv";
+// import nb from "date-fns/locale/nb";
+// import da from "date-fns/locale/da";
 
 registerLocale("fi", fi);
-registerLocale("en", en);
-registerLocale("pl", pl);
-registerLocale("da", da);
+registerLocale("en", enGB);
 registerLocale("sv", sv);
 registerLocale("nb", nb);
+registerLocale("da", da);
+registerLocale("pl", pl);
 
 setDefaultLocale("fi");
 
