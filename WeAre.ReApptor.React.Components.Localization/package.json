@@ -2,6 +2,7 @@
   "name": "@weare/reapptor-react-components-localization",
   "license": "UNLICENSED",
   "version": "0.0.1",
+  "type":"module",
   "scripts": {
     "build": "npm run Build:WeAre.ReApptor.React.Components.Localization --prefix ..",
     "test": "npm run Test:WeAre.ReApptor.React.Components.Localization --prefix .."

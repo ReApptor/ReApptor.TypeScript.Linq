@@ -1,6 +1,5 @@
 import React from 'react';
 import "date-fns";
-import { enGB, fi } from "date-fns/locale";
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {Utility, TFormat} from "@weare/reapptor-toolkit";
 import {RenderCallback} from "@weare/reapptor-react-common";
@@ -13,6 +12,8 @@ import styles from "./DateInput.module.scss";
 
 import "./BootstrapOverride.scss";
 
+import enGB from "date-fns/locale/en-GB";
+import fi from "date-fns/locale/fi";
 //import enGB from "date-fns/locale/en-GB";
 //import fi from "date-fns/locale/fi";
 
