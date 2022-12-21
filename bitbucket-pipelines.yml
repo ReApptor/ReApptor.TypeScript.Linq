@@ -143,7 +143,8 @@ pipelines:
                 ## Run tests
                 - npm run test
                 # Change version number
-                - cd src && npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                - cd src
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Components/src
                 # Change toolkit version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Toolkit
                 # Change common version number
