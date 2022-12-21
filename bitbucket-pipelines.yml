@@ -143,13 +143,13 @@ pipelines:
                 ## Run tests
                 - npm run test
                 # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Components/src
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ./src
                 # Change toolkit version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Toolkit
                 # Change common version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Common
                 # Run build
-                - npm run build
+                - npm run build --prefix ./src
                 ## Create documentation
                 #- mkdir ./etc
                 #- api-extractor run --local
