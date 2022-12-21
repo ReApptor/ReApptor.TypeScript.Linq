@@ -67,8 +67,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		workspace.json = workspace.json
 		post-install.js = post-install.js
 		jest.preset.js = jest.preset.js
-		extra-webpack.js = extra-webpack.js
-		extra-rollup.js = extra-rollup.js
+		extra-webpack.cjs = extra-webpack.cjs
+		extra-rollup.cjs = extra-rollup.cjs
 		babel.config.json = babel.config.json
 	EndProjectSection
 EndProject

@@ -19,7 +19,7 @@
             "external": [
               "react/jsx-runtime"
             ],
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "assets": [
               {
                 "glob": "ReApptor.TypeScript.Linq/README.md",
@@ -47,7 +47,7 @@
           ],
           "options": {
             "jestConfig": "ReApptor.TypeScript.Linq/jest.config.ts",
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "passWithNoTests": true
           }
         }
@@ -72,7 +72,7 @@
             "external": [
               "react/jsx-runtime"
             ],
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "assets": [
               {
                 "glob": "ReApptor.TypeScript.PagedList/README.md",
@@ -176,7 +176,7 @@
               "react/jsx-runtime",
               "swiper/react"
             ],
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "assets": [
               {
                 "glob": "WeAre.ReApptor.React.Components/README.md",
@@ -228,7 +228,7 @@
             "external": [
               "react/jsx-runtime"
             ],
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "assets": [
               {
                 "glob": "WeAre.ReApptor.React.Components.Localization/README.md",
@@ -280,7 +280,7 @@
             "external": [
               "react/jsx-runtime"
             ],
-            "rollupConfig": "./extra-rollup",
+            "rollupConfig": "./extra-rollup.cjs",
             "assets": [
               {
                 "glob": "WeAre.ReApptor.React.Toolkit/README.md",
@@ -339,7 +339,7 @@
             ],
             "styles": [],
             "scripts": [],
-            "webpackConfig": "./extra-webpack"
+            "webpackConfig": "./extra-webpack.cjs"
           },
           "configurations": {
             "production": {

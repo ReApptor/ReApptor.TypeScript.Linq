@@ -1,7 +1,8 @@
 {
   "name": "reapptor-components",
-  "version": "0.0.0",
   "license": "UNLICENSED",
+  "version": "0.0.1",
+  "type":"module",
   "scripts": {
     "Start:WeAre.TestApplication.WebUI": "nx serve WeAre.TestApplication.WebUI --skip-nx-cache --port 58080 --open --hmr false",
     "Build:WeAre.TestApplication.WebUI": "nx build WeAre.TestApplication.WebUI --skip-nx-cache --with-deps",
