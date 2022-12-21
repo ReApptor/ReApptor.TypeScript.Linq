@@ -141,7 +141,7 @@ pipelines:
                 #- npm install -g @microsoft/api-extractor@7.12.1
                 #- npm install -g @microsoft/api-documenter
                 ## Run tests
-                - npm run test
+                - npm run test --prefix ./src
                 # Change version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ./src
                 # Change toolkit version number
