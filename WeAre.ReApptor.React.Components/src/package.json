@@ -3,6 +3,15 @@
   "license": "UNLICENSED",
   "version": "0.0.1",
   "type":"module",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./esm/index.js",
+      "require": "./commonjs/index.cjs"
+    }
+  },
+  "main": "./commonjs/index.cjs",
+  "types": "./types/index.d.ts",
   "scripts": {
     "build": "npm run Build:WeAre.ReApptor.React.Components --prefix ../../",
     "test": "npm run Test:WeAre.ReApptor.React.Components --prefix ../../"

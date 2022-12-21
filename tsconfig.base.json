@@ -16,6 +16,7 @@
       "dom",
       "dom.iterable"
     ],
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
