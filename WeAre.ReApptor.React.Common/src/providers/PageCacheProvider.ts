@@ -3,7 +3,7 @@
  */
 
 import {Mutex} from "async-mutex";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import {Dictionary} from "typescript-collections";
 import {Utility} from "@weare/reapptor-toolkit";
 import ch from "./ComponentHelper";
 

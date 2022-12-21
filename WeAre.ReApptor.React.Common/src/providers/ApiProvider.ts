@@ -10,7 +10,7 @@ import IResponseContainer from "../models/IResponseContainer";
 import PageRouteProvider from "./PageRouteProvider";
 import ch from "./ComponentHelper";
 import {Mutex} from "async-mutex";
-import Dictionary from "typescript-collections/dist/lib/Dictionary";
+import {Dictionary} from "typescript-collections";
 
 type TAction = (() => Promise<void>);
 
