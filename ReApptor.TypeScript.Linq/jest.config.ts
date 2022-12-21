@@ -2,6 +2,6 @@
 
 export default {
   displayName: "ReApptor.TypeScript.Linq",
-  preset: "../jest.preset.js",
+  preset: "../jest.preset.cjs",
   coverageDirectory: "../coverage/libs/ReApptor.TypeScript.Linq"
 };
