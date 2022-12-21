@@ -1,3 +1,9 @@
-@import '~swiper/swiper.scss';
-@import '~swiper/components/navigation/navigation.scss';
-@import '~swiper/components/pagination/pagination.scss';
+// Swiper bundle styles
+@import "swiper/swiper-bundle.min.css";
+
+// Swiper core styles"
+@import "swiper/swiper.min.css";
+
+// Modules styles
+@import "swiper/components/navigation/navigation.min.css";
+@import "swiper/components/pagination/pagination.min.css";
