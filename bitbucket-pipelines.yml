@@ -32,7 +32,7 @@ pipelines:
                 - npm run build
                 # Create documentation
                 - mkdir ./etc
-                - api-extractor run --local
+#                - api-extractor run --local
                 # Create .npmrc file
                 - cd dist
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
@@ -72,7 +72,7 @@ pipelines:
                 - npm run build
                 # Create documentation
                 - mkdir ./etc
-                - api-extractor run --local
+#                - api-extractor run --local
                 # Create .npmrc file
                 - cd dist
                 - echo registry=https://${MYGET_NPM_REGISTRY_URL} > ~/.npmrc
@@ -141,15 +141,15 @@ pipelines:
                 #- npm install -g @microsoft/api-extractor@7.12.1
                 #- npm install -g @microsoft/api-documenter
                 ## Run tests
-                - npm run test
+                - npm run test --prefix ./src
                 # Change version number
-                - npm version 1.0.${BITBUCKET_BUILD_NUMBER}
+                - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ./src
                 # Change toolkit version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Toolkit
                 # Change common version number
                 - npm version 1.0.${BITBUCKET_BUILD_NUMBER} --prefix ../WeAre.ReApptor.React.Common
                 # Run build
-                - npm run build
+                - npm run build --prefix ./src
                 ## Create documentation
                 #- mkdir ./etc
                 #- api-extractor run --local
@@ -273,25 +273,25 @@ pipelines:
                 - echo $BITBUCKET_BUILD_NUMBER
                 - dotnet pack -p:PackageVersion=1.0.${BITBUCKET_BUILD_NUMBER} ./WeAre.Apps.Common/WeAre.Apps.Common.csproj -o obj/reapptor-apps-common/publish
                 - dotnet nuget push obj/reapptor-apps-common/publish/WeAre.Apps.Common.1.0.${BITBUCKET_BUILD_NUMBER}.nupkg -k ${MYGET_API_KEY} -s https://www.myget.org/F/reapptor-apps/api/v2/package
-      - step:
-          name: Build Documentation
-          image: node:14
-          caches:
-            - node
-          script:
-            - node -v && npm -v
-            - npm config set strict-ssl true
-            - npm config set ca ""
-            - npm install -g @microsoft/api-documenter
-            - cd Documentation
-            - mkdir input
-            - cp -a ../WeAre.ReApptor.React.Toolkit/temp/. ./input/
-            - cp -a ../WeAre.ReApptor.React.Common/temp/. ./input/
-            - api-documenter markdown -i ./input/ -o ./docs/
-            - cp index.html ./docs/index.html
-            - mv ./docs/index.md ./docs/README.md
-          artifacts:
-            - Documentation/docs/**
+#      - step:
+#          name: Build Documentation
+#          image: node:14
+#          caches:
+#            - node
+#          script:
+#            - node -v && npm -v
+#            - npm config set strict-ssl true
+#            - npm config set ca ""
+#            - npm install -g @microsoft/api-documenter
+#            - cd Documentation
+#            - mkdir input
+#            - cp -a ../WeAre.ReApptor.React.Toolkit/temp/. ./input/
+#            - cp -a ../WeAre.ReApptor.React.Common/temp/. ./input/
+#            - api-documenter markdown -i ./input/ -o ./docs/
+#            - cp index.html ./docs/index.html
+#            - mv ./docs/index.md ./docs/README.md
+#          artifacts:
+#            - Documentation/docs/**
 #      - step:
 #          name: Deploy Documentation
 #          image: amazon/aws-cli

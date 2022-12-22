@@ -2,6 +2,7 @@
   "name": "@weare/weare-test-application",
   "license": "UNLICENSED",
   "version": "0.0.1",
+  "type":"module",
   "scripts": {
     "start": "npm run Build:WeAre.ReApptor.React.Components --prefix ..",
     "build": "npm run Build:WeAre.ReApptor.React.Components --prefix .."

@@ -1,6 +1,4 @@
-import {ArrayExtensions} from "../index";
-
-ArrayExtensions();
+import "@reapptor/ts-linq";
 
 describe("any", function() {
     test("any-false-from0", function () {

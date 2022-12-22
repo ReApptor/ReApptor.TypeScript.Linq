@@ -1,5 +1,4 @@
 const fs = require("fs");
-//const pl = require("date-fns/locale/pl");
 
 //const fileToEditPath = './node_modules/@nrwl/web/src/executors/package/package.impl.js';
 const fileToEditPath = './node_modules/@nrwl/rollup/src/executors/rollup/rollup.impl.js';
@@ -22,15 +21,13 @@ const replaceCode = `tsconfig: options.tsConfig,\n${indent}${tsNameOfRollupOptio
 
 if (!fs.existsSync(fileToEditPath)) {
     console.error(`cannot check for ts-nameof plugin installation. ${fileToEditPath} cannot be found. is node_modules correctly installed?`);
-    return;
-}
+} else {
 
-console.error(`File = ${fileToEditPath}.`);
+    console.error(`File = ${fileToEditPath}.`);
 
+    let fileToEdit = fs.readFileSync(fileToEditPath).toString();
 
-let fileToEdit = fs.readFileSync(fileToEditPath).toString();
-
-const hasNameOfPlugin = fileToEdit.includes(tsNameOfPluginName);
+    const hasNameOfPlugin = fileToEdit.includes(tsNameOfPluginName);
 //const hasNameOfImport = fileToEdit.includes(tsNameOfImport);
 
 // if (hasNameOfImport) {
@@ -43,33 +40,32 @@ const hasNameOfPlugin = fileToEdit.includes(tsNameOfPluginName);
 //     if (!hasTypescriptImport) {
 //         console.warn(`Can not find the import for rollup-plugin-typescript2 to add ts-nameof import, 
 //         try reinstalling node_modules and if that didn't work it means this script needs some update`);
+//     } else {
+//       fileToEdit = fileToEdit.replace(defaultImport, replaceImport);
 //
-//         return;
+//       console.log('ts-nameof import added');
+//
+//       fs.writeFileSync(fileToEditPath, fileToEdit);
 //     }
-//
-//     fileToEdit = fileToEdit.replace(defaultImport, replaceImport);
-//
-//     console.log('ts-nameof import added');
-//
-//     fs.writeFileSync(fileToEditPath, fileToEdit);
 // }
 
 
-if (hasNameOfPlugin) {
-    console.log('ts-nameof plugin is already in place');
-}
-
-if (!hasNameOfPlugin) {
-    const hasNameOfPlaceHolder = fileToEdit.includes(defaultCode);
-
-    if (!hasNameOfPlaceHolder) {
-        console.warn(`Can not find the placeholder for nameof plugin, 
-        try reinstalling node_modules and if that didn't work it means this script needs some update`);
-        return;
+    if (hasNameOfPlugin) {
+        console.log('ts-nameof plugin is already in place');
     }
-    fileToEdit = fileToEdit.replace(defaultCode, replaceCode);
 
-    console.log('ts-nameof plugin added');
+    if (!hasNameOfPlugin) {
+        const hasNameOfPlaceHolder = fileToEdit.includes(defaultCode);
 
-    fs.writeFileSync(fileToEditPath, fileToEdit);
+        if (!hasNameOfPlaceHolder) {
+            console.warn(`Can not find the placeholder for nameof plugin, 
+        try reinstalling node_modules and if that didn't work it means this script needs some update`);
+        } else {
+            fileToEdit = fileToEdit.replace(defaultCode, replaceCode);
+
+            console.log('ts-nameof plugin added');
+
+            fs.writeFileSync(fileToEditPath, fileToEdit);
+        }
+    }
 }

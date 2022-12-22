@@ -10,7 +10,7 @@ export enum SortDirection {
 }
 
 export default class ArrayUtility {
-
+    
     public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
         return items.filter(predicate);
     }
@@ -104,7 +104,7 @@ export default class ArrayUtility {
         }
         return result;
     }
-
+    
     public static firstOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
@@ -119,7 +119,7 @@ export default class ArrayUtility {
         }
         return defaultValue ?? null;
     }
-
+    
     public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
         if (callback) {
@@ -270,7 +270,7 @@ export default class ArrayUtility {
             pageNumber: pageNumber
         }
     }
-
+    
     public static sortByProperty<T>(propertyName: string, sortDirection: SortDirection | null = SortDirection.Asc): (a: T , b: T) => number {
         const direction: number = (sortDirection == SortDirection.Desc) ? -1 : 1;
 
@@ -336,7 +336,7 @@ export default class ArrayUtility {
                     }
                 }
             }
-
+            
             return value;
         }
 

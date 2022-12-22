@@ -588,6 +588,7 @@ export default class Layout extends BaseAsyncComponent<ILayoutProps, ILayoutStat
             link.download = file.name;
             link.target = "_self";
             link.type = file.type;
+            link.click();
         }
     }
     

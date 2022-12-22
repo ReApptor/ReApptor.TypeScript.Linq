@@ -2,6 +2,6 @@
 
 export default {
   displayName: "WeAre.TestApplication.WebUI",
-  preset: "../jest.preset.js",
+  preset: "../jest.preset.cjs",
   coverageDirectory: "../coverage/WeAre.TestApplication.WebUI"
 };

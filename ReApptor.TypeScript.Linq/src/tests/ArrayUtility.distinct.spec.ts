@@ -1,6 +1,4 @@
-import {ArrayExtensions} from "../index";
-
-ArrayExtensions();
+import "@reapptor/ts-linq";
 
 describe("distinct", function() {
     test("distinct9-from12", function () {

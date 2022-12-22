@@ -1,6 +1,4 @@
-import {ArrayExtensions} from "../index";
-
-ArrayExtensions();
+import "@reapptor/ts-linq";
 
 describe("skip", function() {
     test("skip0from0", function () {

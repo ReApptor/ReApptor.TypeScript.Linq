@@ -1,9 +1,13 @@
 {
-  "name": "@weare/reapptor-linq",
+  "name": "@reapptor/ts-linq",
   "license": "UNLICENSED",
-  "version": "0.0.1",
-  "scripts": {
-    "build": "npm run Build:ReApptor.TypeScript.Linq --prefix ..",
-    "test": "npm run Test:ReApptor.TypeScript.Linq --prefix .."
-  }
+  "version": "1.0.3",
+  "type":"module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReApptor/ReApptor.TypeScript.Linq"
+  },
+  "author": "ReApptor",
+  "description": "It is a complete, fully tested analog of C# Language-Integrated Query (LINQ) written in TypeScript. LINQ package generally operates on the collection types and comes as extension methods serving a variety of purposes in working with collections of types.",
+  "keywords": [ "linq", "language-integrated query", "ts", "typescript", "array extension", "collection extension" ]
 }
