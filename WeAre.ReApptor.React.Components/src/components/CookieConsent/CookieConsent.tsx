@@ -1,7 +1,8 @@
 import React from "react";
 import {BaseComponent} from "@weare/reapptor-react-common";
-import styles from "./CookieConsent.module.scss"
 import {Button, ButtonType} from "@weare/reapptor-react-components";
+
+import styles from "./CookieConsent.module.scss"
 
 /**
  * Position of a cookie-consent banner.
@@ -19,12 +20,6 @@ export enum BannerPosition {
     Bottom
 }
 
-// TODO: is this used at all?
-interface ICookie {
-    cname: string;
-    expiresInDays?: number;
-}
-
 export interface ICookieConsentProps {
 
     /**
@@ -35,7 +30,7 @@ export interface ICookieConsentProps {
     /**
      *  Text shown in the {@link CookieConsent}'s title.
      */
-    title: string | string[] | React.ReactNode;
+    title: string;
 
     /**
      * In how many days from today should the cookie expire.
@@ -90,7 +85,7 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
 
             expirationDate.setTime(expirationDate.getTime() + expirationTimeInMilliseconds);
 
-            return  expirationDate.toUTCString();
+            return expirationDate.toUTCString();
         }
 
         return CookieConsent.defaultExpirationDate;
@@ -139,14 +134,14 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
                     <div className={styles.cookieConsentBannerInner}>
                         <div className={styles.cookieConsentBannerCopy}>
                             <div className={styles.cookieConsentBannerHeader}>
-                                {this.props.title}
+                                {this.toMultiLines(this.props.title)}
                             </div>
 
                             {
                                 (this.props.description) &&
                                 (
                                     <div className={styles.cookieConsentBannerDescription}>
-                                        {this.props.description}
+                                        {this.toMultiLines(this.props.description)}
                                     </div>
                                 )
                             }
@@ -155,7 +150,7 @@ export default class CookieConsent extends BaseComponent<ICookieConsentProps> {
                         <div>
                             <Button label={this.props.acceptButtonText}
                                     type={ButtonType.Orange}
-                                    onClick={async (sender, data) => await this.saveCookieAsync()}
+                                    onClick={(sender, data) => this.saveCookieAsync()}
                             />
                         </div>
                     </div>
