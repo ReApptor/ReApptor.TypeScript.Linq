@@ -1,7 +1,8 @@
 {
   "name": "reapptor-components",
-  "version": "0.0.0",
   "license": "UNLICENSED",
+  "version": "1.0.22",
+  "type": "module",
   "scripts": {
     "Start:WeAre.TestApplication.WebUI": "nx serve WeAre.TestApplication.WebUI --skip-nx-cache --port 58080 --open --hmr false",
     "Build:WeAre.TestApplication.WebUI": "nx build WeAre.TestApplication.WebUI --skip-nx-cache --with-deps",
@@ -20,7 +21,7 @@
     "Test:ReApptor.TypeScript.PagedList": "nx test ReApptor.TypeScript.PagedList",
     "Build:All": "npm run Build:ReApptor.TypeScript.PagedList && npm run Build:ReApptor.TypeScript.Linq && npm run Build:WeAre.ReApptor.React.Toolkit && npm run Build:WeAre.ReApptor.React.Common && npm run Build:WeAre.ReApptor.React.Components && npm run Build:WeAre.ReApptor.React.Components.Localization && npm run Build:WeAre.TestApplication.WebUI",
     "Test:All": "npm run Test:ReApptor.TypeScript.PagedList && npm run Test:ReApptor.TypeScript.Linq && npm run Test:WeAre.ReApptor.React.Toolkit && npm run Test:WeAre.ReApptor.React.Common && npm run Test:WeAre.ReApptor.React.Components && npm run Test:WeAre.ReApptor.React.Components.Localization && npm run Test:WeAre.TestApplication.WebUI",
-    "postinstall": "node post-install.js",
+    "postinstall": "node post-install.cjs",
     "dep-graph": "nx dep-graph"
   },
   "private": true,
@@ -31,6 +32,7 @@
     "async-mutex": "^0.1.4",
     "bootstrap": "^4.6.2",
     "core-js": "^3.26.1",
+    "date-fns": "^2.29.3",
     "document-register-element": "^1.14.10",
     "jquery": "^3.6.2",
     "lodash": "^4.17.21",

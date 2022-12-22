@@ -1,9 +1,9 @@
 import React, {CSSProperties, ReactElement} from "react";
 import {BaseComponent, ch} from "@weare/reapptor-react-common";
-import {Swiper, SwiperSlide} from "swiper/react";
-import SwiperCore, {Navigation, Pagination} from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {NavigationOptions, PaginationOptions} from "swiper/types";
-
+import SwiperCore, {Navigation, Pagination} from "swiper";
+//import {NavigationOptions, PaginationOptions} from "swiper/types";
 
 import "./SwiperStyles.scss";
 import styles from "./Carousel.module.scss";
@@ -11,10 +11,9 @@ import styles from "./Carousel.module.scss";
 // Swiper modules need to be explicitly loaded
 SwiperCore.use([Navigation, Pagination]);
 
-
-// TODO: If a child-elements width changes, Swipers slide width/snapping grid won't be updated.
-//       Using Swipers in-built observer functionality does not help, as it does not notice changes in childrens width.
-
+// TODO:
+//  If a child-elements width changes, Swiper slide width/snapping grid won't be updated.
+//  Using Swiper in-built observer functionality does not help, as it does not notice changes in children width.
 
 export enum CarouselNavigation {
     None = 0,
@@ -264,7 +263,7 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
     public render(): React.ReactNode {
         return (
             <div className={this.className}
-                 onClick={async (event) => await this.props.onClick?.(event)}
+                 onClick={(event) => this.props.onClick?.(event)}
             >
 
                 <Swiper loop={this.loop}
@@ -273,8 +272,8 @@ export default class Carousel extends BaseComponent<ICarouselProps, ICarouselSta
                         pagination={this.paginationOptions}
                         slidesPerView={this.slidesPerView}
                         spaceBetween={this.spaceBetweenSlides}
-                        onInit={async (swiper: SwiperCore) => await this.onSwiperInitAsync(swiper)}
-                        onRealIndexChange={async (swiper: SwiperCore) => {await this.props.onSlideChange?.(swiper.realIndex)}}
+                        onInit={(swiper: SwiperCore) => this.onSwiperInitAsync(swiper)}
+                        onRealIndexChange={(swiper: SwiperCore) => {this.props.onSlideChange?.(swiper.realIndex)}}
                 >
                     {
                         this.children.map((child, index) => {

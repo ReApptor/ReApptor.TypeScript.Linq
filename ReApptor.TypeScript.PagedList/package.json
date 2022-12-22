@@ -1,7 +1,8 @@
 {
-  "name": "@weare/reapptor-paged-list",
+  "name": "@reapptor/ts-paged-list",
   "license": "UNLICENSED",
   "version": "0.0.1",
+  "type":"module",
   "scripts": {
     "build": "npm run Build:ReApptor.TypeScript.PagedList --prefix ..",
     "test": "npm run Test:ReApptor.TypeScript.PagedList --prefix .."

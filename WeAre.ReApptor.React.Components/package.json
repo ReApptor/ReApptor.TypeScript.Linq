@@ -1,9 +1,0 @@
-{
-  "name": "@weare/reapptor-react-components",
-  "license": "UNLICENSED",
-  "version": "0.0.1",
-  "scripts": {
-    "build": "npm run Build:WeAre.ReApptor.React.Components --prefix ..",
-    "test": "npm run Test:WeAre.ReApptor.React.Components --prefix .."
-  }
-}
