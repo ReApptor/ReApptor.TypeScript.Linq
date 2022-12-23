@@ -14,7 +14,7 @@ in their day-to-day work.
 
 ## Included query functions
 
-* [`All`](#All)
+* [`All`](#all-small-msdn)
 * [`Any`](#Any)
 * [`Chunk`](#Chunk)
 * [`Count`](#Count)
