@@ -1,4 +1,4 @@
-![ReApptor](ReApptor.png)
+![ReApptor](https://raw.githubusercontent.com/ReApptor/ReApptor.TypeScript.Linq/main/ReApptor.png)
 # ReApptor TypeScript LINQ
 
 It is a complete, fully tested analog of [C# Language-Integrated Query (LINQ)](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-7.0)
@@ -34,8 +34,7 @@ in their day-to-day work.
 * [`TakeWhile`](#TakeWhile)
 
 
-### All
-#### ([Link to Microsoft system.linq.enumerable.all](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.all?view=net-7.0))
+### All <small>[MSDN](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.all?view=net-7.0)
 Determines whether all elements of a sequence satisfy a condition.
 ```typescript
     /**
