@@ -14,7 +14,7 @@ in their day-to-day work.
 
 ## Included query functions
 
-* [`All`](#all-small-msdn)
+* [`All`](#All)
 * [`Any`](#Any)
 * [`Chunk`](#Chunk)
 * [`Count`](#Count)
@@ -34,7 +34,8 @@ in their day-to-day work.
 * [`TakeWhile`](#TakeWhile)
 
 
-### All <small>[MSDN](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.all?view=net-7.0)
+### All [<small>MSDN</small>](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.all?view=net-7.0)
+
 Determines whether all elements of a sequence satisfy a condition.
 ```typescript
     /**
