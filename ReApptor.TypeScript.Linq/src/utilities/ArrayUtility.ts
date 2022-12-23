@@ -81,11 +81,9 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(items[i], i);
-
             if (!valid) {
                 break;
             }
-
             result.push(item);
         }
         return result;

@@ -1,7 +1,7 @@
-![alt text](https://www.reapptor.com/wp-content/uploads/2021/09/ReApptor-logo-pink-l.png)
+![alt text](./ReApptor.png)
 # ReApptor TypeScript LINQ
 
-It is a complete, fully tested analog of C# Language-Integrated Query (LINQ)
+It is a complete, fully tested analog of [C# Language-Integrated Query (LINQ)](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-7.0)
 written in TypeScript.
 
 LINQ package generally operates on the collection types and comes as
@@ -16,26 +16,26 @@ in their day-to-day work.
 
 * [`All`](#All)
 * [`Any`](#Any)
-* [`Chunk`](#All)
-* [`Count`](#All)
-* [`Distinct`](#All)
-* [`First`](#All)
-* [`FirstOrDefault`](#All)
-* [`Last`](#All)
-* [`LastOrDefault`](#All)
-* [`Max`](#All)
-* [`Min`](#All)
-* [`Repeat`](#All)
-* [`SelectMany`](#All)
-* [`Skip`](#All)
-* [`Sum`](#All)
-* [`Take`](#All)
-* [`TakeLast`](#All)
-* [`TakeWhile`](#All)
+* [`Chunk`](#Chunk)
+* [`Count`](#Count)
+* [`Distinct`](#Distinct)
+* [`First`](#First)
+* [`FirstOrDefault`](#FirstOrDefault)
+* [`Last`](#Last)
+* [`LastOrDefault`](#LastOrDefault)
+* [`Max`](#Max)
+* [`Min`](#Min)
+* [`Repeat`](#Repeat)
+* [`SelectMany`](#SelectMany)
+* [`Skip`](#Skip)
+* [`Sum`](#Sum)
+* [`Take`](#Take)
+* [`TakeLast`](#TakeLast)
+* [`TakeWhile`](#TakeWhile)
 
 
 ### All
-
+#### ([Link to Microsoft system.linq.enumerable.all](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.all?view=net-7.0))
 Determines whether all elements of a sequence satisfy a condition.
 ```typescript
     /**
@@ -75,6 +75,7 @@ hasAllFive = true;
 ```
 ***
 ### Any
+#### ([Link to Microsoft system.linq.enumerable.any](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-7.0))
 Determines whether a sequence contains any elements in the collection,
 which satisfies an optional condition. If no condition is provided,
 the method just returns if the collection is empty or not.
@@ -118,6 +119,7 @@ hasEmptyAnyNumber = false;
 ***
 
 ### Chunk
+#### ([Link to Microsoft system.linq.enumerable.chunk](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.chunk?view=net-7.0))
 Splits the elements of a sequence into chunks of the parameter size at most size.
 ```typescript
 /**
@@ -177,6 +179,7 @@ Size "0" out of range, must be at least 1 or greater.
 
 ***
 ### Count
+#### ([Link to Microsoft system.linq.enumerable.count](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.count?view=net-7.0))
 Returns the number of elements in a sequence.
 ```typescript
 /**
@@ -202,6 +205,7 @@ There are 10 numbers in the collection
 
 ***
 ### Distinct
+#### ([Link to Microsoft system.linq.enumerable.distinct](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.distinct?view=net-7.0))
 Returns distinct elements from a sequence.
 ```typescript
  /**
@@ -267,6 +271,7 @@ distinctAgeHumans =  [
 ```
 ***
 ### First
+#### ([Link to Microsoft system.linq.enumerable.first](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.first?view=net-7.0))
 Returns the first element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
 ```typescript
 /**
@@ -325,6 +330,7 @@ No item found matching the specified predicate.
 
 ***
 ### FirstOrDefault
+#### ([Link to Microsoft system.linq.enumerable.firstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.firstOrDefault?view=net-7.0))
 Returns the first element of a sequence, or a default value if no element is found.
 ```typescript
 /**
@@ -373,6 +379,7 @@ Return -1 if none of the elements matching the predicate. The return value = -1
 ```
 ***
 ### Last
+#### ([Link to Microsoft system.linq.enumerable.last](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.last?view=net-7.0))
 Returns the last element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
 ```typescript
 /**
@@ -429,6 +436,7 @@ No item found matching the specified predicate.
 ```
 ***
 ### LastOrDefault
+#### ([Link to Microsoft system.linq.enumerable.lastOrDefault](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.lastOrDefault?view=net-7.0))
 Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
 ```typescript
 /**
@@ -477,6 +485,7 @@ Return -1 if none of the elements matching the predicate. The return value = -1
 ```
 ***
 ### Max
+#### ([Link to Microsoft system.linq.enumerable.max](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.max?view=net-7.0))
 Returns the maximum value in a sequence of values.
 ```typescript
 /**
@@ -501,6 +510,7 @@ The largest number is 1.5e+104
 ```
 ***
 ### Min
+#### ([Link to Microsoft system.linq.enumerable.min](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.min?view=net-7.0))
 Returns the minimum value in a sequence of values.
 ```typescript
 /**
@@ -526,6 +536,7 @@ The lowest grade is 37
 
 ***
 ### Repeat
+#### ([Link to Microsoft system.linq.enumerable.repeat](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.repeat?view=net-7.0))
 Generates a sequence that contains one repeated value.
 ```typescript
 /**
@@ -598,6 +609,7 @@ console.log(query);
 ```
 ***
 ### Skip
+#### ([Link to Microsoft system.linq.enumerable.skip](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.skip?view=net-7.0))
 Bypasses a specified number of elements in a sequence and then returns the remaining elements.
 ```typescript
 /**
@@ -626,6 +638,7 @@ All grades except the top three are: [ 82, 85, 92, 98 ]
 ```
 ***
 ### Sum
+#### ([Link to Microsoft system.linq.enumerable.sum](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.sum?view=net-7.0))
 Computes the sum of a sequence of numeric values.
 ```typescript
 /**
@@ -651,6 +664,7 @@ The sum of the numbers is 635.13.
 ```
 ***
 ### Take
+#### ([Link to Microsoft system.linq.enumerable.take](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.take?view=net-7.0))
 Returns a specified number of contiguous elements from the start of a sequence.
 ```typescript
 /**
@@ -678,6 +692,7 @@ The top three grades are:98,92,85
 ```
 ***
 ### TakeLast
+#### ([Link to Microsoft system.linq.enumerable.takeLast](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.takeLast?view=net-7.0))
 Returns a new array that contains the last count elements from source.
 ```typescript
 /**
@@ -705,6 +720,7 @@ The worst three grades are:70,59,56
 ```
 ***
 ### TakeWhile
+#### ([Link to Microsoft system.linq.enumerable.takeWhile](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.takeWhile?view=net-7.0))
 Returns elements from an array as long as a specified condition is true.
 ```typescript
 /**
