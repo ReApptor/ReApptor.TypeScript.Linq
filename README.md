@@ -272,7 +272,7 @@ distinctAgeHumans =  [
 ```
 ***
 ### First
-#### ([MSDN: System.Linq.Enumerable.First](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.first?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.First](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.first?view=net-7.0)
 Returns the first element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
 ```typescript
 /**
@@ -331,7 +331,7 @@ No item found matching the specified predicate.
 
 ***
 ### FirstOrDefault
-#### ([MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.firstOrDefault?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.firstOrDefault?view=net-7.0)
 Returns the first element of a sequence, or a default value if no element is found.
 ```typescript
 /**
@@ -380,7 +380,7 @@ Return -1 if none of the elements matching the predicate. The return value = -1
 ```
 ***
 ### Last
-#### ([MSDN: System.Linq.Enumerable.Last](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.last?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Last](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.last?view=net-7.0)
 Returns the last element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
 ```typescript
 /**
@@ -437,7 +437,7 @@ No item found matching the specified predicate.
 ```
 ***
 ### LastOrDefault
-#### ([MSDN: System.Linq.Enumerable.LastOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.lastOrDefault?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.LastOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.lastOrDefault?view=net-7.0)
 Returns the last element of a sequence, or a specified default value if the sequence contains no elements.
 ```typescript
 /**
@@ -486,7 +486,7 @@ Return -1 if none of the elements matching the predicate. The return value = -1
 ```
 ***
 ### Max
-#### ([MSDN: System.Linq.Enumerable.Max](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.max?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Max](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.max?view=net-7.0)
 Returns the maximum value in a sequence of values.
 ```typescript
 /**
@@ -511,7 +511,7 @@ The largest number is 1.5e+104
 ```
 ***
 ### Min
-#### ([MSDN: System.Linq.Enumerable.Min](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.min?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Min](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.min?view=net-7.0)
 Returns the minimum value in a sequence of values.
 ```typescript
 /**
@@ -537,7 +537,7 @@ The lowest grade is 37
 
 ***
 ### Repeat
-#### ([MSDN: System.Linq.Enumerable.Repeat](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.repeat?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Repeat](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.repeat?view=net-7.0)
 Generates a sequence that contains one repeated value.
 ```typescript
 /**
@@ -610,7 +610,7 @@ console.log(query);
 ```
 ***
 ### Skip
-#### ([MSDN: System.Linq.Enumerable.Skip](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.skip?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Skip](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.skip?view=net-7.0)
 Bypasses a specified number of elements in a sequence and then returns the remaining elements.
 ```typescript
 /**
@@ -639,7 +639,7 @@ All grades except the top three are: [ 82, 85, 92, 98 ]
 ```
 ***
 ### Sum
-#### ([MSDN: System.Linq.Enumerable.Sum](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.sum?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Sum](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.sum?view=net-7.0)
 Computes the sum of a sequence of numeric values.
 ```typescript
 /**
@@ -665,7 +665,7 @@ The sum of the numbers is 635.13.
 ```
 ***
 ### Take
-#### ([MSDN: System.Linq.Enumerable.Take](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.take?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Take](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.take?view=net-7.0)
 Returns a specified number of contiguous elements from the start of a sequence.
 ```typescript
 /**
@@ -693,7 +693,7 @@ The top three grades are:98,92,85
 ```
 ***
 ### TakeLast
-#### ([MSDN: System.Linq.Enumerable.TakeLast](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.takeLast?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.TakeLast](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.takeLast?view=net-7.0)
 Returns a new array that contains the last count elements from source.
 ```typescript
 /**
@@ -721,7 +721,7 @@ The worst three grades are:70,59,56
 ```
 ***
 ### TakeWhile
-#### ([MSDN: System.Linq.Enumerable.TakeWhile](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.takeWhile?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.TakeWhile](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.takeWhile?view=net-7.0)
 Returns elements from an array as long as a specified condition is true.
 ```typescript
 /**
