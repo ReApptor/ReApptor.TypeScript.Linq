@@ -15,8 +15,8 @@ export default class ArrayUtility {
         return items.filter(predicate);
     }
 
-    public static async whereAsync<T>(items: readonly T[], callback: (item: T) => Promise<boolean>): Promise<T[]> {
-        return items.filter(item => callback(item));
+    public static async whereAsync<T>(items: readonly T[], predicate: (item: T) => Promise<boolean>): Promise<T[]> {
+        return items.filter(item => predicate(item));
     }
 
     public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
@@ -31,8 +31,8 @@ export default class ArrayUtility {
 
     public static chunk<T>(items: readonly T[], size: number): T[][] {
         if (size < 1)
-            throw Error(`Size "${size}" out of range, must be at least 1 or greater.`);
-        
+            throw new Error(`Size "${size}" out of range, must be at least 1 or greater.`);
+
         const result: T[][] = [];
 
         const copy: T[] = [...items];
@@ -81,9 +81,11 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(items[i], i);
+
             if (!valid) {
                 break;
             }
+
             result.push(item);
         }
         return result;
@@ -111,7 +113,7 @@ export default class ArrayUtility {
                 ? "No item found matching the specified predicate."
                 : "The source sequence is empty.";
 
-            throw Error(error);
+            throw new Error(error);
         }
 
         return item;
@@ -140,18 +142,18 @@ export default class ArrayUtility {
                 ? "No item found matching the specified predicate."
                 : "The source sequence is empty.";
 
-            throw Error(error);
+            throw new Error(error);
         }
 
         return item;
     }
 
-    public static lastOrDefault<T>(items: readonly T[], callback?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+    public static lastOrDefault<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
-        if (callback) {
+        if (predicate) {
             for (let i: number = length - 1; i >= 0; i--) {
                 const item: T = items[i];
-                if (callback(item)) {
+                if (predicate(item)) {
                     return item;
                 }
             }
@@ -161,15 +163,15 @@ export default class ArrayUtility {
         return defaultValue ?? null;
     }
 
-    public static async forEachAsync<T>(items: readonly T[], callback: (item: T) => Promise<void>): Promise<void> {
-        const promises: Promise<void>[] = items.map(item => callback(item));
+    public static async forEachAsync<T>(items: readonly T[], predicate: (item: T) => Promise<void>): Promise<void> {
+        const promises: Promise<void>[] = items.map(item => predicate(item));
         await Promise.all(promises);
     }
 
-    public static groupBy<T>(items: readonly T[], callback: ((item: T) => any) | null | undefined = null): T[][] {
+    public static groupBy<T>(items: readonly T[], keySelector: ((item: T) => any) | null | undefined = null): T[][] {
         const map = new Map<any, T[]>();
         items.forEach((item) => {
-            const key: any = callback ? callback(item) : null;
+            const key: any | null = keySelector ? keySelector(item) : null;
             const collection: T[] | undefined = map.get(key);
             if (!collection) {
                 map.set(key, [item]);
@@ -196,23 +198,24 @@ export default class ArrayUtility {
 
     public static removeAt<T>(items: T[], index: number): void {
         if ((index < 0) || (index >= items.length))
-            throw Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
+            throw new Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
 
         items.splice(index, 1);
     }
 
-    public static max<T>(items: readonly T[], callback: ((item: T) => number) | null = null): T {
-        if (items.length === 0)
-            throw Error("Array cannot be empty.");
+    public static max<T>(items: readonly T[], keySelector: ((item: T) => number) | null = null): T {
+        const length: number = items.length;
 
-        callback = callback || ((item) => (item as any) as number);
+        if (length === 0)
+            throw new Error("The source sequence is empty.");
+
+        keySelector = keySelector || ((item) => (item as any) as number);
 
         let maxItem: T = items[0];
-        let maxValue: number = callback(maxItem);
-        const length: number = items.length;
+        let maxValue: number = keySelector(maxItem);
         for (let i: number = 1; i < length; i++) {
             const item: T = items[i];
-            const value: number = callback(item);
+            const value: number = keySelector(item);
             if (value > maxValue) {
                 maxValue = value;
                 maxItem = item;
@@ -221,22 +224,23 @@ export default class ArrayUtility {
         return maxItem;
     }
 
-    public static maxValue<T>(items: readonly T[], callback: (item: T) => number): number {
-        return callback(ArrayUtility.max(items, callback));
+    public static maxValue<T>(items: readonly T[], keySelector: (item: T) => number): number {
+        return keySelector(ArrayUtility.max(items, keySelector));
     }
 
-    public static min<T, TValue = number | Date>(items: readonly T[], callback: ((item: T) => TValue) | null = null): T {
-        if (items.length === 0)
-            throw Error("Array cannot be empty.");
+    public static min<T, TValue = number | Date>(items: readonly T[], keySelector: ((item: T) => TValue) | null = null): T {
+        const length: number = items.length;
 
-        callback = callback || ((item: T) => (item as any) as TValue);
+        if (length === 0)
+            throw new Error("The source sequence is empty.");
+
+        keySelector = keySelector || ((item: T) => (item as any) as TValue);
 
         let minItem: T = items[0];
-        let minValue: TValue = callback(minItem);
-        const length: number = items.length;
+        let minValue: TValue = keySelector(minItem);
         for (let i: number = 1; i < length; i++) {
             const item: T = items[i];
-            const value: TValue = callback(item);
+            const value: TValue = keySelector(item);
             if (value < minValue) {
                 minValue = value;
                 minItem = item;
@@ -245,14 +249,21 @@ export default class ArrayUtility {
         return minItem;
     }
 
-    public static minValue<T, TValue = number | Date>(items: readonly T[], callback: (item: T) => TValue): TValue {
-        return callback(ArrayUtility.min(items, callback));
+    public static minValue<T, TValue = number | Date>(items: readonly T[], predicate: (item: T) => TValue): TValue {
+        return predicate(this.min(items, predicate));
     }
 
-    public static sum<T>(items: readonly T[] | null | undefined, callback: (item: T) => number | null | undefined): number {
+    public static sum<T>(items: readonly T[] | null | undefined, keySelector?: ((item: T) => number | null | undefined) | null): number {
         let sum: number = 0;
-        if (items) {
-            items.forEach(item => sum += callback(item) ?? 0);
+        if (items != null) {
+            const length: number = items.length;
+            for (let i: number = 0; i < length; i++) {
+                const item: T = items[i];
+                const value: number = keySelector
+                    ? keySelector(item) ?? 0
+                    : item as number;
+                sum = sum + value;
+            }
         }
         return sum;
     }
@@ -269,14 +280,14 @@ export default class ArrayUtility {
         return count;
     }
 
-    public static distinct<T>(items: readonly T[], callback?: ((item: T) => any) | null): T[] {
+    public static distinct<T>(items: readonly T[], predicate?: ((item: T) => any) | null): T[] {
         const result: T[] = [];
         const length: number = items.length;
         if (length > 0) {
             const set = new Set<T>();
             for (let i: number = 0; i < length; i++) {
                 const item: T = items[i];
-                const key: any = callback ? callback(item) : item;
+                const key: any = predicate ? predicate(item) : item;
                 if (!set.has(key)) {
                     set.add(key);
                     result.push(items[i]);
@@ -285,13 +296,24 @@ export default class ArrayUtility {
         }
         return result;
     }
-    
+
     public static repeat<T>(element: T, count: number): T[] {
         const items = new Array<T>(count);
         for (let i = 0; i < count; i++) {
             items[i] = element;
         }
         return items;
+    }
+
+    public static average<T>(items: readonly T[], keySelector?: ((item: T) => number | null | undefined) | null): number {
+        const length: number = items.length;
+
+        if (length === 0)
+            throw new Error("The source sequence is empty.");
+
+        const sum: number = this.sum(items, keySelector);
+
+        return sum / length;
     }
 
     public static sortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
