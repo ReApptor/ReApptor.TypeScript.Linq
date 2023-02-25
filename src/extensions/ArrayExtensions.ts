@@ -87,10 +87,10 @@ declare global {
 
         /**
          * Computes the sum of a sequence of nullable number values.
-         * @param keySelector - A function to extract the key for each element.
+         * @param selector - A transform function to apply to each element.
          * @returns number - the sum of the values in the sequence.
          */
-        average(keySelector?: ((item: T) => number | null | undefined) | null): number;
+        average(selector?: ((item: T) => number | null | undefined) | null): number;
 
         /**
          * Filters a sequence of values based on a predicate.
@@ -177,10 +177,10 @@ declare global {
 
         /**
          * Computes the sum of a sequence of numeric values.
-         * @param keySelector - A function to extract the key for each element.
+         * @param selector - A transform function to apply to each element.
          * @returns number - The sum of the values in the sequence.
          */
-        sum(keySelector?: ((item: T) => number | null | undefined) | null): number;
+        sum(selector?: ((item: T) => number | null | undefined) | null): number;
 
         /**
          * Returns the number of elements in a sequence.
@@ -269,8 +269,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.average == null) {
-        Array.prototype.average = function <T>(keySelector?: ((item: T) => number | null | undefined) | null): number {
-            return ArrayUtility.average(this, keySelector);
+        Array.prototype.average = function <T>(selector?: ((item: T) => number | null | undefined) | null): number {
+            return ArrayUtility.average(this, selector);
         };
     }
 
@@ -359,8 +359,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.sum == null) {
-        Array.prototype.sum = function <T>(keySelector: (item: T) => number | null | undefined): number {
-            return ArrayUtility.sum(this, keySelector);
+        Array.prototype.sum = function <T>(selector: (item: T) => number | null | undefined): number {
+            return ArrayUtility.sum(this, selector);
         };
     }
 

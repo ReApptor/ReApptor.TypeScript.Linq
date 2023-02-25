@@ -253,14 +253,14 @@ export default class ArrayUtility {
         return predicate(this.min(items, predicate));
     }
 
-    public static sum<T>(items: readonly T[] | null | undefined, keySelector?: ((item: T) => number | null | undefined) | null): number {
+    public static sum<T>(items: readonly T[] | null | undefined, selector?: ((item: T) => number | null | undefined) | null): number {
         let sum: number = 0;
         if (items != null) {
             const length: number = items.length;
             for (let i: number = 0; i < length; i++) {
                 const item: T = items[i];
-                const value: number = keySelector
-                    ? keySelector(item) ?? 0
+                const value: number = selector
+                    ? selector(item) ?? 0
                     : item as number;
                 sum = sum + value;
             }
@@ -305,13 +305,13 @@ export default class ArrayUtility {
         return items;
     }
 
-    public static average<T>(items: readonly T[], keySelector?: ((item: T) => number | null | undefined) | null): number {
+    public static average<T>(items: readonly T[], selector?: ((item: T) => number | null | undefined) | null): number {
         const length: number = items.length;
 
         if (length === 0)
             throw new Error("The source sequence is empty.");
 
-        const sum: number = this.sum(items, keySelector);
+        const sum: number = this.sum(items, selector);
 
         return sum / length;
     }

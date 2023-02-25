@@ -16,6 +16,7 @@ in their day-to-day work.
 
 * [`All`](#All)
 * [`Any`](#Any)
+* [`Average`](#Average)
 * [`Chunk`](#Chunk)
 * [`Count`](#Count)
 * [`Distinct`](#Distinct)
@@ -75,6 +76,7 @@ hasAllFive = true;
 
 ```
 ***
+
 ### Any
 #### [MSDN: System.Linq.Enumerable.Any](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.any?view=net-7.0)
 Determines whether a sequence contains any elements in the collection,
@@ -116,6 +118,37 @@ hasFifth = false;
 hasAny = true;
 
 hasEmptyAnyNumber = false;
+```
+***
+
+### Average
+#### [MSDN: System.Linq.Enumerable.Average](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.average?view=net-7.0)
+Computes the average of a sequence of numeric values.
+```typescript
+        /**
+         * Computes the sum of a sequence of nullable number values.
+         * @param selector - A transform function to apply to each element.
+         * @returns number - the sum of the values in the sequence.
+         */
+        average(selector?: ((item: T) => number | null | undefined) | null): number;
+```
+#### Example
+The following code example demonstrates how to use Any to determine whether a sequence contains any elements.
+```typescript
+const numbers: number[] = [1, 2, 3];
+
+const average1: number = numbers.average();
+console.log("average1 = ", average);
+
+const average2: number = numbers.average(item => item);
+console.log("average2 = ", average2);
+```
+
+#### Code produces the following output:
+```
+average1 = 2;
+
+average2 = 2;
 ```
 ***
 
