@@ -141,7 +141,7 @@ declare global {
          * @param keySelector - A function to extract the key for each element.
          * @returns Array<T> - The type of the result value returned by resultSelector.
          */
-        groupBy(keySelector: ((item: T) => any) | null | undefined): T[][];
+        groupBy(keySelector?: ((item: T) => any) | null): T[][];
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -317,7 +317,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T>(keySelector: ((item: T) => any) | null | undefined): T[][] {
+        Array.prototype.groupBy = function <T>(keySelector?: ((item: T) => any) | null): T[][] {
             return ArrayUtility.groupBy(this, keySelector);
         };
     }
@@ -359,7 +359,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.sum == null) {
-        Array.prototype.sum = function <T>(selector: (item: T) => number | null | undefined): number {
+        Array.prototype.sum = function <T>(selector?: ((item: T) => number | null | undefined) | null): number {
             return ArrayUtility.sum(this, selector);
         };
     }

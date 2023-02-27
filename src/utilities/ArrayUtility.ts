@@ -168,7 +168,7 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
-    public static groupBy<T>(items: readonly T[], keySelector: ((item: T) => any) | null | undefined = null): T[][] {
+    public static groupBy<T>(items: readonly T[], keySelector?: ((item: T) => any) | null): T[][] {
         const map = new Map<any, T[]>();
         items.forEach((item) => {
             const key: any | null = keySelector ? keySelector(item) : null;
