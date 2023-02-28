@@ -10,6 +10,7 @@ image: https://raw.githubusercontent.com/ReApptor/ReApptor.TypeScript.Linq/main/
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
+- jekyll-relative-links
 webmaster_verifications:
   google: PVoIdYZSPSxOedGPLWLZBuTx6SeV3YbjHq-4F-HmjXU
   
