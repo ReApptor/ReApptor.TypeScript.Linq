@@ -28,7 +28,7 @@ Install via package.json:
 
 ## Usage
 
-Add `import from "@reapptor/ts-linq";` into the main project file (i.e. index.ts) to register extensions.
+Add `import "@reapptor/ts-linq";` into the main project file (i.e. index.ts) to register extensions.
 
 ## License
 
