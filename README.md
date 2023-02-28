@@ -35,8 +35,12 @@ Add `import Linq from "@reapptor/ts-linq";` into the main project file (i.e. ind
 The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT license](https://raw.githubusercontent.com/ReApptor/ReApptor.TypeScript.Linq/main/LICENSE.md) and is available for free.
 
 ## Links
-- [ReApptor official page](https://www.reapptor.com/)
-- [TypeScript LINQ npm package](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-linq)
+- [ReApptor](https://www.reapptor.com)
+- [ReApptor on GitHub](https://github.com/ReApptor)
+- [ReApptor in LinkedIn](https://www.linkedin.com/company/reapptor/)
+- [Source code](https://github.com/ReApptor/ReApptor.TypeScript.Linq)
+- [NPM package](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-linq)
+- [Discussions](https://github.com/ReApptor/ReApptor.TypeScript.Linq/discussions)
 
 ## Included query functions
 
