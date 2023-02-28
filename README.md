@@ -23,7 +23,7 @@ npm install @reapptor/ts-linq
 Install via package.json:
 
 ```npm
-"@reapptor/ts-linq": "1.0.14"
+"@reapptor/ts-linq": "^1.0.14"
 ```
 
 ## Usage
