@@ -12,6 +12,20 @@ The original idea behind this package is to make TypeScript syntax look
 like C# to ease the work for developers using both C# and TypeScript
 in their day-to-day work.
 
+## Installation
+
+Install from the command line:
+
+```npm
+$ npm install @reapptor/ts-linq
+```
+
+Install via package.json:
+
+```npm
+"@reapptor/ts-linq": "1.0.14"
+```
+
 ## Included query functions
 
 * [`All`](#All)
