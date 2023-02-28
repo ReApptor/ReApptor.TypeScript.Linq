@@ -17,7 +17,7 @@ in their day-to-day work.
 Install from the command line:
 
 ```npm
-$ npm install @reapptor/ts-linq
+npm install @reapptor/ts-linq
 ```
 
 Install via package.json:
