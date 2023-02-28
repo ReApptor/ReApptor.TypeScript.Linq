@@ -16,7 +16,16 @@ export default class ArrayUtility {
     }
 
     public static async whereAsync<T>(items: readonly T[], predicate: (item: T) => Promise<boolean>): Promise<T[]> {
-        return items.filter(item => predicate(item));
+        const result: T[] = [];
+        const length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: T = items[i];
+            const passed: boolean = await predicate(items[i]);
+            if (passed) {
+                result.push(item);
+            }
+        }
+        return result;
     }
 
     public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
