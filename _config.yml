@@ -1,0 +1,15 @@
+title: ReApptor TypeScript LINQ
+tagline: It is a complete, fully tested analog of C# Language-Integrated Query (LINQ) written in TypeScript.
+description: It is a complete, fully tested analog of C# Language-Integrated Query (LINQ) written in TypeScript. LINQ package generally operates on the collection types and comes as extension methods serving a variety of purposes in working with collections of types.
+author: ReApptor
+social:
+  name: ReApptor
+  links:
+    - https://www.linkedin.com/company/reapptor/
+image: https://raw.githubusercontent.com/ReApptor/ReApptor.TypeScript.Linq/main/ReApptor.png
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+webmaster_verifications:
+  google: PVoIdYZSPSxOedGPLWLZBuTx6SeV3YbjHq-4F-HmjXU
+  
