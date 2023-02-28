@@ -6,10 +6,10 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Aggregate
 // All                          *
 // Any                          *   
-// Append
+// Append                       ?
 // AsEnumerable                 -
-// Average
-// Cast
+// Average                      *
+// Cast                         ?
 // Chunk                        *
 // Concat
 // Contains
@@ -24,7 +24,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // ExceptBy
 // First                        *
 // FirstOrDefault               *
-// GroupBy
+// GroupBy                      *
 // GroupJoin
 // Intersect
 // IntersectBy
@@ -65,7 +65,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // TryGetNonEnumeratedCount
 // Union
 // UnionBy
-// Where
+// Where                    *
 // Zip                                  Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
 
 declare global {
@@ -84,6 +84,13 @@ declare global {
          * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
          */
         any(predicate?: (item: T, index: number) => boolean): boolean;
+
+        /**
+         * Computes the sum of a sequence of nullable number values.
+         * @param selector - A transform function to apply to each element.
+         * @returns number - the sum of the values in the sequence.
+         */
+        average(selector?: ((item: T) => number | null | undefined) | null): number;
 
         /**
          * Filters a sequence of values based on a predicate.
@@ -129,7 +136,12 @@ declare global {
          */
         selectMany<TOut>(collectionSelector: (item: T) => TOut[]): TOut[];
 
-        groupBy(predicate: ((item: T) => any) | null | undefined): T[][];
+        /**
+         * Groups the elements of a sequence according to a specified key selector function and creates a result value from each group and its key. The elements of each group are projected by using a specified function.
+         * @param keySelector - A function to extract the key for each element.
+         * @returns Array<T> - The type of the result value returned by resultSelector.
+         */
+        groupBy(keySelector?: ((item: T) => any) | null): T[][];
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -147,28 +159,28 @@ declare global {
 
         /**
          * Returns the maximum value in a sequence of values.
-         * @param predicate - A function to test each element for a condition.
+         * @param keySelector - A function to extract the key for each element.
          * @returns T - The maximum value in the sequence.
          */
-        max(predicate: ((item: T) => number) | null): T;
+        max(keySelector: ((item: T) => number) | null): T;
 
-        maxValue(predicate: (item: T) => number): number;
+        maxValue(keySelector: (item: T) => number): number;
 
         /**
          * Returns the minimum value in a sequence of values.
-         * @param predicate - A function to test each element for a condition.
+         * @param keySelector - A function to extract the key for each element.
          * @returns T - The minimum value in the sequence.
          */
-        min(predicate: ((item: T) => number) | null): T;
+        min(keySelector: ((item: T) => number) | null): T;
 
-        minValue(predicate: (item: T) => number): number;
+        minValue(keySelector: (item: T) => number): number;
 
         /**
          * Computes the sum of a sequence of numeric values.
-         * @param predicate - A function to test each element for a condition.
+         * @param selector - A transform function to apply to each element.
          * @returns number - The sum of the values in the sequence.
          */
-        sum(predicate: (item: T) => number | null | undefined): number;
+        sum(selector?: ((item: T) => number | null | undefined) | null): number;
 
         /**
          * Returns the number of elements in a sequence.
@@ -256,6 +268,12 @@ export const ArrayExtensions = function () {
         };
     }
 
+    if (Array.prototype.average == null) {
+        Array.prototype.average = function <T>(selector?: ((item: T) => number | null | undefined) | null): number {
+            return ArrayUtility.average(this, selector);
+        };
+    }
+
     if (Array.prototype.where == null) {
         Array.prototype.where = function <T>(predicate: (item: T) => boolean): T[] {
             return ArrayUtility.where(this, predicate);
@@ -299,8 +317,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T>(predicate: ((item: T) => any) | null | undefined): T[][] {
-            return ArrayUtility.groupBy(this, predicate);
+        Array.prototype.groupBy = function <T>(keySelector?: ((item: T) => any) | null): T[][] {
+            return ArrayUtility.groupBy(this, keySelector);
         };
     }
 
@@ -317,32 +335,32 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.max == null) {
-        Array.prototype.max = function <T>(predicate: ((item: T) => number) | null = null): T {
-            return ArrayUtility.max(this, predicate);
+        Array.prototype.max = function <T>(keySelector: ((item: T) => number) | null = null): T {
+            return ArrayUtility.max(this, keySelector);
         };
     }
 
     if (Array.prototype.maxValue == null) {
-        Array.prototype.maxValue = function <T>(predicate: (item: T) => number): number {
-            return ArrayUtility.maxValue(this, predicate);
+        Array.prototype.maxValue = function <T>(keySelector: (item: T) => number): number {
+            return ArrayUtility.maxValue(this, keySelector);
         };
     }
 
     if (Array.prototype.min == null) {
-        Array.prototype.min = function <T>(predicate: ((item: T) => number) | null = null): T {
-            return ArrayUtility.min(this, predicate);
+        Array.prototype.min = function <T>(keySelector: ((item: T) => number) | null = null): T {
+            return ArrayUtility.min(this, keySelector);
         };
     }
 
     if (Array.prototype.minValue == null) {
-        Array.prototype.minValue = function <T>(predicate: (item: T) => number): number {
-            return ArrayUtility.minValue(this, predicate);
+        Array.prototype.minValue = function <T>(keySelector: (item: T) => number): number {
+            return ArrayUtility.minValue(this, keySelector);
         };
     }
 
     if (Array.prototype.sum == null) {
-        Array.prototype.sum = function <T>(predicate: (item: T) => number | null | undefined): number {
-            return ArrayUtility.sum(this, predicate);
+        Array.prototype.sum = function <T>(selector?: ((item: T) => number | null | undefined) | null): number {
+            return ArrayUtility.sum(this, selector);
         };
     }
 

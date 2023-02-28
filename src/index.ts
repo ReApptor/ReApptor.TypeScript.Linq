@@ -12,8 +12,12 @@ export * from "./extensions/ArrayExtensions";
 
 // Static initializer (optional):
 // Usage:
+//   1) Manual:
 //   import Linq from "@reapptor/ts-linq";
 //   Linq.init();
+//   2) Automatic:
+//   import "@reapptor/ts-linq";
+
 export default class Linq {
     public static init() {
     }
