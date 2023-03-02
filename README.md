@@ -35,12 +35,13 @@ Add `import "@reapptor/ts-linq";` into the main project file (i.e. index.ts) to 
 The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT license](https://raw.githubusercontent.com/ReApptor/ReApptor.TypeScript.Linq/main/LICENSE.md) and is available for free.
 
 ## Links
-- [ReApptor](https://www.reapptor.com)
-- [ReApptor on GitHub](https://github.com/ReApptor)
-- [ReApptor in LinkedIn](https://www.linkedin.com/company/reapptor/)
+- [Overview](https://reapptor.github.io/ReApptor.TypeScript.Linq/)
 - [Source code](https://github.com/ReApptor/ReApptor.TypeScript.Linq)
 - [NPM package](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-linq)
 - [Discussions](https://github.com/ReApptor/ReApptor.TypeScript.Linq/discussions)
+- [About ReApptor](https://www.reapptor.com)
+- [ReApptor on GitHub](https://github.com/ReApptor)
+- [ReApptor in LinkedIn](https://www.linkedin.com/company/reapptor/)
 
 ## Included query functions
 
@@ -75,6 +76,11 @@ Determines whether all elements of a sequence satisfy a condition.
     * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
     */
     all(predicate: (item: T, index: number) => boolean): boolean;
+/**
+* @param predicate - A function to test each element for a condition.
+* @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+*/
+all(predicate: (item: T, index: number) => boolean): boolean;
 ```
 #### Example
 The following code examples demonstrates how to use All to determine whether all the elements in
@@ -118,6 +124,11 @@ the method just returns if the collection is empty or not.
      * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
      */
     any(predicate?: (item: T, index: number) => boolean): boolean;
+/**
+ * @param predicate - A function to test each element for a condition.
+ * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+ */
+any(predicate?: (item: T, index: number) => boolean): boolean;
 ```
 #### Example
 The following code example demonstrates how to use Any to determine whether a sequence contains any elements.
@@ -161,6 +172,12 @@ Computes the average of a sequence of numeric values.
          * @returns number - the sum of the values in the sequence.
          */
         average(selector?: ((item: T) => number | null | undefined) | null): number;
+/**
+ * Computes the sum of a sequence of nullable number values.
+ * @param selector - A transform function to apply to each element.
+ * @returns number - the sum of the values in the sequence.
+ */
+average(selector?: ((item: T) => number | null | undefined) | null): number;
 ```
 #### Example
 The following code example demonstrates how to use Any to determine whether a sequence contains any elements.
