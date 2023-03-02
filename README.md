@@ -71,11 +71,6 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 
 Determines whether all elements of a sequence satisfy a condition.
 ```typescript
-    /**
-    * @param predicate - A function to test each element for a condition.
-    * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
-    */
-    all(predicate: (item: T, index: number) => boolean): boolean;
 /**
 * @param predicate - A function to test each element for a condition.
 * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
@@ -119,11 +114,6 @@ Determines whether a sequence contains any elements in the collection,
 which satisfies an optional condition. If no condition is provided,
 the method just returns if the collection is empty or not.
 ```typescript
-    /**
-     * @param predicate - A function to test each element for a condition.
-     * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
-     */
-    any(predicate?: (item: T, index: number) => boolean): boolean;
 /**
  * @param predicate - A function to test each element for a condition.
  * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
@@ -166,12 +156,6 @@ hasEmptyAnyNumber = false;
 #### [MSDN: System.Linq.Enumerable.Average](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.average?view=net-7.0)
 Computes the average of a sequence of numeric values.
 ```typescript
-        /**
-         * Computes the sum of a sequence of nullable number values.
-         * @param selector - A transform function to apply to each element.
-         * @returns number - the sum of the values in the sequence.
-         */
-        average(selector?: ((item: T) => number | null | undefined) | null): number;
 /**
  * Computes the sum of a sequence of nullable number values.
  * @param selector - A transform function to apply to each element.
