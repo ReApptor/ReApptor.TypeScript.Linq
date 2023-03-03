@@ -1,5 +1,72 @@
+import Linq from "../Linq";
 
 export default class ArrayUtility {
+
+    private static compareDateType(x: Date | string, y: Date | string, ascending: boolean = true): number {
+        x = (typeof x === "string") ? new Date(x) : x;
+        y = (typeof y === "string") ? new Date(y) : y;
+
+        const xValue: number = x.valueOf();
+        const yValue: number = y.valueOf();
+
+        if (xValue > yValue) {
+            return (ascending) ? 1 : -1;
+        }
+
+        if (xValue < yValue) {
+            return (ascending) ? -1 : 1;
+        }
+
+        return 0;
+    }
+
+    private static invokeSortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
+                                                                      ascending: boolean,
+                                                                      keySelector1?: ((item: T) => TKey1) | null,
+                                                                      keySelector2?: ((item: T) => TKey2) | null,
+                                                                      keySelector3?: ((item: T) => TKey3) | null,
+                                                                      keySelector4?: ((item: T) => TKey4) | null,
+                                                                      keySelector5?: ((item: T) => TKey5) | null,
+                                                                      keySelector6?: ((item: T) => TKey6) | null): void {
+
+        const greaterThen: number = (ascending) ? 1 : -1;
+        const lessThen: number = (ascending) ? -1 : 1;
+        
+        const compare = (keySelector: ((item: T) => any) | null | undefined, x: T, y: T): number => {
+            const xKey: any = keySelector ? keySelector(x) : x;
+            const yKey: any = keySelector ? keySelector(y) : y;
+            if ((Linq.settings.stringToDateCastEnabled) && (Linq.settings.stringToDateCastResolver(xKey))) {
+                return this.compareDateType(xKey, yKey);
+            }
+            return (xKey > yKey)
+                ? greaterThen
+                : (xKey < yKey)
+                    ? lessThen
+                    : 0;
+        }
+
+        const comparator = (x: T, y: T): number => {
+            let value: number = compare(keySelector1, x, y);
+            if ((value === 0) && (keySelector2)) {
+                value = compare(keySelector2, x, y);
+                if ((value === 0) && (keySelector3)) {
+                    value = compare(keySelector3, x, y);
+                    if ((value === 0) && (keySelector4)) {
+                        value = compare(keySelector4, x, y);
+                        if ((value === 0) && (keySelector5)) {
+                            value = compare(keySelector5, x, y);
+                            if ((value === 0) && (keySelector6)) {
+                                value = compare(keySelector6, x, y);
+                            }
+                        }
+                    }
+                }
+            }
+            return value;
+        }
+
+        source.sort(comparator);
+    }
 
     public static all<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): boolean {
         return items.every(predicate);
@@ -41,7 +108,7 @@ export default class ArrayUtility {
     public static chunk<T>(items: readonly T[], size: number): T[][] {
         if (size < 1)
             throw new Error(`Size "${size}" out of range, must be at least 1 or greater.`);
-
+        
         const result: T[][] = [];
 
         const copy: T[] = [...items];
@@ -90,11 +157,11 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(items[i], i);
-
+            
             if (!valid) {
                 break;
             }
-
+            
             result.push(item);
         }
         return result;
@@ -177,17 +244,26 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
-    public static groupBy<T>(items: readonly T[], keySelector?: ((item: T) => any) | null): T[][] {
-        const map = new Map<any, T[]>();
-        items.forEach((item) => {
-            const key: any | null = keySelector ? keySelector(item) : null;
-            const collection: T[] | undefined = map.get(key);
+    public static groupBy<TSource, TKey, TElement>(items: readonly TSource[], keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][] {
+        const map = new Map<TKey, TElement[]>();
+        
+        let length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: TSource = items[i];
+            const key: any | null = keySelector
+                ? keySelector(item)
+                : item;
+            const element: any | null = elementSelector
+                ? elementSelector(item)
+                : item;
+            const collection: TElement[] | undefined = map.get(key);
             if (!collection) {
-                map.set(key, [item]);
+                map.set(key, [element]);
             } else {
-                collection.push(item);
+                collection.push(element);
             }
-        });
+        }
+        
         return Array.from(map.values());
     }
 
@@ -305,7 +381,7 @@ export default class ArrayUtility {
         }
         return result;
     }
-
+    
     public static repeat<T>(element: T, count: number): T[] {
         const items = new Array<T>(count);
         for (let i = 0; i < count; i++) {
@@ -313,7 +389,7 @@ export default class ArrayUtility {
         }
         return items;
     }
-
+    
     public static average<T>(items: readonly T[], selector?: ((item: T) => number | null | undefined) | null): number {
         const length: number = items.length;
 
@@ -332,37 +408,16 @@ export default class ArrayUtility {
                                                                       keySelector4?: ((item: T) => TKey4) | null,
                                                                       keySelector5?: ((item: T) => TKey5) | null,
                                                                       keySelector6?: ((item: T) => TKey6) | null): void {
+        this.invokeSortBy(source, true, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
+    }
 
-        const compare = (keySelector: ((item: T) => any) | null | undefined, x: T, y: T): number => {
-            const xKey: any = keySelector ? keySelector(x) : x;
-            const yKey: any = keySelector ? keySelector(y) : y;
-            return (xKey > yKey)
-                ? 1
-                : (xKey < yKey)
-                    ? -1
-                    : 0;
-        }
-
-        const comparator = (x: T, y: T): number => {
-            let value: number = compare(keySelector1, x, y);
-            if ((value === 0) && (keySelector2)) {
-                value = compare(keySelector2, x, y);
-                if ((value === 0) && (keySelector3)) {
-                    value = compare(keySelector3, x, y);
-                    if ((value === 0) && (keySelector4)) {
-                        value = compare(keySelector4, x, y);
-                        if ((value === 0) && (keySelector5)) {
-                            value = compare(keySelector5, x, y);
-                            if ((value === 0) && (keySelector6)) {
-                                value = compare(keySelector6, x, y);
-                            }
-                        }
-                    }
-                }
-            }
-            return value;
-        }
-
-        source.sort(comparator);
+    public static sortByDescending<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
+                                                                      keySelector1?: ((item: T) => TKey1) | null,
+                                                                      keySelector2?: ((item: T) => TKey2) | null,
+                                                                      keySelector3?: ((item: T) => TKey3) | null,
+                                                                      keySelector4?: ((item: T) => TKey4) | null,
+                                                                      keySelector5?: ((item: T) => TKey5) | null,
+                                                                      keySelector6?: ((item: T) => TKey6) | null): void {
+        this.invokeSortBy(source, false, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
     }
 }

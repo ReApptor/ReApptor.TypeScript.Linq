@@ -137,11 +137,12 @@ declare global {
         selectMany<TOut>(collectionSelector: (item: T) => TOut[]): TOut[];
 
         /**
-         * Groups the elements of a sequence according to a specified key selector function and creates a result value from each group and its key. The elements of each group are projected by using a specified function.
+         * Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.
          * @param keySelector - A function to extract the key for each element.
-         * @returns Array<T> - The type of the result value returned by resultSelector.
+         * @param elementSelector - A function to map each source element to an element in the result grouped element.
+         * @returns Array<T> - An array of grouped objects of type TElement.
          */
-        groupBy(keySelector?: ((item: T) => any) | null): T[][];
+        groupBy<TSource, TKey, TElement>(keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][];
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -210,6 +211,12 @@ declare global {
                                                          keySelector5?: ((item: T) => TKey5) | null,
                                                          keySelector6?: ((item: T) => TKey6) | null): void;
 
+        sortByDescending<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
+                                                                   keySelector2?: ((item: T) => TKey2) | null,
+                                                                   keySelector3?: ((item: T) => TKey3) | null,
+                                                                   keySelector4?: ((item: T) => TKey4) | null,
+                                                                   keySelector5?: ((item: T) => TKey5) | null,
+                                                                   keySelector6?: ((item: T) => TKey6) | null): void;
         forEachAsync(predicate: (item: T) => Promise<void>): Promise<void>;
 
         /**
@@ -317,8 +324,8 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T>(keySelector?: ((item: T) => any) | null): T[][] {
-            return ArrayUtility.groupBy(this, keySelector);
+        Array.prototype.groupBy = function <TSource, TKey, TElement>(keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][] {
+            return ArrayUtility.groupBy(this, keySelector, elementSelector);
         };
     }
 
@@ -390,6 +397,17 @@ export const ArrayExtensions = function () {
                                                                                         keySelector5?: ((item: T) => TKey5) | null,
                                                                                         keySelector6?: ((item: T) => TKey6) | null): void {
             ArrayUtility.sortBy(this, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
+        };
+    }
+
+    if (Array.prototype.sortByDescending == null) {
+        Array.prototype.sortByDescending = function <T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
+                                                                                                  keySelector2?: ((item: T) => TKey2) | null,
+                                                                                                  keySelector3?: ((item: T) => TKey3) | null,
+                                                                                                  keySelector4?: ((item: T) => TKey4) | null,
+                                                                                                  keySelector5?: ((item: T) => TKey5) | null,
+                                                                                                  keySelector6?: ((item: T) => TKey6) | null): void {
+            ArrayUtility.sortByDescending(this, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
         };
     }
 

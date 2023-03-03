@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("chunk", () => {
-
+    
     test("chunk-size1-from0", () => {
         const result: number[][] = [].chunk(1);
         expect(result).toEqual([]);

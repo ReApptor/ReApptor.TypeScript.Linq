@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("skip", () => {
-
+    
     test("skip0from0", () => {
         const result: number[] = [].skip(0);
         expect(result).toEqual([]);

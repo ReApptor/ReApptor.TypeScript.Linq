@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("count", () => {
-
+    
     test("count0-from0", () => {
         const result: number = [].count();
         expect(result).toEqual(0);

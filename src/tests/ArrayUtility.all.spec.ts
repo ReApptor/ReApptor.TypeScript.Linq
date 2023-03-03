@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("all", () => {
-
+    
     test("all-true-from0", () => {
         const result: boolean = [].all(item => item > 9);
         expect(result).toEqual(true);

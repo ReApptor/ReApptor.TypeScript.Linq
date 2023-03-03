@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("average", () => {
-
+    
     test("average-numbers", () => {
         const result: number = [1, 2, 3].average();
         expect(result).toEqual(2);

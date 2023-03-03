@@ -1,7 +1,7 @@
 import "@reapptor/ts-linq";
 
 describe("any", () => {
-
+    
     test("any-false-from0", () => {
         const result: boolean = [].any();
         expect(result).toEqual(false);

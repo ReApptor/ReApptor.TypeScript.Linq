@@ -24,8 +24,17 @@ describe("groupBy", () => {
     // It creates an array of numbers and calls the groupBy method on it without specifying the callback function.
     // The expected result is an array with a single sub-array that contains all the numbers.
     test("should group the items into a single group if the callback is not specified", () => {
+        const items: number[] = [1, 1, 2, 2, 2];
+        const result: number[][] = items.groupBy();
+        expect(result).toEqual([[1, 1], [2, 2, 2]]);
+    });
+
+    // Test case is checking that the method should group the items into a single group if the callback is not specified.
+    // It creates an array of numbers and calls the groupBy method on it without specifying the callback function.
+    // The expected result is an array with a single sub-array that contains all the numbers.
+    test("should group the items into a single group if the callback is not specified", () => {
         const items: number[] = [1, 2, 3, 4, 5];
-        const result: number[][] = items.groupBy(null);
+        const result: number[][] = items.groupBy(() => null);
         expect(result).toEqual([[1, 2, 3, 4, 5]]);
     });
 
