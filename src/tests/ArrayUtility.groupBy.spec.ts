@@ -13,7 +13,7 @@ describe("groupBy", () => {
             { name: "Richard", age: 30 },
             { name: "Helen", age: 25 },
         ];
-        const result: {name: string, age: number}[][] = items.groupBy((item) => item.age);
+        const result: {name: string, age: number}[][] = items.groupBy(item => item.age);
         expect(result).toEqual([
             [{ name: "Sam", age: 30 }, { name: "Richard", age: 30 }],
             [{ name: "Jack", age: 25 }, { name: "Helen", age: 25 }],
@@ -43,7 +43,7 @@ describe("groupBy", () => {
     // The expected result is an empty array since there are no items to group.
     test("should return an empty array if the input array is empty", () => {
         const items: number[] = [];
-        const result: number[][] = items.groupBy((item) => item % 2 === 0);
+        const result: number[][] = items.groupBy(item => item % 2 === 0);
         expect(result).toEqual([]);
     });
 

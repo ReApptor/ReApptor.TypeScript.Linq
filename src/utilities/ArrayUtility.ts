@@ -244,12 +244,12 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
-    public static groupBy<TSource, TKey, TElement>(items: readonly TSource[], keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][] {
+    public static groupBy<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][] {
         const map = new Map<TKey, TElement[]>();
         
         let length: number = items.length;
         for (let i: number = 0; i < length; i++) {
-            const item: TSource = items[i];
+            const item: T = items[i];
             const key: any | null = keySelector
                 ? keySelector(item)
                 : item;

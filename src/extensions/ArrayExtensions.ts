@@ -142,7 +142,7 @@ declare global {
          * @param elementSelector - A function to map each source element to an element in the result grouped element.
          * @returns Array<T> - An array of grouped objects of type TElement.
          */
-        groupBy<TSource, TKey, TElement>(keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][];
+        groupBy<TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][];
 
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -324,7 +324,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <TSource, TKey, TElement>(keySelector?: ((item: TSource) => TKey) | null, elementSelector?: ((item: TSource) => TElement) | null): TElement[][] {
+        Array.prototype.groupBy = function <T, TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => any) | null): TElement[][] {
             return ArrayUtility.groupBy(this, keySelector, elementSelector);
         };
     }
