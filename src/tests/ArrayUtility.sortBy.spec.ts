@@ -86,20 +86,26 @@ describe("sortBy", () => {
 
     test("date-as-string-and-string-to-date-cast-enabled", () => {
         Linq.settings.stringToDateCastEnabled = true;
+        
+        const offset: number = new Date().getTimezoneOffset();
 
         const date0 = "2002-01-10T00:00:00.000Z";
         const date1 = "2002-01-10T00:00:00+03:00";
-        const date2 = "2019-09-24";
-        const date3 = "2019-09-24T01:00:00.000";
-        const date4 = "2019-09-24T01:00:00.000Z";
-        const date5 = "2019-09-25";
-        const date6 = "2019-09-25T16:00:20.817";
+        const date2 = "2019-09-24T24:00:00.000Z";
+        const date3 = "2019-09-25T01:00:00.000";
+        const date4 = "2019-09-25T01:00:00.000Z";
+        const date5 = "2019-09-26";
+        const date6 = "2019-09-26T16:00:20.817";
 
         const items: string[] = [date2, date1, date5, date0, date3, date4, date6];
 
         items.sortBy();
+        
+        const expected: string[] = (offset < 0)
+            ? [date1, date0, date3, date2, date4, date5, date6]
+            : [date1, date0, date2, date3, date4, date5, date6]
 
-        expect(items).toEqual([date1, date0, date3, date2, date4, date5, date6]);
+        expect(items).toEqual(expected);
     });
 
     test("date-as-string-and-string-to-date-cast-disabled", () => {
@@ -107,11 +113,11 @@ describe("sortBy", () => {
 
         const date0 = "2002-01-10T00:00:00.000Z";
         const date1 = "2002-01-10T00:00:00+03:00";
-        const date2 = "2019-09-24";
-        const date3 = "2019-09-24T01:00:00.000";
-        const date4 = "2019-09-24T01:00:00.000Z";
-        const date5 = "2019-09-25";
-        const date6 = "2019-09-25T16:00:20.817";
+        const date2 = "2019-09-24T24:00:00.000Z";
+        const date3 = "2019-09-25T01:00:00.000";
+        const date4 = "2019-09-25T01:00:00.000Z";
+        const date5 = "2019-09-26";
+        const date6 = "2019-09-26T16:00:20.817";
         
         const items: string[] = [date2, date1, date5, date0, date3, date4, date6];
         

@@ -72,9 +72,9 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 Determines whether all elements of a sequence satisfy a condition.
 ```typescript
 /**
-* @param predicate - A function to test each element for a condition.
-* @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
-*/
+ * @param predicate - A function to test each element for a condition.
+ * @returns boolean - true if every element of the source sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
+ */
 all(predicate: (item: T, index: number) => boolean): boolean;
 ```
 #### Example
