@@ -14,5 +14,4 @@ plugins:
 webmaster_verifications:
   google: PVoIdYZSPSxOedGPLWLZBuTx6SeV3YbjHq-4F-HmjXU
 relative_links:
-  enabled:     true
-
+  enabled: true
