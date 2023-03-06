@@ -20,5 +20,9 @@
   "peerDependencies": {
   },
   "private": false,
-  "homepage": "https://reapptor.github.io/ReApptor.TypeScript.Linq/"
+  "homepage": "https://reapptor.github.io/ReApptor.TypeScript.Linq/",
+  "bugs": {
+    "url": "https://github.com/ReApptor/ReApptor.TypeScript.Linq/issues",
+    "email": "contact@reapptor.com"
+  }
 }
