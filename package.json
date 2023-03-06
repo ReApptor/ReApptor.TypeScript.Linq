@@ -1,24 +1,25 @@
 {
-  "name": "@reapptor/ts-linq",
+  "name": "@reapptor/ts-paged-list",
   "license": "MIT",
-  "version": "1.0.22",
-  "type": "module",
+  "version": "1.0.4",
+  "type":"module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReApptor/ReApptor.TypeScript.Linq"
+    "url": "https://github.com/ReApptor/ReApptor.TypeScript.PagedList"
   },
   "author": "ReApptor",
-  "description": "It is a complete, fully tested analog of C# Language-Integrated Query (LINQ) written in TypeScript. LINQ package generally operates on the collection types and comes as extension methods serving a variety of purposes in working with collections of types.",
+  "description": "PagedList is a package for splitting the array into pages and selecting a specific page by an index.",
   "keywords": [
-    "linq",
-    "language-integrated query",
+    "PagedList",
+    "paged-list",
+    "ts-paged-list",
+    "paged list",
+    "pagination",
     "ts",
-    "typescript",
-    "array extension",
-    "collection extension"
+    "typescript"
   ],
   "peerDependencies": {
   },
   "private": false,
-  "homepage": "https://reapptor.github.io/ReApptor.TypeScript.Linq/"
+  "homepage": "https://reapptor.github.io/ReApptor.TypeScript.PagedList/"
 }
