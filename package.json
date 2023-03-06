@@ -1,11 +1,12 @@
 {
   "name": "@reapptor/ts-linq",
   "license": "MIT",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "type": "module",
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com/ReApptor/"
+    "registry": "https://npm.pkg.github.com/ReApptor/",
+    "@reapptor:registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
