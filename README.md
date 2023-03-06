@@ -37,7 +37,8 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 ## Links
 - [Overview](https://reapptor.github.io/ReApptor.TypeScript.Linq/)
 - [Source code](https://github.com/ReApptor/ReApptor.TypeScript.Linq)
-- [NPM package](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-linq)
+- [Package (GitHub)](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-linq)
+- [Package (NPM)](https://www.npmjs.com/package/@reapptor/ts-paged-list)
 - [Discussions](https://github.com/ReApptor/ReApptor.TypeScript.Linq/discussions)
 - [About ReApptor](https://www.reapptor.com)
 - [ReApptor on GitHub](https://github.com/ReApptor)

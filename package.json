@@ -1,13 +1,8 @@
 {
   "name": "@reapptor/ts-linq",
   "license": "MIT",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "type": "module",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/ReApptor/",
-    "@reapptor:registry": "https://npm.pkg.github.com/"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ReApptor/ReApptor.TypeScript.Linq"
@@ -24,5 +19,6 @@
   ],
   "peerDependencies": {
   },
-  "private": false
+  "private": false,
+  "homepage": "https://reapptor.github.io/ReApptor.TypeScript.Linq/"
 }
