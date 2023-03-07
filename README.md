@@ -65,6 +65,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Take`](#Take)
 * [`TakeLast`](#TakeLast)
 * [`TakeWhile`](#TakeWhile)
+* [`GroupBy`](#GroupBy)
 
 
 ### All
@@ -810,4 +811,90 @@ console.log(query);
 #### Code produces the following output:
 ```
 [ 'apple', 'banana', 'mango' ]
+```
+***
+### GroupBy
+#### [MSDN: System.Linq.Enumerable.GroupBy](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.groupBy?view=net-7.0)
+Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.
+```typescript
+ /**
+ * @param keySelector - A function to extract the key for each element.
+ * @param elementSelector - A function to map each source element to an element in the result grouped element.
+ * @returns Array<T> - An array of grouped objects of type TElement.
+ */
+```
+#### Examples
+
+###### Example #1
+The following code example method groups the items by the specified property.
+It creates an array of objects with the name and age properties and calls
+the groupBy method on it with the callback function that groups the objects
+by their age.\
+The expected result is an array with two sub-arrays, where each sub-array
+contains objects with the same age.
+
+```typescript
+const items: {name: string, age: number}[] = [
+    { name: "Sam", age: 30 },
+    { name: "Jack", age: 25 },
+    { name: "Richard", age: 30 },
+    { name: "Helen", age: 25 },
+];
+
+const result: {name: string, age: number}[][] = items.groupBy(item => item.age);
+
+console.log(result);
+```
+#### Code produces the following output:
+```
+ [{ name: "Sam", age: 30 }, { name: "Richard", age: 30 }],
+ [{ name: "Jack", age: 25 }, { name: "Helen", age: 25 }],
+```
+###### Example #2
+The following code example method groups the items into a single group if
+the callback is not specified.It creates an array of numbers and calls
+the groupBy method on it without specifying the callback function.\
+The expected result is an array with a single sub-array that contains all the numbers.
+```typescript
+ const items: number[] = [1, 1, 2, 2, 2];
+ const result: number[][] = items.groupBy();
+ 
+ console.log(result);
+```
+#### Code produces the following output:
+```
+ [[1, 1], [2, 2, 2]]
+```
+
+###### Example #3
+The following code example method groups the items into a single group
+if the callback is not specified. It creates an array of numbers and calls
+the groupBy method on it without specifying the callback function.\
+The expected result is an array with a single sub-array that contains all
+the numbers.
+```typescript
+ const items: number[] = [1, 2, 3, 4, 5];
+ const result: number[][] = items.groupBy(() => null);
+ 
+ console.log(result);
+```
+#### Code produces the following output:
+```
+ [[1, 2, 3, 4, 5]]
+```
+###### Example #4
+The following code example method returns an empty array if the input
+array is empty. It creates an empty array and calls the groupBy method on
+it with a callback function that groups the items based on whether they are
+even or odd./
+The expected result is an empty array since there are no items to group.
+```typescript
+  const items: number[] = [];
+  const result: number[][] = items.groupBy(item => item % 2 === 0);
+ 
+ console.log(result);
+```
+#### Code produces the following output:
+```
+ []
 ```
