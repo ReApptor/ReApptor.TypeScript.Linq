@@ -2,7 +2,7 @@
 # ReApptor TypeScript LINQ
 
 It is a complete, fully tested analog of [C# Language-Integrated Query (LINQ)](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable?view=net-7.0)
-written in TypeScript.
+written in [TypeScript](https://www.typescriptlang.org/).
 
 LINQ package generally operates on the collection types and comes as
 extension methods serving a variety of
@@ -822,6 +822,7 @@ Groups the elements of a sequence according to a key selector function. The keys
  * @param elementSelector - A function to map each source element to an element in the result grouped element.
  * @returns Array<T> - An array of grouped objects of type TElement.
  */
+groupBy<TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][];
 ```
 #### Examples
 
@@ -889,9 +890,9 @@ it with a callback function that groups the items based on whether they are
 even or odd./
 The expected result is an empty array since there are no items to group.
 ```typescript
-  const items: number[] = [];
-  const result: number[][] = items.groupBy(item => item % 2 === 0);
- 
+ const items: number[] = [];
+ const result: number[][] = items.groupBy(item => item % 2 === 0);
+
  console.log(result);
 ```
 #### Code produces the following output:
