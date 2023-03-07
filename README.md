@@ -892,10 +892,125 @@ The expected result is an empty array since there are no items to group.
 ```typescript
  const items: number[] = [];
  const result: number[][] = items.groupBy(item => item % 2 === 0);
-
+ 
  console.log(result);
 ```
 #### Code produces the following output:
 ```
  []
+```
+
+
+***
+### SortBy
+
+Sorts an array in ascending order.
+```typescript
+ /**
+ * @param keySelector1..keySelectorN - A function to extract the key for each element.
+ */
+sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
+    keySelector2?: ((item: T) => TKey2) | null,
+    keySelector3?: ((item: T) => TKey3) | null,
+    keySelector4?: ((item: T) => TKey4) | null,
+    keySelector5?: ((item: T) => TKey5) | null,
+    keySelector6?: ((item: T) => TKey6) | null): void;
+```
+#### Examples
+
+###### Example #1
+Array is sorted in ascending order by default when the "sortBy" method is
+called with only one sorting function.
+
+```typescript
+ const people: Person[] = [
+    { name: "Theodore", age: 30 },
+    { name: "Lucas", age: 25 },
+    { name: "Mia", age: 35 },
+    { name: "Charlotte", age: 40 },
+ ];
+
+ people.sortBy(person => person.age);
+
+ console.log(people);
+```
+#### Code produces the following output:
+```
+[
+    { name: "Lucas", age: 25 },
+    { name: "Theodore", age: 30 },
+    { name: "Mia", age: 35 },
+    { name: "Charlotte", age: 40 },
+]
+```
+###### Example #2
+Array is sorted in ascending order by the first "key"
+when the "sortBy" method is called with two sorting functions.
+```typescript
+ const people: Person[] = [
+    { name: "Theodore", age: 30 },
+    { name: "Lucas", age: 25 },
+    { name: "Mia", age: 35 },
+    { name: "Charlotte", age: 40 },
+ ];
+
+ people.sortBy(person => person.name, person => person.age);
+ 
+ console.log(people);
+```
+#### Code produces the following output:
+```
+[
+    { name: "Charlotte", age: 40 },
+    { name: "Lucas", age: 25 },
+    { name: "Mia", age: 35 },
+    { name: "Theodore", age: 30 },
+]
+```
+
+###### Example #3
+Array is sorted in ascending order by the second "key"
+when the "sortBy" method is called with a "null" first sorting function
+and a second sorting function.
+```typescript
+ const people: Person[] = [
+    { name: "Theodore", age: 30 },
+    { name: "Lucas", age: 25 },
+    { name: "Mia", age: 35 },
+    { name: "Charlotte", age: 40 },
+ ];
+
+ people.sortBy(null, person => person.name);
+ 
+ console.log(people);
+```
+#### Code produces the following output:
+```
+ [
+    { name: "Charlotte", age: 40 },
+    { name: "Lucas", age: 25 },
+    { name: "Mia", age: 35 },
+    { name: "Theodore", age: 30 },
+]
+```
+###### Example #4
+Array of dates is sorted in ascending order.
+```typescript
+ const date0 = new Date(Date.UTC(2023, 0, 0));
+ const date1 = new Date(Date.UTC(2023, 0, 1));
+ const date2 = new Date(Date.UTC(2023, 0, 2));
+ const date3 = new Date(Date.UTC(2023, 1, 2));
+ const date4 = new Date(Date.UTC(2023, 1, 3));
+ const date5 = new Date(Date.UTC(2024, 1, 3));
+ const date6 = new Date(Date.UTC(2025, 0, 0));
+
+ const items: Date[] = [date1, date0, date2, date3, date6, date5, date4];
+ 
+ items.sortBy();
+ 
+ console.log(items);
+```
+#### Code produces the following output:
+```
+ [date0, date1, date2, date3, date4, date5, date6]
 ```
