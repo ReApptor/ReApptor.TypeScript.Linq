@@ -44,6 +44,14 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 - [ReApptor on GitHub](https://github.com/ReApptor)
 - [ReApptor in LinkedIn](https://www.linkedin.com/company/reapptor/)
 
+## Other projects
+### ReApptor.Typescript.PagedList
+- [Overview](https://reapptor.github.io/ReApptor.TypeScript.PagedList)
+- [Source code](https://github.com/ReApptor/ReApptor.TypeScript.PagedList)
+- [Package (GitHub)](https://github.com/ReApptor/ReApptor.TypeScript.PagedList/pkgs/npm/ts-paged-list)
+- [Package (NPM)](https://www.npmjs.com/package/@reapptor/ts-paged-list)
+- [Discussions](https://github.com/ReApptor/ReApptor.TypeScript.PagedList/discussions)
+
 ## Included query functions
 
 * [`All`](#All)
