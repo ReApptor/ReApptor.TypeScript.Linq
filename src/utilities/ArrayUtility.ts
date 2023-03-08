@@ -120,6 +120,21 @@ export default class ArrayUtility {
         return result;
     }
 
+    public static split<T>(items: readonly T[], count: number): T[][] {
+        if (count < 1)
+            throw new Error(`Count "${count}" out of range, must be at least 1 or greater.`);
+        
+        const delta: number = items.length / count;
+        
+        let size: number = Math.trunc(delta);
+        
+        if ((delta > size) || (size === 0)) {
+            size = size + 1;
+        }
+
+        return this.chunk(items, size);
+    }
+
     public static take<T>(items: readonly T[], count: number): T[] {
         if (count < 0) {
             count = 0;
@@ -128,7 +143,7 @@ export default class ArrayUtility {
         if ((count >= 0) && (count < length)) {
             length = count;
         }
-        const result = new Array(length);
+        const result = new Array<T>(length);
         for (let i: number = 0; i < length; i++) {
             result[i] = items[i];
         }

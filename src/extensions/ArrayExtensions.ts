@@ -198,12 +198,23 @@ declare global {
         chunk(size: number): T[][];
 
         /**
+         * Splits the elements of a sequence into the specified count of chunks.
+         * @param count - The count of chunks.
+         * @returns Array<T>[] - An Array<T> that contains the elements of the input sequence is split into the specified count of chunks.
+         */
+        split(count: number): T[][];
+
+        /**
          * Returns distinct elements from a sequence.
          * @param predicate - A predicate function to get comparable value.
          * @returns Array<T> - An Array<T> that contains distinct elements from the source sequence.
          */
         distinct(predicate?: ((item: T) => any) | null): T[];
 
+        /**
+         * Sorts an array in ascending order.
+         * @param keySelector1..keySelectorN - A function to extract the key for each element.
+         */
         sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
                                                          keySelector2?: ((item: T) => TKey2) | null,
                                                          keySelector3?: ((item: T) => TKey3) | null,
@@ -380,6 +391,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.chunk == null) {
         Array.prototype.chunk = function <T>(size: number): T[][] {
             return ArrayUtility.chunk(this, size);
+        };
+    }
+
+    if (Array.prototype.split == null) {
+        Array.prototype.split = function <T>(count: number): T[][] {
+            return ArrayUtility.split(this, count);
         };
     }
 

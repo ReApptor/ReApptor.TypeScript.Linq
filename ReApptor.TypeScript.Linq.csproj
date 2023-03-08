@@ -16,22 +16,22 @@
 
     <ItemGroup>
         <Compile Remove="lib\**" />
-        <Compile Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Remove="lib\**" />
-        <EmbeddedResource Remove="dist\**" />
     </ItemGroup>
 
     <ItemGroup>
         <None Remove="lib\**" />
-        <None Remove="dist\**" />
         <None Remove="package-lock.json" />
         <None Remove=".eslintrc.json" />
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="dist\src\extensions\ArrayExtensions.d.ts" />
+      <TypeScriptCompile Include="dist\src\index.d.ts" />
+      <TypeScriptCompile Include="dist\src\utilities\ArrayUtility.d.ts" />
       <TypeScriptCompile Include="src\extensions\ArrayExtensions.ts" />
       <TypeScriptCompile Include="src\index.ts" />
       <TypeScriptCompile Include="src\tests\ArrayUtility.count.spec.ts" />
@@ -47,7 +47,11 @@
       <Content Include=".github\ISSUE_TEMPLATE\bug_report.md" />
       <Content Include=".github\ISSUE_TEMPLATE\feature_request.md" />
       <Content Include=".github\pull_request_template.md" />
+      <Content Include="dist\index.js" />
+      <Content Include="dist\package.json" />
+      <Content Include="dist\README.md" />
       <Content Include="README.md" />
+      <Content Include=".npmrc" />
     </ItemGroup>
 
 </Project>

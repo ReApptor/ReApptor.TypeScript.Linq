@@ -852,8 +852,8 @@ console.log(result);
  [{ name: "Jack", age: 25 }, { name: "Helen", age: 25 }],
 ```
 ###### Example #2
-The following code example method groups the items into a single group if
-the callback is not specified.It creates an array of numbers and calls
+The following code example method groups the items into a single group if 
+the callback is not specified.It creates an array of numbers and calls 
 the groupBy method on it without specifying the callback function.\
 The expected result is an array with a single sub-array that contains all the numbers.
 ```typescript
@@ -868,10 +868,10 @@ The expected result is an array with a single sub-array that contains all the nu
 ```
 
 ###### Example #3
-The following code example method groups the items into a single group
-if the callback is not specified. It creates an array of numbers and calls
+The following code example method groups the items into a single group 
+if the callback is not specified. It creates an array of numbers and calls 
 the groupBy method on it without specifying the callback function.\
-The expected result is an array with a single sub-array that contains all
+The expected result is an array with a single sub-array that contains all 
 the numbers.
 ```typescript
  const items: number[] = [1, 2, 3, 4, 5];
@@ -884,8 +884,8 @@ the numbers.
  [[1, 2, 3, 4, 5]]
 ```
 ###### Example #4
-The following code example method returns an empty array if the input
-array is empty. It creates an empty array and calls the groupBy method on
+The following code example method returns an empty array if the input 
+array is empty. It creates an empty array and calls the groupBy method on 
 it with a callback function that groups the items based on whether they are
 even or odd./
 The expected result is an empty array since there are no items to group.
@@ -919,7 +919,7 @@ sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TK
 #### Examples
 
 ###### Example #1
-Array is sorted in ascending order by default when the "sortBy" method is
+Array is sorted in ascending order by default when the "sortBy" method is 
 called with only one sorting function.
 
 ```typescript
