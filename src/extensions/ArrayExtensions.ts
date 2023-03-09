@@ -11,7 +11,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Average                      *
 // Cast                         ?
 // Chunk                        *
-// Concat
+// Concat                       *
 // Contains
 // Count                        *
 // DefaultIfEmpty
@@ -45,7 +45,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Range
 // Repeat                   *
 // Reverse
-// Select
+// Select                   *
 // SelectMany               *
 // SequenceEqual
 // Skip                     *
@@ -203,6 +203,13 @@ declare global {
          * @returns Array<T>[] - An Array<T> that contains the elements the input sequence split into chunks of size size.
          */
         chunk(size: number): T[][];
+
+        /**
+         * Concatenates two sequences.
+         * @param second - The sequence to concatenate to the first sequence.
+         * @returns Array<T> - An Array<T> that contains the concatenated elements of the two input sequences.
+         */
+        concat(second: T[]): T[];
 
         /**
          * Splits the elements of a sequence into the specified count of chunks.
@@ -404,6 +411,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.chunk == null) {
         Array.prototype.chunk = function <T>(size: number): T[][] {
             return ArrayUtility.chunk(this, size);
+        };
+    }
+
+    if (Array.prototype.concat == null) {
+        Array.prototype.concat = function <T>(second: T[]): T[] {
+            return ArrayUtility.concat(this, second);
         };
     }
 

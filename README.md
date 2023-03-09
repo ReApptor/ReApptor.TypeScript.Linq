@@ -55,6 +55,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Any`](#Any)
 * [`Average`](#Average)
 * [`Chunk`](#Chunk)
+* [`Concat`](#Concat)
 * [`Count`](#Count)
 * [`Distinct`](#Distinct)
 * [`First`](#First)
@@ -251,6 +252,9 @@ Size "0" out of range, must be at least 1 or greater.
 ```
 
 ***
+### Concat
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### Count
 #### [MSDN: System.Linq.Enumerable.Count](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.count?view=net-7.0)
 Returns the number of elements in a sequence.

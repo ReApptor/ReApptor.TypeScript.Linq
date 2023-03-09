@@ -131,6 +131,10 @@ export default class ArrayUtility {
         return result;
     }
 
+    public static concat<T>(first: readonly T[], second: readonly T[]): T[] {
+        return [...first, ...second];
+    }
+
     public static split<T>(items: readonly T[], count: number): T[][] {
         if (count < 1)
             throw new Error(`Count "${count}" out of range, must be at least 1 or greater.`);
@@ -409,7 +413,7 @@ export default class ArrayUtility {
     }
     
     public static repeat<T>(element: T, count: number): T[] {
-        const items = new Array<T>(count);
+        const items: T[] = new Array<T>(count);
         for (let i = 0; i < count; i++) {
             items[i] = element;
         }
