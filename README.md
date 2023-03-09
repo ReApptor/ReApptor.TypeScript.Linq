@@ -64,6 +64,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Max`](#Max)
 * [`Min`](#Min)
 * [`Repeat`](#Repeat)
+* [`Select`](#Select)
 * [`SelectMany`](#SelectMany)
 * [`Skip`](#Skip)
 * [`Sum`](#Sum)
@@ -637,6 +638,9 @@ I like programming.
 I like programming.
 ```
 ***
+### Select
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### SelectMany
 Projects each element of a sequence to an Array<T> and flattens the resulting sequences into one sequence.
 ```typescript
