@@ -95,7 +95,18 @@ export default class ArrayUtility {
         return result;
     }
 
-    public static selectMany<TIn, TOut>(items: TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
+    public static select<T, TResult>(source: readonly T[], selector: (item: T, index: number) => TResult): TResult[] {
+        const result: TResult[] = [];
+        const length: number = source.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: T = source[i];
+            const resultItem: TResult = selector(item, i);
+            result.push(resultItem);
+        }
+        return result;
+    }
+
+    public static selectMany<TIn, TOut>(items: readonly TIn[], collectionSelector: (item: TIn) => TOut[]): TOut[] {
         const result: TOut[] = [];
         const length: number = items.length;
         for (let i: number = 0; i < length; i++) {

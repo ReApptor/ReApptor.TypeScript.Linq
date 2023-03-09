@@ -130,6 +130,13 @@ declare global {
         skip(count: number): T[];
 
         /**
+         * Projects each element of a sequence into a new form by incorporating the element's index.
+         * @param selector - A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
+         * @returns Array<TResult> - An Array<TResult> whose elements are the result of invoking the transform function on each element of source.
+         */
+        select<TResult>(selector: (item: T, index: number) => TResult): TResult[];
+
+        /**
          * Projects each element of a sequence to an Array<T> and flattens the resulting sequences into one sequence.
          * @param collectionSelector - A transform function to apply to each element of the input sequence.
          * @returns Array<TOut> - An Array<TOut> whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of source and then mapping each of those sequence elements and their corresponding source element to a result element.
@@ -325,6 +332,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.skip == null) {
         Array.prototype.skip = function <T>(count: number): T[] {
             return ArrayUtility.skip(this, count);
+        };
+    }
+
+    if (Array.prototype.select == null) {
+        Array.prototype.select = function <T, TResult>(selector: (item: T, index: number) => TResult): TResult[] {
+            return ArrayUtility.select(this, selector);
         };
     }
 
