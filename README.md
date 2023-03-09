@@ -45,12 +45,9 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 - [ReApptor in LinkedIn](https://www.linkedin.com/company/reapptor/)
 
 ## Other projects
-### ReApptor.Typescript.PagedList
-- [Overview](https://reapptor.github.io/ReApptor.TypeScript.PagedList)
-- [Source code](https://github.com/ReApptor/ReApptor.TypeScript.PagedList)
-- [Package (GitHub)](https://github.com/ReApptor/ReApptor.TypeScript.PagedList/pkgs/npm/ts-paged-list)
-- [Package (NPM)](https://www.npmjs.com/package/@reapptor/ts-paged-list)
-- [Discussions](https://github.com/ReApptor/ReApptor.TypeScript.PagedList/discussions)
+- [ReApptor.TypeScript.PagedList](https://reapptor.github.io/ReApptor.TypeScript.PagedList/)
+  [<small>@reapptor/ts-paged-list</small>](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-paged-list)\
+  <small>It is a complete, fully tested pagination library for splitting the array into pages and selecting a specific page by an index.</small>
 
 ## Included query functions
 
