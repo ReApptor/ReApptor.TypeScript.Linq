@@ -75,7 +75,7 @@ export default class ArrayUtility {
     public static any<T>(items: readonly T[], predicate?: (item: T, index: number) => boolean): boolean {
         return (predicate)
             ? items.some(predicate)
-            : items.length > 0;
+            : (items.length > 0);
     }
 
     public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
@@ -458,6 +458,10 @@ export default class ArrayUtility {
             }
         }
         return count;
+    }
+
+    public static contains<T>(items: readonly T[], value: T): boolean {
+        return items.includes(value);
     }
 
     public static distinct<T>(items: readonly T[], predicate?: ((item: T) => any) | null): T[] {

@@ -12,7 +12,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Cast                         ?
 // Chunk                        *
 // Concat                       *
-// Contains
+// Contains                     *
 // Count                        *
 // DefaultIfEmpty
 // Distinct                     *
@@ -48,8 +48,8 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Select                       *
 // SelectMany                   *
 // SequenceEqual
-// Single
-// SingleOrDefault
+// Single                       *
+// SingleOrDefault              *
 // Skip                         *
 // SkipLast
 // SkipWhile
@@ -61,7 +61,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // ThenByDescending
 // ToArray                      ?
 // ToDictionary                 *
-// ToHashSet
+// ToHashSet                    *
 // ToList                       -
 // ToLookup
 // TryGetNonEnumeratedCount
@@ -229,6 +229,13 @@ declare global {
          * @returns number - The number of elements in the input sequence if the predicate is not specified or, otherwise, the number of elements source that passes the test, specified by the predicate.
          */
         count(predicate?: ((item: T, index: number) => boolean) | null): number;
+        
+        /**
+         * Determines whether a sequence contains a specified element by using the default equality comparer.
+         * @param value - The value to locate in the sequence.
+         * @returns boolean - true if the source sequence contains an element that has the specified value; otherwise, false.
+         */
+        contains(value: T): boolean;
 
         /**
          * Splits the elements of a sequence into chunks of size at most size.
@@ -466,6 +473,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.count == null) {
         Array.prototype.count = function <T>(predicate?: ((item: T, index: number) => boolean) | null): number {
             return ArrayUtility.count(this, predicate);
+        };
+    }
+
+    if (Array.prototype.contains == null) {
+        Array.prototype.contains = function <T>(value: T): boolean {
+            return ArrayUtility.contains(this, value);
         };
     }
 
