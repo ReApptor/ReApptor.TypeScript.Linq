@@ -75,6 +75,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`TakeLast`](#TakeLast)
 * [`TakeWhile`](#TakeWhile)
 * [`ToDictionary`](#ToDictionary)
+* [`ToHashSet`](#ToHashSet)
 * [`GroupBy`](#GroupBy)
 
 
@@ -838,16 +839,20 @@ console.log(query);
 ### ToDictionary
 Documentation is under construction and upcoming soon.\
 <i>Use the built-in code comment instead.</i>
+### ToHashSet
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### GroupBy
 #### [MSDN: System.Linq.Enumerable.GroupBy](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.groupBy?view=net-7.0)
 Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.
 ```typescript
  /**
- * @param keySelector - A function to extract the key for each element.
- * @param elementSelector - A function to map each source element to an element in the result grouped element.
- * @returns Array<T> - An array of grouped objects of type TElement.
+ * Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.
+ * @param keySelector - An optional function to extract the key for each element.
+ * @param elementSelector - An optional function to map each source element to an element in the result grouped element.
+ * @returns Array<TElement[]> - An array of grouped objects of type TElement.
  */
-groupBy<TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][];
+groupBy<TKey = T, TElement = TKey>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][];
 ```
 #### Examples
 

@@ -197,7 +197,7 @@ export default class ArrayUtility {
         return result;
     }
     
-    public static toDictionary<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]> {
+    public static toDictionary<T, TKey = T, TElement = T>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]> {
         const map = new Map<TKey, TElement[]>();
 
         let length: number = items.length;
@@ -218,6 +218,23 @@ export default class ArrayUtility {
         }
 
         return map;
+    }
+    
+    public static toHashSet<T, TKey = T>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null): Set<TKey> {
+        const set = new Set<TKey>();
+
+        const hasKeySelector: boolean = (keySelector != null);
+        
+        let length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: T = items[i];
+            const key: any | null = (hasKeySelector)
+                ? keySelector!(item, i)
+                : item;
+            set.add(key);
+        }
+
+        return set;
     }
 
     public static single<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
@@ -339,7 +356,7 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
-    public static groupBy<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][] {
+    public static groupBy<T, TKey = T, TElement = TKey>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][] {
         const map: Map<TKey, TElement[]> = this.toDictionary(items, keySelector, elementSelector);
 
         return Array.from(map.values());
@@ -395,7 +412,7 @@ export default class ArrayUtility {
         const length: number = items.length;
 
         if (length === 0)
-            throw new Error("The source sequence is empty.");
+            throw new Error(`The source sequence is empty.`);
 
         keySelector = keySelector || ((item: T) => (item as any) as TValue);
 

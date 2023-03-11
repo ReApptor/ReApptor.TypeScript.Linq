@@ -126,11 +126,18 @@ declare global {
 
         /**
          * Creates a dictionary with type Map<TKey,TValue[]> from an Array<T> according to a specified key selector function, and an element selector function.
-         * @param keySelector - A function to extract a key from each element.
-         * @param elementSelector - A transform function to produce a result element value from each element.
-         * @returns T - The single element of the input sequence that satisfies the condition, or defaultValue if no such element is found.
+         * @param keySelector - An optional function to extract a key from each element.
+         * @param elementSelector - An optional transform function to produce a result element value from each element.
+         * @returns Map<TKey, TElement[]> - A dictionary with type Map<TKey,TValue[]> that contains keys and values. The values within each group are in the same order as in the source.
          */
-        toDictionary<TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): Map<TKey, TElement[]>;
+        toDictionary<TKey = T, TElement = T>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]>;
+
+        /**
+         * Creates a hashset with type Set<TKey> from an Array<T> according to a specified key selector function.
+         * @param keySelector - An optional function to extract a key from each element (optional).
+         * @returns Set<TKey> - A hashset with type Set<TKey> that contains values of type TSource selected from the input sequence.
+         */
+        toHashSet<TKey = T>(keySelector?: ((item: T, index: number) => TKey) | null): Set<TKey>;
 
         /**
          * Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.
@@ -171,11 +178,11 @@ declare global {
 
         /**
          * Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.
-         * @param keySelector - A function to extract the key for each element.
-         * @param elementSelector - A function to map each source element to an element in the result grouped element.
+         * @param keySelector - An optional function to extract the key for each element.
+         * @param elementSelector - An optional function to map each source element to an element in the result grouped element.
          * @returns Array<T> - An array of grouped objects of type TElement.
          */
-        groupBy<TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][];
+        groupBy<TKey = T, TElement = TKey>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][];
         
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
@@ -367,8 +374,14 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.toDictionary == null) {
-        Array.prototype.toDictionary = function <T, TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): Map<TKey, TElement[]> {
+        Array.prototype.toDictionary = function <T, TKey = T, TElement = T>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]> {
             return ArrayUtility.toDictionary(this, keySelector, elementSelector);
+        };
+    }
+
+    if (Array.prototype.toHashSet == null) {
+        Array.prototype.toHashSet = function <T, TKey = T>(keySelector?: ((item: T, index: number) => TKey) | null): Set<TKey> {
+            return ArrayUtility.toHashSet(this, keySelector);
         };
     }
 
@@ -403,7 +416,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T, TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): TElement[][] {
+        Array.prototype.groupBy = function <T, TKey = T, TElement = TKey>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): TElement[][] {
             return ArrayUtility.groupBy(this, keySelector, elementSelector);
         };
     }
