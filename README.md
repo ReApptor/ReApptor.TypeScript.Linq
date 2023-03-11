@@ -66,6 +66,8 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Min`](#Min)
 * [`Repeat`](#Repeat)
 * [`Select`](#Select)
+* [`Single`](#Single)
+* [`SingleOrDefault`](#SingleOrDefault)
 * [`SelectMany`](#SelectMany)
 * [`Skip`](#Skip)
 * [`Sum`](#Sum)
@@ -688,6 +690,12 @@ console.log(query);
 [ 'Scruffy', 'Sam', 'Sugar', 'Scratches' ]
 ```
 ***
+### Single
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### SingleOrDefault
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### Skip
 #### [MSDN: System.Linq.Enumerable.Skip](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.skip?view=net-7.0)
 Bypasses a specified number of elements in a sequence and then returns the remaining elements.

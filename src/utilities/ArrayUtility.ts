@@ -197,6 +197,44 @@ export default class ArrayUtility {
         return result;
     }
 
+    public static single<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+        const item: T | null = ArrayUtility.singleOrDefault(items, predicate, defaultValue);
+
+        if (item == null) {
+            const error: string = (predicate)
+                ? `No item found matching the specified predicate.`
+                : `The source sequence is empty.`;
+
+            throw new Error(error);
+        }
+
+        return item;
+    }
+
+    public static singleOrDefault<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+        const length: number = items.length;
+        let result: T | null = null;
+        if (predicate) {
+            for (let i: number = 0; i < length; i++) {
+                const item: T = items[i];
+                if (predicate(item)) {
+                    if (result != null)
+                        throw new Error(`The input sequence contains more than one element.`);
+
+                    result = item;
+                }
+            }
+        } else if (length == 1) {
+            result = items[0];
+        } else if (length > 1) {
+            throw new Error(`The input sequence contains more than one element.`);
+        }
+
+        return (result != null)
+            ? result
+            : defaultValue ?? null;
+    }
+
     public static skip<T>(items: readonly T[], count: number): T[] {
         if (count < 0) {
             count = 0;
@@ -227,6 +265,7 @@ export default class ArrayUtility {
 
     public static firstOrDefault<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
+        
         if (predicate) {
             for (let i: number = 0; i < length; i++) {
                 const item: T = items[i];
@@ -237,7 +276,10 @@ export default class ArrayUtility {
         } else if (length > 0) {
             return items[0];
         }
-        return defaultValue ?? null;
+        
+        return (defaultValue != null)
+            ? defaultValue
+            : null;
     }
 
     public static last<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {

@@ -48,6 +48,8 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Select                   *
 // SelectMany               *
 // SequenceEqual
+// Single
+// SingleOrDefault
 // Skip                     *
 // SkipLast
 // SkipWhile
@@ -121,6 +123,22 @@ declare global {
          * @returns Array<T> - An new array that contains the elements from the input sequence that occur before the element at which the test no longer passes.
          */
         takeWhile(predicate: (item: T, index: number) => boolean): T[];
+
+        /**
+         * Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.
+         * @param predicate - A function to test an element for a condition.
+         * @param defaultValue - The default value to return if the sequence is empty.
+         * @returns T - The single element of the input sequence that satisfies the condition, or defaultValue if no such element is found.
+         */
+        single(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T;
+
+        /**
+         * Returns the only element of a sequence that satisfies a specified condition, or a specified default value if no such element exists; this method throws an exception if more than one element satisfies the condition.
+         * @param predicate - A function to test an element for a condition.
+         * @param defaultValue - The default value to return if the sequence is empty.
+         * @returns T - The single element of the input sequence that satisfies the condition, or defaultValue if no such element is found.
+         */
+        singleOrDefault(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null;
 
         /**
          * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
@@ -333,6 +351,18 @@ export const ArrayExtensions = function () {
     if (Array.prototype.takeWhile == null) {
         Array.prototype.takeWhile = function <T>(predicate: (item: T, index: number) => boolean): T[] {
             return ArrayUtility.takeWhile(this, predicate);
+        };
+    }
+
+    if (Array.prototype.single == null) {
+        Array.prototype.single = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
+            return ArrayUtility.single(this, predicate, defaultValue);
+        };
+    }
+
+    if (Array.prototype.singleOrDefault == null) {
+        Array.prototype.singleOrDefault = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
+            return ArrayUtility.singleOrDefault(this, predicate, defaultValue);
         };
     }
 
