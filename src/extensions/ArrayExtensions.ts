@@ -31,43 +31,43 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Join
 // Last                         *
 // LastOrDefault                *
-// LongCount
+// LongCount                    -
 // Max                          *
-// MaxBy
+// MaxBy                        ?
 // Min                          *
-// MinBy
-// OfType
+// MinBy                        ?
+// OfType                       ?
 // Order
 // OrderBy
 // OrderByDescending
 // OrderDescending
 // Prepend
 // Range
-// Repeat                   *
+// Repeat                       *
 // Reverse
-// Select                   *
-// SelectMany               *
+// Select                       *
+// SelectMany                   *
 // SequenceEqual
 // Single
 // SingleOrDefault
-// Skip                     *
+// Skip                         *
 // SkipLast
 // SkipWhile
-// Sum                      *
-// Take                     *
-// TakeLast                 *
-// TakeWhile                *
+// Sum                          *
+// Take                         *
+// TakeLast                     *
+// TakeWhile                    *
 // ThenBy
 // ThenByDescending
-// ToArray
-// ToDictionary
+// ToArray                      ?
+// ToDictionary                 *
 // ToHashSet
-// ToList                   -
+// ToList                       -
 // ToLookup
 // TryGetNonEnumeratedCount
 // Union
 // UnionBy
-// Where                    *
+// Where                        *
 // Zip                                  Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
 
 declare global {
@@ -125,6 +125,14 @@ declare global {
         takeWhile(predicate: (item: T, index: number) => boolean): T[];
 
         /**
+         * Creates a dictionary with type Map<TKey,TValue[]> from an Array<T> according to a specified key selector function, and an element selector function.
+         * @param keySelector - A function to extract a key from each element.
+         * @param elementSelector - A transform function to produce a result element value from each element.
+         * @returns T - The single element of the input sequence that satisfies the condition, or defaultValue if no such element is found.
+         */
+        toDictionary<TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): Map<TKey, TElement[]>;
+
+        /**
          * Returns the only element of a sequence that satisfies a specified condition, and throws an exception if more than one such element exists.
          * @param predicate - A function to test an element for a condition.
          * @param defaultValue - The default value to return if the sequence is empty.
@@ -167,8 +175,8 @@ declare global {
          * @param elementSelector - A function to map each source element to an element in the result grouped element.
          * @returns Array<T> - An array of grouped objects of type TElement.
          */
-        groupBy<TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][];
-
+        groupBy<TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][];
+        
         /**
          * Removes the first occurrence of a specific object from the Array<T>.
          * @param item - The object(s) to remove from the Array<T>. The value can be null for reference types.
@@ -244,7 +252,7 @@ declare global {
         distinct(predicate?: ((item: T) => any) | null): T[];
 
         /**
-         * Sorts an array in ascending order.
+         * Sorts the array in descending order.
          * @param keySelector1..keySelectorN - A function to extract the key for each element.
          */
         sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
@@ -254,6 +262,10 @@ declare global {
                                                          keySelector5?: ((item: T) => TKey5) | null,
                                                          keySelector6?: ((item: T) => TKey6) | null): void;
 
+        /**
+         * Sorts the array in descending order.
+         * @param keySelector1..keySelectorN - A function to extract the key for each element.
+         */
         sortByDescending<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
                                                                    keySelector2?: ((item: T) => TKey2) | null,
                                                                    keySelector3?: ((item: T) => TKey3) | null,
@@ -354,6 +366,12 @@ export const ArrayExtensions = function () {
         };
     }
 
+    if (Array.prototype.toDictionary == null) {
+        Array.prototype.toDictionary = function <T, TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): Map<TKey, TElement[]> {
+            return ArrayUtility.toDictionary(this, keySelector, elementSelector);
+        };
+    }
+
     if (Array.prototype.single == null) {
         Array.prototype.single = function <T>(predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
             return ArrayUtility.single(this, predicate, defaultValue);
@@ -385,7 +403,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.groupBy == null) {
-        Array.prototype.groupBy = function <T, TKey, TElement>(keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => any) | null): TElement[][] {
+        Array.prototype.groupBy = function <T, TKey, TElement>(keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => any) | null): TElement[][] {
             return ArrayUtility.groupBy(this, keySelector, elementSelector);
         };
     }

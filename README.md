@@ -74,6 +74,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Take`](#Take)
 * [`TakeLast`](#TakeLast)
 * [`TakeWhile`](#TakeWhile)
+* [`ToDictionary`](#ToDictionary)
 * [`GroupBy`](#GroupBy)
 
 
@@ -834,6 +835,9 @@ console.log(query);
 [ 'apple', 'banana', 'mango' ]
 ```
 ***
+### ToDictionary
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### GroupBy
 #### [MSDN: System.Linq.Enumerable.GroupBy](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.groupBy?view=net-7.0)
 Groups the elements of a sequence according to a key selector function. The keys are compared by using a comparer and each group's elements are projected by using a specified function.

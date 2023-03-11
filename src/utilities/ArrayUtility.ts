@@ -196,6 +196,29 @@ export default class ArrayUtility {
         }
         return result;
     }
+    
+    public static toDictionary<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]> {
+        const map = new Map<TKey, TElement[]>();
+
+        let length: number = items.length;
+        for (let i: number = 0; i < length; i++) {
+            const item: T = items[i];
+            const key: any | null = keySelector
+                ? keySelector(item, i)
+                : item;
+            const element: any | null = elementSelector
+                ? elementSelector(item, i)
+                : item;
+            const collection: TElement[] | undefined = map.get(key);
+            if (!collection) {
+                map.set(key, [element]);
+            } else {
+                collection.push(element);
+            }
+        }
+
+        return map;
+    }
 
     public static single<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T {
         const item: T | null = ArrayUtility.singleOrDefault(items, predicate, defaultValue);
@@ -316,26 +339,9 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
-    public static groupBy<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T) => TKey) | null, elementSelector?: ((item: T) => TElement) | null): TElement[][] {
-        const map = new Map<TKey, TElement[]>();
-        
-        let length: number = items.length;
-        for (let i: number = 0; i < length; i++) {
-            const item: T = items[i];
-            const key: any | null = keySelector
-                ? keySelector(item)
-                : item;
-            const element: any | null = elementSelector
-                ? elementSelector(item)
-                : item;
-            const collection: TElement[] | undefined = map.get(key);
-            if (!collection) {
-                map.set(key, [element]);
-            } else {
-                collection.push(element);
-            }
-        }
-        
+    public static groupBy<T, TKey, TElement>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][] {
+        const map: Map<TKey, TElement[]> = this.toDictionary(items, keySelector, elementSelector);
+
         return Array.from(map.values());
     }
 
