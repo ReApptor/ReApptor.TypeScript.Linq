@@ -489,6 +489,18 @@ export default class ArrayUtility {
         return items;
     }
     
+    public static reverse<T>(items: readonly T[]): T[] {
+        const length: number = items.length;
+        const result: T[] = new Array<T>(length);
+        if (length > 0) {
+            const prefix: number = length - 1;
+            for (let i = 0; i < length; i++) {
+                result[i] = items[prefix - i];
+            }
+        }
+        return result;
+    }
+    
     public static average<T>(items: readonly T[], selector?: ((item: T) => number | null | undefined) | null): number {
         const length: number = items.length;
 

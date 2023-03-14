@@ -65,6 +65,7 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Max`](#Max)
 * [`Min`](#Min)
 * [`Repeat`](#Repeat)
+* [`Reverse`](#Reverse)
 * [`Select`](#Select)
 * [`Single`](#Single)
 * [`SingleOrDefault`](#SingleOrDefault)
@@ -646,6 +647,9 @@ I like programming.
 I like programming.
 ```
 ***
+### Reverse
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### Select
 Documentation is under construction and upcoming soon.\
 <i>Use the built-in code comment instead.</i>
