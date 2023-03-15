@@ -356,6 +356,53 @@ export default class ArrayUtility {
         await Promise.all(promises);
     }
 
+    public static except<T>(items: readonly T[], except: readonly T[], comparer?: ((x: T, y: T) => boolean) | null): T[] {
+        const xLength: number = items.length;
+        if (xLength == 0) {
+            return [];
+        }
+
+        const yLength: number = except.length;
+        if (yLength == 0) {
+            return [...items];
+        }
+
+        if (comparer == null) {
+            
+            const result: T[] = [];
+            const valueSet = new Set<T>(except);
+            for (let i: number = 0; i < xLength; i++) {
+                const item: T = items[i];
+                if (!valueSet.has(item)) {
+                    valueSet.add(item);
+                    result.push(item);
+                }
+            }
+            
+            return result;
+        }
+        
+        const result: T[] = [];
+        for (let i: number = 0; i < xLength; i++) {
+            const item: T = items[i];
+            let exists: boolean = false;
+            
+            for (let j: number = 0; j < yLength; j++) {
+                const yItem: T = except[j];
+                if (comparer(item, yItem)) {
+                    exists = true;
+                    break;
+                }
+            }
+            
+            if (!exists) {
+                result.push(item);
+            }
+        }
+
+        return result;
+    }
+
     public static groupBy<T, TKey = T, TElement = TKey>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): TElement[][] {
         const map: Map<TKey, TElement[]> = this.toDictionary(items, keySelector, elementSelector);
 

@@ -19,7 +19,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // DistinctBy
 // ElementAt
 // ElementAtOrDefault
-// Empty                                Returns an empty IEnumerable<T> that has the specified type argument.                                  
+// Empty                        ?       Returns an empty IEnumerable<T> that has the specified type argument.                                  
 // Except
 // ExceptBy
 // First                        *
@@ -289,6 +289,16 @@ declare global {
         forEachAsync(predicate: (item: T) => Promise<void>): Promise<void>;
 
         /**
+         * Produces the set difference of two sequences (the elements from the source collection not existing in the excepted collection).
+         * @param except - An Array<T> whose elements that also occur in the source sequence will cause those elements to be removed from the returned sequence.
+         * @param comparer - A function to compare values.
+         * @returns T[] - An Array<T> sequence that contains the set difference of the elements of two sequences.
+         */
+        except(except: readonly T[], comparer?: ((x: T, y: T) => boolean) | null): T[];
+        
+        // exceptBy<TKey>(second: readonly T[], keySelector: ((item: T, index: number) => TKey) | null, comparer?: ((x: T, y: T) => boolean) | null): T[];
+
+        /**
          * Returns the first element of a sequence, or a default value if no element is found, or throw error if no default element is not specified.
          * @param predicate - A function to test each element for a condition.
          * @param defaultValue - The default value to return if the sequence is empty.
@@ -537,6 +547,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.forEachAsync == null) {
         Array.prototype.forEachAsync = function <T>(predicate: (item: T) => Promise<void>): Promise<void> {
             return ArrayUtility.forEachAsync(this, predicate);
+        };
+    }
+    
+    if (Array.prototype.except == null) {
+        Array.prototype.except = function <T>(except: readonly T[], comparer?: ((x: T, y: T) => boolean) | null): T[] {
+            return ArrayUtility.except(this, except, comparer);
         };
     }
 

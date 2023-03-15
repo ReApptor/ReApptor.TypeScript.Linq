@@ -58,7 +58,8 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`Concat`](#Concat)
 * [`Count`](#Count)
 * [`Distinct`](#Distinct)
-* [`First`](#First)
+* [`Distinct`](#Distinct)
+* [`Except`](#Except)
 * [`FirstOrDefault`](#FirstOrDefault)
 * [`Last`](#Last)
 * [`LastOrDefault`](#LastOrDefault)
@@ -411,6 +412,10 @@ No item found matching the specified predicate.
 ```
 
 ***
+### Except
+#### [MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.except?view=net-7.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### FirstOrDefault
 #### [MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.firstOrDefault?view=net-7.0)
 Returns the first element of a sequence, or a default value if no element is found.
