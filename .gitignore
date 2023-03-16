@@ -28,7 +28,6 @@ package-lock.json
 
 # Test coverage
 coverage/
-!coverage/coverage-summary.json
 
 #documentation
 Documentation/docs
