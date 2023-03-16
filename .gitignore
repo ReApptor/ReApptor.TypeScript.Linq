@@ -26,8 +26,5 @@ ReApptor.TypeScript.Linq/etc/
 node_modules/
 package-lock.json
 
-# Test coverage
-coverage/
-
 #documentation
 Documentation/docs

@@ -38,5 +38,14 @@ describe("split", () => {
         expect(result[0].length).toEqual(1);
         expect(result[1].length).toEqual(1);
     });
+
+    test("split-count0", () => {
+        try {
+            [1, 2].split(0);
+        } catch (e: any) {
+            expect(e).toBeInstanceOf(Error);
+            expect(e.message).toBe(`Count "0" out of range, must be at least 1 or greater.`);
+        }
+    });
     
 });
