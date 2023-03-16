@@ -413,7 +413,7 @@ No item found matching the specified predicate.
 
 ***
 ### Except
-#### [MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.except?view=net-7.0)
+#### [MSDN: System.Linq.Enumerable.Except](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.except?view=net-7.0)
 Documentation is under construction and upcoming soon.\
 <i>Use the built-in code comment instead.</i>
 ### FirstOrDefault
