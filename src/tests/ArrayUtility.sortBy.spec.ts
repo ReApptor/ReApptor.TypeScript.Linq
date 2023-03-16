@@ -1,5 +1,7 @@
+// noinspection JSMismatchedCollectionQueryUpdate
+
 import "@reapptor/ts-linq";
-import Linq from "../Linq";
+import { Linq } from "@reapptor/ts-linq";
 
 interface Person {
     name: string;

@@ -8,6 +8,7 @@ export * from "./extensions/ArrayExtensions";
 // Linq & Settings
 export * from "./LinqSettings";
 export * from "./Linq";
+export {default as Linq} from "./Linq";
 
 // Initializing:
 //   1) Automatic:

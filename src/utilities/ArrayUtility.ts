@@ -548,6 +548,20 @@ export default class ArrayUtility {
         return result;
     }
     
+    public static insert<T>(items: T[], item: T | readonly T[], index?: number | null): void {
+        if (index == null) {
+            index = 0;
+        } else {
+            if ((index < 0) || (index > items.length))
+                throw new Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
+        }
+        if (Array.isArray(item)) {
+            items.splice(index, 0, ...item);
+        } else {
+            items.splice(index, 0, item as T);
+        }
+    }
+    
     public static average<T>(items: readonly T[], selector?: ((item: T) => number | null | undefined) | null): number {
         const length: number = items.length;
 

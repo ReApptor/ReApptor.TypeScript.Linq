@@ -1,3 +1,5 @@
+// noinspection JSMismatchedCollectionQueryUpdate
+
 import "@reapptor/ts-linq";
 
 describe("forEachAsync", () => {

@@ -1,3 +1,5 @@
+// noinspection JSMismatchedCollectionQueryUpdate
+
 import "@reapptor/ts-linq";
 
 // The sum method takes an array of items and a callback function that returns a numeric value for each item.

@@ -1,3 +1,5 @@
+// noinspection JSMismatchedCollectionQueryUpdate
+
 import "@reapptor/ts-linq";
 
 // These tests cover different scenarios and ensure that the groupBy method works correctly in each case.

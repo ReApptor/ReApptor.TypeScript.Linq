@@ -343,6 +343,8 @@ declare global {
          * @returns T[] - An Array<T> whose elements correspond to those of the input sequence in reverse order.
          */
         reverse(): T[];
+
+        insert(item: T | readonly T[], index?: number | null): void;
     }
 }
 
@@ -589,6 +591,12 @@ export const ArrayExtensions = function () {
     if (Array.prototype.reverse == null) {
         Array.prototype.reverse = function <T>(): T[] {
             return ArrayUtility.reverse(this);
+        };
+    }
+
+    if (Array.prototype.insert == null) {
+        Array.prototype.insert = function <T>(item: T | readonly T[], index?: number | null): void {
+            ArrayUtility.insert(this, item, index);
         };
     }
 }

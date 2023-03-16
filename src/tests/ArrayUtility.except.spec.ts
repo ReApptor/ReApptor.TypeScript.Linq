@@ -1,3 +1,5 @@
+// noinspection JSMismatchedCollectionQueryUpdate
+
 import "@reapptor/ts-linq";
 
 describe("except", () => {
@@ -23,28 +25,24 @@ describe("except", () => {
     });
     
     test("zero-except-one", () => {
-        // noinspection JSMismatchedCollectionQueryUpdate
         const input: number[] = [];
         const result: number[] = input.except([2]);
         expect(result).toEqual([]);
     });
     
     test("zero-except-one-comparer", () => {
-        // noinspection JSMismatchedCollectionQueryUpdate
         const input: number[] = [];
         const result: number[] = input.except([2], (x: number, y: number) => x === y);
         expect(result).toEqual([]);
     });
     
     test("zero-except-zero", () => {
-        // noinspection JSMismatchedCollectionQueryUpdate
         const input: number[] = [];
         const result: number[] = input.except([]);
         expect(result).toEqual([]);
     });
     
     test("zero-except-zero-comparer", () => {
-        // noinspection JSMismatchedCollectionQueryUpdate
         const input: number[] = [];
         const result: number[] = input.except([], (x: number, y: number) => x === y);
         expect(result).toEqual([]);
