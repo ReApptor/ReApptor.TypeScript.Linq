@@ -425,9 +425,11 @@ except(except: readonly T[], comparer?: ((x: T, y: T) => boolean) | null): T[];
 ```
 #### Examples
 
-The following code example demonstrates how to use the 
-method to compare two sequences of numbers and return elements that appear only in the first sequence.
+The following code exampled demonstrates how to use the 
+method to compare two sequences of numbers and return first sequence elements that don't 
+appear in the second sequence.
 
+###### Returns first sequence elements excluding elements from the second sequence if appears
 ```typescript
 const numbers1: number[] = [9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
 const numbers2: number[] = [87, 3];
@@ -441,9 +443,27 @@ console.log(result);
 ```
 [9, 34, 65, 92, 87, 435, 54, 83, 23, 435, 67, 12, 19]
 ```
+###### Returns first sequence elements excluding elements from the second sequence custom comparer
+
+```typescript
+const numbers: number[] = [1, 2, 3];
+
+const result = numbers.except([2], (x: number, y: number) => x === y);
+
+
+console.log(result);
+```
+
+#### Code produces the following output:
+```
+[1, 3]
+```
+
 The following code example demonstrates how to use the 
 method with the comparer to compare two sequences of human objects and produce those humans 
 whose age differs from the second sequence of humans.
+
+###### Returns first sequence elements excluding elements from the second sequence
 
 ```typescript
 
