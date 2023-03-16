@@ -443,7 +443,7 @@ console.log(result);
 ```
 [9, 34, 65, 92, 87, 435, 54, 83, 23, 435, 67, 12, 19]
 ```
-###### Returns first sequence elements excluding elements from the second sequence custom comparer
+###### Returns first sequence elements excluding elements from the second sequence utilizing custom comparer
 
 ```typescript
 const numbers: number[] = [1, 2, 3];
@@ -460,10 +460,10 @@ console.log(result);
 ```
 
 The following code example demonstrates how to use the 
-method with the comparer to compare two sequences of human objects and produce those humans 
-whose age differs from the second sequence of humans.
+method with the comparer to compare two sequences of human objects and produce a sequence of humans
+whose age differs from the age of humans from the second sequence.
 
-###### Returns first sequence elements excluding elements from the second sequence
+###### Returns first sequence elements excluding elements from the second sequence utilizing custom comparer
 
 ```typescript
 
