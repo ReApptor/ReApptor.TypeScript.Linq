@@ -344,6 +344,11 @@ declare global {
          */
         reverse(): T[];
 
+        /**
+         * Inserts an element into the Array<T> at the specified index.
+         * @param item - The object to insert.
+         * @param index - The zero-based index at which item should be inserted.
+         */
         insert(item: T | readonly T[], index?: number | null): void;
     }
 }

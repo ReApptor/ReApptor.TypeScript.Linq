@@ -49,7 +49,26 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
   [<small>@reapptor/ts-paged-list</small>](https://github.com/ReApptor/ReApptor.TypeScript.Linq/pkgs/npm/ts-paged-list)\
   <small>It is a complete, fully tested pagination library for splitting the array into pages and selecting a specific page by an index.</small>
 
-## Included query functions
+## IList functions
+
+* [`Remove`](#Remove)
+* [`RemoveAt`](#RemoveAt)
+* [`Insert`](#Insert)
+
+### Remove
+#### [MSDN: System.Collections.Generic.IList.Remove](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.remove?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### RemoveAt
+#### [MSDN: System.Collections.Generic.IList.RemoveAt](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.removeat?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### Insert
+#### [MSDN: System.Collections.Generic.IList.Insert](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.insert?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+
+## LINQ (IEnumerable) functions
 
 * [`All`](#All)
 * [`Any`](#Any)
@@ -79,7 +98,6 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`ToDictionary`](#ToDictionary)
 * [`ToHashSet`](#ToHashSet)
 * [`GroupBy`](#GroupBy)
-
 
 ### All
 #### [MSDN: System.Linq.Enumerable.All](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.all?view=net-7.0)
@@ -414,8 +432,94 @@ No item found matching the specified predicate.
 ***
 ### Except
 #### [MSDN: System.Linq.Enumerable.Except](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.except?view=net-7.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
+Produces the set difference of two sequences (the elements from the source collection not existing in the excepted collection).
+```typescript
+/**
+ * @param except - An Array<T> whose elements that also occur in the source sequence will cause those elements to be removed from the returned sequence.
+ * @param comparer - A function to compare values.
+ * @returns T[] - An Array<T> sequence that contains the set difference of the elements of two sequences.
+ */
+except(except: readonly T[], comparer?: ((x: T, y: T) => boolean) | null): T[];
+```
+#### Examples
+
+The following code exampled demonstrates how to use the 
+method to compare two sequences of numbers and return first sequence elements that don't 
+appear in the second sequence.
+
+###### Returns first sequence elements excluding elements from the second sequence if appears
+```typescript
+const numbers1: number[] = [9, 34, 65, 92, 87, 435, 3, 54, 83, 23, 87, 435, 67, 12, 19];
+const numbers2: number[] = [87, 3];
+
+const result: number[] = numbers1.except(numbers2);
+
+console.log(result);
+```
+
+#### Code produces the following output:
+```
+[9, 34, 65, 92, 87, 435, 54, 83, 23, 435, 67, 12, 19]
+```
+###### Returns first sequence elements excluding elements from the second sequence utilizing custom comparer
+
+```typescript
+const numbers: number[] = [1, 2, 3];
+
+const result = numbers.except([2], (x: number, y: number) => x === y);
+
+
+console.log(result);
+```
+
+#### Code produces the following output:
+```
+[1, 3]
+```
+
+The following code example demonstrates how to use the 
+method with the comparer to compare two sequences of human objects and produce a sequence of humans
+whose age differs from the age of humans from the second sequence.
+
+###### Returns first sequence elements excluding elements from the second sequence utilizing custom comparer
+
+```typescript
+
+class Human {
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  name: string;
+  age: number;
+}
+
+const aleks: Human = new Human("Aleks", 25);
+const andrey: Human = new Human("Andrey", 21);
+const artem: Human = new Human("Artem", 25);
+
+const anastasiia: Human = new Human("Anastasiia", 21);
+const maria: Human = new Human("Maria", 23);
+
+const comparer = (x: Human, y: Human): boolean => {
+  return (x.age == y.age);
+}
+
+const boys: Human[] = [aleks, andrey, artem];
+const girls: Human[] = [anastasiia, maria];
+
+const humansExceptSameAge: Human[] = boys.except(girls, comparer);
+
+const result: string[] = humansExceptSameAge.select(human => human.name);
+
+console.log(result)
+```
+
+#### Code produces the following output:
+```
+["Aleks", "Artem"]
+```
+
 ### FirstOrDefault
 #### [MSDN: System.Linq.Enumerable.FirstOrDefault](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.firstOrDefault?view=net-7.0)
 Returns the first element of a sequence, or a default value if no element is found.
