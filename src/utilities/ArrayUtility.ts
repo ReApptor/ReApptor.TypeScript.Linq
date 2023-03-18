@@ -36,7 +36,7 @@ export default class ArrayUtility {
             const xKey: any = keySelector ? keySelector(x) : x;
             const yKey: any = keySelector ? keySelector(y) : y;
             if ((Linq.settings.stringToDateCastEnabled) && (Linq.settings.stringToDateCastResolver(xKey))) {
-                return this.compareDateType(xKey, yKey);
+                return this.compareDateType(xKey, yKey, ascending);
             }
             return (xKey > yKey)
                 ? greaterThen

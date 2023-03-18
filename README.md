@@ -55,19 +55,6 @@ The ReApptor TypeScript LINQ package is licensed under the terms of the [MIT lic
 * [`RemoveAt`](#RemoveAt)
 * [`Insert`](#Insert)
 
-### Remove
-#### [MSDN: System.Collections.Generic.IList.Remove](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.remove?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
-### RemoveAt
-#### [MSDN: System.Collections.Generic.IList.RemoveAt](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.removeat?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
-### Insert
-#### [MSDN: System.Collections.Generic.IList.Insert](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.insert?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
-
 ## LINQ (IEnumerable) functions
 
 * [`All`](#All)
@@ -98,6 +85,24 @@ Documentation is under construction and upcoming soon.\
 * [`ToDictionary`](#ToDictionary)
 * [`ToHashSet`](#ToHashSet)
 * [`GroupBy`](#GroupBy)
+
+## Async functions
+
+* [`ForEachAsync`](#ForEachAsync)
+* [`WhereAsync`](#WhereAsync)
+
+### Remove
+#### [MSDN: System.Collections.Generic.IList.Remove](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.remove?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### RemoveAt
+#### [MSDN: System.Collections.Generic.IList.RemoveAt](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.removeat?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### Insert
+#### [MSDN: System.Collections.Generic.IList.Insert](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.insert?view=net-8.0)
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 
 ### All
 #### [MSDN: System.Linq.Enumerable.All](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.all?view=net-7.0)
@@ -1157,3 +1162,9 @@ Array of dates is sorted in ascending order.
 ```
  [date0, date1, date2, date3, date4, date5, date6]
 ```
+### ForEachAsync
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### WhereAsync
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
