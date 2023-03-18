@@ -23,5 +23,14 @@ describe("average", () => {
         const result: number = [1].average(item => item);
         expect(result).toEqual(1);
     });
+
+    test("average-empty", () => {
+        try {
+            [].average();
+        } catch (e: any) {
+            expect(e).toBeInstanceOf(Error);
+            expect(e.message).toBe(`The source sequence is empty.`);
+        }
+    });
     
 });

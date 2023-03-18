@@ -566,7 +566,7 @@ export default class ArrayUtility {
         const length: number = items.length;
 
         if (length === 0)
-            throw new Error("The source sequence is empty.");
+            throw new Error(`The source sequence is empty.`);
 
         const sum: number = this.sum(items, selector);
 

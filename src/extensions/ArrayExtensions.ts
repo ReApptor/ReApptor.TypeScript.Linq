@@ -11,7 +11,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Average                      *
 // Cast                         ?
 // Chunk                        *
-// Concat                       *
+// Concat                       -       Native
 // Contains                     *
 // Count                        *
 // DefaultIfEmpty
@@ -44,7 +44,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Prepend
 // Range
 // Repeat                       *
-// Reverse                      *
+// Reverse                      -       Native
 // Select                       *
 // SelectMany                   *
 // SequenceEqual
@@ -245,13 +245,6 @@ declare global {
         chunk(size: number): T[][];
 
         /**
-         * Concatenates two sequences.
-         * @param second - The sequence to concatenate to the first sequence.
-         * @returns Array<T> - An Array<T> that contains the concatenated elements of the two input sequences.
-         */
-        concat(second: T[]): T[];
-
-        /**
          * Splits the elements of a sequence into the specified count of chunks.
          * @param count - The count of chunks.
          * @returns Array<T>[] - An Array<T> that contains the elements of the input sequence is split into the specified count of chunks.
@@ -337,12 +330,6 @@ declare global {
          * @returns T[] - An Array<T> that contains a repeated value.
          */
         repeat(element: T, count: number): T[];
-
-        /**
-         * Inverts the order of the elements in a sequence.
-         * @returns T[] - An Array<T> whose elements correspond to those of the input sequence in reverse order.
-         */
-        reverse(): T[];
 
         /**
          * Inserts an element into the Array<T> at the specified index.
@@ -511,12 +498,6 @@ export const ArrayExtensions = function () {
         };
     }
 
-    if (Array.prototype.concat == null) {
-        Array.prototype.concat = function <T>(second: T[]): T[] {
-            return ArrayUtility.concat(this, second);
-        };
-    }
-
     if (Array.prototype.split == null) {
         Array.prototype.split = function <T>(count: number): T[][] {
             return ArrayUtility.split(this, count);
@@ -590,12 +571,6 @@ export const ArrayExtensions = function () {
     if (Array.prototype.repeat == null) {
         Array.prototype.repeat = function <T>(element: T, count: number): T[] {
             return ArrayUtility.repeat(element, count);
-        };
-    }
-
-    if (Array.prototype.reverse == null) {
-        Array.prototype.reverse = function <T>(): T[] {
-            return ArrayUtility.reverse(this);
         };
     }
 
