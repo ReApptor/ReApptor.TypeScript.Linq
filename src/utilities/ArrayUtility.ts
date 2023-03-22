@@ -131,10 +131,6 @@ export default class ArrayUtility {
         return result;
     }
 
-    public static concat<T>(first: readonly T[], second: readonly T[]): T[] {
-        return [...first, ...second];
-    }
-
     public static split<T>(items: readonly T[], count: number): T[][] {
         if (count < 1)
             throw new Error(`Count "${count}" out of range, must be at least 1 or greater.`);
@@ -294,8 +290,8 @@ export default class ArrayUtility {
 
         if (item == null) {
             const error: string = (predicate)
-                ? "No item found matching the specified predicate."
-                : "The source sequence is empty.";
+                ? `No item found matching the specified predicate.`
+                : `The source sequence is empty.`;
 
             throw new Error(error);
         }
@@ -534,18 +530,6 @@ export default class ArrayUtility {
             items[i] = element;
         }
         return items;
-    }
-    
-    public static reverse<T>(items: readonly T[]): T[] {
-        const length: number = items.length;
-        const result: T[] = new Array<T>(length);
-        if (length > 0) {
-            const prefix: number = length - 1;
-            for (let i = 0; i < length; i++) {
-                result[i] = items[prefix - i];
-            }
-        }
-        return result;
     }
     
     public static insert<T>(items: T[], item: T | readonly T[], index?: number | null): void {

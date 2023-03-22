@@ -78,12 +78,13 @@ describe("sortBy", () => {
         const date4 = new Date(Date.UTC(2023, 1, 3));
         const date5 = new Date(Date.UTC(2024, 1, 3));
         const date6 = new Date(Date.UTC(2025, 0, 0));
+        const date7 = new Date(Date.UTC(2025, 0, 0));
         
-        const items: Date[] = [date1, date0, date2, date3, date6, date5, date4];
+        const items: Date[] = [date1, date0, date2, date3, date6, date5, date4, date7];
         
         items.sortBy();
 
-        expect(items).toEqual([date0, date1, date2, date3, date4, date5, date6]);
+        expect(items).toEqual([date0, date1, date2, date3, date4, date5, date6, date7]);
     });
 
     test("date-as-string-and-string-to-date-cast-enabled", () => {
@@ -98,14 +99,15 @@ describe("sortBy", () => {
         const date4 = "2019-09-25T01:00:00.000Z";
         const date5 = "2019-09-26";
         const date6 = "2019-09-26T16:00:20.817";
+        const date7 = "2019-09-26T16:00:20.817";
 
-        const items: string[] = [date2, date1, date5, date0, date3, date4, date6];
+        const items: string[] = [date2, date1, date5, date0, date3, date4, date6, date7];
 
         items.sortBy();
         
         const expected: string[] = (offset < 0)
-            ? [date1, date0, date3, date2, date4, date5, date6]
-            : [date1, date0, date2, date3, date4, date5, date6]
+            ? [date1, date0, date3, date2, date4, date5, date6, date7]
+            : [date1, date0, date2, date3, date4, date5, date6, date7]
 
         expect(items).toEqual(expected);
     });
@@ -120,12 +122,13 @@ describe("sortBy", () => {
         const date4 = "2019-09-25T01:00:00.000Z";
         const date5 = "2019-09-26";
         const date6 = "2019-09-26T16:00:20.817";
+        const date7 = "2019-09-26T16:00:20.817";
         
-        const items: string[] = [date2, date1, date5, date0, date3, date4, date6];
+        const items: string[] = [date2, date1, date5, date0, date3, date4, date6, date7];
         
         items.sortBy();
 
-        expect(items).toEqual([date1, date0, date2, date3, date4, date5, date6]);
+        expect(items).toEqual([date1, date0, date2, date3, date4, date5, date6, date7]);
     });
 
 });

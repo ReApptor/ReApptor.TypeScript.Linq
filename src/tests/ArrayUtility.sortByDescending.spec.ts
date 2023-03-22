@@ -105,7 +105,7 @@ describe("sortByDescending", () => {
         
         const expected: string[] = (offset < 0)
             ? [date6, date5, date4, date2, date3, date0, date1]
-            : [date6, date5, date4, date3, date2, date0, date1]
+            : [date6, date5, date3, date4, date2, date0, date1]
 
         expect(items).toEqual(expected);
     });

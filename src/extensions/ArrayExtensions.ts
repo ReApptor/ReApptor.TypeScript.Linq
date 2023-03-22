@@ -336,7 +336,7 @@ declare global {
          * @param item - The object to insert.
          * @param index - The zero-based index at which item should be inserted.
          */
-        insert(item: T | readonly T[], index: number | null): void;
+        insert(item: T | readonly T[], index?: number | null): void;
     }
 }
 
