@@ -17,6 +17,35 @@ describe("sortBy", () => {
         { name: "Charlotte", age: 40 },
     ];
 
+    test("multiple-key-selectors", () => {
+        const input: number[][] = [
+            [1, 1, 2, 2, 3, 3],
+            [0, 1, 1, 2, 2, 3],
+            [0, 0, 1, 1, 2, 2],
+            [0, 0, 0, 1, 1, 2],
+            [0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0]
+        ];
+
+        input.sortBy(item => item[0], 
+                     item => item[1],
+                     item => item[2],
+                     item => item[3],
+                     item => item[4],
+                     item => item[5])
+
+        expect(input).toEqual([
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 1, 1, 2],
+            [0, 0, 1, 1, 2, 2],
+            [0, 1, 1, 2, 2, 3],
+            [1, 1, 2, 2, 3, 3],
+        ]);
+    });
+
     // Test case is testing whether the array is sorted in ascending order by default
     // when the "sortBy" method is called with only one sorting function.
     test("should sort the array in ascending order by default", () => {
