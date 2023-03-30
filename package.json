@@ -1,7 +1,7 @@
 {
   "name": "@reapptor/ts-linq",
   "license": "MIT",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "type": "module",
   "repository": {
     "type": "git",
@@ -15,7 +15,9 @@
     "ts",
     "typescript",
     "array extension",
-    "collection extension"
+    "collection extension",
+    "npm",
+    "github"
   ],
   "peerDependencies": {
   },

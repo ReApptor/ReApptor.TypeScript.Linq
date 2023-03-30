@@ -9,9 +9,9 @@ extension methods serving a variety of
 purposes in working with collections of types.
 
 It's a simple, lightweight, intuitive set of features with good
-documentation and examples.
-No complicated or superfluous interfaces, structures, or logic.
-No additional or external types or objects.
+documentation and examples.\
+No complicated or superfluous interfaces, structures, or logic.\
+No additional or external types or objects.\
 
 The original idea behind this package is to make TypeScript syntax look
 like C# to ease the work for developers using both C# and TypeScript
@@ -1177,3 +1177,7 @@ Documentation is under construction and upcoming soon.\
 ### WhereAsync
 Documentation is under construction and upcoming soon.\
 <i>Use the built-in code comment instead.</i>
+
+## Hashtags
+
+#linq #language-integrated-query #ts #typescripts #array-extension #collection-extension #npm #github
