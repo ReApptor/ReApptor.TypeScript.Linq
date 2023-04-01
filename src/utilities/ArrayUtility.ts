@@ -87,7 +87,7 @@ export default class ArrayUtility {
         const length: number = items.length;
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
-            const passed: boolean = await predicate(items[i]);
+            const passed: boolean = await predicate(item);
             if (passed) {
                 result.push(item);
             }
@@ -165,12 +165,12 @@ export default class ArrayUtility {
         if (count < 0) {
             count = 0;
         }
-        let length: number = items.length;
-        if ((count >= 0) && (count < length)) {
-            length = count;
-        }
-        const result = new Array(length);
-        const prefix: number = items.length - length;
+        const sourceLength: number = items.length;
+        const length: number = ((count >= 0) && (count < sourceLength))
+            ? count
+            : sourceLength;
+        const result: T[] = new Array(length);
+        const prefix: number = sourceLength - length;
         for (let i: number = 0; i < length; i++) {
             result[i] = items[prefix + i];
         }
@@ -182,7 +182,7 @@ export default class ArrayUtility {
         const length: number = items.length;
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
-            const valid: boolean = predicate(items[i], i);
+            const valid: boolean = predicate(item, i);
             
             if (!valid) {
                 break;
@@ -281,6 +281,40 @@ export default class ArrayUtility {
         const result = new Array(newLength);
         for (let dest: number = 0, source: number = firstIndex; dest < newLength; dest++, source++) {
             result[dest] = items[source];
+        }
+        return result;
+    }
+
+    public static skipLast<T>(items: readonly T[], count: number): T[] {
+        if (count < 0) {
+            count = 0;
+        }
+        let sourceLength: number = items.length;
+        const length: number = (count <= 0)
+            ? sourceLength
+            : (count < sourceLength)
+                ? sourceLength - count
+                : 0;
+        const result: T[] = new Array(length);
+        for (let i: number = 0; i < length; i++) {
+            result[i] = items[i];
+        }
+        return result;
+    }
+
+    public static skipWhile<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
+        const length: number = items.length;
+        let index: number = 0;
+        for (let i: number = 0; i < length; i++) {
+            const skip: boolean = predicate(items[i], i);
+            if (!skip) {
+                break;
+            }
+            index++;
+        }
+        const result: T[] = [];
+        for (let i: number = index; i < length; i++) {
+            result.push(items[i]);
         }
         return result;
     }

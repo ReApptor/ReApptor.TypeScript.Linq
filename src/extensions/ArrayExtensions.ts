@@ -14,7 +14,7 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Concat                       -       Native
 // Contains                     *
 // Count                        *
-// DefaultIfEmpty
+// DefaultIfEmpty               ?
 // Distinct                     *
 // DistinctBy
 // ElementAt
@@ -51,8 +51,8 @@ import ArrayUtility from "../utilities/ArrayUtility";
 // Single                       *
 // SingleOrDefault              *
 // Skip                         *
-// SkipLast
-// SkipWhile
+// SkipLast                     *
+// SkipWhile                    *
 // Sum                          *
 // Take                         *
 // TakeLast                     *
@@ -163,6 +163,20 @@ declare global {
         skip(count: number): T[];
 
         /**
+         * Returns a new enumerable collection that contains the elements from source with the last count elements of the source collection omitted.
+         * @param count - The number of elements to omit from the end of the collection.
+         * @returns Array<T> - An Array<T> that contains the elements from source minus count elements from the end of the collection.
+         */
+        skipLast(count: number): T[];
+
+        /**
+         * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+         * @param predicate - A function to test each element (and its index) if the element is for a condition.
+         * @returns Array<T> - An Array<T> that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by the predicate.
+         */
+        skipWhile(predicate: (item: T, index: number) => boolean): T[];
+
+        /**
          * Projects each element of a sequence into a new form by incorporating the element's index.
          * @param selector - A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
          * @returns Array<TResult> - An Array<TResult> whose elements are the result of invoking the transform function on each element of source.
@@ -260,7 +274,12 @@ declare global {
 
         /**
          * Sorts the array in descending order.
-         * @param keySelector1..keySelectorN - A function to extract the key for each element.
+         * @param keySelector1 - A function to extract the key for each element (the highest priority 0).
+         * @param keySelector2 - A function to extract the key for each element (the priority 1).
+         * @param keySelector3 - A function to extract the key for each element (the priority 2).
+         * @param keySelector4 - A function to extract the key for each element (the priority 3).
+         * @param keySelector5 - A function to extract the key for each element (the priority 4).
+         * @param keySelector6 - A function to extract the key for each element (the priority lowest priority 5).
          */
         sortBy<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
                                                          keySelector2?: ((item: T) => TKey2) | null,
@@ -271,7 +290,12 @@ declare global {
 
         /**
          * Sorts the array in descending order.
-         * @param keySelector1..keySelectorN - A function to extract the key for each element.
+         * @param keySelector1 - A function to extract the key for each element (the highest priority 0).
+         * @param keySelector2 - A function to extract the key for each element (the priority 1).
+         * @param keySelector3 - A function to extract the key for each element (the priority 2).
+         * @param keySelector4 - A function to extract the key for each element (the priority 3).
+         * @param keySelector5 - A function to extract the key for each element (the priority 4).
+         * @param keySelector6 - A function to extract the key for each element (the priority lowest priority 5).
          */
         sortByDescending<TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(keySelector1?: ((item: T) => TKey1) | null,
                                                                    keySelector2?: ((item: T) => TKey2) | null,
@@ -419,6 +443,19 @@ export const ArrayExtensions = function () {
             return ArrayUtility.skip(this, count);
         };
     }
+    
+    if (Array.prototype.skipLast == null) {
+        Array.prototype.skipLast = function <T>(count: number): T[] {
+            return ArrayUtility.skipLast(this, count);
+        };
+    }
+
+    if (Array.prototype.skipWhile == null) {
+        Array.prototype.skipWhile = function <T>(predicate: (item: T, index: number) => boolean): T[] {
+            return ArrayUtility.skipWhile(this, predicate);
+        };
+    }
+
 
     if (Array.prototype.select == null) {
         Array.prototype.select = function <T, TResult>(selector: (item: T, index: number) => TResult): TResult[] {

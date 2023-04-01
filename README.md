@@ -11,7 +11,7 @@ purposes in working with collections of types.
 It's a simple, lightweight, intuitive set of features with good
 documentation and examples.\
 No complicated or superfluous interfaces, structures, or logic.\
-No additional or external types or objects.\
+No additional or external types or objects.
 
 The original idea behind this package is to make TypeScript syntax look
 like C# to ease the work for developers using both C# and TypeScript
@@ -89,6 +89,8 @@ The generated coverage result is here:\
 * [`SingleOrDefault`](#SingleOrDefault)
 * [`SelectMany`](#SelectMany)
 * [`Skip`](#Skip)
+* [`SkipLast`](#SkipLast)
+* [`SkipWhile`](#SkipWhile)
 * [`Sum`](#Sum)
 * [`Take`](#Take)
 * [`TakeLast`](#TakeLast)
@@ -854,6 +856,12 @@ console.log("All grades except the top three are:", skippedGrades);
 All grades except the top three are: [ 82, 85, 92, 98 ]
 ```
 ***
+### SkipLast
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
+### SkipWhile
+Documentation is under construction and upcoming soon.\
+<i>Use the built-in code comment instead.</i>
 ### Sum
 #### [MSDN: System.Linq.Enumerable.Sum](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.sum?view=net-7.0)
 Computes the sum of a sequence of numeric values.
