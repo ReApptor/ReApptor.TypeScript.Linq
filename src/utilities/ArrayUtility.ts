@@ -21,17 +21,17 @@ export default class ArrayUtility {
     }
 
     private static invokeSortBy<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
-                                                                      ascending: boolean,
-                                                                      keySelector1?: ((item: T) => TKey1) | null,
-                                                                      keySelector2?: ((item: T) => TKey2) | null,
-                                                                      keySelector3?: ((item: T) => TKey3) | null,
-                                                                      keySelector4?: ((item: T) => TKey4) | null,
-                                                                      keySelector5?: ((item: T) => TKey5) | null,
-                                                                      keySelector6?: ((item: T) => TKey6) | null): void {
+                                                                             ascending: boolean,
+                                                                             keySelector1?: ((item: T) => TKey1) | null,
+                                                                             keySelector2?: ((item: T) => TKey2) | null,
+                                                                             keySelector3?: ((item: T) => TKey3) | null,
+                                                                             keySelector4?: ((item: T) => TKey4) | null,
+                                                                             keySelector5?: ((item: T) => TKey5) | null,
+                                                                             keySelector6?: ((item: T) => TKey6) | null): void {
 
         const greaterThen: number = (ascending) ? 1 : -1;
         const lessThen: number = (ascending) ? -1 : 1;
-        
+
         const compare = (keySelector: ((item: T) => any) | null | undefined, x: T, y: T): number => {
             const xKey: any = keySelector ? keySelector(x) : x;
             const yKey: any = keySelector ? keySelector(y) : y;
@@ -119,7 +119,7 @@ export default class ArrayUtility {
     public static chunk<T>(items: readonly T[], size: number): T[][] {
         if (size < 1)
             throw new Error(`Size "${size}" out of range, must be at least 1 or greater.`);
-        
+
         const result: T[][] = [];
 
         const copy: T[] = [...items];
@@ -134,11 +134,11 @@ export default class ArrayUtility {
     public static split<T>(items: readonly T[], count: number): T[][] {
         if (count < 1)
             throw new Error(`Count "${count}" out of range, must be at least 1 or greater.`);
-        
+
         const delta: number = items.length / count;
-        
+
         let size: number = Math.trunc(delta);
-        
+
         if ((delta > size) || (size === 0)) {
             size = size + 1;
         }
@@ -183,16 +183,16 @@ export default class ArrayUtility {
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
             const valid: boolean = predicate(item, i);
-            
+
             if (!valid) {
                 break;
             }
-            
+
             result.push(item);
         }
         return result;
     }
-    
+
     public static toDictionary<T, TKey = T, TElement = T>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null, elementSelector?: ((item: T, index: number) => TElement) | null): Map<TKey, TElement[]> {
         const map = new Map<TKey, TElement[]>();
 
@@ -215,12 +215,12 @@ export default class ArrayUtility {
 
         return map;
     }
-    
+
     public static toHashSet<T, TKey = T>(items: readonly T[], keySelector?: ((item: T, index: number) => TKey) | null): Set<TKey> {
         const set = new Set<TKey>();
 
         const hasKeySelector: boolean = (keySelector != null);
-        
+
         let length: number = items.length;
         for (let i: number = 0; i < length; i++) {
             const item: T = items[i];
@@ -335,7 +335,7 @@ export default class ArrayUtility {
 
     public static firstOrDefault<T>(items: readonly T[], predicate?: ((item: T) => boolean) | null, defaultValue?: T | null): T | null {
         const length: number = items.length;
-        
+
         if (predicate) {
             for (let i: number = 0; i < length; i++) {
                 const item: T = items[i];
@@ -346,7 +346,7 @@ export default class ArrayUtility {
         } else if (length > 0) {
             return items[0];
         }
-        
+
         return (defaultValue != null)
             ? defaultValue
             : null;
@@ -398,7 +398,7 @@ export default class ArrayUtility {
         }
 
         if (comparer == null) {
-            
+
             const result: T[] = [];
             const valueSet = new Set<T>(except);
             for (let i: number = 0; i < xLength; i++) {
@@ -408,15 +408,15 @@ export default class ArrayUtility {
                     result.push(item);
                 }
             }
-            
+
             return result;
         }
-        
+
         const result: T[] = [];
         for (let i: number = 0; i < xLength; i++) {
             const item: T = items[i];
             let exists: boolean = false;
-            
+
             for (let j: number = 0; j < yLength; j++) {
                 const yItem: T = except[j];
                 if (comparer(item, yItem)) {
@@ -424,7 +424,7 @@ export default class ArrayUtility {
                     break;
                 }
             }
-            
+
             if (!exists) {
                 result.push(item);
             }
@@ -454,8 +454,13 @@ export default class ArrayUtility {
     }
 
     public static removeAt<T>(items: T[], index: number): void {
-        if ((index < 0) || (index >= items.length))
-            throw new Error(`Array index "${index}" out of range, can be in [0..${items.length}].`);
+        if ((index < 0) || (index >= items.length)) {
+            const message: string = (items.length > 0)
+                ? `Array index "${index}" out of range, can be in [0..${items.length}].`
+                : `Array index "${index}" out of range, array is empty.`;
+            
+            throw new Error(message);
+        }
 
         items.splice(index, 1);
     }
@@ -557,7 +562,7 @@ export default class ArrayUtility {
         }
         return result;
     }
-    
+
     public static repeat<T>(element: T, count: number): T[] {
         const items: T[] = new Array<T>(count);
         for (let i = 0; i < count; i++) {
@@ -565,7 +570,7 @@ export default class ArrayUtility {
         }
         return items;
     }
-    
+
     public static insert<T>(items: T[], item: T | readonly T[], index?: number | null): void {
         if (index == null) {
             index = 0;
@@ -579,7 +584,7 @@ export default class ArrayUtility {
             items.splice(index, 0, item as T);
         }
     }
-    
+
     public static average<T>(items: readonly T[], selector?: ((item: T) => number | null | undefined) | null): number {
         const length: number = items.length;
 
@@ -602,12 +607,12 @@ export default class ArrayUtility {
     }
 
     public static sortByDescending<T, TKey1, TKey2, TKey3, TKey4, TKey5, TKey6>(source: T[],
-                                                                      keySelector1?: ((item: T) => TKey1) | null,
-                                                                      keySelector2?: ((item: T) => TKey2) | null,
-                                                                      keySelector3?: ((item: T) => TKey3) | null,
-                                                                      keySelector4?: ((item: T) => TKey4) | null,
-                                                                      keySelector5?: ((item: T) => TKey5) | null,
-                                                                      keySelector6?: ((item: T) => TKey6) | null): void {
+                                                                                keySelector1?: ((item: T) => TKey1) | null,
+                                                                                keySelector2?: ((item: T) => TKey2) | null,
+                                                                                keySelector3?: ((item: T) => TKey3) | null,
+                                                                                keySelector4?: ((item: T) => TKey4) | null,
+                                                                                keySelector5?: ((item: T) => TKey5) | null,
+                                                                                keySelector6?: ((item: T) => TKey6) | null): void {
         this.invokeSortBy(source, false, keySelector1, keySelector2, keySelector3, keySelector4, keySelector5, keySelector6);
     }
 }

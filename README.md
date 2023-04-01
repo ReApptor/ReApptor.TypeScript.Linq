@@ -106,16 +106,193 @@ The generated coverage result is here:\
 
 ### Remove
 #### [MSDN: System.Collections.Generic.IList.Remove](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.remove?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
+
+Removes the first occurrence of a specific object from the Array<T>.
+```typescript
+/**
+ * @param item - The object(s) to remove from the Array<T>. The value can be null for reference types.
+ * @returns boolean - true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the Array<T>.
+ */
+remove(item: T | readonly T[]): void;
+```
+#### Example #1
+Removes a single occurrence of an item from the array.
+```typescript
+const items: number[] = [1, 2, 3, 4, 5];
+
+items.remove(3);
+
+console.log(items);
+```
+#### Code produces the following output:
+```
+[1, 2, 4, 5] 
+``````
+#### Example #2
+Removes all specified items from the array.
+```typescript
+const items: number[] = [1, 2, 3, 4, 5];
+
+items.remove([2, 4]);
+
+console.log(items);
+```
+#### Code produces the following output:
+```
+[1, 3, 5] 
+`````````
+#### Example #3
+Removes nothing if the specified item is not in the array.
+```typescript
+const items: number[] = [1, 2, 3, 4, 5];
+
+items.remove(6);
+
+console.log(items);
+```
+#### Code produces the following output:
+```
+[1, 2, 3, 4, 5]
+```
+***
+
 ### RemoveAt
 #### [MSDN: System.Collections.Generic.IList.RemoveAt](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.removeat?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
+
+Removes the element at the specified index of the Array<T>.
+```typescript
+/**
+ * @param index - The zero-based index of the element to remove.
+ * @exception ArgumentOutOfRangeException - index is less than 0 -or- index is equal to or greater than Count.
+ */
+removeAt(index: number): void;
+```
+#### Example #1
+Removes the item at index 2.
+
+```typescript
+const items: string[] = ["a", "b", "c", "d", "e"];
+
+items.removeAt(2);
+
+console.log(items);
+```
+#### Code produces the following output:
+```
+["a", "b", "d", "e"]
+`````````
+#### Example #2
+Removes an item at an index that is less than 0 or greater than or 
+equal to the length of the array.
+
+```typescript
+const items: string[] = ["a", "b", "c", "d", "e"];
+
+try {
+  items.removeAt(-1)
+} catch (error: any) {
+  console.log(error.message);
+}
+```
+#### Code produces the following output:
+```
+"Array index \"-1\" out of range, can be in [0..5]."
+``````
+#### Example #2
+Removing an item at an index that is less than 0 or greater than or 
+equal to the length of the array throws error.
+
+```typescript
+const items: string[] = ["a", "b", "c", "d", "e"];
+
+try {
+  items.removeAt(-1)
+} catch (error: any) {
+  console.log(error.message);
+}
+```
+#### Code produces the following output:
+```
+"Array index \"-1\" out of range, can be in [0..5]."
+``````
+#### Example #3
+Removing an item at index 0 on empty array throws error.
+
+```typescript
+const items: string[] = [];
+
+try {
+  items.removeAt(0)
+} catch (error: any) {
+  console.log(error.message);
+}
+```
+#### Code produces the following output:
+```
+"Array index "0" out of range, array is empty."
+``````
+***
+
 ### Insert
 #### [MSDN: System.Collections.Generic.IList.Insert](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.insert?view=net-8.0)
-Documentation is under construction and upcoming soon.\
-<i>Use the built-in code comment instead.</i>
+
+Inserts an element into the Array<T> at the specified index.
+```typescript
+ /**
+ * @param item - The object to insert.
+ * @param index - The zero-based index at which item should be inserted.
+ */
+insert(item: T | readonly T[], index?: number | null): void;
+```
+#### Example #1
+Inserting one array to another array.
+
+```typescript
+const items: number[] = [1];
+
+items.insert([2, 3]);
+```
+#### Code produces the following output:
+```
+[2, 3, 1]
+`````````
+#### Example #2
+Inserting an item into array.
+
+```typescript
+const items: number[] = [1];
+
+items.insert(2);
+```
+#### Code produces the following output:
+```
+[2, 1]
+`````````
+#### Example #3
+Inserting an item 2 into a 1 index of an array.
+
+```typescript
+const items: number[] = [1, 3];
+
+items.insert(2, 1);
+```
+#### Code produces the following output:
+```
+[1, 2, 3]
+`````````
+#### Example #4
+Inserting an array into a 1 index of another array.
+
+```typescript
+const items: number[] = [1, 4];
+
+items.insert([2, 3], 1);
+```
+#### Code produces the following output:
+```
+[1, 2, 3, 4]
+`````````
+***
 
 ### All
 #### [MSDN: System.Linq.Enumerable.All](https://learn.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.all?view=net-7.0)
