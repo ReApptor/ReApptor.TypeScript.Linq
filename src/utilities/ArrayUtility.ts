@@ -78,7 +78,7 @@ export default class ArrayUtility {
             : (items.length > 0);
     }
 
-    public static where<T>(items: readonly T[], predicate: (item: T) => boolean): T[] {
+    public static where<T>(items: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
         return items.filter(predicate);
     }
 
@@ -439,7 +439,11 @@ export default class ArrayUtility {
         return Array.from(map.values());
     }
 
-    public static remove<T>(items: T[], item: T | []): void {
+    public static remove<T>(items: T[], item: T | T[] | ((item: T, index: number) => boolean)): void {
+        if (typeof item === "function") {
+            item = items.where(item as ((item: T, index: number) => boolean));
+        }
+        
         if (Array.isArray(item)) {
             const length: number = item.length;
             for (let i: number = 0; i < length; i++) {

@@ -99,7 +99,7 @@ declare global {
          * @param predicate - A function to test each element for a condition.
          * @returns Array<T> - An Array<T> that contains elements from the input sequence that satisfy the condition.
          */
-        where(predicate: (item: T) => boolean): T[];
+        where(predicate: (item: T, index: number) => boolean): T[];
 
         whereAsync(predicate: (item: T) => Promise<boolean>): Promise<T[]>;
 
@@ -203,7 +203,7 @@ declare global {
          * @param item - The object(s) to remove from the Array<T>. The value can be null for reference types.
          * @returns boolean - true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the Array<T>.
          */
-        remove(item: T | readonly T[]): void;
+        remove(item: T | T[] | ((item: T, index: number) => boolean)): void;
 
         /**
          * Removes the element at the specified index of the Array<T>.
@@ -385,7 +385,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.where == null) {
-        Array.prototype.where = function <T>(predicate: (item: T) => boolean): T[] {
+        Array.prototype.where = function <T>(predicate: (item: T, index: number) => boolean): T[] {
             return ArrayUtility.where(this, predicate);
         };
     }
@@ -476,7 +476,7 @@ export const ArrayExtensions = function () {
     }
 
     if (Array.prototype.remove == null) {
-        Array.prototype.remove = function <T>(item: T | readonly T[]): void {
+        Array.prototype.remove = function <T>(item: T | T[] | ((item: T, index: number) => boolean)): void {
             ArrayUtility.remove(this, item);
         };
     }
